@@ -56,7 +56,9 @@ a{color:inherit}
 /* header row */
 .head{display:flex;align-items:flex-end;gap:16px;flex-wrap:wrap;padding:22px 0 16px}
 .head p{color:var(--ink-2);margin-top:4px}
-.act{margin-left:auto;display:flex;gap:8px}
+/* Must wrap: three fixed-width buttons in one row overflow 375px once the
+   platform font is wider than the one used during development. */
+.act{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
 .b{font:inherit;font-size:.85rem;font-weight:500;padding:8px 14px;border-radius:6px;cursor:pointer;
   border:1px solid var(--line);background:var(--surface);color:var(--ink);
   transition:transform .12s,background .15s,border-color .15s}
@@ -106,7 +108,9 @@ td.r{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums}
 .two{display:grid;grid-template-columns:1.6fr 1fr;gap:16px;padding-bottom:34px}
 @media(max-width:900px){.two{grid-template-columns:1fr}}
 .list{padding:6px 0}
-.list div{display:flex;gap:12px;align-items:center;padding:10px 17px;border-bottom:1px solid var(--line)}
+.list div{display:flex;gap:12px;align-items:center;padding:10px 17px;border-bottom:1px solid var(--line);
+  flex-wrap:wrap}
+.list div>span:first-child{min-width:0;flex:1 1 130px}
 .list div:last-child{border-bottom:0}
 .bar{flex:1;height:7px;background:var(--surface-2);border-radius:4px;overflow:hidden}
 .bar i{display:block;height:100%;background:var(--teal)}

@@ -99,3 +99,12 @@ Seven real defects across five sites. All of them ship if the process stops at "
 - Lighthouse runs against a local static server, so performance scores reflect the pages, not a
   production network. The accessibility, best-practices and SEO scores are the meaningful ones here.
 - The rubric scores are one reviewer's judgement. The automated columns are not.
+
+## Cross-platform note
+
+The dashboard passed on Windows and failed in CI on Linux with a **+10px horizontal overflow at
+375px**: three action buttons in a non-wrapping flex row, which fit under the Windows system font and
+did not under the Linux one. Fixed by allowing the row to wrap.
+
+This is why CI runs the same script on a different platform. A layout that depends on the width of
+the developer's system font is not responsive — it is lucky.
