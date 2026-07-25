@@ -123,7 +123,7 @@ skills/sitesmith/
     06-redesign-audit       8 passes, repair order, scoring rubric
     07-ux-rules             a11y, forms, navigation, charts, checklists
     impeccable/             35 files — one per command verb
-  data/                     31 CSV datasets — 161 palettes, 57 font pairings, 50+ styles
+  data/                     30 CSV datasets — 161 palettes, 57 font pairings, 50+ styles
   scripts/
     search.py               query the datasets
     verify.mjs              screenshot, axe both schemes, links, console, overflow

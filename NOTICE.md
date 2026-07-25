@@ -38,7 +38,7 @@ Used in: `01-brief-and-dials.md`, `02-architecture.md`, `03-design-engineering.m
 Source: https://github.com/nextlevelbuilder/ui-ux-pro-max-skill
 Copyright (c) 2024 Next Level Builder
 
-Used in: `07-ux-rules.md`, `11-search-engine.md`, the entire `data/` directory (31 CSV datasets) and
+Used in: `07-ux-rules.md`, `11-search-engine.md`, the entire `data/` directory (30 CSV datasets) and
 `scripts/search.py`, `scripts/core.py`, `scripts/design_system.py`.
 
 Same MIT terms as above.
