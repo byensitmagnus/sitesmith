@@ -1,0 +1,30 @@
+{
+  "url": "http://localhost:4321/01-saas-landing/",
+  "widths": {
+    "375": {
+      "status": 200,
+      "screenshot": "375.png",
+      "horizontalOverflowPx": 0,
+      "title": "Aftermath — incident reviews that people actually read"
+    },
+    "768": {
+      "status": 200,
+      "screenshot": "768.png",
+      "horizontalOverflowPx": 0,
+      "title": "Aftermath — incident reviews that people actually read"
+    },
+    "1440": {
+      "status": 200,
+      "screenshot": "1440.png",
+      "horizontalOverflowPx": 0,
+      "title": "Aftermath — incident reviews that people actually read"
+    }
+  },
+  "consoleErrors": [],
+  "failedRequests": [],
+  "brokenLinks": [],
+  "axe": {
+    "violations": [],
+    "passes": 0
+  }
+}

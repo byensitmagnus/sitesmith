@@ -1,0 +1,30 @@
+{
+  "url": "http://localhost:4321/04-local-service/",
+  "widths": {
+    "375": {
+      "status": 200,
+      "screenshot": "375.png",
+      "horizontalOverflowPx": 0,
+      "title": "Ridgeway Roofing — flat roofs and leaks, Sheffield and Rotherham"
+    },
+    "768": {
+      "status": 200,
+      "screenshot": "768.png",
+      "horizontalOverflowPx": 0,
+      "title": "Ridgeway Roofing — flat roofs and leaks, Sheffield and Rotherham"
+    },
+    "1440": {
+      "status": 200,
+      "screenshot": "1440.png",
+      "horizontalOverflowPx": 0,
+      "title": "Ridgeway Roofing — flat roofs and leaks, Sheffield and Rotherham"
+    }
+  },
+  "consoleErrors": [],
+  "failedRequests": [],
+  "brokenLinks": [],
+  "axe": {
+    "violations": [],
+    "passes": 0
+  }
+}

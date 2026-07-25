@@ -1,0 +1,30 @@
+{
+  "url": "http://localhost:4321/05-editorial/",
+  "widths": {
+    "375": {
+      "status": 200,
+      "screenshot": "375.png",
+      "horizontalOverflowPx": 0,
+      "title": "Nils Aardal — sound design for film"
+    },
+    "768": {
+      "status": 200,
+      "screenshot": "768.png",
+      "horizontalOverflowPx": 0,
+      "title": "Nils Aardal — sound design for film"
+    },
+    "1440": {
+      "status": 200,
+      "screenshot": "1440.png",
+      "horizontalOverflowPx": 0,
+      "title": "Nils Aardal — sound design for film"
+    }
+  },
+  "consoleErrors": [],
+  "failedRequests": [],
+  "brokenLinks": [],
+  "axe": {
+    "violations": [],
+    "passes": 0
+  }
+}

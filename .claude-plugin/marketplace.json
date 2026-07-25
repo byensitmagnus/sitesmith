@@ -1,0 +1,17 @@
+{
+  "$schema": "https://www.schemastore.org/claude-code-marketplace.json",
+  "name": "sitesmith",
+  "description": "One skill for building websites that do not look AI-generated. Routes by mode, enforces a 12-step build loop, and renders and measures the result instead of stopping at the code.",
+  "owner": {
+    "name": "sitesmith contributors",
+    "url": "https://github.com/byensitmagnus/sitesmith"
+  },
+  "plugins": [
+    {
+      "name": "sitesmith",
+      "description": "Design, build, redesign, audit and polish websites and web apps. Brief inference, design-system selection, 161 palettes, anti-slop judgement, and a Playwright verification pass.",
+      "source": "./",
+      "category": "design"
+    }
+  ]
+}

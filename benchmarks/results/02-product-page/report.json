@@ -1,0 +1,30 @@
+{
+  "url": "http://localhost:4321/02-product-page/",
+  "widths": {
+    "375": {
+      "status": 200,
+      "screenshot": "375.png",
+      "horizontalOverflowPx": 0,
+      "title": "Meridian RX — 1440p gaming PC, built and tested before it ships"
+    },
+    "768": {
+      "status": 200,
+      "screenshot": "768.png",
+      "horizontalOverflowPx": 0,
+      "title": "Meridian RX — 1440p gaming PC, built and tested before it ships"
+    },
+    "1440": {
+      "status": 200,
+      "screenshot": "1440.png",
+      "horizontalOverflowPx": 0,
+      "title": "Meridian RX — 1440p gaming PC, built and tested before it ships"
+    }
+  },
+  "consoleErrors": [],
+  "failedRequests": [],
+  "brokenLinks": [],
+  "axe": {
+    "violations": [],
+    "passes": 0
+  }
+}

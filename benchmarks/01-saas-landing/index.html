@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aftermath — incident reviews that people actually read</title>
+<meta name="description" content="Aftermath turns an incident channel into a structured review. Timeline, contributing factors and action items, drafted from what already happened.">
+<meta property="og:title" content="Aftermath — incident reviews that people actually read">
+<meta property="og:description" content="Turns an incident channel into a structured review. Timeline, contributing factors, action items.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23b8441f'/><path d='M8 21 L14 11 L18 17 L24 9' stroke='%23faf8f4' stroke-width='2.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+<style>
+:root{
+  /* --ink-3 measured at 5.35:1 on --paper; the obvious #7d7668 lands at 4.37 and fails AA */
+  --paper:#faf8f4; --paper-2:#f2ede3; --ink:#1a1815; --ink-2:#4a453c; --ink-3:#6f6859;
+  --rule:#ddd6c8; --ember:#b8441f; --ember-soft:#f3e2d9;
+  --serif:'Iowan Old Style','Palatino Linotype',Palatino,'Book Antiqua',Georgia,serif;
+  --sans:ui-sans-serif,system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --mono:ui-monospace,'SF Mono','Cascadia Code','Segoe UI Mono',monospace;
+  --step:8px; --measure:64ch; --shell:1180px;
+}
+@media (prefers-color-scheme:dark){
+  :root{--paper:#141210;--paper-2:#1c1916;--ink:#f2ede3;--ink-2:#c2b9a8;--ink-3:#9a9182;
+        --rule:#2e2823;--ember:#e2703f;--ember-soft:#2c1c14;}
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);
+  font-size:17px;line-height:1.6;overflow-x:hidden;
+  font-feature-settings:'kern' 1;-webkit-font-smoothing:antialiased}
+h1,h2,h3{font-family:var(--serif);font-weight:400;margin:0;text-wrap:balance}
+h1{font-size:clamp(2.6rem,6.4vw,4.4rem);line-height:1.02;letter-spacing:-.022em}
+h2{font-size:clamp(1.9rem,3.6vw,2.7rem);line-height:1.1;letter-spacing:-.014em}
+h3{font-size:1.15rem;line-height:1.3;letter-spacing:-.006em}
+p{margin:0;max-width:var(--measure);text-wrap:pretty}
+a{color:inherit}
+:focus-visible{outline:2.5px solid var(--ember);outline-offset:3px;border-radius:2px}
+.shell{max-width:var(--shell);margin-inline:auto;padding-inline:clamp(20px,5vw,44px)}
+.eyebrow{font-family:var(--mono);font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--ink-3);margin:0 0 calc(var(--step)*2)}
+
+/* ---------- nav ---------- */
+.skip{position:absolute;left:-9999px;top:0;background:var(--ink);color:var(--paper);
+  padding:12px 18px;z-index:99;text-decoration:none}
+.skip:focus{left:12px;top:12px}
+nav{border-bottom:1px solid var(--rule);position:sticky;top:0;z-index:20;
+  background:color-mix(in srgb,var(--paper) 88%,transparent);backdrop-filter:blur(10px)}
+.nav-in{display:flex;align-items:center;gap:clamp(16px,3vw,34px);height:66px}
+.brand{font-family:var(--serif);font-size:1.32rem;letter-spacing:-.02em;text-decoration:none;margin-right:auto}
+.brand b{color:var(--ember);font-weight:400}
+.nav-link{font-size:.92rem;color:var(--ink-2);text-decoration:none;white-space:nowrap;
+  padding:6px 2px;border-bottom:1.5px solid transparent;transition:color .18s,border-color .18s}
+.nav-link:hover{color:var(--ink);border-bottom-color:var(--ember)}
+.nav-link[aria-current=page]{color:var(--ink);border-bottom-color:var(--ember)}
+@media(max-width:760px){.nav-link{display:none}}
+
+.btn{display:inline-flex;align-items:center;gap:9px;font-family:var(--sans);font-size:.95rem;
+  font-weight:500;padding:11px 20px;border-radius:3px;text-decoration:none;cursor:pointer;
+  border:1.5px solid var(--ink);background:var(--ink);color:var(--paper);
+  transition:transform .12s ease,background .18s,color .18s,box-shadow .18s}
+.btn:hover{box-shadow:0 6px 20px -8px color-mix(in srgb,var(--ink) 55%,transparent)}
+.btn:active{transform:translateY(1.5px)}
+.btn--ghost{background:transparent;color:var(--ink);border-color:var(--rule)}
+.btn--ghost:hover{border-color:var(--ink)}
+.btn[disabled],.btn[aria-disabled=true]{opacity:.42;cursor:not-allowed;box-shadow:none;transform:none}
+
+/* ---------- hero: asymmetric, not centred ---------- */
+.hero{padding:clamp(56px,10vw,116px) 0 clamp(40px,7vw,80px);
+  display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.85fr);
+  gap:clamp(28px,5vw,64px);align-items:center}
+@media(max-width:900px){.hero{grid-template-columns:1fr;align-items:start}}
+.hero p.lede{font-size:clamp(1.08rem,2vw,1.28rem);color:var(--ink-2);margin-top:calc(var(--step)*3);
+  max-width:52ch}
+.hero-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:calc(var(--step)*4)}
+.hero-note{font-family:var(--mono);font-size:.72rem;color:var(--ink-3);margin-top:calc(var(--step)*2.5)}
+
+/* the artefact: a real timeline fragment, not a decorative orb */
+.artefact{border:1px solid var(--rule);background:var(--paper-2);border-radius:4px;
+  padding:calc(var(--step)*2.5);font-family:var(--mono);font-size:.76rem;line-height:1.75;
+  box-shadow:0 22px 44px -34px rgba(26,24,21,.5)}
+.artefact div{display:grid;grid-template-columns:64px 1fr;gap:14px;padding:5px 0;
+  border-bottom:1px dashed var(--rule)}
+.artefact div:last-child{border-bottom:0}
+.artefact time{color:var(--ink-3);font-variant-numeric:tabular-nums}
+.artefact b{font-weight:500;color:var(--ember)}
+
+/* ---------- zig-zag, not three cards ---------- */
+.rule{border:0;border-top:1px solid var(--rule);margin:0}
+.zig{padding:clamp(44px,6vw,72px) 0;display:grid;gap:clamp(28px,5vw,72px);
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:center}
+.zig:nth-of-type(even)>.zig-media{order:-1}
+@media(max-width:860px){.zig{grid-template-columns:1fr}.zig:nth-of-type(even)>.zig-media{order:0}}
+.zig p{margin-top:calc(var(--step)*2);color:var(--ink-2)}
+.zig-media{border:1px solid var(--rule);border-radius:4px;overflow:hidden;background:var(--paper-2);
+  display:flex;flex-direction:column;min-height:296px}
+.zig-media>:first-child{flex:1}
+.zig-media figcaption{font-family:var(--mono);font-size:.68rem;color:var(--ink-3);
+  padding:10px 14px;border-top:1px solid var(--rule)}
+.bars{display:flex;align-items:flex-end;gap:7px;padding:26px 20px 0}
+.bars i{flex:1;background:var(--ember-soft);border-top:2.5px solid var(--ember);border-radius:1px}
+.stack{padding:26px 22px;display:grid;gap:14px;align-content:center}
+.stack span{height:11px;border-radius:2px;background:var(--rule)}
+.stack span:nth-child(1){width:86%}.stack span:nth-child(2){width:64%}
+.stack span:nth-child(3){width:92%;background:var(--ember);opacity:.5}
+.stack span:nth-child(4){width:47%}.stack span:nth-child(5){width:73%}
+
+/* ---------- spec table, not feature cards ---------- */
+.specs{padding:clamp(44px,7vw,84px) 0}
+table{width:100%;border-collapse:collapse;margin-top:calc(var(--step)*4);font-size:.94rem}
+caption{text-align:left;font-family:var(--mono);font-size:.68rem;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--ink-3);padding-bottom:14px}
+th,td{text-align:left;padding:15px 16px 15px 0;border-bottom:1px solid var(--rule);vertical-align:top}
+th{font-weight:500;width:38%;font-family:var(--sans)}
+td{color:var(--ink-2)}
+tbody tr:hover{background:color-mix(in srgb,var(--ember-soft) 45%,transparent)}
+
+/* ---------- close ---------- */
+.close{padding:clamp(52px,9vw,104px) 0;border-top:1px solid var(--rule)}
+.close .shell{display:grid;grid-template-columns:minmax(0,1.2fr) auto;gap:32px;align-items:end}
+@media(max-width:760px){.close .shell{grid-template-columns:1fr}}
+footer{border-top:1px solid var(--rule);padding:34px 0 46px;font-size:.86rem;color:var(--ink-3)}
+.foot-in{display:flex;flex-wrap:wrap;gap:14px 26px;align-items:center}
+footer a{color:var(--ink-3);text-decoration:none;border-bottom:1px solid transparent}
+footer a:hover{color:var(--ink);border-bottom-color:var(--rule)}
+.foot-in .sp{margin-left:auto}
+
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.rise{animation:rise .62s cubic-bezier(.22,.8,.3,1) both}
+.rise:nth-child(2){animation-delay:.07s}.rise:nth-child(3){animation-delay:.14s}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<nav aria-label="Primary">
+  <div class="shell nav-in">
+    <a class="brand" href="#main"><b>▲</b> Aftermath</a>
+    <a class="nav-link" href="#how" aria-current="page">How it works</a>
+    <a class="nav-link" href="#detail">What it produces</a>
+    <a class="nav-link" href="#specs">Specifics</a>
+    <a class="btn btn--ghost" href="#start">Start a review</a>
+  </div>
+</nav>
+
+<main id="main">
+  <header class="shell hero">
+    <div>
+      <p class="eyebrow rise">Incident review, for teams who stopped writing them</p>
+      <h1 class="rise">The postmortem gets written. It just doesn&rsquo;t get read.</h1>
+      <p class="lede rise">Aftermath reads the incident channel, the deploy log and the alert history, and drafts the review from what actually happened &mdash; timeline first, then contributing factors, then the three actions worth arguing about.</p>
+      <div class="hero-cta rise">
+        <a class="btn" href="#start">Connect a channel</a>
+        <a class="btn btn--ghost" href="#detail">See a finished review</a>
+      </div>
+      <p class="hero-note rise">Reads history only. Never posts, never resolves, never pages anyone.</p>
+    </div>
+    <figure class="artefact rise" aria-label="Excerpt from a generated incident timeline">
+      <div><time>14:02:11</time><span>alert <b>checkout-p99</b> above threshold</span></div>
+      <div><time>14:02:48</time><span>first responder acknowledges</span></div>
+      <div><time>14:09:03</time><span>rollback of <b>#4471</b> begins</span></div>
+      <div><time>14:11:37</time><span>p99 returns under threshold</span></div>
+      <div><time>14:26:00</time><span>contributing factor: <b>connection pool</b></span></div>
+    </figure>
+  </header>
+
+  <hr class="rule">
+
+  <section class="shell zig" id="how">
+    <div>
+      <p class="eyebrow">One &mdash; the timeline</p>
+      <h2>Ordering the mess is most of the work</h2>
+      <p>Every incident leaves a trail across four or five systems, each with its own clock. Aftermath merges them into one ordered sequence and marks the moments where the shape of the incident changed &mdash; first signal, first human, first mitigation, recovery.</p>
+      <p>You correct what it got wrong. That correction is the review.</p>
+    </div>
+    <figure class="zig-media">
+      <div class="bars" role="img" aria-label="Bar chart showing latency returning to baseline after rollback">
+        <i style="height:22%"></i><i style="height:31%"></i><i style="height:96%"></i>
+        <i style="height:88%"></i><i style="height:74%"></i><i style="height:35%"></i>
+        <i style="height:26%"></i><i style="height:24%"></i>
+      </div>
+      <figcaption>p99 latency, 14:00&ndash;14:40, merged from two sources</figcaption>
+    </figure>
+  </section>
+
+  <section class="shell zig" id="detail">
+    <div>
+      <p class="eyebrow">Two &mdash; the argument</p>
+      <h2>Contributing factors, not a root cause</h2>
+      <p>Incidents rarely have one cause, and the search for one usually stops at the person who pressed the button. Aftermath lists the conditions that had to hold simultaneously, and says which ones you can change.</p>
+      <p>Action items come out ranked by how much of the failure surface they remove &mdash; not by how easy they are to close.</p>
+    </div>
+    <figure class="zig-media">
+      <div class="stack" role="img" aria-label="Ranked list of contributing factors with one highlighted">
+        <span></span><span></span><span></span><span></span><span></span>
+      </div>
+      <figcaption>Contributing factors, ranked by removed failure surface</figcaption>
+    </figure>
+  </section>
+
+  <hr class="rule">
+
+  <section class="shell specs" id="specs">
+    <p class="eyebrow">Specifics</p>
+    <h2>What it touches, and what it will not</h2>
+    <table>
+      <caption>Scope and limits</caption>
+      <tbody>
+        <tr><th scope="row">Sources it reads</th><td>Chat history, deploy events, alert history, and any incident tracker with a read API.</td></tr>
+        <tr><th scope="row">What it writes</th><td>A markdown document in your repository. Nothing else, anywhere.</td></tr>
+        <tr><th scope="row">Permissions requested</th><td>Read-only, per channel, revocable per channel.</td></tr>
+        <tr><th scope="row">Data retention</th><td>Source material is discarded once the draft is produced. The draft lives in your repository.</td></tr>
+        <tr><th scope="row">Where it is weak</th><td>Incidents with little written trace. If the work happened on a call, there is nothing to order.</td></tr>
+        <tr><th scope="row">Self-hosting</th><td>Supported. Same build, your infrastructure, no outbound connection required.</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="close" id="start">
+    <div class="shell">
+      <div>
+        <h2>Connect one channel and run it on your last incident</h2>
+        <p style="margin-top:16px;color:var(--ink-2)">If the draft is wrong, you will know inside two minutes, and you can disconnect in one click.</p>
+      </div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap">
+        <a class="btn" href="#start">Connect a channel</a>
+        <a class="btn btn--ghost" href="#specs">Read the limits first</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="shell foot-in">
+    <span>Aftermath</span>
+    <a href="#specs">Scope</a>
+    <a href="#how">How it works</a>
+    <span class="sp">A fictional product, built as a design benchmark.</span>
+  </div>
+</footer>
+</body>
+</html>

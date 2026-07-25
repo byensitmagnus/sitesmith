@@ -1,0 +1,122 @@
+{
+  "url": "http://localhost:4321/06-redesign/before/",
+  "widths": {
+    "375": {
+      "status": 200,
+      "screenshot": "375.png",
+      "horizontalOverflowPx": 374,
+      "title": "ShiftFlow - Unlock Your Team's Potential"
+    },
+    "768": {
+      "status": 200,
+      "screenshot": "768.png",
+      "horizontalOverflowPx": 0,
+      "title": "ShiftFlow - Unlock Your Team's Potential"
+    },
+    "1440": {
+      "status": 200,
+      "screenshot": "1440.png",
+      "horizontalOverflowPx": 0,
+      "title": "ShiftFlow - Unlock Your Team's Potential"
+    }
+  },
+  "consoleErrors": [],
+  "failedRequests": [],
+  "brokenLinks": [
+    {
+      "href": "http://localhost:4321/06-redesign/before/#",
+      "text": "Get Started Free",
+      "reason": "placeholder href=\"#\""
+    },
+    {
+      "href": "http://localhost:4321/06-redesign/before/#",
+      "text": "Start Your Free Trial",
+      "reason": "placeholder href=\"#\""
+    },
+    {
+      "href": "http://localhost:4321/06-redesign/before/#",
+      "text": "Product",
+      "reason": "placeholder href=\"#\""
+    },
+    {
+      "href": "http://localhost:4321/06-redesign/before/#",
+      "text": "Pricing",
+      "reason": "placeholder href=\"#\""
+    },
+    {
+      "href": "http://localhost:4321/06-redesign/before/#",
+      "text": "About",
+      "reason": "placeholder href=\"#\""
+    },
+    {
+      "href": "http://localhost:4321/06-redesign/before/#",
+      "text": "Blog",
+      "reason": "placeholder href=\"#\""
+    },
+    {
+      "href": "http://localhost:4321/06-redesign/before/#",
+      "text": "Careers",
+      "reason": "placeholder href=\"#\""
+    },
+    {
+      "href": "http://localhost:4321/06-redesign/before/#",
+      "text": "Contact",
+      "reason": "placeholder href=\"#\""
+    }
+  ],
+  "axe": {
+    "violations": [
+      {
+        "id": "color-contrast",
+        "scheme": "light",
+        "impact": "serious",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "nodes": 17,
+        "examples": [
+          {
+            "target": ".card:nth-child(1) > span",
+            "detail": "Element has insufficient color contrast of 2.29 (foreground color: #a78bfa, background color: #ede9fe, font size: 9.0pt (12px), font weight: normal). Expected c"
+          },
+          {
+            "target": ".card:nth-child(1) > h3",
+            "detail": "Element has insufficient color contrast of 2.53 (foreground color: #9ca3af, background color: #ffffff, font size: 15.0pt (20px), font weight: bold). Expected co"
+          },
+          {
+            "target": ".card:nth-child(2) > span",
+            "detail": "Element has insufficient color contrast of 2.29 (foreground color: #a78bfa, background color: #ede9fe, font size: 9.0pt (12px), font weight: normal). Expected c"
+          },
+          {
+            "target": ".card:nth-child(2) > h3",
+            "detail": "Element has insufficient color contrast of 2.53 (foreground color: #9ca3af, background color: #ffffff, font size: 15.0pt (20px), font weight: bold). Expected co"
+          }
+        ]
+      },
+      {
+        "id": "color-contrast",
+        "scheme": "dark",
+        "impact": "serious",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "nodes": 17,
+        "examples": [
+          {
+            "target": ".card:nth-child(1) > span",
+            "detail": "Element has insufficient color contrast of 2.29 (foreground color: #a78bfa, background color: #ede9fe, font size: 9.0pt (12px), font weight: normal). Expected c"
+          },
+          {
+            "target": ".card:nth-child(1) > h3",
+            "detail": "Element has insufficient color contrast of 2.53 (foreground color: #9ca3af, background color: #ffffff, font size: 15.0pt (20px), font weight: bold). Expected co"
+          },
+          {
+            "target": ".card:nth-child(2) > span",
+            "detail": "Element has insufficient color contrast of 2.29 (foreground color: #a78bfa, background color: #ede9fe, font size: 9.0pt (12px), font weight: normal). Expected c"
+          },
+          {
+            "target": ".card:nth-child(2) > h3",
+            "detail": "Element has insufficient color contrast of 2.53 (foreground color: #9ca3af, background color: #ffffff, font size: 15.0pt (20px), font weight: bold). Expected co"
+          }
+        ]
+      }
+    ],
+    "passes": 0
+  }
+}

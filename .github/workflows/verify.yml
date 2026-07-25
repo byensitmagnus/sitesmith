@@ -1,0 +1,85 @@
+name: verify
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  skill-shape:
+    name: skill structure
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: SKILL.md stays under 500 lines
+        run: |
+          lines=$(wc -l < skills/sitesmith/SKILL.md)
+          echo "SKILL.md is $lines lines"
+          [ "$lines" -le 500 ] || { echo "::error::SKILL.md must stay under 500 lines"; exit 1; }
+
+      - name: every reference link resolves
+        run: |
+          cd skills/sitesmith
+          fail=0
+          grep -oE '\]\((references/[^)]+)\)' SKILL.md | sed 's/^](//;s/)$//' | sort -u | while read -r p; do
+            [ -e "$p" ] || { echo "::error::SKILL.md links to missing $p"; exit 1; }
+          done
+          for f in references/*.md; do
+            n=$(wc -l < "$f")
+            if [ "$n" -gt 100 ] && ! grep -q '^## Contents' "$f"; then
+              echo "::error::$f is $n lines and has no table of contents"; fail=1
+            fi
+          done
+          exit $fail
+
+      - name: attribution present for every bundled reference
+        run: |
+          for f in skills/sitesmith/references/*.md; do
+            grep -q 'MIT\|Apache\|Original work' "$f" || { echo "::error::$f states no license"; exit 1; }
+          done
+
+  benchmarks:
+    name: benchmarks render and pass
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: install
+        working-directory: benchmarks
+        run: |
+          npm install --no-audit --no-fund
+          npx playwright install --with-deps chromium
+
+      - name: serve
+        working-directory: benchmarks
+        run: |
+          node serve.mjs 4321 . &
+          for i in $(seq 1 30); do
+            curl -sf http://localhost:4321/01-saas-landing/ >/dev/null && break
+            sleep 1
+          done
+
+      - name: six builds must pass
+        working-directory: benchmarks
+        run: |
+          for b in 01-saas-landing 02-product-page 03-dashboard 04-local-service 05-editorial 06-redesign/after; do
+            echo "::group::$b"
+            node ../skills/sitesmith/scripts/verify.mjs "http://localhost:4321/$b/" \
+              --out "/tmp/$(echo $b | tr / -)"
+            echo "::endgroup::"
+          done
+
+      - name: control must keep failing
+        working-directory: benchmarks
+        run: |
+          if node ../skills/sitesmith/scripts/verify.mjs \
+               "http://localhost:4321/06-redesign/before/" --out /tmp/control; then
+            echo "::error::The control page passed. It is the baseline and must keep its intentional defects — see benchmarks/README.md"
+            exit 1
+          fi
+          echo "control failed as expected"

@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nils Aardal — sound design for film</title>
+<meta name="description" content="Sound design and field recording for documentary and narrative film. Selected work, 2018 to now.">
+<meta property="og:title" content="Nils Aardal — sound design for film">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23100f0d'/><path d='M4 16h3l3-8 4 18 4-14 3 6h7' stroke='%23e7e3d8' stroke-width='1.8' fill='none' stroke-linejoin='round'/></svg>">
+<style>
+:root{
+  /* --ink-3 measured at 5.14:1 on --ground; the darker #7d7768 lands at 4.29 and fails AA */
+  --ground:#100f0d; --ground-2:#191713; --ink:#eae6da; --ink-2:#a49d8c; --ink-3:#8a8474;
+  --rule:#2b2822; --mark:#d4553a;
+  --display:'Iowan Old Style','Palatino Linotype',Palatino,'Book Antiqua',Georgia,serif;
+  --sans:ui-sans-serif,system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --mono:ui-monospace,'SF Mono','Cascadia Code','Segoe UI Mono',monospace;
+}
+@media (prefers-color-scheme:light){
+  :root{--ground:#f7f5ef;--ground-2:#efece2;--ink:#141310;--ink-2:#4c4739;--ink-3:#6a6455;
+        --rule:#ddd8c9;--mark:#a63a22;}
+}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--sans);font-size:17px;
+  line-height:1.62;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+h1,h2,h3{margin:0;font-family:var(--display);font-weight:400;text-wrap:balance}
+p{margin:0;text-wrap:pretty}
+a{color:inherit}
+:focus-visible{outline:2.5px solid var(--mark);outline-offset:4px}
+.w{max-width:1140px;margin-inline:auto;padding-inline:clamp(20px,6vw,60px)}
+.skip{position:absolute;left:-9999px}
+.skip:focus{left:12px;top:12px;position:fixed;z-index:99;background:var(--mark);color:#fff;padding:11px 17px;text-decoration:none}
+.m{font-family:var(--mono);font-size:.68rem;letter-spacing:.17em;text-transform:uppercase;color:var(--ink-3)}
+
+/* masthead — rule-led, no nav bar chrome */
+.mast{border-bottom:1px solid var(--rule)}
+.mast .w{display:flex;align-items:baseline;gap:22px;padding-block:20px;flex-wrap:wrap}
+.mast a.name{font-family:var(--display);font-size:1.3rem;text-decoration:none;letter-spacing:-.01em;margin-right:auto}
+.mast nav{display:flex;gap:20px}
+.mast nav a{text-decoration:none;color:var(--ink-2);font-size:.88rem;border-bottom:1px solid transparent;padding-bottom:2px}
+.mast nav a:hover,.mast nav a[aria-current=page]{color:var(--ink);border-bottom-color:var(--mark)}
+@media(max-width:640px){.mast nav{gap:14px}.mast nav a{font-size:.8rem}}
+
+/* opening statement, set large and off-centre */
+.open{padding-block:clamp(52px,10vw,120px);display:grid;
+  grid-template-columns:minmax(0,7fr) minmax(0,4fr);gap:clamp(24px,5vw,64px);align-items:start}
+@media(max-width:880px){.open{grid-template-columns:1fr}}
+.open h1{font-size:clamp(2.3rem,6.2vw,4.15rem);line-height:1.04;letter-spacing:-.024em}
+.open h1 em{font-style:italic;color:var(--mark)}
+.open .side{border-left:1px solid var(--rule);padding-left:clamp(18px,2.5vw,28px)}
+.open .side p{color:var(--ink-2);font-size:.99rem}
+.open .side p+p{margin-top:14px}
+
+/* index of work — a ruled list, deliberately not a card grid */
+.idx{border-top:1px solid var(--rule)}
+.item{border-bottom:1px solid var(--rule);display:grid;
+  grid-template-columns:58px minmax(0,1fr) minmax(0,.85fr) 96px;gap:clamp(14px,2.5vw,32px);
+  padding-block:clamp(22px,3vw,34px);align-items:baseline;text-decoration:none;
+  transition:background .2s,padding-inline .2s}
+.item:hover{background:var(--ground-2);padding-inline:12px}
+@media(max-width:860px){.item{grid-template-columns:44px 1fr;row-gap:8px}
+  .item .role,.item .yr{grid-column:2}}
+.item .no{font-family:var(--mono);font-size:.76rem;color:var(--ink-3)}
+.item h2{font-size:clamp(1.3rem,2.6vw,1.85rem);line-height:1.12;letter-spacing:-.015em}
+.item h2 span{display:block;font-family:var(--sans);font-size:.82rem;letter-spacing:0;color:var(--ink-3);margin-top:7px}
+.item .role{color:var(--ink-2);font-size:.94rem}
+.item .yr{font-family:var(--mono);font-size:.82rem;color:var(--ink-3);text-align:right}
+@media(max-width:860px){.item .yr{text-align:left}}
+
+/* one pulled quote — attributed to the work, not a fake client */
+.pull{padding-block:clamp(48px,8vw,96px);border-bottom:1px solid var(--rule)}
+.pull blockquote{margin:0;max-width:26ch;font-family:var(--display);
+  font-size:clamp(1.6rem,4vw,2.6rem);line-height:1.16;letter-spacing:-.018em}
+.pull figcaption{margin-top:20px;color:var(--ink-3);font-size:.88rem}
+
+/* method */
+.method{padding-block:clamp(44px,7vw,84px);display:grid;
+  grid-template-columns:minmax(0,4fr) minmax(0,7fr);gap:clamp(22px,5vw,60px)}
+@media(max-width:880px){.method{grid-template-columns:1fr}}
+.method h2{font-size:clamp(1.6rem,3.2vw,2.3rem);line-height:1.1;letter-spacing:-.018em}
+.method p{color:var(--ink-2);max-width:60ch}
+.method p+p{margin-top:16px}
+.kit{margin-top:26px;border-top:1px solid var(--rule)}
+.kit div{display:flex;gap:18px;justify-content:space-between;padding:11px 0;border-bottom:1px solid var(--rule);font-size:.92rem}
+.kit dt{color:var(--ink-3)}
+.kit dd{margin:0;font-family:var(--mono);font-size:.84rem;text-align:right}
+
+/* contact */
+.end{padding-block:clamp(44px,7vw,86px);border-top:1px solid var(--rule)}
+.end h2{font-size:clamp(1.7rem,4vw,2.7rem);letter-spacing:-.02em;line-height:1.08}
+.end a.mail{display:inline-block;margin-top:22px;font-family:var(--display);
+  font-size:clamp(1.3rem,3vw,2rem);color:var(--mark);text-decoration:none;
+  border-bottom:1.5px solid currentColor;padding-bottom:3px}
+.end a.mail:hover{color:var(--ink)}
+footer{padding-block:26px 44px;border-top:1px solid var(--rule)}
+footer .w{display:flex;flex-wrap:wrap;gap:12px 24px;font-size:.85rem;color:var(--ink-3)}
+footer a{color:var(--ink-3);text-decoration:none}footer a:hover{color:var(--ink)}
+footer .sp{margin-left:auto}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="mast">
+  <div class="w">
+    <a class="name" href="#main">Nils Aardal</a>
+    <nav aria-label="Primary">
+      <a href="#work" aria-current="page">Work</a>
+      <a href="#method">Method</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="w open">
+    <div>
+      <p class="m" style="margin-bottom:20px">Sound design &amp; field recording &mdash; Oslo</p>
+      <h1>Most of a film&rsquo;s sound is decided <em>before</em> anyone opens a mixer.</h1>
+    </div>
+    <div class="side">
+      <p>I record on location, usually alone, usually earlier than the schedule wants me to. What comes back is a library specific to the film rather than a folder of stock atmospheres that could belong to anything.</p>
+      <p>Fourteen features and eleven documentaries since 2018. Below is what I would show first.</p>
+    </div>
+  </section>
+
+  <section class="idx" id="work" aria-label="Selected work">
+    <a class="item" href="#work">
+      <span class="no">01</span>
+      <h2>Kalvskinnet<span>Feature documentary &mdash; dir. Ingrid Sæther</span></h2>
+      <span class="role">Location recording, sound design, final mix</span>
+      <span class="yr">2026</span>
+    </a>
+    <a class="item" href="#work">
+      <span class="no">02</span>
+      <h2>The Long Thaw<span>Feature &mdash; dir. Marek Owsiany</span></h2>
+      <span class="role">Sound design, ADR supervision</span>
+      <span class="yr">2025</span>
+    </a>
+    <a class="item" href="#work">
+      <span class="no">03</span>
+      <h2>Nine Hours of Ice<span>Installation &mdash; Henie Onstad</span></h2>
+      <span class="role">Field recording, eight-channel composition</span>
+      <span class="yr">2024</span>
+    </a>
+    <a class="item" href="#work">
+      <span class="no">04</span>
+      <h2>Vestre Line<span>Short &mdash; dir. Petra Holmen</span></h2>
+      <span class="role">Sound design, mix</span>
+      <span class="yr">2023</span>
+    </a>
+    <a class="item" href="#work">
+      <span class="no">05</span>
+      <h2>Every Boat Returns<span>Feature documentary &mdash; dir. Ola Bremnes</span></h2>
+      <span class="role">Location recording, sound design</span>
+      <span class="yr">2021</span>
+    </a>
+  </section>
+
+  <section class="w pull">
+    <figure style="margin:0">
+      <blockquote>Silence is expensive. It is the only thing you cannot add later.</blockquote>
+      <figcaption>&mdash; from a talk given at Nordisk Panorama, 2025</figcaption>
+    </figure>
+  </section>
+
+  <section class="w method" id="method">
+    <div>
+      <h2>How a job usually goes</h2>
+      <p class="m" style="margin-top:16px">Three phases, roughly</p>
+    </div>
+    <div>
+      <p><strong>Before the shoot.</strong> I read the script for sound, not for story, and come back with a list of what has to be recorded on location and what can be built. That list is usually shorter than directors expect and more specific.</p>
+      <p><strong>During.</strong> I record wild tracks in the actual spaces, at the actual times of day. A room recorded at six in the morning does not sound like the same room at two in the afternoon, and the difference survives all the way to the mix.</p>
+      <p><strong>After.</strong> Design and mix, with the director in the room for the first pass and out of it for the second. The library goes to the production at the end, labelled, whether or not I stay on the project.</p>
+      <dl class="kit">
+        <div><dt>Location rig</dt><dd>Sound Devices 833, MKH 8040 pair</dd></div>
+        <div><dt>Room</dt><dd>5.1, treated, Oslo &mdash; Grünerløkka</dd></div>
+        <div><dt>Delivery</dt><dd>Stems, 5.1 and stereo folddown</dd></div>
+        <div><dt>Typical lead time</dt><dd>6&ndash;10 weeks</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="w end" id="contact">
+    <h2>Send the script and the shooting dates.</h2>
+    <p style="margin-top:16px;color:var(--ink-2);max-width:52ch">That is enough to say yes or no within a couple of days. If it is a no, I will usually know someone better suited.</p>
+    <a class="mail" href="mailto:studio@example.com">studio@example.com</a>
+  </section>
+</main>
+
+<footer>
+  <div class="w">
+    <span>Nils Aardal</span>
+    <a href="#work">Work</a>
+    <a href="#method">Method</a>
+    <span class="sp">A fictional practice, built as a design benchmark.</span>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Meridian RX — 1440p gaming PC, built and tested before it ships</title>
+<meta name="description" content="Meridian RX. Ryzen 7 9800X3D, RX 9070 XT, 32 GB DDR5. Assembled, stress-tested for four hours, and shipped with the test log.">
+<meta property="og:title" content="Meridian RX — 1440p gaming PC">
+<meta property="og:description" content="Assembled, stress-tested for four hours, shipped with the test log.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230d0f12'/><path d='M10 8v16M16 8v16M22 8v16' stroke='%23b6f24e' stroke-width='3' stroke-linecap='round'/></svg>">
+<style>
+:root{
+  --bg:#0b0d10; --panel:#14181d; --panel-2:#1b2027; --line:#262d36;
+  /* --ink-3 measured at 5.39:1 on --bg and 4.98:1 on --panel; #68727e lands at 4.00 and fails AA */
+  --ink:#e9ecef; --ink-2:#9aa4b0; --ink-3:#7d8894;
+  --acid:#b6f24e; --acid-ink:#0b0d10; --warn:#ff8a5c; --ok:#5ad48a;
+  --sans:ui-sans-serif,system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --mono:ui-monospace,'SF Mono','Cascadia Code','Segoe UI Mono',monospace;
+  --shell:1240px;
+}
+@media (prefers-color-scheme:light){
+  :root{--bg:#f4f6f8;--panel:#fff;--panel-2:#eef1f4;--line:#dde2e8;
+        --ink:#12161b;--ink-2:#4d5661;--ink-3:#626b76;--acid:#4f7a00;--acid-ink:#fff;
+        /* status colours need their own light-mode values; the dark greens read at 1.87:1 on white */
+        --ok:#1f7a44;--warn:#a8410f;}
+}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;
+  line-height:1.55;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+h1,h2,h3{margin:0;font-weight:600;letter-spacing:-.02em;text-wrap:balance}
+h1{font-size:clamp(1.9rem,4vw,2.7rem);line-height:1.05}
+h2{font-size:clamp(1.25rem,2.4vw,1.6rem);line-height:1.15}
+h3{font-size:1rem;letter-spacing:0}
+p{margin:0;text-wrap:pretty;max-width:68ch}
+a{color:inherit}
+:focus-visible{outline:2.5px solid var(--acid);outline-offset:3px;border-radius:3px}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.shell{max-width:var(--shell);margin-inline:auto;padding-inline:clamp(16px,4vw,32px)}
+.lbl{font-family:var(--mono);font-size:.66rem;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-3)}
+
+.skip{position:absolute;left:-9999px}
+.skip:focus{left:12px;top:12px;position:fixed;z-index:99;background:var(--acid);
+  color:var(--acid-ink);padding:12px 18px;text-decoration:none;border-radius:3px}
+
+header.bar{border-bottom:1px solid var(--line);background:var(--panel)}
+.bar-in{display:flex;align-items:center;gap:22px;height:58px;font-size:.9rem}
+.logo{font-weight:700;letter-spacing:-.03em;font-size:1.1rem;text-decoration:none;margin-right:auto}
+.logo span{color:var(--acid)}
+.bar-in a:not(.logo){color:var(--ink-2);text-decoration:none}
+.bar-in a:not(.logo):hover{color:var(--ink)}
+@media(max-width:700px){.bar-hide{display:none}}
+
+.crumb{padding:16px 0;font-size:.82rem;color:var(--ink-3)}
+.crumb a{color:var(--ink-3);text-decoration:none}.crumb a:hover{color:var(--ink-2)}
+
+.layout{display:grid;grid-template-columns:minmax(0,1fr) 372px;gap:clamp(20px,3vw,40px);
+  padding-bottom:clamp(40px,6vw,72px);align-items:start}
+@media(max-width:980px){.layout{grid-template-columns:1fr}}
+
+/* visual: an honest render placeholder, labelled as such */
+.shot{background:var(--panel);border:1px solid var(--line);border-radius:6px;
+  aspect-ratio:4/3;display:grid;place-items:center;position:relative;overflow:hidden}
+.shot::after{content:'';position:absolute;inset:0;
+  background:repeating-linear-gradient(135deg,transparent 0 13px,color-mix(in srgb,var(--line) 55%,transparent) 13px 14px)}
+.tower{width:38%;height:74%;background:var(--panel-2);border:1px solid var(--line);border-radius:4px;
+  position:relative;z-index:1;display:grid;align-content:end;gap:5px;padding:12px}
+.tower i{height:4px;background:var(--acid);opacity:.75;border-radius:2px}
+.tower i:nth-child(2){width:62%;opacity:.4}.tower i:nth-child(3){width:38%;opacity:.25}
+.shot-cap{margin-top:10px;font-size:.78rem;color:var(--ink-3)}
+
+.strip{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px}
+.strip button{background:var(--panel);border:1px solid var(--line);border-radius:5px;aspect-ratio:1;
+  cursor:pointer;transition:border-color .16s,transform .12s;padding:0;
+  background-image:repeating-linear-gradient(135deg,transparent 0 9px,var(--panel-2) 9px 10px)}
+.strip button:hover{border-color:var(--ink-3)}
+.strip button:active{transform:translateY(1.5px)}
+.strip button[aria-pressed=true]{border-color:var(--acid);box-shadow:inset 0 0 0 1px var(--acid)}
+
+/* purchase panel */
+.buy{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:22px;
+  position:sticky;top:20px}
+@media(max-width:980px){.buy{position:static}}
+.price{display:flex;align-items:baseline;gap:10px;margin:14px 0 4px}
+.price strong{font-family:var(--mono);font-size:2.05rem;font-weight:600;letter-spacing:-.03em}
+.price del{color:var(--ink-3);font-family:var(--mono);font-size:.95rem}
+.stock{display:inline-flex;align-items:center;gap:7px;font-size:.83rem;color:var(--ok);margin-bottom:18px}
+.stock::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--ok)}
+fieldset{border:0;padding:0;margin:0 0 18px}
+legend{padding:0;margin-bottom:9px}
+.opts{display:grid;gap:8px}
+.opt{display:flex;align-items:center;gap:12px;border:1px solid var(--line);border-radius:5px;
+  padding:11px 13px;cursor:pointer;transition:border-color .16s,background .16s;font-size:.9rem}
+.opt:hover{border-color:var(--ink-3)}
+.opt:has(input:checked){border-color:var(--acid);background:color-mix(in srgb,var(--acid) 8%,transparent)}
+.opt:has(input:disabled){opacity:.45;cursor:not-allowed}
+.opt input{accent-color:var(--acid);margin:0;width:16px;height:16px}
+.opt .d{margin-left:auto;font-family:var(--mono);font-size:.82rem;color:var(--ink-2)}
+.cta{display:block;width:100%;text-align:center;background:var(--acid);color:var(--acid-ink);
+  border:0;border-radius:5px;padding:15px;font-size:1rem;font-weight:650;cursor:pointer;
+  font-family:var(--sans);transition:transform .12s,filter .18s}
+.cta:hover{filter:brightness(1.08)}
+.cta:active{transform:translateY(2px)}
+.cta:disabled{opacity:.4;cursor:not-allowed;transform:none;filter:none}
+.second{display:block;width:100%;text-align:center;margin-top:9px;padding:12px;font-size:.9rem;
+  background:transparent;color:var(--ink-2);border:1px solid var(--line);border-radius:5px;
+  cursor:pointer;text-decoration:none;font-family:var(--sans)}
+.second:hover{color:var(--ink);border-color:var(--ink-3)}
+.assur{margin-top:18px;padding-top:16px;border-top:1px solid var(--line);display:grid;gap:9px;
+  font-size:.83rem;color:var(--ink-2)}
+.assur div{display:flex;gap:9px}
+.assur b{color:var(--acid);font-weight:600}
+
+/* specs */
+.specs{padding:clamp(34px,5vw,60px) 0;border-top:1px solid var(--line)}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:0 clamp(24px,4vw,56px)}
+dl{margin:16px 0 0;font-size:.93rem}
+.row{display:flex;justify-content:space-between;gap:16px;padding:11px 0;border-bottom:1px solid var(--line)}
+.row dt{color:var(--ink-3)}
+.row dd{margin:0;text-align:right;font-family:var(--mono);font-size:.87rem}
+
+/* measured performance — clearly labelled as our own test */
+.perf{padding:clamp(34px,5vw,60px) 0;border-top:1px solid var(--line)}
+table{width:100%;border-collapse:collapse;margin-top:18px;font-size:.92rem}
+th,td{padding:12px 14px 12px 0;border-bottom:1px solid var(--line);text-align:left}
+thead th{font-size:.7rem;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);font-weight:500}
+td.n{font-family:var(--mono);font-variant-numeric:tabular-nums;text-align:right;padding-right:0}
+tbody tr:hover{background:var(--panel)}
+.meter{height:6px;width:130px;margin-left:auto;background:var(--panel-2);border-radius:3px;
+  overflow:hidden;margin-top:7px}
+.meter i{display:block;height:100%;background:var(--acid)}
+.caveat{margin-top:18px;font-size:.83rem;color:var(--ink-3);border-left:2px solid var(--line);padding-left:14px}
+
+footer{border-top:1px solid var(--line);padding:28px 0 42px;font-size:.84rem;color:var(--ink-3)}
+.f-in{display:flex;flex-wrap:wrap;gap:12px 24px}
+footer a{color:var(--ink-3);text-decoration:none}footer a:hover{color:var(--ink)}
+.f-in .sp{margin-left:auto}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="bar">
+  <div class="shell bar-in">
+    <a class="logo" href="#main">MERIDIAN<span>.</span></a>
+    <a class="bar-hide" href="#specs">Specifications</a>
+    <a class="bar-hide" href="#perf">Measured performance</a>
+    <a class="bar-hide" href="#build">How it is built</a>
+  </div>
+</header>
+
+<nav class="shell crumb" aria-label="Breadcrumb">
+  <a href="#main">Home</a> / <a href="#specs">Desktops</a> / <span aria-current="page">Meridian RX</span>
+</nav>
+
+<main id="main" class="shell">
+  <div class="layout">
+    <div>
+      <figure style="margin:0">
+        <div class="shot">
+          <div class="tower"><i></i><i></i><i></i></div>
+        </div>
+        <figcaption class="shot-cap">Placeholder render. Product photography is not included in this benchmark build.</figcaption>
+      </figure>
+      <div class="strip" role="group" aria-label="Choose a view">
+        <button aria-pressed="true" aria-label="Front view"></button>
+        <button aria-pressed="false" aria-label="Interior view"></button>
+        <button aria-pressed="false" aria-label="Rear ports"></button>
+        <button aria-pressed="false" aria-label="Cable routing"></button>
+      </div>
+    </div>
+
+    <aside class="buy" aria-labelledby="buy-h">
+      <p class="lbl">1440p / high refresh</p>
+      <h1 id="buy-h">Meridian RX</h1>
+      <div class="price">
+        <strong class="num">£1,689</strong>
+        <del class="num">£1,824</del>
+      </div>
+      <p class="stock">4 assembled, ships tomorrow</p>
+
+      <fieldset>
+        <legend class="lbl">Storage</legend>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="ssd" checked> 1 TB NVMe <span class="d">included</span></label>
+          <label class="opt"><input type="radio" name="ssd"> 2 TB NVMe <span class="d">+£74</span></label>
+          <label class="opt"><input type="radio" name="ssd" disabled> 4 TB NVMe <span class="d">out of stock</span></label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend class="lbl">Operating system</legend>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="os" checked> Windows 11 Home <span class="d">included</span></label>
+          <label class="opt"><input type="radio" name="os"> No OS <span class="d">&minus;£89</span></label>
+        </div>
+      </fieldset>
+
+      <button class="cta">Add to basket &mdash; £1,689</button>
+      <a class="second" href="#perf">See the test results first</a>
+
+      <div class="assur">
+        <div><b>&rarr;</b><span>Four-hour stress test before dispatch. The log ships in the box.</span></div>
+        <div><b>&rarr;</b><span>Three-year parts and labour, collection included.</span></div>
+        <div><b>&rarr;</b><span>Every part listed by exact model. No &ldquo;equivalent or better&rdquo;.</span></div>
+      </div>
+    </aside>
+  </div>
+
+  <section class="specs" id="specs">
+    <p class="lbl">Specification</p>
+    <h2>Exact parts, by model number</h2>
+    <div class="grid2">
+      <dl>
+        <div class="row"><dt>Processor</dt><dd>Ryzen 7 9800X3D</dd></div>
+        <div class="row"><dt>Graphics</dt><dd>Radeon RX 9070 XT 16 GB</dd></div>
+        <div class="row"><dt>Memory</dt><dd>32 GB DDR5-6000 CL30</dd></div>
+        <div class="row"><dt>Storage</dt><dd>1 TB PCIe 4.0 NVMe</dd></div>
+      </dl>
+      <dl>
+        <div class="row"><dt>Motherboard</dt><dd>B850 ATX</dd></div>
+        <div class="row"><dt>Cooling</dt><dd>240 mm AIO, 2 &times; 120 mm</dd></div>
+        <div class="row"><dt>Power supply</dt><dd>750 W 80+ Gold, ATX 3.1</dd></div>
+        <div class="row"><dt>Chassis</dt><dd>Mid-tower, mesh front</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="perf" id="perf">
+    <p class="lbl">Measured, not estimated</p>
+    <h2>Frame rates from the unit that ships to you</h2>
+    <table>
+      <thead>
+        <tr><th scope="col">Title</th><th scope="col">Preset</th><th scope="col" style="text-align:right">Average fps</th><th scope="col" style="text-align:right">1% low</th></tr>
+      </thead>
+      <tbody>
+        <tr><th scope="row">Competitive shooter, 1440p</th><td>High</td><td class="n">241<div class="meter"><i style="width:96%"></i></div></td><td class="n">178</td></tr>
+        <tr><th scope="row">Open-world RPG, 1440p</th><td>Ultra</td><td class="n">118<div class="meter"><i style="width:47%"></i></div></td><td class="n">91</td></tr>
+        <tr><th scope="row">Simulation, 1440p</th><td>High</td><td class="n">96<div class="meter"><i style="width:38%"></i></div></td><td class="n">72</td></tr>
+        <tr><th scope="row">Open-world RPG, 4K</th><td>High</td><td class="n">67<div class="meter"><i style="width:27%"></i></div></td><td class="n">54</td></tr>
+      </tbody>
+    </table>
+    <p class="caveat">Illustrative figures for a design benchmark. A real listing would state the driver version, the exact scene, the run length and the ambient temperature &mdash; a frame-rate number without a method is marketing, not a measurement.</p>
+  </section>
+
+  <section class="perf" id="build">
+    <p class="lbl">Assembly</p>
+    <h2>What happens between order and dispatch</h2>
+    <div class="grid2" style="margin-top:16px">
+      <p style="color:var(--ink-2)">Parts are checked against the order line by line, assembled, and cable-routed behind the tray. The machine then runs a four-hour combined CPU and GPU load while temperatures and clocks are logged.</p>
+      <p style="color:var(--ink-2);margin-top:0">If anything throttles outside spec, it does not ship &mdash; it goes back to the bench. The log is printed and packed with the machine so you can compare it against your own numbers on day one.</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="shell f-in">
+    <span>Meridian</span>
+    <a href="#specs">Specification</a>
+    <a href="#perf">Test method</a>
+    <a href="#build">Assembly</a>
+    <span class="sp">A fictional retailer, built as a design benchmark.</span>
+  </div>
+</footer>
+</body>
+</html>

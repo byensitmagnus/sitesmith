@@ -1,0 +1,14 @@
+{
+  "name": "sitesmith-benchmarks",
+  "private": true,
+  "type": "module",
+  "description": "Six independent sites built with the sitesmith skill, plus a no-skill baseline, measured with Playwright, axe and Lighthouse.",
+  "scripts": {
+    "serve": "node serve.mjs",
+    "measure": "node measure.mjs"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.10.0",
+    "playwright": "^1.49.0"
+  }
+}

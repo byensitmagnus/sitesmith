@@ -1,0 +1,11 @@
+node_modules/
+__pycache__/
+*.pyc
+.DS_Store
+Thumbs.db
+
+# verify.mjs --json duplicates report.json
+benchmarks/results/**/raw.json
+
+# local scratch
+.sitesmith/
