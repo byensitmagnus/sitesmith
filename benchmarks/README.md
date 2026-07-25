@@ -103,8 +103,17 @@ Seven real defects across five sites. All of them ship if the process stops at "
 ## Cross-platform note
 
 The dashboard passed on Windows and failed in CI on Linux with a **+10px horizontal overflow at
-375px**: three action buttons in a non-wrapping flex row, which fit under the Windows system font and
-did not under the Linux one. Fixed by allowing the row to wrap.
+375px**. The first guess — three action buttons in a non-wrapping flex row — was wrong, and the
+second CI run failed identically.
+
+The real cause was subtler. The navigation tabs were flex items with `white-space: nowrap`. Under a
+wider font they shrank below their content width and let the *text* spill, so no element's bounding
+box exceeded the viewport while `documentElement.scrollWidth` still did. An element-by-element
+overflow scan finds nothing; only the document-level measurement catches it.
+
+Reproduced locally by injecting `DejaVu Sans` and re-measuring — exactly +10px. Fixed with
+`min-width: 0` plus `overflow: hidden` on the tab row, and by dropping to a single visible tab below
+600px. All six sites now pass at 375 and 768 under both the system stack and a deliberately wide one.
 
 This is why CI runs the same script on a different platform. A layout that depends on the width of
 the developer's system font is not responsive — it is lucky.
