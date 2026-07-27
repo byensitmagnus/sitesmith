@@ -1,0 +1,400 @@
+@charset "utf-8";
+/* Kestrel Survey — one stylesheet for eight pages.
+   Part 1 of DESIGN-SYSTEM.md, verbatim. Every value below is a token, a documented
+   one-off, or a utility value. */
+
+:root{
+  /* spacing — one step, 8px. Ramp: 0.5 1 1.5 2 3 4 6 8 12 × step. */
+  --space-1:4px; --space-2:8px; --space-3:12px; --space-4:16px;
+  --space-5:24px; --space-6:32px; --space-7:48px; --space-8:64px; --space-9:96px;
+
+  /* type — base 17px, ratio 1.333. Roles, not sizes: reuse a role, never invent a size. */
+  --text-micro:0.8125rem; --text-small:0.9375rem; --text-body:1.0625rem;
+  --text-lead:1.25rem; --text-h3:1.4375rem; --text-h2:1.875rem;
+  --text-h1:2.5rem; --text-display:clamp(2.5rem,6.4vw,3.375rem);
+  --leading-tight:1.08; --leading-body:1.62;
+  --measure:64ch;
+
+  /* shape — square, because the identity is a ruled page and not a card. */
+  --radius-inner:0; --radius-outer:0;
+
+  /* elevation — none. Surfaces separate by rule and paper tone; see part 2. */
+  --elev-0:none; --elev-1:none;
+
+  /* container */
+  --container:1120px; --gutter:clamp(20px,5vw,40px);
+
+  /* colour — warm paper and ink, one accent. */
+  --bg:#f6f2ea; --surface:#fffdf8; --surface-2:#ece5d8; --line:#d5ccbb;
+  --ink:#17150f; --ink-2:#4a443a; --ink-3:#665c4c;
+  --accent:#9a2e15; --on-accent:#fff6ef;
+
+  /* families */
+  --font-display:"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,"Times New Roman",serif;
+  --font-body:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --font-mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;
+
+  /* motion */
+  --motion-fast:120ms; --motion-base:200ms;
+  --ease:cubic-bezier(.2,.6,.2,1);
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --bg:#131211; --surface:#1a1817; --surface-2:#232019; --line:#38322a;
+    --ink:#f3eee5; --ink-2:#c8c0b3; --ink-3:#9c9384;
+    --accent:#e8836a; --on-accent:#2a0e05;
+  }
+}
+
+/* ── base ─────────────────────────────────────────────────────────────── */
+
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:var(--font-body);
+  font-size:var(--text-body);
+  line-height:var(--leading-body);
+  overflow-wrap:break-word;
+}
+h1,h2,h3{
+  font-family:var(--font-display);
+  line-height:var(--leading-tight);
+  letter-spacing:-.012em;
+  font-weight:600;
+  margin:0;
+}
+h1{font-size:var(--text-h1)}
+h2{font-size:var(--text-h2)}
+h3{font-size:var(--text-h3)}
+p,ul,ol,dl{margin:0}
+p+p{margin-top:var(--space-4)}
+a{color:var(--accent);text-underline-offset:3px;text-decoration-thickness:1px}
+a:hover{text-decoration-thickness:2px}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:var(--radius-inner)}
+img{max-width:100%;height:auto}
+::selection{background:var(--accent);color:var(--on-accent)}
+
+.wrap{max-width:var(--container);margin:0 auto;padding:0 var(--gutter)}
+.measure{max-width:var(--measure)}
+.lede{font-size:var(--text-lead);color:var(--ink-2);max-width:var(--measure)}
+.eyebrow{
+  font-family:var(--font-mono);font-size:var(--text-micro);
+  letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);margin:0;
+}
+.note{font-size:var(--text-small);color:var(--ink-3);max-width:var(--measure)}
+.skip{
+  position:absolute;left:var(--space-3);top:0;transform:translateY(-100%);
+  background:var(--surface);color:var(--ink);border:1px solid var(--line);
+  padding:var(--space-2) var(--space-4);font-size:var(--text-small);z-index:30;
+}
+.skip:focus{transform:translateY(0)}
+
+/* ── buttons — six states, one focus treatment ────────────────────────── */
+
+.btn{
+  display:inline-block;font:inherit;font-size:var(--text-small);font-weight:650;
+  text-decoration:none;padding:var(--space-3) var(--space-5);
+  border:1px solid var(--line);border-radius:var(--radius-inner);
+  background:var(--surface);color:var(--ink);cursor:pointer;
+  transition:background var(--motion-fast) var(--ease),color var(--motion-fast) var(--ease),
+             border-color var(--motion-fast) var(--ease);
+}
+.btn--primary{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
+.btn--primary:hover{background:color-mix(in srgb,var(--accent) 86%,var(--on-accent))}
+.btn--quiet:hover{background:var(--surface-2);border-color:var(--ink-3)}
+.btn:active{transform:translateY(1px)}
+.btn[aria-disabled="true"]{
+  background:var(--surface-2);color:var(--ink-3);border-color:var(--line);
+  cursor:not-allowed;pointer-events:none;
+}
+.btn[aria-busy="true"]{pointer-events:none;color:var(--ink-3)}
+
+.act{display:flex;flex-wrap:wrap;gap:var(--space-3);align-items:center}
+
+/* ── masthead — identical on every page ───────────────────────────────── */
+
+.masthead{
+  position:sticky;top:0;z-index:20;
+  background:var(--surface);border-bottom:1px solid var(--line);
+  box-shadow:var(--elev-1);
+}
+.masthead__in{
+  display:flex;align-items:center;flex-wrap:nowrap;gap:var(--space-4);
+  max-width:var(--container);margin:0 auto;padding:var(--space-3) var(--gutter);
+  min-height:var(--space-8);
+}
+.masthead__mark{
+  display:block;flex:none;text-decoration:none;color:var(--ink);
+  border-bottom:3px solid var(--accent);padding-bottom:var(--space-1);
+}
+.masthead__name{
+  display:block;font-family:var(--font-display);font-size:var(--text-h3);
+  letter-spacing:-.015em;line-height:var(--leading-tight);white-space:nowrap;
+}
+.masthead__nav{display:flex;gap:var(--space-1);min-width:0;margin:0 0 0 auto}
+.masthead__nav a{
+  display:block;padding:var(--space-3) var(--space-3);
+  font-size:var(--text-small);color:var(--ink-2);text-decoration:none;white-space:nowrap;
+  transition:color var(--motion-fast) var(--ease);
+}
+.masthead__nav a:hover{color:var(--ink)}
+.masthead__nav a[aria-current="page"]{
+  color:var(--ink);font-weight:650;box-shadow:inset 0 -3px 0 var(--accent);
+}
+.masthead__cta{white-space:nowrap}
+.masthead__toggle{position:absolute;width:1px;height:1px;opacity:0}
+.masthead__burger{
+  display:none;align-items:center;margin:0 0 0 auto;
+  padding:var(--space-3) var(--space-4);border:1px solid var(--line);
+  font-size:var(--text-small);color:var(--ink);background:var(--surface);cursor:pointer;
+}
+.masthead__toggle:focus-visible+.masthead__burger{outline:2px solid var(--accent);outline-offset:2px}
+@media (min-width:1121px){.masthead__toggle{display:none}}
+
+@media (max-width:1120px){
+  /* Two rows below this width, so it stops being sticky: a 128px header that never
+     leaves is a sixth of a phone screen, and the action is repeated in the band at
+     the foot of every page anyway. */
+  .masthead{position:static}
+  .masthead__in{flex-wrap:wrap}
+  .masthead__burger{display:inline-flex}
+  .masthead__cta{order:2}
+  .masthead__burger{order:1}
+  .masthead__nav{
+    display:none;order:3;width:100%;flex-direction:column;gap:0;margin:0;
+    border-top:1px solid var(--line);padding-top:var(--space-2);
+  }
+  .masthead__nav a{padding:var(--space-3) 0}
+  .masthead__nav a[aria-current="page"]{
+    box-shadow:inset 3px 0 0 var(--accent);padding-left:var(--space-3);
+  }
+  .masthead__toggle:checked~.masthead__nav{display:flex}
+}
+
+/* ── hero (home) and page head (everywhere else) ──────────────────────── */
+
+.hero{padding:var(--space-9) 0 var(--space-8)}
+.hero h1{font-size:var(--text-display);max-width:23ch;margin:var(--space-4) 0 0}
+.hero .lede{margin:var(--space-5) 0 0}
+.hero .act{margin:var(--space-6) 0 0}
+.hero .note{margin:var(--space-4) 0 0}
+
+@media (max-width:720px){
+  .hero{padding:var(--space-7) 0 var(--space-7)}
+  .section{padding:var(--space-7) 0}
+}
+
+.head{padding:var(--space-8) 0 var(--space-7);border-bottom:1px solid var(--line)}
+.head h1{max-width:20ch;margin:var(--space-4) 0 0}
+.head .lede{margin:var(--space-5) 0 0}
+
+/* ── facts strip — the only numbers on the site, all from the practice ── */
+
+.facts{
+  border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  background:var(--surface-2);
+}
+.facts__in{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,13rem),1fr));
+  gap:var(--space-5) var(--space-6);
+  max-width:var(--container);margin:0 auto;padding:var(--space-6) var(--gutter);
+}
+.facts__in>div{min-width:0}
+.facts dt{
+  font-family:var(--font-mono);font-size:var(--text-micro);
+  letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);
+}
+.facts dd{
+  margin:var(--space-2) 0 0;font-family:var(--font-display);font-size:var(--text-h3);
+  line-height:var(--leading-tight);
+}
+
+/* ── section — mono number in a rail, prose beside it ─────────────────── */
+
+.section{padding:var(--space-8) 0;border-bottom:1px solid var(--line)}
+.section:last-of-type{border-bottom:0}
+.section__in{max-width:var(--container);margin:0 auto;padding:0 var(--gutter)}
+.section__grid{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--space-5)}
+.section__rail{min-width:0}
+.section__num{
+  font-family:var(--font-mono);font-size:var(--text-micro);color:var(--accent);
+  letter-spacing:.08em;margin:0 0 var(--space-2);
+}
+.section__body{min-width:0;max-width:var(--measure)}
+.section__body--wide{max-width:none}
+.section__body>*+*{margin-top:var(--space-4)}
+.section__body>h2+*{margin-top:var(--space-5)}
+.section__body>*+.ruled,.section__body>*+.plates,.section__body>*+.quote,
+.section__body>*+.points{margin-top:var(--space-6)}
+@media (min-width:1000px){
+  .section__grid{grid-template-columns:minmax(0,12rem) minmax(0,1fr);gap:var(--space-7)}
+  .section__rail{position:sticky;top:var(--space-9);align-self:start}
+}
+
+/* ── ruled list — the shape most content takes here ───────────────────── */
+
+.ruled{list-style:none;margin:0;padding:0}
+.ruled>li{padding:var(--space-6) 0;border-top:1px solid var(--line)}
+.ruled>li:first-child{border-top:0;padding-top:var(--space-2)}
+.ruled__index{
+  font-family:var(--font-mono);font-size:var(--text-micro);color:var(--ink-3);
+  letter-spacing:.08em;margin:0 0 var(--space-2);
+}
+.ruled h3{margin:0 0 var(--space-3)}
+.ruled h3 a{color:var(--ink);text-decoration:none}
+.ruled h3 a:hover{color:var(--accent);text-decoration:underline}
+.ruled p{color:var(--ink-2);max-width:var(--measure)}
+.ruled__more{
+  display:inline-block;margin-top:var(--space-4);font-size:var(--text-small);
+  font-weight:650;
+}
+
+/* a plain list of statements, tighter than .ruled and without headings */
+.points{list-style:none;margin:0;padding:0;max-width:var(--measure)}
+.points>li{
+  padding:var(--space-3) 0 var(--space-3) var(--space-5);
+  border-top:1px solid var(--line);position:relative;color:var(--ink-2);
+}
+.points>li::before{
+  content:"";position:absolute;left:0;top:var(--space-5);
+  width:var(--space-3);height:1px;background:var(--ink-3);
+}
+
+/* ── plates — every image on this site is one ─────────────────────────── */
+
+.plates{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,18rem),1fr));
+  gap:var(--space-6);margin:0;padding:0;
+}
+.plate{margin:0}
+/* A single plate in a full-width body would otherwise run to 940px and 3:2 makes it
+   taller than the section it illustrates. */
+.section__body--wide>.plate{max-width:36rem}
+.plate__frame{
+  aspect-ratio:3/2;border:1px solid var(--line);border-radius:var(--radius-outer);
+  background:var(--surface-2);box-shadow:var(--elev-0);
+  display:grid;place-items:center;padding:var(--space-5);text-align:center;
+}
+.plate__frame p{
+  margin:0;font-size:var(--text-small);color:var(--ink-3);max-width:32ch;
+}
+.plate figcaption{
+  margin:var(--space-3) 0 0;font-family:var(--font-mono);font-size:var(--text-micro);
+  color:var(--ink-3);letter-spacing:.04em;
+}
+.plate figcaption b{color:var(--ink-2);font-weight:650}
+
+/* ── pull quote — used twice on the site, never decoratively ──────────── */
+
+.quote{
+  margin:0;padding:0 0 0 var(--space-5);border-left:3px solid var(--accent);
+  max-width:var(--measure);
+}
+.quote p{
+  font-family:var(--font-display);font-size:var(--text-h3);line-height:var(--leading-tight);
+  margin:0;
+}
+.quote p+p{margin-top:var(--space-4)}
+.quote figcaption{
+  margin:var(--space-4) 0 0;font-family:var(--font-mono);font-size:var(--text-micro);
+  letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);
+}
+
+/* ── call to action band ──────────────────────────────────────────────── */
+
+/* Reversed: the one dark band on the page, and the last thing before the footer.
+   It anchors a light editorial page and inverts correctly in the dark scheme. */
+.cta{background:var(--ink);color:var(--bg);border-top:1px solid var(--line)}
+.cta .lede{color:var(--surface-2)}
+.cta a{color:var(--bg)}
+.cta .btn--primary{background:var(--bg);color:var(--ink);border-color:var(--bg)}
+.cta .btn--primary:hover{background:var(--surface-2);border-color:var(--surface-2)}
+.cta :focus-visible{outline:2px solid var(--bg);outline-offset:2px}
+.cta__in{
+  max-width:var(--container);margin:0 auto;padding:var(--space-8) var(--gutter);
+  display:grid;gap:var(--space-6);
+}
+.cta h2{max-width:18ch}
+.cta .lede{margin:var(--space-4) 0 0}
+.cta .act{margin:var(--space-5) 0 0}
+@media (min-width:1000px){
+  .cta__in{grid-template-columns:minmax(0,1fr) minmax(0,20rem);align-items:start}
+}
+.cta__lines{
+  margin:0;padding:0;list-style:none;font-family:var(--font-mono);
+  font-size:var(--text-small);
+}
+.cta__lines li{padding:var(--space-3) 0;border-top:1px solid var(--ink-3)}
+
+/* ── contact page ─────────────────────────────────────────────────────── */
+
+.contact{
+  display:grid;gap:var(--space-6);
+  border:1px solid var(--line);border-radius:var(--radius-outer);
+  background:var(--surface);padding:var(--space-6);
+}
+@media (min-width:1000px){.contact{grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-8)}}
+.contact__label{
+  font-family:var(--font-mono);font-size:var(--text-micro);letter-spacing:.08em;
+  text-transform:uppercase;color:var(--ink-3);margin:0 0 var(--space-2);
+}
+.contact>div>*+.contact__label{margin-top:var(--space-7)}
+.contact__tel+.note,.contact__mail+.note,.contact p+.note{margin-top:var(--space-3)}
+.contact h2{margin-bottom:var(--space-4)}
+.contact__tel{
+  font-family:var(--font-display);font-size:var(--text-h1);line-height:var(--leading-tight);
+  color:var(--ink);text-decoration:none;display:inline-block;
+  border-bottom:3px solid var(--accent);
+}
+.contact__tel:hover{color:var(--accent)}
+.contact__mail{
+  font-family:var(--font-display);font-size:var(--text-h3);color:var(--ink);
+  display:inline-block;
+}
+/* A phone number must never wrap or spill. Below 720px it steps down a role rather
+   than shrinking to a size the scale does not carry. */
+@media (max-width:720px){
+  .contact__tel{font-size:var(--text-h2)}
+  .contact__mail{font-size:var(--text-lead)}
+}
+
+/* ── footer — identical on every page ─────────────────────────────────── */
+
+.foot{border-top:1px solid var(--line);background:var(--surface-2)}
+.foot__in{
+  display:grid;grid-template-columns:minmax(0,1fr);gap:var(--space-6);
+  max-width:var(--container);margin:0 auto;padding:var(--space-8) var(--gutter) var(--space-6);
+}
+@media (min-width:720px){.foot__in{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (min-width:1000px){.foot__in{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.foot h2{font-size:var(--text-h3)}
+.foot__label{
+  font-family:var(--font-mono);font-size:var(--text-micro);letter-spacing:.08em;
+  text-transform:uppercase;color:var(--ink-3);margin:0 0 var(--space-3);
+}
+.foot p{color:var(--ink-2);font-size:var(--text-small)}
+.foot ul{list-style:none;margin:0;padding:0}
+.foot li+li{margin-top:var(--space-2)}
+.foot li a{font-size:var(--text-small);color:var(--ink-2);text-decoration:none}
+.foot li a:hover{color:var(--accent);text-decoration:underline}
+.foot__legal{
+  max-width:var(--container);margin:0 auto;
+  padding:var(--space-5) var(--gutter) var(--space-7);
+  border-top:1px solid var(--line);
+}
+.foot__legal p{font-size:var(--text-micro);color:var(--ink-3);max-width:var(--measure)}
+.foot__legal p+p{margin-top:var(--space-2)}
+
+/* ── motion — one entrance, on the home page, once ────────────────────── */
+
+@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.rise{animation:rise var(--motion-base) var(--ease) backwards}
+.rise--2{animation-delay:60ms}
+.rise--3{animation-delay:120ms}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:1ms!important;animation-iteration-count:1!important;
+    transition-duration:1ms!important;scroll-behavior:auto!important}
+}

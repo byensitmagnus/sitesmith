@@ -115,18 +115,29 @@ async function htmlFiles(dir, out = []) {
 
 /** A site is not its pages. This is the half the v1 checks never looked at. */
 function crossPage(pages) {
+  // A correct site marks the current page in its own header, so comparing raw
+  // header markup reports drift on every well-built multi-page site and consistency
+  // on none. Strip the current-page marker and the class that goes with it.
+  const stripCurrent = (s) =>
+    s
+      .replace(/\saria-current="[^"]*"/gi, '')
+      .replace(/\bclass="([^"]*)"/gi, (m, cls) => {
+        const kept = cls.split(/\s+/).filter((c) => !/current|active|selected|is-here/i.test(c));
+        return kept.length ? `class="${kept.join(' ')}"` : '';
+      });
   const grab = (html, tag) => {
     const m = html.match(new RegExp(`<${tag}[^>]*>([\\s\\S]*?)</${tag}>`, 'i'));
-    return m ? hash(norm(m[1])) : null;
+    return m ? hash(norm(stripCurrent(m[1]))) : null;
   };
   const headers = new Set(), footers = new Set(), tokenSets = [];
   const classCounts = new Map();
-  for (const { html } of pages) {
+  for (const { html, sheets } of pages) {
     const h = grab(html, 'header');
     const f = grab(html, 'footer');
     if (h) headers.add(h);
     if (f) footers.add(f);
-    tokenSets.push(new Set([...html.matchAll(/(--[\w-]+)\s*:/g)].map((m) => m[1])));
+    const styled = html + '\n' + (sheets ?? '');
+    tokenSets.push(new Set([...styled.matchAll(/(--[\w-]+)\s*:/g)].map((m) => m[1])));
     for (const m of html.matchAll(/class="([^"]+)"/g)) {
       for (const c of m[1].split(/\s+/)) classCounts.set(c, (classCounts.get(c) ?? 0) + 1);
     }
@@ -154,8 +165,26 @@ async function measure([dir]) {
   const files = await htmlFiles(site).catch(() => die(`no site/ in ${dir}`));
   if (!files.length) die(`${dir}/site contains no HTML. Nothing to measure.`);
 
+  // Tokens usually live in a linked stylesheet, not inline. Reading only the HTML
+  // reported every one of these sites as declaring zero tokens, which was the
+  // measurement being wrong rather than six agents forgetting design systems.
+  const cssFiles = [];
+  const walkCss = async (d) => {
+    for (const e of await readdir(d, { withFileTypes: true })) {
+      if (e.name.startsWith('.') || e.name === 'node_modules') continue;
+      const full = join(d, e.name);
+      if (e.isDirectory()) await walkCss(full);
+      else if (e.name.endsWith('.css')) cssFiles.push(full);
+    }
+  };
+  await walkCss(site).catch(() => {});
+  const sheets = (await Promise.all(cssFiles.map((f) => readFile(f, 'utf8')))).join('\n');
+
   const pages = [];
-  for (const f of files) pages.push({ file: relative(site, f).replace(/\\/g, '/'), html: await readFile(f, 'utf8') });
+  for (const f of files) {
+    const html = await readFile(f, 'utf8');
+    pages.push({ file: relative(site, f).replace(/\\/g, '/'), html, sheets });
+  }
 
   const artifacts = {
     brief: files.length ? await readFile(join(runDir, 'site/BRIEF.md'), 'utf8').then(() => true, () => false) : false,

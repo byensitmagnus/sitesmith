@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" role="img"
+     aria-label="Line elevation of a Victorian stone mill with arched windows and a tall chimney">
+  <style>
+    .ln { fill: none; stroke: #15171a; stroke-width: 1.3; stroke-linecap: square; }
+    .hair { fill: none; stroke: #15171a; stroke-width: .7; opacity: .5; }
+    .fill { fill: #15171a; opacity: .07; }
+    .gnd { fill: none; stroke: #8c3a1f; stroke-width: 1.6; }
+    @media (prefers-color-scheme: dark) {
+      .ln, .hair { stroke: #e9e6de; }
+      .fill { fill: #e9e6de; }
+      .gnd { stroke: #e08c66; }
+    }
+  </style>
+
+  <!-- chimney -->
+  <path class="ln" d="M318 270V44l8-6h18l8 6v226"/>
+  <path class="ln" d="M314 44h40v10h-40z"/>
+  <path class="hair" d="M320 90h20M320 130h20M320 170h20M320 210h20"/>
+
+  <!-- roof -->
+  <path class="ln" d="M32 92 170 60l138 32"/>
+  <path class="ln" d="M40 92h260v178H40z"/>
+  <path class="fill" d="M40 92h260v178H40z"/>
+
+  <!-- string courses -->
+  <path class="hair" d="M40 148h260M40 196h260M40 244h260"/>
+
+  <!-- window rows: arched heads -->
+  <g class="ln">
+    <path d="M60 145V111a11 11 0 0 1 22 0v34z"/>
+    <path d="M100 145V111a11 11 0 0 1 22 0v34z"/>
+    <path d="M140 145V111a11 11 0 0 1 22 0v34z"/>
+    <path d="M180 145V111a11 11 0 0 1 22 0v34z"/>
+    <path d="M220 145V111a11 11 0 0 1 22 0v34z"/>
+    <path d="M260 145V111a11 11 0 0 1 22 0v34z"/>
+
+    <path d="M60 193V159a11 11 0 0 1 22 0v34z"/>
+    <path d="M100 193V159a11 11 0 0 1 22 0v34z"/>
+    <path d="M140 193V159a11 11 0 0 1 22 0v34z"/>
+    <path d="M180 193V159a11 11 0 0 1 22 0v34z"/>
+    <path d="M220 193V159a11 11 0 0 1 22 0v34z"/>
+    <path d="M260 193V159a11 11 0 0 1 22 0v34z"/>
+
+    <path d="M60 241V207a11 11 0 0 1 22 0v34z"/>
+    <path d="M100 241V207a11 11 0 0 1 22 0v34z"/>
+    <path d="M140 241V207a11 11 0 0 1 22 0v34z"/>
+    <path d="M220 241V207a11 11 0 0 1 22 0v34z"/>
+    <path d="M260 241V207a11 11 0 0 1 22 0v34z"/>
+  </g>
+
+  <!-- doorway -->
+  <path class="ln" d="M179 270v-33a12 12 0 0 1 24 0v33"/>
+
+  <!-- ground floor openings -->
+  <g class="ln">
+    <path d="M60 250h22v18H60zM100 250h22v18h-22zM140 250h22v18h-22zM220 250h22v18h-22zM260 250h22v18h-22z"/>
+  </g>
+
+  <!-- ground line -->
+  <path class="gnd" d="M14 270h372"/>
+</svg>

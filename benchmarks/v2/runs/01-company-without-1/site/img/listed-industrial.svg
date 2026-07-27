@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" role="img"
+     aria-label="Line elevation of a listed industrial shed with a north-light sawtooth roof and brick pilasters">
+  <style>
+    .ln { fill: none; stroke: #15171a; stroke-width: 1.3; stroke-linecap: square; }
+    .hair { fill: none; stroke: #15171a; stroke-width: .7; opacity: .5; }
+    .fill { fill: #15171a; opacity: .07; }
+    .gnd { fill: none; stroke: #8c3a1f; stroke-width: 1.6; }
+    @media (prefers-color-scheme: dark) {
+      .ln, .hair { stroke: #e9e6de; }
+      .fill { fill: #e9e6de; }
+      .gnd { stroke: #e08c66; }
+    }
+  </style>
+
+  <!-- sawtooth roof -->
+  <path class="ln" d="M40 176V116l80 60V116l80 60V116l80 60V116l80 60"/>
+  <path class="fill" d="M40 116h6v60h-6zM120 116h6v60h-6zM200 116h6v60h-6zM280 116h6v60h-6z"/>
+
+  <!-- north-light glazing bars -->
+  <g class="hair">
+    <path d="M40 130h6M40 144h6M40 158h6M120 130h6M120 144h6M120 158h6M200 130h6M200 144h6M200 158h6M280 130h6M280 144h6M280 158h6"/>
+  </g>
+
+  <!-- eaves -->
+  <path class="ln" d="M34 176h332"/>
+
+  <!-- brick body -->
+  <path class="ln" d="M40 176h320v94H40z"/>
+
+  <!-- pilasters -->
+  <g class="ln">
+    <path d="M104 176v94M168 176v94M232 176v94M296 176v94"/>
+  </g>
+
+  <!-- segmental-headed openings -->
+  <g class="ln">
+    <path d="M56 236v-24a16 16 0 0 1 32 0v24z"/>
+    <path d="M120 236v-24a16 16 0 0 1 32 0v24z"/>
+    <path d="M248 236v-24a16 16 0 0 1 32 0v24z"/>
+    <path d="M312 236v-24a16 16 0 0 1 32 0v24z"/>
+  </g>
+  <g class="hair">
+    <path d="M56 224h32M120 224h32M248 224h32M312 224h32M72 196v40M136 196v40M264 196v40M328 196v40"/>
+  </g>
+
+  <!-- cart entrance -->
+  <path class="ln" d="M180 270v-58a20 20 0 0 1 40 0v58"/>
+  <path class="hair" d="M180 212h40M200 192v78"/>
+
+  <!-- plinth -->
+  <path class="hair" d="M40 256h320"/>
+
+  <!-- ground line -->
+  <path class="gnd" d="M14 270h372"/>
+</svg>

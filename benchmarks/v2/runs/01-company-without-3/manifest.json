@@ -1,0 +1,13 @@
+{
+  "brief": "01-company",
+  "arm": "without",
+  "run": 3,
+  "model": "claude-opus-5",
+  "settings": "default",
+  "skillLoaded": false,
+  "skillCommit": "53b4ceb7977f412c2a63d7fda3f352cde1b470a6",
+  "skillCommitSubject": "bench init: do not count runs/ against the clean-tree guard",
+  "promptSha": null,
+  "startedAt": null,
+  "note": "startedAt and promptSha are filled by whoever executes the run."
+}

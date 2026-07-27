@@ -1,0 +1,48 @@
+{
+  "measuredAt": null,
+  "origin": "http://localhost:4323",
+  "artifacts": {
+    "brief": true,
+    "designSystem": true
+  },
+  "crossPage": {
+    "pages": 7,
+    "distinctHeaders": 1,
+    "distinctFooters": 2,
+    "tokensDeclaredAnywhere": 58,
+    "tokensOnEveryPage": 58,
+    "classesReused": 57,
+    "classesTotal": 71
+  },
+  "pages": [
+    {
+      "file": "about.html",
+      "verify": "run verify.mjs against http://localhost:4323/about.html"
+    },
+    {
+      "file": "buildings.html",
+      "verify": "run verify.mjs against http://localhost:4323/buildings.html"
+    },
+    {
+      "file": "contact.html",
+      "verify": "run verify.mjs against http://localhost:4323/contact.html"
+    },
+    {
+      "file": "index.html",
+      "verify": "run verify.mjs against http://localhost:4323/index.html"
+    },
+    {
+      "file": "services/building-surveys.html",
+      "verify": "run verify.mjs against http://localhost:4323/services/building-surveys.html"
+    },
+    {
+      "file": "services/defect-diagnosis.html",
+      "verify": "run verify.mjs against http://localhost:4323/services/defect-diagnosis.html"
+    },
+    {
+      "file": "services/dilapidations.html",
+      "verify": "run verify.mjs against http://localhost:4323/services/dilapidations.html"
+    }
+  ],
+  "note": "Per-page verify and contract results are produced by scripts/verify.mjs and scripts/token-drift.mjs against a served copy of site/. This file records the cross-page half, which no other script measures."
+}

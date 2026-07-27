@@ -13,3 +13,9 @@ benchmarks/results/**/raw.json
 # verify.mjs output for the gallery page itself — reproduced, not committed
 gallery/verify/
 gallery/verify-live/
+
+# Benchmark screenshots: 88MB of full-page PNGs at DSF 2, reproducible from the
+# committed sites with one command. The sites, prompts, manifests and reports are
+# the evidence and are committed; the pictures of them are not.
+benchmarks/v2/runs/**/shots/
+.sitesmith/
