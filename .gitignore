@@ -12,3 +12,4 @@ benchmarks/results/**/raw.json
 
 # verify.mjs output for the gallery page itself — reproduced, not committed
 gallery/verify/
+gallery/verify-live/

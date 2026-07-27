@@ -89,7 +89,9 @@ jobs:
           [ $? -eq 0 ] || { echo "::error::switch before the URL should still parse the URL (expected exit 0)"; exit 1; }
           node $V http://localhost:4321/no-such-page/ --no-axe --out /tmp/c1 >/dev/null 2>&1
           [ $? -eq 1 ] || { echo "::error::an HTTP 404 must be a blocking failure (expected exit 1)"; exit 1; }
-          node $V http://localhost:4322/ --out /tmp/c2 >/dev/null 2>&1
+          # 4399 deliberately has no listener. Do not reuse 4321 or 4322 here —
+          # both are served above, and a reachable port turns this into a no-op.
+          node $V http://localhost:4399/ --out /tmp/c2 >/dev/null 2>&1
           [ $? -eq 2 ] || { echo "::error::an unreachable server is a setup error, not a page defect (expected exit 2)"; exit 1; }
           node $V http://localhost:4321/01-saas-landing/ --widths nonsense --out /tmp/c3 >/dev/null 2>&1
           [ $? -eq 2 ] || { echo "::error::invalid --widths must exit 2"; exit 1; }
