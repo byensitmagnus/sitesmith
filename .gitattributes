@@ -1,0 +1,27 @@
+# Line endings are not cosmetic here.
+#
+# The repository is developed on Windows, where git's autocrlf turns LF into CRLF on
+# checkout. Two of these files are executed by bash inside a Linux container: the
+# entrypoint, which is copied into the image, and the probe, which is bind-mounted at
+# run time. With CRLF endings the kernel reads the shebang as `/bin/bash\r` and the
+# container fails to start, or bash reads every line with a trailing carriage return
+# and the probe fails for a reason that has nothing to do with isolation.
+#
+# A fresh clone on Windows must therefore produce LF for anything a container runs.
+
+* text=auto
+
+*.sh          text eol=lf
+Dockerfile    text eol=lf
+*.mjs         text eol=lf
+*.js          text eol=lf
+*.json        text eol=lf
+*.md          text eol=lf
+*.html        text eol=lf
+*.css         text eol=lf
+*.yml         text eol=lf
+
+*.png binary
+*.jpg binary
+*.webp binary
+*.woff2 binary
