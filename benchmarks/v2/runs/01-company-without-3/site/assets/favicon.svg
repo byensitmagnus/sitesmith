@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="Kestrel Survey">
-  <rect width="32" height="32" fill="#1a1917"/>
-  <g fill="none" stroke="#9c3b1b" stroke-width="2.2" stroke-linecap="square">
-    <path d="M6 11h20"/>
-    <path d="M16 11 7.5 26"/>
-    <path d="M16 11 24.5 26"/>
-    <path d="M16 11v15"/>
-  </g>
-</svg>

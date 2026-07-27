@@ -118,6 +118,7 @@ const report = {
   url,
   fontStress: has('font-stress'),
   widths: {},
+  structure: [],
   consoleErrors: [],
   failedRequests: [],
   brokenLinks: [],
@@ -164,6 +165,25 @@ try {
     const overflow = await page.evaluate(
       () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
     );
+
+    // Document structure. A page can be missing its root element entirely and still
+    // render correctly, because the parser invents one — seven pages shipped that
+    // way in this repository's own benchmark and every contrast check on them
+    // passed. The DOM cannot show it after the fact, so read the source.
+    if (width === Math.min(...widths)) {
+      const src = await (await context.request.get(url)).text();
+      const structure = [];
+      if (!/^\s*<!doctype\s+html/i.test(src)) structure.push('no <!doctype html>');
+      if (!/<html\b/i.test(src)) structure.push('no <html> element');
+      else if (!/<html[^>]*\slang\s*=/i.test(src)) structure.push('<html> has no lang attribute');
+      if (!/<head\b/i.test(src)) structure.push('no <head> element');
+      if (!/<body\b/i.test(src)) structure.push('no <body> element');
+      const h1 = (src.match(/<h1[\s>]/gi) ?? []).length;
+      if (h1 === 0) structure.push('no <h1>');
+      else if (h1 > 1) structure.push(`${h1} <h1> elements`);
+      if (!/<main\b/i.test(src)) structure.push('no <main> landmark');
+      if (structure.length) report.structure = structure;
+    }
 
     report.widths[width] = {
       status: response?.status() ?? null,
@@ -245,7 +265,8 @@ const blocking =
   report.brokenLinks.length +
   serious.length +
   overflowing.length +
-  badStatus.length;
+  badStatus.length +
+  report.structure.length;
 
 if (asJson) {
   console.log(JSON.stringify(report, null, 2));
@@ -257,6 +278,7 @@ if (asJson) {
     console.log(`  ${String(w).padStart(4)}px  ${status}  ${ok}  → ${d.screenshot}`);
   }
   console.log('');
+  console.log(`  structure      : ${report.structure.length === 0 ? 'ok' : report.structure.join(', ')}`);
   console.log(`  console errors : ${report.consoleErrors.length}`);
   console.log(`  failed requests: ${report.failedRequests.length}`);
   console.log(`  broken links   : ${report.brokenLinks.length}`);
