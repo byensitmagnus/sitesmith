@@ -1,0 +1,46 @@
+{
+  "note": "Violations that already existed when the checker was written. The build fails if any count rises or a new rule is broken. Lower these; never raise them.",
+  "recorded": "2026-07-27",
+  "files": {
+    "benchmarks/01-saas-landing/index.html": {
+      "em-dash": 7
+    },
+    "benchmarks/02-product-page/index.html": {
+      "em-dash": 5,
+      "placeholder-shipped": 1
+    },
+    "benchmarks/03-dashboard/index.html": {
+      "em-dash": 14
+    },
+    "benchmarks/04-local-service/index.html": {
+      "em-dash": 4
+    },
+    "benchmarks/05-editorial/index.html": {
+      "em-dash": 10
+    },
+    "benchmarks/06-redesign/after/index.html": {
+      "em-dash": 11
+    },
+    "benchmarks/06-redesign/before/index.html": {
+      "ai-default-type": 1,
+      "fabricated-proof": 4,
+      "theme-lock": 1
+    },
+    "benchmarks/07-multistep-form/index.html": {
+      "em-dash": 3,
+      "authored-svg": 2
+    },
+    "benchmarks/08-documentation/index.html": {
+      "em-dash": 9,
+      "authored-svg": 2
+    },
+    "benchmarks/09-data-entry/index.html": {
+      "em-dash": 18,
+      "authored-svg": 6
+    },
+    "index.html": {
+      "em-dash": 5,
+      "authored-svg": 2
+    }
+  }
+}

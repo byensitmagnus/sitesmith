@@ -15,6 +15,9 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
 
       # One script, runnable locally with the same command. It covers the SKILL.md
       # line cap, the reference-map line counts, every relative markdown link, the
@@ -22,6 +25,14 @@ jobs:
       # detectability, the plugin manifests, orphaned datasets, the counts quoted in
       # the docs, and a smoke test of every search domain, stack and design system.
       - run: python tools/check-repo.py
+
+      # Does our own output obey our own absolute rules? Until now nothing asked.
+      # A ratchet against tools/conformance-baseline.json: the recorded debt is
+      # allowed, any increase fails. See docs/v2/CONFLICTS.md for why the debt exists.
+      - name: conformance ratchet
+        run: |
+          node tools/conformance.mjs \
+            "benchmarks/*/index.html" "benchmarks/*/*/index.html" "index.html"
 
   benchmarks:
     name: benchmarks render and pass

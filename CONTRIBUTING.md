@@ -49,6 +49,17 @@ Structure, licences, docs and the search engine — no dependencies beyond Pytho
 python tools/check-repo.py
 ```
 
+Whether the output obeys the skill's own absolute rules. This is a ratchet: 105 existing
+violations are recorded in `tools/conformance-baseline.json` and allowed; any increase fails.
+
+```bash
+node tools/conformance.mjs "benchmarks/*/index.html" "benchmarks/*/*/index.html" "index.html"
+```
+
+If you fix violations, re-record with `--write-baseline` so the count cannot climb back.
+Why the debt exists, and which of those rules survive v2, is argued in
+[docs/v2/CONFLICTS.md](docs/v2/CONFLICTS.md).
+
 The benchmarks:
 
 ```bash
