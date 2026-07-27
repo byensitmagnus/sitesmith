@@ -15,10 +15,11 @@
  */
 
 import { readFile } from 'node:fs/promises';
-import { glob } from 'node:fs/promises';
+import { fileURLToPath } from 'node:url';
 import { relative, resolve } from 'node:path';
+import { expand } from './lib/files.mjs';
 
-const ROOT = resolve(new URL('..', import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, '$1'));
+const ROOT = fileURLToPath(new URL('..', import.meta.url));
 
 /** Strip anything a reader never sees, so comments and CSS cannot trip a copy rule. */
 function visibleText(html) {
@@ -130,14 +131,7 @@ try {
   }
 }
 
-const files = [];
-for (const p of patterns) {
-  if (p.includes('*')) {
-    for await (const f of glob(p, { cwd: ROOT })) files.push(f);
-  } else {
-    files.push(p);
-  }
-}
+const files = await expand(patterns, ROOT);
 if (!files.length) {
   console.error(`no files matched: ${patterns.join(' ')}`);
   process.exit(2);

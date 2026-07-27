@@ -154,6 +154,12 @@ they are simply bans with no stated legitimate use, which contradicts `SKILL.md:
 "Anti-slop is judgement, not a ban list… Each one is fine when the brand, the content or
 the function asks for it."
 
+## The other half of the audit
+
+This file measures the rules. [TOKEN-DISCIPLINE.md](TOKEN-DISCIPLINE.md) measures the
+output, and finds that not one of the eleven pages has a spacing scale or a type scale —
+including the control, which scores no worse than the nine builds on either.
+
 ## What this means for the rewrite
 
 1. **The ratio is the target.** 4:1 against is why output is careful rather than good. The
