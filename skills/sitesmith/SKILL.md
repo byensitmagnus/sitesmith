@@ -40,57 +40,70 @@ marketing and its order admin is product UI. One design system across all of the
 
 ## 2. The build process
 
-**1. Write `BRIEF.md`.** Business goal, primary action, audience, brand direction, sitemap,
-content and asset plan, page inventory, and what done means for this project. Items 1 to 6 of
-[v2/00-done.md](v2/00-done.md). If two readings of the request lead to materially different
-sites, ask **one** question. Otherwise infer, write it down, and proceed.
+The order is the design. **Evidence, then direction, then contract** — tokens fixed before a
+direction is chosen is how nine different subjects converge on one look, and that is measured,
+not asserted: [docs/v2/LEGACY-VISUAL-AUDIT.md](../../docs/v2/LEGACY-VISUAL-AUDIT.md).
+
+**1. Write `BRIEF.md`.** Business goal, primary action, audience, sitemap, page inventory, and
+what done means here. Items 1 to 6 of [v2/00-done.md](v2/00-done.md). If two readings lead to
+materially different sites, ask **one** question. Otherwise infer, write it down, proceed.
 
 **2. Inspect what exists.** Framework, styling system, tokens, component library,
 `CLAUDE.md` / `AGENTS.md` / `README`, existing assets. An established stack is a decision
 already made. Adopt it.
 
-**3. Commit to a direction.** One line, out loud, before any colour: page kind, audience,
-visual language, family. Then name the **visual signature** — the one thing a visitor would
-recognise on a second page with the logo removed. "Clean and modern" is not a signature.
+**3. Write `EVIDENCE.md`.** [v2/05-evidence.md](v2/05-evidence.md). The subject's artefacts,
+vocabulary, materials, colours that are already true, constraints, references and
+anti-references, and what assets actually exist. Research, not design — nothing here picks a
+colour. A direction that could have been reached without this file did not need it.
 
-**4. Structure before style.** Section order per page, from the argument the mode file gives
-you. What the eye hits first, second, third. A beautiful hero over no argument does not
-convert.
+**4. Start `ASSET-MANIFEST.md`.** [v2/25-assets.md](v2/25-assets.md). Every non-text thing the
+site needs, including the logo and the favicon, each `ready`, `needed` or `substitute`.
 
-**5. Write `DESIGN-SYSTEM.md`.** Derived from this brief, not copied from an example. Spacing
-step and ramp, type scale, grid, colour, radius, elevation, motion, plus the header/footer
-contract, the component inventory and the states. Format and worked example:
-[v2/30-contract.md](v2/30-contract.md). Concrete starting points from data:
+**5. Run the direction lab.** [v2/20-direction-lab.md](v2/20-direction-lab.md). Three comps
+that are *structurally* different, one chosen with reasons, two recorded with the reason they
+lost. Starting points, three at a time and deliberately contrasting:
 
 ```bash
-python scripts/search.py "<product type> <industry> <keywords>" --design-system -p "<Project>"
+python scripts/search.py "<subject> <trade> <what it is made of>" --candidates -p "<Project>"
+node scripts/direction-check.mjs directions/
 ```
 
-**6. Build from blocks.** [blocks/](blocks/README.md) carries the compositions with their
-variants and compatibility metadata. Compose them; do not re-solve a header that already
-exists.
+**6. Write `DESIGN-SYSTEM.md` from the winning comp.** [v2/30-contract.md](v2/30-contract.md).
+The ground, the type, the rhythm and the edge come from the comp that won; the contract writes
+them down so the second page knows them. Not the other way round.
 
-**7. Implement fully.** Real content, real structure, semantic HTML. Every state from
-[v2/10-core.md](v2/10-core.md) section F — six per control, three per page.
+**7. Write `INTERACTIONS.md`.** [v2/40-interaction.md](v2/40-interaction.md). Primary actions
+and what observably happens, the states per surface and how each is reached, keyboard and
+focus. A state with no way in is deleted or wired.
 
-**8. Three widths.** 375, 768, 1440. Actually check.
+**8. Structure before style.** Section order per page, from the argument the mode file gives
+you. What the eye hits first, second, third.
 
-**9. Both schemes, and a wider font.** A palette chosen against a dark ground routinely fails
-on a light one. A layout that fits only under your system font is lucky, not responsive.
+**9. Build.** [blocks/](blocks/README.md) supplies structure, semantics, states and responsive
+behaviour — never the look. Real content, semantic HTML, every state from
+[v2/10-core.md](v2/10-core.md) section F. Three widths: 375, 768, 1440.
 
-**10. Render it.**
+**10. Wire the journeys.** At least one per surface, driving the real page and asserting what
+changed. `journeys/*.spec.mjs`.
+
+**11. Technical gate.** Does it work.
 
 ```bash
 node scripts/verify.mjs http://localhost:5173 --out .sitesmith/shots
 node scripts/verify.mjs http://localhost:5173 --font-stress --no-axe
 node scripts/token-drift.mjs "<pages>" --contract DESIGN-SYSTEM.md
+node scripts/journey.mjs journeys/ --base http://localhost:5173
+node scripts/production-gate.mjs "<pages>" --manifest ASSET-MANIFEST.md --production
 ```
 
-**11. Look at the screenshots.** Open them. Squint: is something clearly first? Anything
-cramped, orphaned, misaligned or floating? Does it look like a product or a demo? Fix, then
-re-render.
+**12. Visual critique gate.** [v2/50-critique.md](v2/50-critique.md). Separate, and only once
+step 11 is green — a broken layout cannot be assessed for art direction. Open the screenshots.
+Squint. Then the rubric: direction, specificity, type, colour, assets, hierarchy,
+production-readiness. If the main criticism is "looks like a generic AI template", it fails
+whatever the scores say.
 
-**12. Walk the done list.** [v2/00-done.md](v2/00-done.md), all fourteen. Report what you
+**13. Walk the done list.** [v2/00-done.md](v2/00-done.md), all fourteen. Report what you
 changed and what you could not.
 
 ## 3. Precedence
@@ -108,18 +121,23 @@ When two things disagree, the higher row wins.
 
 ## 4. What to read
 
-| File | When | Lines |
-| --- | --- | --- |
-| [v2/00-done.md](v2/00-done.md) | First, and again at step 12 | 229 |
-| [v2/10-core.md](v2/10-core.md) | Once per build | 214 |
-| [v2/modes/](v2/modes/README.md) | After routing — one file only | 3 files |
-| [v2/30-contract.md](v2/30-contract.md) | Step 5 | 240 |
-| [blocks/](blocks/README.md) | Step 6 | — |
-| [references/06-redesign-audit.md](references/06-redesign-audit.md) | REDESIGN only | 208 |
-| [references/10-setup.md](references/10-setup.md) | SETUP only | 99 |
-| [references/](references/README.md) | Provenance. Not during a build. | 47 files |
+| File | When |
+| --- | --- |
+| [v2/00-done.md](v2/00-done.md) | First, and again at step 13 |
+| [v2/05-evidence.md](v2/05-evidence.md) | Step 3 |
+| [v2/10-core.md](v2/10-core.md) | Once per build |
+| [v2/modes/](v2/modes/README.md) | After routing — one file only |
+| [v2/20-direction-lab.md](v2/20-direction-lab.md) | Step 5 |
+| [v2/25-assets.md](v2/25-assets.md) | Step 4, and again at step 11 |
+| [v2/30-contract.md](v2/30-contract.md) | Step 6 — after the direction is chosen, never before |
+| [v2/40-interaction.md](v2/40-interaction.md) | Step 7 |
+| [v2/50-critique.md](v2/50-critique.md) | Step 12 |
+| [blocks/](blocks/README.md) | Step 9 |
+| [references/06-redesign-audit.md](references/06-redesign-audit.md) | REDESIGN only |
+| [references/](references/README.md) | Provenance. Not during a build. |
 
-Sixty core rules plus one mode file is what you hold while working. That is the constraint.
+Sixty core rules plus one mode file is what you hold while working. The others are read at
+their step and put down again. That is the constraint.
 
 ## 5. Anti-slop is judgement, not a ban list
 
@@ -142,12 +160,15 @@ The final question, every time: **would a designer look at this and say a machin
 
 | Script | Purpose | Needs |
 | --- | --- | --- |
-| `scripts/search.py` | 161 palettes, 73 font pairings, 84 styles, 161 product types, 99 UX rules | Python 3.10+ |
+| `scripts/search.py --candidates` | Three *contrasting* starting points with confidence, near-misses and repeat warnings | Python 3.10+ |
+| `scripts/direction-check.mjs` | Are the three comps actually three directions | Node 18+, playwright optional |
 | `scripts/verify.mjs` | Screenshots at 3 widths, axe in both schemes, links, console, overflow, `--font-stress` | Node 18+, `npx playwright install chromium` |
 | `scripts/token-drift.mjs` | Values used that the contract never declared | Node 18+ |
+| `scripts/journey.mjs` | Runs the interaction journeys | Node 18+, playwright |
+| `scripts/production-gate.mjs` | Placeholders, unmanifested images, empty brand marks, missing journeys | Node 18+ |
 
-All three are optional and the skill degrades without them, but never skip steps 10 and 11
-just because a script is unavailable — open the page in a browser instead.
+The scripts are optional and the skill degrades without them, but never skip steps 11 and 12
+because a script is unavailable — open the page in a browser and look instead.
 
 ## 7. Attribution
 

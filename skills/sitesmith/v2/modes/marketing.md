@@ -41,40 +41,63 @@ before you add.
 **The first screen must establish two things:** what this is, and who it is for. A headline
 that could sit on a competitor's site has established neither.
 
-## 2. Hero family
+## 2. The first screen
 
-**Default: the split.** Statement left, one asset right, left-aligned, primary action visible
-without scrolling. It works because the eye lands on words first and the asset supports them.
+**The outcome:** a stranger knows what this is and who it is for, and the one action is
+reachable, before they scroll. Everything else about the first screen is open.
 
-| Instead use | When |
+There is no default arrangement here. The arrangement is chosen in the direction lab, from
+the evidence, and it is the axis the three comps are *required* to differ on. Naming a
+default is how nine subjects end up with the same hero — the default gets reached for, and
+the alternatives are never built.
+
+**How the arrangement is decided:** whatever the subject's strongest true material is, that
+is what the first screen is built around.
+
+| If the strongest true material is | The first screen is built around |
 | --- | --- |
-| **Editorial manifesto** — large type, no asset | The statement *is* the product: agencies, opinion-led launches, portfolios. Needs copy strong enough to carry a screen alone. |
-| **Product-led** — the interface as the asset | The product is visual and self-explanatory in one frame. Requires a real screenshot; a div-built mock is banned. |
+| Photography the client owns of the actual work | that photograph, at whatever size makes it evidence rather than decoration |
+| A statement only this client could make | the words, at a size that makes them the object |
+| The product's own interface, real and legible in one frame | that interface |
+| An index of work, cases or writing | the index, starting immediately |
+| A single object the client makes | the object |
+| Nothing yet — assets are `needed` | the words, and the manifest says what will replace them |
 
-**Centred is the third option and needs a reason.** It is correct when the message is
-genuinely singular — one launch, one statement, one date. It is the default that makes
-marketing pages interchangeable, so if you reach for it, say why in the brief.
+Two consequences worth stating. A **div-built fake product screenshot is banned** — if the
+interface is the material, it is a real screenshot or it is not that material. And an
+arrangement chosen because it is what marketing pages look like is the failure in section 12
+item 3, whichever arrangement it is.
 
-Headline ≤ 2 lines at 1440. Subtext ≤ 4 lines. If the action needs a scroll, the hero is too
-tall.
+**What holds regardless:** headline ≤ 2 lines at 1440, subtext ≤ 4 lines, the primary action
+visible without scrolling. If the action needs a scroll, the first screen is too tall.
 
 ## 3. Density
 
-**Spacious.** Base type 17–18px, body measure 60–70 characters, section gaps from the top of
-the ramp — `--space-8` to `--space-9`. White space is doing work here: it is what separates
-an argument into steps.
+**The outcome:** the argument reads as separated steps, and a visitor can tell where one
+point ends and the next begins without a border telling them.
 
-Type scale ratio **1.25 to 1.333**. Marketing pages carry few sizes and use them hard.
+That is what space is doing in this mode, and it is why marketing sits at the open end of
+whatever ramp the contract defines. The specific numbers come from the contract, which comes
+from the winning comp — a page whose material is a full-bleed photograph and a page whose
+material is a paragraph do not want the same measure or the same section gap.
+
+**What holds regardless:** body measure between roughly 55 and 75 characters. Section gaps
+from the same ramp as everything else, not picked by eye. Few type sizes, used hard — a
+marketing page with nine sizes has a scale, not a hierarchy.
 
 ## 4. Radius
 
-**Soft, and consistent.** `--radius-inner: 8px`, `--radius-outer: 16px` is a good starting
-pair; a brand with a hard-edged identity legitimately uses `0` for both.
+**The outcome:** edges look like a decision. Whether that decision is 16px, 2px or none is a
+property of the direction, not of the mode.
 
-Two values plus `full` for avatars. **What is inside a container is tighter than the
-container** — a button inside a card that shares the card's radius reads as a mistake.
+**What holds regardless:** two values plus `full` for avatars, at most. **What is inside a
+container is tighter than the container** — a button inside a card that shares the card's
+radius reads as a mistake. And the value is declared in the contract, so the next page knows
+it.
 
-There is no global radius rule in sitesmith. This is the marketing answer.
+There is no global radius rule in sitesmith and there is no marketing radius either. A
+practice whose work is precise and rectilinear and a nursery whose work is not should not
+arrive at the same corner.
 
 ## 5. Imagery
 

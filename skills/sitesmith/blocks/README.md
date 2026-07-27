@@ -6,15 +6,28 @@ The upstream `09-block-library.md` has carried a folder layout, a frontmatter sc
 sentence "Blocks will be added iteratively" since the day it was vendored. The folder it
 names does not exist and never has. This is the folder.
 
-## What a block is
+## What a block is, and what it is not
 
-A working section of a real website — a header, a hero, a product grid, a pricing table — in
-semantic HTML and CSS over the design tokens, with **variants** and **compatibility
-metadata** so it fits the mode and the direction instead of imposing one.
+A block carries exactly four things:
 
-Blocks are not a template. A library that produces the same site twice has replaced one
-generic look with another. Every block declares which modes it suits, which variants it has,
-and what it does not go with, so the composition stays a decision.
+1. **Structure** — the arrangement of regions and what contains what.
+2. **Semantics** — the right elements, landmarks, labels and relationships.
+3. **States** — every state the pattern can be in, and the markup that expresses each.
+4. **Responsive behaviour** — how the structure reflows, and where it stops working.
+
+A block carries **none** of these: the direction, the palette, the typeface, the ground, the
+rhythm of the page it sits in, or any decision about what this particular site should look
+like. Those come from the direction lab and the contract, in that order.
+
+**This is a hard boundary and it is new in v2.1.** The reason is measured. Nine legacy pages
+share one hero arrangement, one font stack and one palette recipe, and the more that shape
+lives in a reusable block, the more reliably the next site inherits it. A block library that
+supplies art direction is a template with extra steps: it makes every site that uses it look
+like every other site that uses it, which is the exact failure this skill exists to avoid.
+
+So: a block tells you that a purchase panel needs the price, the variant controls, the stock
+state, the action and the delivery promise, in a container that does not reflow the page when
+the price changes. It does not tell you what that panel looks like.
 
 ## Format
 
@@ -26,22 +39,30 @@ Vue or Svelte in one pass.
 name: hero-split
 family: hero
 modes: M E
-use: The default marketing hero. Statement left, one asset right.
-avoid: Product pages, where the gallery and the purchase panel own the first screen.
+structure: Statement region and asset region, side by side, statement first in source order.
+semantics: <section> with an accessible name, one <h1>, the primary action as a real control.
+states: no-asset (asset region collapses, statement gains the width) | long-headline | rtl
+responsive: single column below the container query threshold; the asset never precedes the
+  statement in the reading order at any width.
 variants: media-right (default) | media-left | media-stacked
 pairs: nav-bar, proof-logos, cta-band
 not-with: hero-editorial, hero-product
 tokens: --space-6 --space-8 --text-h1 --text-lead --measure --accent --on-accent
-density: spacious
 prevents: A headline that pushes the primary action below the fold at 1440.
 -->
 <style>/* every selector starts .block-hero-split */</style>
 <section class="block-hero-split"> ... </section>
 ```
 
-`name`, `family`, `modes`, `use` and `variants` are required. `prevents` is optional: it was
-required when this library held only defect-preventing infrastructure, and a composition
-pattern earns its place by being a good composition.
+`name`, `family`, `modes`, `structure`, `semantics`, `states` and `responsive` are required.
+`density` was a field here and has been removed: density is a property of the contract, which
+is a property of the direction, and a block asserting one was a block asserting art direction.
+
+**Selecting a block is not choosing a direction.** `hero-split` is a structure — a statement
+region beside an asset region. Which arrangement this site's first screen uses is decided in
+[`v2/20-direction-lab.md`](../v2/20-direction-lab.md) before any block is opened, and the
+block is then the implementation of a decision already made. If a build reaches for
+`hero-split` because it is there, the lab was skipped.
 
 **Tokens only.** No colour, spacing, radius or font size as a literal, so a block dropped
 into a project inherits that project's system rather than importing a second one. Values a
@@ -71,11 +92,19 @@ duplicate.
 
 ## Choosing one
 
-1. The mode file gives you the argument shape and the hero family.
-2. Take blocks whose `modes` include yours and whose `family` matches the section.
+The direction is already chosen before this list is opened. These steps implement it.
+
+1. **`DIRECTION.md` gives the arrangement.** The mode file gives the argument shape. Neither
+   of them is this folder.
+2. Take blocks whose `modes` include yours and whose `family` matches the section you are
+   implementing.
 3. Check `not-with`: one hero per page, one mega-menu, one sticky CTA.
-4. Pick the variant that fits the direction, not the first one listed.
+4. Pick the variant the direction requires. If no variant matches, **write the structure by
+   hand** — bending the direction to fit an available block is how a library becomes a
+   template.
 5. Delete what the brief does not need. A block with two thirds removed is normal.
+6. Style it entirely from the contract. If a block's own CSS survives into the site unchanged,
+   check whether it was carrying a look rather than a structure.
 
 ## Verification
 

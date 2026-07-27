@@ -41,35 +41,47 @@ There is no argument. There is a **task**, and the screen is judged by how fast 
 error summary before the fields, and a review step that shows every answer with a route back
 to each.
 
-## 2. Hero family
+## 2. The first screen
 
-**None.** A cinematic hero on a dashboard is the clearest sign the wrong governance model was
-applied. The first 46 to 64 pixels are a chrome bar carrying identity, context and state;
-work starts immediately under it.
+**The outcome:** work starts immediately, and the operator can tell within a second whether
+this screen needs them now.
 
-The nearest equivalent to a hero is the **status line**: object, state, and the number that
-decides whether this screen needs attention now.
+A cinematic hero on a dashboard is the clearest sign the wrong governance model was applied.
+What occupies the top is a chrome bar carrying identity, context and state, and under it the
+**status line**: the object, its state, and the number that decides whether to act.
+
+The arrangement below that — rail and pane, master and detail, a single table, a board — is
+a direction-lab choice made from how the work is actually done. A dispatcher watching six
+things at once and a clerk working one record at a time do not get the same screen.
 
 ## 3. Density
 
-**Tight, deliberately.** Base type 13–14px. Rows 28–34px. Spacing step **4px**, not 8 — a
-30px row cannot afford an 8px ramp.
+**The outcome:** a working unit of the operator's actual job is visible without scrolling —
+a shift's rows, a round's stops, a consignment's lines.
 
-The ramp is the same ramp as everywhere else in the contract; density is which end of it is
-in play. `--space-2` to `--space-5` here, where marketing lives at `--space-6` to `--space-9`.
+That is what sets the numbers, and it is why they land where they do. If a consignment is
+twelve lines, twelve lines fit; that forces the row height, which forces the type size, which
+forces the spacing step. A 30px row cannot afford an 8px ramp — so the step is smaller, and
+that is a consequence of the work rather than a preference for tightness.
 
-Type scale ratio **1.2**. Many sizes, close together, most of them small.
+The ramp is the same ramp as everywhere else in the contract. Density is which end of it is
+in play, not a second system.
 
-Figures are tabular everywhere they are compared. A column that shifts under its own digits
-is unreadable at this size.
+**What holds regardless:** many type sizes, close together, most of them small, so the scale
+ratio is tight. Figures that are compared are tabular everywhere — a column that shifts under
+its own digits is unreadable at this size, and this is the mode where it is smallest.
 
 ## 4. Radius
 
-**Minimal.** `--radius-inner: 3px`, `--radius-outer: 6px`, or `0` for both in a genuinely
-utilitarian tool. At a 30px row height, an 8px radius eats the corner of the content.
+**The outcome:** the corner does not eat the content, and a shape does not promise an
+interaction it cannot deliver.
 
-Full-round only for status dots. A pill in a data grid reads as a control that can be
-clicked, so it must be one.
+At the row heights this mode produces, a generous radius removes the corner of a cell. That
+is a measurable consequence of section 3, not a style position — a tool with taller rows can
+afford more, and a genuinely utilitarian instrument may want none at all.
+
+**What holds regardless:** full-round is for status dots. A pill in a data grid reads as a
+control that can be clicked, so it must be one.
 
 ## 5. Imagery
 

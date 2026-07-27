@@ -65,8 +65,13 @@ if __name__ == "__main__":
         ),
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )
-    parser.add_argument("query", help="Search query")
+    parser.add_argument("query", help="Search query, or the chosen label when used with --record")
     parser.add_argument("--domain", "-d", choices=list(CSV_CONFIG.keys()), help="Search domain")
+    # Three contrasting candidates, rather than the top three (which are near each other)
+    parser.add_argument("--candidates", "-c", action="store_true",
+                        help="Three contrasting starting points with confidence, near-misses and repeats")
+    parser.add_argument("--record", action="store_true",
+                        help="Record the query as a chosen direction, so later --candidates runs avoid repeating it")
     parser.add_argument("--stack", "-s", choices=AVAILABLE_STACKS, help=f"Stack-specific search. Available: {', '.join(AVAILABLE_STACKS)}")
     parser.add_argument("--max-results", "-n", type=int, default=MAX_RESULTS, help="Max results (default: 3)")
     parser.add_argument("--json", action="store_true", help="Output as JSON")
@@ -80,6 +85,25 @@ if __name__ == "__main__":
     parser.add_argument("--output-dir", "-o", type=str, default=None, help="Output directory for persisted files (default: current directory)")
 
     args = parser.parse_args()
+
+    # Anti-repeat bookkeeping
+    if args.record:
+        from candidates import record_choice
+        record_choice(args.domain or "style", args.query, args.project_name)
+        print(f"recorded: {args.query} ({args.domain or 'style'}). "
+              f"Later --candidates runs will avoid handing it back as the obvious answer.")
+        sys.exit(0)
+
+    # Three contrasting candidates
+    if args.candidates:
+        from candidates import contrasting_candidates, format_candidates
+        result = contrasting_candidates(args.query, args.domain, project=args.project_name)
+        if args.json:
+            import json
+            print(json.dumps(result, indent=2, ensure_ascii=False))
+        else:
+            print(format_candidates(result))
+        sys.exit(0 if "error" not in result else 1)
 
     # Design system takes priority
     if args.design_system:

@@ -23,10 +23,12 @@ answers.
 
 1. **Argument shape** — the section order the page kind actually needs, and what the first
    screen must establish.
-2. **Hero family** — which hero this mode uses, and the two alternatives with when to pick
-   them.
-3. **Density** — which end of the spacing ramp is in play, and the base type size.
-4. **Radius** — the values for this mode and why. There is no global answer.
+2. **The first screen** — the outcome it must reach, and what decides the arrangement. No
+   mode names a default arrangement: that is chosen per subject in the direction lab.
+3. **Density** — the outcome space is producing here, and which end of the contract's ramp
+   that puts in play.
+4. **Radius** — what the edge has to achieve in this mode. There is no global answer and no
+   mode default either; the value comes from the direction.
 5. **Imagery** — what the images are of, how they are cropped and treated, and what stands in
    when there is none.
 6. **Motion** — what is allowed to move here, and what is not.

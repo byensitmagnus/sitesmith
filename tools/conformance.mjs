@@ -21,12 +21,18 @@ import { expand } from './lib/files.mjs';
 
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
 
-/** Strip anything a reader never sees, so comments and CSS cannot trip a copy rule. */
+/** Strip anything a reader never sees, so comments and CSS cannot trip a copy rule.
+ *
+ *  Markup was left in, which meant attribute values counted as copy: the block library's
+ *  `<input placeholder="you@company.co.uk">` — a real UI affordance, not placeholder text —
+ *  tripped the placeholder rule, and since the generated harness has no baseline entry it
+ *  read as a regression from zero on every run. Attributes are not visible text. */
 function visibleText(html) {
   return html
     .replace(/<!--[\s\S]*?-->/g, ' ')
     .replace(/<style[\s\S]*?<\/style>/gi, ' ')
-    .replace(/<script[\s\S]*?<\/script>/gi, ' ');
+    .replace(/<script[\s\S]*?<\/script>/gi, ' ')
+    .replace(/<[^>]*>/g, ' ');
 }
 
 const RULES = [

@@ -41,33 +41,49 @@ Twelve decisions. Each is an answer, not a range.
 **Listing page:** filters that reflect how the buyer thinks, a grid, and a count. Sort is
 secondary to filter. An empty result offers the nearest thing that exists.
 
-## 2. Hero family
+## 2. The first screen
 
-**Product page: no hero.** The gallery and the purchase panel occupy the first screen. A
-marketing hero above a product is a screen of scrolling between wanting it and buying it.
+**The outcome:** on a product page, the thing and the way to buy it are both on the first
+screen. On a listing, the products start on the first screen.
 
-**Category page: a band, not a hero.** One line of context, then the products. Above roughly
-200px it is costing you the first row.
+That outcome is what rules out a marketing hero here, and the reason is not taste: a hero
+above a product is a screen of scrolling inserted between wanting it and buying it. A
+category band above roughly 200px costs the first row of products.
+
+Within that, the arrangement is still a direction-lab choice — gallery left or right, panel
+sticky or in flow, one large image or a stacked set, filters in a rail or across the top.
+Those differ by catalogue and by what the photography actually looks like, and they are the
+axis the three comps must differ on.
 
 **Home page: this is mode M.** Route it there and keep the same contract.
 
 ## 3. Density
 
-**Middle of the ramp.** Base type 16px. Product cards tight — `--space-3` to `--space-5`
-internally — and generous between sections. A listing grid is a rhythm; irregular gaps read
-as a rendering bug.
+**The outcome:** a listing reads as one rhythm, and on a product page the price is found
+without searching for it.
 
-Price is the second-largest type on a product page after the name, and it is tabular.
+Both are consequences, not numbers. A grid whose gaps are irregular reads as a rendering
+bug, which is why the card interior sits at the tight end of the contract's ramp while the
+gaps between sections sit at the open end. Price is the second-largest type on the page after
+the name and it is tabular, because a price that shifts under its own digits is a price the
+buyer re-reads.
 
-Type scale ratio **1.2**. Commerce pages carry many sizes and need them close together.
+**What holds regardless:** figures that are compared are tabular. Commerce pages carry many
+type sizes and need them close together, so the scale ratio is at the tight end of whatever
+the contract sets — a 1.5 ratio in a listing produces sizes with nothing between them.
 
 ## 4. Radius
 
-**Slight.** `--radius-inner: 4px`, `--radius-outer: 8px`. Product photography is the shape
-that matters; a heavy radius on a card competes with the thing inside it.
+**The outcome:** the product is the shape the eye reads, and nothing on the card competes
+with it.
 
-Full-round is for badges and stock dots only. A pill-shaped "Add to basket" reads as a
-marketing button, not a purchase control.
+A heavy radius on a card competes with the photograph inside it, which is the reason
+commerce tends to land tighter than marketing — but the value comes from the direction and
+the photography, not from this file.
+
+**What holds regardless:** full-round is for badges and stock dots only. A pill-shaped "Add
+to basket" reads as a marketing button rather than a purchase control, and the buyer hesitates
+over which it is.
 
 ## 5. Imagery
 
