@@ -6,7 +6,11 @@
  *
  * Captures a full-page screenshot at each width, collects console errors and failed
  * network requests, checks every same-origin link for a dead target, and runs an axe
- * accessibility scan. Exit code 1 if any blocking problem is found.
+ * accessibility scan.
+ *
+ * Exit 0 clean · 1 blocking defect found (bad HTTP status, console error, broken link,
+ * serious axe violation, horizontal overflow) · 2 could not run (bad arguments, missing
+ * dependency, server unreachable).
  *
  * Requires: npm i -D playwright @axe-core/playwright && npx playwright install chromium
  * MIT — part of https://github.com/byensitmagnus/sitesmith
@@ -30,21 +34,47 @@ async function load(name) {
   }
 }
 
+const USAGE =
+  'usage: node verify.mjs <url> [--out DIR] [--widths 375,768,1440] [--no-axe] [--json]';
+
 const argv = process.argv.slice(2);
+// Flags that consume the next argument. Anything else starting with -- is a switch,
+// so the token after it is still a candidate for the URL.
+const VALUE_FLAGS = new Set(['out', 'widths']);
 const flag = (name, fallback) => {
   const i = argv.indexOf(`--${name}`);
   return i === -1 ? fallback : argv[i + 1];
 };
 const has = (name) => argv.includes(`--${name}`);
 
-const url = argv.find((a) => !a.startsWith('--') && !argv[argv.indexOf(a) - 1]?.startsWith('--'));
+let url;
+for (let i = 0; i < argv.length; i++) {
+  if (argv[i].startsWith('--')) {
+    if (VALUE_FLAGS.has(argv[i].slice(2))) i++; // skip the flag's value
+    continue;
+  }
+  url = argv[i];
+  break;
+}
 if (!url) {
-  console.error('usage: node verify.mjs <url> [--out DIR] [--widths 375,768,1440] [--no-axe] [--json]');
+  console.error(USAGE);
+  process.exit(2);
+}
+try {
+  new URL(url);
+} catch {
+  console.error(`not a valid URL: ${url}\n${USAGE}`);
   process.exit(2);
 }
 
 const outDir = resolve(flag('out', '.sitesmith/shots'));
-const widths = flag('widths', '375,768,1440').split(',').map((n) => parseInt(n.trim(), 10));
+const widths = flag('widths', '375,768,1440')
+  .split(',')
+  .map((n) => parseInt(n.trim(), 10));
+if (!widths.length || widths.some((n) => !Number.isFinite(n) || n < 200)) {
+  console.error(`--widths must be a comma-separated list of pixel values >= 200\n${USAGE}`);
+  process.exit(2);
+}
 const asJson = has('json');
 
 let chromium, AxeBuilder;
@@ -87,7 +117,17 @@ try {
       report.failedRequests.push({ width, url: r.url().slice(0, 200), error: r.failure()?.errorText });
     });
 
-    const response = await page.goto(url, { waitUntil: 'networkidle', timeout: 45000 });
+    let response;
+    try {
+      response = await page.goto(url, { waitUntil: 'networkidle', timeout: 45000 });
+    } catch (e) {
+      // A dev server that is not up is a setup problem, not a page defect. Say so
+      // plainly and exit 2 rather than dumping a Playwright stack trace.
+      console.error(`could not load ${url}\n  ${String(e).split('\n')[0]}`);
+      console.error('  is the dev server running, and is the port right?');
+      await browser.close();
+      process.exit(2);
+    }
     await page.waitForTimeout(600); // let entrance animations settle before capturing
 
     // Store the file name only. An absolute path in a committed report leaks the
@@ -108,7 +148,7 @@ try {
     };
 
     // Link and axe checks only need to run once; the narrowest viewport is the strictest.
-    if (width === widths[0]) {
+    if (width === Math.min(...widths)) {
       const links = await page.$$eval('a[href]', (as) =>
         as.map((a) => ({ href: a.href, text: (a.textContent || '').trim().slice(0, 60) })),
       );
@@ -172,8 +212,15 @@ await writeFile(`${outDir}/report.json`, JSON.stringify(report, null, 2));
 
 const serious = (report.axe?.violations ?? []).filter((v) => v.impact === 'critical' || v.impact === 'serious');
 const overflowing = Object.entries(report.widths).filter(([, w]) => w.horizontalOverflowPx > 1);
+// A 404 that happens to be clean and accessible is still not the page under test.
+// Without this, pointing the script at a wrong path reports PASS.
+const badStatus = Object.entries(report.widths).filter(([, w]) => (w.status ?? 0) >= 400);
 const blocking =
-  report.consoleErrors.length + report.brokenLinks.length + serious.length + overflowing.length;
+  report.consoleErrors.length +
+  report.brokenLinks.length +
+  serious.length +
+  overflowing.length +
+  badStatus.length;
 
 if (asJson) {
   console.log(JSON.stringify(report, null, 2));
@@ -181,7 +228,8 @@ if (asJson) {
   console.log(`\n  ${report.url}\n`);
   for (const [w, d] of Object.entries(report.widths)) {
     const ok = d.horizontalOverflowPx <= 1 ? 'ok' : `OVERFLOW +${d.horizontalOverflowPx}px`;
-    console.log(`  ${String(w).padStart(4)}px  HTTP ${d.status}  ${ok}  → ${d.screenshot}`);
+    const status = (d.status ?? 0) >= 400 ? `HTTP ${d.status} ←` : `HTTP ${d.status}`;
+    console.log(`  ${String(w).padStart(4)}px  ${status}  ${ok}  → ${d.screenshot}`);
   }
   console.log('');
   console.log(`  console errors : ${report.consoleErrors.length}`);
