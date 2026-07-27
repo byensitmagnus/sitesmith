@@ -1,0 +1,30 @@
+{
+  "url": "http://localhost:4321/blocks/",
+  "widths": {
+    "375": {
+      "status": 200,
+      "screenshot": "375.png",
+      "horizontalOverflowPx": 0,
+      "title": "sitesmith block library"
+    },
+    "768": {
+      "status": 200,
+      "screenshot": "768.png",
+      "horizontalOverflowPx": 0,
+      "title": "sitesmith block library"
+    },
+    "1440": {
+      "status": 200,
+      "screenshot": "1440.png",
+      "horizontalOverflowPx": 0,
+      "title": "sitesmith block library"
+    }
+  },
+  "consoleErrors": [],
+  "failedRequests": [],
+  "brokenLinks": [],
+  "axe": {
+    "violations": [],
+    "passes": 0
+  }
+}

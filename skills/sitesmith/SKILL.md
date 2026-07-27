@@ -23,7 +23,7 @@ First action, always. Pick one row. It decides which reference you open and whic
 | Empty directory, no frontend stack | **SETUP** → then NEW | [10-setup.md](references/10-setup.md) — optional, gated |
 | "Build a landing page / site / portfolio" | **NEW** | Step 2 below |
 | Existing code, "redesign / improve / make it better" | **REDESIGN** | [06-redesign-audit.md](references/06-redesign-audit.md) — audit before touching anything |
-| "Build a pricing table / modal / nav" | **COMPONENT** | [09-block-library.md](references/09-block-library.md) |
+| "Build a pricing table / modal / nav" | **COMPONENT** | [blocks/](blocks/README.md) — working implementations |
 | "Review this UI / is it accessible?" | **AUDIT** | [07-ux-rules.md](references/07-ux-rules.md) + [05-ai-tells.md](references/05-ai-tells.md) |
 | Dashboard, data table, admin, multi-step product UI | **PRODUCT UI** | [07-ux-rules.md](references/07-ux-rules.md) is primary; dials are secondary |
 
@@ -172,7 +172,7 @@ Open only what the current step needs. Do not preload.
 | [06-redesign-audit.md](references/06-redesign-audit.md) | REDESIGN mode — 8 passes, repair order, scoring rubric | 208 |
 | [07-ux-rules.md](references/07-ux-rules.md) | PRODUCT UI, and step 9/12 — a11y, forms, nav, charts, checklists | 393 |
 | [08-pattern-vocabulary.md](references/08-pattern-vocabulary.md) | Step 4 — names for hero paradigms, grids, scroll effects | 84 |
-| [09-block-library.md](references/09-block-library.md) | COMPONENT mode — concrete block implementations | 411 |
+| [09-block-library.md](references/09-block-library.md) | Step 12 — the 68-item pre-flight check. The blocks it describes live in [blocks/](blocks/README.md) | 421 |
 | [10-setup.md](references/10-setup.md) | SETUP mode only — gated, skipped by default | 99 |
 | [11-search-engine.md](references/11-search-engine.md) | Step 5 — how to query the palette/font/style data | 289 |
 | [12-design-system.md](references/12-design-system.md) | Step 5 — the contract every page is then checked against | 207 |

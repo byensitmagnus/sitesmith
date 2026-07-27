@@ -1,0 +1,71 @@
+<!--
+name: error-summary
+category: form
+use: Any form that can fail validation on more than one field.
+avoid: A single-field form, put the message on the field and stop.
+tokens: --space-1 --space-2 --space-3 --space-4 --space-5 --bad --bad-soft --ink --ink-2
+        --line --surface --accent --text-small --text-h3 --radius-inner
+prevents: Errors a screen-reader user meets one field at a time with no way back to
+          the first; a field whose message is not wired to it by aria-describedby;
+          and a focus ring that differs per control, so it has to be relearned.
+-->
+<style>
+/* The summary comes first in the document, so it is read before any input, and
+   every entry is a link to the control that failed. */
+.block-error-summary{border:3px solid var(--bad);padding:var(--space-4) var(--space-5);
+  margin-bottom:var(--space-6);background:var(--surface)}
+.block-error-summary h3{margin:0 0 var(--space-2);color:var(--bad);font-size:var(--text-h3)}
+.block-error-summary ul{margin:0;padding-left:var(--space-4)}
+.block-error-summary li{margin-top:var(--space-1)}
+.block-error-summary a{color:var(--bad);font-weight:700}
+
+.block-field{margin-bottom:var(--space-5);max-width:var(--measure)}
+.block-field--invalid{border-left:3px solid var(--bad);padding-left:var(--space-4)}
+.block-field label{display:block;font-weight:700}
+.block-field .hint{color:var(--ink-2);font-size:var(--text-small);margin:var(--space-1) 0 0}
+.block-field .msg{color:var(--bad);font-weight:700;margin:var(--space-2) 0 0;
+  font-size:var(--text-small);display:flex;gap:var(--space-1)}
+.block-field .msg::before{content:"Error:";flex:none}
+.block-field input,
+.block-field textarea{font:inherit;width:100%;padding:var(--space-2) var(--space-3);
+  margin-top:var(--space-2);background:var(--surface);color:var(--ink);
+  border:2px solid var(--ink);border-radius:var(--radius-inner)}
+.block-field--invalid input{border-color:var(--bad)}
+.block-field input:disabled{background:var(--surface-2);color:var(--ink-2);
+  border-color:var(--line);cursor:not-allowed}
+/* One focus treatment, on every control in the project. */
+.block-error-summary a:focus-visible,
+.block-field :focus-visible{outline:2px solid var(--accent);outline-offset:2px;
+  border-radius:var(--radius-inner)}
+</style>
+
+<div class="block-error-summary" role="alert" aria-labelledby="es-h">
+  <h3 id="es-h">There is a problem</h3>
+  <ul>
+    <li><a href="#es-cert">Enter the certificate number shown on your schedule</a></li>
+    <li><a href="#es-date">Enter a start date in the future</a></li>
+  </ul>
+</div>
+
+<div class="block-field block-field--invalid">
+  <label for="es-cert">Certificate number</label>
+  <p class="hint" id="es-cert-hint">Printed top right of the schedule, for example PL-2291045.</p>
+  <p class="msg" id="es-cert-err">Enter the certificate number shown on your schedule</p>
+  <input type="text" id="es-cert" name="cert" autocomplete="off"
+         aria-describedby="es-cert-hint es-cert-err" aria-invalid="true">
+</div>
+
+<div class="block-field block-field--invalid">
+  <label for="es-date">Start date</label>
+  <p class="hint" id="es-date-hint">The first day you intend to trade.</p>
+  <p class="msg" id="es-date-err">Enter a start date in the future</p>
+  <input type="text" id="es-date" name="start" inputmode="numeric" value="14 03 2019"
+         aria-describedby="es-date-hint es-date-err" aria-invalid="true">
+</div>
+
+<div class="block-field">
+  <label for="es-ref">Reference</label>
+  <p class="hint" id="es-ref-hint">Assigned when the application was created. You cannot change it.</p>
+  <input type="text" id="es-ref" name="ref" value="PL/2026/0447" disabled
+         aria-describedby="es-ref-hint">
+</div>

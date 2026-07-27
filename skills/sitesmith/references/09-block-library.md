@@ -2,6 +2,16 @@
 
 > Part of the **sitesmith** skill. Verbatim from [taste-skill](https://github.com/Leonxlnx/taste-skill) — MIT, © 2026 Leonxlnx.
 > Reproduced without modification; only the heading above and file name are ours.
+>
+> **Where the blocks are.** Section 12 below defines a schema and says implementations will
+> follow; upstream they never did, and the path it names does not exist here. The working
+> blocks live in [`blocks/`](../blocks/README.md) instead, rendered and measured in CI. Read
+> this file for the pre-flight check in Section 14, which is the part that earns its place.
+>
+> **Section 13 is out of date for sitesmith.** It declares dashboards, data tables and
+> multi-step forms out of scope. That was true of taste-skill as a marketing-page skill;
+> sitesmith took the wider remit deliberately and governs those with
+> [07-ux-rules.md](07-ux-rules.md). The routing table in `SKILL.md` is the authority.
 
 ---
 

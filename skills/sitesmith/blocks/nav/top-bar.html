@@ -1,0 +1,64 @@
+<!--
+name: top-bar
+category: nav
+use: Product and app shells. A sticky bar carrying brand, sections and one action.
+avoid: Marketing sites with more than five destinations, they need a real nav.
+tokens: --space-1 --space-2 --space-3 --space-4 --line --surface --surface-2 --ink --ink-2
+        --accent --accent-soft --on-accent --text-small --text-body --radius-inner
+prevents: A +10px document overflow that appears only under a wider system font,
+          because nowrap flex items shrink below their content and let the TEXT
+          spill while no element box reports as overflowing.
+-->
+<style>
+.block-top-bar{background:var(--surface);border-bottom:1px solid var(--line);
+  position:sticky;top:0;z-index:12}
+.block-top-bar__in{display:flex;align-items:center;gap:var(--space-3);
+  padding:var(--space-2) var(--space-4);max-width:var(--container);margin-inline:auto}
+.block-top-bar__mark{display:flex;align-items:center;gap:var(--space-2);font-weight:700;
+  letter-spacing:-.03em;text-decoration:none;color:var(--ink);min-width:0}
+.block-top-bar__mark span{width:18px;height:18px;flex:none;border-radius:var(--radius-inner);
+  background:var(--accent)}
+
+/* min-width:0 plus overflow:hidden is the whole fix. A flex item with
+   white-space:nowrap refuses to shrink below its content width by default, so on
+   a platform whose default font is wider than the developer's the text runs past
+   the container. documentElement.scrollWidth grows; every element box still
+   reports as fitting, so an element-by-element scan finds nothing. */
+.block-top-bar__tabs{display:flex;gap:var(--space-1);min-width:0;overflow:hidden}
+.block-top-bar__tabs a{padding:var(--space-1) var(--space-3);border-radius:var(--radius-inner);
+  text-decoration:none;color:var(--ink-2);font-size:var(--text-small);white-space:nowrap;
+  overflow:hidden;text-overflow:ellipsis;
+  transition:background var(--motion-fast) var(--ease),color var(--motion-fast) var(--ease)}
+.block-top-bar__tabs a:hover{background:var(--surface-2);color:var(--ink)}
+.block-top-bar__tabs a[aria-current=page]{background:var(--accent-soft);color:var(--accent);
+  font-weight:600}
+/* Below the widths where four labels stop fitting, drop them rather than truncate:
+   two ellipsed words say less than one whole one. */
+@media(max-width:820px){.block-top-bar__tabs a:nth-child(n+3){display:none}}
+@media(max-width:600px){.block-top-bar__tabs a:nth-child(n+2){display:none}}
+
+.block-top-bar__act{margin-left:auto;display:flex;align-items:center;gap:var(--space-2);
+  min-width:0}
+.block-top-bar__btn{font:inherit;font-size:var(--text-small);font-weight:600;
+  padding:var(--space-2) var(--space-3);border-radius:var(--radius-inner);cursor:pointer;
+  border:1px solid transparent;background:var(--accent);color:var(--on-accent);
+  white-space:nowrap}
+.block-top-bar__btn:active{transform:translateY(1px)}
+.block-top-bar :focus-visible{outline:2px solid var(--accent);outline-offset:2px;
+  border-radius:var(--radius-inner)}
+</style>
+
+<header class="block-top-bar">
+  <div class="block-top-bar__in">
+    <a class="block-top-bar__mark" href="#blocks"><span aria-hidden="true"></span>Ledger</a>
+    <nav class="block-top-bar__tabs" aria-label="Sections">
+      <a href="#blocks" aria-current="page">Reconciliation</a>
+      <a href="#blocks">Accounts</a>
+      <a href="#blocks">Rules</a>
+      <a href="#blocks">Exports</a>
+    </nav>
+    <div class="block-top-bar__act">
+      <button class="block-top-bar__btn" type="button">Auto-match</button>
+    </div>
+  </div>
+</header>

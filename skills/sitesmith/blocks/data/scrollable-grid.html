@@ -1,0 +1,81 @@
+<!--
+name: scrollable-grid
+category: data
+use: A table wider than the column it sits in. Any admin, report or queue.
+avoid: Fewer than five rows, or content that reflows happily, use a definition list.
+tokens: --space-2 --space-3 --space-4 --line --line-2 --surface --surface-2 --ink --ink-3
+        --text-micro --text-small --radius-outer --font-mono
+prevents: A horizontal scroller no keyboard can reach (axe: scrollable-region-focusable);
+          visually-hidden labels escaping the clip and setting document width from
+          inside the grid; a parent 1fr track widening instead of the child scrolling.
+-->
+<style>
+.block-scrollable-grid{border:1px solid var(--line);border-radius:var(--radius-outer);
+  background:var(--surface);overflow:hidden}
+.block-scrollable-grid > header{display:flex;align-items:center;gap:var(--space-3);
+  padding:var(--space-2) var(--space-4);border-bottom:1px solid var(--line);
+  background:var(--surface-2);flex-wrap:wrap}
+.block-scrollable-grid > header h3{margin:0;font-size:var(--text-micro);letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink-3)}
+.block-scrollable-grid > header p{margin:0 0 0 auto;font-size:var(--text-small);
+  color:var(--ink-3);font-family:var(--font-mono)}
+
+/* position:relative is load-bearing. The visually-hidden caption and labels inside
+   are position:absolute; with no positioned ancestor their containing block is the
+   viewport, so they escape this clip and their static position, hundreds of pixels
+   into a wide grid, becomes the document width. No element box reports as
+   overflowing, because each one is 1px wide. */
+.block-scrollable-grid__scroll{overflow-x:auto;position:relative}
+
+/* tabindex="0" on the scroller is the other half: without it everything past the
+   fold is mouse-only. */
+.block-scrollable-grid table{width:100%;border-collapse:collapse;
+  font-size:var(--text-small);min-width:640px}
+.block-scrollable-grid th,
+.block-scrollable-grid td{padding:var(--space-2) var(--space-4);text-align:left;
+  border-bottom:1px solid var(--line);white-space:nowrap}
+.block-scrollable-grid thead th{font-size:var(--text-micro);letter-spacing:.09em;
+  text-transform:uppercase;color:var(--ink-3);font-weight:700;background:var(--surface-2);
+  border-bottom:1px solid var(--line-2);position:sticky;top:0}
+.block-scrollable-grid tbody tr:hover{background:var(--surface-2)}
+.block-scrollable-grid tbody tr:last-child td{border-bottom:0}
+.block-scrollable-grid tbody th{font-family:var(--font-mono);font-weight:600}
+.block-scrollable-grid .num{text-align:right;font-family:var(--font-mono);
+  font-variant-numeric:tabular-nums}
+.block-scrollable-grid__vh{position:absolute;width:1px;height:1px;margin:-1px;
+  overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+/* The parent must be minmax(0,1fr), never 1fr: a 1fr track resolves its minimum to
+   auto and grows to the table instead of letting it scroll here. */
+</style>
+
+<section class="block-scrollable-grid" aria-labelledby="sg-h">
+  <header>
+    <h3 id="sg-h">Unmatched entries</h3>
+    <p>6 of 412</p>
+  </header>
+  <div class="block-scrollable-grid__scroll" tabindex="0" role="region"
+       aria-label="Unmatched entries, scrollable">
+    <table>
+      <caption class="block-scrollable-grid__vh">Unmatched entries by age and amount</caption>
+      <thead>
+        <tr>
+          <th scope="col">Reference</th><th scope="col">Account</th>
+          <th scope="col">Counterparty</th><th scope="col">Age</th>
+          <th scope="col" class="num">Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><th scope="row">TX-4471-902</th><td>Operating</td><td>Northgate Logistics</td>
+            <td>31 days</td><td class="num">12,480.00</td></tr>
+        <tr><th scope="row">TX-4468-114</th><td>Operating</td><td>Halcyon Print Co</td>
+            <td>27 days</td><td class="num">3,912.55</td></tr>
+        <tr><th scope="row">TX-4455-087</th><td>Payroll</td><td>Unmatched deposit</td>
+            <td>22 days</td><td class="num">28,004.00</td></tr>
+        <tr><th scope="row">TX-4451-330</th><td>Treasury</td><td>Weiss &amp; Kort GmbH</td>
+            <td>16 days</td><td class="num">9,140.20</td></tr>
+        <tr><th scope="row">TX-4449-201</th><td>Operating</td><td>Feltham Utilities</td>
+            <td>15 days</td><td class="num">1,287.44</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>

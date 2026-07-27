@@ -46,6 +46,13 @@ jobs:
               "$(dirname "$c")/index.html" --contract "$c" || fail=1
             echo "::endgroup::"
           done
+          # Every block reads from the reference contract, so a literal in a block
+          # fails here — which is what stops the library becoming a folder of snippets.
+          node tools/build-block-harness.mjs >/dev/null
+          echo "::group::blocks"
+          node skills/sitesmith/scripts/token-drift.mjs benchmarks/blocks/index.html \
+            --contract skills/sitesmith/blocks/CONTRACT.md || fail=1
+          echo "::endgroup::"
           exit $fail
 
   benchmarks:
@@ -76,11 +83,19 @@ jobs:
             sleep 1
           done
 
-      - name: nine builds must pass
+      # The block library is generated, so a block that was edited without
+      # rebuilding fails here rather than silently drifting from what CI measures.
+      - name: block harness is current
+        run: |
+          node tools/build-block-harness.mjs
+          git diff --exit-code -- benchmarks/blocks/index.html \
+            || { echo "::error::benchmarks/blocks/index.html is stale — run node tools/build-block-harness.mjs"; exit 1; }
+
+      - name: nine builds and the block harness must pass
         working-directory: benchmarks
         run: |
           for b in 01-saas-landing 02-product-page 03-dashboard 04-local-service 05-editorial \
-                   06-redesign/after 07-multistep-form 08-documentation 09-data-entry; do
+                   06-redesign/after 07-multistep-form 08-documentation 09-data-entry blocks; do
             echo "::group::$b"
             node ../skills/sitesmith/scripts/verify.mjs "http://localhost:4321/$b/" \
               --out "/tmp/$(echo $b | tr / -)"

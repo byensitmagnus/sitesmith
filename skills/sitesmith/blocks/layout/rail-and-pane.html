@@ -1,0 +1,80 @@
+<!--
+name: rail-and-pane
+category: layout
+use: A list you pick from beside the thing you picked. Queues, inboxes, docs, settings.
+avoid: One list with no detail, that is a page, not a split.
+tokens: --space-2 --space-3 --space-4 --line --surface --surface-2 --ink --ink-2 --ink-3
+        --accent --accent-soft --text-small --text-body --text-micro --font-mono
+prevents: A 1fr track that grows to its widest child instead of letting it scroll,
+          which put +250px of document past a 375px screen; and a rail given
+          height:100vh, which makes every page exactly one viewport tall whatever
+          it contains.
+-->
+<style>
+/* minmax(0,1fr), never plain 1fr. A 1fr track resolves its minimum to auto, so a
+   wide table inside widens the track and the overflow lands on the document. */
+.block-rail-and-pane{display:grid;grid-template-columns:280px minmax(0,1fr);
+  align-items:start;border:1px solid var(--line);border-radius:var(--radius-outer);
+  overflow:hidden;background:var(--surface)}
+/* The rail's fill is painted by the grid, not by the rail. Giving the rail
+   height:100vh instead pins the whole page to one viewport even when the list is
+   four items long. */
+@media(min-width:721px){
+  .block-rail-and-pane{background:linear-gradient(to right,var(--surface-2) 0 279px,
+    var(--line) 279px 280px,var(--surface) 280px)}
+}
+@media(max-width:720px){.block-rail-and-pane{grid-template-columns:minmax(0,1fr)}}
+
+.block-rail-and-pane__rail{align-self:start}
+@media(max-width:720px){
+  .block-rail-and-pane__rail{background:var(--surface-2);
+    border-bottom:1px solid var(--line)}
+}
+.block-rail-and-pane__rail h3{margin:0;padding:var(--space-3) var(--space-4);
+  font-size:var(--text-micro);letter-spacing:.11em;text-transform:uppercase;
+  color:var(--ink-3);border-bottom:1px solid var(--line)}
+.block-rail-and-pane__rail ul{margin:0;padding:0;list-style:none}
+.block-rail-and-pane__rail a{display:grid;grid-template-columns:minmax(0,1fr) auto;
+  gap:var(--space-1) var(--space-3);padding:var(--space-3) var(--space-4);
+  border-bottom:1px solid var(--line);text-decoration:none;color:var(--ink);
+  font-size:var(--text-small)}
+.block-rail-and-pane__rail a:hover{background:var(--surface)}
+.block-rail-and-pane__rail a[aria-current=true]{background:var(--accent-soft);
+  box-shadow:inset 3px 0 0 var(--accent)}
+.block-rail-and-pane__rail b{font-family:var(--font-mono);font-weight:600}
+.block-rail-and-pane__rail em{grid-column:1;font-style:normal;color:var(--ink-2);
+  font-size:var(--text-micro);min-width:0;overflow:hidden;text-overflow:ellipsis;
+  white-space:nowrap}
+.block-rail-and-pane__rail time{grid-column:2;grid-row:1;color:var(--ink-3);
+  font-family:var(--font-mono);font-size:var(--text-micro)}
+
+.block-rail-and-pane__pane{padding:var(--space-4);min-width:0}
+.block-rail-and-pane__pane h3{margin:0 0 var(--space-2);font-size:var(--text-h3)}
+.block-rail-and-pane__pane p{margin:0;color:var(--ink-2);font-size:var(--text-small);
+  max-width:var(--measure)}
+.block-rail-and-pane :focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+</style>
+
+<div class="block-rail-and-pane">
+  <nav class="block-rail-and-pane__rail" aria-labelledby="rp-h">
+    <h3 id="rp-h">Inbound today</h3>
+    <ul>
+      <li><a href="#blocks" aria-current="true"><b>DN-40219</b><time>07:12</time>
+        <em>Tavistock Paper Mills, 4 pallets</em></a></li>
+      <li><a href="#blocks"><b>DN-40221</b><time>07:40</time>
+        <em>Kelso Fixings, seal broken, held</em></a></li>
+      <li><a href="#blocks"><b>DN-40224</b><time>08:05</time>
+        <em>Brennand Adhesives, 1 pallet</em></a></li>
+      <li><a href="#blocks"><b>DN-40225</b><time>09:15</time>
+        <em>Orrell Timber, 9 pallets, tail-lift</em></a></li>
+    </ul>
+  </nav>
+  <div class="block-rail-and-pane__pane">
+    <h3>DN-40219 &middot; Tavistock Paper Mills</h3>
+    <p>
+      Trailer TVK-118 on Bay 3 since 07:12. The pane holds whatever the rail selected;
+      it is the column that must be minmax(0,1fr), because it is the one that will one day
+      contain something wider than itself.
+    </p>
+  </div>
+</div>

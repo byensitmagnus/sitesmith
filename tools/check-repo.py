@@ -216,6 +216,9 @@ def _gallery_coverage() -> None:
     bench = ROOT / "benchmarks"
     pages = sorted(p.parent.relative_to(bench).as_posix() for p in bench.glob("*/index.html"))
     pages += sorted(p.parent.relative_to(bench).as_posix() for p in bench.glob("*/*/index.html"))
+    # The block harness is generated from skills/sitesmith/blocks and is not a brief,
+    # so it is verified like a benchmark but does not claim a card in the gallery.
+    pages = [p for p in pages if p != "blocks"]
     for page in pages:
         if f'href="benchmarks/{page}/"' not in html:
             fail("index.html", f"benchmarks/{page} has no card in the gallery")
