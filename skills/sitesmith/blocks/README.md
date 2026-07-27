@@ -44,7 +44,7 @@ prevents: A horizontal scroller that no keyboard can reach, and a 1fr parent
 
 **Tokens only.** A block may not contain a colour, spacing value, radius or font size as a
 literal. It reads them from the contract in
-[`references/12-design-system.md`](../references/12-design-system.md), so a block dropped
+[`v2/30-contract.md`](../v2/30-contract.md), so a block dropped
 into a project inherits that project's system instead of importing a second one.
 
 **Class prefix.** Every selector starts `.block-<name>` so two blocks on one page cannot

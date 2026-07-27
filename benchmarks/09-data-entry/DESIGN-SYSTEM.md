@@ -1,7 +1,7 @@
 # Kestrel WMS — design system
 
 The contract for `benchmarks/09-data-entry/`. Format:
-[`references/12-design-system.md`](../../skills/sitesmith/references/12-design-system.md).
+[`v2/30-contract.md`](../../skills/sitesmith/v2/30-contract.md).
 Checked with:
 
 ```bash

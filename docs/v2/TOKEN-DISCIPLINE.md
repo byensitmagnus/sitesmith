@@ -62,7 +62,7 @@ are the corrected ones.
 ## What v2 has to produce, and the first proof that it can
 
 A per-project design-system artifact, written before any page and checked after every page.
-The format is [`references/12-design-system.md`](../../skills/sitesmith/references/12-design-system.md).
+The format is [`v2/30-contract.md`](../../skills/sitesmith/v2/30-contract.md).
 
 | Must carry | Produced by |
 | --- | --- |

@@ -1,7 +1,10 @@
 # The design-system contract
 
-> Original work, MIT. Written for sitesmith — not derived from any third-party skill.
-> Open at step 5, before any page exists. Every page is checked against it afterwards.
+> Original work, MIT. Open at step 5, before any page exists. Every page is checked against
+> it afterwards.
+>
+> **Derived from the brief, not from this file.** The example below shows the shape. A
+> contract that reuses its values has skipped the only step that mattered.
 
 ---
 
@@ -35,10 +38,28 @@ consistent *with*.
 
 ## The contract
 
-Write `DESIGN-SYSTEM.md` at the project root **before the first page**. It has four parts.
-Parts 1 and 4 are checked mechanically. Parts 2 and 3 are checked by reading.
+Write `DESIGN-SYSTEM.md` at the project root **before the first page**. It has five parts.
+Parts 1, 4 and 5 are checked mechanically. Parts 2 and 3 are checked by reading.
 
-A page may only use values the contract declares. Everything else is a drift.
+A page uses values the contract declares, **or a one-off the contract documents**. Anything
+else is drift.
+
+### On one-offs
+
+A token set is a vocabulary, not a cage. Real compositions need values a nine-step ramp does
+not carry: an optical offset that makes a mark sit right, a hero measure that belongs to one
+headline, a hairline that is 1.5px because the rule reads wrong at 1 and heavy at 2.
+
+Those are decisions. Record them in part 5 with the reason, and the checker accepts them.
+
+What is not a one-off is the twenty-seventh spacing value on a page, arrived at by nudging.
+The test is whether you can write the reason in a clause. If the reason is "it looked
+better", the ramp is the answer; if the reason is "the counter of the mark is 3px low at this
+size", it is a one-off and belongs in the record.
+
+**Consistency is not the same as quality.** A site where every value came from the ramp and
+nothing was composed is consistent and dead. The contract exists so composition is
+deliberate, not so composition stops.
 
 ---
 
@@ -176,6 +197,18 @@ shadow.
 
 ---
 
+## 5. One-off values
+
+A table. Empty is a legitimate state for a small site; long is a sign the ramp is wrong.
+
+| Value | Where | Why it is not a token |
+| --- | --- | --- |
+| `1.5px` | the rule under the masthead | 1px disappears against the ground, 2px reads as a border |
+| `-3px` | the brand mark's optical offset | the counter sits low at 26px and only at 26px |
+
+The checker reads this table and accepts what it lists. Anything else on the page that is
+not a token fails.
+
 ## Checking a page against the contract
 
 ```bash
@@ -184,15 +217,15 @@ node scripts/token-drift.mjs "<pages>" --contract DESIGN-SYSTEM.md
 
 The gate reports, per page:
 
-- **undeclared** — a colour, length, radius or shadow literal that no token carries. Every
-  one of these is a decision made at the call site.
+- **undeclared** — a colour, length, radius or shadow literal that is neither a token nor a
+  documented one-off. Every one of these is a decision made at the call site and forgotten.
 - **missing** — a required token group the contract does not declare.
 - **unused** — tokens the project declares and no page uses. Not a failure; a prompt to
   delete them.
 
 A page passes when it introduces no undeclared value. Utility values are exempt and listed
 in the tool: `0`, `1px` hairlines, `50%`, `100%`, `auto`, and anything inside a
-`@supports`/`@media` feature test.
+`@supports`/`@media` feature test. Values listed in part 5 are accepted with their reason.
 
 ---
 

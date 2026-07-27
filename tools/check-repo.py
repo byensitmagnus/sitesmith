@@ -68,11 +68,14 @@ def _skill_length() -> None:
 @check("SKILL.md reference-map line counts are accurate")
 def _reference_line_counts() -> None:
     text = (SKILL / "SKILL.md").read_text(encoding="utf-8")
-    for m in re.finditer(r"\[([0-9]{2}-[^\]]+\.md)\]\(references/[^)]+\)[^|]*\|[^|]*\|\s*(\d+)\s*\|", text):
-        name, claimed = m.group(1), int(m.group(2))
-        target = REFS / name
+    for m in re.finditer(
+        r"\[(?:v2/)?([0-9]{2}-[^\]]+\.md)\]\((references|v2)/[^)]+\)[^|]*\|[^|]*\|\s*(\d+)\s*\|",
+        text,
+    ):
+        name, where, claimed = m.group(1), m.group(2), int(m.group(3))
+        target = (REFS if where == "references" else SKILL / "v2") / name
         if not target.exists():
-            fail(f"SKILL.md -> {name}", "listed in the reference map but missing on disk")
+            fail(f"SKILL.md -> {name}", "listed in the reading list but missing on disk")
             continue
         actual = len(target.read_text(encoding="utf-8").splitlines())
         if actual != claimed:

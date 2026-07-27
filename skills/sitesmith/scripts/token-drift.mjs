@@ -166,9 +166,25 @@ function contractTokens(md) {
   return declaredTokens(block[1]);
 }
 
-function checkAgainstContract(html, tokens) {
+/**
+ * Values the contract documents as deliberate exceptions, from the "One-off values"
+ * table. A token set is a vocabulary, not a cage: an optical offset or a 1.5px rule
+ * is a decision, and a checker that forbids decisions produces consistent dead sites.
+ * The reason column is for a human; the checker only needs the value.
+ */
+function contractOneOffs(md) {
+  const section = md.match(/##\s*\d*\.?\s*One-off values[\s\S]*?(?=\n##\s|\n*$)/i);
+  const out = new Set();
+  if (!section) return out;
+  for (const row of section[0].matchAll(/^\|\s*`([^`]+)`\s*\|/gm)) {
+    out.add(row[1].trim().toLowerCase());
+  }
+  return out;
+}
+
+function checkAgainstContract(html, tokens, oneOffs = new Set()) {
   const sheet = css(html);
-  const declaredValues = new Set();
+  const declaredValues = new Set(oneOffs);
   for (const v of [...tokens.values()].flat()) {
     declaredValues.add(v.toLowerCase());
     for (const m of v.matchAll(HEX)) declaredValues.add(m[0].toLowerCase());
@@ -226,10 +242,14 @@ if (contractPath) {
     process.exit(2);
   }
 
+  const oneOffs = contractOneOffs(md);
   const results = [];
   for (const f of files) {
     const rel = relative(ROOT, resolve(ROOT, f)).replace(/\\/g, '/');
-    results.push({ file: rel, ...checkAgainstContract(await readFile(resolve(ROOT, f), 'utf8'), tokens) });
+    results.push({
+      file: rel,
+      ...checkAgainstContract(await readFile(resolve(ROOT, f), 'utf8'), tokens, oneOffs),
+    });
   }
   const missing = results[0]?.missing ?? [];
   const drift = results.reduce((n, r) => n + r.undeclared.reduce((m, [, c]) => m + c, 0), 0);

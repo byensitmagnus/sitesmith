@@ -2,7 +2,7 @@
 
 The token set the blocks in this folder read from. A project substitutes its own values;
 the **names** are the interface. Format:
-[`references/12-design-system.md`](../references/12-design-system.md).
+[`v2/30-contract.md`](../v2/30-contract.md).
 
 These values are deliberately neutral. They exist so the blocks can be rendered and checked
 on their own, not as a recommended palette — a project that ships this grey has not chosen
