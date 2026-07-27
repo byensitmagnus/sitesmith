@@ -22,6 +22,8 @@
   "claudeIntegrity": "sha512-ogBrvwkqF9f8okmnXKxmRNHuvtFxFEffe5pWdqOV3iQDxlUOKirFqnyWC7NGXXnDA4WkkbPH8pvSbwyCR2Auyw==",
   "claudeIntegrityNote": "npm dist.integrity for that exact version. The build downloads the tarball, recomputes its sha512 and refuses to install on a mismatch.",
   "claudePublished": "2026-07-24T23:11:21.821Z",
+  "platform": "linux/amd64",
+  "platformNote": "Pinned on pull, build and every run. The base tag is a multi-architecture manifest list, so an arm64 host would otherwise silently build and benchmark a different image.",
   "model": "claude-opus-4-5-20251101",
   "modelAccept": ["claude-opus-4-5-20251101"],
   "endpoint": "api.anthropic.com"

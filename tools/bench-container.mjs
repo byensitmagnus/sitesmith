@@ -11,18 +11,24 @@
  *   node tools/bench-container.mjs run-all      # the 18: one key prompt, stop on first failure
  *   node tools/bench-container.mjs down
  *
- * Two rules shape the whole file.
+ * Three rules shape the whole file.
+ *
+ * The two arms differ by one read-only mount and by nothing else. Strip that mount from
+ * the treatment invocation and it is byte-identical to the control's, argument for
+ * argument and variable for variable. A container that can read which arm it is in has
+ * been told the answer.
  *
  * Everything the environment is made of is committed before anything runs, in
- * bench/base.lock.json: base image digest, CLI version, model. The build consumes
- * those values and is never allowed to resolve its own, because a mutable tag can
- * change the base under a gate that is already green. What the build produces — the
- * machine-specific image id — is an artifact under benchmarks/v2/runs/, not a source
- * edit, so no commit is needed between the gates and the runs.
+ * bench/base.lock.json. What the build produces is an artifact under
+ * benchmarks/v2/runs/, which is git-ignored, so no commit is needed between the gates
+ * and the runs. After the build, nothing addresses the image by its tag: a tag is a
+ * label that can be moved onto a different image, and every container is started from
+ * the immutable image id instead.
  *
- * Names are neutral throughout. A control container that can read the subject's name
- * off an image tag, a container name or a mount path has been told the one thing it
- * was supposed not to know.
+ * A gate is bound to the Docker runtime that produced it, not just to the source that
+ * asked for it: image id and platform, network id and Internal flag, the proxy's
+ * container, image, command, allowlist and mounts. If any of it moves, both gates are
+ * void.
  */
 
 import { readFile, writeFile, mkdir, readdir, rm, stat } from 'node:fs/promises';
@@ -41,6 +47,7 @@ const BRIEFS = join(ROOT, 'benchmarks/v2/briefs');
 const BASE_LOCK_PATH = join(BENCH, 'base.lock.json');
 const TOOLS_PKG = join(BENCH, 'tools-package.json');
 const TOOLS_LOCK = join(BENCH, 'tools-package-lock.json');
+
 /* Both of these live under benchmarks/v2/runs/, which is git-ignored, and that is not
    tidiness. A gate verdict written anywhere else appears as an untracked file, and the
    next command's clean-tree check would then refuse to run — the runner would block on
@@ -62,12 +69,13 @@ const gitRaw = (...a) => execFileSync('git', a, { cwd: ROOT, encoding: 'utf8' })
 const BASE_LOCK_TEXT = await readFile(BASE_LOCK_PATH, 'utf8').catch(() => die('bench/base.lock.json is missing.'));
 const LOCK = JSON.parse(BASE_LOCK_TEXT);
 for (const k of ['base', 'baseDigest', 'debianSnapshot', 'claudeVersion', 'claudeIntegrity',
-                 'model', 'modelAccept', 'endpoint']) {
+                 'model', 'modelAccept', 'endpoint', 'platform']) {
   if (!LOCK[k]) die(`bench/base.lock.json has no ${k}`);
 }
 if (!/^sha256:[0-9a-f]{64}$/.test(LOCK.baseDigest)) die('baseDigest must be an immutable sha256 digest');
 if (!/^sha512-[A-Za-z0-9+/=]+$/.test(LOCK.claudeIntegrity)) die('claudeIntegrity must be an sha512 subresource hash');
 if (!/^\d{8}T\d{6}Z$/.test(LOCK.debianSnapshot)) die('debianSnapshot must be a snapshot.debian.org timestamp');
+if (!/^[a-z0-9]+\/[a-z0-9]+$/.test(LOCK.platform)) die('platform must look like linux/amd64');
 
 const BASE = LOCK.base;
 const BASE_DIGEST = LOCK.baseDigest;
@@ -76,19 +84,23 @@ const CLAUDE_VERSION = LOCK.claudeVersion;
 const CLAUDE_INTEGRITY = LOCK.claudeIntegrity;
 const MODEL = LOCK.model;
 const ENDPOINT = LOCK.endpoint;
+const PLATFORM = LOCK.platform;
 /* Exact acceptance. An alias may be added to modelAccept only together with the dated
    id it resolved to; a prefix match would quietly accept a different model. */
 const MODEL_ACCEPT = new Set(LOCK.modelAccept);
 
-/* Neutral identifiers. Nothing here names the subject. */
-const IMAGE = 'bench-runner:3';
+/* Neutral identifiers. Nothing here names the subject. The tag is a build-time label
+   only; after the build every container is addressed by image id. */
+const BUILD_TAG = 'bench-runner:3';
 const NET = 'benchnet';
 const PROXY = 'benchnet-egress';
-const runName = (id) => `benchrun-${String(id).replace(/[^a-z0-9-]/gi, '')}`;
+const RUN_PREFIX = 'benchrun-';
+const runName = (id) => `${RUN_PREFIX}${String(id).replace(/[^a-z0-9-]/gi, '')}`;
 
 const MARK = 'sitesmith';
 const SKILL_DIR = join(ROOT, 'skills', MARK);
 const SKILL_DEST = `/home/bench/.claude/skills/${MARK}`;
+const SKILL_MOUNT = `${SKILL_DIR}:${SKILL_DEST}:ro`;
 const BLOCKED_URL = `https://raw.githubusercontent.com/byensitmagnus/${MARK}/main/skills/${MARK}/SKILL.md`;
 const HOST_PATH = `/mnt/c/Users/Usmo1/Documents/${MARK}`;
 
@@ -96,13 +108,28 @@ const BRIEF_LIST = ['01-company', '02-shop', '03-console'];
 const RUN_TIMEOUT_MS = 45 * 60 * 1000;
 const MAX_TURNS = 220;
 const MAX_COST_PER_RUN_USD = 12;
+const MAX_DISCOVERY_USD = 1;
 const MAX_TOTAL_COST_USD = 160;
+const BUDGET = {
+  maxCostPerRunUsd: MAX_COST_PER_RUN_USD,
+  maxDiscoveryUsd: MAX_DISCOVERY_USD,
+  maxTotalCostUsd: MAX_TOTAL_COST_USD,
+  maxTurns: MAX_TURNS,
+  timeoutMs: RUN_TIMEOUT_MS,
+  enforcement: 'passed to the CLI as --max-budget-usd; the build refuses an image whose CLI lacks the flag',
+};
 
 function docker(args, opts = {}) {
   const r = spawnSync('docker', args, { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024, ...opts });
   if (r.error) die('docker is not installed or not running. See bench/README.md.');
   return r;
 }
+
+const inspectJson = (args, what) => {
+  const r = docker(args);
+  if (r.status !== 0) die(`could not inspect ${what}: ${(r.stderr || '').trim()}`);
+  try { return JSON.parse(r.stdout)[0]; } catch { return die(`unparseable inspect output for ${what}`); }
+};
 
 const GENERATION_PROMPT = [
   'Read BRIEF.md in your working directory. It is your entire brief.',
@@ -115,6 +142,10 @@ const GENERATION_PROMPT = [
   'for that you did not do.',
 ].join('\n');
 
+export const DISCOVERY_PROMPT =
+  'Output only a JSON array of the names of every skill available to you, for example ' +
+  '["alpha","beta"]. If you have none, output []. No other text.';
+
 /* ── pure rules ─────────────────────────────────────────────────────────────
    These exist so the self-test can call the real logic instead of grepping this
    file for strings. A regex that matches its own source proves nothing. */
@@ -122,22 +153,73 @@ const GENERATION_PROMPT = [
 /** The only reference the build is allowed to pull. Never a tag. */
 export const basePullRef = () => `${BASE}@${BASE_DIGEST}`;
 export const buildArgs = () => [
-  'build', '--pull=false',
+  'build', '--pull=false', '--platform', PLATFORM,
   '--build-arg', `BASE_DIGEST=${BASE_DIGEST}`,
   '--build-arg', `DEBIAN_SNAPSHOT=${DEBIAN_SNAPSHOT}`,
   '--build-arg', `CLAUDE_VERSION=${CLAUDE_VERSION}`,
   '--build-arg', `CLAUDE_INTEGRITY=${CLAUDE_INTEGRITY}`,
-  '-t', IMAGE, BENCH,
+  '-t', BUILD_TAG, BENCH,
 ];
+
+/** `claude --version` prints "2.1.220 (Claude Code)". Exact on the version token: a
+ *  substring test would accept 2.1.2201. */
+export const versionMatches = (out) => String(out).trim().split(/\s+/)[0] === CLAUDE_VERSION;
 
 /** No `echo EXIT=$?`: that swallowed the CLI's status and made a failed run exit 0.
  *  --max-budget-usd is the cap the CLI enforces on itself while it spends. Checking a
  *  total afterwards is an audit, not a limit: by the time the number is known the money
- *  is already gone. The build refuses to produce an image whose CLI lacks the flag. */
+ *  is already gone. */
 export const generationCommand = (prompt) =>
   `claude -p ${JSON.stringify(prompt)} --model ${MODEL} --output-format json ` +
   `--max-turns ${MAX_TURNS} --max-budget-usd ${MAX_COST_PER_RUN_USD} ` +
   `> /work/agent.json 2> /work/agent.err`;
+
+export const discoveryCommand = () =>
+  `claude -p ${JSON.stringify(DISCOVERY_PROMPT)} --model ${MODEL} --output-format json ` +
+  `--max-turns 3 --max-budget-usd ${MAX_DISCOVERY_USD} --debug ` +
+  `> /work/disc.json 2> /work/disc.err`;
+
+/** Structured, not a regex sweep of stderr. The CLI's debug output has no stable format
+ *  and a loose word match there would accept the skill's name appearing in a file path,
+ *  an error message or a stack trace. This reads the model's JSON result, parses the
+ *  array it was asked for, and looks at its elements. */
+export const parseSkillNames = (text) => {
+  if (typeof text !== 'string') return [];
+  const m = text.match(/\[[\s\S]*?\]/);
+  if (!m) return [];
+  try {
+    const arr = JSON.parse(m[0]);
+    return Array.isArray(arr) ? arr.filter((x) => typeof x === 'string').map((s) => s.trim()) : [];
+  } catch { return []; }
+};
+
+/** An element naming the skill. The first token is enough — a model may append a
+ *  description — but it must be an element of the parsed array, not text found anywhere. */
+export const namesSkill = (names) =>
+  names.some((n) => n.toLowerCase().split(/[^a-z0-9-]/)[0] === MARK);
+
+/** Exactly what the daemon must report. Anything else fails, in either direction. */
+export const expectedMounts = (arm, probing) => {
+  const m = ['/work'];
+  if (probing) m.push('/probe/probe.sh:ro');
+  if (arm === 'with') m.push(`${SKILL_DEST}:ro`);
+  return m.sort();
+};
+
+export const modelAccepted = (m) => MODEL_ACCEPT.has(m ?? '');
+export const gateReady = (g) => g?.mechanicalProbe?.pass === true && g?.modelProbe?.pass === true;
+export const runDirName = (runId, problems) => (problems.length ? `INVALID-${runId}` : runId);
+export const killPlan = (name) => [['kill', name], ['rm', '-f', name]];
+
+export const budgetProblems = (cost, spentSoFar) => {
+  const p = [];
+  if (typeof cost !== 'number') p.push('no cost reported, so the budget cannot be enforced');
+  else if (cost > MAX_COST_PER_RUN_USD) p.push(`cost $${cost.toFixed(2)} over the $${MAX_COST_PER_RUN_USD} per-run cap`);
+  if (spentSoFar + (typeof cost === 'number' ? cost : 0) > MAX_TOTAL_COST_USD) {
+    p.push(`total spend would exceed the $${MAX_TOTAL_COST_USD} benchmark budget`);
+  }
+  return p;
+};
 
 /** The order the eighteen runs happen in.
  *
@@ -164,38 +246,8 @@ export const runOrder = () => {
   return order;
 };
 
-export const discoveryCommand = () =>
-  `claude -p "List the names of every skill available to you, then stop. If none, say NONE." ` +
-  `--model ${MODEL} --output-format json --max-turns 3 --debug > /work/disc.json 2> /work/disc.err`;
-
-/** Exactly what the daemon must report. Anything else fails, in either direction. */
-export const expectedMounts = (arm, probing) => {
-  const m = ['/work'];
-  if (probing) m.push('/probe/probe.sh:ro');
-  if (arm === 'with') m.push(`${SKILL_DEST}:ro`);
-  return m.sort();
-};
-
-export const modelAccepted = (m) => MODEL_ACCEPT.has(m ?? '');
-export const gateReady = (g) => g?.mechanicalProbe?.pass === true && g?.modelProbe?.pass === true;
-export const runDirName = (runId, problems) => (problems.length ? `INVALID-${runId}` : runId);
-export const killPlan = (name) => [['kill', name], ['rm', '-f', name]];
-
-export const budgetProblems = (cost, spentSoFar) => {
-  const p = [];
-  if (typeof cost !== 'number') p.push('no cost reported, so the budget cannot be enforced');
-  else if (cost > MAX_COST_PER_RUN_USD) p.push(`cost $${cost.toFixed(2)} over the $${MAX_COST_PER_RUN_USD} per-run cap`);
-  if (spentSoFar + (typeof cost === 'number' ? cost : 0) > MAX_TOTAL_COST_USD) {
-    p.push(`total spend would exceed the $${MAX_TOTAL_COST_USD} benchmark budget`);
-  }
-  return p;
-};
-
 /* ── the tree must not move between the gates and the runs ─────────────── */
 
-/** Anything uncommitted is a source change the fingerprint's HEAD cannot see.
- *  benchmarks/v2/runs/ is git-ignored, so build artifacts and run output never
- *  make the tree dirty and no commit is needed mid-benchmark. */
 export const dirtyPaths = (porcelain) =>
   porcelain.split('\n').filter((l) => l.length > 3).map((l) => l.slice(3).trim()).filter(Boolean);
 
@@ -206,6 +258,84 @@ function requireCleanTree(what) {
         paths.map((p) => '    ' + p).join('\n') +
         '\n  Commit or discard these, then re-run both gates.');
   }
+}
+
+/* ── the image is addressed by id, never by tag ────────────────────────── */
+
+async function buildArtifact() {
+  return readFile(BUILD_ARTIFACT, 'utf8').then(JSON.parse, () => null);
+}
+
+async function imageRef() {
+  const a = await buildArtifact();
+  if (!a?.imageId) die('no build artifact. Run `build` first.');
+  return a.imageId;
+}
+
+/* ── the runtime a gate is bound to ────────────────────────────────────── */
+
+/** Read from the daemon, not from configuration. The gate is a claim about a running
+ *  system; if the image, the network or the proxy is not the one the probe passed
+ *  against, the claim no longer covers anything. */
+async function runtimeFacts() {
+  const image = await imageRef();
+  const img = inspectJson(['image', 'inspect', image], 'the generation image');
+  const net = inspectJson(['network', 'inspect', NET], `network ${NET}`);
+  const px = inspectJson(['container', 'inspect', PROXY], `proxy container ${PROXY}`);
+
+  // Containers legitimately come and go on this network while the benchmark runs; the
+  // benchmark's own are excluded by name. Anything else joining the isolated network is
+  // exactly the change that must invalidate a gate.
+  const attached = Object.values(net.Containers ?? {}).map((c) => c.Name)
+    .filter((n) => n !== PROXY && !n.startsWith(RUN_PREFIX)).sort();
+
+  return {
+    imageId: img.Id,
+    imagePlatform: `${img.Os}/${img.Architecture}`,
+    networkId: net.Id,
+    networkInternal: net.Internal === true,
+    networkDriver: net.Driver,
+    networkForeignContainers: attached,
+    proxyId: px.Id,
+    proxyImageId: px.Image,
+    proxyRunning: px.State?.Running === true,
+    proxyEntrypoint: px.Config?.Entrypoint ?? null,
+    proxyCmd: px.Config?.Cmd ?? null,
+    proxyAllow: (px.Config?.Env ?? []).filter((e) => e.startsWith('ALLOW=')).sort(),
+    proxyMounts: (px.Mounts ?? []).map((m) => `${m.Destination}${m.RW ? '' : ':ro'}`).sort(),
+    proxyNetworks: Object.keys(px.NetworkSettings?.Networks ?? {}).sort(),
+  };
+}
+
+export const runtimeProblems = (f) => {
+  const p = [];
+  if (f.imagePlatform !== PLATFORM) p.push(`image platform is ${f.imagePlatform}, not ${PLATFORM}`);
+  if (!f.networkInternal) p.push('the generation network is not --internal');
+  if (f.networkForeignContainers.length) p.push(`foreign containers on the network: ${f.networkForeignContainers.join(', ')}`);
+  if (!f.proxyRunning) p.push('the egress proxy is not running');
+  if (f.proxyImageId !== f.imageId) p.push('the proxy runs a different image from the generations');
+  if (JSON.stringify(f.proxyAllow) !== JSON.stringify([`ALLOW=${ENDPOINT}`])) {
+    p.push(`the proxy allowlist is ${JSON.stringify(f.proxyAllow)}, not exactly ALLOW=${ENDPOINT}`);
+  }
+  if (JSON.stringify(f.proxyMounts) !== JSON.stringify(['/proxy.mjs:ro'])) {
+    p.push(`the proxy has unexpected mounts: ${JSON.stringify(f.proxyMounts)}`);
+  }
+  if (!f.proxyNetworks.includes(NET)) p.push('the proxy is not attached to the generation network');
+  return p;
+};
+
+async function assertRuntime(gate, phase) {
+  const now = await runtimeFacts();
+  const bad = runtimeProblems(now);
+  if (bad.length) die(`the Docker runtime is not in the state a gate can cover, before ${phase}:\n` +
+    bad.map((b) => '    ' + b).join('\n'));
+  const was = gate?.runtime;
+  const moved = Object.entries(now).filter(([k, v]) => JSON.stringify(was?.[k]) !== JSON.stringify(v));
+  if (moved.length) {
+    die(`the Docker runtime changed since the gates, before ${phase}: ${moved.map(([k]) => k).join(', ')}\n` +
+        '  Both gates are void. Re-run `probe` and `discovery`.');
+  }
+  return now;
 }
 
 /* ── fingerprint ───────────────────────────────────────────────────────── */
@@ -224,9 +354,10 @@ async function hashTree(dir) {
   return h.digest('hex');
 }
 
-/** Everything that, if it changes, invalidates a green gate. */
+/** Everything in source that, if it changes, invalidates a green gate. The runtime half
+ *  lives in runtimeFacts(). */
 async function fingerprint() {
-  const build = await readFile(BUILD_ARTIFACT, 'utf8').then(JSON.parse, () => ({}));
+  const build = (await buildArtifact()) ?? {};
   return {
     runnerSha256: sha(await readFile(fileURLToPath(import.meta.url), 'utf8')),
     baseLockSha256: sha(BASE_LOCK_TEXT),
@@ -237,6 +368,7 @@ async function fingerprint() {
     toolsLockSha256: sha(await readFile(TOOLS_LOCK, 'utf8').catch(() => '')),
     baseDigest: BASE_DIGEST,
     debianSnapshot: DEBIAN_SNAPSHOT,
+    platform: PLATFORM,
     claudeVersion: CLAUDE_VERSION,
     claudeIntegrity: CLAUDE_INTEGRITY,
     model: MODEL,
@@ -247,13 +379,14 @@ async function fingerprint() {
     skillCommit: git('rev-parse', 'HEAD'),
     skillPayloadSha256: await hashTree(SKILL_DIR),
     promptSha256: sha(GENERATION_PROMPT),
+    discoveryPromptSha256: sha(DISCOVERY_PROMPT),
     runOrderSha256: sha(JSON.stringify(runOrder())),
+    budgetSha256: sha(JSON.stringify(BUDGET)),
   };
 }
 
-function driftAgainst(gate, fp) {
-  return Object.entries(fp).filter(([k, v]) => JSON.stringify(gate?.fingerprint?.[k]) !== JSON.stringify(v));
-}
+const driftAgainst = (gate, fp) =>
+  Object.entries(fp).filter(([k, v]) => JSON.stringify(gate?.fingerprint?.[k]) !== JSON.stringify(v));
 
 /* ── secret ────────────────────────────────────────────────────────────── */
 
@@ -269,6 +402,10 @@ function readSecret(purpose) {
 /* ── build ─────────────────────────────────────────────────────────────── */
 
 async function build() {
+  // First, before anything touches Docker. A build from a dirty tree cannot be traced
+  // back to a commit, and every gate downstream is bound to this one's output.
+  requireCleanTree('this build');
+
   for (const [p, what] of [[TOOLS_PKG, 'bench/tools-package.json'], [TOOLS_LOCK, 'bench/tools-package-lock.json']]) {
     if (!(await stat(p).then(() => true, () => false))) die(`${what} is missing. It is committed source, not generated here.`);
   }
@@ -276,17 +413,21 @@ async function build() {
   // The digest comes from the committed lock and nowhere else. There is deliberately no
   // path in this function that pulls a tag or reads RepoDigests: that is how a base image
   // silently changes under a gate that is already green.
-  console.log(`  pulling ${basePullRef()}`);
-  if (docker(['pull', basePullRef()], { stdio: 'inherit' }).status !== 0) die('could not pull the pinned base image');
-
+  console.log(`  pulling ${basePullRef()} for ${PLATFORM}`);
+  if (docker(['pull', '--platform', PLATFORM, basePullRef()], { stdio: 'inherit' }).status !== 0) {
+    die('could not pull the pinned base image');
+  }
   if (docker(buildArgs(), { stdio: 'inherit' }).status !== 0) die('docker build failed');
 
-  const id = docker(['image', 'inspect', '--format', '{{.Id}}', IMAGE]).stdout.trim();
-  const ver = docker(['run', '--rm', '--entrypoint', 'claude', IMAGE, '--version']).stdout.trim();
-  if (!ver.includes(CLAUDE_VERSION)) {
-    die(`the image reports CLI "${ver}" but the lock pins ${CLAUDE_VERSION}. Not proceeding.`);
-  }
-  const apt = docker(['run', '--rm', '--entrypoint', 'cat', IMAGE, '/opt/apt-manifest.txt']).stdout;
+  const img = inspectJson(['image', 'inspect', BUILD_TAG], 'the freshly built image');
+  const id = img.Id;
+  const platform = `${img.Os}/${img.Architecture}`;
+  if (platform !== PLATFORM) die(`the image is ${platform}, not the pinned ${PLATFORM}`);
+
+  // From here on the tag is never used again. Everything addresses this id.
+  const ver = docker(['run', '--rm', '--platform', PLATFORM, '--entrypoint', 'claude', id, '--version']).stdout.trim();
+  if (!versionMatches(ver)) die(`the image reports CLI "${ver}" but the lock pins exactly ${CLAUDE_VERSION}.`);
+  const apt = docker(['run', '--rm', '--platform', PLATFORM, '--entrypoint', 'cat', id, '/opt/apt-manifest.txt']).stdout;
   if (!apt.trim()) die('the image has no apt manifest, so what it installed cannot be recorded');
 
   // An artifact, not a source edit. benchmarks/v2/runs/ is git-ignored, so building does
@@ -294,38 +435,44 @@ async function build() {
   await mkdir(RUNS, { recursive: true });
   await writeFile(join(RUNS, 'apt-manifest.txt'), apt);
   await writeFile(BUILD_ARTIFACT, JSON.stringify({
-    imageTag: IMAGE, imageId: id,
-    base: BASE, baseDigest: BASE_DIGEST,
-    debianSnapshot: DEBIAN_SNAPSHOT,
-    aptPackages: apt.trim().split('\n').length,
-    aptManifestSha256: sha(apt),
-    claudeVersion: ver, pinnedClaudeVersion: CLAUDE_VERSION,
+    buildTag: BUILD_TAG, imageId: id, platform,
+    tagNote: 'The tag was used to build and is not used again. Containers are started from imageId.',
+    base: BASE, baseDigest: BASE_DIGEST, debianSnapshot: DEBIAN_SNAPSHOT,
+    aptPackages: apt.trim().split('\n').length, aptManifestSha256: sha(apt),
+    claudeVersion: ver, pinnedClaudeVersion: CLAUDE_VERSION, claudeVersionExact: true,
     claudeIntegrity: CLAUDE_INTEGRITY,
     claudeIntegrityVerified: 'in-image, before install; the build fails on a mismatch',
-    hardBudgetFlag: 'verified present at build time',
-    model: MODEL,
-    builtAt: new Date().toISOString(),
-    builtFromCommit: git('rev-parse', 'HEAD'),
+    hardBudgetFlag: 'verified present at build time', budget: BUDGET,
+    model: MODEL, builtAt: new Date().toISOString(), builtFromCommit: git('rev-parse', 'HEAD'),
     note: 'Build output, machine-specific. Committed with the run results afterwards, never before.',
   }, null, 2) + '\n');
 
-  console.log(`\n  image ${IMAGE}\n  base  ${BASE_DIGEST}\n  apt   ${apt.trim().split('\n').length} packages from snapshot ${DEBIAN_SNAPSHOT}`);
-  console.log(`  cli   ${ver}, tarball integrity verified\n  id    ${id}`);
-  console.log(`\n  wrote ${BUILD_ARTIFACT.replace(ROOT, '')}\n  next: up, then probe\n`);
+  console.log(`\n  platform ${platform}`);
+  console.log(`  base     ${BASE_DIGEST}`);
+  console.log(`  apt      ${apt.trim().split('\n').length} packages from snapshot ${DEBIAN_SNAPSHOT}`);
+  console.log(`  cli      ${ver}, tarball integrity verified, budget flag present`);
+  console.log(`  image id ${id}\n`);
+  console.log(`  wrote ${BUILD_ARTIFACT.replace(ROOT, '')}\n  next: up, then probe\n`);
 }
 
 /* ── network ───────────────────────────────────────────────────────────── */
 
-function up() {
+async function up() {
+  const image = await imageRef();
   docker(['rm', '-f', PROXY]);
   docker(['network', 'rm', NET]);
   if (docker(['network', 'create', '--internal', NET], { stdio: 'inherit' }).status !== 0) die('network create failed');
-  if (docker(['run', '-d', '--name', PROXY, '--network', 'bridge', '-e', `ALLOW=${ENDPOINT}`,
+  if (docker(['run', '-d', '--name', PROXY, '--platform', PLATFORM, '--network', 'bridge',
+              '-e', `ALLOW=${ENDPOINT}`,
               '-v', `${join(BENCH, 'egress-proxy.mjs')}:/proxy.mjs:ro`,
-              '--entrypoint', 'node', IMAGE, '/proxy.mjs'], { stdio: 'inherit' }).status !== 0) die('proxy start failed');
+              '--entrypoint', 'node', image, '/proxy.mjs'], { stdio: 'inherit' }).status !== 0) die('proxy start failed');
   if (docker(['network', 'connect', '--alias', 'egress', NET, PROXY], { stdio: 'inherit' }).status !== 0) die('proxy attach failed');
+
+  const bad = runtimeProblems(await runtimeFacts());
+  if (bad.length) die('the runtime came up wrong:\n' + bad.map((b) => '    ' + b).join('\n'));
   console.log(`\n  ${NET} is --internal: no route off the host except through the proxy`);
-  console.log(`  allowlist: ${ENDPOINT}, exact host only\n`);
+  console.log(`  allowlist: ${ENDPOINT}, exact host only`);
+  console.log(`  proxy and generations both run image ${image}\n`);
 }
 
 function down() {
@@ -336,15 +483,21 @@ function down() {
 
 /* ── the one invocation everything uses ────────────────────────────────── */
 
-function containerArgs({ workspace, arm, name, probing = false }) {
+/** Control and treatment differ by the skill mount and by nothing else.
+ *
+ *  ARM used to be passed to every container. It told the model which arm it was in, in
+ *  plain text, in its own environment — the treatment could read that it had help and
+ *  the control could read that it did not. It now exists only while probing, where the
+ *  shell script needs to know which assertions to make and no model is present. */
+function containerArgs({ workspace, arm, name, image, probing = false }) {
+  if (!image) die('containerArgs needs an image id');
   const args = [
     'run', '--rm', '-i', '--name', name,
+    '--platform', PLATFORM,
     '--network', NET,
     '-e', 'HTTPS_PROXY=http://egress:8888',
     '-e', 'HTTP_PROXY=http://egress:8888',
     '-e', 'NO_PROXY=',
-    '-e', `ENDPOINT=${ENDPOINT}`,
-    '-e', `ARM=${arm}`,
     '--memory', '4g', '--cpus', '2', '--pids-limit', '512',
     '-v', `${workspace}:/work`,
   ];
@@ -352,12 +505,20 @@ function containerArgs({ workspace, arm, name, probing = false }) {
     // Present only while probing. A generation container never has this mount and never
     // sees these variables, which is what lets the probe scan the filesystem for the mark.
     args.push('-v', `${join(BENCH, 'probe.sh')}:/probe/probe.sh:ro`,
+              '-e', `ARM=${arm}`, '-e', `ENDPOINT=${ENDPOINT}`,
               '-e', `MARK=${MARK}`, '-e', `BLOCKED_URL=${BLOCKED_URL}`, '-e', `HOST_PATH=${HOST_PATH}`);
   }
-  if (arm === 'with') args.push('-v', `${SKILL_DIR}:${SKILL_DEST}:ro`);
-  args.push(IMAGE);
+  if (arm === 'with') args.push('-v', SKILL_MOUNT);
+  args.push(image);
   return args;
 }
+
+/** Strip the one permitted difference. What is left must be identical, or the arms
+ *  differ by something other than the skill. */
+export const withoutSkillMount = (args) => {
+  const i = args.indexOf(SKILL_MOUNT);
+  return i > 0 && args[i - 1] === '-v' ? [...args.slice(0, i - 1), ...args.slice(i + 1)] : [...args];
+};
 
 /** Read the container's real bind mounts from the daemon while it runs. A mount table
  *  reported from inside the container would be asking the thing under test to grade
@@ -402,25 +563,29 @@ function runContainer(args, command, secret, timeoutMs, name) {
   });
 }
 
-function requireBuilt() {
-  return stat(BUILD_ARTIFACT).then(() => true, () => die('no build artifact. Run `build` first.'));
+async function freshWorkspace(id, files = {}) {
+  const ws = join(LAB, id);
+  await rm(ws, { recursive: true, force: true });
+  await mkdir(ws, { recursive: true });
+  for (const [name, content] of Object.entries(files)) await writeFile(join(ws, name), content);
+  return ws;
 }
 
 /* ── gate 1: mechanical, unpaid ────────────────────────────────────────── */
 
 async function probe() {
-  await requireBuilt();
   requireCleanTree('this gate');
+  const image = await imageRef();
+  const runtime = await runtimeFacts();
+  const bad = runtimeProblems(runtime);
+  if (bad.length) die('the runtime is not in a state a gate can cover:\n' + bad.map((b) => '    ' + b).join('\n'));
 
   const results = {};
   for (const arm of ['without', 'with']) {
-    const ws = join(LAB, `probe-${arm}`);
-    await rm(ws, { recursive: true, force: true });
-    await mkdir(ws, { recursive: true });
-    await writeFile(join(ws, 'BRIEF.md'), 'Probe workspace. Build nothing.\n');
+    const ws = await freshWorkspace(`probe-${arm}`, { 'BRIEF.md': 'Probe workspace. Build nothing.\n' });
     const name = runName(`probe-${arm}`);
 
-    const running = runContainer(containerArgs({ workspace: ws, arm, name, probing: true }),
+    const running = runContainer(containerArgs({ workspace: ws, arm, name, image, probing: true }),
       'bash /probe/probe.sh', null, 8 * 60 * 1000, name);
     const mounts = await inspectMounts(name, arm, true);
     const { code, out } = await running;
@@ -444,15 +609,17 @@ async function probe() {
   }
 
   const pass = results.without.pass && results.with.pass;
-  await mkdir(join(ROOT, 'benchmarks/v2'), { recursive: true });
+  await mkdir(RUNS, { recursive: true });
   await writeFile(GATE, JSON.stringify({
     when: new Date().toISOString(),
     treeClean: true,
     fingerprint: await fingerprint(),
+    runtime, runtimeSha256: sha(JSON.stringify(runtime)),
+    budget: BUDGET,
     mechanicalProbe: { control: results.without, treatment: results.with, pass },
     modelProbe: null,
     note: 'No credential is used or recorded by the mechanical probe. Both gates must be green, ' +
-          'against one unchanged fingerprint, before run-all.',
+          'against one unchanged fingerprint and one unchanged Docker runtime, before run-all.',
   }, null, 2) + '\n');
   console.log(`\n  ${pass ? 'PASS — next: discovery, which is also a gate' : 'FAIL — stop here'}\n`);
   process.exit(pass ? 0 : 1);
@@ -467,39 +634,57 @@ async function discovery() {
   const fp = await fingerprint();
   const drift = driftAgainst(gate, fp);
   if (drift.length) die(`the environment changed since the mechanical probe: ${drift.map(([k]) => k).join(', ')}`);
+  await assertRuntime(gate, 'discovery');
+  const image = await imageRef();
 
   const secret = await readSecret('two short calls');
   if (!secret) die('no key given');
 
   const out = {};
   for (const arm of ['without', 'with']) {
-    const ws = join(LAB, `probe-${arm}`);
+    // A fresh, empty workspace per arm. Reusing the probe workspaces left probe.log and
+    // a probe write-test behind, so the two arms would not have started from the same
+    // directory — a difference that has nothing to do with the skill.
+    const ws = await freshWorkspace(`disc-${arm}`);
     const name = runName(`disc-${arm}`);
-    const r = await runContainer(containerArgs({ workspace: ws, arm, name }), discoveryCommand(), secret, 5 * 60 * 1000, name);
+    const r = await runContainer(containerArgs({ workspace: ws, arm, name, image }),
+      discoveryCommand(), secret, 5 * 60 * 1000, name);
+
     const raw = await readFile(join(ws, 'disc.json'), 'utf8').catch(() => '');
     const err = await readFile(join(ws, 'disc.err'), 'utf8').catch(() => '');
     let j = null;
     try { j = JSON.parse(raw); } catch { /* handled below */ }
     const modelReturned = j?.modelUsage ? Object.keys(j.modelUsage)[0] : (j?.model ?? null);
+    const names = parseSkillNames(j?.result ?? '');
     out[arm] = {
       exit: r.code, isError: j?.is_error ?? null, modelReturned, modelAccepted: modelAccepted(modelReturned),
       sessionId: j?.session_id ?? null, costUsd: j?.total_cost_usd ?? null,
-      skillReferenced: new RegExp(MARK, 'i').test((j?.result ?? '') + err),
+      skillNames: names, namesSkill: namesSkill(names),
+      // Secondary evidence only. The debug channel has no stable format, so it is
+      // recorded and never gates. The negative direction is different: any appearance of
+      // the mark in the control is a leak regardless of where it came from.
+      debugMentionsSkillPath: err.includes(SKILL_DEST),
+      markOccurrencesAnywhere: ((j?.result ?? '') + err).toLowerCase().split(MARK).length - 1,
       resultHead: (j?.result ?? '').slice(0, 200),
     };
-    console.log(`\n  discovery — ${arm}: exit ${r.code}, skill referenced ${out[arm].skillReferenced}, model ${modelReturned ?? '?'}`);
+    console.log(`\n  discovery — ${arm}: exit ${r.code}, skills ${JSON.stringify(names).slice(0, 120)}`);
+    console.log(`    names the skill ${out[arm].namesSkill}, mark seen ${out[arm].markOccurrencesAnywhere}x, model ${modelReturned ?? '?'}`);
   }
 
-  const pass = out.with.skillReferenced === true && out.without.skillReferenced === false &&
-               out.with.exit === 0 && out.without.exit === 0 &&
-               out.with.isError !== true && out.without.isError !== true &&
-               out.with.modelAccepted && out.without.modelAccepted;
+  const pass =
+    out.with.namesSkill === true &&
+    out.without.namesSkill === false && out.without.markOccurrencesAnywhere === 0 &&
+    out.with.exit === 0 && out.without.exit === 0 &&
+    out.with.isError !== true && out.without.isError !== true &&
+    out.with.modelAccepted && out.without.modelAccepted;
 
+  const discoveryCostUsd = (out.with.costUsd ?? 0) + (out.without.costUsd ?? 0);
   await writeFile(GATE, JSON.stringify({
     ...gate, fingerprint: fp,
-    modelProbe: { control: out.without, treatment: out.with, pass, when: new Date().toISOString() },
+    modelProbe: { control: out.without, treatment: out.with, pass, discoveryCostUsd, when: new Date().toISOString() },
   }, null, 2) + '\n');
-  console.log(`\n  ${pass ? 'PASS — the treatment loads the skill and the control never sees it. run-all is unlocked.' : 'FAIL — do not run the generations'}\n`);
+  console.log(`\n  spent $${discoveryCostUsd.toFixed(2)}`);
+  console.log(`  ${pass ? 'PASS — the treatment loads the skill and the control never sees it. run-all is unlocked.' : 'FAIL — do not run the generations'}\n`);
   process.exit(pass ? 0 : 1);
 }
 
@@ -511,41 +696,53 @@ async function preflight() {
   const drift = gate ? driftAgainst(gate, fp) : [];
   const dirty = dirtyPaths(gitRaw('status', '--porcelain'));
   const order = runOrder();
+
   console.log(`\n  planned: ${BRIEF_LIST.length} briefs x 2 arms x 3 = ${order.length} generations, in this order`);
   for (const s of order) console.log(`    ${String(s.index + 1).padStart(2)}  ${s.brief}-${s.arm}-${s.run}`);
   console.log(`\n  first position   ${order.filter((s) => s.index % 2 === 0 && s.arm === 'with').length} with, ` +
     `${order.filter((s) => s.index % 2 === 0 && s.arm === 'without').length} without (9 pairs cannot split evenly)`);
   console.log(`  model            ${MODEL}`);
+  console.log(`  platform         ${PLATFORM}   (committed)`);
   console.log(`  base digest      ${BASE_DIGEST}   (committed)`);
   console.log(`  debian snapshot  ${DEBIAN_SNAPSHOT}   (committed)`);
-  console.log(`  cli              ${CLAUDE_VERSION}, integrity pinned   (committed)`);
-  console.log(`  image id         ${fp.imageId ?? 'not built yet'}   (artifact)`);
+  console.log(`  cli              ${CLAUDE_VERSION} exactly, integrity pinned   (committed)`);
+  console.log(`  image id         ${fp.imageId ?? 'not built yet'}   (artifact, used instead of the tag)`);
   console.log(`  apt manifest     ${fp.aptManifestSha256?.slice(0, 16) ?? 'not built yet'}   (artifact)`);
   console.log(`  skill commit     ${fp.skillCommit}`);
   console.log(`  working tree     ${dirty.length ? 'DIRTY: ' + dirty.join(', ') : 'clean'}`);
   console.log(`  per run          ${RUN_TIMEOUT_MS / 60000} min, ${MAX_TURNS} turns, $${MAX_COST_PER_RUN_USD} enforced by the CLI`);
   console.log(`  total budget     $${MAX_TOTAL_COST_USD}, checked before each run starts`);
+  console.log(`  discovery spend  ${gate?.modelProbe?.discoveryCostUsd != null ? '$' + gate.modelProbe.discoveryCostUsd.toFixed(2) : 'not run'}`);
   console.log(`  mechanical gate  ${gate?.mechanicalProbe?.pass === true ? 'green' : 'NOT GREEN'}`);
   console.log(`  discovery gate   ${gate?.modelProbe?.pass === true ? 'green' : 'NOT GREEN'}`);
   if (drift.length) console.log(`  DRIFT since the gates: ${drift.map(([k]) => k).join(', ')}`);
+
+  let runtimeOk = false;
+  if (gateReady(gate)) {
+    await assertRuntime(gate, 'preflight');   // exits on any change
+    runtimeOk = true;
+    console.log('  docker runtime   unchanged since the gates');
+  }
   console.log('');
-  process.exit(gateReady(gate) && drift.length === 0 && dirty.length === 0 ? 0 : 1);
+  process.exit(gateReady(gate) && drift.length === 0 && dirty.length === 0 && runtimeOk ? 0 : 1);
 }
 
 /* ── run ───────────────────────────────────────────────────────────────── */
 
-async function runOne(slot, secret, fp, spentSoFar) {
+async function runOne(slot, secret, fp, gate, spentSoFar, image) {
   const { brief, arm, run: n } = slot;
   const runId = `${brief}-${arm}-${n}`;
-  const ws = join(LAB, runId);
   const name = runName(runId);
   const briefText = await readFile(join(BRIEFS, `${brief}.md`), 'utf8');
-  await rm(ws, { recursive: true, force: true });
+  const ws = await freshWorkspace(runId, { 'BRIEF.md': briefText });
   await mkdir(join(ws, 'site'), { recursive: true });
-  await writeFile(join(ws, 'BRIEF.md'), briefText);
+
+  // Re-read the daemon before every run, not once at the start. A network recreated or a
+  // proxy restarted between run 4 and run 5 would otherwise pass unnoticed.
+  const runtime = await assertRuntime(gate, `run ${slot.index + 1}`);
 
   const started = new Date().toISOString();
-  const running = runContainer(containerArgs({ workspace: ws, arm, name }),
+  const running = runContainer(containerArgs({ workspace: ws, arm, name, image }),
     generationCommand(GENERATION_PROMPT), secret, RUN_TIMEOUT_MS, name);
   const mounts = await inspectMounts(name, arm, false);
   const r = await running;
@@ -577,8 +774,14 @@ async function runOne(slot, secret, fp, spentSoFar) {
     modelRequested: MODEL, modelReturned, modelAccepted: modelAccepted(modelReturned),
     sessionId: j?.session_id ?? null, usage: j?.usage ?? null, numTurns: j?.num_turns ?? null,
     costUsd: cost, isError: j?.is_error ?? null,
-    settings: { outputFormat: 'json', maxTurns: MAX_TURNS, permissionMode: 'default', timeoutMs: RUN_TIMEOUT_MS },
+    platform: PLATFORM, imageId: image,
+    budget: BUDGET, spentBeforeThisRunUsd: spentSoFar,
+    discoveryCostUsd: gate?.modelProbe?.discoveryCostUsd ?? null,
+    settings: { outputFormat: 'json', maxTurns: MAX_TURNS, permissionMode: 'default', timeoutMs: RUN_TIMEOUT_MS,
+                budgetFlag: `--max-budget-usd ${MAX_COST_PER_RUN_USD}` },
     mounts: { expected: mounts.want ?? expectedMounts(arm, false), observed: mounts.got ?? null, ok: mounts.ok },
+    armDifference: 'one read-only bind mount; container arguments and environment are otherwise identical',
+    runtimeSha256: sha(JSON.stringify(runtime)),
     ...fp,
     gates: { mechanical: 'pass', discovery: 'pass' },
     started, finished, durationMs: Date.parse(finished) - Date.parse(started),
@@ -606,6 +809,8 @@ async function runAll() {
   const fp = await fingerprint();
   const drift = driftAgainst(gate, fp);
   if (drift.length) die(`the environment changed since the gates: ${drift.map(([k]) => k).join(', ')}. Re-run both.`);
+  await assertRuntime(gate, 'the runs');
+  const image = await imageRef();
 
   const secret = await readSecret('all 18 generations, asked once');
   if (!secret) die('no key given');
@@ -620,7 +825,7 @@ async function runAll() {
       die(`\n  stopping before run ${slot.index + 1}: $${spent.toFixed(2)} spent and the next run ` +
         `could take it past the $${MAX_TOTAL_COST_USD} budget.\n`);
     }
-    const res = await runOne(slot, secret, fp, spent);
+    const res = await runOne(slot, secret, fp, gate, spent, image);
     spent += res.cost;
     if (!res.ok) die(`\n  stopped at the first failure. $${spent.toFixed(2)} spent. ` +
       'The failed run is under INVALID-* and is not benchmark data.\n');
@@ -645,8 +850,15 @@ async function selftest() {
     buildArgs().includes(`BASE_DIGEST=${BASE_DIGEST}`) && buildArgs().includes('--pull=false'));
   ok('the digest in use is the one on disk',
     BASE_DIGEST === JSON.parse(await readFile(BASE_LOCK_PATH, 'utf8')).baseDigest);
+  ok('the platform is pinned everywhere it can be',
+    buildArgs().includes('--platform') && buildArgs().includes(PLATFORM) &&
+    containerArgs({ workspace: '/w', arm: 'without', name: 'n', image: 'sha256:x' }).includes(PLATFORM));
+  ok('the CLI version is matched exactly, not by substring',
+    versionMatches(`${CLAUDE_VERSION} (Claude Code)`) && !versionMatches(`${CLAUDE_VERSION}1 (Claude Code)`) &&
+    !versionMatches('2.1.9 (Claude Code)'));
   ok('the image id is an artifact, not source',
     BUILD_ARTIFACT.includes('benchmarks') && BUILD_ARTIFACT.includes('runs') && !tracked('bench/image.lock.json'));
+
   // The runner must be able to finish its own sequence. Every file it writes between
   // `build` and the last run has to be git-ignored, or the next command's clean-tree
   // check refuses to proceed and the benchmark blocks on its own output.
@@ -662,18 +874,18 @@ async function selftest() {
   ]) ok(`${what} cannot dirty the tree`, ignored(p), p);
 
   const dockerfile = await readFile(join(BENCH, 'Dockerfile'), 'utf8');
-  ok('probe.sh is not baked into the image', !/COPY\s+probe\.sh/.test(dockerfile));
-  ok('the Dockerfile takes the digest as a build argument', /FROM \S+@\$\{BASE_DIGEST\}/.test(dockerfile));
   // Comments are stripped first: this file explains why deb.debian.org is not used, and
   // a naive grep would read its own explanation as the thing it forbids.
   const instructions = dockerfile.split('\n').filter((l) => !l.trim().startsWith('#')).join('\n');
+  ok('probe.sh is not baked into the image', !/COPY\s+probe\.sh/.test(instructions));
+  ok('the Dockerfile takes the digest as a build argument', /FROM \S+@\$\{BASE_DIGEST\}/.test(instructions));
   ok('apt reads a frozen snapshot, not a moving mirror',
     /snapshot\.debian\.org\/archive\/debian\/%s/.test(instructions) && !/deb\.debian\.org/.test(instructions));
   ok('the CLI tarball is verified before it is installed',
-    /npm pack "@anthropic-ai\/claude-code@\$\{CLAUDE_VERSION\}"/.test(dockerfile) &&
-    /createHash\("sha512"\)/.test(dockerfile) && /npm install -g "\$TARBALL"/.test(dockerfile));
-  ok('the build refuses a CLI without the budget flag', /max-budget-usd/.test(dockerfile));
-  ok('what apt installed is recorded in the image', /dpkg-query -W .* > \/opt\/apt-manifest\.txt/.test(dockerfile));
+    /npm pack "@anthropic-ai\/claude-code@\$\{CLAUDE_VERSION\}"/.test(instructions) &&
+    /createHash\("sha512"\)/.test(instructions) && /npm install -g "\$TARBALL"/.test(instructions));
+  ok('the build refuses a CLI without the budget flag', /max-budget-usd/.test(instructions));
+  ok('what apt installed is recorded in the image', /dpkg-query -W .* > \/opt\/apt-manifest\.txt/.test(instructions));
   ok('the integrity hash is actually passed to the build',
     buildArgs().includes(`CLAUDE_INTEGRITY=${CLAUDE_INTEGRITY}`) &&
     buildArgs().includes(`DEBIAN_SNAPSHOT=${DEBIAN_SNAPSHOT}`));
@@ -691,21 +903,34 @@ async function selftest() {
   ok('the probe needs no credential', !/ANTHROPIC_API_KEY/.test(probeSh));
 
   ok('image, network and container names are neutral',
-    ![IMAGE, NET, PROXY, runName('01-company-with-1')].some((s) => new RegExp(MARK, 'i').test(s)));
+    ![BUILD_TAG, NET, PROXY, runName('01-company-with-1')].some((s) => new RegExp(MARK, 'i').test(s)));
 
-  const gen = containerArgs({ workspace: '/tmp/x', arm: 'without', name: 'n' });
-  const treat = containerArgs({ workspace: '/tmp/x', arm: 'with', name: 'n' });
+  /* The central claim: the two arms differ by one mount and by nothing else. */
+  const IMG = 'sha256:0123456789abcdef';
+  const ctl = containerArgs({ workspace: '/w', arm: 'without', name: 'n', image: IMG });
+  const trt = containerArgs({ workspace: '/w', arm: 'with', name: 'n', image: IMG });
+  ok('treatment minus the skill mount is byte-identical to control',
+    JSON.stringify(withoutSkillMount(trt)) === JSON.stringify(ctl), `${trt.length} vs ${ctl.length} args`);
+  ok('the skill mount is the only difference',
+    trt.length === ctl.length + 2 && trt.includes(SKILL_MOUNT) && !ctl.includes(SKILL_MOUNT));
+  ok('no generation or discovery container is told which arm it is in',
+    !ctl.concat(trt).some((a) => /^ARM=/.test(String(a))));
+  ok('the probe is the only container that gets ARM',
+    containerArgs({ workspace: '/w', arm: 'with', name: 'n', image: IMG, probing: true }).includes('ARM=with'));
+  ok('containers are started from an image id, not a tag',
+    ctl[ctl.length - 1] === IMG && !ctl.includes(BUILD_TAG));
+
   const mountsOf = (a) => a.filter((_, i) => a[i - 1] === '-v');
   ok('a control generation mounts only the workspace',
-    JSON.stringify(mountsOf(gen)) === JSON.stringify(['/tmp/x:/work']));
+    JSON.stringify(mountsOf(ctl)) === JSON.stringify(['/w:/work']));
   ok('a treatment generation adds only the read-only skill',
-    mountsOf(treat).length === 2 && mountsOf(treat)[1].endsWith(':ro'));
+    mountsOf(trt).length === 2 && mountsOf(trt)[1].endsWith(':ro'));
   ok('no generation container carries a probe mount',
-    !gen.concat(treat).some((a) => String(a).includes('/probe/')));
+    !ctl.concat(trt).some((a) => String(a).includes('/probe/')));
   ok('no generation container carries the mark in its environment',
-    !gen.concat(treat).some((a) => /^(MARK|BLOCKED_URL|HOST_PATH)=/.test(String(a))));
+    !ctl.concat(trt).some((a) => /^(MARK|BLOCKED_URL|HOST_PATH)=/.test(String(a))));
   ok('no credential appears in any docker argument',
-    !gen.some((a) => /API_KEY|TOKEN|SECRET|sk-ant/i.test(String(a))));
+    !ctl.some((a) => /API_KEY|TOKEN|SECRET|sk-ant/i.test(String(a))));
 
   ok('the expected mount table is exact',
     JSON.stringify(expectedMounts('without', false)) === JSON.stringify(['/work']) &&
@@ -713,7 +938,52 @@ async function selftest() {
   ok('the real exit code is kept',
     !/echo EXIT=/.test(generationCommand('p')) && /2> \/work\/agent\.err/.test(generationCommand('p')));
   ok('the spend cap is handed to the process, not checked afterwards',
-    generationCommand('p').includes(`--max-budget-usd ${MAX_COST_PER_RUN_USD}`));
+    generationCommand('p').includes(`--max-budget-usd ${MAX_COST_PER_RUN_USD}`) &&
+    discoveryCommand().includes(`--max-budget-usd ${MAX_DISCOVERY_USD}`));
+
+  /* Discovery evidence must be structured. */
+  ok('skill discovery reads a parsed list, not stray text',
+    namesSkill(parseSkillNames(`["alpha","${MARK}","beta"]`)) &&
+    namesSkill(parseSkillNames(`["${MARK} — build websites"]`)) &&
+    !namesSkill(parseSkillNames('["alpha","beta"]')) &&
+    !namesSkill(parseSkillNames(`I could not find ${MARK} anywhere on disk`)) &&
+    !namesSkill(parseSkillNames(`error at /opt/${MARK}/x.js`)));
+
+  /* Runtime binding. */
+  const goodRuntime = {
+    imageId: IMG, imagePlatform: PLATFORM, networkId: 'n1', networkInternal: true, networkDriver: 'bridge',
+    networkForeignContainers: [], proxyId: 'p1', proxyImageId: IMG, proxyRunning: true,
+    proxyEntrypoint: ['node'], proxyCmd: ['/proxy.mjs'], proxyAllow: [`ALLOW=${ENDPOINT}`],
+    proxyMounts: ['/proxy.mjs:ro'], proxyNetworks: [NET, 'bridge'].sort(),
+  };
+  ok('a correct runtime raises nothing', runtimeProblems(goodRuntime).length === 0);
+  ok('a non-internal network is rejected',
+    runtimeProblems({ ...goodRuntime, networkInternal: false }).length === 1);
+  ok('a widened allowlist is rejected',
+    runtimeProblems({ ...goodRuntime, proxyAllow: [`ALLOW=${ENDPOINT},example.com`] }).length === 1);
+  ok('a foreign container on the network is rejected',
+    runtimeProblems({ ...goodRuntime, networkForeignContainers: ['someone-elses'] }).length === 1);
+  ok('a proxy on a different image is rejected',
+    runtimeProblems({ ...goodRuntime, proxyImageId: 'sha256:other' }).length === 1);
+  ok('an extra proxy mount is rejected',
+    runtimeProblems({ ...goodRuntime, proxyMounts: ['/proxy.mjs:ro', '/host:ro'] }).length === 1);
+  ok('the wrong platform is rejected',
+    runtimeProblems({ ...goodRuntime, imagePlatform: 'linux/arm64' }).length === 1);
+
+  ok('the model must match exactly',
+    modelAccepted(MODEL) && !modelAccepted('claude-sonnet-4-5-20250929') && !modelAccepted(null));
+  ok('a timeout kills and removes the container',
+    JSON.stringify(killPlan('c')) === JSON.stringify([['kill', 'c'], ['rm', '-f', 'c']]));
+  ok('the budget is enforced per run and in total',
+    budgetProblems(1, 0).length === 0 && budgetProblems(99, 0).length > 0 &&
+    budgetProblems(null, 0).length > 0 && budgetProblems(5, MAX_TOTAL_COST_USD).length > 0);
+  ok('both gates are required before a run',
+    !gateReady(null) && !gateReady({ mechanicalProbe: { pass: true } }) &&
+    !gateReady({ mechanicalProbe: { pass: true }, modelProbe: { pass: false } }) &&
+    gateReady({ mechanicalProbe: { pass: true }, modelProbe: { pass: true } }));
+  ok('an uncommitted change is detected, with the path intact',
+    JSON.stringify(dirtyPaths(' M bench/Dockerfile\n?? x.txt\nM  a/b.json\n')) ===
+      JSON.stringify(['bench/Dockerfile', 'x.txt', 'a/b.json']) && dirtyPaths('').length === 0);
 
   const order = runOrder();
   const count = (f) => order.filter(f).length;
@@ -731,20 +1001,6 @@ async function selftest() {
     new Set(order.slice(0, 6).map((s) => s.brief)).size === BRIEF_LIST.length);
   ok('the order is deterministic, not seeded by chance',
     JSON.stringify(runOrder()) === JSON.stringify(runOrder()));
-  ok('the model must match exactly',
-    modelAccepted(MODEL) && !modelAccepted('claude-sonnet-4-5-20250929') && !modelAccepted(null));
-  ok('a timeout kills and removes the container',
-    JSON.stringify(killPlan('c')) === JSON.stringify([['kill', 'c'], ['rm', '-f', 'c']]));
-  ok('the budget is enforced per run and in total',
-    budgetProblems(1, 0).length === 0 && budgetProblems(99, 0).length > 0 &&
-    budgetProblems(null, 0).length > 0 && budgetProblems(5, MAX_TOTAL_COST_USD).length > 0);
-  ok('both gates are required before a run',
-    !gateReady(null) && !gateReady({ mechanicalProbe: { pass: true } }) &&
-    !gateReady({ mechanicalProbe: { pass: true }, modelProbe: { pass: false } }) &&
-    gateReady({ mechanicalProbe: { pass: true }, modelProbe: { pass: true } }));
-  ok('an uncommitted change is detected, with the path intact',
-    JSON.stringify(dirtyPaths(' M bench/Dockerfile\n?? x.txt\nM  a/b.json\n')) ===
-      JSON.stringify(['bench/Dockerfile', 'x.txt', 'a/b.json']) && dirtyPaths('').length === 0);
   ok('a failed run is quarantined rather than counted',
     runDirName('a', []) === 'a' && runDirName('a', ['x']) === 'INVALID-a');
 
@@ -756,7 +1012,7 @@ async function selftest() {
     console.log(`    ${k.padEnd(22)} ${typeof v === 'string' ? v.slice(0, 71) : JSON.stringify(v)}`);
   }
   const failed = rows.filter(([s]) => s.startsWith('FAIL')).length;
-  console.log(`\n  ${failed === 0 ? 'PASS — nothing was spent' : `FAIL — ${failed} problem(s)`}\n`);
+  console.log(`\n  ${failed === 0 ? `PASS — ${rows.length} checks, nothing was spent` : `FAIL — ${failed} problem(s)`}\n`);
   process.exit(failed === 0 ? 0 : 1);
 }
 
