@@ -19,3 +19,11 @@ gallery/verify-live/
 # the evidence and are committed; the pictures of them are not.
 benchmarks/v2/runs/**/shots/
 .sitesmith/
+
+# Dry-run benchmark artefacts. The runs were workspace-isolated, not process-isolated,
+# so they are not evidence and are not carried in the repository. The harness, the
+# probe, the briefs and the rubric are.
+benchmarks/v2/sheets/
+benchmarks/v2/runs/
+benchmarks/v2/grading/
+benchmarks/v2/measurements-*.json

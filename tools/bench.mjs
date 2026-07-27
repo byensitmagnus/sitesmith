@@ -13,7 +13,7 @@
  * Exit 0 fine, 1 the run failed a floor check, 2 could not run.
  */
 
-import { readFile, writeFile, mkdir, readdir, cp, rm } from 'node:fs/promises';
+import { readFile, writeFile, mkdir, readdir, cp, rm, stat } from 'node:fs/promises';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { join, resolve, relative, basename } from 'node:path';
@@ -281,22 +281,34 @@ async function grade([brief]) {
     .sort((a, b) => a.key.localeCompare(b.key))
     .map((r, i) => ({ ...r, label: String.fromCharCode(65 + i) }));
 
+  // The pack is images and the brief. No code, no run name, no manifest, no report:
+  // every one of those names the arm, and a grader who can infer the arm is not blind.
   const out = join(ROOT, 'benchmarks/v2/grading', brief);
+  const sheets = join(ROOT, 'benchmarks/v2/sheets');
   await rm(out, { recursive: true, force: true });
+  await mkdir(out, { recursive: true });
+  let copied = 0;
   for (const r of labelled) {
-    const dest = join(out, r.label);
-    await cp(join(RUNS, r.name, 'site'), join(dest, 'site'), { recursive: true });
-    await cp(join(RUNS, r.name, 'shots'), join(dest, 'shots'), { recursive: true }).catch(() => {});
-    // manifest.json and report.json stay behind: both name the arm.
+    for (const view of ['desktop', 'mobile']) {
+      const src = join(sheets, `${r.name}-${view}.jpg`);
+      try {
+        await cp(src, join(out, `${r.label}-${view}.jpg`));
+        copied++;
+      } catch {
+        console.error(`  missing sheet: ${r.name}-${view}.jpg — run bench-sheets.mjs first`);
+      }
+    }
   }
+  await cp(join(BRIEFS, `${brief}.md`), join(out, 'BRIEF.md'));
+  await cp(join(ROOT, 'benchmarks/v2/rubric.md'), join(out, 'RUBRIC.md'));
   await writeFile(
-    join(out, 'KEY.json'),
+    join(out, '.key.json'),
     JSON.stringify(Object.fromEntries(labelled.map((r) => [r.label, r.name])), null, 2) + '\n',
   );
 
-  console.log(`\n  ${relative(ROOT, out)} — ${labelled.length} runs, labelled ${labelled.map((r) => r.label).join(' ')}`);
-  console.log(`  Grade every one against benchmarks/v2/rubric.md before opening KEY.json.`);
-  console.log(`  Write grade.json per label: seven scores and one sentence each.\n`);
+  console.log(`\n  ${relative(ROOT, out)} — ${labelled.length} builds, labelled ${labelled.map((r) => r.label).join(' ')}`);
+  console.log(`  ${copied} sheets, the brief and the rubric. No code, no run names.`);
+  console.log(`  Grade all of them, then open .key.json — not before.\n`);
 }
 
 /* ── main ──────────────────────────────────────────────────────────────── */
