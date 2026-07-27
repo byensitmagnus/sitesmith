@@ -17,13 +17,25 @@ docker info --format "{{.ServerVersion}}"
 ## 2. Build, start, prove — about 10 minutes, no spend
 
 ```bash
-node tools/bench-container.mjs build && node tools/bench-container.mjs up && node tools/bench-container.mjs probe
+docker info --format "{{.ServerVersion}}" && node tools/bench-container.mjs selftest && node tools/bench-container.mjs build && node tools/bench-container.mjs up && node tools/bench-container.mjs probe
 ```
 
-`build` writes `bench/image.lock.json`. **Commit it.** It pins the base image by digest, so
-every later build is the same image rather than a similar one.
-
 `probe` must print **PASS**. It runs no model and needs no key.
+
+## What is pinned, and where
+
+`bench/base.lock.json` is committed source and is the only place the base image digest,
+the CLI version and the model are written down. `build` consumes those values; there is no
+path in it that pulls a mutable tag or resolves a digest of its own, because a tag can move
+under a gate that is already green. `bench/tools-package-lock.json` is committed for the
+same reason.
+
+What the build *produces* — the machine-specific image id — is written to
+`benchmarks/v2/runs/image-build.json`, which is git-ignored. It is an artifact of running
+the benchmark, not an edit to it, so **nothing needs to be committed between the two gates
+and the eighteen runs**. That matters: every command from `probe` onwards refuses to
+proceed if the working tree is dirty or if `HEAD` has moved, and both gates are void if it
+does.
 
 ---
 

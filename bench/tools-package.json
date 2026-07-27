@@ -1,0 +1,10 @@
+{
+  "name": "bench-tools",
+  "private": true,
+  "type": "module",
+  "description": "Measurement tools available to a generation via NODE_PATH. Committed source, together with its lockfile, so the image is built from a fixed dependency tree rather than whatever the registry serves that day.",
+  "dependencies": {
+    "playwright": "1.49.1",
+    "@axe-core/playwright": "4.10.1"
+  }
+}

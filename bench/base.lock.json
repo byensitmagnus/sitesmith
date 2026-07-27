@@ -1,0 +1,25 @@
+{
+  "$comment": [
+    "The committed base lock. Everything the generation environment is built from is fixed here,",
+    "in source, before anything runs. The build consumes these values and is not allowed to resolve",
+    "its own: pulling a mutable tag would let the base image change under a green gate.",
+    "",
+    "The machine-specific image id is NOT here. It is a build artifact, written to",
+    "benchmarks/v2/runs/image-build.json, because it is produced by running the benchmark rather",
+    "than by editing it. Changing this file changes HEAD, which invalidates both gates by design."
+  ],
+  "base": "node:22-bookworm-slim",
+  "baseDigest": "sha256:6c74791e557ce11fc957704f6d4fe134a7bc8d6f5ca4403205b2966bd488f6b3",
+  "baseProvenance": {
+    "source": "https://hub.docker.com/v2/repositories/library/node/tags/22-bookworm-slim",
+    "tagLastPushed": "2026-07-14T08:38:37.071739Z",
+    "resolvedOn": "2026-07-27",
+    "note": "Multi-architecture manifest list. node:22-bookworm-slim@<digest> resolves to this exact list on every host."
+  },
+  "claudeVersion": "2.1.220",
+  "claudeIntegrity": "sha512-ogBrvwkqF9f8okmnXKxmRNHuvtFxFEffe5pWdqOV3iQDxlUOKirFqnyWC7NGXXnDA4WkkbPH8pvSbwyCR2Auyw==",
+  "claudePublished": "2026-07-24T23:11:21.821Z",
+  "model": "claude-opus-4-5-20251101",
+  "modelAccept": ["claude-opus-4-5-20251101"],
+  "endpoint": "api.anthropic.com"
+}

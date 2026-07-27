@@ -3,7 +3,7 @@
  * The containerised benchmark runner. Original work, MIT.
  *
  *   node tools/bench-container.mjs selftest     # unpaid, asserts the runner's own rules
- *   node tools/bench-container.mjs build        # pinned image, writes image.lock.json
+ *   node tools/bench-container.mjs build        # builds from the committed base lock
  *   node tools/bench-container.mjs up           # internal network + egress proxy
  *   node tools/bench-container.mjs probe        # UNPAID mechanical gate
  *   node tools/bench-container.mjs discovery    # PAID gate, two short calls
@@ -11,8 +11,17 @@
  *   node tools/bench-container.mjs run-all      # the 18: one key prompt, stop on first failure
  *   node tools/bench-container.mjs down
  *
+ * Two rules shape the whole file.
+ *
+ * Everything the environment is made of is committed before anything runs, in
+ * bench/base.lock.json: base image digest, CLI version, model. The build consumes
+ * those values and is never allowed to resolve its own, because a mutable tag can
+ * change the base under a gate that is already green. What the build produces — the
+ * machine-specific image id — is an artifact under benchmarks/v2/runs/, not a source
+ * edit, so no commit is needed between the gates and the runs.
+ *
  * Names are neutral throughout. A control container that can read the subject's name
- * from an image tag, a container name or a mount path has been told the one thing it
+ * off an image tag, a container name or a mount path has been told the one thing it
  * was supposed not to know.
  */
 
@@ -29,23 +38,40 @@ const BENCH = join(ROOT, 'bench');
 const LAB = join(tmpdir(), 'wsbench');
 const RUNS = join(ROOT, 'benchmarks/v2/runs');
 const BRIEFS = join(ROOT, 'benchmarks/v2/briefs');
-const LOCK = join(BENCH, 'image.lock.json');
+const BASE_LOCK_PATH = join(BENCH, 'base.lock.json');
+const TOOLS_PKG = join(BENCH, 'tools-package.json');
+const TOOLS_LOCK = join(BENCH, 'tools-package-lock.json');
+const BUILD_ARTIFACT = join(RUNS, 'image-build.json');
 const GATE = join(ROOT, 'benchmarks/v2/isolation-probe.json');
+
+const die = (m) => { console.error(m); process.exit(2); };
+const sha = (s) => createHash('sha256').update(s).digest('hex');
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+const git = (...a) => execFileSync('git', a, { cwd: ROOT, encoding: 'utf8' }).trim();
+
+/* ── the committed lock is the only source of these ────────────────────── */
+
+const BASE_LOCK_TEXT = await readFile(BASE_LOCK_PATH, 'utf8').catch(() => die('bench/base.lock.json is missing.'));
+const LOCK = JSON.parse(BASE_LOCK_TEXT);
+for (const k of ['base', 'baseDigest', 'claudeVersion', 'model', 'modelAccept', 'endpoint']) {
+  if (!LOCK[k]) die(`bench/base.lock.json has no ${k}`);
+}
+if (!/^sha256:[0-9a-f]{64}$/.test(LOCK.baseDigest)) die('baseDigest must be an immutable sha256 digest');
+
+const BASE = LOCK.base;
+const BASE_DIGEST = LOCK.baseDigest;
+const CLAUDE_VERSION = LOCK.claudeVersion;
+const MODEL = LOCK.model;
+const ENDPOINT = LOCK.endpoint;
+/* Exact acceptance. An alias may be added to modelAccept only together with the dated
+   id it resolved to; a prefix match would quietly accept a different model. */
+const MODEL_ACCEPT = new Set(LOCK.modelAccept);
 
 /* Neutral identifiers. Nothing here names the subject. */
 const IMAGE = 'bench-runner:3';
 const NET = 'benchnet';
 const PROXY = 'benchnet-egress';
 const runName = (id) => `benchrun-${String(id).replace(/[^a-z0-9-]/gi, '')}`;
-
-const ENDPOINT = 'api.anthropic.com';
-const MODEL = 'claude-opus-4-5-20251101';
-/* Exact acceptance. If the provider answers with an id that is not in this set, the run
-   is not the run that was planned, and it is discarded rather than explained away. An
-   alias may be added here only together with the dated id it resolved to. */
-const MODEL_ACCEPT = new Set([MODEL]);
-const CLAUDE_VERSION = '2.1.220';
-const BASE = 'node:22-bookworm-slim';
 
 const MARK = 'sitesmith';
 const SKILL_DIR = join(ROOT, 'skills', MARK);
@@ -58,11 +84,6 @@ const RUN_TIMEOUT_MS = 45 * 60 * 1000;
 const MAX_TURNS = 220;
 const MAX_COST_PER_RUN_USD = 12;
 const MAX_TOTAL_COST_USD = 160;
-
-const die = (m) => { console.error(m); process.exit(2); };
-const sha = (s) => createHash('sha256').update(s).digest('hex');
-const git = (...a) => execFileSync('git', a, { cwd: ROOT, encoding: 'utf8' }).trim();
-const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 function docker(args, opts = {}) {
   const r = spawnSync('docker', args, { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024, ...opts });
@@ -84,6 +105,15 @@ const GENERATION_PROMPT = [
 /* ── pure rules ─────────────────────────────────────────────────────────────
    These exist so the self-test can call the real logic instead of grepping this
    file for strings. A regex that matches its own source proves nothing. */
+
+/** The only reference the build is allowed to pull. Never a tag. */
+export const basePullRef = () => `${BASE}@${BASE_DIGEST}`;
+export const buildArgs = () => [
+  'build', '--pull=false',
+  '--build-arg', `BASE_DIGEST=${BASE_DIGEST}`,
+  '--build-arg', `CLAUDE_VERSION=${CLAUDE_VERSION}`,
+  '-t', IMAGE, BENCH,
+];
 
 /** No `echo EXIT=$?`: that swallowed the CLI's status and made a failed run exit 0. */
 export const generationCommand = (prompt) =>
@@ -117,6 +147,23 @@ export const budgetProblems = (cost, spentSoFar) => {
   return p;
 };
 
+/* ── the tree must not move between the gates and the runs ─────────────── */
+
+/** Anything uncommitted is a source change the fingerprint's HEAD cannot see.
+ *  benchmarks/v2/runs/ is git-ignored, so build artifacts and run output never
+ *  make the tree dirty and no commit is needed mid-benchmark. */
+export const dirtyPaths = (porcelain) =>
+  porcelain.split('\n').map((l) => l.slice(3).trim()).filter(Boolean);
+
+function requireCleanTree(what) {
+  const paths = dirtyPaths(git('status', '--porcelain'));
+  if (paths.length) {
+    die(`the working tree is not clean, so ${what} would not be reproducible from HEAD:\n` +
+        paths.map((p) => '    ' + p).join('\n') +
+        '\n  Commit or discard these, then re-run both gates.');
+  }
+}
+
 /* ── fingerprint ───────────────────────────────────────────────────────── */
 
 async function hashTree(dir) {
@@ -135,23 +182,29 @@ async function hashTree(dir) {
 
 /** Everything that, if it changes, invalidates a green gate. */
 async function fingerprint() {
-  const lock = await readFile(LOCK, 'utf8').then(JSON.parse, () => ({}));
+  const build = await readFile(BUILD_ARTIFACT, 'utf8').then(JSON.parse, () => ({}));
   return {
     runnerSha256: sha(await readFile(fileURLToPath(import.meta.url), 'utf8')),
+    baseLockSha256: sha(BASE_LOCK_TEXT),
     dockerfileSha256: sha(await readFile(join(BENCH, 'Dockerfile'), 'utf8')),
     entrypointSha256: sha(await readFile(join(BENCH, 'entrypoint.sh'), 'utf8')),
     probeSha256: sha(await readFile(join(BENCH, 'probe.sh'), 'utf8')),
     proxySha256: sha(await readFile(join(BENCH, 'egress-proxy.mjs'), 'utf8')),
-    dependencyLockSha256: sha(await readFile(join(BENCH, 'tools-package-lock.json'), 'utf8').catch(() => '')),
-    baseDigest: lock.baseDigest ?? null,
-    imageId: lock.imageId ?? null,
-    claudeVersion: lock.claudeVersion ?? null,
-    egressAllowlist: [ENDPOINT],
+    toolsLockSha256: sha(await readFile(TOOLS_LOCK, 'utf8').catch(() => '')),
+    baseDigest: BASE_DIGEST,
+    claudeVersion: CLAUDE_VERSION,
     model: MODEL,
+    egressAllowlist: [ENDPOINT],
+    imageId: build.imageId ?? null,
+    imageBuiltFromDigest: build.baseDigest ?? null,
     skillCommit: git('rev-parse', 'HEAD'),
     skillPayloadSha256: await hashTree(SKILL_DIR),
     promptSha256: sha(GENERATION_PROMPT),
   };
+}
+
+function driftAgainst(gate, fp) {
+  return Object.entries(fp).filter(([k, v]) => JSON.stringify(gate?.fingerprint?.[k]) !== JSON.stringify(v));
 }
 
 /* ── secret ────────────────────────────────────────────────────────────── */
@@ -168,46 +221,39 @@ function readSecret(purpose) {
 /* ── build ─────────────────────────────────────────────────────────────── */
 
 async function build() {
-  await writeFile(join(BENCH, 'tools-package.json'), JSON.stringify({
-    name: 'bench-tools', private: true, type: 'module',
-    dependencies: { playwright: '1.49.1', '@axe-core/playwright': '4.10.1' },
-  }, null, 2) + '\n');
-
-  if (!(await stat(join(BENCH, 'tools-package-lock.json')).then(() => true, () => false))) {
-    const r = spawnSync('npm', ['install', '--package-lock-only', '--prefix', BENCH],
-      { encoding: 'utf8', shell: process.platform === 'win32' });
-    if (r.status !== 0) die('could not generate the tools lockfile:\n' + r.stderr);
+  for (const [p, what] of [[TOOLS_PKG, 'bench/tools-package.json'], [TOOLS_LOCK, 'bench/tools-package-lock.json']]) {
+    if (!(await stat(p).then(() => true, () => false))) die(`${what} is missing. It is committed source, not generated here.`);
   }
 
-  // A committed lock pins the base. Only the very first build resolves a digest from a
-  // mutable tag; after that the digest is the input, so a rebuild is the same image and
-  // not merely a similar one.
-  const lock = await readFile(LOCK, 'utf8').then(JSON.parse, () => null);
-  let digest = lock?.baseDigest ?? null;
-  if (digest) {
-    console.log(`  using pinned base ${digest}`);
-    docker(['pull', `${BASE}@${digest}`], { stdio: 'inherit' });
-  } else {
-    docker(['pull', BASE], { stdio: 'inherit' });
-    digest = (docker(['inspect', '--format', '{{index .RepoDigests 0}}', BASE]).stdout ?? '').trim().split('@')[1];
-    if (!digest?.startsWith('sha256:')) die(`could not resolve a digest for ${BASE}`);
-    console.log(`  resolved and pinning base ${digest}`);
-  }
+  // The digest comes from the committed lock and nowhere else. There is deliberately no
+  // path in this function that pulls a tag or reads RepoDigests: that is how a base image
+  // silently changes under a gate that is already green.
+  console.log(`  pulling ${basePullRef()}`);
+  if (docker(['pull', basePullRef()], { stdio: 'inherit' }).status !== 0) die('could not pull the pinned base image');
 
-  if (docker(['build', '--build-arg', `BASE_DIGEST=${digest}`, '--build-arg', `CLAUDE_VERSION=${CLAUDE_VERSION}`,
-              '-t', IMAGE, BENCH], { stdio: 'inherit' }).status !== 0) die('docker build failed');
+  if (docker(buildArgs(), { stdio: 'inherit' }).status !== 0) die('docker build failed');
 
   const id = docker(['image', 'inspect', '--format', '{{.Id}}', IMAGE]).stdout.trim();
   const ver = docker(['run', '--rm', '--entrypoint', 'claude', IMAGE, '--version']).stdout.trim();
-  if (lock?.imageId && lock.imageId !== id) console.log('  note: the image id changed, so the gates must be re-run');
+  if (!ver.includes(CLAUDE_VERSION)) {
+    die(`the image reports CLI "${ver}" but the lock pins ${CLAUDE_VERSION}. Not proceeding.`);
+  }
 
-  await writeFile(LOCK, JSON.stringify({
-    base: BASE, baseDigest: digest, claudeVersion: ver, requestedClaudeVersion: CLAUDE_VERSION,
-    imageId: id, builtAt: new Date().toISOString(),
-    note: 'Commit this file. It is what makes a rebuild the same image rather than a similar one.',
+  // An artifact, not a source edit. benchmarks/v2/runs/ is git-ignored, so building does
+  // not dirty the tree and no commit is needed between here and the eighteen runs.
+  await mkdir(RUNS, { recursive: true });
+  await writeFile(BUILD_ARTIFACT, JSON.stringify({
+    imageTag: IMAGE, imageId: id,
+    base: BASE, baseDigest: BASE_DIGEST,
+    claudeVersion: ver, pinnedClaudeVersion: CLAUDE_VERSION,
+    model: MODEL,
+    builtAt: new Date().toISOString(),
+    builtFromCommit: git('rev-parse', 'HEAD'),
+    note: 'Build output, machine-specific. Committed with the run results afterwards, never before.',
   }, null, 2) + '\n');
-  console.log(`\n  image ${IMAGE}\n  base  ${digest}\n  cli   ${ver}\n  id    ${id}\n`);
-  console.log('  commit bench/image.lock.json before running the gates\n');
+
+  console.log(`\n  image ${IMAGE}\n  base  ${BASE_DIGEST}\n  cli   ${ver}\n  id    ${id}`);
+  console.log(`\n  wrote ${BUILD_ARTIFACT.replace(ROOT, '')}\n  next: up, then probe\n`);
 }
 
 /* ── network ───────────────────────────────────────────────────────────── */
@@ -256,7 +302,7 @@ function containerArgs({ workspace, arm, name, probing = false }) {
 }
 
 /** Read the container's real bind mounts from the daemon while it runs. A mount table
- *  reported from inside the container would be asserting the thing under test against
+ *  reported from inside the container would be asking the thing under test to grade
  *  itself. */
 async function inspectMounts(name, arm, probing, timeoutMs = 30000) {
   const deadline = Date.now() + timeoutMs;
@@ -298,9 +344,16 @@ function runContainer(args, command, secret, timeoutMs, name) {
   });
 }
 
+function requireBuilt() {
+  return stat(BUILD_ARTIFACT).then(() => true, () => die('no build artifact. Run `build` first.'));
+}
+
 /* ── gate 1: mechanical, unpaid ────────────────────────────────────────── */
 
 async function probe() {
+  await requireBuilt();
+  requireCleanTree('this gate');
+
   const results = {};
   for (const arm of ['without', 'with']) {
     const ws = join(LAB, `probe-${arm}`);
@@ -336,10 +389,12 @@ async function probe() {
   await mkdir(join(ROOT, 'benchmarks/v2'), { recursive: true });
   await writeFile(GATE, JSON.stringify({
     when: new Date().toISOString(),
+    treeClean: true,
     fingerprint: await fingerprint(),
     mechanicalProbe: { control: results.without, treatment: results.with, pass },
     modelProbe: null,
-    note: 'No credential is used or recorded by the mechanical probe. Both gates must be green before run-all.',
+    note: 'No credential is used or recorded by the mechanical probe. Both gates must be green, ' +
+          'against one unchanged fingerprint, before run-all.',
   }, null, 2) + '\n');
   console.log(`\n  ${pass ? 'PASS — next: discovery, which is also a gate' : 'FAIL — stop here'}\n`);
   process.exit(pass ? 0 : 1);
@@ -350,8 +405,9 @@ async function probe() {
 async function discovery() {
   const gate = await readFile(GATE, 'utf8').then(JSON.parse, () => null);
   if (gate?.mechanicalProbe?.pass !== true) die('run `probe` first; it costs nothing.');
+  requireCleanTree('this gate');
   const fp = await fingerprint();
-  const drift = Object.entries(fp).filter(([k, v]) => JSON.stringify(gate.fingerprint?.[k]) !== JSON.stringify(v));
+  const drift = driftAgainst(gate, fp);
   if (drift.length) die(`the environment changed since the mechanical probe: ${drift.map(([k]) => k).join(', ')}`);
 
   const secret = await readSecret('two short calls');
@@ -394,21 +450,23 @@ async function discovery() {
 async function preflight() {
   const gate = await readFile(GATE, 'utf8').then(JSON.parse, () => null);
   const fp = await fingerprint();
-  const drift = gate ? Object.entries(fp).filter(([k, v]) => JSON.stringify(gate.fingerprint?.[k]) !== JSON.stringify(v)) : [];
+  const drift = gate ? driftAgainst(gate, fp) : [];
+  const dirty = dirtyPaths(git('status', '--porcelain'));
   console.log(`\n  planned: ${BRIEF_LIST.length} briefs x 2 arms x 3 = ${BRIEF_LIST.length * 6} generations`);
   for (const b of BRIEF_LIST) for (const arm of ['with', 'without']) for (const n of [1, 2, 3]) console.log(`    ${b}-${arm}-${n}`);
   console.log(`\n  model            ${MODEL}`);
-  console.log(`  image id         ${fp.imageId ?? 'not built yet'}`);
-  console.log(`  base digest      ${fp.baseDigest ?? 'not built yet'}`);
-  console.log(`  cli              ${fp.claudeVersion ?? 'not built yet'}`);
+  console.log(`  base digest      ${BASE_DIGEST}   (committed)`);
+  console.log(`  cli              ${CLAUDE_VERSION}   (committed)`);
+  console.log(`  image id         ${fp.imageId ?? 'not built yet'}   (artifact)`);
   console.log(`  skill commit     ${fp.skillCommit}`);
+  console.log(`  working tree     ${dirty.length ? 'DIRTY: ' + dirty.join(', ') : 'clean'}`);
   console.log(`  per run          ${RUN_TIMEOUT_MS / 60000} min, ${MAX_TURNS} turns, $${MAX_COST_PER_RUN_USD} cap`);
   console.log(`  total budget     $${MAX_TOTAL_COST_USD}`);
   console.log(`  mechanical gate  ${gate?.mechanicalProbe?.pass === true ? 'green' : 'NOT GREEN'}`);
   console.log(`  discovery gate   ${gate?.modelProbe?.pass === true ? 'green' : 'NOT GREEN'}`);
   if (drift.length) console.log(`  DRIFT since the gates: ${drift.map(([k]) => k).join(', ')}`);
   console.log('');
-  process.exit(gateReady(gate) && drift.length === 0 ? 0 : 1);
+  process.exit(gateReady(gate) && drift.length === 0 && dirty.length === 0 ? 0 : 1);
 }
 
 /* ── run ───────────────────────────────────────────────────────────────── */
@@ -479,8 +537,9 @@ async function runOne(brief, arm, n, secret, fp, spentSoFar) {
 async function runAll() {
   const gate = await readFile(GATE, 'utf8').then(JSON.parse, () => null);
   if (!gateReady(gate)) die('both gates must be green. Run `probe`, then `discovery`.');
+  requireCleanTree('these runs');
   const fp = await fingerprint();
-  const drift = Object.entries(fp).filter(([k, v]) => JSON.stringify(gate.fingerprint?.[k]) !== JSON.stringify(v));
+  const drift = driftAgainst(gate, fp);
   if (drift.length) die(`the environment changed since the gates: ${drift.map(([k]) => k).join(', ')}. Re-run both.`);
 
   const secret = await readSecret('all 18 generations, asked once');
@@ -505,11 +564,27 @@ async function runAll() {
 async function selftest() {
   const rows = [];
   const ok = (n, v, d = '') => rows.push([v ? 'ok  ' : 'FAIL', n, d]);
-  const note = (n, d) => rows.push(['--  ', n, d]);
+  const tracked = (p) => spawnSync('git', ['ls-files', '--error-unmatch', p], { cwd: ROOT, stdio: 'ignore' }).status === 0;
+
+  ok('the base lock is committed', tracked('bench/base.lock.json'));
+  ok('the tools lockfile is committed', tracked('bench/tools-package-lock.json'));
+  ok('the tools manifest is committed', tracked('bench/tools-package.json'));
+  ok('the base is pinned to an immutable digest', /^sha256:[0-9a-f]{64}$/.test(BASE_DIGEST));
+  ok('the build pulls the digest, never a tag',
+    basePullRef() === `${BASE}@${BASE_DIGEST}` && basePullRef().includes('@sha256:'));
+  ok('the build passes that same digest to the image',
+    buildArgs().includes(`BASE_DIGEST=${BASE_DIGEST}`) && buildArgs().includes('--pull=false'));
+  ok('the digest in use is the one on disk',
+    BASE_DIGEST === JSON.parse(await readFile(BASE_LOCK_PATH, 'utf8')).baseDigest);
+  ok('the image id is an artifact, not source',
+    BUILD_ARTIFACT.includes('benchmarks') && BUILD_ARTIFACT.includes('runs') && !tracked('bench/image.lock.json'));
+  const ignored = (p) => spawnSync('git', ['check-ignore', '-q', p], { cwd: ROOT }).status === 0;
+  ok('run output and build artifacts cannot dirty the tree',
+    ignored('benchmarks/v2/runs/image-build.json') && ignored('benchmarks/v2/runs/01-company-with-1/manifest.json'));
 
   const dockerfile = await readFile(join(BENCH, 'Dockerfile'), 'utf8');
   ok('probe.sh is not baked into the image', !/COPY\s+probe\.sh/.test(dockerfile));
-  ok('the base is pinned by digest', /FROM \S+@\$\{BASE_DIGEST\}/.test(dockerfile));
+  ok('the Dockerfile takes the digest as a build argument', /FROM \S+@\$\{BASE_DIGEST\}/.test(dockerfile));
 
   const ep = await readFile(join(BENCH, 'entrypoint.sh'), 'utf8');
   ok('the secret arrives on stdin', /read -r -t \d+ _S/.test(ep));
@@ -523,7 +598,6 @@ async function selftest() {
   ok('the probe scans the readable filesystem', /\/work \/home \/opt \/usr \/etc \/tmp \/var/.test(probeSh));
   ok('the probe needs no credential', !/ANTHROPIC_API_KEY/.test(probeSh));
 
-  // Behavioural from here down: these call the functions the runner actually uses.
   ok('image, network and container names are neutral',
     ![IMAGE, NET, PROXY, runName('01-company-with-1')].some((s) => new RegExp(MARK, 'i').test(s)));
 
@@ -557,19 +631,17 @@ async function selftest() {
     !gateReady(null) && !gateReady({ mechanicalProbe: { pass: true } }) &&
     !gateReady({ mechanicalProbe: { pass: true }, modelProbe: { pass: false } }) &&
     gateReady({ mechanicalProbe: { pass: true }, modelProbe: { pass: true } }));
+  ok('an uncommitted change is detected',
+    dirtyPaths(' M tools/bench-container.mjs\n?? x.txt\n').length === 2 && dirtyPaths('').length === 0);
   ok('a failed run is quarantined rather than counted',
     runDirName('a', []) === 'a' && runDirName('a', ['x']) === 'INVALID-a');
-
-  const lockExists = await stat(LOCK).then(() => true, () => false);
-  if (lockExists) ok('image.lock.json is present', true);
-  else note('image.lock.json', 'not yet — the first `build` writes it; commit it before the gates');
 
   const fp = await fingerprint();
   console.log('\n  unpaid self-test — no container, no model, no key\n');
   for (const [s, n, d] of rows) console.log(`  ${s}  ${n}${d ? '  — ' + d : ''}`);
   console.log('\n  the fingerprint the gates bind to:');
   for (const [k, v] of Object.entries(fp)) {
-    console.log(`    ${k.padEnd(22)} ${typeof v === 'string' ? v.slice(0, 64) : JSON.stringify(v)}`);
+    console.log(`    ${k.padEnd(22)} ${typeof v === 'string' ? v.slice(0, 71) : JSON.stringify(v)}`);
   }
   const failed = rows.filter(([s]) => s.startsWith('FAIL')).length;
   console.log(`\n  ${failed === 0 ? 'PASS — nothing was spent' : `FAIL — ${failed} problem(s)`}\n`);
