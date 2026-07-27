@@ -1,92 +1,86 @@
 # Running the isolated benchmark
 
-Three steps. About 25 minutes, most of it Docker downloading.
-
-Nothing here is run until the probe passes. The probe is cheap; the eighteen
-generations are not.
+Two commands from you. The gate that decides whether the eighteen paid generations
+may start costs nothing and never touches the model.
 
 ---
 
 ## 1. Install Docker Desktop — about 15 minutes
 
-Download from <https://www.docker.com/products/docker-desktop/>, install, and start it.
-Wait until the whale icon in the tray stops animating.
-
-Check it is up:
+<https://www.docker.com/products/docker-desktop/> · install · start · wait for the whale
+icon to stop animating.
 
 ```bash
 docker info --format "{{.ServerVersion}}"
 ```
 
-A version number means ready. An error means Docker Desktop has not finished starting.
-
-## 2. Add the API key — about 2 minutes
-
-Get a key at <https://console.anthropic.com/settings/keys>.
-
-Set it as a **user** environment variable so it lives in your account and not in this
-repository:
+## 2. Build, start and prove — about 10 minutes, no spend
 
 ```bash
-setx ANTHROPIC_API_KEY "sk-ant-..."
+node tools/bench-container.mjs build && node tools/bench-container.mjs up && node tools/bench-container.mjs probe
 ```
 
-Then **close this terminal and open a new one** — `setx` only affects new sessions.
-
-Confirm it is visible without printing it:
-
-```bash
-node -e "console.log(process.env.ANTHROPIC_API_KEY ? 'key present' : 'NOT SET')"
-```
-
-**The key never enters this repository.** It is not written to the image, the manifests,
-the logs or any committed file. The runner passes it to the container by reference at run
-time, and the manifest records only whether one was present.
-
-## 3. Build, start and probe — about 8 minutes
-
-```bash
-node tools/bench-container.mjs build
-```
-```bash
-node tools/bench-container.mjs up
-```
-```bash
-node tools/bench-container.mjs probe
-```
-
-The probe must print **PASS**. It runs one throwaway generation in each arm and checks:
-
-| | must be |
-| --- | --- |
-| workspace read and write | works |
-| local absolute path to the repo | denied |
-| `raw.githubusercontent.com/.../sitesmith` | denied |
-| any other internet host | denied |
-| inherited context, prompt or parent directory | none |
-| skill mounted in treatment | yes, and read-only |
-
-A **FAIL** stops there. Do not run the generations on a failed probe: the result would
-not be evidence, and the runner refuses anyway — `run` reads
-`benchmarks/v2/isolation-probe.json` and will not start without a pass.
+The probe must print **PASS**. It runs no model and needs no key.
 
 ---
 
-## What makes it isolated
+## The key
 
-- **Fresh container per run.** No inherited conversation, agent context or working
-  directory.
-- **`docker network create --internal`.** The generation containers have no route off the
-  host at all.
-- **One egress proxy**, the only container on both networks, allowlisting the model
-  endpoint. `github.com` is not on the list, so "the control cannot fetch the public
-  repository" is a fact about the network rather than a line in a prompt.
-- **Mounts are the only difference.** Control gets the workspace. Treatment gets the same
-  workspace plus the skill, read-only, at `~/.claude/skills/sitesmith` — the path a real
-  installation uses.
-- **Identical prompt.** Both arms are given the same words, and the prompt does not
-  mention that a skill exists. Telling a control not to look at something tells it where
-  to look.
+**You are never asked to store it.** There is no `setx`, no `.env`, no file. The runner
+prompts for it at the moment it is needed, with the input hidden, holds it in memory and
+pipes it to the container's standard input as a single line.
+
+It is therefore not an argument, not a `docker run -e` variable, not a file and not an
+image layer, which means `docker inspect` on a running container cannot show it. It is
+never written to a log or a manifest; the manifest records only that a credential was
+supplied.
+
+Only two commands ask for it: `probe-model` (optional, one short call per arm) and `run`.
+
+## What the mechanical probe checks
+
+Shell commands in the same image, network, entrypoint and mounts a real generation uses.
+The model's own account of its confinement is kept as a supplement and is not the gate: a
+subject reporting on its own cage can be wrong or agreeable, and a shell either connects
+or it does not.
+
+| Check | Must be |
+| --- | --- |
+| workspace read, write | works |
+| `/mnt/c/Users/.../sitesmith`, `/mnt/c`, `/repo` | denied |
+| mount table beyond `/work` and the skill | empty |
+| `~/.claude.json`, `projects`, `todos` | absent |
+| direct connection ignoring the proxy | denied — the network is `--internal` |
+| `raw.githubusercontent.com` through the proxy | denied |
+| `example.com` through the proxy | denied |
+| `evil.api.anthropic.com` through the proxy | denied — exact host matching |
+| `api.anthropic.com` through the proxy | connects |
+| env naming sitesmith, `OLDPWD`, `CLAUDE_PROJECT_DIR` | absent |
+| control: any file naming the skill | absent |
+| treatment: skill present at `~/.claude/skills/sitesmith` | yes, and read-only |
+
+## Optional, paid, one short call per arm
+
+```bash
+node tools/bench-container.mjs probe-model
+```
+
+Proves through the CLI's own debug output that treatment loads the skill and control never
+sees it. A readable mount is not the same as a loaded skill.
+
+## Then
+
+```bash
+node tools/bench-container.mjs preflight
+```
+
+Lists the eighteen runs, the pinned image, base digest, CLI version, model, skill commit,
+timeout and turn cap, and refuses if anything drifted since the probe. Spends nothing.
+
+A green probe is bound to a fingerprint: runner hash, Dockerfile hash, entrypoint hash,
+probe hash, proxy hash, dependency lock, base digest, image id, CLI version, allowlist,
+model, skill commit, skill payload hash and prompt hash. Change one and `run` rejects the
+old verdict rather than trusting it.
 
 ## Afterwards
 
@@ -94,5 +88,5 @@ not be evidence, and the runner refuses anyway — `run` reads
 node tools/bench-container.mjs down
 ```
 
-Measurement runs on the host, after generation, against the collected sites. The
-generation environment never measures itself.
+Measurement runs on the host, after generation. The generation environment never measures
+itself.

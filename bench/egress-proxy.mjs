@@ -27,9 +27,10 @@ const ALLOW = (process.env.ALLOW ?? 'api.anthropic.com')
 
 const permitted = (host) => {
   const h = host.toLowerCase().replace(/:\d+$/, '');
-  // Exact host or a subdomain of an allowed host. No wildcards, no regex: a
-  // permissive matcher here would quietly undo the whole isolation claim.
-  return ALLOW.some((a) => h === a || h.endsWith('.' + a));
+  // Exact host only. Subdomain matching was here and was wrong: it would have let
+  // anything.api.anthropic.com through, and a benchmark whose isolation depends on
+  // nobody registering a subdomain is not isolated.
+  return ALLOW.includes(h);
 };
 
 const log = (verdict, host) =>
