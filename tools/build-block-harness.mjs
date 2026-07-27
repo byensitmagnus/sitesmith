@@ -89,6 +89,10 @@ a{color:var(--accent)}
   margin:var(--space-2) 0 var(--space-4);font-size:var(--text-small)}
 .spec dt{color:var(--ink-3);font-weight:700}
 .spec dd{margin:0;color:var(--ink-2);min-width:0}
+/* An unbroken token — a file path in mono — is wider under the runner's font than
+   under Windows', and it spills the text without any element box reporting as
+   overflowing. +20px at 375px, invisible to an element scan. */
+.harness code,.spec dd{overflow-wrap:anywhere}
 .spec dd code{font-family:var(--font-mono);font-size:var(--text-micro)}
 .stage{border:1px solid var(--line);border-radius:var(--radius-outer);padding:var(--space-5);
   background:var(--bg)}

@@ -101,6 +101,8 @@ def _links() -> None:
 # --------------------------------------------------------------- attribution / licence
 
 ATTRIBUTION = re.compile(r"— (MIT|Apache License 2\.0),|Original work, MIT", re.UNICODE)
+DERIVED = re.compile(r"Derived from", re.UNICODE)
+CHANGE_NOTE = re.compile(r"\*\*Modified for sitesmith:\*\*\s*\S", re.UNICODE)
 
 
 @check("every bundled reference states its licence inline")
@@ -110,6 +112,19 @@ def _attribution() -> None:
     for p in sorted(list(REFS.glob("*.md")) + list((REFS / "impeccable").glob("*.md"))):
         if not ATTRIBUTION.search(p.read_text(encoding="utf-8")):
             fail(p.relative_to(ROOT).as_posix(), "no attribution header — see NOTICE.md for the format")
+
+
+@check("every derived file says what was changed")
+def _change_notices() -> None:
+    # Apache 2.0 §4(b): a modified file must carry a prominent notice that we changed
+    # it. The presence of the note is checkable; only review can check it is honest.
+    for p in sorted(list(REFS.glob("*.md")) + list((REFS / "impeccable").glob("*.md"))):
+        text = p.read_text(encoding="utf-8")
+        if DERIVED.search(text) and not CHANGE_NOTE.search(text):
+            fail(
+                p.relative_to(ROOT).as_posix(),
+                'claims "Derived from" without a "**Modified for sitesmith:** …" note',
+            )
 
 
 @check("references over 100 lines carry a table of contents")

@@ -3,6 +3,7 @@
  * sitesmith verify — renders a page and reports what a diff cannot show.
  *
  *   node verify.mjs <url> [--out DIR] [--widths 375,768,1440] [--no-axe] [--json]
+ *                         [--font-stress]
  *
  * Captures a full-page screenshot at each width, collects console errors and failed
  * network requests, checks every same-origin link for a dead target, and runs an axe
@@ -35,7 +36,22 @@ async function load(name) {
 }
 
 const USAGE =
-  'usage: node verify.mjs <url> [--out DIR] [--widths 375,768,1440] [--no-axe] [--json]';
+  'usage: node verify.mjs <url> [--out DIR] [--widths 375,768,1440] [--no-axe] [--json] [--font-stress]';
+
+/**
+ * --font-stress substitutes a deliberately wide font pair before measuring.
+ *
+ * A layout that fits only under the developer's system font is not responsive, it
+ * is lucky, and the luck runs out on the first machine with a wider default. This
+ * repository has now paid for that twice: +10px on a dashboard and +20px on the
+ * block library, both green locally and red on the Linux runner, both invisible to
+ * an element-by-element scan because the text spills while every box still fits.
+ * Running the check locally is the difference between a class of bug and a bug.
+ */
+const STRESS_CSS = `
+  *{font-family:'DejaVu Sans',Verdana,Tahoma,sans-serif !important}
+  code,pre,kbd,samp,tt{font-family:'DejaVu Sans Mono','Liberation Mono',monospace !important}
+`;
 
 const argv = process.argv.slice(2);
 // Flags that consume the next argument. Anything else starting with -- is a switch,
@@ -98,7 +114,15 @@ if (!has('no-axe')) {
 
 await mkdir(outDir, { recursive: true });
 
-const report = { url, widths: {}, consoleErrors: [], failedRequests: [], brokenLinks: [], axe: null };
+const report = {
+  url,
+  fontStress: has('font-stress'),
+  widths: {},
+  consoleErrors: [],
+  failedRequests: [],
+  brokenLinks: [],
+  axe: null,
+};
 
 const browser = await chromium.launch();
 try {
@@ -128,6 +152,7 @@ try {
       await browser.close();
       process.exit(2);
     }
+    if (has('font-stress')) await page.addStyleTag({ content: STRESS_CSS });
     await page.waitForTimeout(600); // let entrance animations settle before capturing
 
     // Store the file name only. An absolute path in a committed report leaks the
@@ -225,7 +250,7 @@ const blocking =
 if (asJson) {
   console.log(JSON.stringify(report, null, 2));
 } else {
-  console.log(`\n  ${report.url}\n`);
+  console.log(`\n  ${report.url}${report.fontStress ? '   [wide-font stress]' : ''}\n`);
   for (const [w, d] of Object.entries(report.widths)) {
     const ok = d.horizontalOverflowPx <= 1 ? 'ok' : `OVERFLOW +${d.horizontalOverflowPx}px`;
     const status = (d.status ?? 0) >= 400 ? `HTTP ${d.status} ←` : `HTTP ${d.status}`;

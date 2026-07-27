@@ -32,14 +32,26 @@ show the page that exhibits it. Opinions are welcome in issues; the skill files 
 
 ## Changing a bundled reference
 
-`references/01`–`05`, `07`–`09`, `11` and everything under `references/impeccable/` are reproduced
-verbatim from upstream projects. **Fix those upstream, not here.** A correction merged here would
-silently diverge from the source we credit. Open the PR against
-[taste-skill](https://github.com/Leonxlnx/taste-skill),
-[ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) or
-[impeccable](https://github.com/pbakaus/impeccable), then open an issue here to pull the update in.
+Every reference file says at the top which of two things it is.
 
-`SKILL.md`, `06-redesign-audit.md` and `10-setup.md` are ours. Edit those directly.
+**Verbatim from** — still the upstream text. A correction that is genuinely upstream's bug should
+go upstream: [taste-skill](https://github.com/Leonxlnx/taste-skill),
+[ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill),
+[impeccable](https://github.com/pbakaus/impeccable). A change that is only right for sitesmith
+converts the file to derived, which is fine — say so in the heading.
+
+**Derived from … Modified for sitesmith** — ours to edit, provided the heading keeps naming the
+source and keeps saying what changed. `Modified for sitesmith:` must describe the change, not
+announce that one exists. `tools/check-repo.py` enforces the presence of the note; only review
+enforces that it is honest.
+
+What is not acceptable is a file that has been edited and still claims to be verbatim.
+
+Why the repository stopped vendoring four intact voices, with the measurements: the 2026-07-27
+addendum in [LICENSE-AUDIT.md](LICENSE-AUDIT.md) and [docs/v2/CONFLICTS.md](docs/v2/CONFLICTS.md).
+
+`SKILL.md`, `06-redesign-audit.md`, `10-setup.md`, `12-design-system.md` and `blocks/` are original
+work. Edit those directly.
 
 ## Running the checks
 
@@ -69,8 +81,15 @@ node serve.mjs 4321 . &
 node ../skills/sitesmith/scripts/verify.mjs http://localhost:4321/01-saas-landing/ --out results/01-saas-landing
 ```
 
-All six benchmarks must pass. `06-redesign/before/` must **keep failing** — it is the control, and a
-PR that fixes it will be closed.
+Then the same widths under a deliberately wide font, which is how a layout that only fits
+under your system font gets caught here rather than on the runner:
+
+```bash
+node ../skills/sitesmith/scripts/verify.mjs http://localhost:4321/01-saas-landing/ --font-stress --no-axe
+```
+
+All nine benchmarks and the block harness must pass both. `06-redesign/before/` must **keep
+failing** — it is the control, and a PR that fixes it will be closed.
 
 CI runs both on every push. `verify.mjs` has an exit contract CI asserts directly: **0** clean,
 **1** a blocking defect in the page, **2** it could not run at all. Keep them distinct — a script

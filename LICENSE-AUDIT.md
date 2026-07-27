@@ -34,8 +34,60 @@ knowledge in the field, and none of the original phrasing.
 
 ## Our own contributions
 
-`SKILL.md`, `references/05-redesign-audit.md`, `references/09-setup.md`, this file, `NOTICE.md`,
-`README.md` and all CI configuration are original work, released under **MIT** (see `LICENSE`).
+`SKILL.md`, `references/06-redesign-audit.md`, `references/10-setup.md`,
+`references/12-design-system.md`, `blocks/`, `scripts/verify.mjs`, `scripts/token-drift.mjs`,
+`tools/`, this file, `NOTICE.md`, `README.md`, the benchmarks and all CI configuration are original
+work, released under **MIT** (see `LICENSE`).
+
+---
+
+## Addendum, 2026-07-27: from verbatim to derived
+
+**What changed.** The four sources are being rewritten and merged into one ruleset rather than
+carried as four intact voices behind a router. Files that were "reproduced without modification"
+become derived works.
+
+**Why.** Measured with `tools/extract-rules.py`: the reference set carries **978 rules across 47
+files, 735 prohibitions against 185 requirements** — four to one. `tools/find-conflicts.py` finds
+**thirteen of fourteen subjects** with both a prohibition and a requirement across different files.
+Corner radius is mandated as one scale in one file and listed as a defect in another. The skill
+declares itself out of scope for dashboards, data tables and multi-step forms, which are three of
+its own nine benchmarks. Full evidence with file and line: [docs/v2/CONFLICTS.md](docs/v2/CONFLICTS.md).
+
+Four intact voices cannot be made to agree by adding a fifth that adjudicates between them. The
+merge is the fix, and the merge requires modification.
+
+**Does the grant still hold?** Yes, and this is not a close question.
+
+| Source | Licence | Derivative works |
+| --- | --- | --- |
+| taste-skill | MIT | Permitted. "…to deal in the Software without restriction, including without limitation the rights to use, copy, **modify**, merge, publish, distribute…" Copyright and permission notice must be retained. |
+| ui-ux-pro-max | MIT | Same terms. |
+| frontend-design | Apache 2.0 | Permitted under §2 and §3. §4(b) requires modified files to carry prominent notices stating that we changed them. |
+| impeccable | Apache 2.0 | Same terms. |
+
+Both licences permit modification and redistribution of derivative works. Nothing here weakens the
+audit's original conclusion; it changes what we do with the grant, not whether we have it.
+
+**What we now owe.** Apache 2.0 §4(b) is the binding new obligation, and MIT attribution continues
+unchanged. Every derived file carries this header block, which is ours:
+
+```markdown
+> Part of the **sitesmith** skill. Derived from [taste-skill](https://github.com/Leonxlnx/taste-skill) — MIT, © 2026 Leonxlnx.
+> **Modified for sitesmith:** merged with 07-ux-rules and rewritten; the radius rule now states a
+> scale rather than a single value, and the out-of-scope list is removed.
+```
+
+`Modified for sitesmith:` must say what changed, not that something did. `tools/check-repo.py`
+fails the build if a file claims to be derived and does not carry one.
+
+Files that are still untouched keep saying **Verbatim from**. Both forms are legitimate; what is not
+legitimate is a file that has been edited and still claims to be verbatim, which is the state
+`09-block-library.md` was briefly in before its heading was corrected.
+
+**What does not change.** `website-builder-setup` and `redesign-skill` stay out. A licence that was
+never granted cannot be relied on more heavily because we are now writing derivative works —
+if anything the opposite. No material of unverified provenance enters the rewrite.
 
 ## Re-audit triggers
 

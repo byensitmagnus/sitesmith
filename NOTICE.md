@@ -1,11 +1,19 @@
 # Third-party notices
 
-sitesmith bundles material from four openly licensed projects. Their text is reproduced without
-modification in `skills/sitesmith/references/`; only the heading block above each file and the
-file names are ours. Every bundled file states its source inline.
+sitesmith bundles material from four openly licensed projects, in
+`skills/sitesmith/references/`. Every bundled file states its source inline, in a heading block
+that is ours, and says which of two things it is:
 
-Full reasoning, including the two sources that were **rejected** as non-redistributable, is in
-[LICENSE-AUDIT.md](LICENSE-AUDIT.md).
+- **Verbatim from** — the upstream text, unmodified. Only the heading block and the file name
+  are ours.
+- **Derived from … Modified for sitesmith** — rewritten or merged, with a note saying what
+  changed. This satisfies Apache 2.0 §4(b) for the two Apache sources and is good practice for
+  the two MIT ones. `tools/check-repo.py` fails the build if a derived file omits the note.
+
+Both licences permit derivative works; the reasoning for moving from verbatim vendoring to a
+merged ruleset, and the measurements behind it, are in the 2026-07-27 addendum to
+[LICENSE-AUDIT.md](LICENSE-AUDIT.md) — which also covers the two sources that were **rejected**
+as non-redistributable.
 
 ---
 

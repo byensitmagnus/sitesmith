@@ -1,5 +1,6 @@
 {
   "url": "http://localhost:4321/blocks/",
+  "fontStress": false,
   "widths": {
     "375": {
       "status": 200,

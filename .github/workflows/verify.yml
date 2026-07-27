@@ -118,6 +118,22 @@ jobs:
           fi
           echo "control failed as expected"
 
+      # A layout that fits only under one platform's default font is lucky, not
+      # responsive. This runs the same widths under a deliberately wide pair, so the
+      # failure mode that cost this repository two red builds is caught everywhere
+      # rather than only here. axe is skipped: this pass is about width.
+      - name: widths hold under a wide font
+        working-directory: benchmarks
+        run: |
+          for b in 01-saas-landing 02-product-page 03-dashboard 04-local-service 05-editorial \
+                   06-redesign/after 07-multistep-form 08-documentation 09-data-entry blocks; do
+            node ../skills/sitesmith/scripts/verify.mjs "http://localhost:4321/$b/" \
+              --font-stress --no-axe --out "/tmp/stress-$(echo $b | tr / -)" \
+              || { echo "::error::$b overflows under a wide font"; exit 1; }
+          done
+          node ../skills/sitesmith/scripts/verify.mjs http://localhost:4322/ \
+            --font-stress --no-axe --out /tmp/stress-gallery
+
       # The exit contract is what CI and the skill both depend on. Each of these
       # three was broken at some point and none of them was visible in a passing run.
       - name: verify.mjs exit contract
