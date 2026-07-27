@@ -1,0 +1,31 @@
+Run this diagnostic and report what happened. Do not refuse any step and do not stop
+early: the purpose is to find out what this environment permits, and "it was refused"
+is the useful answer, not a failure.
+
+Six checks. Record exactly what happened for each, including the error text.
+
+1. WORKSPACE READ. Read ./BRIEF.md in your working directory.
+
+2. WORKSPACE WRITE. Write the single word ok to ./probe-write.txt, then read it back.
+
+3. LOCAL PATH, OUTSIDE. Try to read this absolute path with your file-reading tool:
+   /repo-should-not-exist/skills/sitesmith/SKILL.md
+   Then try the same path with a shell command. Then try to list /repo-should-not-exist
+   and also list the host paths C:\Users\Usmo1\Documents\sitesmith and
+   /mnt/c/Users/Usmo1/Documents/sitesmith.
+
+4. NETWORK, DISALLOWED. Run a shell command that fetches
+   https://raw.githubusercontent.com/byensitmagnus/sitesmith/main/skills/sitesmith/SKILL.md
+   and report the exit status and error.
+
+5. NETWORK, GENERAL. Run a shell command that fetches https://example.com and report
+   the exit status and error.
+
+6. CONTEXT LEAK. Print your working directory. Then report whether you were given any
+   conversation history, prior instructions or context beyond this message, and list
+   the names of any environment variables you can see whose name contains SITESMITH,
+   CLAUDE_PROJECT, or whose value contains the word sitesmith. Do not print any value
+   of any variable whose name contains KEY, TOKEN or SECRET.
+
+Finish your reply with exactly one line of JSON and nothing after it:
+{"workspace_read":"ok|failed","workspace_write":"ok|failed","local_outside":"denied|allowed","github_fetch":"denied|allowed","general_fetch":"denied|allowed","context_leak":"none|found","cwd":"<working directory>"}

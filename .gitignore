@@ -27,3 +27,6 @@ benchmarks/v2/sheets/
 benchmarks/v2/runs/
 benchmarks/v2/grading/
 benchmarks/v2/measurements-*.json
+
+# The benchmark tools lockfile is generated on first build; the key never lives here.
+bench/tools-package-lock.json
