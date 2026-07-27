@@ -1,0 +1,123 @@
+<!--
+name: product-grid
+family: catalogue
+modes: E
+use: A category or search listing. One aspect ratio, one rhythm, price and stock
+     legible without opening anything.
+avoid: Fewer than four products, where a grid reads as a gap. Use a row.
+variants: four-up (default) | three-up | two-up-editorial
+pairs: filter-rail, hero-category, empty-state
+not-with: comparison-table
+tokens: --space-1 --space-2 --space-3 --space-4 --space-5 --space-7 --text-micro
+        --text-small --text-body --text-h3 --ink --ink-2 --ink-3 --line --line-2
+        --surface --surface-2 --accent --ok --ok-soft --warn --warn-soft --bad
+        --bad-soft --radius-inner --radius-outer --font-mono --motion-fast --ease
+        --container --gutter --leading-tight
+density: medium
+prevents: A grid whose cards change height with the length of the product name, and
+          a stock state carried by colour alone.
+-->
+<style>
+.block-product-grid{max-width:var(--container);margin-inline:auto;
+  padding:var(--space-7) var(--gutter)}
+.block-product-grid__head{display:flex;align-items:baseline;gap:var(--space-3);
+  flex-wrap:wrap;margin-bottom:var(--space-5)}
+.block-product-grid h3{margin:0;font-size:var(--text-h3);letter-spacing:-.02em}
+.block-product-grid__count{color:var(--ink-3);font-size:var(--text-small);
+  font-family:var(--font-mono)}
+.block-product-grid__sort{margin-left:auto;font-size:var(--text-small);color:var(--ink-2)}
+
+.block-product-grid__list{display:grid;list-style:none;margin:0;padding:0;
+  grid-template-columns:repeat(auto-fill,minmax(min(100%,15rem),1fr));gap:var(--space-5)}
+.block-product-grid--three-up .block-product-grid__list{
+  grid-template-columns:repeat(auto-fill,minmax(min(100%,19rem),1fr))}
+
+/* A card is a link with a fixed-ratio image and a body that ends flush. Without the
+   flex column the price of a two-line name sits lower than the price beside it, and
+   the row stops reading as a set. */
+.block-product-grid__card{display:flex;flex-direction:column;height:100%;
+  text-decoration:none;color:inherit;border:1px solid var(--line);
+  border-radius:var(--radius-outer);overflow:hidden;background:var(--surface);
+  transition:border-color var(--motion-fast) var(--ease)}
+.block-product-grid__card:hover{border-color:var(--line-2)}
+.block-product-grid__shot{aspect-ratio:1;background:var(--surface-2);
+  border-bottom:1px solid var(--line);display:grid;place-items:center;
+  padding:var(--space-4);text-align:center}
+.block-product-grid__shot span{color:var(--ink-3);font-size:var(--text-micro)}
+.block-product-grid__body{padding:var(--space-4);display:flex;flex-direction:column;
+  gap:var(--space-1);flex:1}
+.block-product-grid__brand{font-size:var(--text-micro);letter-spacing:.09em;
+  text-transform:uppercase;color:var(--ink-3);font-weight:700}
+.block-product-grid__name{font-size:var(--text-body);font-weight:600;
+  line-height:var(--leading-tight)}
+.block-product-grid__price{margin-top:auto;padding-top:var(--space-3);
+  display:flex;align-items:baseline;gap:var(--space-2);font-family:var(--font-mono);
+  font-variant-numeric:tabular-nums}
+.block-product-grid__price b{font-size:var(--text-h3);letter-spacing:-.02em}
+.block-product-grid__was{color:var(--ink-3);font-size:var(--text-small);
+  text-decoration:line-through}
+/* Stock says the words as well as being a colour. A buyer who cannot distinguish
+   amber from green still has to know. */
+.block-product-grid__stock{font-size:var(--text-micro);font-weight:700;
+  letter-spacing:.05em;text-transform:uppercase;padding:var(--space-1) var(--space-2);
+  border-radius:var(--radius-inner);width:fit-content}
+.block-product-grid__stock--in{background:var(--ok-soft);color:var(--ok)}
+.block-product-grid__stock--low{background:var(--warn-soft);color:var(--warn)}
+.block-product-grid__stock--out{background:var(--bad-soft);color:var(--bad)}
+.block-product-grid :focus-visible{outline:2px solid var(--accent);outline-offset:2px;
+  border-radius:var(--radius-outer)}
+</style>
+
+<section class="block-product-grid" aria-labelledby="pg-h">
+  <div class="block-product-grid__head">
+    <h3 id="pg-h">Kraft liner</h3>
+    <span class="block-product-grid__count">18 products</span>
+    <span class="block-product-grid__sort">Sorted by width, narrow first</span>
+  </div>
+  <ul class="block-product-grid__list">
+    <li>
+      <a class="block-product-grid__card" href="#blocks">
+        <span class="block-product-grid__shot"><span>Front, square, white ground. Not yet shot.</span></span>
+        <span class="block-product-grid__body">
+          <span class="block-product-grid__brand">Tavistock</span>
+          <span class="block-product-grid__name">Kraft liner 90gsm, 1250mm reel</span>
+          <span class="block-product-grid__stock block-product-grid__stock--in">In stock</span>
+          <span class="block-product-grid__price"><b>&pound;84.00</b></span>
+        </span>
+      </a>
+    </li>
+    <li>
+      <a class="block-product-grid__card" href="#blocks">
+        <span class="block-product-grid__shot"><span>Front, square, white ground. Not yet shot.</span></span>
+        <span class="block-product-grid__body">
+          <span class="block-product-grid__brand">Tavistock</span>
+          <span class="block-product-grid__name">Kraft liner 120gsm, 1600mm reel, extended length</span>
+          <span class="block-product-grid__stock block-product-grid__stock--low">3 left</span>
+          <span class="block-product-grid__price"><b>&pound;131.50</b><span class="block-product-grid__was">&pound;146.00</span></span>
+        </span>
+      </a>
+    </li>
+    <li>
+      <a class="block-product-grid__card" href="#blocks">
+        <span class="block-product-grid__shot"><span>Front, square, white ground. Not yet shot.</span></span>
+        <span class="block-product-grid__body">
+          <span class="block-product-grid__brand">Orrell</span>
+          <span class="block-product-grid__name">Test liner 135gsm, 1250mm reel</span>
+          <span class="block-product-grid__stock block-product-grid__stock--out">Back 12 Aug</span>
+          <span class="block-product-grid__price"><b>&pound;97.20</b></span>
+        </span>
+      </a>
+    </li>
+    <li>
+      <a class="block-product-grid__card" href="#blocks">
+        <span class="block-product-grid__shot"><span>Front, square, white ground. Not yet shot.</span></span>
+        <span class="block-product-grid__body">
+          <span class="block-product-grid__brand">Brennand</span>
+          <span class="block-product-grid__name">Fluting medium 105gsm</span>
+          <span class="block-product-grid__stock block-product-grid__stock--in">In stock</span>
+          <span class="block-product-grid__price"><b>&pound;68.40</b></span>
+        </span>
+      </a>
+    </li>
+  </ul>
+</section>

@@ -1,0 +1,115 @@
+<!--
+name: review-summary
+family: proof
+modes: E
+use: The distribution, then the reviews, with the low ones present.
+avoid: Any product with no reviews yet. Say so in a sentence instead.
+variants: with-distribution (default) | compact | rating-only
+pairs: purchase-panel, spec-table, product-grid
+not-with: testimonial
+tokens: --space-1 --space-2 --space-3 --space-4 --space-5 --space-7 --text-micro
+        --text-small --text-body --text-h2 --text-h3 --ink --ink-2 --ink-3 --line
+        --surface --surface-2 --accent --warn --ok --radius-inner --radius-outer
+        --radius-full --font-mono --container --gutter --measure
+density: medium
+prevents: A mean with no distribution behind it, and a page of five-star reviews
+          only, which buyers read as filtered because it usually is.
+-->
+<style>
+.block-review-summary{max-width:var(--container);margin-inline:auto;
+  padding:var(--space-7) var(--gutter)}
+.block-review-summary h3{margin:0 0 var(--space-5);font-size:var(--text-h3);
+  letter-spacing:-.02em}
+.block-review-summary__top{display:grid;grid-template-columns:auto minmax(0,1fr);
+  gap:var(--space-7);align-items:start;padding-bottom:var(--space-5);
+  border-bottom:1px solid var(--line)}
+@media(max-width:640px){
+  .block-review-summary__top{grid-template-columns:minmax(0,1fr);gap:var(--space-4)}
+}
+.block-review-summary__score b{display:block;font-size:var(--text-h2);
+  font-family:var(--font-mono);letter-spacing:-.03em;line-height:1}
+.block-review-summary__score span{color:var(--ink-3);font-size:var(--text-small)}
+
+/* The distribution is the point. A 4.6 from 300 and a 4.6 from three are different
+   facts, and only one of them is evidence. */
+.block-review-summary__dist{display:grid;gap:var(--space-2);min-width:0}
+.block-review-summary__row{display:grid;grid-template-columns:3.5rem minmax(0,1fr) 3rem;
+  gap:var(--space-3);align-items:center;font-size:var(--text-small)}
+.block-review-summary__bar{height:var(--space-2);background:var(--surface-2);
+  border-radius:var(--radius-full);overflow:hidden}
+.block-review-summary__bar i{display:block;height:100%;background:var(--accent)}
+.block-review-summary__row span:last-child{text-align:right;font-family:var(--font-mono);
+  color:var(--ink-3)}
+
+.block-review-summary__list{margin:var(--space-5) 0 0;padding:0;list-style:none;
+  display:grid;gap:var(--space-5)}
+.block-review-summary__list li{border-left:2px solid var(--line);
+  padding-left:var(--space-4);max-width:var(--measure)}
+.block-review-summary__meta{display:flex;gap:var(--space-3);flex-wrap:wrap;
+  align-items:baseline;font-size:var(--text-small);color:var(--ink-3);
+  margin-bottom:var(--space-2)}
+.block-review-summary__meta b{color:var(--ink);font-weight:650}
+.block-review-summary__stars{font-family:var(--font-mono);color:var(--warn);
+  letter-spacing:.1em}
+.block-review-summary__verified{font-size:var(--text-micro);font-weight:700;
+  letter-spacing:.05em;text-transform:uppercase;color:var(--ok)}
+.block-review-summary__list p{margin:0;color:var(--ink-2);font-size:var(--text-body)}
+/* A low review kept in place is worth more than the four above it. */
+.block-review-summary__list li[data-low=true]{border-left-color:var(--warn)}
+</style>
+
+<section class="block-review-summary" aria-labelledby="rs-h">
+  <h3 id="rs-h">What buyers reported</h3>
+
+  <div class="block-review-summary__top">
+    <div class="block-review-summary__score">
+      <b>4.2</b>
+      <span>from 213 verified purchases</span>
+    </div>
+    <div class="block-review-summary__dist">
+      <div class="block-review-summary__row"><span>5 star</span>
+        <span class="block-review-summary__bar"><i style="width:58%"></i></span><span>124</span></div>
+      <div class="block-review-summary__row"><span>4 star</span>
+        <span class="block-review-summary__bar"><i style="width:24%"></i></span><span>51</span></div>
+      <div class="block-review-summary__row"><span>3 star</span>
+        <span class="block-review-summary__bar"><i style="width:9%"></i></span><span>19</span></div>
+      <div class="block-review-summary__row"><span>2 star</span>
+        <span class="block-review-summary__bar"><i style="width:5%"></i></span><span>11</span></div>
+      <div class="block-review-summary__row"><span>1 star</span>
+        <span class="block-review-summary__bar"><i style="width:4%"></i></span><span>8</span></div>
+    </div>
+  </div>
+
+  <ul class="block-review-summary__list">
+    <li>
+      <p class="block-review-summary__meta">
+        <span class="block-review-summary__stars" aria-label="5 out of 5">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+        <b>Priya N.</b><span>14 July 2026</span>
+        <span class="block-review-summary__verified">Verified purchase</span>
+      </p>
+      <p>
+        Consistent across four reels, which the last supplier was not. The splice count
+        matched what the page said, so our line stopped guessing.
+      </p>
+    </li>
+    <li data-low="true">
+      <p class="block-review-summary__meta">
+        <span class="block-review-summary__stars" aria-label="2 out of 5">&#9733;&#9733;&#9734;&#9734;&#9734;</span>
+        <b>Tom Braithwaite</b><span>2 July 2026</span>
+        <span class="block-review-summary__verified">Verified purchase</span>
+      </p>
+      <p>
+        Arrived at the top of the moisture tolerance and cockled on our press. Replaced
+        without argument, but we lost a shift. Store it inside if your yard is damp.
+      </p>
+    </li>
+    <li>
+      <p class="block-review-summary__meta">
+        <span class="block-review-summary__stars" aria-label="4 out of 5">&#9733;&#9733;&#9733;&#9733;&#9734;</span>
+        <b>Elin Sørensen</b><span>28 June 2026</span>
+        <span class="block-review-summary__verified">Verified purchase</span>
+      </p>
+      <p>Good stock. Kerbside delivery means you need a forklift; that is on the page, but read it.</p>
+    </li>
+  </ul>
+</section>

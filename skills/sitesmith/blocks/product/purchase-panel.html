@@ -1,0 +1,124 @@
+<!--
+name: purchase-panel
+family: product
+modes: E
+use: The right column of a product page. Price, variant, delivery and the one action,
+     all visible together.
+avoid: Anything that is not a product page. This block is the purchase, not a summary.
+variants: sticky (default) | inline | with-finance
+pairs: product-gallery, spec-table, review-summary, cta-sticky
+not-with: cta-band
+tokens: --space-1 --space-2 --space-3 --space-4 --space-5 --text-micro --text-small
+        --text-body --text-h2 --text-h3 --ink --ink-2 --ink-3 --line --line-2
+        --surface --surface-2 --accent --on-accent --ok --ok-soft --warn --warn-soft
+        --radius-inner --radius-outer --font-mono --container --leading-tight
+density: medium
+prevents: A buyer scrolling away from the price to find the button, and a delivery
+          estimate that only appears at checkout.
+-->
+<style>
+.block-purchase-panel{border:1px solid var(--line);border-radius:var(--radius-outer);
+  background:var(--surface);padding:var(--space-5);display:flex;flex-direction:column;
+  gap:var(--space-4);max-width:26rem}
+@media(min-width:961px){
+  .block-purchase-panel--sticky{position:sticky;top:var(--space-5)}
+}
+.block-purchase-panel__brand{font-size:var(--text-micro);letter-spacing:.09em;
+  text-transform:uppercase;color:var(--ink-3);font-weight:700}
+.block-purchase-panel h3{margin:var(--space-1) 0 0;font-size:var(--text-h3);
+  line-height:var(--leading-tight);letter-spacing:-.02em}
+.block-purchase-panel__sku{font-family:var(--font-mono);font-size:var(--text-small);
+  color:var(--ink-3);overflow-wrap:anywhere}
+
+/* Price is the second largest thing on the page after the name, and it is tabular so
+   a variant swap does not shift the column. */
+.block-purchase-panel__price{display:flex;align-items:baseline;gap:var(--space-3);
+  flex-wrap:wrap;font-family:var(--font-mono);font-variant-numeric:tabular-nums}
+.block-purchase-panel__price b{font-size:var(--text-h2);letter-spacing:-.03em}
+.block-purchase-panel__price s{color:var(--ink-3);font-size:var(--text-small)}
+.block-purchase-panel__vat{font-size:var(--text-small);color:var(--ink-2);
+  font-family:inherit}
+
+fieldset.block-purchase-panel__opts{border:0;margin:0;padding:0}
+.block-purchase-panel__opts legend{padding:0;font-size:var(--text-small);
+  font-weight:650;margin-bottom:var(--space-2)}
+.block-purchase-panel__swatches{display:flex;gap:var(--space-2);flex-wrap:wrap}
+.block-purchase-panel__swatches input{position:absolute;opacity:0;width:1px;height:1px}
+.block-purchase-panel__swatches label{font-size:var(--text-small);
+  padding:var(--space-2) var(--space-3);border:1px solid var(--line-2);
+  border-radius:var(--radius-inner);cursor:pointer;background:var(--surface)}
+.block-purchase-panel__swatches input:checked + label{border-color:var(--accent);
+  box-shadow:inset 0 0 0 1px var(--accent);font-weight:650}
+.block-purchase-panel__swatches input:focus-visible + label{outline:2px solid var(--accent);
+  outline-offset:2px}
+.block-purchase-panel__swatches input:disabled + label{opacity:.45;cursor:not-allowed;
+  text-decoration:line-through}
+
+.block-purchase-panel__qty{display:flex;align-items:center;gap:var(--space-3)}
+.block-purchase-panel__qty input{font:inherit;width:5rem;padding:var(--space-2) var(--space-3);
+  border:1px solid var(--line-2);border-radius:var(--radius-inner);
+  background:var(--surface);color:var(--ink);font-family:var(--font-mono);
+  text-align:right}
+
+.block-purchase-panel__buy{font:inherit;font-size:var(--text-body);font-weight:700;
+  padding:var(--space-3) var(--space-5);border-radius:var(--radius-inner);cursor:pointer;
+  border:1px solid var(--accent);background:var(--accent);color:var(--on-accent);
+  width:100%}
+.block-purchase-panel__buy:active{transform:translateY(1px)}
+.block-purchase-panel__second{font:inherit;font-size:var(--text-small);font-weight:600;
+  padding:var(--space-2) var(--space-4);border-radius:var(--radius-inner);cursor:pointer;
+  border:1px solid var(--line-2);background:var(--surface);color:var(--ink);width:100%}
+
+/* Delivery lives with the action, not at checkout. A buyer should never have to
+   commit to find out when it arrives. */
+.block-purchase-panel__facts{border-top:1px solid var(--line);padding-top:var(--space-4);
+  display:grid;gap:var(--space-2);font-size:var(--text-small);color:var(--ink-2)}
+.block-purchase-panel__facts div{display:flex;gap:var(--space-3)}
+.block-purchase-panel__facts b{color:var(--ink);font-weight:650;flex:none;
+  min-width:6.5rem}
+.block-purchase-panel__stock{font-size:var(--text-micro);font-weight:700;
+  letter-spacing:.05em;text-transform:uppercase;padding:var(--space-1) var(--space-2);
+  border-radius:var(--radius-inner);width:fit-content;
+  background:var(--ok-soft);color:var(--ok)}
+.block-purchase-panel :focus-visible{outline:2px solid var(--accent);outline-offset:2px;
+  border-radius:var(--radius-inner)}
+</style>
+
+<aside class="block-purchase-panel block-purchase-panel--sticky" aria-labelledby="pp-h">
+  <div>
+    <p class="block-purchase-panel__brand">Tavistock Paper Mills</p>
+    <h3 id="pp-h">Kraft liner 120gsm, 1600mm reel</h3>
+    <p class="block-purchase-panel__sku">PM-1142 &middot; EAN 5060421887302</p>
+  </div>
+
+  <p class="block-purchase-panel__price">
+    <b>&pound;131.50</b><s>&pound;146.00</s>
+    <span class="block-purchase-panel__vat">per reel, excluding VAT</span>
+  </p>
+
+  <span class="block-purchase-panel__stock">In stock, 41 reels</span>
+
+  <fieldset class="block-purchase-panel__opts">
+    <legend>Reel width</legend>
+    <div class="block-purchase-panel__swatches">
+      <input type="radio" name="pp-width" id="pp-w1"><label for="pp-w1">1250mm</label>
+      <input type="radio" name="pp-width" id="pp-w2" checked><label for="pp-w2">1600mm</label>
+      <input type="radio" name="pp-width" id="pp-w3" disabled><label for="pp-w3">2000mm</label>
+    </div>
+  </fieldset>
+
+  <div class="block-purchase-panel__qty">
+    <label for="pp-qty">Quantity</label>
+    <input type="text" id="pp-qty" inputmode="numeric" value="4">
+    <span style="color:var(--ink-3);font-size:var(--text-small)">&pound;526.00 total</span>
+  </div>
+
+  <button class="block-purchase-panel__buy" type="button">Add to basket</button>
+  <button class="block-purchase-panel__second" type="button">Request a sample</button>
+
+  <div class="block-purchase-panel__facts">
+    <div><b>Delivery</b><span>Thursday 30 July if ordered within 6 hours. Pallet, kerbside.</span></div>
+    <div><b>Returns</b><span>28 days unopened. We collect.</span></div>
+    <div><b>Trade</b><span>Sign in for account pricing on orders over 10 reels.</span></div>
+  </div>
+</aside>

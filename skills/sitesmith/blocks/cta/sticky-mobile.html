@@ -1,0 +1,54 @@
+<!--
+name: cta-sticky
+family: cta
+modes: E M
+use: The purchase action pinned to the bottom of a phone, carrying the price with it.
+avoid: Desktop, where the purchase panel is already sticky. This block hides above 720px.
+variants: price-and-action (default) | action-only | with-variant
+pairs: purchase-panel, product-gallery, spec-table
+not-with: cta-band
+tokens: --space-1 --space-2 --space-3 --space-4 --text-micro --text-small --text-body
+        --ink --ink-2 --ink-3 --line --surface --accent --on-accent --ok
+        --radius-inner --font-mono --leading-tight
+density: medium
+prevents: A phone buyer who has scrolled to the specification and has to scroll back
+          to buy, and a sticky bar that covers the last line of the page.
+-->
+<style>
+/* Hidden above 720px on purpose: the purchase panel is already sticky there, and two
+   persistent buy buttons on one screen is one too many. */
+.block-cta-sticky{display:none}
+@media(max-width:720px){
+  .block-cta-sticky{display:block;position:sticky;bottom:0;z-index:15;
+    background:var(--surface);border-top:1px solid var(--line)}
+  /* The page reserves the bar's height so the final line is never underneath it. */
+  .block-cta-sticky__spacer{display:block;height:var(--space-9)}
+}
+.block-cta-sticky__in{display:flex;align-items:center;gap:var(--space-3);
+  padding:var(--space-3) var(--space-4)}
+.block-cta-sticky__price{min-width:0;line-height:var(--leading-tight)}
+.block-cta-sticky__price b{display:block;font-family:var(--font-mono);
+  font-variant-numeric:tabular-nums;font-size:var(--text-body);letter-spacing:-.02em}
+.block-cta-sticky__price span{display:block;font-size:var(--text-micro);
+  color:var(--ink-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.block-cta-sticky__buy{margin-left:auto;font:inherit;font-size:var(--text-small);
+  font-weight:700;padding:var(--space-3) var(--space-4);border-radius:var(--radius-inner);
+  cursor:pointer;border:1px solid var(--accent);background:var(--accent);
+  color:var(--on-accent);white-space:nowrap}
+.block-cta-sticky__buy:active{transform:translateY(1px)}
+.block-cta-sticky :focus-visible{outline:2px solid var(--accent);outline-offset:2px;
+  border-radius:var(--radius-inner)}
+.block-cta-sticky__stock{font-size:var(--text-micro);font-weight:700;color:var(--ok);
+  letter-spacing:.05em;text-transform:uppercase}
+</style>
+
+<div class="block-cta-sticky">
+  <div class="block-cta-sticky__in">
+    <div class="block-cta-sticky__price">
+      <b>&pound;131.50</b>
+      <span>1600mm reel &middot; <span class="block-cta-sticky__stock">In stock</span></span>
+    </div>
+    <button class="block-cta-sticky__buy" type="button">Add to basket</button>
+  </div>
+</div>
+<span class="block-cta-sticky__spacer" aria-hidden="true"></span>

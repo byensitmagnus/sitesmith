@@ -1,0 +1,96 @@
+<!--
+name: spec-table
+family: product
+modes: E
+use: The full specification, grouped. Buyers who read specifications are the ones who
+     complete, so this is proof, not an appendix.
+avoid: Curating it. Six specs shown when twelve exist reads as six specs hidden.
+variants: grouped (default) | flat | two-column
+pairs: purchase-panel, product-gallery, review-summary
+not-with: comparison-table
+tokens: --space-2 --space-3 --space-4 --space-5 --space-7 --text-micro --text-small
+        --text-body --text-h3 --ink --ink-2 --ink-3 --line --line-2 --surface
+        --surface-2 --accent --radius-outer --font-mono --container --gutter
+density: medium
+prevents: A specification that omits the awkward number, which the buyer who cares
+          finds elsewhere and then distrusts the rest of the page.
+-->
+<style>
+.block-spec-table{max-width:var(--container);margin-inline:auto;
+  padding:var(--space-7) var(--gutter)}
+.block-spec-table h3{margin:0 0 var(--space-4);font-size:var(--text-h3);
+  letter-spacing:-.02em}
+.block-spec-table__wrap{border:1px solid var(--line);border-radius:var(--radius-outer);
+  background:var(--surface);overflow:hidden}
+/* Grouped, and every group complete. Grouping is how a long specification stays
+   readable; hiding rows is how it stops being a specification. */
+.block-spec-table table{width:100%;border-collapse:collapse;font-size:var(--text-small)}
+.block-spec-table caption{text-align:left;padding:var(--space-3) var(--space-4);
+  color:var(--ink-3);font-size:var(--text-micro);letter-spacing:.09em;
+  text-transform:uppercase;font-weight:700;background:var(--surface-2);
+  border-bottom:1px solid var(--line)}
+.block-spec-table tbody th{text-align:left;font-weight:600;color:var(--ink-2);
+  padding:var(--space-3) var(--space-4);border-bottom:1px solid var(--line);
+  width:40%;vertical-align:top}
+.block-spec-table tbody td{padding:var(--space-3) var(--space-4);
+  border-bottom:1px solid var(--line);color:var(--ink);vertical-align:top;
+  overflow-wrap:anywhere}
+.block-spec-table tbody tr:last-child th,
+.block-spec-table tbody tr:last-child td{border-bottom:0}
+.block-spec-table .num{font-family:var(--font-mono);font-variant-numeric:tabular-nums}
+.block-spec-table__group + .block-spec-table__group{border-top:1px solid var(--line-2)}
+.block-spec-table__note{margin:var(--space-4) 0 0;color:var(--ink-3);
+  font-size:var(--text-small);max-width:var(--measure)}
+@media(max-width:560px){
+  .block-spec-table tbody th{width:auto;display:block;border-bottom:0;
+    padding-bottom:0;color:var(--ink-3);font-size:var(--text-micro);
+    letter-spacing:.06em;text-transform:uppercase}
+  .block-spec-table tbody td{display:block;padding-top:var(--space-1)}
+}
+</style>
+
+<section class="block-spec-table" aria-labelledby="st-h">
+  <h3 id="st-h">Full specification</h3>
+  <div class="block-spec-table__wrap">
+    <div class="block-spec-table__group">
+      <table>
+        <caption>Material</caption>
+        <tbody>
+          <tr><th scope="row">Grammage</th><td class="num">120 gsm &plusmn; 4</td></tr>
+          <tr><th scope="row">Fibre</th><td>100% recycled, unbleached</td></tr>
+          <tr><th scope="row">Burst strength</th><td class="num">340 kPa, ISO 2759</td></tr>
+          <tr><th scope="row">Moisture at despatch</th><td class="num">7.5% &plusmn; 1.5</td></tr>
+          <tr><th scope="row">Cobb 60</th><td class="num">32 g/m&sup2;</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="block-spec-table__group">
+      <table>
+        <caption>Reel</caption>
+        <tbody>
+          <tr><th scope="row">Width</th><td class="num">1600 mm</td></tr>
+          <tr><th scope="row">Length</th><td class="num">4000 m</td></tr>
+          <tr><th scope="row">Core diameter</th><td class="num">76 mm</td></tr>
+          <tr><th scope="row">Reel weight</th><td class="num">768 kg</td></tr>
+          <tr><th scope="row">Splices per reel</th><td class="num">Up to 2</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="block-spec-table__group">
+      <table>
+        <caption>Handling and compliance</caption>
+        <tbody>
+          <tr><th scope="row">Pallet</th><td>Single reel, upright, strapped</td></tr>
+          <tr><th scope="row">Storage</th><td>15 to 25&deg;C, 50 to 60% RH. Outside this the moisture figure above does not hold.</td></tr>
+          <tr><th scope="row">Food contact</th><td>Not suitable for direct food contact</td></tr>
+          <tr><th scope="row">Certification</th><td>FSC Recycled 100%, licence FSC-C012345</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <p class="block-spec-table__note">
+    Every figure above is from the mill's current datasheet, revision 11, February 2026.
+    Splices and the moisture tolerance are stated because they are the two that come back as
+    complaints when they are not.
+  </p>
+</section>

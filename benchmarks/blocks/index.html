@@ -342,7 +342,344 @@ a{color:var(--accent)}
   </section>
 
   <section class="spec" aria-labelledby="b3">
-    <h2 id="b3">benefits</h2>
+    <h2 id="b3">product-grid</h2>
+    <dl>
+      <dt>Family</dt><dd>catalogue &middot; modes E &middot; medium</dd>
+      <dt>Use</dt><dd>A category or search listing. One aspect ratio, one rhythm, price and stock legible without opening anything.</dd>
+      <dt>Avoid</dt><dd>Fewer than four products, where a grid reads as a gap. Use a row.</dd>
+      <dt>Variants</dt><dd>four-up (default) | three-up | two-up-editorial</dd>
+      <dt>Pairs with</dt><dd>filter-rail, hero-category, empty-state not-with: comparison-table</dd>
+      
+      <dt>Prevents</dt><dd>A grid whose cards change height with the length of the product name, and a stock state carried by colour alone.</dd>
+      <dt>Source</dt><dd><code>skills/sitesmith/blocks/catalogue/product-grid.html</code></dd>
+    </dl>
+    <div class="stage">
+<style>
+.block-product-grid{max-width:var(--container);margin-inline:auto;
+  padding:var(--space-7) var(--gutter)}
+.block-product-grid__head{display:flex;align-items:baseline;gap:var(--space-3);
+  flex-wrap:wrap;margin-bottom:var(--space-5)}
+.block-product-grid h3{margin:0;font-size:var(--text-h3);letter-spacing:-.02em}
+.block-product-grid__count{color:var(--ink-3);font-size:var(--text-small);
+  font-family:var(--font-mono)}
+.block-product-grid__sort{margin-left:auto;font-size:var(--text-small);color:var(--ink-2)}
+
+.block-product-grid__list{display:grid;list-style:none;margin:0;padding:0;
+  grid-template-columns:repeat(auto-fill,minmax(min(100%,15rem),1fr));gap:var(--space-5)}
+.block-product-grid--three-up .block-product-grid__list{
+  grid-template-columns:repeat(auto-fill,minmax(min(100%,19rem),1fr))}
+
+/* A card is a link with a fixed-ratio image and a body that ends flush. Without the
+   flex column the price of a two-line name sits lower than the price beside it, and
+   the row stops reading as a set. */
+.block-product-grid__card{display:flex;flex-direction:column;height:100%;
+  text-decoration:none;color:inherit;border:1px solid var(--line);
+  border-radius:var(--radius-outer);overflow:hidden;background:var(--surface);
+  transition:border-color var(--motion-fast) var(--ease)}
+.block-product-grid__card:hover{border-color:var(--line-2)}
+.block-product-grid__shot{aspect-ratio:1;background:var(--surface-2);
+  border-bottom:1px solid var(--line);display:grid;place-items:center;
+  padding:var(--space-4);text-align:center}
+.block-product-grid__shot span{color:var(--ink-3);font-size:var(--text-micro)}
+.block-product-grid__body{padding:var(--space-4);display:flex;flex-direction:column;
+  gap:var(--space-1);flex:1}
+.block-product-grid__brand{font-size:var(--text-micro);letter-spacing:.09em;
+  text-transform:uppercase;color:var(--ink-3);font-weight:700}
+.block-product-grid__name{font-size:var(--text-body);font-weight:600;
+  line-height:var(--leading-tight)}
+.block-product-grid__price{margin-top:auto;padding-top:var(--space-3);
+  display:flex;align-items:baseline;gap:var(--space-2);font-family:var(--font-mono);
+  font-variant-numeric:tabular-nums}
+.block-product-grid__price b{font-size:var(--text-h3);letter-spacing:-.02em}
+.block-product-grid__was{color:var(--ink-3);font-size:var(--text-small);
+  text-decoration:line-through}
+/* Stock says the words as well as being a colour. A buyer who cannot distinguish
+   amber from green still has to know. */
+.block-product-grid__stock{font-size:var(--text-micro);font-weight:700;
+  letter-spacing:.05em;text-transform:uppercase;padding:var(--space-1) var(--space-2);
+  border-radius:var(--radius-inner);width:fit-content}
+.block-product-grid__stock--in{background:var(--ok-soft);color:var(--ok)}
+.block-product-grid__stock--low{background:var(--warn-soft);color:var(--warn)}
+.block-product-grid__stock--out{background:var(--bad-soft);color:var(--bad)}
+.block-product-grid :focus-visible{outline:2px solid var(--accent);outline-offset:2px;
+  border-radius:var(--radius-outer)}
+</style>
+
+<section class="block-product-grid" aria-labelledby="pg-h">
+  <div class="block-product-grid__head">
+    <h3 id="pg-h">Kraft liner</h3>
+    <span class="block-product-grid__count">18 products</span>
+    <span class="block-product-grid__sort">Sorted by width, narrow first</span>
+  </div>
+  <ul class="block-product-grid__list">
+    <li>
+      <a class="block-product-grid__card" href="#blocks">
+        <span class="block-product-grid__shot"><span>Front, square, white ground. Not yet shot.</span></span>
+        <span class="block-product-grid__body">
+          <span class="block-product-grid__brand">Tavistock</span>
+          <span class="block-product-grid__name">Kraft liner 90gsm, 1250mm reel</span>
+          <span class="block-product-grid__stock block-product-grid__stock--in">In stock</span>
+          <span class="block-product-grid__price"><b>&pound;84.00</b></span>
+        </span>
+      </a>
+    </li>
+    <li>
+      <a class="block-product-grid__card" href="#blocks">
+        <span class="block-product-grid__shot"><span>Front, square, white ground. Not yet shot.</span></span>
+        <span class="block-product-grid__body">
+          <span class="block-product-grid__brand">Tavistock</span>
+          <span class="block-product-grid__name">Kraft liner 120gsm, 1600mm reel, extended length</span>
+          <span class="block-product-grid__stock block-product-grid__stock--low">3 left</span>
+          <span class="block-product-grid__price"><b>&pound;131.50</b><span class="block-product-grid__was">&pound;146.00</span></span>
+        </span>
+      </a>
+    </li>
+    <li>
+      <a class="block-product-grid__card" href="#blocks">
+        <span class="block-product-grid__shot"><span>Front, square, white ground. Not yet shot.</span></span>
+        <span class="block-product-grid__body">
+          <span class="block-product-grid__brand">Orrell</span>
+          <span class="block-product-grid__name">Test liner 135gsm, 1250mm reel</span>
+          <span class="block-product-grid__stock block-product-grid__stock--out">Back 12 Aug</span>
+          <span class="block-product-grid__price"><b>&pound;97.20</b></span>
+        </span>
+      </a>
+    </li>
+    <li>
+      <a class="block-product-grid__card" href="#blocks">
+        <span class="block-product-grid__shot"><span>Front, square, white ground. Not yet shot.</span></span>
+        <span class="block-product-grid__body">
+          <span class="block-product-grid__brand">Brennand</span>
+          <span class="block-product-grid__name">Fluting medium 105gsm</span>
+          <span class="block-product-grid__stock block-product-grid__stock--in">In stock</span>
+          <span class="block-product-grid__price"><b>&pound;68.40</b></span>
+        </span>
+      </a>
+    </li>
+  </ul>
+</section>
+    </div>
+  </section>
+
+  <section class="spec" aria-labelledby="b4">
+    <h2 id="b4">purchase-panel</h2>
+    <dl>
+      <dt>Family</dt><dd>product &middot; modes E &middot; medium</dd>
+      <dt>Use</dt><dd>The right column of a product page. Price, variant, delivery and the one action, all visible together.</dd>
+      <dt>Avoid</dt><dd>Anything that is not a product page. This block is the purchase, not a summary.</dd>
+      <dt>Variants</dt><dd>sticky (default) | inline | with-finance</dd>
+      <dt>Pairs with</dt><dd>product-gallery, spec-table, review-summary, cta-sticky not-with: cta-band</dd>
+      
+      <dt>Prevents</dt><dd>A buyer scrolling away from the price to find the button, and a delivery estimate that only appears at checkout.</dd>
+      <dt>Source</dt><dd><code>skills/sitesmith/blocks/product/purchase-panel.html</code></dd>
+    </dl>
+    <div class="stage">
+<style>
+.block-purchase-panel{border:1px solid var(--line);border-radius:var(--radius-outer);
+  background:var(--surface);padding:var(--space-5);display:flex;flex-direction:column;
+  gap:var(--space-4);max-width:26rem}
+@media(min-width:961px){
+  .block-purchase-panel--sticky{position:sticky;top:var(--space-5)}
+}
+.block-purchase-panel__brand{font-size:var(--text-micro);letter-spacing:.09em;
+  text-transform:uppercase;color:var(--ink-3);font-weight:700}
+.block-purchase-panel h3{margin:var(--space-1) 0 0;font-size:var(--text-h3);
+  line-height:var(--leading-tight);letter-spacing:-.02em}
+.block-purchase-panel__sku{font-family:var(--font-mono);font-size:var(--text-small);
+  color:var(--ink-3);overflow-wrap:anywhere}
+
+/* Price is the second largest thing on the page after the name, and it is tabular so
+   a variant swap does not shift the column. */
+.block-purchase-panel__price{display:flex;align-items:baseline;gap:var(--space-3);
+  flex-wrap:wrap;font-family:var(--font-mono);font-variant-numeric:tabular-nums}
+.block-purchase-panel__price b{font-size:var(--text-h2);letter-spacing:-.03em}
+.block-purchase-panel__price s{color:var(--ink-3);font-size:var(--text-small)}
+.block-purchase-panel__vat{font-size:var(--text-small);color:var(--ink-2);
+  font-family:inherit}
+
+fieldset.block-purchase-panel__opts{border:0;margin:0;padding:0}
+.block-purchase-panel__opts legend{padding:0;font-size:var(--text-small);
+  font-weight:650;margin-bottom:var(--space-2)}
+.block-purchase-panel__swatches{display:flex;gap:var(--space-2);flex-wrap:wrap}
+.block-purchase-panel__swatches input{position:absolute;opacity:0;width:1px;height:1px}
+.block-purchase-panel__swatches label{font-size:var(--text-small);
+  padding:var(--space-2) var(--space-3);border:1px solid var(--line-2);
+  border-radius:var(--radius-inner);cursor:pointer;background:var(--surface)}
+.block-purchase-panel__swatches input:checked + label{border-color:var(--accent);
+  box-shadow:inset 0 0 0 1px var(--accent);font-weight:650}
+.block-purchase-panel__swatches input:focus-visible + label{outline:2px solid var(--accent);
+  outline-offset:2px}
+.block-purchase-panel__swatches input:disabled + label{opacity:.45;cursor:not-allowed;
+  text-decoration:line-through}
+
+.block-purchase-panel__qty{display:flex;align-items:center;gap:var(--space-3)}
+.block-purchase-panel__qty input{font:inherit;width:5rem;padding:var(--space-2) var(--space-3);
+  border:1px solid var(--line-2);border-radius:var(--radius-inner);
+  background:var(--surface);color:var(--ink);font-family:var(--font-mono);
+  text-align:right}
+
+.block-purchase-panel__buy{font:inherit;font-size:var(--text-body);font-weight:700;
+  padding:var(--space-3) var(--space-5);border-radius:var(--radius-inner);cursor:pointer;
+  border:1px solid var(--accent);background:var(--accent);color:var(--on-accent);
+  width:100%}
+.block-purchase-panel__buy:active{transform:translateY(1px)}
+.block-purchase-panel__second{font:inherit;font-size:var(--text-small);font-weight:600;
+  padding:var(--space-2) var(--space-4);border-radius:var(--radius-inner);cursor:pointer;
+  border:1px solid var(--line-2);background:var(--surface);color:var(--ink);width:100%}
+
+/* Delivery lives with the action, not at checkout. A buyer should never have to
+   commit to find out when it arrives. */
+.block-purchase-panel__facts{border-top:1px solid var(--line);padding-top:var(--space-4);
+  display:grid;gap:var(--space-2);font-size:var(--text-small);color:var(--ink-2)}
+.block-purchase-panel__facts div{display:flex;gap:var(--space-3)}
+.block-purchase-panel__facts b{color:var(--ink);font-weight:650;flex:none;
+  min-width:6.5rem}
+.block-purchase-panel__stock{font-size:var(--text-micro);font-weight:700;
+  letter-spacing:.05em;text-transform:uppercase;padding:var(--space-1) var(--space-2);
+  border-radius:var(--radius-inner);width:fit-content;
+  background:var(--ok-soft);color:var(--ok)}
+.block-purchase-panel :focus-visible{outline:2px solid var(--accent);outline-offset:2px;
+  border-radius:var(--radius-inner)}
+</style>
+
+<aside class="block-purchase-panel block-purchase-panel--sticky" aria-labelledby="pp-h">
+  <div>
+    <p class="block-purchase-panel__brand">Tavistock Paper Mills</p>
+    <h3 id="pp-h">Kraft liner 120gsm, 1600mm reel</h3>
+    <p class="block-purchase-panel__sku">PM-1142 &middot; EAN 5060421887302</p>
+  </div>
+
+  <p class="block-purchase-panel__price">
+    <b>&pound;131.50</b><s>&pound;146.00</s>
+    <span class="block-purchase-panel__vat">per reel, excluding VAT</span>
+  </p>
+
+  <span class="block-purchase-panel__stock">In stock, 41 reels</span>
+
+  <fieldset class="block-purchase-panel__opts">
+    <legend>Reel width</legend>
+    <div class="block-purchase-panel__swatches">
+      <input type="radio" name="pp-width" id="pp-w1"><label for="pp-w1">1250mm</label>
+      <input type="radio" name="pp-width" id="pp-w2" checked><label for="pp-w2">1600mm</label>
+      <input type="radio" name="pp-width" id="pp-w3" disabled><label for="pp-w3">2000mm</label>
+    </div>
+  </fieldset>
+
+  <div class="block-purchase-panel__qty">
+    <label for="pp-qty">Quantity</label>
+    <input type="text" id="pp-qty" inputmode="numeric" value="4">
+    <span style="color:var(--ink-3);font-size:var(--text-small)">&pound;526.00 total</span>
+  </div>
+
+  <button class="block-purchase-panel__buy" type="button">Add to basket</button>
+  <button class="block-purchase-panel__second" type="button">Request a sample</button>
+
+  <div class="block-purchase-panel__facts">
+    <div><b>Delivery</b><span>Thursday 30 July if ordered within 6 hours. Pallet, kerbside.</span></div>
+    <div><b>Returns</b><span>28 days unopened. We collect.</span></div>
+    <div><b>Trade</b><span>Sign in for account pricing on orders over 10 reels.</span></div>
+  </div>
+</aside>
+    </div>
+  </section>
+
+  <section class="spec" aria-labelledby="b5">
+    <h2 id="b5">spec-table</h2>
+    <dl>
+      <dt>Family</dt><dd>product &middot; modes E &middot; medium</dd>
+      <dt>Use</dt><dd>The full specification, grouped. Buyers who read specifications are the ones who complete, so this is proof, not an appendix.</dd>
+      <dt>Avoid</dt><dd>Curating it. Six specs shown when twelve exist reads as six specs hidden.</dd>
+      <dt>Variants</dt><dd>grouped (default) | flat | two-column</dd>
+      <dt>Pairs with</dt><dd>purchase-panel, product-gallery, review-summary not-with: comparison-table</dd>
+      
+      <dt>Prevents</dt><dd>A specification that omits the awkward number, which the buyer who cares finds elsewhere and then distrusts the rest of the page.</dd>
+      <dt>Source</dt><dd><code>skills/sitesmith/blocks/product/spec-table.html</code></dd>
+    </dl>
+    <div class="stage">
+<style>
+.block-spec-table{max-width:var(--container);margin-inline:auto;
+  padding:var(--space-7) var(--gutter)}
+.block-spec-table h3{margin:0 0 var(--space-4);font-size:var(--text-h3);
+  letter-spacing:-.02em}
+.block-spec-table__wrap{border:1px solid var(--line);border-radius:var(--radius-outer);
+  background:var(--surface);overflow:hidden}
+/* Grouped, and every group complete. Grouping is how a long specification stays
+   readable; hiding rows is how it stops being a specification. */
+.block-spec-table table{width:100%;border-collapse:collapse;font-size:var(--text-small)}
+.block-spec-table caption{text-align:left;padding:var(--space-3) var(--space-4);
+  color:var(--ink-3);font-size:var(--text-micro);letter-spacing:.09em;
+  text-transform:uppercase;font-weight:700;background:var(--surface-2);
+  border-bottom:1px solid var(--line)}
+.block-spec-table tbody th{text-align:left;font-weight:600;color:var(--ink-2);
+  padding:var(--space-3) var(--space-4);border-bottom:1px solid var(--line);
+  width:40%;vertical-align:top}
+.block-spec-table tbody td{padding:var(--space-3) var(--space-4);
+  border-bottom:1px solid var(--line);color:var(--ink);vertical-align:top;
+  overflow-wrap:anywhere}
+.block-spec-table tbody tr:last-child th,
+.block-spec-table tbody tr:last-child td{border-bottom:0}
+.block-spec-table .num{font-family:var(--font-mono);font-variant-numeric:tabular-nums}
+.block-spec-table__group + .block-spec-table__group{border-top:1px solid var(--line-2)}
+.block-spec-table__note{margin:var(--space-4) 0 0;color:var(--ink-3);
+  font-size:var(--text-small);max-width:var(--measure)}
+@media(max-width:560px){
+  .block-spec-table tbody th{width:auto;display:block;border-bottom:0;
+    padding-bottom:0;color:var(--ink-3);font-size:var(--text-micro);
+    letter-spacing:.06em;text-transform:uppercase}
+  .block-spec-table tbody td{display:block;padding-top:var(--space-1)}
+}
+</style>
+
+<section class="block-spec-table" aria-labelledby="st-h">
+  <h3 id="st-h">Full specification</h3>
+  <div class="block-spec-table__wrap">
+    <div class="block-spec-table__group">
+      <table>
+        <caption>Material</caption>
+        <tbody>
+          <tr><th scope="row">Grammage</th><td class="num">120 gsm &plusmn; 4</td></tr>
+          <tr><th scope="row">Fibre</th><td>100% recycled, unbleached</td></tr>
+          <tr><th scope="row">Burst strength</th><td class="num">340 kPa, ISO 2759</td></tr>
+          <tr><th scope="row">Moisture at despatch</th><td class="num">7.5% &plusmn; 1.5</td></tr>
+          <tr><th scope="row">Cobb 60</th><td class="num">32 g/m&sup2;</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="block-spec-table__group">
+      <table>
+        <caption>Reel</caption>
+        <tbody>
+          <tr><th scope="row">Width</th><td class="num">1600 mm</td></tr>
+          <tr><th scope="row">Length</th><td class="num">4000 m</td></tr>
+          <tr><th scope="row">Core diameter</th><td class="num">76 mm</td></tr>
+          <tr><th scope="row">Reel weight</th><td class="num">768 kg</td></tr>
+          <tr><th scope="row">Splices per reel</th><td class="num">Up to 2</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="block-spec-table__group">
+      <table>
+        <caption>Handling and compliance</caption>
+        <tbody>
+          <tr><th scope="row">Pallet</th><td>Single reel, upright, strapped</td></tr>
+          <tr><th scope="row">Storage</th><td>15 to 25&deg;C, 50 to 60% RH. Outside this the moisture figure above does not hold.</td></tr>
+          <tr><th scope="row">Food contact</th><td>Not suitable for direct food contact</td></tr>
+          <tr><th scope="row">Certification</th><td>FSC Recycled 100%, licence FSC-C012345</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <p class="block-spec-table__note">
+    Every figure above is from the mill's current datasheet, revision 11, February 2026.
+    Splices and the moisture tolerance are stated because they are the two that come back as
+    complaints when they are not.
+  </p>
+</section>
+    </div>
+  </section>
+
+  <section class="spec" aria-labelledby="b6">
+    <h2 id="b6">benefits</h2>
     <dl>
       <dt>Family</dt><dd>content &middot; modes M &middot; spacious</dd>
       <dt>Use</dt><dd>The three or four things that decide whether this is for you, after the hero.</dd>
@@ -439,8 +776,122 @@ a{color:var(--accent)}
     </div>
   </section>
 
-  <section class="spec" aria-labelledby="b4">
-    <h2 id="b4">testimonial</h2>
+  <section class="spec" aria-labelledby="b7">
+    <h2 id="b7">review-summary</h2>
+    <dl>
+      <dt>Family</dt><dd>proof &middot; modes E &middot; medium</dd>
+      <dt>Use</dt><dd>The distribution, then the reviews, with the low ones present.</dd>
+      <dt>Avoid</dt><dd>Any product with no reviews yet. Say so in a sentence instead.</dd>
+      <dt>Variants</dt><dd>with-distribution (default) | compact | rating-only</dd>
+      <dt>Pairs with</dt><dd>purchase-panel, spec-table, product-grid not-with: testimonial</dd>
+      
+      <dt>Prevents</dt><dd>A mean with no distribution behind it, and a page of five-star reviews only, which buyers read as filtered because it usually is.</dd>
+      <dt>Source</dt><dd><code>skills/sitesmith/blocks/proof/review-summary.html</code></dd>
+    </dl>
+    <div class="stage">
+<style>
+.block-review-summary{max-width:var(--container);margin-inline:auto;
+  padding:var(--space-7) var(--gutter)}
+.block-review-summary h3{margin:0 0 var(--space-5);font-size:var(--text-h3);
+  letter-spacing:-.02em}
+.block-review-summary__top{display:grid;grid-template-columns:auto minmax(0,1fr);
+  gap:var(--space-7);align-items:start;padding-bottom:var(--space-5);
+  border-bottom:1px solid var(--line)}
+@media(max-width:640px){
+  .block-review-summary__top{grid-template-columns:minmax(0,1fr);gap:var(--space-4)}
+}
+.block-review-summary__score b{display:block;font-size:var(--text-h2);
+  font-family:var(--font-mono);letter-spacing:-.03em;line-height:1}
+.block-review-summary__score span{color:var(--ink-3);font-size:var(--text-small)}
+
+/* The distribution is the point. A 4.6 from 300 and a 4.6 from three are different
+   facts, and only one of them is evidence. */
+.block-review-summary__dist{display:grid;gap:var(--space-2);min-width:0}
+.block-review-summary__row{display:grid;grid-template-columns:3.5rem minmax(0,1fr) 3rem;
+  gap:var(--space-3);align-items:center;font-size:var(--text-small)}
+.block-review-summary__bar{height:var(--space-2);background:var(--surface-2);
+  border-radius:var(--radius-full);overflow:hidden}
+.block-review-summary__bar i{display:block;height:100%;background:var(--accent)}
+.block-review-summary__row span:last-child{text-align:right;font-family:var(--font-mono);
+  color:var(--ink-3)}
+
+.block-review-summary__list{margin:var(--space-5) 0 0;padding:0;list-style:none;
+  display:grid;gap:var(--space-5)}
+.block-review-summary__list li{border-left:2px solid var(--line);
+  padding-left:var(--space-4);max-width:var(--measure)}
+.block-review-summary__meta{display:flex;gap:var(--space-3);flex-wrap:wrap;
+  align-items:baseline;font-size:var(--text-small);color:var(--ink-3);
+  margin-bottom:var(--space-2)}
+.block-review-summary__meta b{color:var(--ink);font-weight:650}
+.block-review-summary__stars{font-family:var(--font-mono);color:var(--warn);
+  letter-spacing:.1em}
+.block-review-summary__verified{font-size:var(--text-micro);font-weight:700;
+  letter-spacing:.05em;text-transform:uppercase;color:var(--ok)}
+.block-review-summary__list p{margin:0;color:var(--ink-2);font-size:var(--text-body)}
+/* A low review kept in place is worth more than the four above it. */
+.block-review-summary__list li[data-low=true]{border-left-color:var(--warn)}
+</style>
+
+<section class="block-review-summary" aria-labelledby="rs-h">
+  <h3 id="rs-h">What buyers reported</h3>
+
+  <div class="block-review-summary__top">
+    <div class="block-review-summary__score">
+      <b>4.2</b>
+      <span>from 213 verified purchases</span>
+    </div>
+    <div class="block-review-summary__dist">
+      <div class="block-review-summary__row"><span>5 star</span>
+        <span class="block-review-summary__bar"><i style="width:58%"></i></span><span>124</span></div>
+      <div class="block-review-summary__row"><span>4 star</span>
+        <span class="block-review-summary__bar"><i style="width:24%"></i></span><span>51</span></div>
+      <div class="block-review-summary__row"><span>3 star</span>
+        <span class="block-review-summary__bar"><i style="width:9%"></i></span><span>19</span></div>
+      <div class="block-review-summary__row"><span>2 star</span>
+        <span class="block-review-summary__bar"><i style="width:5%"></i></span><span>11</span></div>
+      <div class="block-review-summary__row"><span>1 star</span>
+        <span class="block-review-summary__bar"><i style="width:4%"></i></span><span>8</span></div>
+    </div>
+  </div>
+
+  <ul class="block-review-summary__list">
+    <li>
+      <p class="block-review-summary__meta">
+        <span class="block-review-summary__stars" aria-label="5 out of 5">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+        <b>Priya N.</b><span>14 July 2026</span>
+        <span class="block-review-summary__verified">Verified purchase</span>
+      </p>
+      <p>
+        Consistent across four reels, which the last supplier was not. The splice count
+        matched what the page said, so our line stopped guessing.
+      </p>
+    </li>
+    <li data-low="true">
+      <p class="block-review-summary__meta">
+        <span class="block-review-summary__stars" aria-label="2 out of 5">&#9733;&#9733;&#9734;&#9734;&#9734;</span>
+        <b>Tom Braithwaite</b><span>2 July 2026</span>
+        <span class="block-review-summary__verified">Verified purchase</span>
+      </p>
+      <p>
+        Arrived at the top of the moisture tolerance and cockled on our press. Replaced
+        without argument, but we lost a shift. Store it inside if your yard is damp.
+      </p>
+    </li>
+    <li>
+      <p class="block-review-summary__meta">
+        <span class="block-review-summary__stars" aria-label="4 out of 5">&#9733;&#9733;&#9733;&#9733;&#9734;</span>
+        <b>Elin Sørensen</b><span>28 June 2026</span>
+        <span class="block-review-summary__verified">Verified purchase</span>
+      </p>
+      <p>Good stock. Kerbside delivery means you need a forklift; that is on the page, but read it.</p>
+    </li>
+  </ul>
+</section>
+    </div>
+  </section>
+
+  <section class="spec" aria-labelledby="b8">
+    <h2 id="b8">testimonial</h2>
     <dl>
       <dt>Family</dt><dd>proof &middot; modes M E &middot; spacious</dd>
       <dt>Use</dt><dd>One named customer saying something specific. The strongest proof there is, and the only one worth a section of its own.</dd>
@@ -512,8 +963,8 @@ a{color:var(--accent)}
     </div>
   </section>
 
-  <section class="spec" aria-labelledby="b5">
-    <h2 id="b5">error-summary</h2>
+  <section class="spec" aria-labelledby="b9">
+    <h2 id="b9">error-summary</h2>
     <dl>
       <dt>Family</dt><dd>form &middot; modes M E P &middot; any</dd>
       <dt>Use</dt><dd>Any form that can fail validation on more than one field.</dd>
@@ -588,8 +1039,8 @@ a{color:var(--accent)}
     </div>
   </section>
 
-  <section class="spec" aria-labelledby="b6">
-    <h2 id="b6">cta-band</h2>
+  <section class="spec" aria-labelledby="b10">
+    <h2 id="b10">cta-band</h2>
     <dl>
       <dt>Family</dt><dd>cta &middot; modes M E &middot; spacious</dd>
       <dt>Use</dt><dd>The end of the argument. One action, restated once the case has been made.</dd>
@@ -657,8 +1108,62 @@ a{color:var(--accent)}
     </div>
   </section>
 
-  <section class="spec" aria-labelledby="b7">
-    <h2 id="b7">empty-state</h2>
+  <section class="spec" aria-labelledby="b11">
+    <h2 id="b11">cta-sticky</h2>
+    <dl>
+      <dt>Family</dt><dd>cta &middot; modes E M &middot; medium</dd>
+      <dt>Use</dt><dd>The purchase action pinned to the bottom of a phone, carrying the price with it.</dd>
+      <dt>Avoid</dt><dd>Desktop, where the purchase panel is already sticky. This block hides above 720px.</dd>
+      <dt>Variants</dt><dd>price-and-action (default) | action-only | with-variant</dd>
+      <dt>Pairs with</dt><dd>purchase-panel, product-gallery, spec-table not-with: cta-band</dd>
+      
+      <dt>Prevents</dt><dd>A phone buyer who has scrolled to the specification and has to scroll back to buy, and a sticky bar that covers the last line of the page.</dd>
+      <dt>Source</dt><dd><code>skills/sitesmith/blocks/cta/sticky-mobile.html</code></dd>
+    </dl>
+    <div class="stage">
+<style>
+/* Hidden above 720px on purpose: the purchase panel is already sticky there, and two
+   persistent buy buttons on one screen is one too many. */
+.block-cta-sticky{display:none}
+@media(max-width:720px){
+  .block-cta-sticky{display:block;position:sticky;bottom:0;z-index:15;
+    background:var(--surface);border-top:1px solid var(--line)}
+  /* The page reserves the bar's height so the final line is never underneath it. */
+  .block-cta-sticky__spacer{display:block;height:var(--space-9)}
+}
+.block-cta-sticky__in{display:flex;align-items:center;gap:var(--space-3);
+  padding:var(--space-3) var(--space-4)}
+.block-cta-sticky__price{min-width:0;line-height:var(--leading-tight)}
+.block-cta-sticky__price b{display:block;font-family:var(--font-mono);
+  font-variant-numeric:tabular-nums;font-size:var(--text-body);letter-spacing:-.02em}
+.block-cta-sticky__price span{display:block;font-size:var(--text-micro);
+  color:var(--ink-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.block-cta-sticky__buy{margin-left:auto;font:inherit;font-size:var(--text-small);
+  font-weight:700;padding:var(--space-3) var(--space-4);border-radius:var(--radius-inner);
+  cursor:pointer;border:1px solid var(--accent);background:var(--accent);
+  color:var(--on-accent);white-space:nowrap}
+.block-cta-sticky__buy:active{transform:translateY(1px)}
+.block-cta-sticky :focus-visible{outline:2px solid var(--accent);outline-offset:2px;
+  border-radius:var(--radius-inner)}
+.block-cta-sticky__stock{font-size:var(--text-micro);font-weight:700;color:var(--ok);
+  letter-spacing:.05em;text-transform:uppercase}
+</style>
+
+<div class="block-cta-sticky">
+  <div class="block-cta-sticky__in">
+    <div class="block-cta-sticky__price">
+      <b>&pound;131.50</b>
+      <span>1600mm reel &middot; <span class="block-cta-sticky__stock">In stock</span></span>
+    </div>
+    <button class="block-cta-sticky__buy" type="button">Add to basket</button>
+  </div>
+</div>
+<span class="block-cta-sticky__spacer" aria-hidden="true"></span>
+    </div>
+  </section>
+
+  <section class="spec" aria-labelledby="b12">
+    <h2 id="b12">empty-state</h2>
     <dl>
       <dt>Family</dt><dd>data &middot; modes M E P &middot; any</dd>
       <dt>Use</dt><dd>Any list, table or panel that can legitimately have nothing in it.</dd>
@@ -709,8 +1214,8 @@ a{color:var(--accent)}
     </div>
   </section>
 
-  <section class="spec" aria-labelledby="b8">
-    <h2 id="b8">rail-and-pane</h2>
+  <section class="spec" aria-labelledby="b13">
+    <h2 id="b13">rail-and-pane</h2>
     <dl>
       <dt>Family</dt><dd>data &middot; modes P &middot; dense</dd>
       <dt>Use</dt><dd>A list you pick from beside the thing you picked. Queues, inboxes, docs, settings.</dd>
@@ -793,8 +1298,8 @@ a{color:var(--accent)}
     </div>
   </section>
 
-  <section class="spec" aria-labelledby="b9">
-    <h2 id="b9">scrollable-grid</h2>
+  <section class="spec" aria-labelledby="b14">
+    <h2 id="b14">scrollable-grid</h2>
     <dl>
       <dt>Family</dt><dd>data &middot; modes P &middot; dense</dd>
       <dt>Use</dt><dd>A table wider than the column it sits in. Any admin, report or queue.</dd>
@@ -879,8 +1384,8 @@ a{color:var(--accent)}
     </div>
   </section>
 
-  <section class="spec" aria-labelledby="b10">
-    <h2 id="b10">footer-full</h2>
+  <section class="spec" aria-labelledby="b15">
+    <h2 id="b15">footer-full</h2>
     <dl>
       <dt>Family</dt><dd>footer &middot; modes M E P &middot; spacious</dd>
       <dt>Use</dt><dd>The site footer. Navigation the header could not hold, the legal and contact facts, and nothing else.</dd>
