@@ -1,0 +1,529 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>sitesmith — nine sites, nine briefs, one skill</title>
+<meta name="description" content="Nine websites built by the sitesmith skill from nine different briefs, plus the control page you get when nothing steers the model. Every page is live, and every measurement was produced by the bundled verification script.">
+<meta property="og:title" content="sitesmith — nine sites, nine briefs, one skill">
+<meta property="og:description" content="Nine live builds and one control, measured rather than asserted.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://byensitmagnus.github.io/sitesmith/">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%230d0e10'/><path d='M7 23L16 8l9 15z' fill='none' stroke='%23ff7a52' stroke-width='2.4' stroke-linejoin='round'/></svg>">
+<style>
+/* A proof gallery. The reader is deciding in twenty seconds whether the claim is
+   real, so the evidence is the interface: live frames, the measurement beside
+   each one, and the control left in to fail. */
+:root{
+  --bg:#0c0d0f; --surface:#15171a; --surface-2:#1c1f23; --line:#262a2f; --line-2:#343a41;
+  --ink:#eceef0; --ink-2:#a2a9b2; --ink-3:#8b939d;
+  /* --on-sig has to flip with the scheme. The signal is light orange on the dark
+     page and dark orange on the light one, so a fixed near-black label reads at
+     7.3:1 in dark and 3.6:1 in light — a fail nobody sees who only tests one. */
+  --sig:#ff7a52; --sig-soft:#2a1710; --on-sig:#12100f;
+  --ok:#57cf8b; --ok-soft:#0f2a1d; --bad:#ff6b57; --bad-soft:#2b1512;
+  --sans:ui-sans-serif,system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --mono:ui-monospace,'SF Mono','Cascadia Code','Segoe UI Mono',monospace;
+  color-scheme:dark;
+}
+@media (prefers-color-scheme:light){
+  :root{--bg:#f6f5f3;--surface:#fff;--surface-2:#efeeeb;--line:#e0ded9;--line-2:#cbc8c1;
+        --ink:#15161a;--ink-2:#565b63;--ink-3:#666c74;
+        --sig:#c2400f;--sig-soft:#fbeae3;--on-sig:#fff;--ok:#1c6b40;--ok-soft:#e5f3ea;
+        --bad:#a8271a;--bad-soft:#fbe9e6;color-scheme:light}
+}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;
+  line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+h1,h2,h3{margin:0;line-height:1.15;letter-spacing:-.032em;font-weight:660}
+p{margin:0}
+ul{margin:0;padding:0;list-style:none}
+a{color:var(--sig)}
+img{max-width:100%;display:block}
+:focus-visible{outline:2px solid var(--sig);outline-offset:3px;border-radius:4px}
+.wrap{max-width:1240px;margin-inline:auto;padding-inline:clamp(18px,4vw,34px)}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.lbl{font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);font-weight:700}
+.skip{position:absolute;left:-9999px}
+.skip:focus{position:fixed;left:12px;top:12px;z-index:60;background:var(--sig);color:var(--on-sig);
+  padding:11px 16px;border-radius:6px;text-decoration:none;font-weight:700}
+.vh{position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip-path:inset(50%);
+  white-space:nowrap}
+
+/* ── masthead ─────────────────────────────────────────────────────────── */
+.top{border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--bg);z-index:30}
+.top-in{display:flex;align-items:center;gap:16px;height:58px}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);
+  font-weight:700;letter-spacing:-.04em;font-size:1.08rem}
+.logo svg{width:22px;height:22px;flex:none}
+.top nav{margin-left:auto;display:flex;gap:6px;align-items:center;min-width:0}
+.top nav a{padding:7px 12px;border-radius:7px;text-decoration:none;color:var(--ink-2);
+  font-size:.9rem;white-space:nowrap}
+.top nav a:hover{background:var(--surface-2);color:var(--ink)}
+.top nav a.cta{background:var(--ink);color:var(--bg);font-weight:600}
+.top nav a.cta:hover{background:var(--sig);color:var(--on-sig)}
+@media(max-width:700px){.top nav a.hide{display:none}}
+
+/* ── hero ─────────────────────────────────────────────────────────────── */
+.hero{padding:clamp(46px,7vw,86px) 0 clamp(28px,4vw,44px);border-bottom:1px solid var(--line)}
+.hero h1{font-size:clamp(2.1rem,5.6vw,3.5rem);max-width:17ch}
+.hero h1 em{font-style:normal;color:var(--sig)}
+.hero .sub{color:var(--ink-2);font-size:clamp(1rem,2vw,1.15rem);max-width:62ch;
+  margin-top:clamp(16px,2vw,22px)}
+.hero .cta-row{display:flex;gap:11px;flex-wrap:wrap;margin-top:clamp(22px,3vw,30px)}
+.btn{display:inline-flex;align-items:center;gap:9px;font-size:.92rem;font-weight:600;
+  padding:11px 18px;border-radius:8px;text-decoration:none;border:1px solid var(--line-2);
+  color:var(--ink);background:var(--surface)}
+.btn:hover{border-color:var(--sig);color:var(--sig)}
+.btn--p{background:var(--sig);border-color:var(--sig);color:var(--on-sig)}
+.btn--p:hover{filter:brightness(1.12);color:var(--on-sig)}
+
+/* ── scoreboard ───────────────────────────────────────────────────────── */
+.score{display:grid;grid-template-columns:repeat(auto-fit,minmax(158px,1fr));
+  border:1px solid var(--line);border-radius:12px;background:var(--surface);overflow:hidden;
+  margin:clamp(30px,5vw,50px) 0}
+.score div{padding:16px 18px;border-right:1px solid var(--line)}
+.score div:last-child{border-right:0}
+@media(max-width:860px){.score div{border-right:0;border-bottom:1px solid var(--line)}
+  .score div:last-child{border-bottom:0}}
+.score b{display:block;font-family:var(--mono);font-size:1.85rem;letter-spacing:-.045em;
+  margin:7px 0 2px;font-weight:600}
+.score .good{color:var(--ok)}.score .warn{color:var(--bad)}
+.score span.note{font-size:.8rem;color:var(--ink-3)}
+
+/* ── section headers ──────────────────────────────────────────────────── */
+section{padding:clamp(40px,6vw,72px) 0}
+section+section{border-top:1px solid var(--line)}
+.head{max-width:64ch;margin-bottom:clamp(22px,3vw,34px)}
+.head h2{font-size:clamp(1.5rem,3.2vw,2.05rem)}
+.head p{color:var(--ink-2);margin-top:11px}
+
+/* ── specimen grid ────────────────────────────────────────────────────── */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(324px,1fr));gap:clamp(16px,2vw,22px)}
+.card{border:1px solid var(--line);border-radius:12px;background:var(--surface);overflow:hidden;
+  display:flex;flex-direction:column}
+.card:hover{border-color:var(--line-2)}
+.card .shot{display:block;border-bottom:1px solid var(--line);background:var(--surface-2);
+  aspect-ratio:16/10;overflow:hidden}
+.card .shot img{width:100%;height:100%;object-fit:cover;object-position:top center}
+.card .body{padding:15px 17px 17px;display:flex;flex-direction:column;gap:9px;flex:1}
+.card .kicker{display:flex;align-items:baseline;gap:9px}
+.card .kicker .num{font-family:var(--mono);font-size:.78rem;color:var(--ink-3)}
+.card h3{font-size:1.03rem}
+.card .brief{color:var(--ink-2);font-size:.88rem}
+.card .chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:auto;padding-top:5px}
+.chip{font-family:var(--mono);font-size:.72rem;padding:2px 8px;border-radius:5px;
+  border:1px solid var(--line-2);color:var(--ink-2)}
+.chip--ok{background:var(--ok-soft);border-color:transparent;color:var(--ok)}
+.chip--bad{background:var(--bad-soft);border-color:transparent;color:var(--bad)}
+.card .open{font-size:.88rem;font-weight:600;text-decoration:none;color:var(--sig);
+  display:inline-flex;align-items:center;gap:6px}
+.card .open:hover{text-decoration:underline}
+.card--control{border-color:var(--bad)}
+.card--control .shot{border-bottom-color:var(--bad)}
+
+/* ── defect table ─────────────────────────────────────────────────────── */
+.tbl{overflow-x:auto;position:relative;border:1px solid var(--line);border-radius:12px;
+  background:var(--surface)}
+table{width:100%;border-collapse:collapse;font-size:.89rem;min-width:620px}
+th,td{padding:11px 16px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+thead th{font-size:.68rem;letter-spacing:.11em;text-transform:uppercase;color:var(--ink-3);
+  font-weight:700;background:var(--surface-2);white-space:nowrap}
+tbody tr:last-child td,tbody tr:last-child th{border-bottom:0}
+tbody th{font-family:var(--mono);font-weight:600;white-space:nowrap;color:var(--ink)}
+td.why{color:var(--ink-2)}
+
+/* ── install ──────────────────────────────────────────────────────────── */
+/* 420px, not 300: at 300 the four panels land 3-then-1 and the last one dangles. */
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(420px,1fr));gap:clamp(16px,2vw,24px)}
+@media(max-width:520px){.two{grid-template-columns:minmax(0,1fr)}}
+.panel{border:1px solid var(--line);border-radius:12px;background:var(--surface);padding:20px 22px}
+.panel h3{font-size:.98rem;margin-bottom:10px}
+.panel p{color:var(--ink-2);font-size:.9rem}
+pre{margin:12px 0 0;background:var(--bg);border:1px solid var(--line);border-radius:9px;
+  padding:13px 15px;overflow-x:auto;font-family:var(--mono);font-size:.82rem;line-height:1.7;
+  color:var(--ink)}
+pre .c{color:var(--ink-3)}
+
+/* ── footer ───────────────────────────────────────────────────────────── */
+footer{border-top:1px solid var(--line);padding:clamp(34px,5vw,52px) 0 clamp(44px,6vw,64px);
+  color:var(--ink-2);font-size:.9rem}
+footer .cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+  gap:clamp(20px,3vw,34px)}
+footer h3{font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);
+  margin-bottom:11px}
+footer li{margin-bottom:6px}
+footer a{color:var(--ink-2);text-decoration:none}
+footer a:hover{color:var(--sig);text-decoration:underline}
+footer .fine{margin-top:clamp(26px,4vw,40px);padding-top:20px;border-top:1px solid var(--line);
+  color:var(--ink-3);font-size:.84rem;max-width:80ch}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<a class="skip" href="#gallery">Skip to the gallery</a>
+
+<header class="top">
+  <div class="wrap top-in">
+    <a class="logo" href="#gallery">
+      <svg viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+        <path d="M7 23L16 8l9 15z" fill="none" stroke="var(--sig)" stroke-width="2.4" stroke-linejoin="round"/>
+      </svg>
+      sitesmith
+    </a>
+    <nav aria-label="Primary">
+      <a class="hide" href="#gallery">Gallery</a>
+      <a class="hide" href="#caught">What it caught</a>
+      <a class="hide" href="#install">Install</a>
+      <a class="cta" href="https://github.com/byensitmagnus/sitesmith">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="hero">
+    <h1>Nine briefs. Nine sites. <em>No house style.</em></h1>
+    <p class="sub">
+      sitesmith is a coding-agent skill for building websites that do not look AI-generated. Every
+      page below was built from a different brief by the same skill, then rendered, scanned and
+      corrected by the script that ships with it. The tenth is the control: what you get when
+      nothing steers the model.
+    </p>
+    <div class="cta-row">
+      <a class="btn btn--p" href="#gallery">See the nine</a>
+      <a class="btn" href="https://github.com/byensitmagnus/sitesmith">Read the skill</a>
+      <a class="btn" href="benchmarks/06-redesign/before/">Open the control</a>
+    </div>
+  </div>
+
+  <div class="score">
+    <div>
+      <span class="lbl">Console errors</span><b class="mono good">0</b>
+      <span class="note">across all nine</span>
+    </div>
+    <div>
+      <span class="lbl">Broken links</span><b class="mono good">0</b>
+      <span class="note">control: 8</span>
+    </div>
+    <div>
+      <span class="lbl">Serious axe</span><b class="mono good">0</b>
+      <span class="note">light and dark, control: 2</span>
+    </div>
+    <div>
+      <span class="lbl">Mobile overflow</span><b class="mono good">0</b>
+      <span class="note">at 375px, control: +374px</span>
+    </div>
+    <div>
+      <span class="lbl">Defects the loop caught</span><b class="mono warn">15</b>
+      <span class="note">before any of this shipped</span>
+    </div>
+  </div>
+</div>
+
+<section id="gallery">
+  <div class="wrap">
+    <div class="head">
+      <h2>The specimens</h2>
+      <p>
+        Every frame links to the page itself, not to a picture of it. Open one and resize the
+        window, or switch your system to dark — both schemes are part of the pass.
+      </p>
+    </div>
+
+    <div class="grid">
+      <figure class="card">
+        <a class="shot" href="benchmarks/01-saas-landing/">
+          <img src="gallery/thumbs/01-saas-landing.png" width="1920" height="1200"
+               alt="Incident review SaaS landing page, editorial split layout" loading="eager" decoding="async">
+        </a>
+        <figcaption class="body">
+          <div class="kicker"><span class="num">01</span><h3>SaaS landing</h3></div>
+          <p class="brief">Incident review tool sold to engineers who distrust marketing pages.</p>
+          <div class="chips">
+            <span class="chip chip--ok">PASS</span><span class="chip">LH a11y 100</span>
+            <span class="chip">editorial split</span>
+          </div>
+          <a class="open" href="benchmarks/01-saas-landing/">Open the page<span aria-hidden="true">&rarr;</span></a>
+        </figcaption>
+      </figure>
+
+      <figure class="card">
+        <a class="shot" href="benchmarks/02-product-page/">
+          <img src="gallery/thumbs/02-product-page.png" width="1920" height="1200"
+               alt="Gaming PC product page with a sticky purchase panel" loading="eager" decoding="async">
+        </a>
+        <figcaption class="body">
+          <div class="kicker"><span class="num">02</span><h3>Product page</h3></div>
+          <p class="brief">Built-to-order gaming PC. Conversion-led, spec-heavy, dark by design.</p>
+          <div class="chips">
+            <span class="chip chip--ok">PASS</span><span class="chip">LH a11y 100</span>
+            <span class="chip">sticky buy panel</span>
+          </div>
+          <a class="open" href="benchmarks/02-product-page/">Open the page<span aria-hidden="true">&rarr;</span></a>
+        </figcaption>
+      </figure>
+
+      <figure class="card">
+        <a class="shot" href="benchmarks/03-dashboard/">
+          <img src="gallery/thumbs/03-dashboard.png" width="1920" height="1200"
+               alt="Reconciliation queue dashboard with a stat rail and a scrollable table" loading="eager" decoding="async">
+        </a>
+        <figcaption class="body">
+          <div class="kicker"><span class="num">03</span><h3>Dashboard</h3></div>
+          <p class="brief">Reconciliation queue. Data-dense product UI, governed by the UX rules.</p>
+          <div class="chips">
+            <span class="chip chip--ok">PASS</span><span class="chip">LH a11y 100</span>
+            <span class="chip">top-nav, stat rail</span>
+          </div>
+          <a class="open" href="benchmarks/03-dashboard/">Open the page<span aria-hidden="true">&rarr;</span></a>
+        </figcaption>
+      </figure>
+
+      <figure class="card">
+        <a class="shot" href="benchmarks/04-local-service/">
+          <img src="gallery/thumbs/04-local-service.png" width="1920" height="1200"
+               alt="Roofing company site with a numbered price list" loading="lazy" decoding="async">
+        </a>
+        <figcaption class="body">
+          <div class="kicker"><span class="num">04</span><h3>Local service</h3></div>
+          <p class="brief">Flat-roof repair. Trust first, phone-led, priced in the open.</p>
+          <div class="chips">
+            <span class="chip chip--ok">PASS</span><span class="chip">LH a11y 100</span>
+            <span class="chip">numbered price list</span>
+          </div>
+          <a class="open" href="benchmarks/04-local-service/">Open the page<span aria-hidden="true">&rarr;</span></a>
+        </figcaption>
+      </figure>
+
+      <figure class="card">
+        <a class="shot" href="benchmarks/05-editorial/">
+          <img src="gallery/thumbs/05-editorial.png" width="1920" height="1200"
+               alt="Sound designer portfolio as a ruled typographic index" loading="lazy" decoding="async">
+        </a>
+        <figcaption class="body">
+          <div class="kicker"><span class="num">05</span><h3>Editorial</h3></div>
+          <p class="brief">Sound designer's portfolio. A ruled index, not a card grid.</p>
+          <div class="chips">
+            <span class="chip chip--ok">PASS</span><span class="chip">LH a11y 100</span>
+            <span class="chip">typographic index</span>
+          </div>
+          <a class="open" href="benchmarks/05-editorial/">Open the page<span aria-hidden="true">&rarr;</span></a>
+        </figcaption>
+      </figure>
+
+      <figure class="card">
+        <a class="shot" href="benchmarks/06-redesign/after/">
+          <img src="gallery/thumbs/06-redesign-after.png" width="1920" height="1200"
+               alt="Rota software page rebuilt from the control" loading="lazy" decoding="async">
+        </a>
+        <figcaption class="body">
+          <div class="kicker"><span class="num">06</span><h3>Redesign</h3></div>
+          <p class="brief">The control page, rebuilt. Same product, same claims, audited first.</p>
+          <div class="chips">
+            <span class="chip chip--ok">PASS</span><span class="chip">LH a11y 100</span>
+            <span class="chip">rebuilt from 81</span>
+          </div>
+          <a class="open" href="benchmarks/06-redesign/after/">Open the page<span aria-hidden="true">&rarr;</span></a>
+        </figcaption>
+      </figure>
+
+      <figure class="card">
+        <a class="shot" href="benchmarks/07-multistep-form/">
+          <img src="gallery/thumbs/07-multistep-form.png" width="1920" height="1200"
+               alt="Council pavement licence application, step three of four" loading="lazy" decoding="async">
+        </a>
+        <figcaption class="body">
+          <div class="kicker"><span class="num">07</span><h3>Multi-step form</h3></div>
+          <p class="brief">A council licence application with real error, upload and review states.</p>
+          <div class="chips">
+            <span class="chip chip--ok">PASS</span><span class="chip">error summary</span>
+            <span class="chip">no script</span>
+          </div>
+          <a class="open" href="benchmarks/07-multistep-form/">Open the page<span aria-hidden="true">&rarr;</span></a>
+        </figcaption>
+      </figure>
+
+      <figure class="card">
+        <a class="shot" href="benchmarks/08-documentation/">
+          <img src="gallery/thumbs/08-documentation.png" width="1920" height="1200"
+               alt="Webhook API reference with a sidebar tree and an on-page contents list" loading="lazy" decoding="async">
+        </a>
+        <figcaption class="body">
+          <div class="kicker"><span class="num">08</span><h3>Documentation</h3></div>
+          <p class="brief">API reference read sideways from search: three panes, code, callouts.</p>
+          <div class="chips">
+            <span class="chip chip--ok">PASS</span><span class="chip">3-pane</span>
+            <span class="chip">no script</span>
+          </div>
+          <a class="open" href="benchmarks/08-documentation/">Open the page<span aria-hidden="true">&rarr;</span></a>
+        </figcaption>
+      </figure>
+
+      <figure class="card">
+        <a class="shot" href="benchmarks/09-data-entry/">
+          <img src="gallery/thumbs/09-data-entry.png" width="1920" height="1200"
+               alt="Warehouse goods-in line entry grid with inline editing and a keyboard legend" loading="lazy" decoding="async">
+        </a>
+        <figcaption class="body">
+          <div class="kicker"><span class="num">09</span><h3>Data entry</h3></div>
+          <p class="brief">Warehouse goods-in. Keyboard-first, 12 lines, two of them unresolved.</p>
+          <div class="chips">
+            <span class="chip chip--ok">PASS</span><span class="chip">inline edit</span>
+            <span class="chip">key legend</span>
+          </div>
+          <a class="open" href="benchmarks/09-data-entry/">Open the page<span aria-hidden="true">&rarr;</span></a>
+        </figcaption>
+      </figure>
+
+      <figure class="card card--control">
+        <a class="shot" href="benchmarks/06-redesign/before/">
+          <img src="gallery/thumbs/06-redesign-before.png" width="1920" height="1200"
+               alt="The control page: purple gradient hero, blurred orbs, three equal feature cards" loading="lazy" decoding="async">
+        </a>
+        <figcaption class="body">
+          <div class="kicker"><span class="num">&mdash;</span><h3>The control</h3></div>
+          <p class="brief">
+            The same product with nothing steering the model. It is kept, not fixed — it is the
+            measurement, and CI fails if it ever starts passing.
+          </p>
+          <div class="chips">
+            <span class="chip chip--bad">8 dead links</span><span class="chip chip--bad">2 serious axe</span>
+            <span class="chip chip--bad">+374px at 375</span><span class="chip">LH a11y 81</span>
+          </div>
+          <a class="open" href="benchmarks/06-redesign/before/">Open the control<span aria-hidden="true">&rarr;</span></a>
+        </figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section id="caught">
+  <div class="wrap">
+    <div class="head">
+      <h2>What the loop caught</h2>
+      <p>
+        Fifteen defects found in work that looked finished in the editor. Not one of them is
+        visible in a diff, and every one of them ships if the process stops at "the code compiles".
+      </p>
+    </div>
+    <div class="tbl" tabindex="0" role="region" aria-label="Defects found during the builds, scrollable">
+      <table>
+        <caption class="vh">Each defect, the page it was found on, and why code review would miss it</caption>
+        <thead>
+          <tr><th scope="col">Page</th><th scope="col">Defect</th><th scope="col">Why review missed it</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">01</th><td>+55px horizontal overflow at 375px</td>
+            <td class="why">An inline <code>style="display:contents"</code> silently beat the <code>display:none</code> media query</td></tr>
+          <tr><th scope="row">01, 02, 05</th><td>Body text between 4.00:1 and 4.37:1</td>
+            <td class="why">Looks fine. Fails AA by a tenth, and only in one of the two schemes</td></tr>
+          <tr><th scope="row">02</th><td>Status green at 1.87:1 in light mode</td>
+            <td class="why">The colour was only ever chosen against the dark background</td></tr>
+          <tr><th scope="row">03</th><td>White button label at 1.83:1 in dark mode</td>
+            <td class="why">The light-mode value was hardcoded</td></tr>
+          <tr><th scope="row">03</th><td>Scrollable table unreachable by keyboard</td>
+            <td class="why">Nothing visually wrong at any width</td></tr>
+          <tr><th scope="row">03</th><td>+10px overflow on Linux only</td>
+            <td class="why">Nowrap flex items let the <em>text</em> spill, so no element box overflowed while the document did</td></tr>
+          <tr><th scope="row">07</th><td>A <code>&lt;span&gt;</code> between <code>&lt;dt&gt;</code> and <code>&lt;dd&gt;</code></td>
+            <td class="why">Renders perfectly. The list simply stops being a list</td></tr>
+          <tr><th scope="row">08</th><td>Breadcrumb current page at 1.6:1</td>
+            <td class="why">The separator's colour rule matched the label too</td></tr>
+          <tr><th scope="row">08</th><td><code>role="tablist"</code> over radio inputs</td>
+            <td class="why">The role forbids those children; the tabs looked and worked fine</td></tr>
+          <tr><th scope="row">08</th><td>Code blocks and table scroll, but take no focus</td>
+            <td class="why">Content past the fold was mouse-only</td></tr>
+          <tr><th scope="row">08</th><td>Sidebar at <code>height:100vh</code></td>
+            <td class="why">Made every page exactly one viewport tall whatever it contained</td></tr>
+          <tr><th scope="row">09</th><td>+250px overflow from a <code>1fr</code> track</td>
+            <td class="why"><code>1fr</code> resolves its minimum to <code>auto</code>, so the track grew instead of the grid scrolling</td></tr>
+          <tr><th scope="row">09</th><td>Hidden labels escaping the scroll container</td>
+            <td class="why">Absolutely positioned with no positioned ancestor, so each 1px label sat 615px into the document</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="install">
+  <div class="wrap">
+    <div class="head">
+      <h2>Use it</h2>
+      <p>The skill triggers on its own. You describe the site; it routes, commits to a direction, builds, then measures.</p>
+    </div>
+    <div class="two">
+      <div class="panel">
+        <h3>Claude Code</h3>
+        <p>Install as a plugin from the marketplace in this repository.</p>
+<pre tabindex="0"><code>claude plugin marketplace add byensitmagnus/sitesmith
+claude plugin install sitesmith@sitesmith</code></pre>
+      </div>
+      <div class="panel">
+        <h3>Codex, Grok, Cursor and others</h3>
+        <p>Anything that reads <code>~/.claude/skills</code> or <code>~/.agents/skills</code>.</p>
+<pre tabindex="0"><code>git clone https://github.com/byensitmagnus/sitesmith.git
+cp -r sitesmith/skills/sitesmith ~/.claude/skills/</code></pre>
+      </div>
+      <div class="panel">
+        <h3>Then just ask</h3>
+        <p>No command to remember. These are real prompts from the briefs above.</p>
+<pre tabindex="0"><code><span class="c">&gt;</span> Build a landing page for a company that
+  does flat-roof repair in Sheffield.
+
+<span class="c">&gt;</span> This dashboard looks generic. Audit it
+  and fix what you find.</code></pre>
+      </div>
+      <div class="panel">
+        <h3>Reproduce the numbers</h3>
+        <p>Nothing on this page is asserted. Run the same script yourself.</p>
+<pre tabindex="0"><code>cd benchmarks
+npm i &amp;&amp; npx playwright install chromium
+node serve.mjs 4321 . &amp;
+node ../skills/sitesmith/scripts/verify.mjs \
+  http://localhost:4321/09-data-entry/</code></pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="cols">
+      <div>
+        <h3>Repository</h3>
+        <ul>
+          <li><a href="https://github.com/byensitmagnus/sitesmith">Source on GitHub</a></li>
+          <li><a href="https://github.com/byensitmagnus/sitesmith/blob/main/skills/sitesmith/SKILL.md">SKILL.md</a></li>
+          <li><a href="https://github.com/byensitmagnus/sitesmith/blob/main/benchmarks/README.md">Benchmark method</a></li>
+          <li><a href="https://github.com/byensitmagnus/sitesmith/blob/main/CONTRIBUTING.md">Contributing</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Built from</h3>
+        <ul>
+          <li><a href="https://github.com/Leonxlnx/taste-skill">taste-skill</a> &middot; MIT</li>
+          <li><a href="https://github.com/nextlevelbuilder/ui-ux-pro-max-skill">ui-ux-pro-max-skill</a> &middot; MIT</li>
+          <li><a href="https://github.com/anthropics/claude-plugins-official">frontend-design</a> &middot; Apache 2.0</li>
+          <li><a href="https://github.com/pbakaus/impeccable">impeccable</a> &middot; Apache 2.0</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Licence</h3>
+        <ul>
+          <li><a href="https://github.com/byensitmagnus/sitesmith/blob/main/LICENSE">MIT for our own work</a></li>
+          <li><a href="https://github.com/byensitmagnus/sitesmith/blob/main/NOTICE.md">Third-party notices</a></li>
+          <li><a href="https://github.com/byensitmagnus/sitesmith/blob/main/LICENSE-AUDIT.md">Provenance audit</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="fine">
+      Every company, product, person, price and figure on the benchmark pages is invented and marked
+      as such on the page itself. Lighthouse scores are quoted for the six pages that have been run
+      through it; 07, 08 and 09 carry the axe, link, console and overflow measurements only. The
+      pages use system font stacks because the measurement environment has no network.
+      This gallery is itself built with the skill and passes the same script.
+    </p>
+  </div>
+</footer>
+</body>
+</html>

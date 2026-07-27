@@ -9,3 +9,6 @@ benchmarks/results/**/raw.json
 
 # local scratch
 .sitesmith/
+
+# verify.mjs output for the gallery page itself — reproduced, not committed
+gallery/verify/
