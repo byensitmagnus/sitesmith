@@ -7,38 +7,21 @@ on:
   workflow_dispatch:
 
 jobs:
-  skill-shape:
-    name: skill structure
+  repo-check:
+    name: repo structure, licences and search engine
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
 
-      - name: SKILL.md stays under 500 lines
-        run: |
-          lines=$(wc -l < skills/sitesmith/SKILL.md)
-          echo "SKILL.md is $lines lines"
-          [ "$lines" -le 500 ] || { echo "::error::SKILL.md must stay under 500 lines"; exit 1; }
-
-      - name: every reference link resolves
-        run: |
-          cd skills/sitesmith
-          fail=0
-          grep -oE '\]\((references/[^)]+)\)' SKILL.md | sed 's/^](//;s/)$//' | sort -u | while read -r p; do
-            [ -e "$p" ] || { echo "::error::SKILL.md links to missing $p"; exit 1; }
-          done
-          for f in references/*.md; do
-            n=$(wc -l < "$f")
-            if [ "$n" -gt 100 ] && ! grep -q '^## Contents' "$f"; then
-              echo "::error::$f is $n lines and has no table of contents"; fail=1
-            fi
-          done
-          exit $fail
-
-      - name: attribution present for every bundled reference
-        run: |
-          for f in skills/sitesmith/references/*.md; do
-            grep -q 'MIT\|Apache\|Original work' "$f" || { echo "::error::$f states no license"; exit 1; }
-          done
+      # One script, runnable locally with the same command. It covers the SKILL.md
+      # line cap, the reference-map line counts, every relative markdown link, the
+      # attribution header on all 46 bundled files, the '## Contents' rule, LICENSE
+      # detectability, the plugin manifests, orphaned datasets, the counts quoted in
+      # the docs, and a smoke test of every search domain, stack and design system.
+      - run: python tools/check-repo.py
 
   benchmarks:
     name: benchmarks render and pass
@@ -83,3 +66,20 @@ jobs:
             exit 1
           fi
           echo "control failed as expected"
+
+      # The exit contract is what CI and the skill both depend on. Each of these
+      # three was broken at some point and none of them was visible in a passing run.
+      - name: verify.mjs exit contract
+        working-directory: benchmarks
+        run: |
+          V=../skills/sitesmith/scripts/verify.mjs
+          set +e
+          node $V --no-axe http://localhost:4321/01-saas-landing/ --out /tmp/c0 >/dev/null 2>&1
+          [ $? -eq 0 ] || { echo "::error::switch before the URL should still parse the URL (expected exit 0)"; exit 1; }
+          node $V http://localhost:4321/no-such-page/ --no-axe --out /tmp/c1 >/dev/null 2>&1
+          [ $? -eq 1 ] || { echo "::error::an HTTP 404 must be a blocking failure (expected exit 1)"; exit 1; }
+          node $V http://localhost:4322/ --out /tmp/c2 >/dev/null 2>&1
+          [ $? -eq 2 ] || { echo "::error::an unreachable server is a setup error, not a page defect (expected exit 2)"; exit 1; }
+          node $V http://localhost:4321/01-saas-landing/ --widths nonsense --out /tmp/c3 >/dev/null 2>&1
+          [ $? -eq 2 ] || { echo "::error::invalid --widths must exit 2"; exit 1; }
+          echo "exit contract holds"

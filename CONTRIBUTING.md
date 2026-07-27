@@ -43,6 +43,14 @@ silently diverge from the source we credit. Open the PR against
 
 ## Running the checks
 
+Structure, licences, docs and the search engine — no dependencies beyond Python 3.10+:
+
+```bash
+python tools/check-repo.py
+```
+
+The benchmarks:
+
 ```bash
 cd benchmarks
 npm install && npx playwright install chromium
@@ -53,7 +61,9 @@ node ../skills/sitesmith/scripts/verify.mjs http://localhost:4321/01-saas-landin
 All six benchmarks must pass. `06-redesign/before/` must **keep failing** — it is the control, and a
 PR that fixes it will be closed.
 
-CI runs the same thing on every push.
+CI runs both on every push. `verify.mjs` has an exit contract CI asserts directly: **0** clean,
+**1** a blocking defect in the page, **2** it could not run at all. Keep them distinct — a script
+that returns 1 when the dev server is down teaches everyone to ignore 1.
 
 ## Commit style
 
