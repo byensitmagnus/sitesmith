@@ -33,9 +33,12 @@ RUN useradd -m -u 1001 bench \
 ENV PLAYWRIGHT_BROWSERS_PATH=/opt/pw
 RUN mkdir -p /opt/pw && npx playwright install chromium && chmod -R a+rX /opt/pw
 
+# probe.sh is deliberately NOT copied in. It names the thing the control must never
+# see, so baking it into the generation image would put the marker and a URL to the
+# public repository inside every control container. It is bind-mounted at /probe for
+# the duration of a probe run and is absent from every generation.
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
-COPY probe.sh /usr/local/bin/probe.sh
-RUN chmod 0555 /usr/local/bin/entrypoint.sh /usr/local/bin/probe.sh
+RUN chmod 0555 /usr/local/bin/entrypoint.sh
 
 USER bench
 ENV HOME=/home/bench
