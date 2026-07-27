@@ -1,0 +1,96 @@
+<!--
+name: editorial
+family: content
+modes: M
+use: Long-form prose. Journal entries, guides, case studies, anything read rather than
+     scanned.
+avoid: Marketing sections. This block gives one column its measure and nothing else.
+variants: single-column (default) | with-aside | with-pull
+pairs: hero-editorial, cta-band, footer-full
+not-with: benefits
+tokens: --space-2 --space-3 --space-4 --space-5 --space-7 --text-small --text-body
+        --text-lead --text-h3 --leading-body --leading-tight --measure --ink --ink-2
+        --ink-3 --line --surface-2 --accent --radius-inner --container --gutter
+        --font-mono
+density: spacious
+prevents: Body copy that runs the full width of a 1440 screen, and a pull quote that
+          repeats a sentence the reader passed four lines ago.
+-->
+<style>
+.block-editorial{max-width:var(--container);margin-inline:auto;
+  padding:var(--space-7) var(--gutter)}
+.block-editorial__body{max-width:var(--measure)}
+.block-editorial h3{margin:0 0 var(--space-4);font-size:var(--text-h3);
+  letter-spacing:-.02em;line-height:var(--leading-tight)}
+.block-editorial h4{margin:var(--space-7) 0 var(--space-3);font-size:var(--text-body);
+  letter-spacing:-.01em}
+.block-editorial p{margin:0 0 var(--space-4);color:var(--ink-2);
+  line-height:var(--leading-body)}
+.block-editorial p:first-of-type{font-size:var(--text-lead);color:var(--ink)}
+.block-editorial ul{margin:0 0 var(--space-4);padding-left:var(--space-5);
+  color:var(--ink-2)}
+.block-editorial li{margin-bottom:var(--space-2)}
+.block-editorial a{color:var(--accent)}
+.block-editorial code{font-family:var(--font-mono);font-size:var(--text-small);
+  background:var(--surface-2);padding:0 var(--space-2);border-radius:var(--radius-inner);
+  overflow-wrap:anywhere}
+/* A pull quote lifts a line the reader has not reached yet. Repeating one they just
+   passed is decoration wearing a typographic hat. */
+.block-editorial blockquote{margin:var(--space-5) 0;padding-left:var(--space-5);
+  border-left:2px solid var(--accent);font-size:var(--text-lead);color:var(--ink)}
+.block-editorial figure{margin:var(--space-5) 0}
+.block-editorial figcaption{margin-top:var(--space-2);font-size:var(--text-small);
+  color:var(--ink-3)}
+.block-editorial__aside{border-top:1px solid var(--line);margin-top:var(--space-5);
+  padding-top:var(--space-4);font-size:var(--text-small);color:var(--ink-3)}
+
+/* variant: with-aside — notes beside the column at width, under it below 980px. */
+.block-editorial--with-aside .block-editorial__grid{display:grid;
+  grid-template-columns:minmax(0,var(--measure)) minmax(0,14rem);gap:var(--space-7)}
+@media(max-width:980px){
+  .block-editorial--with-aside .block-editorial__grid{grid-template-columns:minmax(0,1fr)}
+}
+</style>
+
+<article class="block-editorial">
+  <div class="block-editorial__body">
+    <h3>Why the parapet goes first</h3>
+    <p>
+      In twelve years of surveys, the membrane over the open field of a flat roof has almost
+      never been the thing that failed. It is the upstand at the parapet, and it fails for a
+      reason that has nothing to do with the material.
+    </p>
+    <p>
+      A flat roof is not flat. It moves: thermally, twice a day, and structurally, slowly.
+      The field has room to move. The upstand is pinned between a deck that expands and a
+      wall that does not, and every cycle works the bond a little.
+    </p>
+
+    <h4>What a specification should say</h4>
+    <p>
+      Most specifications name a membrane and a warranty and stop. The three lines that
+      actually decide whether the roof lasts are about the detail, not the sheet:
+    </p>
+    <ul>
+      <li>Upstand height above finished surface, and what happens where it cannot be met.</li>
+      <li>Termination method at the head, mechanical or adhered, and the fixing centres.</li>
+      <li>Whether the deck is checked for moisture before covering, and who signs that off.</li>
+    </ul>
+
+    <blockquote>
+      The warranty covers the sheet. Nothing in it covers the junction between the sheet and
+      the building, which is where the water gets in.
+    </blockquote>
+
+    <p>
+      None of this is exotic. It is in every manufacturer's detail drawings, which is worth
+      remembering when a quote does not mention any of it: the information was available and
+      somebody chose not to price it.
+    </p>
+
+    <p class="block-editorial__aside">
+      Written from the survey record for 214 flat roofs inspected between 2014 and 2026. The
+      failure distribution is our own and has not been published elsewhere.
+    </p>
+  </div>
+</article>

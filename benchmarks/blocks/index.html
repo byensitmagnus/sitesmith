@@ -97,7 +97,114 @@ a{color:var(--accent)}
   </header>
 
   <section class="spec" aria-labelledby="b0">
-    <h2 id="b0">site-bar</h2>
+    <h2 id="b0">mega-menu</h2>
+    <dl>
+      <dt>Family</dt><dd>nav &middot; modes E M &middot; medium</dd>
+      <dt>Use</dt><dd>A catalogue with more than about twenty categories, or a multi-brand company.</dd>
+      <dt>Avoid</dt><dd>Fewer than twelve destinations, where it is furniture. Use site-bar's plain nav.</dd>
+      <dt>Variants</dt><dd>three-column (default) | with-feature | two-level</dd>
+      <dt>Pairs with</dt><dd>site-bar, product-grid, breadcrumb not-with: mega-menu</dd>
+      
+      <dt>Prevents</dt><dd>A menu that opens on hover and closes before the pointer reaches it, and one that cannot be opened from the keyboard at all.</dd>
+      <dt>Source</dt><dd><code>skills/sitesmith/blocks/nav/mega-menu.html</code></dd>
+    </dl>
+    <div class="stage">
+<style>
+/* Disclosure, not hover. A hover menu is unusable on touch, closes when the pointer
+   crosses a gap, and cannot be reached by keyboard without extra script. */
+.block-mega-menu{border-bottom:1px solid var(--line);background:var(--surface);
+  position:relative}
+.block-mega-menu__in{max-width:var(--container);margin-inline:auto;
+  padding:0 var(--gutter);display:flex;gap:var(--space-1);flex-wrap:wrap}
+.block-mega-menu__t{position:absolute;opacity:0;width:1px;height:1px}
+.block-mega-menu__label{display:inline-flex;align-items:center;gap:var(--space-2);
+  padding:var(--space-3) var(--space-3);font-size:var(--text-small);color:var(--ink-2);
+  cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;
+  transition:color var(--motion-fast) var(--ease)}
+.block-mega-menu__label:hover{color:var(--ink)}
+.block-mega-menu__label::after{content:"";width:var(--space-2);height:var(--space-2);
+  border-right:2px solid currentColor;border-bottom:2px solid currentColor;
+  transform:translateY(-2px) rotate(45deg)}
+.block-mega-menu__t:checked + .block-mega-menu__label{color:var(--ink);font-weight:650;
+  border-bottom-color:var(--accent)}
+.block-mega-menu__t:checked + .block-mega-menu__label::after{transform:translateY(2px) rotate(-135deg)}
+.block-mega-menu__t:focus-visible + .block-mega-menu__label{outline:2px solid var(--accent);
+  outline-offset:-2px}
+
+.block-mega-menu__panel{display:none;width:100%;order:9;
+  border-top:1px solid var(--line);background:var(--surface-2);
+  padding:var(--space-5) 0 var(--space-5)}
+.block-mega-menu__t:checked ~ .block-mega-menu__panel{display:block}
+.block-mega-menu__cols{display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(min(100%,12rem),1fr));gap:var(--space-5)}
+.block-mega-menu__panel h4{margin:0 0 var(--space-3);font-size:var(--text-micro);
+  letter-spacing:.11em;text-transform:uppercase;color:var(--ink-3);font-weight:700}
+.block-mega-menu__panel ul{margin:0;padding:0;list-style:none}
+.block-mega-menu__panel li{margin-bottom:var(--space-2)}
+.block-mega-menu__panel a{color:var(--ink-2);text-decoration:none;
+  font-size:var(--text-small)}
+.block-mega-menu__panel a:hover{color:var(--ink);text-decoration:underline}
+.block-mega-menu__feature{border:1px solid var(--line);border-radius:var(--radius-outer);
+  background:var(--surface);padding:var(--space-4);font-size:var(--text-small);
+  color:var(--ink-2)}
+.block-mega-menu__feature b{display:block;color:var(--ink);font-size:var(--text-body);
+  margin-bottom:var(--space-2)}
+.block-mega-menu :focus-visible{outline:2px solid var(--accent);outline-offset:2px;
+  border-radius:var(--radius-inner)}
+</style>
+
+<nav class="block-mega-menu" aria-label="Catalogue">
+  <div class="block-mega-menu__in">
+    <input class="block-mega-menu__t" type="checkbox" id="mm-1" checked>
+    <label class="block-mega-menu__label" for="mm-1">Paper and board</label>
+
+    <input class="block-mega-menu__t" type="checkbox" id="mm-2">
+    <label class="block-mega-menu__label" for="mm-2">Packaging</label>
+
+    <input class="block-mega-menu__t" type="checkbox" id="mm-3">
+    <label class="block-mega-menu__label" for="mm-3">Handling</label>
+
+    <div class="block-mega-menu__panel">
+      <div class="block-mega-menu__cols">
+        <div>
+          <h4>Liner</h4>
+          <ul>
+            <li><a href="#blocks">Kraft liner</a></li>
+            <li><a href="#blocks">Test liner</a></li>
+            <li><a href="#blocks">White top</a></li>
+            <li><a href="#blocks">Coated liner</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Fluting</h4>
+          <ul>
+            <li><a href="#blocks">Semi-chemical</a></li>
+            <li><a href="#blocks">Recycled medium</a></li>
+            <li><a href="#blocks">Heavy duty</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Board</h4>
+          <ul>
+            <li><a href="#blocks">Single wall</a></li>
+            <li><a href="#blocks">Double wall</a></li>
+            <li><a href="#blocks">Die-cut blanks</a></li>
+          </ul>
+        </div>
+        <div class="block-mega-menu__feature">
+          <b>Reel width guide</b>
+          Which width fits your corrugator, and what the trim costs when it does not.
+          <a href="#blocks">Read the guide</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+    </div>
+  </section>
+
+  <section class="spec" aria-labelledby="b1">
+    <h2 id="b1">site-bar</h2>
     <dl>
       <dt>Family</dt><dd>nav &middot; modes M E &middot; spacious</dd>
       <dt>Use</dt><dd>The header for a marketing or commerce site. Wordmark, up to five destinations, one action, and a real disclosure on a phone.</dd>
@@ -191,8 +298,8 @@ a{color:var(--accent)}
     </div>
   </section>
 
-  <section class="spec" aria-labelledby="b1">
-    <h2 id="b1">top-bar</h2>
+  <section class="spec" aria-labelledby="b2">
+    <h2 id="b2">top-bar</h2>
     <dl>
       <dt>Family</dt><dd>nav &middot; modes P &middot; dense</dd>
       <dt>Use</dt><dd>Product and app shells. A sticky bar carrying brand, sections and one action.</dd>
@@ -260,8 +367,62 @@ a{color:var(--accent)}
     </div>
   </section>
 
-  <section class="spec" aria-labelledby="b2">
-    <h2 id="b2">hero-split</h2>
+  <section class="spec" aria-labelledby="b3">
+    <h2 id="b3">hero-editorial</h2>
+    <dl>
+      <dt>Family</dt><dd>hero &middot; modes M &middot; spacious</dd>
+      <dt>Use</dt><dd>When the statement is the product. Agencies, opinion-led launches, portfolios.</dd>
+      <dt>Avoid</dt><dd>Anything with a weak sentence. This hero has nothing to hide behind.</dd>
+      <dt>Variants</dt><dd>left (default) | ruled | with-standfirst</dd>
+      <dt>Pairs with</dt><dd>site-bar, benefits, cta-band not-with: hero-split</dd>
+      
+      <dt>Prevents</dt><dd>Huge type over a thin page, which is the same shape as this block and is the reason it needs a sentence worth the size.</dd>
+      <dt>Source</dt><dd><code>skills/sitesmith/blocks/hero/editorial.html</code></dd>
+    </dl>
+    <div class="stage">
+<style>
+.block-hero-editorial{max-width:var(--container);margin-inline:auto;
+  padding:var(--space-9) var(--gutter) var(--space-8)}
+.block-hero-editorial__eyebrow{margin:0;font-size:var(--text-micro);letter-spacing:.14em;
+  text-transform:uppercase;color:var(--ink-3);font-weight:700}
+/* Type this large is a claim. If the sentence under it is not worth a screen, use
+   hero-split and put the asset back. */
+.block-hero-editorial h3{margin:var(--space-4) 0 0;font-size:var(--text-display);
+  line-height:var(--leading-tight);letter-spacing:-.04em;max-width:16ch;
+  text-wrap:balance}
+.block-hero-editorial__standfirst{margin:var(--space-5) 0 0;font-size:var(--text-lead);
+  color:var(--ink-2);max-width:var(--measure)}
+.block-hero-editorial__meta{margin:var(--space-7) 0 0;padding-top:var(--space-4);
+  border-top:1px solid var(--line);display:flex;gap:var(--space-7);flex-wrap:wrap;
+  font-size:var(--text-small);color:var(--ink-3)}
+.block-hero-editorial__meta b{display:block;color:var(--ink);font-weight:650}
+.block-hero-editorial a{color:var(--accent)}
+.block-hero-editorial :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* variant: ruled — a heavy rule above the statement, for brands whose signature is
+   typographic rather than chromatic. */
+.block-hero-editorial--ruled{border-top:4px solid var(--ink);padding-top:var(--space-5)}
+</style>
+
+<section class="block-hero-editorial" aria-labelledby="he-h">
+  <p class="block-hero-editorial__eyebrow">Halloway &amp; Fen &middot; Studio note</p>
+  <h3 id="he-h">Most roofs fail at the detail, not the membrane.</h3>
+  <p class="block-hero-editorial__standfirst">
+    Twelve years of surveys, and the same six junctions account for most of what we are called
+    out to. Here is what they are, why they go, and what a specification should say about
+    them before anyone orders material.
+  </p>
+  <div class="block-hero-editorial__meta">
+    <span><b>Written by</b>Ruth Halloway</span>
+    <span><b>Published</b>18 July 2026</span>
+    <span><b>Reading</b>11 minutes</span>
+  </div>
+</section>
+    </div>
+  </section>
+
+  <section class="spec" aria-labelledby="b4">
+    <h2 id="b4">hero-split</h2>
     <dl>
       <dt>Family</dt><dd>hero &middot; modes M E &middot; spacious</dd>
       <dt>Use</dt><dd>The default marketing hero. Statement left, one asset right, action visible without scrolling.</dd>
@@ -341,8 +502,8 @@ a{color:var(--accent)}
     </div>
   </section>
 
-  <section class="spec" aria-labelledby="b3">
-    <h2 id="b3">product-grid</h2>
+  <section class="spec" aria-labelledby="b5">
+    <h2 id="b5">product-grid</h2>
     <dl>
       <dt>Family</dt><dd>catalogue &middot; modes E &middot; medium</dd>
       <dt>Use</dt><dd>A category or search listing. One aspect ratio, one rhythm, price and stock legible without opening anything.</dd>
@@ -461,8 +622,8 @@ a{color:var(--accent)}
     </div>
   </section>
 
-  <section class="spec" aria-labelledby="b4">
-    <h2 id="b4">purchase-panel</h2>
+  <section class="spec" aria-labelledby="b6">
+    <h2 id="b6">purchase-panel</h2>
     <dl>
       <dt>Family</dt><dd>product &middot; modes E &middot; medium</dd>
       <dt>Use</dt><dd>The right column of a product page. Price, variant, delivery and the one action, all visible together.</dd>
@@ -583,8 +744,8 @@ fieldset.block-purchase-panel__opts{border:0;margin:0;padding:0}
     </div>
   </section>
 
-  <section class="spec" aria-labelledby="b5">
-    <h2 id="b5">spec-table</h2>
+  <section class="spec" aria-labelledby="b7">
+    <h2 id="b7">spec-table</h2>
     <dl>
       <dt>Family</dt><dd>product &middot; modes E &middot; medium</dd>
       <dt>Use</dt><dd>The full specification, grouped. Buyers who read specifications are the ones who complete, so this is proof, not an appendix.</dd>
@@ -678,8 +839,8 @@ fieldset.block-purchase-panel__opts{border:0;margin:0;padding:0}
     </div>
   </section>
 
-  <section class="spec" aria-labelledby="b6">
-    <h2 id="b6">benefits</h2>
+  <section class="spec" aria-labelledby="b8">
+    <h2 id="b8">benefits</h2>
     <dl>
       <dt>Family</dt><dd>content &middot; modes M &middot; spacious</dd>
       <dt>Use</dt><dd>The three or four things that decide whether this is for you, after the hero.</dd>
@@ -776,8 +937,200 @@ fieldset.block-purchase-panel__opts{border:0;margin:0;padding:0}
     </div>
   </section>
 
-  <section class="spec" aria-labelledby="b7">
-    <h2 id="b7">review-summary</h2>
+  <section class="spec" aria-labelledby="b9">
+    <h2 id="b9">editorial</h2>
+    <dl>
+      <dt>Family</dt><dd>content &middot; modes M &middot; spacious</dd>
+      <dt>Use</dt><dd>Long-form prose. Journal entries, guides, case studies, anything read rather than scanned.</dd>
+      <dt>Avoid</dt><dd>Marketing sections. This block gives one column its measure and nothing else.</dd>
+      <dt>Variants</dt><dd>single-column (default) | with-aside | with-pull</dd>
+      <dt>Pairs with</dt><dd>hero-editorial, cta-band, footer-full not-with: benefits</dd>
+      
+      <dt>Prevents</dt><dd>Body copy that runs the full width of a 1440 screen, and a pull quote that repeats a sentence the reader passed four lines ago.</dd>
+      <dt>Source</dt><dd><code>skills/sitesmith/blocks/content/editorial.html</code></dd>
+    </dl>
+    <div class="stage">
+<style>
+.block-editorial{max-width:var(--container);margin-inline:auto;
+  padding:var(--space-7) var(--gutter)}
+.block-editorial__body{max-width:var(--measure)}
+.block-editorial h3{margin:0 0 var(--space-4);font-size:var(--text-h3);
+  letter-spacing:-.02em;line-height:var(--leading-tight)}
+.block-editorial h4{margin:var(--space-7) 0 var(--space-3);font-size:var(--text-body);
+  letter-spacing:-.01em}
+.block-editorial p{margin:0 0 var(--space-4);color:var(--ink-2);
+  line-height:var(--leading-body)}
+.block-editorial p:first-of-type{font-size:var(--text-lead);color:var(--ink)}
+.block-editorial ul{margin:0 0 var(--space-4);padding-left:var(--space-5);
+  color:var(--ink-2)}
+.block-editorial li{margin-bottom:var(--space-2)}
+.block-editorial a{color:var(--accent)}
+.block-editorial code{font-family:var(--font-mono);font-size:var(--text-small);
+  background:var(--surface-2);padding:0 var(--space-2);border-radius:var(--radius-inner);
+  overflow-wrap:anywhere}
+/* A pull quote lifts a line the reader has not reached yet. Repeating one they just
+   passed is decoration wearing a typographic hat. */
+.block-editorial blockquote{margin:var(--space-5) 0;padding-left:var(--space-5);
+  border-left:2px solid var(--accent);font-size:var(--text-lead);color:var(--ink)}
+.block-editorial figure{margin:var(--space-5) 0}
+.block-editorial figcaption{margin-top:var(--space-2);font-size:var(--text-small);
+  color:var(--ink-3)}
+.block-editorial__aside{border-top:1px solid var(--line);margin-top:var(--space-5);
+  padding-top:var(--space-4);font-size:var(--text-small);color:var(--ink-3)}
+
+/* variant: with-aside — notes beside the column at width, under it below 980px. */
+.block-editorial--with-aside .block-editorial__grid{display:grid;
+  grid-template-columns:minmax(0,var(--measure)) minmax(0,14rem);gap:var(--space-7)}
+@media(max-width:980px){
+  .block-editorial--with-aside .block-editorial__grid{grid-template-columns:minmax(0,1fr)}
+}
+</style>
+
+<article class="block-editorial">
+  <div class="block-editorial__body">
+    <h3>Why the parapet goes first</h3>
+    <p>
+      In twelve years of surveys, the membrane over the open field of a flat roof has almost
+      never been the thing that failed. It is the upstand at the parapet, and it fails for a
+      reason that has nothing to do with the material.
+    </p>
+    <p>
+      A flat roof is not flat. It moves: thermally, twice a day, and structurally, slowly.
+      The field has room to move. The upstand is pinned between a deck that expands and a
+      wall that does not, and every cycle works the bond a little.
+    </p>
+
+    <h4>What a specification should say</h4>
+    <p>
+      Most specifications name a membrane and a warranty and stop. The three lines that
+      actually decide whether the roof lasts are about the detail, not the sheet:
+    </p>
+    <ul>
+      <li>Upstand height above finished surface, and what happens where it cannot be met.</li>
+      <li>Termination method at the head, mechanical or adhered, and the fixing centres.</li>
+      <li>Whether the deck is checked for moisture before covering, and who signs that off.</li>
+    </ul>
+
+    <blockquote>
+      The warranty covers the sheet. Nothing in it covers the junction between the sheet and
+      the building, which is where the water gets in.
+    </blockquote>
+
+    <p>
+      None of this is exotic. It is in every manufacturer's detail drawings, which is worth
+      remembering when a quote does not mention any of it: the information was available and
+      somebody chose not to price it.
+    </p>
+
+    <p class="block-editorial__aside">
+      Written from the survey record for 214 flat roofs inspected between 2014 and 2026. The
+      failure distribution is our own and has not been published elsewhere.
+    </p>
+  </div>
+</article>
+    </div>
+  </section>
+
+  <section class="spec" aria-labelledby="b10">
+    <h2 id="b10">process</h2>
+    <dl>
+      <dt>Family</dt><dd>content &middot; modes M E &middot; spacious</dd>
+      <dt>Use</dt><dd>How it works, when the mechanism is the reassurance. Services, trades, anything bought on trust.</dd>
+      <dt>Avoid</dt><dd>Products where the buyer does not care how it is made. Use benefits.</dd>
+      <dt>Variants</dt><dd>numbered-rows (default) | horizontal | with-durations</dd>
+      <dt>Pairs with</dt><dd>benefits, testimonial, cta-band not-with: process</dd>
+      
+      <dt>Prevents</dt><dd>Four steps that all say "we work with you", which is a process section that has not been asked what actually happens.</dd>
+      <dt>Source</dt><dd><code>skills/sitesmith/blocks/content/process.html</code></dd>
+    </dl>
+    <div class="stage">
+<style>
+.block-process{max-width:var(--container);margin-inline:auto;
+  padding:var(--space-7) var(--gutter)}
+.block-process__head{max-width:var(--measure);margin-bottom:var(--space-7)}
+.block-process h3{margin:0;font-size:var(--text-h2);letter-spacing:-.025em;
+  line-height:var(--leading-tight)}
+.block-process__head p{margin:var(--space-3) 0 0;color:var(--ink-2)}
+/* Numbers the browser counts, so a step inserted later renumbers itself. */
+.block-process__steps{margin:0;padding:0;list-style:none;counter-reset:step;
+  border-top:1px solid var(--line)}
+.block-process__steps > li{counter-increment:step;display:grid;
+  grid-template-columns:auto minmax(0,1fr) minmax(0,10rem);
+  gap:var(--space-3) var(--space-5);padding:var(--space-5) 0;
+  border-bottom:1px solid var(--line);align-items:start}
+@media(max-width:760px){
+  .block-process__steps > li{grid-template-columns:auto minmax(0,1fr)}
+  .block-process__when{grid-column:2}
+}
+.block-process__steps > li::before{content:counter(step,decimal-leading-zero);
+  font-family:var(--font-mono);font-size:var(--text-small);color:var(--accent);
+  font-weight:700;padding-top:var(--space-1)}
+.block-process__steps h4{margin:0 0 var(--space-2);font-size:var(--text-h3);
+  letter-spacing:-.015em;line-height:var(--leading-tight)}
+.block-process__steps p{margin:0;color:var(--ink-2);font-size:var(--text-body);
+  max-width:var(--measure)}
+/* Each step says what it costs the reader in time. "We work with you" says nothing;
+   "an hour, and you do not need to be there" is the reassurance. */
+.block-process__when{font-size:var(--text-small);color:var(--ink-3)}
+.block-process__when b{display:block;color:var(--ink);font-weight:650;
+  font-family:var(--font-mono)}
+</style>
+
+<section class="block-process" aria-labelledby="pr-h">
+  <div class="block-process__head">
+    <h3 id="pr-h">What happens after you call</h3>
+    <p>
+      Four steps, with what each one costs you in time. Nothing here needs you on the roof.
+    </p>
+  </div>
+  <ol class="block-process__steps">
+    <li>
+      <div>
+        <h4>We look at it</h4>
+        <p>
+          Two of us, ladder and a moisture meter, every junction photographed. You do not
+          need to be there if we can get access.
+        </p>
+      </div>
+      <p class="block-process__when"><b>1 hour</b>Within four working days</p>
+    </li>
+    <li>
+      <div>
+        <h4>You get the finding</h4>
+        <p>
+          A written report with the photographs and the readings, and a fixed price for the
+          work it implies. If we think it can wait a season, the report says so.
+        </p>
+      </div>
+      <p class="block-process__when"><b>2 days</b>After the survey</p>
+    </li>
+    <li>
+      <div>
+        <h4>You decide, in your own time</h4>
+        <p>
+          The price holds for sixty days. We do not follow up more than once, and the report
+          is yours whether you use us or not.
+        </p>
+      </div>
+      <p class="block-process__when"><b>Up to 60 days</b>No expiry pressure</p>
+    </li>
+    <li>
+      <div>
+        <h4>We do the work in one block</h4>
+        <p>
+          Materials on site before we start, so the roof is open for a known window. You get
+          the before-and-after photographs for your building file.
+        </p>
+      </div>
+      <p class="block-process__when"><b>1 to 3 days</b>Scheduled with you</p>
+    </li>
+  </ol>
+</section>
+    </div>
+  </section>
+
+  <section class="spec" aria-labelledby="b11">
+    <h2 id="b11">review-summary</h2>
     <dl>
       <dt>Family</dt><dd>proof &middot; modes E &middot; medium</dd>
       <dt>Use</dt><dd>The distribution, then the reviews, with the low ones present.</dd>
@@ -890,8 +1243,8 @@ fieldset.block-purchase-panel__opts{border:0;margin:0;padding:0}
     </div>
   </section>
 
-  <section class="spec" aria-labelledby="b8">
-    <h2 id="b8">testimonial</h2>
+  <section class="spec" aria-labelledby="b12">
+    <h2 id="b12">testimonial</h2>
     <dl>
       <dt>Family</dt><dd>proof &middot; modes M E &middot; spacious</dd>
       <dt>Use</dt><dd>One named customer saying something specific. The strongest proof there is, and the only one worth a section of its own.</dd>
@@ -963,8 +1316,197 @@ fieldset.block-purchase-panel__opts{border:0;margin:0;padding:0}
     </div>
   </section>
 
-  <section class="spec" aria-labelledby="b9">
-    <h2 id="b9">error-summary</h2>
+  <section class="spec" aria-labelledby="b13">
+    <h2 id="b13">faq</h2>
+    <dl>
+      <dt>Family</dt><dd>decide &middot; modes M E &middot; medium</dd>
+      <dt>Use</dt><dd>The objections that stop a decision, answered in the buyer's words.</dd>
+      <dt>Avoid</dt><dd>Questions nobody asked. An FAQ of marketing copy is worse than none.</dd>
+      <dt>Variants</dt><dd>disclosure (default) | open-list | two-column</dd>
+      <dt>Pairs with</dt><dd>pricing-table, cta-band, spec-table not-with: faq</dd>
+      
+      <dt>Prevents</dt><dd>An accordion that hides the answers from search and from anyone who wants to read all of them, and questions phrased as claims.</dd>
+      <dt>Source</dt><dd><code>skills/sitesmith/blocks/decide/faq.html</code></dd>
+    </dl>
+    <div class="stage">
+<style>
+.block-faq{max-width:var(--container);margin-inline:auto;
+  padding:var(--space-7) var(--gutter)}
+.block-faq h3{margin:0 0 var(--space-5);font-size:var(--text-h3);letter-spacing:-.02em}
+/* <details> keeps the answers in the document, so they are findable and printable
+   even while collapsed. A script-driven accordion usually is not. */
+.block-faq__list{max-width:var(--measure);border-top:1px solid var(--line)}
+.block-faq details{border-bottom:1px solid var(--line)}
+.block-faq summary{list-style:none;cursor:pointer;padding:var(--space-4) var(--space-5) var(--space-4) 0;
+  font-weight:650;font-size:var(--text-body);display:flex;gap:var(--space-3);
+  position:relative;transition:color var(--motion-fast) var(--ease)}
+.block-faq summary::-webkit-details-marker{display:none}
+.block-faq summary:hover{color:var(--accent)}
+.block-faq summary::after{content:"";position:absolute;right:var(--space-2);top:50%;
+  width:var(--space-2);height:var(--space-2);border-right:2px solid var(--ink-3);
+  border-bottom:2px solid var(--ink-3);transform:translateY(-70%) rotate(45deg)}
+.block-faq details[open] summary::after{transform:translateY(-30%) rotate(-135deg)}
+.block-faq details > p{margin:0 0 var(--space-4);color:var(--ink-2);
+  font-size:var(--text-small)}
+.block-faq details > p + p{margin-top:calc(var(--space-3) * -1 + var(--space-3))}
+.block-faq :focus-visible{outline:2px solid var(--accent);outline-offset:2px;
+  border-radius:var(--radius-inner)}
+
+/* variant: open-list — no disclosure at all. Correct when there are five or fewer
+   questions, because the click is then pure cost. */
+.block-faq--open-list summary{pointer-events:none}
+.block-faq--open-list summary::after{display:none}
+</style>
+
+<section class="block-faq" aria-labelledby="fq-h">
+  <h3 id="fq-h">Before you book</h3>
+  <div class="block-faq__list">
+    <details open>
+      <summary>What if the survey finds more than I expected?</summary>
+      <p>
+        You get the finding and a price, and you decide. We have never started work on the
+        day of a survey, because a quote you have not read is not a quote you agreed to.
+      </p>
+    </details>
+    <details>
+      <summary>Do you work on roofs you did not install?</summary>
+      <p>
+        Most of them. The exception is a roof still inside another contractor's warranty,
+        where our work would void it. We will tell you if that is the case and what it
+        covers.
+      </p>
+    </details>
+    <details>
+      <summary>How long does a flat roof actually last?</summary>
+      <p>
+        Single-ply membrane, laid well, on a dry deck: twenty to twenty-five years. The
+        number in the manufacturer's literature assumes a detail standard that most
+        installations do not meet, which is why we survey the junctions rather than the field.
+      </p>
+    </details>
+    <details>
+      <summary>Can you work in winter?</summary>
+      <p>
+        Yes, with two limits. Hot-air welding needs the deck above 5&deg;C, and we will not
+        lay on a wet substrate. In practice that costs a day or two of waiting in January,
+        not a month.
+      </p>
+    </details>
+  </div>
+</section>
+    </div>
+  </section>
+
+  <section class="spec" aria-labelledby="b14">
+    <h2 id="b14">pricing-table</h2>
+    <dl>
+      <dt>Family</dt><dd>decide &middot; modes M E &middot; medium</dd>
+      <dt>Use</dt><dd>Two to four plans where the reader is choosing, not just reading a number.</dd>
+      <dt>Avoid</dt><dd>One plan. That is a price, and it belongs in a sentence.</dd>
+      <dt>Variants</dt><dd>three-tier (default) | two-tier | with-annual-toggle</dd>
+      <dt>Pairs with</dt><dd>faq, comparison-table, cta-band not-with: comparison-table</dd>
+      
+      <dt>Prevents</dt><dd>Three columns of ticks where the differences are invisible, and a recommended tier marked only by colour.</dd>
+      <dt>Source</dt><dd><code>skills/sitesmith/blocks/decide/pricing-table.html</code></dd>
+    </dl>
+    <div class="stage">
+<style>
+.block-pricing-table{max-width:var(--container);margin-inline:auto;
+  padding:var(--space-7) var(--gutter)}
+.block-pricing-table__head{max-width:var(--measure);margin-bottom:var(--space-5)}
+.block-pricing-table h3{margin:0;font-size:var(--text-h3);letter-spacing:-.02em}
+.block-pricing-table__head p{margin:var(--space-2) 0 0;color:var(--ink-2);
+  font-size:var(--text-small)}
+.block-pricing-table__tiers{display:grid;list-style:none;margin:0;padding:0;
+  grid-template-columns:repeat(auto-fit,minmax(min(100%,16rem),1fr));gap:var(--space-4)}
+.block-pricing-table__tier{display:flex;flex-direction:column;gap:var(--space-3);
+  border:1px solid var(--line);border-radius:var(--radius-outer);
+  background:var(--surface);padding:var(--space-5)}
+/* The recommended tier is marked by a word and a border, not by colour alone. */
+.block-pricing-table__tier[data-recommended]{border-color:var(--accent);
+  border-width:2px;padding:calc(var(--space-5) - 1px)}
+.block-pricing-table__flag{align-self:flex-start;font-size:var(--text-micro);
+  font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  background:var(--accent-soft);color:var(--accent);
+  padding:var(--space-1) var(--space-2);border-radius:var(--radius-inner)}
+.block-pricing-table__tier h4{margin:0;font-size:var(--text-body);font-weight:650}
+.block-pricing-table__amount{font-family:var(--font-mono);
+  font-variant-numeric:tabular-nums;line-height:var(--leading-tight)}
+.block-pricing-table__amount b{font-size:var(--text-h2);letter-spacing:-.03em}
+.block-pricing-table__amount span{color:var(--ink-3);font-size:var(--text-small);
+  font-family:inherit}
+.block-pricing-table__for{color:var(--ink-2);font-size:var(--text-small);
+  min-height:calc(var(--space-5) + var(--space-3))}
+/* Differences, not a feature dump. Each tier lists what it adds over the one before,
+   which is the actual question the reader has. */
+.block-pricing-table__adds{margin:0;padding:0;list-style:none;display:grid;
+  gap:var(--space-2);font-size:var(--text-small);color:var(--ink-2)}
+.block-pricing-table__adds li{display:flex;gap:var(--space-2)}
+.block-pricing-table__adds li::before{content:"+";color:var(--ok);font-weight:700;
+  flex:none}
+.block-pricing-table__btn{margin-top:auto;font:inherit;font-size:var(--text-small);
+  font-weight:650;text-align:center;text-decoration:none;
+  padding:var(--space-3) var(--space-4);border-radius:var(--radius-inner);
+  border:1px solid var(--line-2);background:var(--surface);color:var(--ink)}
+.block-pricing-table__tier[data-recommended] .block-pricing-table__btn{
+  background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.block-pricing-table__note{margin:var(--space-4) 0 0;color:var(--ink-3);
+  font-size:var(--text-small);max-width:var(--measure)}
+.block-pricing-table :focus-visible{outline:2px solid var(--accent);outline-offset:2px;
+  border-radius:var(--radius-inner)}
+</style>
+
+<section class="block-pricing-table" aria-labelledby="pt-h">
+  <div class="block-pricing-table__head">
+    <h3 id="pt-h">Maintenance contracts</h3>
+    <p>Priced per roof, per year. Each tier lists what it adds to the one before it.</p>
+  </div>
+  <ul class="block-pricing-table__tiers">
+    <li class="block-pricing-table__tier">
+      <h4>Inspection</h4>
+      <p class="block-pricing-table__amount"><b>&pound;340</b> <span>per year</span></p>
+      <p class="block-pricing-table__for">For a roof under ten years old with no known defects.</p>
+      <ul class="block-pricing-table__adds">
+        <li>One inspection each autumn</li>
+        <li>Written report with photographs</li>
+        <li>Gutter and outlet clearance</li>
+      </ul>
+      <a class="block-pricing-table__btn" href="#blocks">Choose inspection</a>
+    </li>
+    <li class="block-pricing-table__tier" data-recommended>
+      <span class="block-pricing-table__flag">Most chosen</span>
+      <h4>Inspection and repair</h4>
+      <p class="block-pricing-table__amount"><b>&pound;780</b> <span>per year</span></p>
+      <p class="block-pricing-table__for">For a roof over ten years old, or one that has leaked once.</p>
+      <ul class="block-pricing-table__adds">
+        <li>Two inspections, spring and autumn</li>
+        <li>Minor repairs included up to &pound;600 of labour</li>
+        <li>48-hour response to a reported leak</li>
+      </ul>
+      <a class="block-pricing-table__btn" href="#blocks">Choose inspection and repair</a>
+    </li>
+    <li class="block-pricing-table__tier">
+      <h4>Managed</h4>
+      <p class="block-pricing-table__amount"><b>&pound;1,450</b> <span>per year</span></p>
+      <p class="block-pricing-table__for">For multiple buildings, or where a lease requires evidence of maintenance.</p>
+      <ul class="block-pricing-table__adds">
+        <li>Quarterly inspection</li>
+        <li>Same-day response, including weekends</li>
+        <li>Condition report formatted for a lease file</li>
+      </ul>
+      <a class="block-pricing-table__btn" href="#blocks">Choose managed</a>
+    </li>
+  </ul>
+  <p class="block-pricing-table__note">
+    Prices are for a single roof up to 400m&sup2; within twenty miles of Sheffield, excluding
+    VAT. Larger or further is quoted after the survey; we do not price those from a table.
+  </p>
+</section>
+    </div>
+  </section>
+
+  <section class="spec" aria-labelledby="b15">
+    <h2 id="b15">error-summary</h2>
     <dl>
       <dt>Family</dt><dd>form &middot; modes M E P &middot; any</dd>
       <dt>Use</dt><dd>Any form that can fail validation on more than one field.</dd>
@@ -1039,8 +1581,8 @@ fieldset.block-purchase-panel__opts{border:0;margin:0;padding:0}
     </div>
   </section>
 
-  <section class="spec" aria-labelledby="b10">
-    <h2 id="b10">cta-band</h2>
+  <section class="spec" aria-labelledby="b16">
+    <h2 id="b16">cta-band</h2>
     <dl>
       <dt>Family</dt><dd>cta &middot; modes M E &middot; spacious</dd>
       <dt>Use</dt><dd>The end of the argument. One action, restated once the case has been made.</dd>
@@ -1108,8 +1650,8 @@ fieldset.block-purchase-panel__opts{border:0;margin:0;padding:0}
     </div>
   </section>
 
-  <section class="spec" aria-labelledby="b11">
-    <h2 id="b11">cta-sticky</h2>
+  <section class="spec" aria-labelledby="b17">
+    <h2 id="b17">cta-sticky</h2>
     <dl>
       <dt>Family</dt><dd>cta &middot; modes E M &middot; medium</dd>
       <dt>Use</dt><dd>The purchase action pinned to the bottom of a phone, carrying the price with it.</dd>
@@ -1162,8 +1704,8 @@ fieldset.block-purchase-panel__opts{border:0;margin:0;padding:0}
     </div>
   </section>
 
-  <section class="spec" aria-labelledby="b12">
-    <h2 id="b12">empty-state</h2>
+  <section class="spec" aria-labelledby="b18">
+    <h2 id="b18">empty-state</h2>
     <dl>
       <dt>Family</dt><dd>data &middot; modes M E P &middot; any</dd>
       <dt>Use</dt><dd>Any list, table or panel that can legitimately have nothing in it.</dd>
@@ -1214,8 +1756,8 @@ fieldset.block-purchase-panel__opts{border:0;margin:0;padding:0}
     </div>
   </section>
 
-  <section class="spec" aria-labelledby="b13">
-    <h2 id="b13">rail-and-pane</h2>
+  <section class="spec" aria-labelledby="b19">
+    <h2 id="b19">rail-and-pane</h2>
     <dl>
       <dt>Family</dt><dd>data &middot; modes P &middot; dense</dd>
       <dt>Use</dt><dd>A list you pick from beside the thing you picked. Queues, inboxes, docs, settings.</dd>
@@ -1298,8 +1840,8 @@ fieldset.block-purchase-panel__opts{border:0;margin:0;padding:0}
     </div>
   </section>
 
-  <section class="spec" aria-labelledby="b14">
-    <h2 id="b14">scrollable-grid</h2>
+  <section class="spec" aria-labelledby="b20">
+    <h2 id="b20">scrollable-grid</h2>
     <dl>
       <dt>Family</dt><dd>data &middot; modes P &middot; dense</dd>
       <dt>Use</dt><dd>A table wider than the column it sits in. Any admin, report or queue.</dd>
@@ -1384,8 +1926,8 @@ fieldset.block-purchase-panel__opts{border:0;margin:0;padding:0}
     </div>
   </section>
 
-  <section class="spec" aria-labelledby="b15">
-    <h2 id="b15">footer-full</h2>
+  <section class="spec" aria-labelledby="b21">
+    <h2 id="b21">footer-full</h2>
     <dl>
       <dt>Family</dt><dd>footer &middot; modes M E P &middot; spacious</dd>
       <dt>Use</dt><dd>The site footer. Navigation the header could not hold, the legal and contact facts, and nothing else.</dd>

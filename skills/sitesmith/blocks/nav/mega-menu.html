@@ -1,0 +1,107 @@
+<!--
+name: mega-menu
+family: nav
+modes: E M
+use: A catalogue with more than about twenty categories, or a multi-brand company.
+avoid: Fewer than twelve destinations, where it is furniture. Use site-bar's plain nav.
+variants: three-column (default) | with-feature | two-level
+pairs: site-bar, product-grid, breadcrumb
+not-with: mega-menu
+tokens: --space-1 --space-2 --space-3 --space-4 --space-5 --text-micro --text-small
+        --text-body --ink --ink-2 --ink-3 --line --surface --surface-2 --accent
+        --radius-inner --radius-outer --container --gutter --motion-fast --ease
+density: medium
+prevents: A menu that opens on hover and closes before the pointer reaches it, and
+          one that cannot be opened from the keyboard at all.
+-->
+<style>
+/* Disclosure, not hover. A hover menu is unusable on touch, closes when the pointer
+   crosses a gap, and cannot be reached by keyboard without extra script. */
+.block-mega-menu{border-bottom:1px solid var(--line);background:var(--surface);
+  position:relative}
+.block-mega-menu__in{max-width:var(--container);margin-inline:auto;
+  padding:0 var(--gutter);display:flex;gap:var(--space-1);flex-wrap:wrap}
+.block-mega-menu__t{position:absolute;opacity:0;width:1px;height:1px}
+.block-mega-menu__label{display:inline-flex;align-items:center;gap:var(--space-2);
+  padding:var(--space-3) var(--space-3);font-size:var(--text-small);color:var(--ink-2);
+  cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;
+  transition:color var(--motion-fast) var(--ease)}
+.block-mega-menu__label:hover{color:var(--ink)}
+.block-mega-menu__label::after{content:"";width:var(--space-2);height:var(--space-2);
+  border-right:2px solid currentColor;border-bottom:2px solid currentColor;
+  transform:translateY(-2px) rotate(45deg)}
+.block-mega-menu__t:checked + .block-mega-menu__label{color:var(--ink);font-weight:650;
+  border-bottom-color:var(--accent)}
+.block-mega-menu__t:checked + .block-mega-menu__label::after{transform:translateY(2px) rotate(-135deg)}
+.block-mega-menu__t:focus-visible + .block-mega-menu__label{outline:2px solid var(--accent);
+  outline-offset:-2px}
+
+.block-mega-menu__panel{display:none;width:100%;order:9;
+  border-top:1px solid var(--line);background:var(--surface-2);
+  padding:var(--space-5) 0 var(--space-5)}
+.block-mega-menu__t:checked ~ .block-mega-menu__panel{display:block}
+.block-mega-menu__cols{display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(min(100%,12rem),1fr));gap:var(--space-5)}
+.block-mega-menu__panel h4{margin:0 0 var(--space-3);font-size:var(--text-micro);
+  letter-spacing:.11em;text-transform:uppercase;color:var(--ink-3);font-weight:700}
+.block-mega-menu__panel ul{margin:0;padding:0;list-style:none}
+.block-mega-menu__panel li{margin-bottom:var(--space-2)}
+.block-mega-menu__panel a{color:var(--ink-2);text-decoration:none;
+  font-size:var(--text-small)}
+.block-mega-menu__panel a:hover{color:var(--ink);text-decoration:underline}
+.block-mega-menu__feature{border:1px solid var(--line);border-radius:var(--radius-outer);
+  background:var(--surface);padding:var(--space-4);font-size:var(--text-small);
+  color:var(--ink-2)}
+.block-mega-menu__feature b{display:block;color:var(--ink);font-size:var(--text-body);
+  margin-bottom:var(--space-2)}
+.block-mega-menu :focus-visible{outline:2px solid var(--accent);outline-offset:2px;
+  border-radius:var(--radius-inner)}
+</style>
+
+<nav class="block-mega-menu" aria-label="Catalogue">
+  <div class="block-mega-menu__in">
+    <input class="block-mega-menu__t" type="checkbox" id="mm-1" checked>
+    <label class="block-mega-menu__label" for="mm-1">Paper and board</label>
+
+    <input class="block-mega-menu__t" type="checkbox" id="mm-2">
+    <label class="block-mega-menu__label" for="mm-2">Packaging</label>
+
+    <input class="block-mega-menu__t" type="checkbox" id="mm-3">
+    <label class="block-mega-menu__label" for="mm-3">Handling</label>
+
+    <div class="block-mega-menu__panel">
+      <div class="block-mega-menu__cols">
+        <div>
+          <h4>Liner</h4>
+          <ul>
+            <li><a href="#blocks">Kraft liner</a></li>
+            <li><a href="#blocks">Test liner</a></li>
+            <li><a href="#blocks">White top</a></li>
+            <li><a href="#blocks">Coated liner</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Fluting</h4>
+          <ul>
+            <li><a href="#blocks">Semi-chemical</a></li>
+            <li><a href="#blocks">Recycled medium</a></li>
+            <li><a href="#blocks">Heavy duty</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Board</h4>
+          <ul>
+            <li><a href="#blocks">Single wall</a></li>
+            <li><a href="#blocks">Double wall</a></li>
+            <li><a href="#blocks">Die-cut blanks</a></li>
+          </ul>
+        </div>
+        <div class="block-mega-menu__feature">
+          <b>Reel width guide</b>
+          Which width fits your corrugator, and what the trim costs when it does not.
+          <a href="#blocks">Read the guide</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>

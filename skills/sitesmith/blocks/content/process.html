@@ -1,0 +1,99 @@
+<!--
+name: process
+family: content
+modes: M E
+use: How it works, when the mechanism is the reassurance. Services, trades, anything
+     bought on trust.
+avoid: Products where the buyer does not care how it is made. Use benefits.
+variants: numbered-rows (default) | horizontal | with-durations
+pairs: benefits, testimonial, cta-band
+not-with: process
+tokens: --space-2 --space-3 --space-4 --space-5 --space-7 --text-micro --text-small
+        --text-body --text-h2 --text-h3 --ink --ink-2 --ink-3 --line --accent
+        --measure --container --gutter --leading-tight --font-mono
+density: spacious
+prevents: Four steps that all say "we work with you", which is a process section
+          that has not been asked what actually happens.
+-->
+<style>
+.block-process{max-width:var(--container);margin-inline:auto;
+  padding:var(--space-7) var(--gutter)}
+.block-process__head{max-width:var(--measure);margin-bottom:var(--space-7)}
+.block-process h3{margin:0;font-size:var(--text-h2);letter-spacing:-.025em;
+  line-height:var(--leading-tight)}
+.block-process__head p{margin:var(--space-3) 0 0;color:var(--ink-2)}
+/* Numbers the browser counts, so a step inserted later renumbers itself. */
+.block-process__steps{margin:0;padding:0;list-style:none;counter-reset:step;
+  border-top:1px solid var(--line)}
+.block-process__steps > li{counter-increment:step;display:grid;
+  grid-template-columns:auto minmax(0,1fr) minmax(0,10rem);
+  gap:var(--space-3) var(--space-5);padding:var(--space-5) 0;
+  border-bottom:1px solid var(--line);align-items:start}
+@media(max-width:760px){
+  .block-process__steps > li{grid-template-columns:auto minmax(0,1fr)}
+  .block-process__when{grid-column:2}
+}
+.block-process__steps > li::before{content:counter(step,decimal-leading-zero);
+  font-family:var(--font-mono);font-size:var(--text-small);color:var(--accent);
+  font-weight:700;padding-top:var(--space-1)}
+.block-process__steps h4{margin:0 0 var(--space-2);font-size:var(--text-h3);
+  letter-spacing:-.015em;line-height:var(--leading-tight)}
+.block-process__steps p{margin:0;color:var(--ink-2);font-size:var(--text-body);
+  max-width:var(--measure)}
+/* Each step says what it costs the reader in time. "We work with you" says nothing;
+   "an hour, and you do not need to be there" is the reassurance. */
+.block-process__when{font-size:var(--text-small);color:var(--ink-3)}
+.block-process__when b{display:block;color:var(--ink);font-weight:650;
+  font-family:var(--font-mono)}
+</style>
+
+<section class="block-process" aria-labelledby="pr-h">
+  <div class="block-process__head">
+    <h3 id="pr-h">What happens after you call</h3>
+    <p>
+      Four steps, with what each one costs you in time. Nothing here needs you on the roof.
+    </p>
+  </div>
+  <ol class="block-process__steps">
+    <li>
+      <div>
+        <h4>We look at it</h4>
+        <p>
+          Two of us, ladder and a moisture meter, every junction photographed. You do not
+          need to be there if we can get access.
+        </p>
+      </div>
+      <p class="block-process__when"><b>1 hour</b>Within four working days</p>
+    </li>
+    <li>
+      <div>
+        <h4>You get the finding</h4>
+        <p>
+          A written report with the photographs and the readings, and a fixed price for the
+          work it implies. If we think it can wait a season, the report says so.
+        </p>
+      </div>
+      <p class="block-process__when"><b>2 days</b>After the survey</p>
+    </li>
+    <li>
+      <div>
+        <h4>You decide, in your own time</h4>
+        <p>
+          The price holds for sixty days. We do not follow up more than once, and the report
+          is yours whether you use us or not.
+        </p>
+      </div>
+      <p class="block-process__when"><b>Up to 60 days</b>No expiry pressure</p>
+    </li>
+    <li>
+      <div>
+        <h4>We do the work in one block</h4>
+        <p>
+          Materials on site before we start, so the roof is open for a known window. You get
+          the before-and-after photographs for your building file.
+        </p>
+      </div>
+      <p class="block-process__when"><b>1 to 3 days</b>Scheduled with you</p>
+    </li>
+  </ol>
+</section>

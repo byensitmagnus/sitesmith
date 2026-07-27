@@ -1,0 +1,109 @@
+<!--
+name: pricing-table
+family: decide
+modes: M E
+use: Two to four plans where the reader is choosing, not just reading a number.
+avoid: One plan. That is a price, and it belongs in a sentence.
+variants: three-tier (default) | two-tier | with-annual-toggle
+pairs: faq, comparison-table, cta-band
+not-with: comparison-table
+tokens: --space-1 --space-2 --space-3 --space-4 --space-5 --space-7 --text-micro
+        --text-small --text-body --text-h2 --text-h3 --ink --ink-2 --ink-3 --line
+        --line-2 --surface --surface-2 --accent --on-accent --accent-soft --ok
+        --radius-inner --radius-outer --font-mono --container --gutter --leading-tight
+density: medium
+prevents: Three columns of ticks where the differences are invisible, and a
+          recommended tier marked only by colour.
+-->
+<style>
+.block-pricing-table{max-width:var(--container);margin-inline:auto;
+  padding:var(--space-7) var(--gutter)}
+.block-pricing-table__head{max-width:var(--measure);margin-bottom:var(--space-5)}
+.block-pricing-table h3{margin:0;font-size:var(--text-h3);letter-spacing:-.02em}
+.block-pricing-table__head p{margin:var(--space-2) 0 0;color:var(--ink-2);
+  font-size:var(--text-small)}
+.block-pricing-table__tiers{display:grid;list-style:none;margin:0;padding:0;
+  grid-template-columns:repeat(auto-fit,minmax(min(100%,16rem),1fr));gap:var(--space-4)}
+.block-pricing-table__tier{display:flex;flex-direction:column;gap:var(--space-3);
+  border:1px solid var(--line);border-radius:var(--radius-outer);
+  background:var(--surface);padding:var(--space-5)}
+/* The recommended tier is marked by a word and a border, not by colour alone. */
+.block-pricing-table__tier[data-recommended]{border-color:var(--accent);
+  border-width:2px;padding:calc(var(--space-5) - 1px)}
+.block-pricing-table__flag{align-self:flex-start;font-size:var(--text-micro);
+  font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  background:var(--accent-soft);color:var(--accent);
+  padding:var(--space-1) var(--space-2);border-radius:var(--radius-inner)}
+.block-pricing-table__tier h4{margin:0;font-size:var(--text-body);font-weight:650}
+.block-pricing-table__amount{font-family:var(--font-mono);
+  font-variant-numeric:tabular-nums;line-height:var(--leading-tight)}
+.block-pricing-table__amount b{font-size:var(--text-h2);letter-spacing:-.03em}
+.block-pricing-table__amount span{color:var(--ink-3);font-size:var(--text-small);
+  font-family:inherit}
+.block-pricing-table__for{color:var(--ink-2);font-size:var(--text-small);
+  min-height:calc(var(--space-5) + var(--space-3))}
+/* Differences, not a feature dump. Each tier lists what it adds over the one before,
+   which is the actual question the reader has. */
+.block-pricing-table__adds{margin:0;padding:0;list-style:none;display:grid;
+  gap:var(--space-2);font-size:var(--text-small);color:var(--ink-2)}
+.block-pricing-table__adds li{display:flex;gap:var(--space-2)}
+.block-pricing-table__adds li::before{content:"+";color:var(--ok);font-weight:700;
+  flex:none}
+.block-pricing-table__btn{margin-top:auto;font:inherit;font-size:var(--text-small);
+  font-weight:650;text-align:center;text-decoration:none;
+  padding:var(--space-3) var(--space-4);border-radius:var(--radius-inner);
+  border:1px solid var(--line-2);background:var(--surface);color:var(--ink)}
+.block-pricing-table__tier[data-recommended] .block-pricing-table__btn{
+  background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.block-pricing-table__note{margin:var(--space-4) 0 0;color:var(--ink-3);
+  font-size:var(--text-small);max-width:var(--measure)}
+.block-pricing-table :focus-visible{outline:2px solid var(--accent);outline-offset:2px;
+  border-radius:var(--radius-inner)}
+</style>
+
+<section class="block-pricing-table" aria-labelledby="pt-h">
+  <div class="block-pricing-table__head">
+    <h3 id="pt-h">Maintenance contracts</h3>
+    <p>Priced per roof, per year. Each tier lists what it adds to the one before it.</p>
+  </div>
+  <ul class="block-pricing-table__tiers">
+    <li class="block-pricing-table__tier">
+      <h4>Inspection</h4>
+      <p class="block-pricing-table__amount"><b>&pound;340</b> <span>per year</span></p>
+      <p class="block-pricing-table__for">For a roof under ten years old with no known defects.</p>
+      <ul class="block-pricing-table__adds">
+        <li>One inspection each autumn</li>
+        <li>Written report with photographs</li>
+        <li>Gutter and outlet clearance</li>
+      </ul>
+      <a class="block-pricing-table__btn" href="#blocks">Choose inspection</a>
+    </li>
+    <li class="block-pricing-table__tier" data-recommended>
+      <span class="block-pricing-table__flag">Most chosen</span>
+      <h4>Inspection and repair</h4>
+      <p class="block-pricing-table__amount"><b>&pound;780</b> <span>per year</span></p>
+      <p class="block-pricing-table__for">For a roof over ten years old, or one that has leaked once.</p>
+      <ul class="block-pricing-table__adds">
+        <li>Two inspections, spring and autumn</li>
+        <li>Minor repairs included up to &pound;600 of labour</li>
+        <li>48-hour response to a reported leak</li>
+      </ul>
+      <a class="block-pricing-table__btn" href="#blocks">Choose inspection and repair</a>
+    </li>
+    <li class="block-pricing-table__tier">
+      <h4>Managed</h4>
+      <p class="block-pricing-table__amount"><b>&pound;1,450</b> <span>per year</span></p>
+      <p class="block-pricing-table__for">For multiple buildings, or where a lease requires evidence of maintenance.</p>
+      <ul class="block-pricing-table__adds">
+        <li>Quarterly inspection</li>
+        <li>Same-day response, including weekends</li>
+        <li>Condition report formatted for a lease file</li>
+      </ul>
+      <a class="block-pricing-table__btn" href="#blocks">Choose managed</a>
+    </li>
+  </ul>
+  <p class="block-pricing-table__note">
+    Prices are for a single roof up to 400m&sup2; within twenty miles of Sheffield, excluding
+    VAT. Larger or further is quoted after the survey; we do not price those from a table.
+  </p>
+</section>
