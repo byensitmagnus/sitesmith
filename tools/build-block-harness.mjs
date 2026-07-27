@@ -42,8 +42,12 @@ function meta(source, path) {
       fields[key] += ' ' + line.trim();
     }
   }
-  for (const required of ['name', 'category', 'use', 'prevents']) {
+  for (const required of ['name', 'family', 'modes', 'use', 'variants']) {
     if (!fields[required]) throw new Error(`${path}: metadata missing \`${required}\``);
+  }
+  const known = /^[MEP ]+$/;
+  if (!known.test(fields.modes)) {
+    throw new Error(`${path}: modes must be one or more of M E P, got "${fields.modes}"`);
   }
   return { ...fields, body: source.slice(m[0].length).trim() };
 }
@@ -58,6 +62,15 @@ for (const f of files) {
   blocks.push({ path: f.slice(BLOCKS.length + 1).split(sep).join('/'), ...meta(await readFile(f, 'utf8'), f) });
 }
 if (!blocks.length) throw new Error('no blocks found');
+
+// Grouped by family, in the order a page is actually assembled. Alphabetical by path
+// interleaves a footer between two heroes, which makes the library unreadable as a
+// library even though every block in it is fine.
+const FAMILY_ORDER = ['nav', 'hero', 'catalogue', 'product', 'content', 'proof', 'decide', 'form', 'cta', 'data', 'footer'];
+blocks.sort((a, b) => {
+  const fa = FAMILY_ORDER.indexOf(a.family), fb = FAMILY_ORDER.indexOf(b.family);
+  return (fa === -1 ? 99 : fa) - (fb === -1 ? 99 : fb) || a.name.localeCompare(b.name);
+});
 
 const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
@@ -120,9 +133,13 @@ ${blocks
     (b, i) => `  <section class="spec" aria-labelledby="b${i}">
     <h2 id="b${i}">${esc(b.name)}</h2>
     <dl>
+      <dt>Family</dt><dd>${esc(b.family)} &middot; modes ${esc(b.modes)}${b.density ? ` &middot; ${esc(b.density)}` : ''}</dd>
       <dt>Use</dt><dd>${esc(b.use)}</dd>
       ${b.avoid ? `<dt>Avoid</dt><dd>${esc(b.avoid)}</dd>` : ''}
-      <dt>Prevents</dt><dd>${esc(b.prevents)}</dd>
+      <dt>Variants</dt><dd>${esc(b.variants)}</dd>
+      ${b.pairs ? `<dt>Pairs with</dt><dd>${esc(b.pairs)}</dd>` : ''}
+      ${b['not-with'] ? `<dt>Not with</dt><dd>${esc(b['not-with'])}</dd>` : ''}
+      ${b.prevents ? `<dt>Prevents</dt><dd>${esc(b.prevents)}</dd>` : ''}
       <dt>Source</dt><dd><code>skills/sitesmith/blocks/${esc(b.path)}</code></dd>
     </dl>
     <div class="stage">
@@ -138,5 +155,5 @@ ${b.body}
 
 await mkdir(OUT, { recursive: true });
 await writeFile(join(OUT, 'index.html'), page);
-console.log(`benchmarks/blocks/index.html — ${blocks.length} blocks`);
-for (const b of blocks) console.log(`  ${b.category.padEnd(10)} ${b.name}`);
+console.log(`benchmarks/blocks/index.html: ${blocks.length} blocks`);
+for (const b of blocks) console.log(`  ${b.family.padEnd(10)} ${b.modes.padEnd(6)} ${b.name}`);

@@ -97,10 +97,711 @@ a{color:var(--accent)}
   </header>
 
   <section class="spec" aria-labelledby="b0">
-    <h2 id="b0">scrollable-grid</h2>
+    <h2 id="b0">site-bar</h2>
     <dl>
+      <dt>Family</dt><dd>nav &middot; modes M E &middot; spacious</dd>
+      <dt>Use</dt><dd>The header for a marketing or commerce site. Wordmark, up to five destinations, one action, and a real disclosure on a phone.</dd>
+      <dt>Avoid</dt><dd>Product UI, which uses top-bar and carries state rather than destinations.</dd>
+      <dt>Variants</dt><dd>actions-right (default) | centred-nav | with-search</dd>
+      <dt>Pairs with</dt><dd>hero-split, hero-editorial, footer-full, cta-sticky not-with: top-bar</dd>
+      
+      <dt>Prevents</dt><dd>A phone header that hides the primary action behind the menu, and a nav whose labels ellipse into each other under a wider font.</dd>
+      <dt>Source</dt><dd><code>skills/sitesmith/blocks/nav/site-bar.html</code></dd>
+    </dl>
+    <div class="stage">
+<style>
+.block-site-bar{background:var(--surface);border-bottom:1px solid var(--line);
+  position:sticky;top:0;z-index:20}
+.block-site-bar__in{display:flex;align-items:center;gap:var(--space-4);
+  max-width:var(--container);margin-inline:auto;
+  padding:var(--space-3) var(--gutter);min-height:var(--space-9)}
+.block-site-bar__mark{display:flex;align-items:center;gap:var(--space-2);
+  font-weight:700;letter-spacing:-.03em;font-size:var(--text-body);text-decoration:none;
+  color:var(--ink);min-width:0;white-space:nowrap}
+.block-site-bar__mark i{width:var(--space-4);height:var(--space-4);flex:none;
+  background:var(--accent);border-radius:var(--radius-inner);font-style:normal}
+
+/* min-width:0 so nowrap labels shrink inside the row instead of spilling the text
+   past the viewport under a wider default font. */
+.block-site-bar__nav{display:flex;gap:var(--space-1);min-width:0;overflow:hidden}
+.block-site-bar__nav a{padding:var(--space-2) var(--space-3);border-radius:var(--radius-inner);
+  text-decoration:none;color:var(--ink-2);font-size:var(--text-small);white-space:nowrap;
+  transition:color var(--motion-fast) var(--ease)}
+.block-site-bar__nav a:hover{color:var(--ink)}
+.block-site-bar__nav a[aria-current=page]{color:var(--ink);font-weight:650;
+  box-shadow:inset 0 -2px 0 var(--accent)}
+
+.block-site-bar__act{margin-left:auto;display:flex;align-items:center;gap:var(--space-3)}
+.block-site-bar__cta{font:inherit;font-size:var(--text-small);font-weight:650;
+  padding:var(--space-2) var(--space-4);border-radius:var(--radius-inner);
+  background:var(--accent);color:var(--on-accent);text-decoration:none;white-space:nowrap}
+.block-site-bar__cta:active{transform:translateY(1px)}
+.block-site-bar :focus-visible{outline:2px solid var(--accent);outline-offset:2px;
+  border-radius:var(--radius-inner)}
+
+/* The disclosure is a real focusable control, and the primary action stays outside
+   it — a phone header that buries the one action behind a menu has hidden the point
+   of the page. */
+.block-site-bar__toggle{position:absolute;opacity:0;width:1px;height:1px}
+.block-site-bar__burger{display:none;align-items:center;gap:var(--space-2);
+  padding:var(--space-2) var(--space-3);border:1px solid var(--line);
+  border-radius:var(--radius-inner);font-size:var(--text-small);color:var(--ink);
+  cursor:pointer;background:var(--surface)}
+.block-site-bar__toggle:focus-visible + .block-site-bar__burger{outline:2px solid var(--accent);
+  outline-offset:2px}
+@media(max-width:760px){
+  .block-site-bar__burger{display:inline-flex}
+  .block-site-bar__nav{display:none;width:100%;flex-direction:column;gap:0;
+    border-top:1px solid var(--line);padding-top:var(--space-2);overflow:visible}
+  .block-site-bar__nav a{padding:var(--space-3) 0}
+  .block-site-bar__nav a[aria-current=page]{box-shadow:inset 2px 0 0 var(--accent);
+    padding-left:var(--space-3)}
+  .block-site-bar__toggle:checked ~ .block-site-bar__nav{display:flex}
+  .block-site-bar__in{flex-wrap:wrap}
+  .block-site-bar__act{margin-left:auto;order:2}
+  .block-site-bar__burger{order:1}
+}
+
+/* variant: centred-nav */
+.block-site-bar--centred-nav .block-site-bar__nav{margin-inline:auto}
+.block-site-bar--centred-nav .block-site-bar__act{margin-left:0}
+/* variant: with-search */
+.block-site-bar__search{display:flex;align-items:center;gap:var(--space-2);
+  border:1px solid var(--line);border-radius:var(--radius-full);
+  padding:var(--space-2) var(--space-4);color:var(--ink-2);font-size:var(--text-small);
+  background:var(--bg);min-width:0}
+</style>
+
+<header class="block-site-bar">
+  <div class="block-site-bar__in">
+    <a class="block-site-bar__mark" href="#blocks"><i aria-hidden="true"></i>Halloway &amp; Fen</a>
+    <input class="block-site-bar__toggle" type="checkbox" id="sb-toggle">
+    <label class="block-site-bar__burger" for="sb-toggle">Menu</label>
+    <nav class="block-site-bar__nav" aria-label="Primary">
+      <a href="#blocks" aria-current="page">Work</a>
+      <a href="#blocks">Services</a>
+      <a href="#blocks">Studio</a>
+      <a href="#blocks">Journal</a>
+    </nav>
+    <div class="block-site-bar__act">
+      <a class="block-site-bar__cta" href="#blocks">Start a project</a>
+    </div>
+  </div>
+</header>
+    </div>
+  </section>
+
+  <section class="spec" aria-labelledby="b1">
+    <h2 id="b1">top-bar</h2>
+    <dl>
+      <dt>Family</dt><dd>nav &middot; modes P &middot; dense</dd>
+      <dt>Use</dt><dd>Product and app shells. A sticky bar carrying brand, sections and one action.</dd>
+      <dt>Avoid</dt><dd>Marketing sites with more than five destinations, they need a real nav.</dd>
+      <dt>Variants</dt><dd>tabs (default) | title-only</dd>
+      <dt>Pairs with</dt><dd>rail-and-pane, scrollable-grid</dd>
+      
+      <dt>Prevents</dt><dd>A +10px document overflow that appears only under a wider system font, because nowrap flex items shrink below their content and let the TEXT spill while no element box reports as overflowing.</dd>
+      <dt>Source</dt><dd><code>skills/sitesmith/blocks/nav/top-bar.html</code></dd>
+    </dl>
+    <div class="stage">
+<style>
+.block-top-bar{background:var(--surface);border-bottom:1px solid var(--line);
+  position:sticky;top:0;z-index:12}
+.block-top-bar__in{display:flex;align-items:center;gap:var(--space-3);
+  padding:var(--space-2) var(--space-4);max-width:var(--container);margin-inline:auto}
+.block-top-bar__mark{display:flex;align-items:center;gap:var(--space-2);font-weight:700;
+  letter-spacing:-.03em;text-decoration:none;color:var(--ink);min-width:0}
+.block-top-bar__mark span{width:18px;height:18px;flex:none;border-radius:var(--radius-inner);
+  background:var(--accent)}
+
+/* min-width:0 plus overflow:hidden is the whole fix. A flex item with
+   white-space:nowrap refuses to shrink below its content width by default, so on
+   a platform whose default font is wider than the developer's the text runs past
+   the container. documentElement.scrollWidth grows; every element box still
+   reports as fitting, so an element-by-element scan finds nothing. */
+.block-top-bar__tabs{display:flex;gap:var(--space-1);min-width:0;overflow:hidden}
+.block-top-bar__tabs a{padding:var(--space-1) var(--space-3);border-radius:var(--radius-inner);
+  text-decoration:none;color:var(--ink-2);font-size:var(--text-small);white-space:nowrap;
+  overflow:hidden;text-overflow:ellipsis;
+  transition:background var(--motion-fast) var(--ease),color var(--motion-fast) var(--ease)}
+.block-top-bar__tabs a:hover{background:var(--surface-2);color:var(--ink)}
+.block-top-bar__tabs a[aria-current=page]{background:var(--accent-soft);color:var(--accent);
+  font-weight:600}
+/* Below the widths where four labels stop fitting, drop them rather than truncate:
+   two ellipsed words say less than one whole one. */
+@media(max-width:820px){.block-top-bar__tabs a:nth-child(n+3){display:none}}
+@media(max-width:600px){.block-top-bar__tabs a:nth-child(n+2){display:none}}
+
+.block-top-bar__act{margin-left:auto;display:flex;align-items:center;gap:var(--space-2);
+  min-width:0}
+.block-top-bar__btn{font:inherit;font-size:var(--text-small);font-weight:600;
+  padding:var(--space-2) var(--space-3);border-radius:var(--radius-inner);cursor:pointer;
+  border:1px solid transparent;background:var(--accent);color:var(--on-accent);
+  white-space:nowrap}
+.block-top-bar__btn:active{transform:translateY(1px)}
+.block-top-bar :focus-visible{outline:2px solid var(--accent);outline-offset:2px;
+  border-radius:var(--radius-inner)}
+</style>
+
+<header class="block-top-bar">
+  <div class="block-top-bar__in">
+    <a class="block-top-bar__mark" href="#blocks"><span aria-hidden="true"></span>Ledger</a>
+    <nav class="block-top-bar__tabs" aria-label="Sections">
+      <a href="#blocks" aria-current="page">Reconciliation</a>
+      <a href="#blocks">Accounts</a>
+      <a href="#blocks">Rules</a>
+      <a href="#blocks">Exports</a>
+    </nav>
+    <div class="block-top-bar__act">
+      <button class="block-top-bar__btn" type="button">Auto-match</button>
+    </div>
+  </div>
+</header>
+    </div>
+  </section>
+
+  <section class="spec" aria-labelledby="b2">
+    <h2 id="b2">hero-split</h2>
+    <dl>
+      <dt>Family</dt><dd>hero &middot; modes M E &middot; spacious</dd>
+      <dt>Use</dt><dd>The default marketing hero. Statement left, one asset right, action visible without scrolling.</dd>
+      <dt>Avoid</dt><dd>Product pages, where the gallery and purchase panel own the first screen.</dd>
+      <dt>Variants</dt><dd>media-right (default) | media-left | media-stacked</dd>
+      <dt>Pairs with</dt><dd>site-bar, proof-logos, content-benefits, cta-band not-with: hero-editorial</dd>
+      
+      <dt>Prevents</dt><dd>A headline that pushes the primary action below the fold, and an asset column that collapses under the text instead of beside it at 768.</dd>
+      <dt>Source</dt><dd><code>skills/sitesmith/blocks/hero/split.html</code></dd>
+    </dl>
+    <div class="stage">
+<style>
+.block-hero-split{max-width:var(--container);margin-inline:auto;
+  padding:var(--space-8) var(--gutter)}
+.block-hero-split__grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);
+  gap:var(--space-7);align-items:center}
+@media(max-width:860px){
+  .block-hero-split__grid{grid-template-columns:minmax(0,1fr);gap:var(--space-5)}
+}
+.block-hero-split__eyebrow{font-size:var(--text-small);letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink-3);font-weight:650;margin:0}
+/* Two lines at 1440 is the budget. A third line is a subhead pretending to be a
+   headline, and it is what pushes the action off the first screen. */
+.block-hero-split h3{font-size:var(--text-h1);line-height:var(--leading-tight);
+  letter-spacing:-.03em;margin:var(--space-3) 0 0;max-width:18ch}
+.block-hero-split__lede{font-size:var(--text-lead);color:var(--ink-2);
+  margin:var(--space-4) 0 0;max-width:var(--measure)}
+.block-hero-split__act{display:flex;gap:var(--space-3);flex-wrap:wrap;
+  margin-top:var(--space-5)}
+.block-hero-split__btn{font:inherit;font-weight:650;text-decoration:none;
+  padding:var(--space-3) var(--space-5);border-radius:var(--radius-inner);
+  background:var(--accent);color:var(--on-accent);border:1px solid var(--accent)}
+.block-hero-split__btn--quiet{background:transparent;color:var(--ink);
+  border-color:var(--line)}
+.block-hero-split__btn:active{transform:translateY(1px)}
+.block-hero-split__note{margin:var(--space-4) 0 0;font-size:var(--text-small);
+  color:var(--ink-3)}
+.block-hero-split :focus-visible{outline:2px solid var(--accent);outline-offset:2px;
+  border-radius:var(--radius-inner)}
+
+/* The asset. A labelled placeholder is a legitimate answer and says what belongs
+   here; an unlabelled grey rectangle claims to be content. */
+.block-hero-split__media{border:1px solid var(--line);border-radius:var(--radius-outer);
+  background:var(--surface-2);aspect-ratio:4/3;display:grid;place-items:center;
+  padding:var(--space-5);text-align:center;min-width:0}
+.block-hero-split__media p{margin:0;color:var(--ink-3);font-size:var(--text-small);
+  max-width:34ch}
+
+/* variants */
+.block-hero-split--media-left .block-hero-split__media{order:-1}
+@media(min-width:861px){
+  .block-hero-split--media-stacked .block-hero-split__grid{grid-template-columns:minmax(0,1fr)}
+}
+</style>
+
+<section class="block-hero-split" aria-labelledby="hs-h">
+  <div class="block-hero-split__grid">
+    <div>
+      <p class="block-hero-split__eyebrow">Flat roofing, Sheffield</p>
+      <h3 id="hs-h">The leak is rarely where the stain is.</h3>
+      <p class="block-hero-split__lede">
+        We survey the whole deck before quoting, because the third repair usually costs more
+        than doing it once. Fixed price after the survey, and the survey is free within ten
+        miles.
+      </p>
+      <div class="block-hero-split__act">
+        <a class="block-hero-split__btn" href="#blocks">Book a survey</a>
+        <a class="block-hero-split__btn block-hero-split__btn--quiet" href="#blocks">See recent work</a>
+      </div>
+      <p class="block-hero-split__note">Usually on site within four working days.</p>
+    </div>
+    <figure class="block-hero-split__media">
+      <p>Image slot: a completed flat roof, three-quarter view, 4:3, daylight. Not yet shot.</p>
+    </figure>
+  </div>
+</section>
+    </div>
+  </section>
+
+  <section class="spec" aria-labelledby="b3">
+    <h2 id="b3">benefits</h2>
+    <dl>
+      <dt>Family</dt><dd>content &middot; modes M &middot; spacious</dd>
+      <dt>Use</dt><dd>The three or four things that decide whether this is for you, after the hero.</dd>
+      <dt>Avoid</dt><dd>Feature lists. A benefit says what changes for the reader; a feature says what the product contains.</dd>
+      <dt>Variants</dt><dd>ruled-rows (default) | weighted-pair | numbered</dd>
+      <dt>Pairs with</dt><dd>hero-split, proof-testimonial, cta-band not-with: services-grid</dd>
+      
+      <dt>Prevents</dt><dd>Three equal cards with an icon each, which is the shape that makes marketing pages interchangeable and says nothing about which item matters most.</dd>
+      <dt>Source</dt><dd><code>skills/sitesmith/blocks/content/benefits.html</code></dd>
+    </dl>
+    <div class="stage">
+<style>
+.block-benefits{max-width:var(--container);margin-inline:auto;
+  padding:var(--space-8) var(--gutter)}
+.block-benefits__head{max-width:var(--measure);margin-bottom:var(--space-7)}
+.block-benefits h3{font-size:var(--text-h2);line-height:var(--leading-tight);
+  letter-spacing:-.025em;margin:0}
+.block-benefits__head p{margin:var(--space-3) 0 0;color:var(--ink-2)}
+
+/* Ruled rows, not cards. Items in a set are peers; a box around each one adds a
+   border and takes away the comparison. */
+.block-benefits__list{margin:0;padding:0;list-style:none;border-top:1px solid var(--line)}
+.block-benefits__list > li{display:grid;
+  grid-template-columns:minmax(0,7rem) minmax(0,1fr) minmax(0,1.2fr);
+  gap:var(--space-3) var(--space-5);padding:var(--space-5) 0;
+  border-bottom:1px solid var(--line)}
+@media(max-width:820px){
+  .block-benefits__list > li{grid-template-columns:minmax(0,1fr)}
+}
+.block-benefits__label{font-size:var(--text-micro);letter-spacing:.11em;
+  text-transform:uppercase;color:var(--ink-3);font-weight:700;padding-top:var(--space-1)}
+.block-benefits__list h4{margin:0;font-size:var(--text-h3);letter-spacing:-.015em;
+  line-height:var(--leading-tight)}
+.block-benefits__list p{margin:0;color:var(--ink-2);font-size:var(--text-body);
+  max-width:var(--measure)}
+.block-benefits__proof{margin:var(--space-2) 0 0;font-size:var(--text-small);
+  color:var(--ink-3)}
+
+/* variant: weighted-pair — the first item gets the room, because in most briefs one
+   of the three is actually the reason anyone is reading. */
+.block-benefits--weighted-pair .block-benefits__list > li:first-child h4{
+  font-size:var(--text-h2)}
+.block-benefits--weighted-pair .block-benefits__list > li:first-child{
+  padding-block:var(--space-7)}
+/* variant: numbered */
+.block-benefits--numbered .block-benefits__list{counter-reset:b}
+.block-benefits--numbered .block-benefits__label{counter-increment:b}
+.block-benefits--numbered .block-benefits__label::before{content:counter(b,decimal-leading-zero) " ";
+  color:var(--accent)}
+</style>
+
+<section class="block-benefits" aria-labelledby="bf-h">
+  <div class="block-benefits__head">
+    <h3 id="bf-h">What a survey actually changes</h3>
+    <p>
+      Three things, in the order they matter to the person paying. Not a feature list: every
+      line below is something different about your week, not something inside the service.
+    </p>
+  </div>
+  <ul class="block-benefits__list">
+    <li>
+      <span class="block-benefits__label">Cost</span>
+      <h4>One price, agreed before we start</h4>
+      <div>
+        <p>
+          The survey finds what the quote has to cover, so the number you accept is the
+          number you pay. Variations need your signature, not a phone call afterwards.
+        </p>
+        <p class="block-benefits__proof">Fixed-price on 94 of the last 100 jobs.</p>
+      </div>
+    </li>
+    <li>
+      <span class="block-benefits__label">Time</span>
+      <h4>Two days on site, not two weeks of visits</h4>
+      <div>
+        <p>
+          Repairs get scheduled as one block once materials are on site. You lose access to
+          the roof for a known window rather than an open one.
+        </p>
+      </div>
+    </li>
+    <li>
+      <span class="block-benefits__label">After</span>
+      <h4>A written record of what was found</h4>
+      <div>
+        <p>
+          Photographs of the deck before it was covered, the moisture readings, and what we
+          expect to need attention in five years. Useful when you sell.
+        </p>
+      </div>
+    </li>
+  </ul>
+</section>
+    </div>
+  </section>
+
+  <section class="spec" aria-labelledby="b4">
+    <h2 id="b4">testimonial</h2>
+    <dl>
+      <dt>Family</dt><dd>proof &middot; modes M E &middot; spacious</dd>
+      <dt>Use</dt><dd>One named customer saying something specific. The strongest proof there is, and the only one worth a section of its own.</dd>
+      <dt>Avoid</dt><dd>Any page where you do not have a real quotation. An invented testimonial is the single clearest tell that a machine wrote the page.</dd>
+      <dt>Variants</dt><dd>single (default) | pair | with-figure</dd>
+      <dt>Pairs with</dt><dd>benefits, proof-logos, cta-band not-with: review-summary</dd>
+      
+      <dt>Prevents</dt><dd>A carousel of three interchangeable quotations attributed to nobody in particular, which reads as filler even when the quotations are real.</dd>
+      <dt>Source</dt><dd><code>skills/sitesmith/blocks/proof/testimonial.html</code></dd>
+    </dl>
+    <div class="stage">
+<style>
+.block-testimonial{max-width:var(--container);margin-inline:auto;
+  padding:var(--space-8) var(--gutter)}
+.block-testimonial__grid{display:grid;gap:var(--space-5)}
+.block-testimonial--pair .block-testimonial__grid{
+  grid-template-columns:repeat(auto-fit,minmax(min(100%,22rem),1fr))}
+
+.block-testimonial figure{margin:0;border-left:2px solid var(--accent);
+  padding-left:var(--space-5);max-width:var(--measure)}
+/* Three lines is the budget. Past that nobody reads it, and a quotation nobody reads
+   proves nothing. */
+.block-testimonial blockquote{margin:0;font-size:var(--text-lead);
+  color:var(--ink);text-wrap:pretty}
+.block-testimonial figcaption{margin-top:var(--space-4);display:flex;
+  align-items:center;gap:var(--space-3);font-size:var(--text-small);color:var(--ink-2)}
+.block-testimonial figcaption b{color:var(--ink);font-weight:650;display:block}
+.block-testimonial__avatar{width:var(--space-7);height:var(--space-7);flex:none;
+  border-radius:var(--radius-full);background:var(--surface);border:1px solid var(--line);
+  display:grid;place-items:center;font-size:var(--text-small);color:var(--ink-3)}
+
+/* variant: with-figure — one number beside the quotation, sourced. A number without a
+   source is the thing this block exists to avoid. */
+.block-testimonial__figure{border-top:1px solid var(--line);margin-top:var(--space-5);
+  padding-top:var(--space-4)}
+.block-testimonial__figure b{display:block;font-size:var(--text-h3);letter-spacing:-.02em}
+.block-testimonial__figure span{font-size:var(--text-small);color:var(--ink-3)}
+</style>
+
+<section class="block-testimonial block-testimonial--pair" aria-labelledby="tm-h">
+  <h3 id="tm-h" class="block-testimonial__vh" hidden>What customers said</h3>
+  <div class="block-testimonial__grid">
+    <figure>
+      <blockquote>
+        They found standing water under the insulation that two previous quotes had missed,
+        and told us before the price rather than after it.
+      </blockquote>
+      <figcaption>
+        <span class="block-testimonial__avatar" aria-hidden="true">RM</span>
+        <span><b>Rachel Mbeki</b>Facilities lead, Cutlers Court, Sheffield</span>
+      </figcaption>
+      <div class="block-testimonial__figure">
+        <b>Nine years</b>
+        <span>since the last callout on that roof. Measured from the job record, March 2017.</span>
+      </div>
+    </figure>
+    <figure>
+      <blockquote>
+        The written record was what sold the building. The buyer's surveyor stopped asking
+        questions once he had the moisture readings.
+      </blockquote>
+      <figcaption>
+        <span class="block-testimonial__avatar" aria-hidden="true">DO</span>
+        <span><b>Daniel Oyelaran</b>Owner, Ravensworth Works</span>
+      </figcaption>
+    </figure>
+  </div>
+</section>
+    </div>
+  </section>
+
+  <section class="spec" aria-labelledby="b5">
+    <h2 id="b5">error-summary</h2>
+    <dl>
+      <dt>Family</dt><dd>form &middot; modes M E P &middot; any</dd>
+      <dt>Use</dt><dd>Any form that can fail validation on more than one field.</dd>
+      <dt>Avoid</dt><dd>A single-field form, put the message on the field and stop.</dd>
+      <dt>Variants</dt><dd>summary-and-fields (default) | summary-only</dd>
+      <dt>Pairs with</dt><dd>multi-step shell, cta-band</dd>
+      
+      <dt>Prevents</dt><dd>Errors a screen-reader user meets one field at a time with no way back to the first; a field whose message is not wired to it by aria-describedby; and a focus ring that differs per control, so it has to be relearned.</dd>
+      <dt>Source</dt><dd><code>skills/sitesmith/blocks/form/error-summary.html</code></dd>
+    </dl>
+    <div class="stage">
+<style>
+/* The summary comes first in the document, so it is read before any input, and
+   every entry is a link to the control that failed. */
+.block-error-summary{border:3px solid var(--bad);padding:var(--space-4) var(--space-5);
+  margin-bottom:var(--space-6);background:var(--surface)}
+.block-error-summary h3{margin:0 0 var(--space-2);color:var(--bad);font-size:var(--text-h3)}
+.block-error-summary ul{margin:0;padding-left:var(--space-4)}
+.block-error-summary li{margin-top:var(--space-1)}
+.block-error-summary a{color:var(--bad);font-weight:700}
+
+.block-field{margin-bottom:var(--space-5);max-width:var(--measure)}
+.block-field--invalid{border-left:3px solid var(--bad);padding-left:var(--space-4)}
+.block-field label{display:block;font-weight:700}
+.block-field .hint{color:var(--ink-2);font-size:var(--text-small);margin:var(--space-1) 0 0}
+.block-field .msg{color:var(--bad);font-weight:700;margin:var(--space-2) 0 0;
+  font-size:var(--text-small);display:flex;gap:var(--space-1)}
+.block-field .msg::before{content:"Error:";flex:none}
+.block-field input,
+.block-field textarea{font:inherit;width:100%;padding:var(--space-2) var(--space-3);
+  margin-top:var(--space-2);background:var(--surface);color:var(--ink);
+  border:2px solid var(--ink);border-radius:var(--radius-inner)}
+.block-field--invalid input{border-color:var(--bad)}
+.block-field input:disabled{background:var(--surface-2);color:var(--ink-2);
+  border-color:var(--line);cursor:not-allowed}
+/* One focus treatment, on every control in the project. */
+.block-error-summary a:focus-visible,
+.block-field :focus-visible{outline:2px solid var(--accent);outline-offset:2px;
+  border-radius:var(--radius-inner)}
+</style>
+
+<div class="block-error-summary" role="alert" aria-labelledby="es-h">
+  <h3 id="es-h">There is a problem</h3>
+  <ul>
+    <li><a href="#es-cert">Enter the certificate number shown on your schedule</a></li>
+    <li><a href="#es-date">Enter a start date in the future</a></li>
+  </ul>
+</div>
+
+<div class="block-field block-field--invalid">
+  <label for="es-cert">Certificate number</label>
+  <p class="hint" id="es-cert-hint">Printed top right of the schedule, for example PL-2291045.</p>
+  <p class="msg" id="es-cert-err">Enter the certificate number shown on your schedule</p>
+  <input type="text" id="es-cert" name="cert" autocomplete="off"
+         aria-describedby="es-cert-hint es-cert-err" aria-invalid="true">
+</div>
+
+<div class="block-field block-field--invalid">
+  <label for="es-date">Start date</label>
+  <p class="hint" id="es-date-hint">The first day you intend to trade.</p>
+  <p class="msg" id="es-date-err">Enter a start date in the future</p>
+  <input type="text" id="es-date" name="start" inputmode="numeric" value="14 03 2019"
+         aria-describedby="es-date-hint es-date-err" aria-invalid="true">
+</div>
+
+<div class="block-field">
+  <label for="es-ref">Reference</label>
+  <p class="hint" id="es-ref-hint">Assigned when the application was created. You cannot change it.</p>
+  <input type="text" id="es-ref" name="ref" value="PL/2026/0447" disabled
+         aria-describedby="es-ref-hint">
+</div>
+    </div>
+  </section>
+
+  <section class="spec" aria-labelledby="b6">
+    <h2 id="b6">cta-band</h2>
+    <dl>
+      <dt>Family</dt><dd>cta &middot; modes M E &middot; spacious</dd>
+      <dt>Use</dt><dd>The end of the argument. One action, restated once the case has been made.</dd>
+      <dt>Avoid</dt><dd>Repeating it a third time on a short page. Three appearances is the maximum and two is usually right.</dd>
+      <dt>Variants</dt><dd>centred (default) | split | quiet-rule</dd>
+      <dt>Pairs with</dt><dd>benefits, testimonial, footer-full not-with: cta-band</dd>
+      
+      <dt>Prevents</dt><dd>Two calls to action with the same intent on one page, which is a page that could not decide; and a band whose label describes the mechanism rather than the outcome.</dd>
+      <dt>Source</dt><dd><code>skills/sitesmith/blocks/cta/band.html</code></dd>
+    </dl>
+    <div class="stage">
+<style>
+.block-cta-band{max-width:var(--container);margin-inline:auto;
+  padding:var(--space-7) var(--gutter) var(--space-8)}
+.block-cta-band__in{background:var(--surface-2);border:1px solid var(--line);
+  border-radius:var(--radius-outer);padding:var(--space-7) var(--space-5);
+  text-align:center}
+.block-cta-band h3{margin:0;font-size:var(--text-h2);letter-spacing:-.025em;
+  line-height:var(--leading-tight);max-width:20ch;margin-inline:auto}
+.block-cta-band p{margin:var(--space-3) auto 0;color:var(--ink-2);
+  max-width:var(--measure)}
+.block-cta-band__act{margin-top:var(--space-5);display:inline-flex;gap:var(--space-3);
+  flex-wrap:wrap;justify-content:center}
+/* The label states the outcome, not the mechanism. "Book a survey", never "Submit". */
+.block-cta-band__btn{font:inherit;font-weight:650;text-decoration:none;
+  padding:var(--space-3) var(--space-5);border-radius:var(--radius-inner);
+  background:var(--accent);color:var(--on-accent);border:1px solid var(--accent)}
+.block-cta-band__btn--quiet{background:transparent;color:var(--ink);border-color:var(--line)}
+.block-cta-band__btn:active{transform:translateY(1px)}
+.block-cta-band__note{margin-top:var(--space-4);font-size:var(--text-small);
+  color:var(--ink-2)}
+.block-cta-band :focus-visible{outline:2px solid var(--accent);outline-offset:2px;
+  border-radius:var(--radius-inner)}
+
+/* variant: split — copy left, action right, for pages that end on a long section and
+   need the band to read as a continuation rather than a new page. */
+.block-cta-band--split .block-cta-band__in{display:grid;
+  grid-template-columns:minmax(0,1fr) auto;gap:var(--space-5);align-items:center;
+  text-align:left}
+.block-cta-band--split h3,
+.block-cta-band--split p{margin-inline:0}
+@media(max-width:720px){
+  .block-cta-band--split .block-cta-band__in{grid-template-columns:minmax(0,1fr)}
+}
+/* variant: quiet-rule — no panel, a rule above. For editorial pages where a filled
+   band would be the loudest thing on a deliberately quiet page. */
+.block-cta-band--quiet-rule .block-cta-band__in{background:transparent;border:0;
+  border-top:2px solid var(--ink);border-radius:0;padding-inline:0}
+</style>
+
+<section class="block-cta-band" aria-labelledby="cb-h">
+  <div class="block-cta-band__in">
+    <h3 id="cb-h">The survey is free within ten miles of Sheffield.</h3>
+    <p>
+      An hour on the roof, a written finding, and a fixed price if you want the work. No
+      obligation and no follow-up calls.
+    </p>
+    <div class="block-cta-band__act">
+      <a class="block-cta-band__btn" href="#blocks">Book a survey</a>
+      <a class="block-cta-band__btn block-cta-band__btn--quiet" href="#blocks">Call 0114 496 0182</a>
+    </div>
+    <p class="block-cta-band__note">Monday to Thursday, 7am to 5pm. Emergencies answered at any hour.</p>
+  </div>
+</section>
+    </div>
+  </section>
+
+  <section class="spec" aria-labelledby="b7">
+    <h2 id="b7">empty-state</h2>
+    <dl>
+      <dt>Family</dt><dd>data &middot; modes M E P &middot; any</dd>
+      <dt>Use</dt><dd>Any list, table or panel that can legitimately have nothing in it.</dd>
+      <dt>Avoid</dt><dd>A loading state, that is a different component and a different message.</dd>
+      <dt>Variants</dt><dd>with-actions (default) | message-only</dd>
+      <dt>Pairs with</dt><dd>scrollable-grid, product-grid</dd>
+      
+      <dt>Prevents</dt><dd>The state every generated page forgets, and the one every real product hits on day one. Also the empty state that says "No data" and offers no way out, which is a dead end wearing a sentence.</dd>
+      <dt>Source</dt><dd><code>skills/sitesmith/blocks/feedback/empty-state.html</code></dd>
+    </dl>
+    <div class="stage">
+<style>
+.block-empty-state{border:1px dashed var(--line-2);border-radius:var(--radius-outer);
+  background:var(--surface);padding:var(--space-6) var(--space-4);text-align:center}
+.block-empty-state__glyph{width:44px;height:44px;margin:0 auto var(--space-3);
+  border-radius:var(--radius-inner);background:var(--surface-2);
+  border:1px solid var(--line)}
+.block-empty-state h3{margin:0;font-size:var(--text-body);color:var(--ink)}
+/* The body says why it is empty and what would fill it. "No results" says neither. */
+.block-empty-state p{margin:var(--space-2) auto 0;color:var(--ink-2);
+  font-size:var(--text-small);max-width:42ch}
+.block-empty-state__act{margin-top:var(--space-4);display:inline-flex;gap:var(--space-2);
+  flex-wrap:wrap;justify-content:center}
+.block-empty-state button{font:inherit;font-size:var(--text-small);font-weight:600;
+  padding:var(--space-2) var(--space-4);border-radius:var(--radius-inner);cursor:pointer;
+  border:1px solid var(--line-2);background:var(--surface);color:var(--ink);
+  transition:border-color var(--motion-fast) var(--ease)}
+.block-empty-state button:hover{border-color:var(--ink-2)}
+.block-empty-state button.primary{background:var(--accent);border-color:var(--accent);
+  color:var(--on-accent)}
+.block-empty-state button:active{transform:translateY(1px)}
+.block-empty-state :focus-visible{outline:2px solid var(--accent);outline-offset:2px;
+  border-radius:var(--radius-inner)}
+</style>
+
+<section class="block-empty-state" aria-labelledby="es2-h">
+  <div class="block-empty-state__glyph" aria-hidden="true"></div>
+  <h3 id="es2-h">No rules matched this week</h3>
+  <p>
+    Every entry in the queue was routed by hand. One rule for Northgate would have cleared
+    61 of them.
+  </p>
+  <div class="block-empty-state__act">
+    <button class="primary" type="button">Draft a rule from these rows</button>
+    <button type="button">See how rules work</button>
+  </div>
+</section>
+    </div>
+  </section>
+
+  <section class="spec" aria-labelledby="b8">
+    <h2 id="b8">rail-and-pane</h2>
+    <dl>
+      <dt>Family</dt><dd>data &middot; modes P &middot; dense</dd>
+      <dt>Use</dt><dd>A list you pick from beside the thing you picked. Queues, inboxes, docs, settings.</dd>
+      <dt>Avoid</dt><dd>One list with no detail, that is a page, not a split.</dd>
+      <dt>Variants</dt><dd>rail-left (default) | rail-right</dd>
+      <dt>Pairs with</dt><dd>scrollable-grid, nav-bar</dd>
+      
+      <dt>Prevents</dt><dd>A 1fr track that grows to its widest child instead of letting it scroll, which put +250px of document past a 375px screen; and a rail given</dd>
+      <dt>Source</dt><dd><code>skills/sitesmith/blocks/layout/rail-and-pane.html</code></dd>
+    </dl>
+    <div class="stage">
+<style>
+/* minmax(0,1fr), never plain 1fr. A 1fr track resolves its minimum to auto, so a
+   wide table inside widens the track and the overflow lands on the document. */
+.block-rail-and-pane{display:grid;grid-template-columns:280px minmax(0,1fr);
+  align-items:start;border:1px solid var(--line);border-radius:var(--radius-outer);
+  overflow:hidden;background:var(--surface)}
+/* The rail's fill is painted by the grid, not by the rail. Giving the rail
+   height:100vh instead pins the whole page to one viewport even when the list is
+   four items long. */
+@media(min-width:721px){
+  .block-rail-and-pane{background:linear-gradient(to right,var(--surface-2) 0 279px,
+    var(--line) 279px 280px,var(--surface) 280px)}
+}
+@media(max-width:720px){.block-rail-and-pane{grid-template-columns:minmax(0,1fr)}}
+
+.block-rail-and-pane__rail{align-self:start}
+@media(max-width:720px){
+  .block-rail-and-pane__rail{background:var(--surface-2);
+    border-bottom:1px solid var(--line)}
+}
+.block-rail-and-pane__rail h3{margin:0;padding:var(--space-3) var(--space-4);
+  font-size:var(--text-micro);letter-spacing:.11em;text-transform:uppercase;
+  color:var(--ink-3);border-bottom:1px solid var(--line)}
+.block-rail-and-pane__rail ul{margin:0;padding:0;list-style:none}
+.block-rail-and-pane__rail a{display:grid;grid-template-columns:minmax(0,1fr) auto;
+  gap:var(--space-1) var(--space-3);padding:var(--space-3) var(--space-4);
+  border-bottom:1px solid var(--line);text-decoration:none;color:var(--ink);
+  font-size:var(--text-small)}
+.block-rail-and-pane__rail a:hover{background:var(--surface)}
+.block-rail-and-pane__rail a[aria-current=true]{background:var(--accent-soft);
+  box-shadow:inset 3px 0 0 var(--accent)}
+.block-rail-and-pane__rail b{font-family:var(--font-mono);font-weight:600}
+.block-rail-and-pane__rail em{grid-column:1;font-style:normal;color:var(--ink-2);
+  font-size:var(--text-micro);min-width:0;overflow:hidden;text-overflow:ellipsis;
+  white-space:nowrap}
+.block-rail-and-pane__rail time{grid-column:2;grid-row:1;color:var(--ink-3);
+  font-family:var(--font-mono);font-size:var(--text-micro)}
+
+.block-rail-and-pane__pane{padding:var(--space-4);min-width:0}
+.block-rail-and-pane__pane h3{margin:0 0 var(--space-2);font-size:var(--text-h3)}
+.block-rail-and-pane__pane p{margin:0;color:var(--ink-2);font-size:var(--text-small);
+  max-width:var(--measure)}
+.block-rail-and-pane :focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+</style>
+
+<div class="block-rail-and-pane">
+  <nav class="block-rail-and-pane__rail" aria-labelledby="rp-h">
+    <h3 id="rp-h">Inbound today</h3>
+    <ul>
+      <li><a href="#blocks" aria-current="true"><b>DN-40219</b><time>07:12</time>
+        <em>Tavistock Paper Mills, 4 pallets</em></a></li>
+      <li><a href="#blocks"><b>DN-40221</b><time>07:40</time>
+        <em>Kelso Fixings, seal broken, held</em></a></li>
+      <li><a href="#blocks"><b>DN-40224</b><time>08:05</time>
+        <em>Brennand Adhesives, 1 pallet</em></a></li>
+      <li><a href="#blocks"><b>DN-40225</b><time>09:15</time>
+        <em>Orrell Timber, 9 pallets, tail-lift</em></a></li>
+    </ul>
+  </nav>
+  <div class="block-rail-and-pane__pane">
+    <h3>DN-40219 &middot; Tavistock Paper Mills</h3>
+    <p>
+      Trailer TVK-118 on Bay 3 since 07:12. The pane holds whatever the rail selected;
+      it is the column that must be minmax(0,1fr), because it is the one that will one day
+      contain something wider than itself.
+    </p>
+  </div>
+</div>
+    </div>
+  </section>
+
+  <section class="spec" aria-labelledby="b9">
+    <h2 id="b9">scrollable-grid</h2>
+    <dl>
+      <dt>Family</dt><dd>data &middot; modes P &middot; dense</dd>
       <dt>Use</dt><dd>A table wider than the column it sits in. Any admin, report or queue.</dd>
       <dt>Avoid</dt><dd>Fewer than five rows, or content that reflows happily, use a definition list.</dd>
+      <dt>Variants</dt><dd>default | with-footer-totals | selectable-rows</dd>
+      <dt>Pairs with</dt><dd>rail-and-pane, empty-state</dd>
+      
       <dt>Prevents</dt><dd>A horizontal scroller no keyboard can reach (axe: scrollable-region-focusable); visually-hidden labels escaping the clip and setting document width from inside the grid; a parent 1fr track widening instead of the child scrolling.</dd>
       <dt>Source</dt><dd><code>skills/sitesmith/blocks/data/scrollable-grid.html</code></dd>
     </dl>
@@ -178,268 +879,118 @@ a{color:var(--accent)}
     </div>
   </section>
 
-  <section class="spec" aria-labelledby="b1">
-    <h2 id="b1">empty-state</h2>
+  <section class="spec" aria-labelledby="b10">
+    <h2 id="b10">footer-full</h2>
     <dl>
-      <dt>Use</dt><dd>Any list, table or panel that can legitimately have nothing in it.</dd>
-      <dt>Avoid</dt><dd>A loading state, that is a different component and a different message.</dd>
-      <dt>Prevents</dt><dd>The state every generated page forgets, and the one every real product hits on day one. Also the empty state that says "No data" and offers no way out, which is a dead end wearing a sentence.</dd>
-      <dt>Source</dt><dd><code>skills/sitesmith/blocks/feedback/empty-state.html</code></dd>
+      <dt>Family</dt><dd>footer &middot; modes M E P &middot; spacious</dd>
+      <dt>Use</dt><dd>The site footer. Navigation the header could not hold, the legal and contact facts, and nothing else.</dd>
+      <dt>Avoid</dt><dd>Product UI screens with a fixed status bar, which use footer-compact.</dd>
+      <dt>Variants</dt><dd>four-column (default) | two-column | with-newsletter</dd>
+      <dt>Pairs with</dt><dd>cta-band, site-bar not-with: footer-compact</dd>
+      
+      <dt>Prevents</dt><dd>A footer that repeats the header verbatim and adds nothing, and a legal line hidden at a size nobody can read.</dd>
+      <dt>Source</dt><dd><code>skills/sitesmith/blocks/footer/full.html</code></dd>
     </dl>
     <div class="stage">
 <style>
-.block-empty-state{border:1px dashed var(--line-2);border-radius:var(--radius-outer);
-  background:var(--surface);padding:var(--space-6) var(--space-4);text-align:center}
-.block-empty-state__glyph{width:44px;height:44px;margin:0 auto var(--space-3);
-  border-radius:var(--radius-inner);background:var(--surface-2);
-  border:1px solid var(--line)}
-.block-empty-state h3{margin:0;font-size:var(--text-body);color:var(--ink)}
-/* The body says why it is empty and what would fill it. "No results" says neither. */
-.block-empty-state p{margin:var(--space-2) auto 0;color:var(--ink-2);
-  font-size:var(--text-small);max-width:42ch}
-.block-empty-state__act{margin-top:var(--space-4);display:inline-flex;gap:var(--space-2);
-  flex-wrap:wrap;justify-content:center}
-.block-empty-state button{font:inherit;font-size:var(--text-small);font-weight:600;
-  padding:var(--space-2) var(--space-4);border-radius:var(--radius-inner);cursor:pointer;
-  border:1px solid var(--line-2);background:var(--surface);color:var(--ink);
-  transition:border-color var(--motion-fast) var(--ease)}
-.block-empty-state button:hover{border-color:var(--ink-2)}
-.block-empty-state button.primary{background:var(--accent);border-color:var(--accent);
-  color:var(--on-accent)}
-.block-empty-state button:active{transform:translateY(1px)}
-.block-empty-state :focus-visible{outline:2px solid var(--accent);outline-offset:2px;
-  border-radius:var(--radius-inner)}
-</style>
-
-<section class="block-empty-state" aria-labelledby="es2-h">
-  <div class="block-empty-state__glyph" aria-hidden="true"></div>
-  <h3 id="es2-h">No rules matched this week</h3>
-  <p>
-    Every entry in the queue was routed by hand. One rule for Northgate would have cleared
-    61 of them.
-  </p>
-  <div class="block-empty-state__act">
-    <button class="primary" type="button">Draft a rule from these rows</button>
-    <button type="button">See how rules work</button>
-  </div>
-</section>
-    </div>
-  </section>
-
-  <section class="spec" aria-labelledby="b2">
-    <h2 id="b2">error-summary</h2>
-    <dl>
-      <dt>Use</dt><dd>Any form that can fail validation on more than one field.</dd>
-      <dt>Avoid</dt><dd>A single-field form, put the message on the field and stop.</dd>
-      <dt>Prevents</dt><dd>Errors a screen-reader user meets one field at a time with no way back to the first; a field whose message is not wired to it by aria-describedby; and a focus ring that differs per control, so it has to be relearned.</dd>
-      <dt>Source</dt><dd><code>skills/sitesmith/blocks/form/error-summary.html</code></dd>
-    </dl>
-    <div class="stage">
-<style>
-/* The summary comes first in the document, so it is read before any input, and
-   every entry is a link to the control that failed. */
-.block-error-summary{border:3px solid var(--bad);padding:var(--space-4) var(--space-5);
-  margin-bottom:var(--space-6);background:var(--surface)}
-.block-error-summary h3{margin:0 0 var(--space-2);color:var(--bad);font-size:var(--text-h3)}
-.block-error-summary ul{margin:0;padding-left:var(--space-4)}
-.block-error-summary li{margin-top:var(--space-1)}
-.block-error-summary a{color:var(--bad);font-weight:700}
-
-.block-field{margin-bottom:var(--space-5);max-width:var(--measure)}
-.block-field--invalid{border-left:3px solid var(--bad);padding-left:var(--space-4)}
-.block-field label{display:block;font-weight:700}
-.block-field .hint{color:var(--ink-2);font-size:var(--text-small);margin:var(--space-1) 0 0}
-.block-field .msg{color:var(--bad);font-weight:700;margin:var(--space-2) 0 0;
-  font-size:var(--text-small);display:flex;gap:var(--space-1)}
-.block-field .msg::before{content:"Error:";flex:none}
-.block-field input,
-.block-field textarea{font:inherit;width:100%;padding:var(--space-2) var(--space-3);
-  margin-top:var(--space-2);background:var(--surface);color:var(--ink);
-  border:2px solid var(--ink);border-radius:var(--radius-inner)}
-.block-field--invalid input{border-color:var(--bad)}
-.block-field input:disabled{background:var(--surface-2);color:var(--ink-2);
-  border-color:var(--line);cursor:not-allowed}
-/* One focus treatment, on every control in the project. */
-.block-error-summary a:focus-visible,
-.block-field :focus-visible{outline:2px solid var(--accent);outline-offset:2px;
-  border-radius:var(--radius-inner)}
-</style>
-
-<div class="block-error-summary" role="alert" aria-labelledby="es-h">
-  <h3 id="es-h">There is a problem</h3>
-  <ul>
-    <li><a href="#es-cert">Enter the certificate number shown on your schedule</a></li>
-    <li><a href="#es-date">Enter a start date in the future</a></li>
-  </ul>
-</div>
-
-<div class="block-field block-field--invalid">
-  <label for="es-cert">Certificate number</label>
-  <p class="hint" id="es-cert-hint">Printed top right of the schedule, for example PL-2291045.</p>
-  <p class="msg" id="es-cert-err">Enter the certificate number shown on your schedule</p>
-  <input type="text" id="es-cert" name="cert" autocomplete="off"
-         aria-describedby="es-cert-hint es-cert-err" aria-invalid="true">
-</div>
-
-<div class="block-field block-field--invalid">
-  <label for="es-date">Start date</label>
-  <p class="hint" id="es-date-hint">The first day you intend to trade.</p>
-  <p class="msg" id="es-date-err">Enter a start date in the future</p>
-  <input type="text" id="es-date" name="start" inputmode="numeric" value="14 03 2019"
-         aria-describedby="es-date-hint es-date-err" aria-invalid="true">
-</div>
-
-<div class="block-field">
-  <label for="es-ref">Reference</label>
-  <p class="hint" id="es-ref-hint">Assigned when the application was created. You cannot change it.</p>
-  <input type="text" id="es-ref" name="ref" value="PL/2026/0447" disabled
-         aria-describedby="es-ref-hint">
-</div>
-    </div>
-  </section>
-
-  <section class="spec" aria-labelledby="b3">
-    <h2 id="b3">rail-and-pane</h2>
-    <dl>
-      <dt>Use</dt><dd>A list you pick from beside the thing you picked. Queues, inboxes, docs, settings.</dd>
-      <dt>Avoid</dt><dd>One list with no detail, that is a page, not a split.</dd>
-      <dt>Prevents</dt><dd>A 1fr track that grows to its widest child instead of letting it scroll, which put +250px of document past a 375px screen; and a rail given</dd>
-      <dt>Source</dt><dd><code>skills/sitesmith/blocks/layout/rail-and-pane.html</code></dd>
-    </dl>
-    <div class="stage">
-<style>
-/* minmax(0,1fr), never plain 1fr. A 1fr track resolves its minimum to auto, so a
-   wide table inside widens the track and the overflow lands on the document. */
-.block-rail-and-pane{display:grid;grid-template-columns:280px minmax(0,1fr);
-  align-items:start;border:1px solid var(--line);border-radius:var(--radius-outer);
-  overflow:hidden;background:var(--surface)}
-/* The rail's fill is painted by the grid, not by the rail. Giving the rail
-   height:100vh instead pins the whole page to one viewport even when the list is
-   four items long. */
-@media(min-width:721px){
-  .block-rail-and-pane{background:linear-gradient(to right,var(--surface-2) 0 279px,
-    var(--line) 279px 280px,var(--surface) 280px)}
+.block-footer-full{border-top:1px solid var(--line);background:var(--surface)}
+.block-footer-full__in{max-width:var(--container);margin-inline:auto;
+  padding:var(--space-8) var(--gutter) var(--space-7)}
+.block-footer-full__cols{display:grid;
+  grid-template-columns:minmax(0,1.4fr) repeat(3,minmax(0,1fr));gap:var(--space-7)}
+@media(max-width:860px){
+  .block-footer-full__cols{grid-template-columns:repeat(auto-fit,minmax(min(100%,13rem),1fr));
+    gap:var(--space-5)}
 }
-@media(max-width:720px){.block-rail-and-pane{grid-template-columns:minmax(0,1fr)}}
-
-.block-rail-and-pane__rail{align-self:start}
-@media(max-width:720px){
-  .block-rail-and-pane__rail{background:var(--surface-2);
-    border-bottom:1px solid var(--line)}
-}
-.block-rail-and-pane__rail h3{margin:0;padding:var(--space-3) var(--space-4);
-  font-size:var(--text-micro);letter-spacing:.11em;text-transform:uppercase;
-  color:var(--ink-3);border-bottom:1px solid var(--line)}
-.block-rail-and-pane__rail ul{margin:0;padding:0;list-style:none}
-.block-rail-and-pane__rail a{display:grid;grid-template-columns:minmax(0,1fr) auto;
-  gap:var(--space-1) var(--space-3);padding:var(--space-3) var(--space-4);
-  border-bottom:1px solid var(--line);text-decoration:none;color:var(--ink);
-  font-size:var(--text-small)}
-.block-rail-and-pane__rail a:hover{background:var(--surface)}
-.block-rail-and-pane__rail a[aria-current=true]{background:var(--accent-soft);
-  box-shadow:inset 3px 0 0 var(--accent)}
-.block-rail-and-pane__rail b{font-family:var(--font-mono);font-weight:600}
-.block-rail-and-pane__rail em{grid-column:1;font-style:normal;color:var(--ink-2);
-  font-size:var(--text-micro);min-width:0;overflow:hidden;text-overflow:ellipsis;
-  white-space:nowrap}
-.block-rail-and-pane__rail time{grid-column:2;grid-row:1;color:var(--ink-3);
-  font-family:var(--font-mono);font-size:var(--text-micro)}
-
-.block-rail-and-pane__pane{padding:var(--space-4);min-width:0}
-.block-rail-and-pane__pane h3{margin:0 0 var(--space-2);font-size:var(--text-h3)}
-.block-rail-and-pane__pane p{margin:0;color:var(--ink-2);font-size:var(--text-small);
-  max-width:var(--measure)}
-.block-rail-and-pane :focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
-</style>
-
-<div class="block-rail-and-pane">
-  <nav class="block-rail-and-pane__rail" aria-labelledby="rp-h">
-    <h3 id="rp-h">Inbound today</h3>
-    <ul>
-      <li><a href="#blocks" aria-current="true"><b>DN-40219</b><time>07:12</time>
-        <em>Tavistock Paper Mills, 4 pallets</em></a></li>
-      <li><a href="#blocks"><b>DN-40221</b><time>07:40</time>
-        <em>Kelso Fixings, seal broken, held</em></a></li>
-      <li><a href="#blocks"><b>DN-40224</b><time>08:05</time>
-        <em>Brennand Adhesives, 1 pallet</em></a></li>
-      <li><a href="#blocks"><b>DN-40225</b><time>09:15</time>
-        <em>Orrell Timber, 9 pallets, tail-lift</em></a></li>
-    </ul>
-  </nav>
-  <div class="block-rail-and-pane__pane">
-    <h3>DN-40219 &middot; Tavistock Paper Mills</h3>
-    <p>
-      Trailer TVK-118 on Bay 3 since 07:12. The pane holds whatever the rail selected;
-      it is the column that must be minmax(0,1fr), because it is the one that will one day
-      contain something wider than itself.
-    </p>
-  </div>
-</div>
-    </div>
-  </section>
-
-  <section class="spec" aria-labelledby="b4">
-    <h2 id="b4">top-bar</h2>
-    <dl>
-      <dt>Use</dt><dd>Product and app shells. A sticky bar carrying brand, sections and one action.</dd>
-      <dt>Avoid</dt><dd>Marketing sites with more than five destinations, they need a real nav.</dd>
-      <dt>Prevents</dt><dd>A +10px document overflow that appears only under a wider system font, because nowrap flex items shrink below their content and let the TEXT spill while no element box reports as overflowing.</dd>
-      <dt>Source</dt><dd><code>skills/sitesmith/blocks/nav/top-bar.html</code></dd>
-    </dl>
-    <div class="stage">
-<style>
-.block-top-bar{background:var(--surface);border-bottom:1px solid var(--line);
-  position:sticky;top:0;z-index:12}
-.block-top-bar__in{display:flex;align-items:center;gap:var(--space-3);
-  padding:var(--space-2) var(--space-4);max-width:var(--container);margin-inline:auto}
-.block-top-bar__mark{display:flex;align-items:center;gap:var(--space-2);font-weight:700;
-  letter-spacing:-.03em;text-decoration:none;color:var(--ink);min-width:0}
-.block-top-bar__mark span{width:18px;height:18px;flex:none;border-radius:var(--radius-inner);
-  background:var(--accent)}
-
-/* min-width:0 plus overflow:hidden is the whole fix. A flex item with
-   white-space:nowrap refuses to shrink below its content width by default, so on
-   a platform whose default font is wider than the developer's the text runs past
-   the container. documentElement.scrollWidth grows; every element box still
-   reports as fitting, so an element-by-element scan finds nothing. */
-.block-top-bar__tabs{display:flex;gap:var(--space-1);min-width:0;overflow:hidden}
-.block-top-bar__tabs a{padding:var(--space-1) var(--space-3);border-radius:var(--radius-inner);
-  text-decoration:none;color:var(--ink-2);font-size:var(--text-small);white-space:nowrap;
-  overflow:hidden;text-overflow:ellipsis;
-  transition:background var(--motion-fast) var(--ease),color var(--motion-fast) var(--ease)}
-.block-top-bar__tabs a:hover{background:var(--surface-2);color:var(--ink)}
-.block-top-bar__tabs a[aria-current=page]{background:var(--accent-soft);color:var(--accent);
-  font-weight:600}
-/* Below the widths where four labels stop fitting, drop them rather than truncate:
-   two ellipsed words say less than one whole one. */
-@media(max-width:820px){.block-top-bar__tabs a:nth-child(n+3){display:none}}
-@media(max-width:600px){.block-top-bar__tabs a:nth-child(n+2){display:none}}
-
-.block-top-bar__act{margin-left:auto;display:flex;align-items:center;gap:var(--space-2);
-  min-width:0}
-.block-top-bar__btn{font:inherit;font-size:var(--text-small);font-weight:600;
-  padding:var(--space-2) var(--space-3);border-radius:var(--radius-inner);cursor:pointer;
-  border:1px solid transparent;background:var(--accent);color:var(--on-accent);
-  white-space:nowrap}
-.block-top-bar__btn:active{transform:translateY(1px)}
-.block-top-bar :focus-visible{outline:2px solid var(--accent);outline-offset:2px;
+.block-footer-full__brand b{display:block;font-size:var(--text-body);
+  letter-spacing:-.03em}
+/* The address is real information, not decoration. A trade site is judged on whether
+   the buyer can tell where you actually are. */
+.block-footer-full__brand address{font-style:normal;margin:var(--space-3) 0 0;
+  color:var(--ink-2);font-size:var(--text-small)}
+.block-footer-full h3{font-size:var(--text-micro);letter-spacing:.11em;
+  text-transform:uppercase;color:var(--ink-3);margin:0 0 var(--space-3);font-weight:700}
+.block-footer-full ul{margin:0;padding:0;list-style:none}
+.block-footer-full li{margin-bottom:var(--space-2)}
+.block-footer-full a{color:var(--ink-2);text-decoration:none;font-size:var(--text-small)}
+.block-footer-full a:hover{color:var(--ink);text-decoration:underline}
+.block-footer-full__legal{border-top:1px solid var(--line);margin-top:var(--space-7);
+  padding-top:var(--space-4);display:flex;gap:var(--space-4);flex-wrap:wrap;
+  align-items:baseline;color:var(--ink-3);font-size:var(--text-small)}
+.block-footer-full__legal p{margin:0;max-width:var(--measure)}
+.block-footer-full__legal nav{margin-left:auto;display:flex;gap:var(--space-4);
+  flex-wrap:wrap}
+.block-footer-full :focus-visible{outline:2px solid var(--accent);outline-offset:2px;
   border-radius:var(--radius-inner)}
+
+/* variant: with-newsletter */
+.block-footer-full__signup{display:flex;gap:var(--space-2);flex-wrap:wrap;
+  margin-top:var(--space-3)}
+.block-footer-full__signup input{font:inherit;font-size:var(--text-small);
+  padding:var(--space-2) var(--space-3);border:1px solid var(--line);
+  border-radius:var(--radius-inner);background:var(--surface);color:var(--ink);
+  min-width:0;flex:1 1 11rem}
+.block-footer-full__signup button{font:inherit;font-size:var(--text-small);
+  font-weight:650;padding:var(--space-2) var(--space-4);border:1px solid var(--accent);
+  border-radius:var(--radius-inner);background:var(--accent);color:var(--on-accent);
+  cursor:pointer}
+/* variant: two-column */
+.block-footer-full--two-column .block-footer-full__cols{
+  grid-template-columns:minmax(0,1.4fr) minmax(0,1fr)}
 </style>
 
-<header class="block-top-bar">
-  <div class="block-top-bar__in">
-    <a class="block-top-bar__mark" href="#blocks"><span aria-hidden="true"></span>Ledger</a>
-    <nav class="block-top-bar__tabs" aria-label="Sections">
-      <a href="#blocks" aria-current="page">Reconciliation</a>
-      <a href="#blocks">Accounts</a>
-      <a href="#blocks">Rules</a>
-      <a href="#blocks">Exports</a>
-    </nav>
-    <div class="block-top-bar__act">
-      <button class="block-top-bar__btn" type="button">Auto-match</button>
+<footer class="block-footer-full">
+  <div class="block-footer-full__in">
+    <div class="block-footer-full__cols">
+      <div class="block-footer-full__brand">
+        <b>Halloway &amp; Fen</b>
+        <address>
+          Unit 4, Ravensworth Works<br>
+          Sheffield S4 7YB<br>
+          0114 496 0182
+        </address>
+      </div>
+      <nav aria-labelledby="ff-work">
+        <h3 id="ff-work">Work</h3>
+        <ul>
+          <li><a href="#blocks">Flat roof repair</a></li>
+          <li><a href="#blocks">Full replacement</a></li>
+          <li><a href="#blocks">Surveys and reports</a></li>
+          <li><a href="#blocks">Maintenance contracts</a></li>
+        </ul>
+      </nav>
+      <nav aria-labelledby="ff-about">
+        <h3 id="ff-about">Studio</h3>
+        <ul>
+          <li><a href="#blocks">Who we are</a></li>
+          <li><a href="#blocks">Recent jobs</a></li>
+          <li><a href="#blocks">Journal</a></li>
+          <li><a href="#blocks">Working here</a></li>
+        </ul>
+      </nav>
+      <div>
+        <h3 id="ff-news">Quarterly note</h3>
+        <p style="margin:0;color:var(--ink-2);font-size:var(--text-small)">
+          Four emails a year on what fails and when. No sales.
+        </p>
+        <form class="block-footer-full__signup">
+          <label class="block-footer-full__vh" for="ff-email" hidden>Email address</label>
+          <input type="email" id="ff-email" name="email" placeholder="you@company.co.uk"
+                 aria-labelledby="ff-news">
+          <button type="submit">Subscribe</button>
+        </form>
+      </div>
+    </div>
+    <div class="block-footer-full__legal">
+      <p>Halloway &amp; Fen Roofing Ltd, registered in England 09441207. VAT GB 214 8830 47.</p>
+      <nav aria-label="Legal">
+        <a href="#blocks">Privacy</a>
+        <a href="#blocks">Terms</a>
+        <a href="#blocks">Accessibility</a>
+      </nav>
     </div>
   </div>
-</header>
+</footer>
     </div>
   </section>
 </main>

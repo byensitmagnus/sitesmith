@@ -1,0 +1,71 @@
+<!--
+name: cta-band
+family: cta
+modes: M E
+use: The end of the argument. One action, restated once the case has been made.
+avoid: Repeating it a third time on a short page. Three appearances is the maximum and
+       two is usually right.
+variants: centred (default) | split | quiet-rule
+pairs: benefits, testimonial, footer-full
+not-with: cta-band
+tokens: --space-3 --space-4 --space-5 --space-7 --space-8 --text-small --text-body
+        --text-h2 --measure --ink --ink-2 --surface-2 --line --accent --on-accent
+        --radius-inner --radius-outer --leading-tight --container --gutter
+density: spacious
+prevents: Two calls to action with the same intent on one page, which is a page that
+          could not decide; and a band whose label describes the mechanism rather
+          than the outcome.
+-->
+<style>
+.block-cta-band{max-width:var(--container);margin-inline:auto;
+  padding:var(--space-7) var(--gutter) var(--space-8)}
+.block-cta-band__in{background:var(--surface-2);border:1px solid var(--line);
+  border-radius:var(--radius-outer);padding:var(--space-7) var(--space-5);
+  text-align:center}
+.block-cta-band h3{margin:0;font-size:var(--text-h2);letter-spacing:-.025em;
+  line-height:var(--leading-tight);max-width:20ch;margin-inline:auto}
+.block-cta-band p{margin:var(--space-3) auto 0;color:var(--ink-2);
+  max-width:var(--measure)}
+.block-cta-band__act{margin-top:var(--space-5);display:inline-flex;gap:var(--space-3);
+  flex-wrap:wrap;justify-content:center}
+/* The label states the outcome, not the mechanism. "Book a survey", never "Submit". */
+.block-cta-band__btn{font:inherit;font-weight:650;text-decoration:none;
+  padding:var(--space-3) var(--space-5);border-radius:var(--radius-inner);
+  background:var(--accent);color:var(--on-accent);border:1px solid var(--accent)}
+.block-cta-band__btn--quiet{background:transparent;color:var(--ink);border-color:var(--line)}
+.block-cta-band__btn:active{transform:translateY(1px)}
+.block-cta-band__note{margin-top:var(--space-4);font-size:var(--text-small);
+  color:var(--ink-2)}
+.block-cta-band :focus-visible{outline:2px solid var(--accent);outline-offset:2px;
+  border-radius:var(--radius-inner)}
+
+/* variant: split — copy left, action right, for pages that end on a long section and
+   need the band to read as a continuation rather than a new page. */
+.block-cta-band--split .block-cta-band__in{display:grid;
+  grid-template-columns:minmax(0,1fr) auto;gap:var(--space-5);align-items:center;
+  text-align:left}
+.block-cta-band--split h3,
+.block-cta-band--split p{margin-inline:0}
+@media(max-width:720px){
+  .block-cta-band--split .block-cta-band__in{grid-template-columns:minmax(0,1fr)}
+}
+/* variant: quiet-rule — no panel, a rule above. For editorial pages where a filled
+   band would be the loudest thing on a deliberately quiet page. */
+.block-cta-band--quiet-rule .block-cta-band__in{background:transparent;border:0;
+  border-top:2px solid var(--ink);border-radius:0;padding-inline:0}
+</style>
+
+<section class="block-cta-band" aria-labelledby="cb-h">
+  <div class="block-cta-band__in">
+    <h3 id="cb-h">The survey is free within ten miles of Sheffield.</h3>
+    <p>
+      An hour on the roof, a written finding, and a fixed price if you want the work. No
+      obligation and no follow-up calls.
+    </p>
+    <div class="block-cta-band__act">
+      <a class="block-cta-band__btn" href="#blocks">Book a survey</a>
+      <a class="block-cta-band__btn block-cta-band__btn--quiet" href="#blocks">Call 0114 496 0182</a>
+    </div>
+    <p class="block-cta-band__note">Monday to Thursday, 7am to 5pm. Emergencies answered at any hour.</p>
+  </div>
+</section>

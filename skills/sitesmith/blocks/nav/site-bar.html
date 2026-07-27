@@ -1,0 +1,96 @@
+<!--
+name: site-bar
+family: nav
+modes: M E
+use: The header for a marketing or commerce site. Wordmark, up to five destinations,
+     one action, and a real disclosure on a phone.
+avoid: Product UI, which uses top-bar and carries state rather than destinations.
+variants: actions-right (default) | centred-nav | with-search
+pairs: hero-split, hero-editorial, footer-full, cta-sticky
+not-with: top-bar
+tokens: --space-2 --space-3 --space-4 --space-5 --line --surface --bg --ink --ink-2
+        --accent --on-accent --text-small --text-body --radius-inner --radius-full
+        --motion-fast --ease --container --gutter
+density: spacious
+prevents: A phone header that hides the primary action behind the menu, and a nav
+          whose labels ellipse into each other under a wider font.
+-->
+<style>
+.block-site-bar{background:var(--surface);border-bottom:1px solid var(--line);
+  position:sticky;top:0;z-index:20}
+.block-site-bar__in{display:flex;align-items:center;gap:var(--space-4);
+  max-width:var(--container);margin-inline:auto;
+  padding:var(--space-3) var(--gutter);min-height:var(--space-9)}
+.block-site-bar__mark{display:flex;align-items:center;gap:var(--space-2);
+  font-weight:700;letter-spacing:-.03em;font-size:var(--text-body);text-decoration:none;
+  color:var(--ink);min-width:0;white-space:nowrap}
+.block-site-bar__mark i{width:var(--space-4);height:var(--space-4);flex:none;
+  background:var(--accent);border-radius:var(--radius-inner);font-style:normal}
+
+/* min-width:0 so nowrap labels shrink inside the row instead of spilling the text
+   past the viewport under a wider default font. */
+.block-site-bar__nav{display:flex;gap:var(--space-1);min-width:0;overflow:hidden}
+.block-site-bar__nav a{padding:var(--space-2) var(--space-3);border-radius:var(--radius-inner);
+  text-decoration:none;color:var(--ink-2);font-size:var(--text-small);white-space:nowrap;
+  transition:color var(--motion-fast) var(--ease)}
+.block-site-bar__nav a:hover{color:var(--ink)}
+.block-site-bar__nav a[aria-current=page]{color:var(--ink);font-weight:650;
+  box-shadow:inset 0 -2px 0 var(--accent)}
+
+.block-site-bar__act{margin-left:auto;display:flex;align-items:center;gap:var(--space-3)}
+.block-site-bar__cta{font:inherit;font-size:var(--text-small);font-weight:650;
+  padding:var(--space-2) var(--space-4);border-radius:var(--radius-inner);
+  background:var(--accent);color:var(--on-accent);text-decoration:none;white-space:nowrap}
+.block-site-bar__cta:active{transform:translateY(1px)}
+.block-site-bar :focus-visible{outline:2px solid var(--accent);outline-offset:2px;
+  border-radius:var(--radius-inner)}
+
+/* The disclosure is a real focusable control, and the primary action stays outside
+   it — a phone header that buries the one action behind a menu has hidden the point
+   of the page. */
+.block-site-bar__toggle{position:absolute;opacity:0;width:1px;height:1px}
+.block-site-bar__burger{display:none;align-items:center;gap:var(--space-2);
+  padding:var(--space-2) var(--space-3);border:1px solid var(--line);
+  border-radius:var(--radius-inner);font-size:var(--text-small);color:var(--ink);
+  cursor:pointer;background:var(--surface)}
+.block-site-bar__toggle:focus-visible + .block-site-bar__burger{outline:2px solid var(--accent);
+  outline-offset:2px}
+@media(max-width:760px){
+  .block-site-bar__burger{display:inline-flex}
+  .block-site-bar__nav{display:none;width:100%;flex-direction:column;gap:0;
+    border-top:1px solid var(--line);padding-top:var(--space-2);overflow:visible}
+  .block-site-bar__nav a{padding:var(--space-3) 0}
+  .block-site-bar__nav a[aria-current=page]{box-shadow:inset 2px 0 0 var(--accent);
+    padding-left:var(--space-3)}
+  .block-site-bar__toggle:checked ~ .block-site-bar__nav{display:flex}
+  .block-site-bar__in{flex-wrap:wrap}
+  .block-site-bar__act{margin-left:auto;order:2}
+  .block-site-bar__burger{order:1}
+}
+
+/* variant: centred-nav */
+.block-site-bar--centred-nav .block-site-bar__nav{margin-inline:auto}
+.block-site-bar--centred-nav .block-site-bar__act{margin-left:0}
+/* variant: with-search */
+.block-site-bar__search{display:flex;align-items:center;gap:var(--space-2);
+  border:1px solid var(--line);border-radius:var(--radius-full);
+  padding:var(--space-2) var(--space-4);color:var(--ink-2);font-size:var(--text-small);
+  background:var(--bg);min-width:0}
+</style>
+
+<header class="block-site-bar">
+  <div class="block-site-bar__in">
+    <a class="block-site-bar__mark" href="#blocks"><i aria-hidden="true"></i>Halloway &amp; Fen</a>
+    <input class="block-site-bar__toggle" type="checkbox" id="sb-toggle">
+    <label class="block-site-bar__burger" for="sb-toggle">Menu</label>
+    <nav class="block-site-bar__nav" aria-label="Primary">
+      <a href="#blocks" aria-current="page">Work</a>
+      <a href="#blocks">Services</a>
+      <a href="#blocks">Studio</a>
+      <a href="#blocks">Journal</a>
+    </nav>
+    <div class="block-site-bar__act">
+      <a class="block-site-bar__cta" href="#blocks">Start a project</a>
+    </div>
+  </div>
+</header>

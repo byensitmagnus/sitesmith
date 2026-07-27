@@ -1,71 +1,94 @@
 # Blocks
 
-> Original work, MIT. Written for sitesmith.
+> Original work, MIT. Composition patterns for real websites, built on the project's tokens.
 
-Working implementations, not a schema. `references/09-block-library.md` has carried a
-folder layout, a frontmatter format and the sentence "Blocks will be added iteratively"
-since the day it was vendored; the folder it points at does not exist and never has. This
-is the folder.
+The upstream `09-block-library.md` has carried a folder layout, a frontmatter schema and the
+sentence "Blocks will be added iteratively" since the day it was vendored. The folder it
+names does not exist and never has. This is the folder.
 
-## The rule
+## What a block is
 
-**A block earns its place by naming the defect it prevents.**
+A working section of a real website — a header, a hero, a product grid, a pricing table — in
+semantic HTML and CSS over the design tokens, with **variants** and **compatibility
+metadata** so it fits the mode and the direction instead of imposing one.
 
-Every block here encodes something that was found by rendering a page, not by reading one —
-mostly in this repository, at the cost of a failing build. A block that is only a tidy way
-to lay out three cards is not worth a file: the agent can write that, and writing it fresh
-each time costs nothing. What the agent cannot reliably reproduce is the `min-width: 0` that
-stops a nowrap flex row spilling text past the viewport, or the `tabindex="0"` that makes a
-horizontal scroller reachable without a mouse.
-
-This keeps the library small on purpose. Nine good blocks beat forty that restate the
-obvious.
+Blocks are not a template. A library that produces the same site twice has replaced one
+generic look with another. Every block declares which modes it suits, which variants it has,
+and what it does not go with, so the composition stays a decision.
 
 ## Format
 
-One `.html` file per block. No build step, no framework — semantic HTML and CSS over the
-project's design tokens, which any agent can translate to JSX, Vue or Svelte in one pass.
+One `.html` file per block. No build step, no framework: an agent translates this to JSX,
+Vue or Svelte in one pass.
 
 ```html
 <!--
-name: scrollable-grid
-category: data
-use: A table wider than its column. Any admin, any report.
-avoid: Fewer than five rows, or content that reflows — use a definition list.
-tokens: --space-3 --space-5 --line --line-2 --surface --surface-2 --ink-3 --text-micro
-prevents: A horizontal scroller that no keyboard can reach, and a 1fr parent
-          track that widens instead of letting the child scroll.
+name: hero-split
+family: hero
+modes: M E
+use: The default marketing hero. Statement left, one asset right.
+avoid: Product pages, where the gallery and the purchase panel own the first screen.
+variants: media-right (default) | media-left | media-stacked
+pairs: nav-bar, proof-logos, cta-band
+not-with: hero-editorial, hero-product
+tokens: --space-6 --space-8 --text-h1 --text-lead --measure --accent --on-accent
+density: spacious
+prevents: A headline that pushes the primary action below the fold at 1440.
 -->
-<style>/* scoped to .block-scrollable-grid */</style>
-<div class="block-scrollable-grid"> … </div>
+<style>/* every selector starts .block-hero-split */</style>
+<section class="block-hero-split"> ... </section>
 ```
 
-`prevents:` is required. If a block cannot name a defect, it does not go in.
+`name`, `family`, `modes`, `use` and `variants` are required. `prevents` is optional: it was
+required when this library held only defect-preventing infrastructure, and a composition
+pattern earns its place by being a good composition.
 
-**Tokens only.** A block may not contain a colour, spacing value, radius or font size as a
-literal. It reads them from the contract in
-[`v2/30-contract.md`](../v2/30-contract.md), so a block dropped
-into a project inherits that project's system instead of importing a second one.
+**Tokens only.** No colour, spacing, radius or font size as a literal, so a block dropped
+into a project inherits that project's system rather than importing a second one. Values a
+composition genuinely needs go in the contract's one-off table with a reason.
 
 **Class prefix.** Every selector starts `.block-<name>` so two blocks on one page cannot
-collide, and so a project can find and rename them later.
+collide, and a project can find and rename them later.
+
+**Variants are classes**, not forks: `.block-hero-split--media-left` modifies, it does not
+duplicate.
+
+## Families
+
+| Family | Modes | Blocks |
+| --- | --- | --- |
+| `nav` | M E P | bar, mega-menu, mobile disclosure, breadcrumb |
+| `hero` | M E | split, editorial, product-led, category band |
+| `catalogue` | E | product grid, product card, filter rail |
+| `product` | E | gallery, purchase panel, specification table |
+| `content` | M | benefits, services, process, editorial, feature detail |
+| `proof` | M E | logo wall, testimonial, review summary |
+| `decide` | M E | pricing table, comparison table, FAQ |
+| `form` | M E P | field, error summary, multi-step shell |
+| `cta` | M E | band, mobile sticky bar |
+| `footer` | M E P | full, compact |
+| `data` | P | scrollable grid, empty state, rail and pane |
+
+## Choosing one
+
+1. The mode file gives you the argument shape and the hero family.
+2. Take blocks whose `modes` include yours and whose `family` matches the section.
+3. Check `not-with`: one hero per page, one mega-menu, one sticky CTA.
+4. Pick the variant that fits the direction, not the first one listed.
+5. Delete what the brief does not need. A block with two thirds removed is normal.
 
 ## Verification
 
-The blocks are assembled into one page and run through the same script as every benchmark:
+All blocks are assembled into one page and run through the same scripts as every benchmark:
 
 ```bash
-node tools/build-block-harness.mjs         # writes benchmarks/blocks/index.html
+node tools/build-block-harness.mjs
 node skills/sitesmith/scripts/verify.mjs http://localhost:4321/blocks/
+node skills/sitesmith/scripts/verify.mjs http://localhost:4321/blocks/ --font-stress --no-axe
 node skills/sitesmith/scripts/token-drift.mjs benchmarks/blocks/index.html \
   --contract skills/sitesmith/blocks/CONTRACT.md
 ```
 
-CI runs all three. A block that breaks at 375px, fails axe in either scheme, or reaches for
-a literal fails the build — which is the difference between this and a folder of snippets.
-
-## Using one
-
-Copy the markup and the style, drop it in, and delete what the brief does not need. The
-blocks assume the token names in `CONTRACT.md`; if a project uses different names, rename
-them once at the top rather than editing every rule.
+CI runs all four and fails if the harness is stale. A block that overflows at 375px, fails
+axe in either scheme, or reaches for a literal fails the build, which is the difference
+between this and a folder of snippets.

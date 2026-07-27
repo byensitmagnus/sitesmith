@@ -1,0 +1,82 @@
+<!--
+name: hero-split
+family: hero
+modes: M E
+use: The default marketing hero. Statement left, one asset right, action visible
+     without scrolling.
+avoid: Product pages, where the gallery and purchase panel own the first screen.
+variants: media-right (default) | media-left | media-stacked
+pairs: site-bar, proof-logos, content-benefits, cta-band
+not-with: hero-editorial
+tokens: --space-3 --space-4 --space-5 --space-7 --space-8 --text-small --text-h1
+        --text-lead --measure --leading-tight --ink --ink-2 --ink-3 --surface-2
+        --line --accent --on-accent --radius-outer --radius-inner --container --gutter
+density: spacious
+prevents: A headline that pushes the primary action below the fold, and an asset
+          column that collapses under the text instead of beside it at 768.
+-->
+<style>
+.block-hero-split{max-width:var(--container);margin-inline:auto;
+  padding:var(--space-8) var(--gutter)}
+.block-hero-split__grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);
+  gap:var(--space-7);align-items:center}
+@media(max-width:860px){
+  .block-hero-split__grid{grid-template-columns:minmax(0,1fr);gap:var(--space-5)}
+}
+.block-hero-split__eyebrow{font-size:var(--text-small);letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink-3);font-weight:650;margin:0}
+/* Two lines at 1440 is the budget. A third line is a subhead pretending to be a
+   headline, and it is what pushes the action off the first screen. */
+.block-hero-split h3{font-size:var(--text-h1);line-height:var(--leading-tight);
+  letter-spacing:-.03em;margin:var(--space-3) 0 0;max-width:18ch}
+.block-hero-split__lede{font-size:var(--text-lead);color:var(--ink-2);
+  margin:var(--space-4) 0 0;max-width:var(--measure)}
+.block-hero-split__act{display:flex;gap:var(--space-3);flex-wrap:wrap;
+  margin-top:var(--space-5)}
+.block-hero-split__btn{font:inherit;font-weight:650;text-decoration:none;
+  padding:var(--space-3) var(--space-5);border-radius:var(--radius-inner);
+  background:var(--accent);color:var(--on-accent);border:1px solid var(--accent)}
+.block-hero-split__btn--quiet{background:transparent;color:var(--ink);
+  border-color:var(--line)}
+.block-hero-split__btn:active{transform:translateY(1px)}
+.block-hero-split__note{margin:var(--space-4) 0 0;font-size:var(--text-small);
+  color:var(--ink-3)}
+.block-hero-split :focus-visible{outline:2px solid var(--accent);outline-offset:2px;
+  border-radius:var(--radius-inner)}
+
+/* The asset. A labelled placeholder is a legitimate answer and says what belongs
+   here; an unlabelled grey rectangle claims to be content. */
+.block-hero-split__media{border:1px solid var(--line);border-radius:var(--radius-outer);
+  background:var(--surface-2);aspect-ratio:4/3;display:grid;place-items:center;
+  padding:var(--space-5);text-align:center;min-width:0}
+.block-hero-split__media p{margin:0;color:var(--ink-3);font-size:var(--text-small);
+  max-width:34ch}
+
+/* variants */
+.block-hero-split--media-left .block-hero-split__media{order:-1}
+@media(min-width:861px){
+  .block-hero-split--media-stacked .block-hero-split__grid{grid-template-columns:minmax(0,1fr)}
+}
+</style>
+
+<section class="block-hero-split" aria-labelledby="hs-h">
+  <div class="block-hero-split__grid">
+    <div>
+      <p class="block-hero-split__eyebrow">Flat roofing, Sheffield</p>
+      <h3 id="hs-h">The leak is rarely where the stain is.</h3>
+      <p class="block-hero-split__lede">
+        We survey the whole deck before quoting, because the third repair usually costs more
+        than doing it once. Fixed price after the survey, and the survey is free within ten
+        miles.
+      </p>
+      <div class="block-hero-split__act">
+        <a class="block-hero-split__btn" href="#blocks">Book a survey</a>
+        <a class="block-hero-split__btn block-hero-split__btn--quiet" href="#blocks">See recent work</a>
+      </div>
+      <p class="block-hero-split__note">Usually on site within four working days.</p>
+    </div>
+    <figure class="block-hero-split__media">
+      <p>Image slot: a completed flat roof, three-quarter view, 4:3, daylight. Not yet shot.</p>
+    </figure>
+  </div>
+</section>

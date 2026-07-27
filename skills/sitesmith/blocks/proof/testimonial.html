@@ -1,0 +1,75 @@
+<!--
+name: testimonial
+family: proof
+modes: M E
+use: One named customer saying something specific. The strongest proof there is, and
+     the only one worth a section of its own.
+avoid: Any page where you do not have a real quotation. An invented testimonial is the
+       single clearest tell that a machine wrote the page.
+variants: single (default) | pair | with-figure
+pairs: benefits, proof-logos, cta-band
+not-with: review-summary
+tokens: --space-2 --space-3 --space-4 --space-5 --space-7 --space-8 --text-small
+        --text-body --text-lead --text-h3 --measure --ink --ink-2 --ink-3 --line
+        --surface --accent --radius-outer --radius-full --container --gutter
+density: spacious
+prevents: A carousel of three interchangeable quotations attributed to nobody in
+          particular, which reads as filler even when the quotations are real.
+-->
+<style>
+.block-testimonial{max-width:var(--container);margin-inline:auto;
+  padding:var(--space-8) var(--gutter)}
+.block-testimonial__grid{display:grid;gap:var(--space-5)}
+.block-testimonial--pair .block-testimonial__grid{
+  grid-template-columns:repeat(auto-fit,minmax(min(100%,22rem),1fr))}
+
+.block-testimonial figure{margin:0;border-left:2px solid var(--accent);
+  padding-left:var(--space-5);max-width:var(--measure)}
+/* Three lines is the budget. Past that nobody reads it, and a quotation nobody reads
+   proves nothing. */
+.block-testimonial blockquote{margin:0;font-size:var(--text-lead);
+  color:var(--ink);text-wrap:pretty}
+.block-testimonial figcaption{margin-top:var(--space-4);display:flex;
+  align-items:center;gap:var(--space-3);font-size:var(--text-small);color:var(--ink-2)}
+.block-testimonial figcaption b{color:var(--ink);font-weight:650;display:block}
+.block-testimonial__avatar{width:var(--space-7);height:var(--space-7);flex:none;
+  border-radius:var(--radius-full);background:var(--surface);border:1px solid var(--line);
+  display:grid;place-items:center;font-size:var(--text-small);color:var(--ink-3)}
+
+/* variant: with-figure — one number beside the quotation, sourced. A number without a
+   source is the thing this block exists to avoid. */
+.block-testimonial__figure{border-top:1px solid var(--line);margin-top:var(--space-5);
+  padding-top:var(--space-4)}
+.block-testimonial__figure b{display:block;font-size:var(--text-h3);letter-spacing:-.02em}
+.block-testimonial__figure span{font-size:var(--text-small);color:var(--ink-3)}
+</style>
+
+<section class="block-testimonial block-testimonial--pair" aria-labelledby="tm-h">
+  <h3 id="tm-h" class="block-testimonial__vh" hidden>What customers said</h3>
+  <div class="block-testimonial__grid">
+    <figure>
+      <blockquote>
+        They found standing water under the insulation that two previous quotes had missed,
+        and told us before the price rather than after it.
+      </blockquote>
+      <figcaption>
+        <span class="block-testimonial__avatar" aria-hidden="true">RM</span>
+        <span><b>Rachel Mbeki</b>Facilities lead, Cutlers Court, Sheffield</span>
+      </figcaption>
+      <div class="block-testimonial__figure">
+        <b>Nine years</b>
+        <span>since the last callout on that roof. Measured from the job record, March 2017.</span>
+      </div>
+    </figure>
+    <figure>
+      <blockquote>
+        The written record was what sold the building. The buyer's surveyor stopped asking
+        questions once he had the moisture readings.
+      </blockquote>
+      <figcaption>
+        <span class="block-testimonial__avatar" aria-hidden="true">DO</span>
+        <span><b>Daniel Oyelaran</b>Owner, Ravensworth Works</span>
+      </figcaption>
+    </figure>
+  </div>
+</section>
