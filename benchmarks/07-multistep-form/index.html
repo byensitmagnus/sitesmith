@@ -1,0 +1,413 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Documents — apply for a pavement licence — Marchbrook Borough Council</title>
+<meta name="description" content="Step 3 of 4 of the pavement licence application: insurance certificate, site plan and the clear-route declaration.">
+<meta property="og:title" content="Apply for a pavement licence — Marchbrook Borough Council">
+<meta property="og:description" content="Step 3 of 4: upload your insurance certificate and site plan.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%230b0c0c'/><path d='M6 24V12l10-6 10 6v12' fill='none' stroke='%23fff' stroke-width='2.6' stroke-linejoin='round'/></svg>">
+<style>
+/* One column, one measure, no cards. A statutory form is read under pressure by
+   someone who needs the answer, not the aesthetic. Everything decorative is out. */
+:root{
+  --bg:#f3f2f1; --surface:#fff; --ink:#0b0c0c; --ink-2:#4c565b; --line:#8f9598;
+  --line-soft:#cfd2d3; --green:#005a30; --on-green:#fff; --blue:#144e81; --red:#b8300f;
+  --focus:#ffdd00; --focus-ink:#0b0c0c;
+  --sans:ui-sans-serif,system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;
+  --mono:ui-monospace,'Cascadia Mono','Segoe UI Mono',monospace;
+  --step:8px;
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#15181a;--surface:#1d2124;--ink:#eef0f1;--ink-2:#b3bbbf;--line:#71797d;
+        --line-soft:#3b4247;--green:#5cc08a;--on-green:#0b0f10;--blue:#7db4e6;--red:#ff8f7d;}
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:17px;
+  line-height:1.45;overflow-x:hidden}
+h1,h2,h3{margin:0;line-height:1.2;letter-spacing:-.01em}
+h1{font-size:1.85rem;font-weight:700}
+h2{font-size:1.16rem;font-weight:700}
+h3{font-size:.98rem;font-weight:700}
+p{margin:0}
+ol,ul{margin:0;padding:0;list-style:none}
+a{color:var(--blue)}
+a:hover{color:var(--ink)}
+/* The whole service uses one focus treatment: a solid yellow block with a black
+   underline. It is the same on links, inputs, radios and buttons, so keyboard
+   users learn it once. */
+:focus-visible{outline:3px solid var(--focus);outline-offset:0;
+  box-shadow:0 3px 0 0 var(--focus-ink);background:var(--focus);color:var(--focus-ink)}
+.wrap{max-width:1180px;margin-inline:auto;padding-inline:clamp(15px,4vw,30px)}
+/* Four links all reading "Change" are ambiguous out of context, which is how a
+   screen-reader user meets them. The hidden half names the row. */
+.vh{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;
+  clip-path:inset(50%);white-space:nowrap;border:0}
+.skip{position:absolute;left:-9999px}
+.skip:focus{position:fixed;left:10px;top:10px;z-index:99;padding:12px 16px;background:var(--focus);
+  color:var(--focus-ink);box-shadow:0 3px 0 var(--focus-ink);text-decoration:none;font-weight:700}
+
+/* ── masthead ─────────────────────────────────────────────────────────── */
+.mast{background:var(--ink);color:var(--surface);padding:11px 0}
+@media (prefers-color-scheme:dark){.mast{background:#0a0d0e;color:#eef0f1}}
+.mast .wrap{display:flex;align-items:center;gap:11px;flex-wrap:wrap}
+.crest{width:26px;height:26px;flex:none;border:2px solid currentColor}
+.crest path{stroke:currentColor}
+.mast b{font-size:1rem;letter-spacing:-.02em}
+.mast span{color:#c9cdcf;font-size:.85rem;margin-left:auto}
+@media (prefers-color-scheme:dark){.mast span{color:#9aa3a7}}
+.service{border-bottom:4px solid var(--ink);background:var(--surface)}
+.service .wrap{display:flex;align-items:baseline;gap:12px;padding-block:13px;flex-wrap:wrap}
+.service a{font-weight:700;text-decoration:none;color:var(--ink);font-size:1rem}
+.service a:hover{text-decoration:underline}
+.phase{display:inline-flex;align-items:center;gap:9px;font-size:.8rem;color:var(--ink-2)}
+.phase b{background:var(--blue);color:#fff;padding:2px 8px;font-size:.7rem;letter-spacing:.06em;
+  text-transform:uppercase}
+@media (prefers-color-scheme:dark){.phase b{color:#0b0f10}}
+
+/* ── layout ───────────────────────────────────────────────────────────── */
+/* Three columns only when there is room for all three to be useful. The right
+   rail is not filler — it is the two questions the phone line actually gets. */
+.cols{display:grid;grid-template-columns:210px minmax(0,1fr) 250px;gap:clamp(24px,4vw,52px);
+  padding:calc(var(--step)*4) 0 calc(var(--step)*7)}
+@media(max-width:1120px){.cols{grid-template-columns:210px minmax(0,1fr)}}
+@media(max-width:880px){.cols{grid-template-columns:1fr;gap:calc(var(--step)*3)}}
+
+.rail{align-self:start;position:sticky;top:calc(var(--step)*3);font-size:.9rem;
+  border-top:4px solid var(--ink);padding-top:calc(var(--step)*1.5)}
+.rail h2{font-size:.95rem;margin-bottom:calc(var(--step))}
+.rail h2+p,.rail li{color:var(--ink-2)}
+.rail ol{list-style:decimal;padding-left:1.15em;margin-top:calc(var(--step))}
+.rail li{margin-bottom:7px;padding-left:2px}
+.rail .sep{border-top:1px solid var(--line-soft);margin:calc(var(--step)*2.5) 0}
+.rail b{display:block;color:var(--ink)}
+@media(max-width:1120px){
+  .rail{grid-column:1/-1;position:static;display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:calc(var(--step)*3)}
+  .rail .sep{display:none}
+}
+@media(max-width:880px){.rail{grid-column:auto}}
+
+/* Step tracker: a real ordered list, numbered by the browser, not by decoration.
+   Below 880px it collapses to one line so it never eats the top of a phone screen. */
+.track{position:sticky;top:calc(var(--step)*3);align-self:start}
+.track h2{font-size:.74rem;letter-spacing:.11em;text-transform:uppercase;color:var(--ink-2);
+  margin-bottom:calc(var(--step)*1.5)}
+.track ol{counter-reset:s;border-left:4px solid var(--line-soft)}
+.track li{counter-increment:s;padding:9px 0 9px 15px;font-size:.9rem;position:relative;color:var(--ink-2)}
+.track li::before{content:counter(s) ". ";font-weight:700}
+.track li[data-state=done]{color:var(--ink)}
+.track li[data-state=done]::after{content:"done";float:right;font-size:.72rem;font-weight:700;
+  color:var(--green);letter-spacing:.04em;text-transform:uppercase}
+.track li[aria-current=step]{color:var(--ink);font-weight:700;box-shadow:-4px 0 0 0 var(--ink)}
+@media(max-width:880px){
+  .track{position:static}
+  .track h2{display:none}
+  .track ol{border-left:0;border-top:4px solid var(--line-soft);display:flex;overflow:hidden}
+  .track li{flex:1;min-width:0;padding:8px 0 0;font-size:.78rem;white-space:nowrap;overflow:hidden;
+    text-overflow:ellipsis}
+  .track li[data-state=done]::after{display:none}
+  .track li[aria-current=step]{box-shadow:0 -4px 0 0 var(--ink)}
+}
+/* Below 620px four truncated labels say less than one whole one. Keep the current
+   step; the caption above the heading already carries "Step 3 of 4". */
+@media(max-width:620px){
+  .track li:not([aria-current=step]){display:none}
+  .track li[aria-current=step]{flex:none;padding-left:2px}
+}
+
+.form{max-width:33rem}
+.caption{color:var(--ink-2);font-size:.95rem;margin-bottom:calc(var(--step)*.75)}
+.lead{color:var(--ink-2);margin:calc(var(--step)*1.5) 0 calc(var(--step)*3.5);max-width:32rem}
+
+/* ── error summary ────────────────────────────────────────────────────── */
+/* Placed first in the document so a screen reader meets it before the fields,
+   and every entry is a link to the input that failed. */
+.errsum{border:4px solid var(--red);padding:calc(var(--step)*2) calc(var(--step)*2.5);
+  margin-bottom:calc(var(--step)*4);background:var(--surface)}
+.errsum h2{color:var(--red);margin-bottom:calc(var(--step))}
+.errsum li{margin-top:6px}
+.errsum a{color:var(--red);font-weight:700}
+
+/* ── fields ───────────────────────────────────────────────────────────── */
+fieldset{border:0;margin:0;padding:0}
+legend{padding:0;font-weight:700;font-size:1.16rem}
+.grp{margin-bottom:calc(var(--step)*4.5)}
+.grp--err{border-left:4px solid var(--red);padding-left:calc(var(--step)*2)}
+label,.lbl{display:block;font-weight:700}
+.hint{color:var(--ink-2);font-size:.92rem;margin-top:4px}
+.msg{color:var(--red);font-weight:700;margin-top:8px;display:flex;gap:7px}
+.msg::before{content:"Error:";flex:none}
+input[type=text],textarea{font:inherit;width:100%;padding:9px 11px;margin-top:10px;
+  background:var(--surface);color:var(--ink);border:2px solid var(--ink);border-radius:0}
+input[type=text]:disabled{background:var(--bg);color:var(--ink-2);border-color:var(--line);
+  cursor:not-allowed}
+.in--err{border-color:var(--red)}
+.in--w{max-width:15rem}
+/* Tall enough that a near-full answer is readable without scrolling at 375px,
+   where the same text runs to six lines rather than three. */
+textarea{min-height:150px;resize:vertical;line-height:1.4}
+.count{color:var(--ink-2);font-size:.9rem;margin-top:7px}
+.count b{color:var(--ink)}
+
+.opt{display:flex;align-items:flex-start;gap:12px;padding:10px 0}
+.opt input{width:26px;height:26px;flex:none;margin:0;accent-color:var(--ink)}
+.opt label{font-weight:400}
+.opt label b{display:block;font-weight:700}
+/* Conditional reveal, no script: the panel exists only while "Other" is chosen. */
+.reveal{display:none;border-left:4px solid var(--line);margin-left:13px;
+  padding:calc(var(--step)) 0 calc(var(--step)*1.5) calc(var(--step)*2)}
+.cover:has(#cover-other:checked) .reveal{display:block}
+
+/* ── file rows ────────────────────────────────────────────────────────── */
+.file{border:2px solid var(--line-soft);padding:calc(var(--step)*1.75) calc(var(--step)*2);
+  margin-top:calc(var(--step)*1.5);display:flex;gap:calc(var(--step)*2);align-items:center;
+  flex-wrap:wrap;background:var(--surface)}
+.file--done{border-color:var(--green)}
+.file b{font-family:var(--mono);font-size:.88rem;word-break:break-all;min-width:0}
+.file .meta{color:var(--ink-2);font-size:.86rem}
+.file .right{margin-left:auto;display:flex;gap:calc(var(--step)*2);align-items:center}
+.badge{font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  padding:3px 8px;color:var(--on-green);background:var(--green)}
+.drop{border:2px dashed var(--line);padding:calc(var(--step)*3) calc(var(--step)*2);
+  margin-top:calc(var(--step)*1.5);text-align:center;color:var(--ink-2);background:var(--surface)}
+
+/* ── buttons ──────────────────────────────────────────────────────────── */
+.actions{display:flex;gap:calc(var(--step)*2.5);align-items:center;flex-wrap:wrap;
+  border-top:1px solid var(--line-soft);padding-top:calc(var(--step)*3.5)}
+.btn{font:inherit;font-weight:700;padding:11px 20px;border:2px solid transparent;cursor:pointer;
+  background:var(--green);color:var(--on-green);box-shadow:0 3px 0 rgba(0,0,0,.45);
+  transition:transform .08s,box-shadow .08s}
+.btn:hover{filter:brightness(1.12)}
+.btn:active{transform:translateY(3px);box-shadow:0 0 0 rgba(0,0,0,.45)}
+.btn--2{background:var(--surface);color:var(--ink);border-color:var(--line);box-shadow:none}
+.btn--2:hover{filter:none;background:var(--bg)}
+.btn:disabled{opacity:.5;cursor:not-allowed;box-shadow:none;transform:none;filter:none}
+
+/* ── answers so far ───────────────────────────────────────────────────── */
+.answers{margin-top:calc(var(--step)*7);max-width:33rem}
+.answers h2{margin-bottom:calc(var(--step)*1.5)}
+/* A <dl> may only contain dt/dd pairs or <div> wrappers — a bare <span> between
+   them is a structure violation no rendering shows. One <dt> with two <dd> is
+   valid, so the Change link is the second value, not a third column. */
+.answers dl{margin:0;border-top:1px solid var(--line-soft)}
+.answers .row{display:grid;grid-template-columns:minmax(0,11rem) minmax(0,1fr) auto;
+  column-gap:calc(var(--step)*2);padding:11px 0;border-bottom:1px solid var(--line-soft);
+  font-size:.94rem}
+.answers dt{font-weight:700}
+.answers dd{margin:0;color:var(--ink-2);min-width:0;overflow-wrap:anywhere}
+.answers dd.chg{text-align:right;color:inherit}
+@media(max-width:620px){
+  .answers .row{grid-template-columns:minmax(0,1fr) auto}
+  .answers dd:not(.chg){grid-column:1;padding-top:2px}
+  .answers dd.chg{grid-row:span 2;align-self:center}
+}
+
+footer{border-top:1px solid var(--line-soft);background:var(--surface);
+  padding:calc(var(--step)*4) 0 calc(var(--step)*6);font-size:.9rem;color:var(--ink-2)}
+footer ul{display:flex;gap:calc(var(--step)*3);flex-wrap:wrap;margin-bottom:calc(var(--step)*2)}
+footer p{max-width:46rem}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to the form</a>
+
+<div class="mast">
+  <div class="wrap">
+    <svg class="crest" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+      <path d="M6 25V13l10-6 10 6v12" fill="none" stroke-width="2.6" stroke-linejoin="round"/>
+    </svg>
+    <b>Marchbrook Borough Council</b>
+    <span>Licensing and street trading</span>
+  </div>
+</div>
+
+<div class="service">
+  <div class="wrap">
+    <a href="#main">Apply for a pavement licence</a>
+    <span class="phase"><b>Benchmark</b> A design sample, not a live service</span>
+  </div>
+</div>
+
+<div class="wrap cols">
+  <nav class="track" aria-label="Application progress">
+    <h2 id="prog">Your application</h2>
+    <ol aria-labelledby="prog">
+      <li data-state="done">Premises</li>
+      <li data-state="done">Area and furniture</li>
+      <li aria-current="step">Documents</li>
+      <li>Check and submit</li>
+    </ol>
+  </nav>
+
+  <main id="main">
+    <form class="form" action="#answers" method="get" novalidate>
+      <div class="errsum" role="alert" aria-labelledby="errsum-h">
+        <h2 id="errsum-h">There is a problem</h2>
+        <ul>
+          <li><a href="#cert-no">Enter the certificate number shown on your insurance schedule</a></li>
+          <li><a href="#plan-upload">Upload a site plan before continuing</a></li>
+        </ul>
+      </div>
+
+      <p class="caption">Step 3 of 4</p>
+      <h1>Insurance and site plan</h1>
+      <p class="lead">
+        We need proof that you are insured and a plan showing where the furniture will stand.
+        Applications without both are returned unread, which adds about three weeks.
+      </p>
+
+      <div class="grp">
+        <h2 id="ins-h">Public liability insurance</h2>
+        <p class="hint">A certificate or schedule from your insurer. PDF, JPG or PNG, up to 10MB.</p>
+        <div class="file file--done">
+          <b>hollis-lane-cafe-PL-schedule.pdf</b>
+          <span class="meta">1.4MB &middot; uploaded 24 July</span>
+          <span class="right">
+            <span class="badge">Scanned, clean</span>
+            <a href="#ins-h">Replace</a>
+          </span>
+        </div>
+      </div>
+
+      <div class="grp grp--err">
+        <label for="cert-no">Certificate number</label>
+        <p class="hint" id="cert-hint">Printed top right of the schedule, for example PL&#8209;2291045.</p>
+        <p class="msg" id="cert-err">Enter the certificate number shown on your insurance schedule</p>
+        <input type="text" id="cert-no" name="cert-no" class="in--err in--w" inputmode="text"
+               autocomplete="off" aria-describedby="cert-hint cert-err" aria-invalid="true">
+      </div>
+
+      <fieldset class="grp cover">
+        <legend>Level of cover</legend>
+        <p class="hint">Marchbrook requires at least &pound;5 million for tables on the highway.</p>
+        <div class="opt">
+          <input type="radio" id="cover-5" name="cover" value="5m">
+          <label for="cover-5"><b>&pound;5 million</b>The minimum accepted</label>
+        </div>
+        <div class="opt">
+          <input type="radio" id="cover-10" name="cover" value="10m">
+          <label for="cover-10"><b>&pound;10 million</b>Required if you serve alcohol outdoors</label>
+        </div>
+        <div class="opt">
+          <input type="radio" id="cover-other" name="cover" value="other" checked>
+          <label for="cover-other"><b>A different amount</b>Tell us what your policy covers</label>
+        </div>
+        <div class="reveal">
+          <label for="cover-amt">Amount of cover</label>
+          <p class="hint" id="amt-hint">In pounds. Do not include commas.</p>
+          <input type="text" id="cover-amt" name="cover-amt" class="in--w" value="7500000"
+                 inputmode="numeric" aria-describedby="amt-hint">
+        </div>
+      </fieldset>
+
+      <div class="grp grp--err" id="plan-upload">
+        <h2 id="plan-h">Site plan</h2>
+        <p class="hint">
+          Scale drawing or a marked-up photograph showing the licensed area, the building line and
+          the clear route past it.
+        </p>
+        <p class="msg">Upload a site plan before continuing</p>
+        <div class="drop">
+          <p><strong>No file chosen.</strong></p>
+          <p style="margin-top:6px">Drag a file here, or <a href="#plan-h">choose one from your device</a>.</p>
+        </div>
+      </div>
+
+      <div class="grp">
+        <label for="route">How will you keep a 1.5 metre clear route?</label>
+        <p class="hint" id="route-hint">
+          Describe the barrier, the gap you will leave and who checks it at opening.
+          Enforcement officers read this answer on site.
+        </p>
+        <textarea id="route" name="route" rows="4" aria-describedby="route-hint route-count"
+        >Two-metre planter run along the kerb edge, leaving 1.7m between the planters and the shopfront. The duty supervisor measures it with a marked pole at open and after the lunch changeover.</textarea>
+        <p class="count" id="route-count">You have <b>34</b> characters remaining</p>
+      </div>
+
+      <fieldset class="grp">
+        <legend>Declaration</legend>
+        <div class="opt">
+          <input type="checkbox" id="notice" name="notice" checked>
+          <label for="notice">
+            <b>I have displayed the site notice</b>
+            The notice must stay up for the whole 14&#8209;day consultation, starting the day after you submit.
+          </label>
+        </div>
+      </fieldset>
+
+      <div class="actions">
+        <button type="submit" class="btn">Save and continue</button>
+        <button type="button" class="btn btn--2">Save and come back later</button>
+        <button type="button" class="btn btn--2" disabled>Submit application (step 4)</button>
+      </div>
+    </form>
+
+    <section class="answers" id="answers" aria-labelledby="ans-h">
+      <h2 id="ans-h">Your answers so far</h2>
+      <dl>
+        <div class="row">
+          <dt>Premises</dt>
+          <dd>Hollis Lane Coffee House, 12 Hollis Lane, Marchbrook MB4 2QD</dd>
+          <dd class="chg"><a href="#main">Change<span class="vh"> premises</span></a></dd>
+        </div>
+        <div class="row">
+          <dt>Licence type</dt>
+          <dd>Tables and chairs, no alcohol served outdoors</dd>
+          <dd class="chg"><a href="#main">Change<span class="vh"> licence type</span></a></dd>
+        </div>
+        <div class="row">
+          <dt>Area</dt>
+          <dd>6.4m along the frontage &times; 1.8m deep, four tables of two</dd>
+          <dd class="chg"><a href="#main">Change<span class="vh"> area</span></a></dd>
+        </div>
+        <div class="row">
+          <dt>Hours</dt>
+          <dd>08:00 to 20:00, seven days, furniture stored inside overnight</dd>
+          <dd class="chg"><a href="#main">Change<span class="vh"> hours</span></a></dd>
+        </div>
+      </dl>
+    </section>
+  </main>
+
+  <aside class="rail" aria-labelledby="rail-h">
+    <h2 id="rail-h">If you get stuck</h2>
+    <p>
+      <b>01623 555 0180</b>
+      Monday to Thursday, 9am to 4pm. Have reference <strong>PL/2026/0447</strong> ready.
+    </p>
+    <div class="sep"></div>
+    <h2>What happens next</h2>
+    <ol>
+      <li>Your site notice stays up for 14 days while neighbours comment.</li>
+      <li>Highways checks the clear route against your plan.</li>
+      <li>You get a decision, or a request for one more thing, by email.</li>
+    </ol>
+    <div class="sep"></div>
+    <p>
+      Saving does not submit anything. A part-finished application stays in your account for
+      28 days.
+    </p>
+  </aside>
+</div>
+
+<footer>
+  <div class="wrap">
+    <ul>
+      <li><a href="#main">Accessibility statement</a></li>
+      <li><a href="#main">Cookies</a></li>
+      <li><a href="#answers">Privacy</a></li>
+      <li><a href="#prog">Contact licensing</a></li>
+    </ul>
+    <p>
+      Marchbrook Borough Council, the premises, the certificate and the policy figures are invented
+      for this benchmark. Nothing on this page is a real public service or real advice.
+    </p>
+  </div>
+</footer>
+</body>
+</html>

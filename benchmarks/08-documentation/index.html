@@ -1,0 +1,450 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Retries and backoff — Relay webhooks documentation</title>
+<meta name="description" content="How Relay retries a failed webhook delivery: the backoff schedule, what counts as a failure, idempotency keys and how to replay from the dead-letter queue.">
+<meta property="og:title" content="Retries and backoff — Relay webhooks">
+<meta property="og:description" content="The backoff schedule, what counts as a failure, and how to replay a dead-lettered delivery.">
+<meta property="og:type" content="article">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%23191f2b'/><path d='M8 20c0-6 4-9 8-9s5 2 5 4-2 4-4 4' fill='none' stroke='%23ff9a76' stroke-width='2.6' stroke-linecap='round'/><circle cx='22' cy='21' r='2.4' fill='%23ff9a76'/></svg>">
+<style>
+/* Documentation is read sideways: people arrive from search, land mid-page and
+   leave. So the shape is three panes — where am I, what is this, what is on this
+   page — and the prose column never exceeds a comfortable measure. */
+:root{
+  --paper:#fdfcf9; --raise:#fff; --ink:#1b1a17; --ink-2:#57534a; --ink-3:#6d6759;
+  --rule:#e4e0d6; --rule-2:#cfc9bb;
+  --rust:#9a3410; --rust-soft:#fbeee7;
+  --note:#1c4f6b; --note-soft:#e8f2f7; --warn:#7a4b00; --warn-soft:#fbf1dd;
+  /* The shell is dark in both schemes. A docs sidebar that flips with the page
+     makes the whole layout swim; keeping it fixed gives the reader an anchor. */
+  --shell:#191f2b; --shell-2:#222a39; --shell-ink:#dde3ec; --shell-ink-2:#98a4b8;
+  --shell-line:#2e394b; --shell-accent:#ffa680;
+  --code-bg:#151a23; --code-ink:#e3e8ef; --code-dim:#93a1b5; --code-key:#ffb08c; --code-str:#9fd3a8;
+  --sans:ui-sans-serif,system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --mono:ui-monospace,'SF Mono','Cascadia Code','Segoe UI Mono','Roboto Mono',monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root{--paper:#14161a;--raise:#1a1d23;--ink:#e7e9ec;--ink-2:#aab2bd;--ink-3:#98a1ad;
+        --rule:#282d35;--rule-2:#3a414c;--rust:#ff9a76;--rust-soft:#2a1b14;
+        --note:#8ecbe8;--note-soft:#132630;--warn:#e8bb6a;--warn-soft:#2b2214;}
+}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:16px;
+  line-height:1.62;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{margin:0;line-height:1.25;letter-spacing:-.018em;font-weight:650}
+p,ul,ol,table,figure,pre{margin:0}
+a{color:var(--rust)}
+a:hover{text-decoration-thickness:2px}
+code{font-family:var(--mono);font-size:.88em}
+:focus-visible{outline:2px solid var(--rust);outline-offset:2px;border-radius:3px}
+.skip{position:absolute;left:-9999px}
+.skip:focus{position:fixed;left:12px;top:12px;z-index:99;background:var(--rust);color:#fff;
+  padding:10px 15px;border-radius:5px;text-decoration:none}
+.vh{position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip-path:inset(50%);
+  white-space:nowrap}
+
+/* ── frame ────────────────────────────────────────────────────────────── */
+.app{display:grid;grid-template-columns:258px minmax(0,1fr);min-height:100vh}
+/* The dark rail is painted by the grid, not by the sidebar. Giving the sidebar
+   height:100vh instead makes every page exactly one viewport tall even when the
+   article is shorter — a 450px band of nothing that only a full-page capture shows. */
+@media(min-width:1001px){
+  .app{background:linear-gradient(to right,var(--shell) 0 257px,var(--shell-line) 257px 258px,
+       var(--paper) 258px)}
+}
+@media(max-width:1000px){.app{grid-template-columns:1fr}}
+
+/* ── sidebar ──────────────────────────────────────────────────────────── */
+.side{background:var(--shell);color:var(--shell-ink);padding:0 0 34px;
+  border-right:1px solid var(--shell-line)}
+@media(min-width:1001px){
+  .side{position:sticky;top:0;max-height:100vh;overflow-y:auto;align-self:start;
+    background:transparent;border-right:0}
+}
+.brand{display:flex;align-items:center;gap:10px;padding:19px 22px 15px;text-decoration:none;
+  color:inherit;font-weight:700;letter-spacing:-.03em;font-size:1.06rem}
+.brand svg{width:24px;height:24px;flex:none}
+.ver{margin:0 22px 20px;position:relative}
+.ver select{appearance:none;width:100%;font:inherit;font-size:.85rem;padding:7px 30px 7px 11px;
+  background:var(--shell-2);color:var(--shell-ink);border:1px solid var(--shell-line);
+  border-radius:6px;cursor:pointer}
+.ver::after{content:"";position:absolute;right:12px;top:50%;width:7px;height:7px;
+  border-right:2px solid var(--shell-ink-2);border-bottom:2px solid var(--shell-ink-2);
+  transform:translateY(-70%) rotate(45deg);pointer-events:none}
+.side nav{padding:0 12px}
+.side h2{font-size:.68rem;letter-spacing:.13em;text-transform:uppercase;color:var(--shell-ink-2);
+  padding:16px 10px 7px;font-weight:700}
+.side ul{list-style:none;padding:0}
+.side a:not(.brand){display:block;padding:6px 10px;border-radius:6px;text-decoration:none;
+  color:var(--shell-ink-2);font-size:.9rem}
+.side a:not(.brand):hover{background:var(--shell-2);color:var(--shell-ink)}
+.side a[aria-current=page]{background:var(--shell-2);color:var(--shell-accent);font-weight:650;
+  box-shadow:inset 2.5px 0 0 var(--shell-accent)}
+.side .sub{margin-left:10px;border-left:1px solid var(--shell-line);padding-left:6px}
+/* On a phone the full tree is 330px of chrome sitting on top of the heading the
+   reader arrived for. Behind a disclosure it is one line; no script needed, and
+   the control is a real focusable input rather than a div pretending. */
+.navtog{position:absolute;opacity:0;width:1px;height:1px}
+.navtog-l{display:none}
+@media(max-width:1000px){
+  .side{border-right:0;border-bottom:1px solid var(--shell-line);padding-bottom:16px}
+  .side nav{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:0 18px}
+  .side .sub{margin-left:0}
+  .navtog-l{display:flex;align-items:center;gap:10px;margin:0 22px;padding:10px 13px;
+    background:var(--shell-2);border:1px solid var(--shell-line);border-radius:7px;
+    color:var(--shell-ink);font-size:.9rem;font-weight:600;cursor:pointer}
+  .navtog-l::after{content:"";width:7px;height:7px;margin-left:auto;
+    border-right:2px solid var(--shell-ink-2);border-bottom:2px solid var(--shell-ink-2);
+    transform:translateY(-2px) rotate(45deg)}
+  .navtog:focus-visible+.navtog-l{outline:2px solid var(--shell-accent);outline-offset:2px}
+  .side nav{display:none}
+  .navtog:checked~nav{display:grid}
+  .navtog:checked+.navtog-l::after{transform:translateY(2px) rotate(-135deg)}
+}
+
+/* ── page ─────────────────────────────────────────────────────────────── */
+.page{display:grid;grid-template-columns:minmax(0,1fr) 216px;gap:clamp(26px,4vw,54px);
+  padding:clamp(22px,3vw,38px) clamp(18px,4vw,52px) 60px;max-width:1220px;width:100%}
+@media(max-width:1180px){.page{grid-template-columns:minmax(0,1fr)}}
+.crumb{font-size:.83rem;color:var(--ink-3);display:flex;gap:8px;flex-wrap:wrap;
+  margin-bottom:14px}
+.crumb a{color:var(--ink-2);text-decoration:none}
+.crumb a:hover{color:var(--rust);text-decoration:underline}
+/* The separator colour is deliberately faint. Styling every <span> in the trail
+   with it also caught the current-page label and dropped it to 1.6:1. */
+.crumb .sep{color:var(--rule-2)}
+.crumb [aria-current]{color:var(--ink-2)}
+
+article{max-width:44rem}
+article>h1{font-size:2.1rem;letter-spacing:-.03em}
+.meta{display:flex;gap:14px;flex-wrap:wrap;align-items:center;color:var(--ink-3);font-size:.84rem;
+  margin:12px 0 30px;padding-bottom:16px;border-bottom:1px solid var(--rule)}
+.pill{font-family:var(--mono);font-size:.74rem;background:var(--rust-soft);color:var(--rust);
+  padding:3px 8px;border-radius:4px;font-weight:600}
+article>p{margin-bottom:19px;color:var(--ink-2)}
+article>p.first{color:var(--ink);font-size:1.09rem;line-height:1.55}
+article h2{font-size:1.32rem;margin:44px 0 14px;scroll-margin-top:20px}
+article h3{font-size:1.03rem;margin:30px 0 10px}
+/* Anchor affordance on hover only — a permanent # on every heading is noise. */
+article h2 a.anchor,article h3 a.anchor{color:var(--rule-2);text-decoration:none;margin-left:8px;
+  opacity:0;font-weight:400}
+article h2:hover a.anchor,article h3:hover a.anchor,a.anchor:focus-visible{opacity:1}
+article ul,article ol{padding-left:1.35em;margin-bottom:19px;color:var(--ink-2)}
+article li{margin-bottom:7px}
+article li::marker{color:var(--rule-2)}
+strong{color:var(--ink);font-weight:650}
+
+/* ── code ─────────────────────────────────────────────────────────────── */
+.snippet{margin:0 0 24px;border:1px solid var(--rule-2);border-radius:9px;overflow:hidden;
+  background:var(--code-bg)}
+.tabs{display:flex;gap:0;background:var(--shell);border-bottom:1px solid var(--shell-line)}
+.tabs input{position:absolute;opacity:0;width:1px;height:1px}
+.tabs label{font-family:var(--mono);font-size:.78rem;padding:9px 15px;color:var(--code-dim);
+  cursor:pointer;border-bottom:2px solid transparent}
+.tabs label:hover{color:var(--code-ink)}
+.tabs input:checked+label{color:var(--shell-accent);border-bottom-color:var(--shell-accent)}
+.tabs input:focus-visible+label{outline:2px solid var(--shell-accent);outline-offset:-2px}
+.tabs .name{margin-left:auto;align-self:center;padding-right:14px;font-family:var(--mono);
+  font-size:.74rem;color:var(--code-dim)}
+pre{overflow-x:auto;padding:15px 17px;color:var(--code-ink);font-family:var(--mono);
+  font-size:.83rem;line-height:1.68;tab-size:2}
+.snippet .pane{display:none}
+.snippet:has(#t-curl:checked) .pane-curl,.snippet:has(#t-node:checked) .pane-node{display:block}
+.c-dim{color:var(--code-dim)}.c-key{color:var(--code-key)}.c-str{color:var(--code-str)}
+
+/* ── callouts ─────────────────────────────────────────────────────────── */
+.call{border-left:3px solid;padding:14px 18px;border-radius:0 8px 8px 0;margin:0 0 24px;
+  font-size:.94rem}
+.call p{margin:0;color:inherit}
+.call b{display:block;margin-bottom:3px;font-size:.78rem;letter-spacing:.09em;text-transform:uppercase}
+.call--note{border-color:var(--note);background:var(--note-soft);color:var(--ink)}
+.call--note b{color:var(--note)}
+.call--warn{border-color:var(--warn);background:var(--warn-soft);color:var(--ink)}
+.call--warn b{color:var(--warn)}
+
+/* ── table ────────────────────────────────────────────────────────────── */
+/* position:relative so the visually-hidden <caption> is contained and clipped
+   here rather than by the viewport. See 09-data-entry for what that costs. */
+.tbl{overflow-x:auto;position:relative;margin:0 0 24px;border:1px solid var(--rule);
+  border-radius:9px;background:var(--raise)}
+table{width:100%;border-collapse:collapse;font-size:.88rem;min-width:430px}
+th,td{padding:9px 15px;text-align:left;border-bottom:1px solid var(--rule)}
+thead th{font-size:.71rem;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-3);
+  font-weight:700;background:var(--paper)}
+tbody tr:last-child td,tbody tr:last-child th{border-bottom:0}
+td.n,th.n{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+tbody th{font-family:var(--mono);font-weight:600;font-size:.85rem}
+
+/* ── pager ────────────────────────────────────────────────────────────── */
+.pager{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:52px;
+  border-top:1px solid var(--rule);padding-top:24px}
+@media(max-width:560px){.pager{grid-template-columns:1fr}}
+.pager a{display:block;padding:13px 16px;border:1px solid var(--rule);border-radius:9px;
+  text-decoration:none;color:var(--ink);background:var(--raise)}
+.pager a:hover{border-color:var(--rust)}
+.pager small{display:block;color:var(--ink-3);font-size:.76rem;letter-spacing:.07em;
+  text-transform:uppercase;margin-bottom:3px}
+.pager .next{text-align:right}
+
+/* ── on-page contents ─────────────────────────────────────────────────── */
+.onpage{align-self:start;font-size:.87rem}
+@media(min-width:1181px){.onpage{position:sticky;top:26px}}
+.onpage h2{font-size:.7rem;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);
+  margin-bottom:11px}
+.onpage ul{list-style:none;padding:0;border-left:1px solid var(--rule)}
+.onpage a{display:block;padding:5px 0 5px 13px;color:var(--ink-2);text-decoration:none;
+  margin-left:-1px;border-left:1px solid transparent}
+.onpage a:hover{color:var(--ink)}
+.onpage a[aria-current=true]{color:var(--rust);border-left-color:var(--rust);font-weight:600}
+.onpage .edit{margin-top:18px;padding-top:16px;border-top:1px solid var(--rule);display:block;
+  color:var(--ink-2);text-decoration:none;font-size:.84rem}
+.onpage .edit:hover{color:var(--rust)}
+@media(max-width:1180px){
+  .onpage{border:1px solid var(--rule);border-radius:9px;padding:16px 18px;background:var(--raise);
+    max-width:44rem;order:-1;margin-bottom:8px}
+  .onpage ul{border-left:0}
+  .onpage a{padding-left:0;border-left:0}
+  .onpage a[aria-current=true]{border-left:0}
+}
+/* Two columns only where an entry still fits on one line. At 375px `columns:2`
+   split "What counts as a / failure" across the gutter. */
+@media(min-width:621px) and (max-width:1180px){
+  .onpage ul{columns:2;column-gap:26px}
+  .onpage li{break-inside:avoid}
+}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<a class="skip" href="#doc">Skip to the article</a>
+
+<div class="app">
+  <div class="side">
+    <a class="brand" href="#doc">
+      <svg viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+        <path d="M8 20c0-6 4-9 8-9s5 2 5 4-2 4-4 4" fill="none" stroke="var(--shell-accent)"
+              stroke-width="2.6" stroke-linecap="round"/>
+        <circle cx="22" cy="21" r="2.4" fill="var(--shell-accent)"/>
+      </svg>
+      Relay docs
+    </a>
+
+    <div class="ver">
+      <label class="vh" for="ver">API version</label>
+      <select id="ver" name="ver">
+        <option selected>v3 &middot; current</option>
+        <option>v2 &middot; security fixes only</option>
+        <option>v1 &middot; ended 31 March 2026</option>
+      </select>
+    </div>
+
+    <input type="checkbox" id="navtog" class="navtog">
+    <label class="navtog-l" for="navtog">Browse documentation</label>
+
+    <nav aria-label="Documentation">
+      <div>
+        <h2 id="nav-start">Getting started</h2>
+        <ul aria-labelledby="nav-start">
+          <li><a href="#doc">Send your first event</a></li>
+          <li><a href="#doc">Endpoints and secrets</a></li>
+          <li><a href="#doc">Verifying signatures</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2 id="nav-deliver">Delivery</h2>
+        <ul aria-labelledby="nav-deliver">
+          <li><a href="#doc">Delivery lifecycle</a></li>
+          <li><a href="#doc" aria-current="page">Retries and backoff</a></li>
+          <li class="sub"><ul>
+            <li><a href="#schedule">The schedule</a></li>
+            <li><a href="#failure">What counts as failure</a></li>
+            <li><a href="#dead-letter">Dead-letter queue</a></li>
+          </ul></li>
+          <li><a href="#doc">Ordering guarantees</a></li>
+          <li><a href="#doc">Rate limits</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2 id="nav-ref">Reference</h2>
+        <ul aria-labelledby="nav-ref">
+          <li><a href="#doc">HTTP API</a></li>
+          <li><a href="#doc">Event types</a></li>
+          <li><a href="#doc">Error codes</a></li>
+          <li><a href="#doc">Changelog</a></li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+
+  <div class="page">
+    <main id="doc">
+      <nav class="crumb" aria-label="Breadcrumb">
+        <a href="#doc">Docs</a><span class="sep">/</span><a href="#doc">Delivery</a><span class="sep">/</span>
+        <span aria-current="page">Retries and backoff</span>
+      </nav>
+
+      <article>
+        <h1>Retries and backoff</h1>
+        <p class="meta">
+          <span class="pill">v3</span>
+          <span>Updated 22 July 2026</span>
+          <span>Reading time about 6 minutes</span>
+        </p>
+
+        <p class="first">
+          When your endpoint does not accept a delivery, Relay keeps the event and tries again on a
+          fixed schedule. Nothing is dropped silently: an event either succeeds, or ends up in the
+          dead-letter queue where you can see it.
+        </p>
+        <p>
+          This page covers the schedule itself, what Relay treats as a failure, and how to replay a
+          delivery once your endpoint is healthy again. If you are debugging one specific event,
+          the delivery log on the endpoint page shows every attempt with the response body we saw.
+        </p>
+
+        <h2 id="schedule">The schedule<a class="anchor" href="#schedule" aria-label="Link to this section">#</a></h2>
+        <p>
+          Relay retries eight times over roughly 26 hours. Intervals are exponential with jitter, so
+          a fleet of endpoints recovering from the same outage does not stampede you at the same
+          second.
+        </p>
+
+        <!-- Anything that scrolls sideways must be reachable by keyboard, or the
+             content past the fold is unreachable without a mouse. -->
+        <div class="tbl" tabindex="0" role="region" aria-label="Retry schedule, scrollable">
+          <table>
+            <caption class="vh">Retry attempts, delay after the previous attempt, and elapsed time</caption>
+            <thead>
+              <tr>
+                <th scope="col">Attempt</th>
+                <th scope="col" class="n">Delay</th>
+                <th scope="col" class="n">Elapsed</th>
+                <th scope="col">Jitter</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><th scope="row">1</th><td class="n">immediate</td><td class="n">0s</td><td>none</td></tr>
+              <tr><th scope="row">2</th><td class="n">30s</td><td class="n">30s</td><td>&plusmn;5s</td></tr>
+              <tr><th scope="row">3</th><td class="n">2m</td><td class="n">2m 30s</td><td>&plusmn;20s</td></tr>
+              <tr><th scope="row">4</th><td class="n">10m</td><td class="n">12m 30s</td><td>&plusmn;90s</td></tr>
+              <tr><th scope="row">5</th><td class="n">1h</td><td class="n">1h 12m</td><td>&plusmn;9m</td></tr>
+              <tr><th scope="row">6</th><td class="n">3h</td><td class="n">4h 12m</td><td>&plusmn;27m</td></tr>
+              <tr><th scope="row">7</th><td class="n">8h</td><td class="n">12h 12m</td><td>&plusmn;72m</td></tr>
+              <tr><th scope="row">8</th><td class="n">14h</td><td class="n">26h 12m</td><td>&plusmn;2h</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="call call--note">
+          <b>Note</b>
+          <p>
+            The schedule is per endpoint, not per event. Pausing an endpoint freezes its timers;
+            resuming continues from the attempt it had reached rather than starting again.
+          </p>
+        </div>
+
+        <h2 id="failure">What counts as a failure<a class="anchor" href="#failure" aria-label="Link to this section">#</a></h2>
+        <p>
+          A delivery succeeds on any <code>2xx</code>. Everything below is retried, except
+          <code>410 Gone</code>, which disables the endpoint after the first response — it is the
+          documented way to tell us to stop.
+        </p>
+        <ul>
+          <li><strong>Connection refused, DNS failure or TLS error</strong> — retried.</li>
+          <li><strong>No response within 12 seconds</strong> — retried, and the attempt is logged as a timeout.</li>
+          <li><strong><code>429</code> with a <code>Retry-After</code> header</strong> — we honour the header when it asks for more than the next scheduled delay, never less.</li>
+          <li><strong>Any other <code>4xx</code> or <code>5xx</code></strong> — retried on the schedule above.</li>
+          <li><strong><code>3xx</code></strong> — not followed. Point the endpoint at the final URL.</li>
+        </ul>
+
+        <div class="call call--warn">
+          <b>Take care</b>
+          <p>
+            Returning <code>200</code> before you have persisted the event is the most common cause
+            of lost webhooks. Acknowledge after the write, not before it — a retry you never receive
+            cannot be replayed.
+          </p>
+        </div>
+
+        <h3>Making retries safe</h3>
+        <p>
+          Every attempt carries the same <code>Relay-Event-Id</code>. Store it and reject repeats:
+          that is the whole of idempotency here, and it costs one unique index.
+        </p>
+
+        <figure class="snippet">
+          <!-- Radios styled as tabs are a radio group, not a tablist. role="tablist"
+               forbids <input> children, and claiming a role the markup cannot keep
+               is worse than claiming none. -->
+          <div class="tabs" role="group" aria-label="Example language">
+            <input type="radio" name="lang" id="t-curl" checked>
+            <label for="t-curl">curl</label>
+            <input type="radio" name="lang" id="t-node">
+            <label for="t-node">node</label>
+            <span class="name">verify-and-store</span>
+          </div>
+          <pre class="pane pane-curl" tabindex="0" aria-label="curl example"><code><span class="c-dim"># Replay one delivery once the endpoint is healthy again</span>
+curl -X POST https://api.relay.example/v3/deliveries/<span class="c-str">dl_8fa21c</span>/replay \
+  -H <span class="c-str">"Authorization: Bearer $RELAY_KEY"</span> \
+  -H <span class="c-str">"Relay-Idempotency-Key: replay-dl_8fa21c-1"</span>
+
+<span class="c-dim"># => 202 Accepted, queued as a fresh attempt 1</span></code></pre>
+          <pre class="pane pane-node" tabindex="0" aria-label="node example"><code><span class="c-key">app</span>.post(<span class="c-str">'/webhooks/relay'</span>, <span class="c-key">async</span> (req, res) =&gt; {
+  <span class="c-key">const</span> id = req.headers[<span class="c-str">'relay-event-id'</span>];
+
+  <span class="c-dim">// Unique index on event_id turns a duplicate into a no-op.</span>
+  <span class="c-key">const</span> { rowCount } = <span class="c-key">await</span> db.query(
+    <span class="c-str">'insert into inbox (event_id, body) values ($1, $2) on conflict do nothing'</span>,
+    [id, req.body],
+  );
+
+  <span class="c-key">if</span> (rowCount === <span class="c-str">0</span>) <span class="c-key">return</span> res.sendStatus(<span class="c-str">200</span>); <span class="c-dim">// already handled</span>
+
+  <span class="c-key">await</span> enqueue(id);        <span class="c-dim">// persist first…</span>
+  res.sendStatus(<span class="c-str">200</span>);        <span class="c-dim">// …then acknowledge</span>
+});</code></pre>
+        </figure>
+
+        <h2 id="dead-letter">Dead-letter queue<a class="anchor" href="#dead-letter" aria-label="Link to this section">#</a></h2>
+        <p>
+          After the eighth attempt the delivery is dead-lettered. It is kept for 30 days with the
+          full request we sent and the last response we got, and it does not count against your
+          delivery quota.
+        </p>
+        <p>
+          Replay a single delivery with the call above, or select a time range in the dashboard and
+          replay in bulk. Replays enter the queue as a fresh attempt 1 and follow the same schedule.
+        </p>
+        <ul>
+          <li>Bulk replays are rate-limited to 200 deliveries a minute per endpoint.</li>
+          <li>An endpoint disabled by <code>410</code> must be re-enabled before anything replays.</li>
+          <li>Deliveries older than 30 days are removed and cannot be recovered.</li>
+        </ul>
+      </article>
+
+      <nav class="pager" aria-label="Page navigation">
+        <a href="#doc"><small>Previous</small>Delivery lifecycle</a>
+        <a class="next" href="#doc"><small>Next</small>Ordering guarantees</a>
+      </nav>
+    </main>
+
+    <nav class="onpage" aria-labelledby="onpage-h">
+      <h2 id="onpage-h">On this page</h2>
+      <ul>
+        <li><a href="#schedule" aria-current="true">The schedule</a></li>
+        <li><a href="#failure">What counts as a failure</a></li>
+        <li><a href="#dead-letter">Dead-letter queue</a></li>
+      </ul>
+      <a class="edit" href="#doc">Edit this page on GitHub</a>
+      <p style="margin-top:14px;font-size:.78rem;color:var(--ink-3)">
+        Relay is a fictional service written for this benchmark. The endpoints, keys and figures
+        are not real.
+      </p>
+    </nav>
+  </div>
+</div>
+</body>
+</html>

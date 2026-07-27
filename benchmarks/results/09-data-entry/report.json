@@ -1,0 +1,30 @@
+{
+  "url": "http://localhost:4321/09-data-entry/",
+  "widths": {
+    "375": {
+      "status": 200,
+      "screenshot": "375.png",
+      "horizontalOverflowPx": 0,
+      "title": "Goods-in · Bay 3 — booking in DN-40219 — Kestrel WMS"
+    },
+    "768": {
+      "status": 200,
+      "screenshot": "768.png",
+      "horizontalOverflowPx": 0,
+      "title": "Goods-in · Bay 3 — booking in DN-40219 — Kestrel WMS"
+    },
+    "1440": {
+      "status": 200,
+      "screenshot": "1440.png",
+      "horizontalOverflowPx": 0,
+      "title": "Goods-in · Bay 3 — booking in DN-40219 — Kestrel WMS"
+    }
+  },
+  "consoleErrors": [],
+  "failedRequests": [],
+  "brokenLinks": [],
+  "axe": {
+    "violations": [],
+    "passes": 0
+  }
+}
