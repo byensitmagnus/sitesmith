@@ -24,18 +24,37 @@ docker info --format "{{.ServerVersion}}" && node tools/bench-container.mjs self
 
 ## What is pinned, and where
 
-`bench/base.lock.json` is committed source and is the only place the base image digest,
-the CLI version and the model are written down. `build` consumes those values; there is no
-path in it that pulls a mutable tag or resolves a digest of its own, because a tag can move
-under a gate that is already green. `bench/tools-package-lock.json` is committed for the
-same reason.
+`bench/base.lock.json` is committed source and is the only place these are written down:
 
-What the build *produces* — the machine-specific image id — is written to
-`benchmarks/v2/runs/image-build.json`, which is git-ignored. It is an artifact of running
-the benchmark, not an edit to it, so **nothing needs to be committed between the two gates
-and the eighteen runs**. That matters: every command from `probe` onwards refuses to
-proceed if the working tree is dirty or if `HEAD` has moved, and both gates are void if it
-does.
+| Pinned | How |
+| --- | --- |
+| base image | by sha256 digest — `build` pulls `node:22-bookworm-slim@sha256:…` and has no path that resolves a tag |
+| Debian packages | by `snapshot.debian.org` at a fixed timestamp; the base digest alone leaves `apt-get` free to install whatever the mirror serves that morning |
+| the CLI | by version, **and** by recomputing the tarball's sha512 against the recorded integrity hash before installing — a mismatch fails the build |
+| measurement tools | by a committed `tools-package-lock.json` |
+
+The build also refuses to produce an image whose CLI has no `--max-budget-usd`, because
+the per-run cap is passed to the process. A total checked after the fact is an audit, not
+a limit.
+
+What the build *produces* — the machine-specific image id and the list of packages apt
+actually installed — goes to `benchmarks/v2/runs/`, which is git-ignored. Those are
+artifacts of running the benchmark, not edits to it, so **nothing needs to be committed
+between the two gates and the eighteen runs**. Every command from `probe` onwards refuses
+to proceed on a dirty working tree or a moved `HEAD`, and both gates are void if either
+changes. The gate verdict itself lives under `benchmarks/v2/runs/` for exactly this
+reason: written anywhere tracked, a successful probe would leave an untracked file and the
+next command would refuse to run — the benchmark would block on its own output.
+
+## The order of the eighteen
+
+Not three treatment runs then three control runs. Each `(brief, replicate)` pair runs its
+two arms back to back so both meet the same provider conditions, which arm goes first
+alternates so no position advantage accumulates, and briefs interleave across replicates so
+drift over a long session is spread rather than concentrated. Nine pairs cannot split
+first-position evenly; it is 5/4 by construction and `preflight` prints it. Nothing is
+random: the order is a function of the brief list, identical on every machine, and hashed
+into the fingerprint.
 
 ---
 

@@ -16,8 +16,11 @@
     "resolvedOn": "2026-07-27",
     "note": "Multi-architecture manifest list. node:22-bookworm-slim@<digest> resolves to this exact list on every host."
   },
+  "debianSnapshot": "20260715T000000Z",
+  "debianSnapshotNote": "apt reads snapshot.debian.org at this timestamp, not deb.debian.org. The base digest freezes the image; without this, apt-get would still install whatever the mirror served that morning. Verified to resolve to Debian 12.15 bookworm.",
   "claudeVersion": "2.1.220",
   "claudeIntegrity": "sha512-ogBrvwkqF9f8okmnXKxmRNHuvtFxFEffe5pWdqOV3iQDxlUOKirFqnyWC7NGXXnDA4WkkbPH8pvSbwyCR2Auyw==",
+  "claudeIntegrityNote": "npm dist.integrity for that exact version. The build downloads the tarball, recomputes its sha512 and refuses to install on a mismatch.",
   "claudePublished": "2026-07-24T23:11:21.821Z",
   "model": "claude-opus-4-5-20251101",
   "modelAccept": ["claude-opus-4-5-20251101"],

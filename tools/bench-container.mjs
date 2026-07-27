@@ -41,26 +41,39 @@ const BRIEFS = join(ROOT, 'benchmarks/v2/briefs');
 const BASE_LOCK_PATH = join(BENCH, 'base.lock.json');
 const TOOLS_PKG = join(BENCH, 'tools-package.json');
 const TOOLS_LOCK = join(BENCH, 'tools-package-lock.json');
+/* Both of these live under benchmarks/v2/runs/, which is git-ignored, and that is not
+   tidiness. A gate verdict written anywhere else appears as an untracked file, and the
+   next command's clean-tree check would then refuse to run — the runner would block on
+   its own output and could never complete the sequence it requires. */
 const BUILD_ARTIFACT = join(RUNS, 'image-build.json');
-const GATE = join(ROOT, 'benchmarks/v2/isolation-probe.json');
+const GATE = join(RUNS, 'isolation-probe.json');
 
 const die = (m) => { console.error(m); process.exit(2); };
 const sha = (s) => createHash('sha256').update(s).digest('hex');
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const git = (...a) => execFileSync('git', a, { cwd: ROOT, encoding: 'utf8' }).trim();
+/** Untrimmed. `git status --porcelain` puts two status columns before every path, and
+ *  trimming eats the leading space of the first line only, which silently shortened the
+ *  first offending path by one character. */
+const gitRaw = (...a) => execFileSync('git', a, { cwd: ROOT, encoding: 'utf8' });
 
 /* ── the committed lock is the only source of these ────────────────────── */
 
 const BASE_LOCK_TEXT = await readFile(BASE_LOCK_PATH, 'utf8').catch(() => die('bench/base.lock.json is missing.'));
 const LOCK = JSON.parse(BASE_LOCK_TEXT);
-for (const k of ['base', 'baseDigest', 'claudeVersion', 'model', 'modelAccept', 'endpoint']) {
+for (const k of ['base', 'baseDigest', 'debianSnapshot', 'claudeVersion', 'claudeIntegrity',
+                 'model', 'modelAccept', 'endpoint']) {
   if (!LOCK[k]) die(`bench/base.lock.json has no ${k}`);
 }
 if (!/^sha256:[0-9a-f]{64}$/.test(LOCK.baseDigest)) die('baseDigest must be an immutable sha256 digest');
+if (!/^sha512-[A-Za-z0-9+/=]+$/.test(LOCK.claudeIntegrity)) die('claudeIntegrity must be an sha512 subresource hash');
+if (!/^\d{8}T\d{6}Z$/.test(LOCK.debianSnapshot)) die('debianSnapshot must be a snapshot.debian.org timestamp');
 
 const BASE = LOCK.base;
 const BASE_DIGEST = LOCK.baseDigest;
+const DEBIAN_SNAPSHOT = LOCK.debianSnapshot;
 const CLAUDE_VERSION = LOCK.claudeVersion;
+const CLAUDE_INTEGRITY = LOCK.claudeIntegrity;
 const MODEL = LOCK.model;
 const ENDPOINT = LOCK.endpoint;
 /* Exact acceptance. An alias may be added to modelAccept only together with the dated
@@ -111,14 +124,45 @@ export const basePullRef = () => `${BASE}@${BASE_DIGEST}`;
 export const buildArgs = () => [
   'build', '--pull=false',
   '--build-arg', `BASE_DIGEST=${BASE_DIGEST}`,
+  '--build-arg', `DEBIAN_SNAPSHOT=${DEBIAN_SNAPSHOT}`,
   '--build-arg', `CLAUDE_VERSION=${CLAUDE_VERSION}`,
+  '--build-arg', `CLAUDE_INTEGRITY=${CLAUDE_INTEGRITY}`,
   '-t', IMAGE, BENCH,
 ];
 
-/** No `echo EXIT=$?`: that swallowed the CLI's status and made a failed run exit 0. */
+/** No `echo EXIT=$?`: that swallowed the CLI's status and made a failed run exit 0.
+ *  --max-budget-usd is the cap the CLI enforces on itself while it spends. Checking a
+ *  total afterwards is an audit, not a limit: by the time the number is known the money
+ *  is already gone. The build refuses to produce an image whose CLI lacks the flag. */
 export const generationCommand = (prompt) =>
   `claude -p ${JSON.stringify(prompt)} --model ${MODEL} --output-format json ` +
-  `--max-turns ${MAX_TURNS} > /work/agent.json 2> /work/agent.err`;
+  `--max-turns ${MAX_TURNS} --max-budget-usd ${MAX_COST_PER_RUN_USD} ` +
+  `> /work/agent.json 2> /work/agent.err`;
+
+/** The order the eighteen runs happen in.
+ *
+ *  The old order ran all three treatment replicates of a brief before any control
+ *  replicate, so a slow provider hour or a cold start landed entirely on one arm. Here
+ *  each (brief, replicate) pair runs its two arms back to back, so both arms of a pair
+ *  meet the same conditions, and which arm goes first alternates across pairs so no
+ *  position advantage accumulates. Briefs interleave across replicates as well, so
+ *  drift over the session is spread rather than concentrated.
+ *
+ *  Nine pairs cannot split first-position evenly; it is 5/4 by construction, recorded
+ *  rather than hidden. There is no randomness: the order is a function of the brief
+ *  list, so it is identical on every machine and hashed into the fingerprint. */
+export const runOrder = () => {
+  const order = [];
+  for (const replicate of [1, 2, 3]) {
+    for (const [b, brief] of BRIEF_LIST.entries()) {
+      const withFirst = (replicate + b) % 2 === 0;
+      for (const arm of withFirst ? ['with', 'without'] : ['without', 'with']) {
+        order.push({ index: order.length, brief, arm, run: replicate, pairWithFirst: withFirst });
+      }
+    }
+  }
+  return order;
+};
 
 export const discoveryCommand = () =>
   `claude -p "List the names of every skill available to you, then stop. If none, say NONE." ` +
@@ -153,10 +197,10 @@ export const budgetProblems = (cost, spentSoFar) => {
  *  benchmarks/v2/runs/ is git-ignored, so build artifacts and run output never
  *  make the tree dirty and no commit is needed mid-benchmark. */
 export const dirtyPaths = (porcelain) =>
-  porcelain.split('\n').map((l) => l.slice(3).trim()).filter(Boolean);
+  porcelain.split('\n').filter((l) => l.length > 3).map((l) => l.slice(3).trim()).filter(Boolean);
 
 function requireCleanTree(what) {
-  const paths = dirtyPaths(git('status', '--porcelain'));
+  const paths = dirtyPaths(gitRaw('status', '--porcelain'));
   if (paths.length) {
     die(`the working tree is not clean, so ${what} would not be reproducible from HEAD:\n` +
         paths.map((p) => '    ' + p).join('\n') +
@@ -192,14 +236,18 @@ async function fingerprint() {
     proxySha256: sha(await readFile(join(BENCH, 'egress-proxy.mjs'), 'utf8')),
     toolsLockSha256: sha(await readFile(TOOLS_LOCK, 'utf8').catch(() => '')),
     baseDigest: BASE_DIGEST,
+    debianSnapshot: DEBIAN_SNAPSHOT,
     claudeVersion: CLAUDE_VERSION,
+    claudeIntegrity: CLAUDE_INTEGRITY,
     model: MODEL,
     egressAllowlist: [ENDPOINT],
     imageId: build.imageId ?? null,
     imageBuiltFromDigest: build.baseDigest ?? null,
+    aptManifestSha256: build.aptManifestSha256 ?? null,
     skillCommit: git('rev-parse', 'HEAD'),
     skillPayloadSha256: await hashTree(SKILL_DIR),
     promptSha256: sha(GENERATION_PROMPT),
+    runOrderSha256: sha(JSON.stringify(runOrder())),
   };
 }
 
@@ -238,21 +286,31 @@ async function build() {
   if (!ver.includes(CLAUDE_VERSION)) {
     die(`the image reports CLI "${ver}" but the lock pins ${CLAUDE_VERSION}. Not proceeding.`);
   }
+  const apt = docker(['run', '--rm', '--entrypoint', 'cat', IMAGE, '/opt/apt-manifest.txt']).stdout;
+  if (!apt.trim()) die('the image has no apt manifest, so what it installed cannot be recorded');
 
   // An artifact, not a source edit. benchmarks/v2/runs/ is git-ignored, so building does
   // not dirty the tree and no commit is needed between here and the eighteen runs.
   await mkdir(RUNS, { recursive: true });
+  await writeFile(join(RUNS, 'apt-manifest.txt'), apt);
   await writeFile(BUILD_ARTIFACT, JSON.stringify({
     imageTag: IMAGE, imageId: id,
     base: BASE, baseDigest: BASE_DIGEST,
+    debianSnapshot: DEBIAN_SNAPSHOT,
+    aptPackages: apt.trim().split('\n').length,
+    aptManifestSha256: sha(apt),
     claudeVersion: ver, pinnedClaudeVersion: CLAUDE_VERSION,
+    claudeIntegrity: CLAUDE_INTEGRITY,
+    claudeIntegrityVerified: 'in-image, before install; the build fails on a mismatch',
+    hardBudgetFlag: 'verified present at build time',
     model: MODEL,
     builtAt: new Date().toISOString(),
     builtFromCommit: git('rev-parse', 'HEAD'),
     note: 'Build output, machine-specific. Committed with the run results afterwards, never before.',
   }, null, 2) + '\n');
 
-  console.log(`\n  image ${IMAGE}\n  base  ${BASE_DIGEST}\n  cli   ${ver}\n  id    ${id}`);
+  console.log(`\n  image ${IMAGE}\n  base  ${BASE_DIGEST}\n  apt   ${apt.trim().split('\n').length} packages from snapshot ${DEBIAN_SNAPSHOT}`);
+  console.log(`  cli   ${ver}, tarball integrity verified\n  id    ${id}`);
   console.log(`\n  wrote ${BUILD_ARTIFACT.replace(ROOT, '')}\n  next: up, then probe\n`);
 }
 
@@ -451,17 +509,22 @@ async function preflight() {
   const gate = await readFile(GATE, 'utf8').then(JSON.parse, () => null);
   const fp = await fingerprint();
   const drift = gate ? driftAgainst(gate, fp) : [];
-  const dirty = dirtyPaths(git('status', '--porcelain'));
-  console.log(`\n  planned: ${BRIEF_LIST.length} briefs x 2 arms x 3 = ${BRIEF_LIST.length * 6} generations`);
-  for (const b of BRIEF_LIST) for (const arm of ['with', 'without']) for (const n of [1, 2, 3]) console.log(`    ${b}-${arm}-${n}`);
-  console.log(`\n  model            ${MODEL}`);
+  const dirty = dirtyPaths(gitRaw('status', '--porcelain'));
+  const order = runOrder();
+  console.log(`\n  planned: ${BRIEF_LIST.length} briefs x 2 arms x 3 = ${order.length} generations, in this order`);
+  for (const s of order) console.log(`    ${String(s.index + 1).padStart(2)}  ${s.brief}-${s.arm}-${s.run}`);
+  console.log(`\n  first position   ${order.filter((s) => s.index % 2 === 0 && s.arm === 'with').length} with, ` +
+    `${order.filter((s) => s.index % 2 === 0 && s.arm === 'without').length} without (9 pairs cannot split evenly)`);
+  console.log(`  model            ${MODEL}`);
   console.log(`  base digest      ${BASE_DIGEST}   (committed)`);
-  console.log(`  cli              ${CLAUDE_VERSION}   (committed)`);
+  console.log(`  debian snapshot  ${DEBIAN_SNAPSHOT}   (committed)`);
+  console.log(`  cli              ${CLAUDE_VERSION}, integrity pinned   (committed)`);
   console.log(`  image id         ${fp.imageId ?? 'not built yet'}   (artifact)`);
+  console.log(`  apt manifest     ${fp.aptManifestSha256?.slice(0, 16) ?? 'not built yet'}   (artifact)`);
   console.log(`  skill commit     ${fp.skillCommit}`);
   console.log(`  working tree     ${dirty.length ? 'DIRTY: ' + dirty.join(', ') : 'clean'}`);
-  console.log(`  per run          ${RUN_TIMEOUT_MS / 60000} min, ${MAX_TURNS} turns, $${MAX_COST_PER_RUN_USD} cap`);
-  console.log(`  total budget     $${MAX_TOTAL_COST_USD}`);
+  console.log(`  per run          ${RUN_TIMEOUT_MS / 60000} min, ${MAX_TURNS} turns, $${MAX_COST_PER_RUN_USD} enforced by the CLI`);
+  console.log(`  total budget     $${MAX_TOTAL_COST_USD}, checked before each run starts`);
   console.log(`  mechanical gate  ${gate?.mechanicalProbe?.pass === true ? 'green' : 'NOT GREEN'}`);
   console.log(`  discovery gate   ${gate?.modelProbe?.pass === true ? 'green' : 'NOT GREEN'}`);
   if (drift.length) console.log(`  DRIFT since the gates: ${drift.map(([k]) => k).join(', ')}`);
@@ -471,7 +534,8 @@ async function preflight() {
 
 /* ── run ───────────────────────────────────────────────────────────────── */
 
-async function runOne(brief, arm, n, secret, fp, spentSoFar) {
+async function runOne(slot, secret, fp, spentSoFar) {
+  const { brief, arm, run: n } = slot;
   const runId = `${brief}-${arm}-${n}`;
   const ws = join(LAB, runId);
   const name = runName(runId);
@@ -508,6 +572,7 @@ async function runOne(brief, arm, n, secret, fp, spentSoFar) {
 
   const manifest = {
     runId, brief, arm, run: Number(n),
+    orderIndex: slot.index, pairWithFirst: slot.pairWithFirst,
     prompt: GENERATION_PROMPT, promptSha256: sha(GENERATION_PROMPT), briefSha256: sha(briefText),
     modelRequested: MODEL, modelReturned, modelAccepted: modelAccepted(modelReturned),
     sessionId: j?.session_id ?? null, usage: j?.usage ?? null, numTurns: j?.num_turns ?? null,
@@ -545,16 +610,20 @@ async function runAll() {
   const secret = await readSecret('all 18 generations, asked once');
   if (!secret) die('no key given');
 
+  const order = runOrder();
+  console.log(`\n  order (counterbalanced, deterministic): ${order.map((s) => s.arm[0]).join('')}\n`);
+
   let spent = 0;
-  for (const brief of BRIEF_LIST) {
-    for (const arm of ['with', 'without']) {
-      for (const n of [1, 2, 3]) {
-        const res = await runOne(brief, arm, n, secret, fp, spent);
-        spent += res.cost;
-        if (!res.ok) die(`\n  stopped at the first failure. $${spent.toFixed(2)} spent. ` +
-          'The failed run is under INVALID-* and is not benchmark data.\n');
-      }
+  for (const slot of order) {
+    // Checked before the money is committed, not after it is reported.
+    if (spent + MAX_COST_PER_RUN_USD > MAX_TOTAL_COST_USD) {
+      die(`\n  stopping before run ${slot.index + 1}: $${spent.toFixed(2)} spent and the next run ` +
+        `could take it past the $${MAX_TOTAL_COST_USD} budget.\n`);
     }
+    const res = await runOne(slot, secret, fp, spent);
+    spent += res.cost;
+    if (!res.ok) die(`\n  stopped at the first failure. $${spent.toFixed(2)} spent. ` +
+      'The failed run is under INVALID-* and is not benchmark data.\n');
   }
   console.log(`\n  18/18 complete, $${spent.toFixed(2)} spent.\n`);
 }
@@ -578,13 +647,36 @@ async function selftest() {
     BASE_DIGEST === JSON.parse(await readFile(BASE_LOCK_PATH, 'utf8')).baseDigest);
   ok('the image id is an artifact, not source',
     BUILD_ARTIFACT.includes('benchmarks') && BUILD_ARTIFACT.includes('runs') && !tracked('bench/image.lock.json'));
+  // The runner must be able to finish its own sequence. Every file it writes between
+  // `build` and the last run has to be git-ignored, or the next command's clean-tree
+  // check refuses to proceed and the benchmark blocks on its own output.
   const ignored = (p) => spawnSync('git', ['check-ignore', '-q', p], { cwd: ROOT }).status === 0;
-  ok('run output and build artifacts cannot dirty the tree',
-    ignored('benchmarks/v2/runs/image-build.json') && ignored('benchmarks/v2/runs/01-company-with-1/manifest.json'));
+  const rel = (p) => p.replace(ROOT, '').replace(/\\/g, '/');
+  for (const [what, p] of [
+    ['the mechanical gate verdict', rel(GATE)],
+    ['the discovery verdict', rel(GATE)],
+    ['the build artifact', rel(BUILD_ARTIFACT)],
+    ['the apt manifest', rel(join(RUNS, 'apt-manifest.txt'))],
+    ['a run manifest', rel(join(RUNS, '01-company-with-1/manifest.json'))],
+    ['a quarantined run', rel(join(RUNS, 'INVALID-01-company-with-1/manifest.json'))],
+  ]) ok(`${what} cannot dirty the tree`, ignored(p), p);
 
   const dockerfile = await readFile(join(BENCH, 'Dockerfile'), 'utf8');
   ok('probe.sh is not baked into the image', !/COPY\s+probe\.sh/.test(dockerfile));
   ok('the Dockerfile takes the digest as a build argument', /FROM \S+@\$\{BASE_DIGEST\}/.test(dockerfile));
+  // Comments are stripped first: this file explains why deb.debian.org is not used, and
+  // a naive grep would read its own explanation as the thing it forbids.
+  const instructions = dockerfile.split('\n').filter((l) => !l.trim().startsWith('#')).join('\n');
+  ok('apt reads a frozen snapshot, not a moving mirror',
+    /snapshot\.debian\.org\/archive\/debian\/%s/.test(instructions) && !/deb\.debian\.org/.test(instructions));
+  ok('the CLI tarball is verified before it is installed',
+    /npm pack "@anthropic-ai\/claude-code@\$\{CLAUDE_VERSION\}"/.test(dockerfile) &&
+    /createHash\("sha512"\)/.test(dockerfile) && /npm install -g "\$TARBALL"/.test(dockerfile));
+  ok('the build refuses a CLI without the budget flag', /max-budget-usd/.test(dockerfile));
+  ok('what apt installed is recorded in the image', /dpkg-query -W .* > \/opt\/apt-manifest\.txt/.test(dockerfile));
+  ok('the integrity hash is actually passed to the build',
+    buildArgs().includes(`CLAUDE_INTEGRITY=${CLAUDE_INTEGRITY}`) &&
+    buildArgs().includes(`DEBIAN_SNAPSHOT=${DEBIAN_SNAPSHOT}`));
 
   const ep = await readFile(join(BENCH, 'entrypoint.sh'), 'utf8');
   ok('the secret arrives on stdin', /read -r -t \d+ _S/.test(ep));
@@ -620,6 +712,25 @@ async function selftest() {
     expectedMounts('with', true).length === 3);
   ok('the real exit code is kept',
     !/echo EXIT=/.test(generationCommand('p')) && /2> \/work\/agent\.err/.test(generationCommand('p')));
+  ok('the spend cap is handed to the process, not checked afterwards',
+    generationCommand('p').includes(`--max-budget-usd ${MAX_COST_PER_RUN_USD}`));
+
+  const order = runOrder();
+  const count = (f) => order.filter(f).length;
+  ok('the run order is 18 slots, 9 per arm',
+    order.length === 18 && count((s) => s.arm === 'with') === 9 && count((s) => s.arm === 'without') === 9);
+  ok('every brief gets three of each arm',
+    BRIEF_LIST.every((b) => ['with', 'without'].every((a) => count((s) => s.brief === b && s.arm === a) === 3)));
+  ok('the two arms of a pair are adjacent',
+    order.every((s, i) => i % 2 === 1 || (order[i + 1].brief === s.brief && order[i + 1].run === s.run &&
+      order[i + 1].arm !== s.arm)));
+  ok('first position is counterbalanced as far as nine pairs allow',
+    Math.abs(count((s) => s.index % 2 === 0 && s.arm === 'with') -
+             count((s) => s.index % 2 === 0 && s.arm === 'without')) <= 1);
+  ok('briefs interleave rather than running in blocks',
+    new Set(order.slice(0, 6).map((s) => s.brief)).size === BRIEF_LIST.length);
+  ok('the order is deterministic, not seeded by chance',
+    JSON.stringify(runOrder()) === JSON.stringify(runOrder()));
   ok('the model must match exactly',
     modelAccepted(MODEL) && !modelAccepted('claude-sonnet-4-5-20250929') && !modelAccepted(null));
   ok('a timeout kills and removes the container',
@@ -631,8 +742,9 @@ async function selftest() {
     !gateReady(null) && !gateReady({ mechanicalProbe: { pass: true } }) &&
     !gateReady({ mechanicalProbe: { pass: true }, modelProbe: { pass: false } }) &&
     gateReady({ mechanicalProbe: { pass: true }, modelProbe: { pass: true } }));
-  ok('an uncommitted change is detected',
-    dirtyPaths(' M tools/bench-container.mjs\n?? x.txt\n').length === 2 && dirtyPaths('').length === 0);
+  ok('an uncommitted change is detected, with the path intact',
+    JSON.stringify(dirtyPaths(' M bench/Dockerfile\n?? x.txt\nM  a/b.json\n')) ===
+      JSON.stringify(['bench/Dockerfile', 'x.txt', 'a/b.json']) && dirtyPaths('').length === 0);
   ok('a failed run is quarantined rather than counted',
     runDirName('a', []) === 'a' && runDirName('a', ['x']) === 'INVALID-a');
 
