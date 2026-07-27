@@ -94,3 +94,24 @@ Three, and the benchmark is void if any is broken.
    it does not invalidate the automatic columns and it does qualify the rubric ones.
 3. **Every run is published, including the bad ones.** Six runs where two were discarded is
    a four-run benchmark with a selection story.
+
+## Known weaknesses of this design
+
+Stated here rather than discovered by a reader.
+
+**The control is instructed, not isolated.** Both arms run as agents inside this repository,
+so the control is told not to read `skills/`, `benchmarks/` or `docs/` rather than being
+prevented from it. An agent that glanced at the skill would contaminate its own arm silently.
+A clean control runs in an empty directory with the brief and nothing else, and that is the
+version to build once this one has said something.
+
+**One model, one day.** The result describes this model at this version. It says nothing
+about whether the skill helps a smaller model, which is arguably the more useful question.
+
+**Three runs is the floor, not a sample.** Three per arm shows whether the difference
+survives variance. It does not support a confidence interval, and no number from this
+benchmark should be quoted with one.
+
+**The grader is the author.** Until someone else grades a set blind, the seven rubric
+dimensions are one interested party's judgement. The automatic columns are not, which is why
+they are reported separately.
