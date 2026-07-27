@@ -16,7 +16,7 @@
  * on the machine. That is stated in the results rather than claimed away.
  */
 
-import { mkdir, writeFile, readFile, cp, rm, readdir, stat } from 'node:fs/promises';
+import { mkdir, writeFile, readFile, cp, rm, readdir, stat } from 'node:fs/promises'; // eslint-disable-line
 import { createHash } from 'node:crypto';
 import { tmpdir } from 'node:os';
 import { execFileSync } from 'node:child_process';
@@ -188,13 +188,19 @@ async function collect() {
     await cp(src, dest, { recursive: true });
     // The skill tells the agent to write these at the project root; the task told it
     // to write the site into site/. Both readings are reasonable, so collect either.
+    //
+    // The workspace root already holds BRIEF.md as the *input*, so it is never an
+    // artifact. An agent that wrote its plan there under any other name, or wrote a
+    // BRIEF.md that differs from the one it was given, did produce one.
+    const input = await readFile(join(LAB, runId, 'BRIEF.md'), 'utf8').catch(() => null);
     let extra = 0;
-    for (const f of ['BRIEF.md', 'DESIGN-SYSTEM.md']) {
+    for (const f of await readdir(join(LAB, runId)).catch(() => [])) {
+      if (!/\.md$/i.test(f)) continue;
       const at = join(LAB, runId, f);
-      if (await stat(at).then(() => true, () => false)) {
-        await cp(at, join(dest, f));
-        extra++;
-      }
+      const text = await readFile(at, 'utf8').catch(() => null);
+      if (text === null || text === input) continue;
+      await cp(at, join(dest, f));
+      extra++;
     }
     console.log(`  ${runId.padEnd(24)} ${files.length} entries copied${extra ? ` (+${extra} artifact)` : ''}`);
   }

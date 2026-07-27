@@ -6,13 +6,23 @@ Most design skills are a list of rules. This one is a loop: it routes by what yo
 picks a direction before it picks colours, and then **renders the page and measures it** instead of
 stopping when the code compiles.
 
-### [→ Open the gallery](https://byensitmagnus.github.io/sitesmith/) — nine live sites and the control
+> **Where this is.** The canonical layer is [`skills/sitesmith/v2/`](skills/sitesmith/v2/README.md):
+> a definition of done, sixty core rules, three mode files, a design-system contract and a block
+> library. It replaced a set of four vendored skills that carried 978 rules, 735 of them
+> prohibitions.
+>
+> **v2 is not yet proven.** An isolated benchmark — three briefs, three runs with the skill and
+> three without, blind-graded — is running now. Until it reports, the claim on this page is a
+> claim. [Method.](benchmarks/v2/README.md)
+
+### [→ Open the gallery](https://byensitmagnus.github.io/sitesmith/)
 
 ![Nine benchmark sites and one control](benchmarks/results/contact-sheet.png)
 
-Nine sites, nine briefs, one skill. The tenth is the control — the page you get when nothing steers
-the model. Every frame in the gallery is the page itself, not a picture of it.
-[Full results and how to reproduce them.](benchmarks/README.md)
+Nine sites built with v1 while a person consulted the skill, plus the control. They are **legacy**:
+they show what the checks catch and the measurements taken from them are cited throughout, but nine
+hand-built pages are not evidence that an agent produces better websites. That is what the v2
+benchmark is for. [Method and raw reports.](benchmarks/README.md)
 
 ---
 
@@ -68,15 +78,22 @@ at "the code compiles".
 
 ## Results
 
-Measured, not asserted. [Method and raw reports.](benchmarks/README.md)
+**What is measured, and what is not.**
+
+The nine v1 builds pass the technical floor and the control does not:
 
 | | Console | Broken links | Axe serious | Mobile overflow | Lighthouse a11y |
 | --- | --- | --- | --- | --- | --- |
-| Nine sitesmith builds | 0 | 0 | 0 | 0 | 100 (six measured) |
+| Nine v1 builds | 0 | 0 | 0 | 0 | 100 (six measured) |
 | Control (no skill) | 0 | 8 | 2 | 1 | 81 |
 
-Lighthouse has been run on benchmarks 01–06; 07–09 carry the axe, link, console and overflow
-measurements only.
+That is a real result about a real checker, and it is **not** a result about the skill: a person
+wrote those nine pages while reading the rules. The control was written to be bad.
+
+The v2 benchmark answers the actual question — does an agent handed a brief produce a better
+website with this than without it — with eighteen isolated runs, blind grading and every run
+published including the bad ones. [Method, and the four weaknesses of the
+design.](benchmarks/v2/README.md) It has not reported yet.
 
 ## Install
 
@@ -124,34 +141,36 @@ Build a pricing table. Three tiers, one recommended.
 
 ```
 skills/sitesmith/
-  SKILL.md                  206 lines — routing, the 12-step loop, precedence, anti-slop
-  references/               11 files — opened on demand, never preloaded
-    01-brief-and-dials      direction, dials, choosing a real design system
-    03-design-engineering   type, colour, layout, materiality, states, content
-    05-ai-tells             the full tell list
-    06-redesign-audit       8 passes, repair order, scoring rubric
-    07-ux-rules             a11y, forms, navigation, charts, checklists
-    impeccable/             35 files — one per command verb
+  SKILL.md                  routing, the build loop, precedence, anti-slop
+  v2/                       THE CANONICAL LAYER — the only thing read during a build
+    00-done.md              fourteen things a finished website has
+    10-core.md              sixty rules that hold in every mode
+    modes/                  marketing · e-commerce · product UI, one answer each
+    30-contract.md          the design-system contract, derived from the brief
+  blocks/                   22 composition patterns, tokens only, variants and metadata
+  references/               v1 upstream, kept for attribution. NOT read during a build
   data/                     28 CSV datasets — 161 palettes, 73 font pairings, 84 styles
   scripts/
     search.py               query the datasets
-    verify.mjs              screenshot, axe both schemes, links, console, overflow
-benchmarks/                 nine sites, one control, all measurements
-  01-saas-landing           02-product-page      03-dashboard
-  04-local-service          05-editorial         06-redesign/{before,after}
-  07-multistep-form         08-documentation     09-data-entry
+    verify.mjs              3 widths, axe both schemes, links, console, overflow,
+                            document structure, --font-stress
+    token-drift.mjs         values used that the contract never declared
+benchmarks/                 v1: nine sites and the control. Legacy, kept for the measurements
+  v2/                       the isolated benchmark: briefs, runs, rubric, results
 index.html                  the gallery, published to GitHub Pages
-gallery/thumbs/             card images, regenerated by benchmarks/thumbs.mjs
-tools/check-repo.py         13 self-checks: links, licences, doc counts, gallery, search engine
+tools/                      repo self-checks, conformance ratchet, benchmark harness
 ```
 
-`SKILL.md` stays under 500 lines on purpose. References are one hop away and load only when the
-current step needs them.
+`SKILL.md` stays under 500 lines on purpose, and sixty core rules plus one mode file is what an
+agent holds while working. `references/` is provenance, not authority — the reasoning is in
+[`docs/v2/`](docs/v2/CONFLICTS.md).
 
 ## Credit
 
-sitesmith is a composition. The design knowledge comes from four openly licensed projects,
-reproduced without modification and credited in [NOTICE.md](NOTICE.md):
+sitesmith v1 was a composition of four openly licensed projects, credited in
+[NOTICE.md](NOTICE.md). v2 is written here and descends from them: their material is kept in
+`references/` for attribution, and every file says whether it is still verbatim or was modified,
+with a note saying what changed.
 
 - **[taste-skill](https://github.com/Leonxlnx/taste-skill)** (MIT) — brief inference, dials, AI tells, motion, blocks
 - **[ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill)** (MIT) — the datasets, the search engine, the UX rules
@@ -164,8 +183,16 @@ Two further sources were evaluated and **rejected** as non-redistributable — o
 had no traceable author. Their material was replaced with originally written equivalents. The
 reasoning is in [LICENSE-AUDIT.md](LICENSE-AUDIT.md).
 
-Original to this repo, MIT: `SKILL.md`, `06-redesign-audit.md`, `10-setup.md`, `verify.mjs`, the
-benchmarks and the docs.
+Original to this repo, MIT: `SKILL.md`, all of `v2/`, all of `blocks/`, `06-redesign-audit.md`,
+`10-setup.md`, `verify.mjs`, `token-drift.mjs`, `tools/`, the benchmarks and the docs.
+
+**Where the four are still ahead.** Worth saying on the front page rather than in a footnote:
+impeccable has the more mature product — a CLI installer, live browser iteration, hooks that fire
+while you edit, and a concept-selection flow that generates several directions before choosing one.
+taste-skill has image-first workflows and a brandkit that starts from meaning. frontend-design is
+the sharpest single statement about taking one reasoned aesthetic risk. ui-ux-pro-max has the
+larger, better-maintained dataset. sitesmith's strengths are verification and cross-page
+consistency; it is not yet their equal at forming a visual direction.
 
 ## Contributing
 

@@ -226,9 +226,15 @@ async function measure([dir]) {
     pages.push({ file: relative(site, f).replace(/\\/g, '/'), html, sheets });
   }
 
+  // The plan artifact may be called BRIEF.md, PROJECT-BRIEF.md or similar; the input
+  // brief is never counted, because collect refuses to copy it.
+  const md = (await readdir(runDir).catch(() => [])).filter((f) => /\.md$/i.test(f));
+  const inSite = (await readdir(site).catch(() => [])).filter((f) => /\.md$/i.test(f));
+  const all = [...md, ...inSite];
   const artifacts = {
-    brief: files.length ? await readFile(join(runDir, 'site/BRIEF.md'), 'utf8').then(() => true, () => false) : false,
-    designSystem: await readFile(join(runDir, 'site/DESIGN-SYSTEM.md'), 'utf8').then(() => true, () => false),
+    plan: all.some((f) => /brief|plan/i.test(f)),
+    designSystem: all.some((f) => /design[-_]?system/i.test(f)),
+    files: all,
   };
 
   const report = {

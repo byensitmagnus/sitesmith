@@ -13,10 +13,15 @@ show the page that exhibits it. Opinions are welcome in issues; the skill files 
   is legitimate — a tell with no legitimate use is rare, and claiming otherwise makes the skill
   brittle.
 - **Verification improvements.** `scripts/verify.mjs` currently checks screenshots, axe in both
-  schemes, console errors, link targets and horizontal overflow. Font-loading shifts, tap-target
-  sizes and reduced-motion compliance are not checked yet.
-- **A seventh benchmark**, if it exercises something the six don't. Multi-step forms, long-form
-  documentation and data-entry-heavy admin are all uncovered.
+  schemes, console errors, link targets, horizontal overflow, document structure and behaviour under
+  a wider font. Font-loading shifts, tap-target sizes and reduced-motion compliance are not checked
+  yet.
+- **Growth in `v2/10-core.md`.** Sixty is a budget, not a target. A rule enters by displacing one,
+  and the pull request says which.
+- **Blocks.** Composition patterns for real sites, token-only, with variants and compatibility
+  metadata. See [blocks/README.md](skills/sitesmith/blocks/README.md) for the format.
+- **A fourth benchmark brief**, if it exercises something the three don't. The current three are a
+  multi-page company site, a shop and an operator console.
 - **Corrections.** If a reference file contradicts itself or the precedence order resolves wrongly,
   that's a bug.
 

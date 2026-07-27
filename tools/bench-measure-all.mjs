@@ -172,7 +172,7 @@ for (const r of results) {
       `${(r.structureFailed?.length ? `${r.structureFailed.length}FAIL` : '  ok').padStart(6)}  ` +
       `${pct(c.valueCoverage)}  ${String(c.undeclaredLiterals).padStart(5)}  ` +
       `${pct(c.componentReuse)}  ${String(c.distinctHeaders).padStart(3)} ${String(c.distinctFooters).padStart(3)}  ` +
-      `${(r.artifacts.brief ? 'yes' : 'no')}/${(r.artifacts.designSystem ? 'yes' : 'no')}`,
+      `${(r.artifacts.plan ? 'yes' : 'no')}/${(r.artifacts.designSystem ? 'yes' : 'no')}`,
   );
 }
 console.log('\n  cover : share of colour and length values that come from a named token');
