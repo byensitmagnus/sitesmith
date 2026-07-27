@@ -1,3 +1,8 @@
+> Part of the **sitesmith** skill. Verbatim from [impeccable](https://github.com/pbakaus/impeccable) — Apache License 2.0, © Paul Bakaus.
+> Reproduced without modification; only this header block and the file name are ours.
+
+---
+
 Generate a `DESIGN.md` file at the project root that captures the current visual design system, so AI agents generating new screens stay on-brand.
 
 DESIGN.md follows the [official DESIGN.md format spec](https://raw.githubusercontent.com/google-labs-code/design.md/main/docs/spec.md): optional YAML frontmatter carrying machine-readable design tokens, followed by up to eight markdown sections in a fixed order. **Tokens are normative; prose provides context for how to apply them.** Sections may be omitted when not relevant, but those present stay in the specified order. Use the canonical headings below so the file remains portable across DESIGN.md-aware tools.

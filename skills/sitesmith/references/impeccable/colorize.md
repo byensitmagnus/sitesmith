@@ -1,3 +1,8 @@
+> Part of the **sitesmith** skill. Verbatim from [impeccable](https://github.com/pbakaus/impeccable) — Apache License 2.0, © Paul Bakaus.
+> Reproduced without modification; only this header block and the file name are ours.
+
+---
+
 > **Additional context needed**: existing brand colors.
 
 Introduce color as hierarchy, meaning, and atmosphere. Preserve confirmed brand and semantic conventions; do not replace a visual world under the guise of colorizing it.

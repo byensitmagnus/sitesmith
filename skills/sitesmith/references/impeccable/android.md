@@ -1,5 +1,10 @@
 # Android platform
 
+> Part of the **sitesmith** skill. Verbatim from [impeccable](https://github.com/pbakaus/impeccable) — Apache License 2.0, © Paul Bakaus.
+> Reproduced without modification; only this header block and the file name are ours.
+
+---
+
 For native Android apps: Jetpack Compose, Android Views, React Native, Expo, Flutter shipping to Android hardware.
 
 On native, the visitor mode narrows what expression may override. Material Design 3 governs structure, navigation, and interaction in every mode; brand expresses through Material's theming (color roles, type scale, shape, motion). A Material-everywhere cross-platform app that also ships to iPhone still owes iOS its OS guarantees on that hardware: safe-area insets, Reduce Motion, edge-swipe back.

@@ -1,3 +1,8 @@
+> Part of the **sitesmith** skill. Verbatim from [impeccable](https://github.com/pbakaus/impeccable) — Apache License 2.0, © Paul Bakaus.
+> Reproduced without modification; only this header block and the file name are ours.
+
+---
+
 > **Additional context needed**: target platforms/devices and usage contexts.
 
 Adapt an existing design to a different context: another screen size, device, platform, or use case. The trap is treating adaptation as scaling. The job is rethinking the experience for the new context.

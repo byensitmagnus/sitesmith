@@ -1,3 +1,8 @@
+> Part of the **sitesmith** skill. Verbatim from [impeccable](https://github.com/pbakaus/impeccable) — Apache License 2.0, © Paul Bakaus.
+> Reproduced without modification; only this header block and the file name are ours.
+
+---
+
 > **Additional context needed**: the brand's emotional range.
 
 Make the experience memorable at moments that earn it. Delight is not a layer of generic whimsy; it is product character revealed through a useful interaction, a humane response, or an unexpectedly considered detail.

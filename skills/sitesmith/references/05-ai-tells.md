@@ -1,6 +1,6 @@
 # AI tells: patterns that expose machine-generated design
 
-> Part of the **sitesmith** skill. Verbatim from [taste-skill](https://github.com/Leonxlnx/taste-skill) — MIT, © 2026 Leonxlnx. Final section verbatim from Verbatim from [frontend-design](https://github.com/anthropics/claude-plugins-official) — Apache 2.0, © Anthropic.
+> Part of the **sitesmith** skill. Verbatim from [taste-skill](https://github.com/Leonxlnx/taste-skill) — MIT, © 2026 Leonxlnx. Final section verbatim from [frontend-design](https://github.com/anthropics/claude-plugins-official) — Apache 2.0, © Anthropic.
 > Reproduced without modification; only the heading above and file name are ours.
 
 ---

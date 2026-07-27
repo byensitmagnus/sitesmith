@@ -1,4 +1,4 @@
-# Search engine: CLI for 161 palettes, 57 font pairings, 50+ styles
+# Search engine: CLI for 161 palettes, 73 font pairings, 84 styles
 
 > Part of the **sitesmith** skill. Verbatim from [ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) — MIT, © 2024 Next Level Builder.
 > Reproduced without modification; only the heading above and file name are ours.

@@ -1,5 +1,10 @@
 # Shape
 
+> Part of the **sitesmith** skill. Verbatim from [impeccable](https://github.com/pbakaus/impeccable) — Apache License 2.0, © Paul Bakaus.
+> Reproduced without modification; only this header block and the file name are ours.
+
+---
+
 Discover what should be made and how it should work, then return a confirmed design brief without code.
 
 ## Phase 1: Discovery interview

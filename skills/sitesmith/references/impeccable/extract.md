@@ -1,5 +1,10 @@
 # Extract Flow
 
+> Part of the **sitesmith** skill. Verbatim from [impeccable](https://github.com/pbakaus/impeccable) — Apache License 2.0, © Paul Bakaus.
+> Reproduced without modification; only this header block and the file name are ours.
+
+---
+
 Identify reusable patterns, components, and design tokens, then extract and consolidate them into the design system for systematic reuse.
 
 ## Step 1: Discover the Design System
