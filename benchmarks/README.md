@@ -1,9 +1,11 @@
 # Benchmarks
 
-Six independent sites built with sitesmith from six different briefs, plus one deliberately generic
-control. Every result below was produced by the scripts in this directory, not asserted.
+Nine independent sites built with sitesmith from nine different briefs, plus one deliberately
+generic control. Every result below was produced by the scripts in this directory, not asserted.
 
-![Six benchmark sites and one control](results/contact-sheet.png)
+![Nine benchmark sites and one control](results/contact-sheet.png)
+
+All ten are live in the [gallery](https://byensitmagnus.github.io/sitesmith/).
 
 ## Reproduce
 
@@ -11,6 +13,12 @@ control. Every result below was produced by the scripts in this directory, not a
 npm install && npx playwright install chromium
 node serve.mjs 4321 .
 node ../skills/sitesmith/scripts/verify.mjs http://localhost:4321/01-saas-landing/ --out results/01-saas-landing
+```
+
+Then regenerate the gallery thumbnails and the contact sheet, which read from `results/`:
+
+```bash
+node thumbs.mjs
 ```
 
 Lighthouse (desktop preset, headless):
@@ -31,7 +39,13 @@ Measured 2026-07-25. `verify.mjs` runs axe in **both** colour schemes at 375, 76
 | 04 | Local service | Roofing company, trust-first, phone-led | 0 | 0 | 0 | 0 | 100 / 100 / 100 / 100 |
 | 05 | Editorial | Sound designer portfolio, typographic | 0 | 0 | 0 | 0 | 100 / 100 / 100 / 100 |
 | 06 | Redesign, after | Rota software, rebuilt from the control | 0 | 0 | 0 | 0 | 100 / 100 / 100 / 100 |
+| 07 | Multi-step form | Council licence application, statutory, error-heavy | 0 | 0 | 0 | 0 | not run |
+| 08 | Documentation | Webhook API reference, three panes, code samples | 0 | 0 | 0 | 0 | not run |
+| 09 | Data entry | Warehouse goods-in grid, keyboard-first, inline edit | 0 | 0 | 0 | 0 | not run |
 | — | **Control, before** | The same product, built the default way | 0 | **8** | **2** | **1** | 100 / **81** / **96** / **90** |
+
+07, 08 and 09 were added later and have not been through Lighthouse. Their axe, link, console and
+overflow columns come from the same `verify.mjs` run as the rest and are quoted nowhere else.
 
 ## The control
 
@@ -58,19 +72,21 @@ measurement. Its defects, all intentional:
 Scored 1–5 by inspection of the 1440 screenshots. The rubric is in
 `references/06-redesign-audit.md`; this is the same one the skill applies to its own output.
 
-| | 01 | 02 | 03 | 04 | 05 | 06 after | Control |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| Hierarchy | 5 | 5 | 4 | 5 | 5 | 5 | 2 |
-| Originality | 5 | 4 | 4 | 4 | 5 | 4 | 1 |
-| Cohesion | 5 | 4 | 5 | 4 | 5 | 5 | 3 |
-| Responsiveness | 5 | 5 | 4 | 5 | 5 | 5 | 1 |
-| Usability (states) | 4 | 5 | 5 | 4 | 4 | 5 | 1 |
-| Slop resistance | 5 | 5 | 5 | 5 | 5 | 5 | 1 |
+| | 01 | 02 | 03 | 04 | 05 | 06 after | 07 | 08 | 09 | Control |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Hierarchy | 5 | 5 | 4 | 5 | 5 | 5 | 5 | 5 | 4 | 2 |
+| Originality | 5 | 4 | 4 | 4 | 5 | 4 | 4 | 4 | 5 | 1 |
+| Cohesion | 5 | 4 | 5 | 4 | 5 | 5 | 5 | 5 | 5 | 3 |
+| Responsiveness | 5 | 5 | 4 | 5 | 5 | 5 | 5 | 4 | 4 | 1 |
+| Usability (states) | 4 | 5 | 5 | 4 | 4 | 5 | 5 | 4 | 5 | 1 |
+| Slop resistance | 5 | 5 | 5 | 5 | 5 | 5 | 5 | 5 | 5 | 1 |
 
-**Template test:** the six do not share a layout. Left-aligned editorial split; two-column commerce
+**Template test:** the nine do not share a layout. Left-aligned editorial split; two-column commerce
 with a sticky purchase panel; top-nav dashboard with a stat rail and a scrollable table; a numbered
-price list under a split hero; a ruled typographic index; and a numbered process under a rota
-fragment. No bento grid, no three-card feature row, no centred hero anywhere in the set.
+price list under a split hero; a ruled typographic index; a numbered process under a rota fragment;
+a one-column statutory form with a step rail and a help rail; a three-pane documentation frame with
+a permanently dark shell; and a two-pane goods-in console with an editable grid and a keyboard
+legend. No bento grid, no three-card feature row, no centred hero anywhere in the set.
 
 ## What the loop actually caught
 
@@ -86,8 +102,20 @@ results above:
 | 03 | White label on the dark-mode teal button, 1.83:1 | The light-mode value was hardcoded |
 | 03 | Scrollable table unreachable by keyboard | Nothing visually wrong at any width |
 | 05 | `--ink-3` at 4.29:1 in dark mode only | Light mode passed |
+| 07 | A `<span>` sitting between `<dt>` and `<dd>` | Renders perfectly; the list simply stops being a list |
+| 08 | Breadcrumb current-page label at 1.6:1 | The separator's colour rule matched the label too |
+| 08 | `role="tablist"` over radio inputs | The role forbids those children; the tabs looked and worked fine |
+| 08 | Code blocks and the table scroll but take no focus | Content past the fold was mouse-only |
+| 08 | `height:100vh` on the sidebar | Made every page exactly one viewport tall whatever it contained |
+| 09 | +250px overflow at 375px from a `1fr` track | `1fr` resolves its minimum to `auto`, so the track grew instead of the grid scrolling |
+| 09 | Hidden labels escaping the scroll container | Absolutely positioned with no positioned ancestor, so each 1px label sat 615px into the document |
 
-Seven real defects across five sites. All of them ship if the process stops at "the code compiles".
+Fifteen real defects across eight sites, counting the cross-platform overflow below. All of them
+ship if the process stops at "the code compiles".
+
+Three more were caught by step 11 — looking at the screenshots — rather than by the script: a dead
+right third at 1440 in 07, four truncated step labels at 375 in 07, and an on-page contents list
+whose two columns split entry text down the middle at 375 in 08.
 
 ## Limitations
 
@@ -98,7 +126,12 @@ Seven real defects across five sites. All of them ship if the process stops at "
   frame-rate table in `02` carries an explicit note that its numbers are illustrative.
 - Lighthouse runs against a local static server, so performance scores reflect the pages, not a
   production network. The accessibility, best-practices and SEO scores are the meaningful ones here.
-- The rubric scores are one reviewer's judgement. The automated columns are not.
+  Benchmarks 07, 08 and 09 have not been through Lighthouse at all.
+- The rubric scores are one reviewer's judgement, and that reviewer built the pages. The automated
+  columns are not a judgement.
+- Every page is script-free. That is a property of this set, not a rule the skill imposes — it keeps
+  the console-error column meaningful and the pages archivable, but it means none of them exercises
+  client-side state.
 
 ## Cross-platform note
 

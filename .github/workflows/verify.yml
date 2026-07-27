@@ -41,21 +41,32 @@ jobs:
       - name: serve
         working-directory: benchmarks
         run: |
+          # 4321 serves the benchmark set; 4322 serves the repository root so the
+          # gallery's links to benchmarks/… resolve exactly as they do on Pages.
           node serve.mjs 4321 . &
+          node serve.mjs 4322 .. &
           for i in $(seq 1 30); do
-            curl -sf http://localhost:4321/01-saas-landing/ >/dev/null && break
+            curl -sf http://localhost:4321/01-saas-landing/ >/dev/null \
+              && curl -sf http://localhost:4322/ >/dev/null && break
             sleep 1
           done
 
-      - name: six builds must pass
+      - name: nine builds must pass
         working-directory: benchmarks
         run: |
-          for b in 01-saas-landing 02-product-page 03-dashboard 04-local-service 05-editorial 06-redesign/after; do
+          for b in 01-saas-landing 02-product-page 03-dashboard 04-local-service 05-editorial \
+                   06-redesign/after 07-multistep-form 08-documentation 09-data-entry; do
             echo "::group::$b"
             node ../skills/sitesmith/scripts/verify.mjs "http://localhost:4321/$b/" \
               --out "/tmp/$(echo $b | tr / -)"
             echo "::endgroup::"
           done
+
+      # The gallery makes the claims, so it is held to them. This also catches a
+      # thumbnail or a benchmark link that was renamed but not updated.
+      - name: the gallery must pass its own script
+        working-directory: benchmarks
+        run: node ../skills/sitesmith/scripts/verify.mjs http://localhost:4322/ --out /tmp/gallery
 
       - name: control must keep failing
         working-directory: benchmarks

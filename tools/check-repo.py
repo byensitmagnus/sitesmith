@@ -197,6 +197,36 @@ def _doc_counts() -> None:
                 fail(f"{rel}:{line}", f"says {m.group(0)}, actual is {datasets}")
 
 
+@check("the gallery's local links and images resolve on disk")
+def _gallery_assets() -> None:
+    html = (ROOT / "index.html").read_text(encoding="utf-8")
+    for attr in ("href", "src"):
+        for m in re.finditer(rf'{attr}="([^"]+)"', html):
+            target = m.group(1)
+            if target.startswith(("http://", "https://", "mailto:", "#", "data:")):
+                continue
+            if not (ROOT / target.split("#")[0]).exists():
+                line = html[: m.start()].count("\n") + 1
+                fail(f"index.html:{line}", f"{attr} points at missing {target}")
+
+
+@check("every benchmark appears in the gallery with a thumbnail")
+def _gallery_coverage() -> None:
+    html = (ROOT / "index.html").read_text(encoding="utf-8")
+    bench = ROOT / "benchmarks"
+    pages = sorted(p.parent.relative_to(bench).as_posix() for p in bench.glob("*/index.html"))
+    pages += sorted(p.parent.relative_to(bench).as_posix() for p in bench.glob("*/*/index.html"))
+    for page in pages:
+        if f'href="benchmarks/{page}/"' not in html:
+            fail("index.html", f"benchmarks/{page} has no card in the gallery")
+        thumb = ROOT / "gallery" / "thumbs" / f"{page.replace('/', '-')}.png"
+        if not thumb.exists():
+            fail(
+                thumb.relative_to(ROOT).as_posix(),
+                "missing thumbnail — run `node benchmarks/thumbs.mjs`",
+            )
+
+
 @check("search.py answers on every domain and every stack")
 def _search_smoke() -> None:
     sys.path.insert(0, str(SKILL / "scripts"))
