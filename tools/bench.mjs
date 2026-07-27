@@ -43,8 +43,19 @@ async function init([brief, arm, n]) {
 
   // A run whose skill commit is "main, roughly" is not reproducible, and the point
   // of the harness is reproducibility.
-  if (git('status', '--porcelain')) {
-    die('working tree is dirty. Commit or stash first: the run records a commit, and a dirty tree makes that a lie.');
+  //
+  // Changes under runs/ do not count: scaffolding a run is what makes the tree
+  // dirty, so counting them means the second run of a batch can never be created.
+  // What must be clean is the skill the commit claims to identify.
+  const dirty = git('status', '--porcelain')
+    .split('\n')
+    .filter(Boolean)
+    .filter((l) => !l.slice(3).replace(/^"|"$/g, '').startsWith('benchmarks/v2/runs/'));
+  if (dirty.length) {
+    die(
+      'the skill is uncommitted, so the commit this run records would be a lie:\n' +
+        dirty.map((l) => `  ${l}`).join('\n'),
+    );
   }
 
   const briefPath = join(BRIEFS, `${brief}.md`);
