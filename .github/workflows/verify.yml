@@ -34,6 +34,20 @@ jobs:
           node tools/conformance.mjs \
             "benchmarks/*/index.html" "benchmarks/*/*/index.html" "index.html"
 
+      # Any page with a DESIGN-SYSTEM.md beside it may only use values that
+      # contract declares. One benchmark has one today; the rest are the backlog.
+      - name: design-system contracts hold
+        run: |
+          fail=0
+          for c in benchmarks/*/DESIGN-SYSTEM.md; do
+            [ -e "$c" ] || continue
+            echo "::group::$c"
+            node skills/sitesmith/scripts/token-drift.mjs \
+              "$(dirname "$c")/index.html" --contract "$c" || fail=1
+            echo "::endgroup::"
+          done
+          exit $fail
+
   benchmarks:
     name: benchmarks render and pass
     runs-on: ubuntu-latest

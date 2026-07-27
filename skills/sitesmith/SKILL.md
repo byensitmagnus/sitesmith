@@ -57,12 +57,18 @@ Inference table and presets: [01-brief-and-dials.md](references/01-brief-and-dia
 second, third. Sketch it as a list of blocks with a one-line purpose each. A page with a beautiful
 hero and no argument underneath does not convert.
 
-**5. Fix the system.** Type scale, one accent, neutral family, spacing step, grid, radius scale,
-elevation scale, image treatment, motion budget. Write them as tokens, not as values scattered
-through components. Concrete recommendations from data:
+**5. Fix the system.** Write `DESIGN-SYSTEM.md` **before the first page**: spacing step, type
+scale, radius scale, elevation, container, colour, families, motion budget, plus the component
+and voice contracts. Format and worked example:
+[12-design-system.md](references/12-design-system.md).
+
+Measured across every page in this repository, not one had a spacing scale or a type scale
+until the contract existed. One page can survive without a system; a site cannot, because
+there is nothing for page two to be consistent with.
 
 ```bash
 python scripts/search.py "<product type> <industry> <keywords>" --design-system -p "<Project>"
+node scripts/token-drift.mjs "<pages>" --contract DESIGN-SYSTEM.md
 ```
 
 **6. Implement fully.** Real content, real structure, semantic HTML. No Lorem Ipsum, no invented
@@ -169,6 +175,7 @@ Open only what the current step needs. Do not preload.
 | [09-block-library.md](references/09-block-library.md) | COMPONENT mode — concrete block implementations | 411 |
 | [10-setup.md](references/10-setup.md) | SETUP mode only — gated, skipped by default | 99 |
 | [11-search-engine.md](references/11-search-engine.md) | Step 5 — how to query the palette/font/style data | 289 |
+| [12-design-system.md](references/12-design-system.md) | Step 5 — the contract every page is then checked against | 207 |
 | [impeccable/](references/impeccable/) | On demand — one file per command verb | 35 files |
 
 Every file above is one hop from here. None of them requires reading another to be useful.
@@ -189,6 +196,7 @@ time · `harden` / `optimize` robustness and performance.
 | --- | --- | --- |
 | `scripts/search.py` | Query 161 palettes, 73 font pairings, 84 styles, 161 product types, 99 UX rules | Python 3.10+ |
 | `scripts/verify.mjs` | Screenshots at 3 widths, console errors, broken links, axe scan | Node 18+, `npx playwright install chromium` |
+| `scripts/token-drift.mjs` | Values used that the project's design system never declared | Node 18+ |
 
 Both are optional. The skill degrades gracefully without them: without `search.py` you choose the
 system by hand from `01-brief-and-dials.md`; without `verify.mjs` steps 10–11 become a manual
