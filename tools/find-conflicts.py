@@ -83,14 +83,20 @@ if __name__ == "__main__":
                 print(f"             {r['text'][:150]}")
         sys.exit(0)
 
-    print("topic                 forbids  requires  files  split?")
-    print("-" * 60)
+    print("topic                 forbids  requires  files  candidate?")
+    print("-" * 64)
     for topic in TOPICS:
         rs = grouped[topic]
         f = sum(1 for r in rs if r["force"] == "forbids")
         q = sum(1 for r in rs if r["force"] == "requires")
         files = len({r["file"] for r in rs})
-        split = "YES" if f and q and files > 1 else ""
+        split = "read it" if f and q and files > 1 else ""
         print(f"{topic:<21} {f:>7}  {q:>8}  {files:>5}  {split}")
-    print("\nRun with a topic name to read every rule on it, e.g.")
-    print("  python tools/find-conflicts.py radius scope")
+    print(
+        "\nA candidate is not a contradiction. This classifies by verb, so a contrast\n"
+        "threshold reads as advice and a logo rule reads as a requirement, and a subject\n"
+        "lands here without anything actually disagreeing. Of the thirteen flagged on\n"
+        "2026-07-27, seven were real. Read the rules before believing the column:\n"
+        "  python tools/find-conflicts.py radius scope\n"
+        "Adjudications, with reasons: docs/v2/DECISIONS.md"
+    )

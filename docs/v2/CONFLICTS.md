@@ -132,10 +132,16 @@ a match must say so and ask, not emit the median of its training data. Remove th
 return an explicit `no confident match` with the two nearest candidates and what
 distinguishes them.
 
-### 7. Split verdicts still to adjudicate
+### 7. Split verdicts, since adjudicated
 
-These came back split and are not yet resolved. Each is a decision the agent currently makes
-by guessing:
+**Seven of the thirteen were real. Six were not.** The grouper classifies by verb, so a
+contrast threshold reads as advice and a logo rule reads as a requirement, and a subject
+lands in the split column without anything actually disagreeing. Each was read; the verdicts
+and the reasons are in [DECISIONS.md](DECISIONS.md). Two of the seven turned out to be gaps
+rather than contradictions — the one-accent lock has no notion of semantic status colour,
+and nothing in the set permits a deliberate single-theme page.
+
+The counts that produced the candidates:
 
 | Subject | forbids | requires | files |
 | --- | ---: | ---: | ---: |
