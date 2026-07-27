@@ -2,6 +2,9 @@
 # -*- coding: utf-8 -*-
 """
 UI/UX Pro Max Core - BM25 search engine for UI/UX style guides
+
+Part of the sitesmith skill. From ui-ux-pro-max-skill (MIT, (c) 2024 Next Level Builder):
+https://github.com/nextlevelbuilder/ui-ux-pro-max-skill
 """
 
 import csv

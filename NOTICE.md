@@ -38,10 +38,15 @@ Used in: `01-brief-and-dials.md`, `02-architecture.md`, `03-design-engineering.m
 Source: https://github.com/nextlevelbuilder/ui-ux-pro-max-skill
 Copyright (c) 2024 Next Level Builder
 
-Used in: `07-ux-rules.md`, `11-search-engine.md`, the entire `data/` directory (30 CSV datasets) and
+Used in: `07-ux-rules.md`, `11-search-engine.md`, the entire `data/` directory (28 CSV datasets) and
 `scripts/search.py`, `scripts/core.py`, `scripts/design_system.py`.
 
 Same MIT terms as above.
+
+**Changes made:** two upstream files, `design.csv` and `draft.csv`, are **not** bundled. Neither is a
+CSV — both are Chinese-language style prose (~1,600 lines each, 216 KB combined) and neither is
+reachable from `core.py`; `draft.csv` says so itself in its own header note. Every remaining file is
+verbatim.
 
 ## frontend-design — Apache License 2.0
 
@@ -68,8 +73,10 @@ Used in: the entire `references/impeccable/` directory (35 files).
 
 Licensed under the Apache License, Version 2.0, terms as above.
 
-**Changes made:** none. Files are copied as-is; `SKILL.md` from upstream is included as
-`_SKILL-original.md`.
+**Changes made:** the body of every file is unmodified. Each file carries an added attribution
+header block, as elsewhere in this repo. Upstream's `SKILL.md` is included as `_SKILL-original.md`
+with its 32 `reference/<file>.md` links repointed to `<file>.md`, because upstream's `reference/`
+directory is this directory here — the targets are unchanged, only the path to them.
 
 **Upstream's own third-party notice, carried forward:** impeccable's `reference/ios.md` and
 `reference/android.md` are distilled from [ehmo/platform-design-skills](https://github.com/ehmo/platform-design-skills)

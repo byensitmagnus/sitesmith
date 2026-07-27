@@ -4,6 +4,9 @@
 Design System Generator - Aggregates search results and applies reasoning
 to generate comprehensive design system recommendations.
 
+Part of the sitesmith skill. From ui-ux-pro-max-skill (MIT, (c) 2024 Next Level Builder):
+https://github.com/nextlevelbuilder/ui-ux-pro-max-skill
+
 Usage:
     from design_system import generate_design_system
     result = generate_design_system("SaaS dashboard", "My Project")

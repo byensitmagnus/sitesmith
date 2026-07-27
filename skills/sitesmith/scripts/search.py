@@ -2,12 +2,15 @@
 # -*- coding: utf-8 -*-
 """
 UI/UX Pro Max Search - BM25 search engine for UI/UX style guides
+
+Part of the sitesmith skill. From ui-ux-pro-max-skill (MIT, (c) 2024 Next Level Builder):
+https://github.com/nextlevelbuilder/ui-ux-pro-max-skill
+
 Usage: python search.py "<query>" [--domain <domain>] [--stack <stack>] [--max-results 3]
        python search.py "<query>" --design-system [-p "Project Name"]
        python search.py "<query>" --design-system --persist [-p "Project Name"] [--page "dashboard"]
 
-Domains: style, prompt, color, chart, landing, product, ux, typography, google-fonts
-Stacks: react, nextjs, vue, svelte, astro, swiftui, react-native, flutter, nuxtjs, nuxt-ui, html-tailwind, shadcn, jetpack-compose, threejs
+Domains and stacks below are generated from core.py, so --help never drifts from what exists.
 
 Persistence (Master + Overrides pattern):
   --persist    Save design system to design-system/MASTER.md
@@ -54,7 +57,14 @@ def format_output(result):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="UI Pro Max Search")
+    parser = argparse.ArgumentParser(
+        description="UI Pro Max Search",
+        epilog=(
+            "domains: " + ", ".join(CSV_CONFIG) + "\n"
+            "stacks:  " + ", ".join(AVAILABLE_STACKS)
+        ),
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+    )
     parser.add_argument("query", help="Search query")
     parser.add_argument("--domain", "-d", choices=list(CSV_CONFIG.keys()), help="Search domain")
     parser.add_argument("--stack", "-s", choices=AVAILABLE_STACKS, help=f"Stack-specific search. Available: {', '.join(AVAILABLE_STACKS)}")

@@ -187,7 +187,7 @@ time · `harden` / `optimize` robustness and performance.
 
 | Script | Purpose | Needs |
 | --- | --- | --- |
-| `scripts/search.py` | Query 161 palettes, 57 font pairings, 50+ styles, 161 product types, 99 UX rules | Python 3.10+ |
+| `scripts/search.py` | Query 161 palettes, 73 font pairings, 84 styles, 161 product types, 99 UX rules | Python 3.10+ |
 | `scripts/verify.mjs` | Screenshots at 3 widths, console errors, broken links, axe scan | Node 18+, `npx playwright install chromium` |
 
 Both are optional. The skill degrades gracefully without them: without `search.py` you choose the

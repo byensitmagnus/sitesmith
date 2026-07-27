@@ -1,7 +1,7 @@
 {
   "name": "sitesmith",
   "version": "1.0.0",
-  "description": "One skill for building websites that do not look AI-generated. Mode routing, a mandatory 12-step build loop, 161 palettes and 57 font pairings, anti-slop judgement rather than ban lists, and a Playwright pass that screenshots, scans and measures the rendered page.",
+  "description": "One skill for building websites that do not look AI-generated. Mode routing, a mandatory 12-step build loop, 161 palettes and 73 font pairings, anti-slop judgement rather than ban lists, and a Playwright pass that screenshots, scans and measures the rendered page.",
   "author": {
     "name": "sitesmith contributors",
     "url": "https://github.com/byensitmagnus/sitesmith"

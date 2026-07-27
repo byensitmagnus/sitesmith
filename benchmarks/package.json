@@ -4,8 +4,8 @@
   "type": "module",
   "description": "Six independent sites built with the sitesmith skill, plus a no-skill baseline, measured with Playwright, axe and Lighthouse.",
   "scripts": {
-    "serve": "node serve.mjs",
-    "measure": "node measure.mjs"
+    "serve": "node serve.mjs 4321 .",
+    "verify": "node ../skills/sitesmith/scripts/verify.mjs"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.10.0",
