@@ -186,7 +186,17 @@ async function collect() {
     }
     await rm(dest, { recursive: true, force: true });
     await cp(src, dest, { recursive: true });
-    console.log(`  ${runId.padEnd(24)} ${files.length} entries copied`);
+    // The skill tells the agent to write these at the project root; the task told it
+    // to write the site into site/. Both readings are reasonable, so collect either.
+    let extra = 0;
+    for (const f of ['BRIEF.md', 'DESIGN-SYSTEM.md']) {
+      const at = join(LAB, runId, f);
+      if (await stat(at).then(() => true, () => false)) {
+        await cp(at, join(dest, f));
+        extra++;
+      }
+    }
+    console.log(`  ${runId.padEnd(24)} ${files.length} entries copied${extra ? ` (+${extra} artifact)` : ''}`);
   }
 }
 

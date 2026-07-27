@@ -1,13 +1,13 @@
 # Grading rubric
 
-> Original work, MIT. Applied blind: the grader does not know which arm a run belongs to.
+> Original work, MIT. Applied blind, from images and the brief only.
 
-Seven dimensions, scored 1 to 5. The automatic measurements are recorded separately and are
-not part of this score — a site that fails axe is already failing, and rating it here twice
-would double-count the floor.
+You are grading a website you can see but cannot inspect. You get three things: the original
+brief, a desktop contact sheet, and a mobile contact sheet. You do not get the code, the
+run name, which arm it belongs to, or any other grader's opinion.
 
-**Score the artifact in front of you, not the effort behind it.** A site that did three
-things well and stopped scores above one that attempted everything and finished nothing.
+Ten dimensions, 1 to 5. **Every score needs one sentence saying why.** A number without a
+sentence is not a judgement.
 
 ---
 
@@ -17,99 +17,108 @@ things well and stopped scores above one that attempted everything and finished 
 | --- | --- |
 | 5 | A professional would ship this. Specific to this client, finished, nothing obviously missing. |
 | 4 | Sound. One or two things a reviewer would send back. |
-| 3 | Competent and generic. Nothing wrong, nothing chosen. The average of everything in its category. |
-| 2 | Visibly unfinished, or actively wrong somewhere it matters. |
+| 3 | Competent and generic. Nothing wrong, nothing chosen. |
+| 2 | Visibly unfinished, or wrong somewhere it matters. |
 | 1 | Not usable as a starting point. |
 
-**3 is the important score.** It is where an unsteered model lands, and the whole claim under
-test is whether the skill moves work off it.
+**3 is the important score.** It is where unsteered work lands, and the question under test is
+whether anything moved it.
 
 ---
 
 ## 1. Brand fit
 
-Does this look like it belongs to this client, and only this client?
+Does this look like it belongs to this client, and only this client? Put a competitor's name
+on it: does it look wrong? A page that would suit any firm in the sector is a 3.
 
-- **5** — swap the logo onto a competitor and it would look wrong. The direction answers
-  something in the brief.
-- **3** — plausible for any firm in the sector.
-- **1** — belongs to a different sector entirely.
+## 2. Visual hierarchy
 
-Test: what would this site lose if the accent were a different hue? If the answer is
-"nothing", it is a 3 at best.
+Squint until the words go. Is one thing clearly first, one clearly second? An even field of
+equally weighted panels reads as calm and is indecision. Look at where the eye lands on the
+home page and whether the same logic holds on an inner page.
 
-## 2. Visual quality
+## 3. Originality without randomness
 
-Hierarchy, type, spacing, composition.
+Two failures, one score. **Generic** is the safe average of its category: the interchangeable
+layout, the default section order. **Random** is difference for its own sake: a typeface that
+fights the content, an accent that means nothing, a layout that is unusual and not better.
 
-- **5** — squint and one thing is clearly first. Type has a scale that is visibly used.
-  Spacing groups things. Nothing floats, nothing is orphaned.
-- **3** — even, calm, unobjectionable. Everything the same weight.
-- **1** — cramped or sprawling, misaligned, competing focal points.
+- **5** — a specific direction you could describe in a sentence, held consistently.
+- **3** — no direction, or a direction that is only a colour.
+- **1** — arbitrary. Choices that surprise without paying for it.
 
-## 3. Content quality
+## 4. Cross-page consistency
 
-Copy, argument, specificity.
+Cover the logo. Would you know page four is the same site as page one? Header, footer,
+spacing rhythm, type scale, colour. Score only what the brief asked for: a one-page site
+cannot fail this.
 
-- **5** — written for this audience, makes an argument, every claim traceable. Delete the
-  images and the case still stands.
-- **3** — accurate and generic. Could describe any competitor.
-- **1** — filler, or fabricated facts. **Any invented statistic, testimonial or customer logo
-  caps this dimension at 2**, whatever else is true of the copy.
+## 5. Content and factual discipline
 
-## 4. Asset handling
+Does the copy make an argument, in this audience's language, about this client's actual
+business? And is it honest about what it does not know?
 
-Images, illustration, placeholders.
+- **5** — specific, and where a fact is missing the page says so rather than inventing one.
+- **3** — accurate and generic; could describe any competitor.
+- **Any invented statistic, testimonial, customer name or credential caps this at 2**,
+  however well it reads. Placeholders that are clearly labelled as placeholders are not
+  inventions; unlabelled ones are.
 
-- **5** — one treatment, consistently applied. Where an asset does not exist, a labelled slot
-  says what belongs there.
-- **3** — images present, treatment inconsistent, or placeholders that do not say what they
-  are.
-- **1** — unlabelled grey rectangles, decorative SVG blobs, or a div-built fake screenshot.
+## 6. Assets and image treatment
 
-## 5. State coverage
+One treatment, consistently applied? Where an asset does not exist, does the page say what
+belongs there?
 
-Every state the thing can be in.
+- **5** — coherent treatment, and missing assets are named slots.
+- **3** — images present but inconsistent, or placeholders that do not say what they are.
+- **1** — unlabelled grey rectangles, decorative blobs, or a fake screenshot built from boxes.
 
-- **5** — six control states distinguishable; empty, error, loading and partial present
-  wherever the data can be absent. The empty state says what would fill it.
-- **3** — hover and focus exist, page-level states do not.
-- **1** — the happy path only.
+## 7. Responsive quality
 
-## 6. Cross-page consistency
+Compare the mobile sheet against the desktop one. Did the layout reflow with intent, or did
+it collapse into one column and hope? Look for: navigation that still works, a primary action
+still reachable, tables and wide content handled, nothing cramped against the edge.
 
-Only scored where the brief asked for more than one page.
+## 8. States and functional completion
 
-- **5** — header, footer, components and tokens identical across pages. Page four cost less
-  than page two.
-- **3** — recognisably the same site, with drift: a spacing that changed, a second grey, a
-  header that lost an item.
-- **1** — pages that look like different projects.
+From the images alone. Does the set include the states a real site meets: an empty result, an
+error, a 404, a form with visible labels and an error message, a disabled control that says
+why? A set of nothing but happy paths is a 2, however good the happy paths look.
 
-The automatic cross-page numbers are in `report.json`. Read them after scoring, not before.
+**You will not see interaction states.** Judge what is visible: whether the states that
+warrant their own page or section exist at all.
 
-## 7. Completion
+## 9. Conversion and the primary action
 
-Is it finished, against what the brief asked for?
+Is it obvious what the visitor should do, and is that the heaviest interactive thing on the
+screen? Is the action repeated where the argument ends? Does its label state the outcome
+rather than the mechanism? Two actions with the same intent on one page is a page that could
+not decide.
 
-- **5** — every page the brief named exists and is complete. `BRIEF.md` and
-  `DESIGN-SYSTEM.md` exist and describe what was built.
-- **3** — the main pages exist, the secondary ones are stubs.
-- **1** — one page and a promise.
+## 10. Overall production readiness
+
+Would you hand this to the client tomorrow? Not "is it impressive" — is it **finished**. A
+site that did four things well and stopped beats one that attempted everything and completed
+nothing.
 
 ---
 
-## The blind procedure
+## Pairwise
 
-1. `node tools/bench.mjs grade <brief>` copies every run for that brief into a working
-   directory under a random label, strips `manifest.json` and any file naming the arm, and
-   writes a key file the grader must not open.
-2. Grade all six. Write `grade.json` per run: seven scores, and one sentence per dimension
-   saying why. A score with no sentence is not a judgement, it is a number.
-3. Only then open the key.
-4. Report every run. Six runs where two were dropped is a four-run benchmark with a
-   selection story.
+After scoring, you are shown pairs of builds of the same brief. For each pair answer one
+question: **which of these two solves the brief better, and in one sentence, why?** You may
+answer "no meaningful difference". Pairwise is often sharper than absolute scores, because
+comparing two things is easier than calibrating a scale.
 
-**If the grader built the skill, the result says so.** It does not invalidate the automatic
-columns; it does qualify these seven, and the honest thing is to publish the qualification
-next to the number rather than under it.
+---
+
+## What the grading does not see
+
+Stated so the result is not read as more than it is.
+
+- **No code.** Semantics, accessibility, contract adherence and structure are measured
+  mechanically and reported separately. Do not guess at them from pictures.
+- **No interaction.** Hover, focus, loading and validation states are invisible here.
+- **No arm labels.** If you find yourself inferring which build "used the tool", stop: that
+  inference is the thing this design exists to prevent.
+- **Two graders, independently.** Neither sees the other's scores until both are locked.

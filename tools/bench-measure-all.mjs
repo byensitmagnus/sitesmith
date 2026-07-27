@@ -126,11 +126,27 @@ for (const run of runs) {
     }
   }
 
+  // Document structure is read from the source, so it does not need a browser.
+  const structureFailed = [];
+  for (const p of list) {
+    const src = await readFile(join(site, p), 'utf8');
+    const bad = [];
+    if (!/^\s*<!doctype\s+html/i.test(src)) bad.push('doctype');
+    if (!/<html\b/i.test(src)) bad.push('html');
+    else if (!/<html[^>]*\slang\s*=/i.test(src)) bad.push('lang');
+    if (!/<body\b/i.test(src)) bad.push('body');
+    const h1 = (src.match(/<h1[\s>]/gi) ?? []).length;
+    if (h1 !== 1) bad.push(`h1x${h1}`);
+    if (!/<main\b/i.test(src)) bad.push('main');
+    if (bad.length) structureFailed.push({ page: p, missing: bad });
+  }
+
   results.push({
     run,
     pages: list.length,
     verifyFailed: perPage.filter((p) => p.verify !== 0).map((p) => p.page),
     stressFailed: perPage.filter((p) => p.stress !== 0).map((p) => p.page),
+    structureFailed,
     cross,
     artifacts,
     contract,
@@ -139,23 +155,28 @@ for (const run of runs) {
 
 await writeFile(join(ROOT, 'benchmarks/v2', `measurements-${brief}.json`), JSON.stringify(results, null, 2) + '\n');
 
+const pct = (v) => (v === null ? '  — ' : `${String(Math.round(v * 100)).padStart(3)}%`);
+
 console.log(`\n  independent measurement — ${brief}\n`);
-console.log('  run                      pages  verify  stress  hdr  ftr  tok/all  reuse  BRIEF  DS   contract');
+console.log('  run                     pages verify stress struct  cover  undecl  reuse  hdr ftr  BRIEF/DS');
 for (const r of results) {
   if (r.error) {
-    console.log(`  ${r.run.padEnd(24)} ${r.error}`);
+    console.log(`  ${r.run.padEnd(23)} ${r.error}`);
     continue;
   }
   const c = r.cross;
   console.log(
-    `  ${r.run.padEnd(24)} ${String(r.pages).padStart(5)}  ` +
-      `${(r.verifyFailed.length ? `${r.verifyFailed.length} FAIL` : 'pass').padEnd(6)}  ` +
-      `${(r.stressFailed.length ? `${r.stressFailed.length} FAIL` : 'pass').padEnd(6)}  ` +
-      `${String(c.distinctHeaders).padStart(3)}  ${String(c.distinctFooters).padStart(3)}  ` +
-      `${String(c.tokensOnEveryPage).padStart(3)}/${String(c.tokensDeclaredAnywhere).padEnd(3)}  ` +
-      `${String(c.classesReused).padStart(5)}  ` +
-      `${(r.artifacts.brief ? 'yes' : 'no').padEnd(5)}  ${(r.artifacts.designSystem ? 'yes' : 'no').padEnd(3)}  ${r.contract}`,
+    `  ${r.run.padEnd(23)} ${String(r.pages).padStart(5)} ` +
+      `${(r.verifyFailed.length ? `${r.verifyFailed.length}FAIL` : ' pass').padStart(6)} ` +
+      `${(r.stressFailed.length ? `${r.stressFailed.length}FAIL` : ' pass').padStart(6)} ` +
+      `${(r.structureFailed?.length ? `${r.structureFailed.length}FAIL` : '  ok').padStart(6)}  ` +
+      `${pct(c.valueCoverage)}  ${String(c.undeclaredLiterals).padStart(5)}  ` +
+      `${pct(c.componentReuse)}  ${String(c.distinctHeaders).padStart(3)} ${String(c.distinctFooters).padStart(3)}  ` +
+      `${(r.artifacts.brief ? 'yes' : 'no')}/${(r.artifacts.designSystem ? 'yes' : 'no')}`,
   );
 }
-console.log('\n  hdr/ftr: distinct header and footer markup across pages. 1 is consistent.');
+console.log('\n  cover : share of colour and length values that come from a named token');
+console.log('  undecl: literal values in declarations that no token carries');
+console.log('  reuse : share of class names used on more than one page');
+console.log('  hdr/ftr: distinct header and footer markup across pages, ignoring the current marker. 1 is consistent.');
 console.log(`  written to benchmarks/v2/measurements-${brief}.json\n`);

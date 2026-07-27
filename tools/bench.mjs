@@ -145,14 +145,54 @@ function crossPage(pages) {
   const union = new Set(tokenSets.flatMap((s) => [...s]));
   const shared = [...union].filter((t) => tokenSets.every((s) => s.has(t)));
   const reused = [...classCounts.values()].filter((n) => n > 1).length;
+
+  /**
+   * Coverage, not vocabulary size. A raw token count rewards declaring tokens and
+   * says nothing about whether the page uses them — the previous run reported
+   * 43 against 17 and that number is not a quality measure.
+   *
+   * This measures the share of colour and length values in declarations that come
+   * from somewhere named, using the site's own token block as the reference. It is
+   * therefore comparable across both arms whether or not a contract file exists.
+   */
+  const sheets = pages[0]?.sheets ?? '';
+  const allCss = pages.map((p) => p.html).join('\n') + '\n' + sheets;
+  const declared = new Set();
+  for (const m of allCss.matchAll(/--[\w-]+\s*:\s*([^;}]+)/g)) {
+    for (const v of m[1].matchAll(/#[0-9a-f]{3,8}\b|-?\d*\.?\d+(?:px|rem|em)\b/gi)) {
+      declared.add(v[0].toLowerCase());
+    }
+  }
+  const UTILITY = /^(0|0px|0rem|1px|-1px|2px|100%|50%)$/;
+  const PROPS =
+    'color|background|background-color|border-color|fill|stroke|padding|margin|gap|row-gap|column-gap|border-radius|font-size|box-shadow';
+  let literals = 0, covered = 0;
+  for (const m of allCss.matchAll(new RegExp(`(?:^|[;{\\s])(?:${PROPS})\\s*:\\s*([^;}]+)`, 'gi'))) {
+    const value = m[1];
+    if (/var\(/.test(value)) continue;
+    for (const v of value.matchAll(/#[0-9a-f]{3,8}\b|-?\d*\.?\d+(?:px|rem|em)\b/gi)) {
+      const lit = v[0].toLowerCase();
+      if (UTILITY.test(lit)) continue;
+      literals++;
+      if (declared.has(lit)) covered++;
+    }
+  }
+  const varUses = (allCss.match(/var\(--/g) ?? []).length;
+
   return {
     pages: pages.length,
     distinctHeaders: headers.size,
     distinctFooters: footers.size,
-    tokensDeclaredAnywhere: union.size,
+    tokensDeclared: union.size,
     tokensOnEveryPage: shared.length,
-    classesReused: reused,
+    // The reported numbers, in the order they matter.
+    valueCoverage: varUses + literals ? +(varUses / (varUses + literals)).toFixed(3) : null,
+    undeclaredLiterals: literals - covered,
+    literalsTotal: literals,
+    varUses,
+    classesShared: reused,
     classesTotal: classCounts.size,
+    componentReuse: classCounts.size ? +(reused / classCounts.size).toFixed(3) : null,
   };
 }
 
