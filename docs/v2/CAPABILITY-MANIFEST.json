@@ -1,0 +1,302 @@
+{
+  "audited": "2026-07-28",
+  "sitesmith": "48aa17c76540f2207df0bf22af8b85346de0bf11",
+  "rule": "A capability is complete only when a workflow, an implementation or a verifiable output exists. A markdown rule on its own is 'partial'.",
+  "competitors": {
+    "taste-skill": {
+      "sha": "e988add20dab0fa97d7a76781c48961c8184288e",
+      "licence": "MIT"
+    },
+    "ui-ux-pro-max": {
+      "sha": "4857a2c5ef989794751a0f66b8545a4a49566286",
+      "licence": "MIT (+OFL fonts)"
+    },
+    "frontend-design": {
+      "sha": "2235be7c60b551f5de82ade908fd3816455afcda",
+      "licence": "Apache-2.0"
+    },
+    "impeccable": {
+      "sha": "1cf7d7ab0f1ac0bb3319fd20be389a3009f4037d",
+      "licence": "Apache-2.0 + NOTICE"
+    }
+  },
+  "capabilities": [
+    {
+      "id": "evidence-pack",
+      "competitor": "frontend-design",
+      "competitorFile": "SKILL.md (design from the subject's world)",
+      "competitorSha": "2235be7c60b551f5de82ade908fd3816455afcda",
+      "sitesmithStatus": "complete",
+      "decision": "retain",
+      "sitesmithFile": "skills/sitesmith/v2/05-evidence.md",
+      "evidence": "pilots/01-chandlery/EVIDENCE.md, pilots/02-foundry/EVIDENCE.md, pilots/03-cask-console/EVIDENCE.md",
+      "licence": "principle only; nothing copied",
+      "rationale": "Upstream states the principle in prose. SiteSmith produces EVIDENCE.md per project with seven required sections and an inferred/needed marker convention the production gate reads."
+    },
+    {
+      "id": "aesthetic-thesis",
+      "competitor": "frontend-design",
+      "competitorFile": "SKILL.md",
+      "competitorSha": "2235be7c60b551f5de82ade908fd3816455afcda",
+      "sitesmithStatus": "partial",
+      "decision": "implement",
+      "rationale": "SiteSmith records a signature in DIRECTION.md but until direction-fidelity gained signature-selector there was no way to show the signature existed on the page. The selector is now required and none of the three pilots declares one.",
+      "sitesmithFile": "skills/sitesmith/scripts/direction-fidelity.mjs",
+      "evidence": "P0-2 — all three pilots currently FAIL on 'names no signature-selector'",
+      "licence": "principle only",
+      "priority": "P0"
+    },
+    {
+      "id": "three-structural-comps",
+      "competitor": "none",
+      "competitorFile": "—",
+      "competitorSha": "—",
+      "sitesmithStatus": "complete",
+      "decision": "retain",
+      "rationale": "No competitor requires or measures three structurally different comps. SiteSmith requires pairwise difference on three of five axes including composition, verified against the rendered DOM.",
+      "sitesmithFile": "skills/sitesmith/v2/20-direction-lab.md, skills/sitesmith/scripts/direction-check.mjs",
+      "evidence": "tools/gate-fixtures.mjs — 4 direction fixtures including palette-variants FAIL",
+      "licence": "original"
+    },
+    {
+      "id": "guided-variation-dials",
+      "competitor": "taste-skill",
+      "competitorFile": "skills/taste-skill/SKILL.md (87 KB)",
+      "competitorSha": "e988add20dab0fa97d7a76781c48961c8184288e",
+      "sitesmithStatus": "partial",
+      "decision": "adapt",
+      "rationale": "taste-skill's dials govern density, motion and boldness explicitly. SiteSmith's mode files state outcomes but expose no dial the user can turn, so variation between projects depends entirely on the direction lab.",
+      "sitesmithFile": "skills/sitesmith/v2/modes/",
+      "evidence": "none yet",
+      "licence": "MIT, attributed in NOTICE.md; principle adapted, text not copied",
+      "priority": "P1"
+    },
+    {
+      "id": "anti-repeat",
+      "competitor": "taste-skill",
+      "competitorFile": "skills/taste-skill/SKILL.md",
+      "competitorSha": "e988add20dab0fa97d7a76781c48961c8184288e",
+      "sitesmithStatus": "complete",
+      "decision": "retain",
+      "rationale": "Upstream states anti-slop as guidance. SiteSmith keeps one append-only cross-project history storing the measured render fingerprint beside the declared axes, so a direction described in fresh words that renders as the last one is caught.",
+      "sitesmithFile": "skills/sitesmith/scripts/direction-history.mjs, docs/v2/direction-history.jsonl",
+      "evidence": "18 search anti-repeat fixtures in tools/gate-fixtures.mjs",
+      "licence": "principle only"
+    },
+    {
+      "id": "brandkit-and-reference-board",
+      "competitor": "taste-skill + ui-ux-pro-max",
+      "competitorFile": "skills/brandkit/SKILL.md; .claude/skills/brand/ (5 scripts incl. extract-colors.cjs, validate-asset.cjs)",
+      "competitorSha": "e988add20dab0fa97d7a76781c48961c8184288e / 4857a2c5ef989794751a0f66b8545a4a49566286",
+      "sitesmithStatus": "missing",
+      "decision": "implement",
+      "rationale": "SiteSmith has an asset manifest but no step that inventories an existing brand — extracting palette from a supplied logo, recording type, and building a reference board. A CEO with an existing brand cannot hand it over.",
+      "sitesmithFile": "—",
+      "evidence": "none",
+      "licence": "MIT both; implement independently",
+      "priority": "P0"
+    },
+    {
+      "id": "asset-inventory-focal-crop",
+      "competitor": "ui-ux-pro-max",
+      "competitorFile": ".claude/skills/brand/scripts/validate-asset.cjs",
+      "competitorSha": "4857a2c5ef989794751a0f66b8545a4a49566286",
+      "sitesmithStatus": "complete",
+      "decision": "retain",
+      "rationale": "ASSET-MANIFEST.md records id, source, licence, state, focal point and treatment; the production gate fails a build with any row not ready, an unmanifested asset, or an empty element used as a mark.",
+      "sitesmithFile": "skills/sitesmith/v2/25-assets.md, skills/sitesmith/scripts/production-gate.mjs",
+      "evidence": "6 production fixtures in tools/gate-fixtures.mjs",
+      "licence": "original"
+    },
+    {
+      "id": "visual-relevance-and-dominance",
+      "competitor": "taste-skill",
+      "competitorFile": "skills/image-to-code-skill/SKILL.md, skills/imagegen-frontend-web/SKILL.md",
+      "competitorSha": "e988add20dab0fa97d7a76781c48961c8184288e",
+      "sitesmithStatus": "partial",
+      "decision": "implement",
+      "rationale": "'ready' means technically present. direction-fidelity now measures asset share of the first screen against what the declared imagery commits to, and all three pilots fail it (2.06 %, 4.47 %, 0.55 %).",
+      "sitesmithFile": "skills/sitesmith/scripts/direction-fidelity.mjs",
+      "evidence": "docs/v2/PILOT-CONVERGENCE.md",
+      "licence": "principle only",
+      "priority": "P0"
+    },
+    {
+      "id": "design-system-generator",
+      "competitor": "ui-ux-pro-max",
+      "competitorFile": ".claude/skills/ui-ux-pro-max/scripts/design_system.py (59.4 KB)",
+      "competitorSha": "4857a2c5ef989794751a0f66b8545a4a49566286",
+      "sitesmithStatus": "complete",
+      "decision": "retain",
+      "rationale": "Vendored under MIT and kept, but deliberately demoted: SiteSmith writes the contract from the winning comp rather than generating it from a query, because generating tokens before a direction is chosen is the mechanism that made nine subjects converge.",
+      "sitesmithFile": "skills/sitesmith/scripts/design_system.py, skills/sitesmith/v2/30-contract.md",
+      "evidence": "token-drift.mjs PASS on all three pilots, 0 undeclared values",
+      "licence": "MIT, © Next Level Builder, attributed in NOTICE.md"
+    },
+    {
+      "id": "contrasting-search-candidates",
+      "competitor": "ui-ux-pro-max",
+      "competitorFile": ".claude/skills/ui-ux-pro-max/scripts/search.py, core.py",
+      "competitorSha": "4857a2c5ef989794751a0f66b8545a4a49566286",
+      "sitesmithStatus": "complete",
+      "decision": "adapt",
+      "rationale": "Upstream returns the top three by BM25, which are near each other by construction. SiteSmith adds --candidates: three deliberately contrasting rows with confidence, the near-misses they displaced and cross-project anti-repeat.",
+      "sitesmithFile": "skills/sitesmith/scripts/candidates.py",
+      "evidence": "18 python fixtures in tests/gates/search_v3_test.py",
+      "licence": "MIT base vendored and attributed; selection logic original"
+    },
+    {
+      "id": "stack-specific-implementation",
+      "competitor": "ui-ux-pro-max + impeccable",
+      "competitorFile": "data/stacks/*.csv (25 files); live/svelte-component.mjs, sveltekit-adapter.mjs, tanstack-adapter.mjs",
+      "competitorSha": "4857a2c5ef989794751a0f66b8545a4a49566286 / 1cf7d7ab0f1ac0bb3319fd20be389a3009f4037d",
+      "sitesmithStatus": "partial",
+      "decision": "implement",
+      "rationale": "SiteSmith vendors the 25 stack CSVs but its pipeline never routes to them. The mode files are stack-agnostic and blocks are plain HTML, so a Next.js or Astro project gets generic guidance. Demoted to P1 for v1.0: no exit gate depends on it, because the pilots and all three benchmark briefs are plain HTML and CSS.",
+      "sitesmithFile": "skills/sitesmith/data/stacks/",
+      "evidence": "none — no step reads a stack",
+      "licence": "MIT, attributed",
+      "priority": "P1"
+    },
+    {
+      "id": "interaction-journeys",
+      "competitor": "impeccable",
+      "competitorFile": "scripts/live-*.mjs",
+      "competitorSha": "1cf7d7ab0f1ac0bb3319fd20be389a3009f4037d",
+      "sitesmithStatus": "complete",
+      "decision": "retain",
+      "rationale": "impeccable's live mode edits a running page; it does not assert that a state is reachable. SiteSmith requires a Playwright journey per surface asserting a change, an announcement, a failure path and a keyboard path.",
+      "sitesmithFile": "skills/sitesmith/v2/40-interaction.md, skills/sitesmith/scripts/journey.mjs",
+      "evidence": "3 journey fixtures; a painted-state page fails, a wired one passes",
+      "licence": "original"
+    },
+    {
+      "id": "technical-verification",
+      "competitor": "impeccable",
+      "competitorFile": "scripts/detector/rules/checks.mjs (249 KB)",
+      "competitorSha": "1cf7d7ab0f1ac0bb3319fd20be389a3009f4037d",
+      "sitesmithStatus": "complete",
+      "decision": "retain",
+      "rationale": "verify.mjs renders at three widths, runs axe in both colour schemes, and checks overflow, dead links, console errors, document structure and wide-font stress.",
+      "sitesmithFile": "skills/sitesmith/scripts/verify.mjs",
+      "evidence": "CI: nine benchmarks, the block harness and the gallery; the control must keep failing",
+      "licence": "original"
+    },
+    {
+      "id": "deterministic-antipattern-detector",
+      "competitor": "impeccable",
+      "competitorFile": "scripts/detector/detect-antipatterns-browser.js (364 KB), rules/checks.mjs (249 KB)",
+      "competitorSha": "1cf7d7ab0f1ac0bb3319fd20be389a3009f4037d",
+      "sitesmithStatus": "partial",
+      "decision": "adapt",
+      "rationale": "SiteSmith has tools/conformance.mjs with a ratchet, but it is text-level and runs over files rather than a rendered page. impeccable's detector runs in the browser against computed style.",
+      "sitesmithFile": "tools/conformance.mjs",
+      "evidence": "conformance baseline with 97 recorded violations and a ratchet",
+      "licence": "Apache-2.0; implement independently, do not lift rules",
+      "priority": "P1"
+    },
+    {
+      "id": "visual-critique-gate",
+      "competitor": "impeccable",
+      "competitorFile": "reference/critique.md, reference/polish.md, reference/harden.md",
+      "competitorSha": "1cf7d7ab0f1ac0bb3319fd20be389a3009f4037d",
+      "sitesmithStatus": "complete",
+      "decision": "retain",
+      "rationale": "impeccable documents critique as a command. SiteSmith enforces the ceremony: two locked reviews, hashes of brief, rubric and sheets, an opaque label, key opened after both locks, whole-review generic scanning, and reviewer ≠ builder.",
+      "sitesmithFile": "skills/sitesmith/v2/50-critique.md, skills/sitesmith/scripts/critique-gate.mjs",
+      "evidence": "11 critique fixtures in tools/gate-fixtures.mjs",
+      "licence": "original"
+    },
+    {
+      "id": "command-vocabulary",
+      "competitor": "impeccable",
+      "competitorFile": "command-metadata.json (7.9 KB), reference/{init,shape,audit,harden,polish,doctor,live}.md",
+      "competitorSha": "1cf7d7ab0f1ac0bb3319fd20be389a3009f4037d",
+      "sitesmithStatus": "missing",
+      "decision": "implement",
+      "rationale": "SiteSmith has nine scripts and a thirteen-step prose process but no named commands. A user cannot say 'audit this' or 'polish that'. impeccable declares its vocabulary as data so providers can be generated from it.",
+      "sitesmithFile": "—",
+      "evidence": "none",
+      "licence": "Apache-2.0; the idea of metadata-as-data is adopted, the file is not copied",
+      "priority": "P0"
+    },
+    {
+      "id": "install-update-doctor",
+      "competitor": "impeccable + ui-ux-pro-max + taste-skill",
+      "competitorFile": "scripts/doctor.mjs, skills-lock.json; cli/; skill.sh",
+      "competitorSha": "1cf7d7ab0f1ac0bb3319fd20be389a3009f4037d",
+      "sitesmithStatus": "missing",
+      "decision": "implement",
+      "rationale": "All three competitors install in one command. SiteSmith is cloned by hand. There is no update path and nothing detects a broken or drifted installation.",
+      "sitesmithFile": "—",
+      "evidence": "none",
+      "licence": "implement independently",
+      "priority": "P0"
+    },
+    {
+      "id": "provider-packages",
+      "competitor": "impeccable",
+      "competitorFile": ".agents/, .claude/, .cursor/, .codex/hooks.json, skills-lock.json",
+      "competitorSha": "1cf7d7ab0f1ac0bb3319fd20be389a3009f4037d",
+      "sitesmithStatus": "missing",
+      "decision": "implement",
+      "rationale": "impeccable ships three provider trees generated from one source with a lock file. SiteSmith ships a Claude skill directory only.",
+      "sitesmithFile": "—",
+      "evidence": "none",
+      "licence": "implement independently",
+      "priority": "P0"
+    },
+    {
+      "id": "live-feedback",
+      "competitor": "impeccable",
+      "competitorFile": "scripts/live.mjs and ~17 live-*.mjs modules",
+      "competitorSha": "1cf7d7ab0f1ac0bb3319fd20be389a3009f4037d",
+      "sitesmithStatus": "missing",
+      "decision": "intentionally-reject",
+      "rationale": "A live browser session that injects into a running dev server, stores sessions, applies manual edits and commits them is a product in itself — ~17 modules plus adapters for Svelte, SvelteKit and TanStack. It does not serve the closed loop SiteSmith is claiming, and building a worse version of it before v1.0 would cost the release. Revisit after v1.0.",
+      "sitesmithFile": "—",
+      "evidence": "—",
+      "licence": "n/a",
+      "priority": "P1"
+    },
+    {
+      "id": "redesign-existing-site",
+      "competitor": "taste-skill + impeccable",
+      "competitorFile": "skills/redesign-skill/SKILL.md; reference/{onboard,adapt,new-work}.md",
+      "competitorSha": "e988add20dab0fa97d7a76781c48961c8184288e / 1cf7d7ab0f1ac0bb3319fd20be389a3009f4037d",
+      "sitesmithStatus": "partial",
+      "decision": "adapt",
+      "rationale": "SiteSmith has references/06-redesign-audit.md and a REDESIGN route, but the v2 pipeline is written for a new build; there is no step that inventories an existing component library and reuses it.",
+      "sitesmithFile": "skills/sitesmith/references/06-redesign-audit.md",
+      "evidence": "benchmarks/06-redesign before/after pair",
+      "licence": "original (upstream redesign-skill was removed for unverifiable provenance)",
+      "priority": "P1"
+    },
+    {
+      "id": "measured-proof",
+      "competitor": "none",
+      "competitorFile": "—",
+      "competitorSha": "—",
+      "sitesmithStatus": "partial",
+      "decision": "implement",
+      "rationale": "No competitor benchmarks its own effect. SiteSmith has the harness — pinned base digest, internal network, exact-host egress proxy, two gates, 63 self-tests — but has not run the 18 generations, so the claim is unproven.",
+      "sitesmithFile": "tools/bench-container.mjs, bench/",
+      "evidence": "63 runner self-tests pass; probe and generations not yet run",
+      "licence": "original",
+      "priority": "P0"
+    },
+    {
+      "id": "ecommerce-factual-discipline",
+      "competitor": "ui-ux-pro-max",
+      "competitorFile": ".claude/skills/ui-ux-pro-max/data/products.csv",
+      "competitorSha": "4857a2c5ef989794751a0f66b8545a4a49566286",
+      "sitesmithStatus": "partial",
+      "decision": "implement",
+      "rationale": "Mode E and the pilot enforce honest figures by convention — the chandlery publishes batch numbers and refuses to state a safe working load. Nothing mechanical stops a build inventing a price, a review or a delivery promise.",
+      "sitesmithFile": "skills/sitesmith/v2/modes/ecommerce.md",
+      "evidence": "production-gate blocks fabricated-proof language and stand-in identifiers; no check for invented commerce facts",
+      "licence": "principle only",
+      "priority": "P0"
+    }
+  ]
+}
