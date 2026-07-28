@@ -77,8 +77,45 @@ export function parseReview(text) {
            bodyHash: createHash('sha256').update(body.trim()).digest('hex') };
 }
 
+/** Every field a locked review has to carry so the ceremony can be shown to have happened
+ *  rather than described. */
+export const REQUIRED_META = ['reviewer', 'reviewer-id', 'run-id', 'label', 'locked', 'sha256',
+                              'brief-sha256', 'rubric-sha256', 'sheet-sha256'];
+
 export function judge({ reviews, key }) {
   const problems = [];
+
+  /* The reviewers must not be whoever built the thing. A build agent reviewing its own work
+     blind is still the build agent. */
+  const builtBy = key?.['built-by'] ?? key?.builtBy ?? null;
+  if (!builtBy) {
+    problems.push('key.json does not say who built the work (`built-by`), so it cannot be ' +
+      'shown that the reviewers were not the builder');
+  }
+  for (const r of reviews) {
+    const id = r.meta?.['reviewer-id'];
+    if (builtBy && id && String(id).toLowerCase() === String(builtBy).toLowerCase()) {
+      problems.push(`${r.meta.reviewer} is the build agent (${builtBy}). A builder reviewing ` +
+        'its own work blind is still the builder.');
+    }
+  }
+
+  /* Every review must be bound to the same brief, rubric and contact sheets, by hash. Two
+     reviewers scoring different screenshots are not two reviews of one thing. */
+  for (const field of ['brief-sha256', 'rubric-sha256', 'sheet-sha256', 'run-id']) {
+    const values = new Set(reviews.map((r) => r.meta?.[field]).filter(Boolean));
+    if (values.size > 1) {
+      problems.push(`the reviews disagree on ${field}: ${[...values].map((v) => String(v).slice(0, 12)).join(' vs ')}. ` +
+        'They were not looking at the same thing.');
+    }
+  }
+
+  /* Labels must be randomised and distinct per review, so neither reviewer can infer which
+     page they are scoring from the label alone. */
+  const labels = reviews.map((r) => r.meta?.label).filter(Boolean);
+  if (labels.some((l) => /chandlery|foundry|cask|pilot|with|without|sitesmith/i.test(l))) {
+    problems.push(`a label names the subject (${labels.join(', ')}); it has to be opaque`);
+  }
 
   if (reviews.length < 2) {
     problems.push(`a blind review needs two independent reviewers; found ${reviews.length}. ` +
@@ -93,7 +130,9 @@ export function judge({ reviews, key }) {
   for (const r of reviews) {
     const who = r.meta?.reviewer ?? r.file;
     if (r.error) { problems.push(`${r.file}: ${r.error}`); continue; }
-    if (!r.meta.locked) problems.push(`${who} is not locked: no locked timestamp`);
+    for (const f of REQUIRED_META) {
+      if (!r.meta[f]) problems.push(`${who} carries no ${f}`);
+    }
     if (!r.meta.sha256) problems.push(`${who} carries no sha256, so it cannot be shown unchanged`);
     else if (r.meta.sha256 !== r.bodyHash) {
       problems.push(`${who} was edited after locking: recorded ${r.meta.sha256.slice(0, 12)}, ` +
@@ -110,7 +149,10 @@ export function judge({ reviews, key }) {
   /* The key must not have been opened before every review was locked. */
   if (!key || key.opened === undefined) {
     problems.push('key.json is missing or has no `opened` field, so the order cannot be shown');
-  } else if (key.opened !== null) {
+  } else if (key.opened === null) {
+    problems.push('the key was never opened. A blind review is only finished when the mapping ' +
+      'is revealed and recorded, after both reviews are locked.');
+  } else {
     const opened = Date.parse(key.opened);
     for (const r of reviews) {
       const locked = Date.parse(r.meta?.locked ?? '');
@@ -122,11 +164,20 @@ export function judge({ reviews, key }) {
     }
   }
 
-  /* The primary-criticism test, which overrides the numbers. */
+  /* The generic-template test. Scanned across the whole review, not only the one-sentence
+     answer: a reviewer who buries "could be any consultancy" in the specificity note has
+     said the same thing, and reading only the headline lets it through. */
   for (const r of reviews) {
+    const who = r.meta?.reviewer ?? r.file;
     if (r.primary && isGenericCriticism(r.primary)) {
-      problems.push(`${r.meta?.reviewer ?? r.file} names the generic-template failure as the ` +
-        `main problem: "${r.primary}". That fails regardless of the scores.`);
+      problems.push(`${who} names the generic-template failure as the main problem: ` +
+        `"${r.primary}". That fails regardless of the scores.`);
+      continue;
+    }
+    const hit = (r.body ?? '').split('\n').find((line) => isGenericCriticism(line));
+    if (hit) {
+      problems.push(`${who} raises the generic-template failure inside the review: ` +
+        `"${hit.trim().slice(0, 120)}"`);
     }
   }
 

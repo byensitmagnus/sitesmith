@@ -165,6 +165,16 @@ expect('critique', 'a median under the threshold', crit('fail-below-threshold'),
   /median production-readiness is [\d.]+, under the threshold/);
 expect('critique', 'a review edited after locking', crit('fail-edited-after-locking'), 1,
   /was edited after locking/);
+expect('critique', 'a reviewer who is the build agent', crit('fail-reviewer-is-builder'), 1,
+  /is the build agent/);
+expect('critique', 'a key that was never opened', crit('fail-key-never-opened'), 1,
+  /never opened/);
+expect('critique', 'reviews bound to different contact sheets', crit('fail-different-sheets'), 1,
+  /disagree on sheet-sha256/);
+expect('critique', 'the generic criticism buried in the notes', crit('fail-generic-buried'), 1,
+  /raises the generic-template failure inside the review/);
+expect('critique', 'a label that names the subject', crit('fail-label-names-subject'), 1,
+  /label names the subject/);
 
 /* ══ search v3 ══════════════════════════════════════════════════════════ */
 

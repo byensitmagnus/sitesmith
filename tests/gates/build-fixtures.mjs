@@ -358,57 +358,109 @@ await put('journey/journeys/counter.spec.mjs', JOURNEY);
 
 /* ══ critique ═══════════════════════════════════════════════════════════ */
 
-const review = ({ reviewer, locked, primary, scores }) => {
+const RUN = 'run-2026-07-28-a91f';
+const BRIEF_SHA = 'b1'.repeat(32);
+const RUBRIC_SHA = 'r2'.repeat(32);
+const SHEET_SHA = 's3'.repeat(32);
+
+/* A locked review carries everything the ceremony needs to be shown rather than described:
+   who reviewed, under which opaque label, in which run, and the hashes of the brief, the
+   rubric and the contact sheets they scored. */
+const review = ({ reviewer, id, locked, primary, scores, notes = '', label = 'L7',
+                  run = RUN, brief = BRIEF_SHA, rubric = RUBRIC_SHA, sheet = SHEET_SHA }) => {
   const body = `primary-criticism: ${primary}\n` +
-    Object.entries(scores).map(([k, v]) => `${k}: ${v}`).join('\n') + '\n';
+    Object.entries(scores).map(([k, v]) => `${k}: ${v}`).join('\n') + '\n' +
+    (notes ? `\nnotes: ${notes}\n` : '');
   const sha = createHash('sha256').update(body.trim()).digest('hex');
-  return `---\nreviewer: ${reviewer}\nlocked: ${locked}\nsha256: ${sha}\n---\n${body}`;
+  return `---\nreviewer: ${reviewer}\nreviewer-id: ${id}\nrun-id: ${run}\nlabel: ${label}\n` +
+    `locked: ${locked}\nsha256: ${sha}\nbrief-sha256: ${brief}\nrubric-sha256: ${rubric}\n` +
+    `sheet-sha256: ${sheet}\n---\n${body}`;
 };
+const keyFile = (opened) => JSON.stringify({ opened, 'built-by': 'build-agent-1',
+  labels: { L7: 'site-a', L2: 'site-b' } }, null, 2) + '\n';
 const GOOD = { direction: 8, specificity: 9, type: 8, colour: 8, assets: 8, hierarchy: 8, 'production-readiness': 8 };
 
-await put('critique/pass/CRITIQUE-A.md', review({ reviewer: 'A', locked: '2026-07-28T09:12:00Z',
+await put('critique/pass/CRITIQUE-A.md', review({ reviewer: 'A', id: 'rev-a', locked: '2026-07-28T09:12:00Z',
   primary: 'The batch number is the smallest thing on a page whose whole argument is the batch.',
   scores: GOOD }));
-await put('critique/pass/CRITIQUE-B.md', review({ reviewer: 'B', locked: '2026-07-28T09:31:00Z',
+await put('critique/pass/CRITIQUE-B.md', review({ reviewer: 'B', id: 'rev-b', locked: '2026-07-28T09:31:00Z',
   primary: 'The drawing column crowds the price at 1024px.', scores: { ...GOOD, type: 7 } }));
-await put('critique/pass/key.json', JSON.stringify({ opened: '2026-07-28T09:40:00Z',
-  labels: { L1: 'chandlery', L2: 'foundry' } }, null, 2) + '\n');
+await put('critique/pass/key.json', keyFile('2026-07-28T09:40:00Z'));
 
-await put('critique/fail-one-reviewer/CRITIQUE-A.md', review({ reviewer: 'A',
+await put('critique/fail-one-reviewer/CRITIQUE-A.md', review({ reviewer: 'A', id: 'rev-a',
   locked: '2026-07-28T09:12:00Z', primary: 'The lede runs long at 375.', scores: GOOD }));
-await put('critique/fail-one-reviewer/key.json', JSON.stringify({ opened: '2026-07-28T09:40:00Z' }, null, 2) + '\n');
+await put('critique/fail-one-reviewer/key.json', keyFile('2026-07-28T09:40:00Z'));
 
-await put('critique/fail-key-opened-early/CRITIQUE-A.md', review({ reviewer: 'A',
+await put('critique/fail-key-opened-early/CRITIQUE-A.md', review({ reviewer: 'A', id: 'rev-a',
   locked: '2026-07-28T09:12:00Z', primary: 'The lede runs long at 375.', scores: GOOD }));
-await put('critique/fail-key-opened-early/CRITIQUE-B.md', review({ reviewer: 'B',
+await put('critique/fail-key-opened-early/CRITIQUE-B.md', review({ reviewer: 'B', id: 'rev-b',
   locked: '2026-07-28T09:31:00Z', primary: 'The drawing crowds the price.', scores: GOOD }));
 await put('critique/fail-key-opened-early/key.json',
-  JSON.stringify({ opened: '2026-07-28T09:20:00Z' }, null, 2) + '\n');
+  keyFile('2026-07-28T09:20:00Z'));
 
-await put('critique/fail-generic-template/CRITIQUE-A.md', review({ reviewer: 'A',
+await put('critique/fail-generic-template/CRITIQUE-A.md', review({ reviewer: 'A', id: 'rev-a',
   locked: '2026-07-28T09:12:00Z',
   primary: 'It looks like a generic AI-generated template: system font, off-white, one accent.',
   scores: GOOD }));
-await put('critique/fail-generic-template/CRITIQUE-B.md', review({ reviewer: 'B',
+await put('critique/fail-generic-template/CRITIQUE-B.md', review({ reviewer: 'B', id: 'rev-b',
   locked: '2026-07-28T09:31:00Z', primary: 'The drawing crowds the price.', scores: GOOD }));
 await put('critique/fail-generic-template/key.json',
-  JSON.stringify({ opened: '2026-07-28T09:40:00Z' }, null, 2) + '\n');
+  keyFile('2026-07-28T09:40:00Z'));
 
-await put('critique/fail-below-threshold/CRITIQUE-A.md', review({ reviewer: 'A',
+await put('critique/fail-below-threshold/CRITIQUE-A.md', review({ reviewer: 'A', id: 'rev-a',
   locked: '2026-07-28T09:12:00Z', primary: 'The price is hard to find.',
   scores: { ...GOOD, 'production-readiness': 6 } }));
-await put('critique/fail-below-threshold/CRITIQUE-B.md', review({ reviewer: 'B',
+await put('critique/fail-below-threshold/CRITIQUE-B.md', review({ reviewer: 'B', id: 'rev-b',
   locked: '2026-07-28T09:31:00Z', primary: 'The drawing crowds the price.',
   scores: { ...GOOD, 'production-readiness': 7 } }));
 await put('critique/fail-below-threshold/key.json',
-  JSON.stringify({ opened: '2026-07-28T09:40:00Z' }, null, 2) + '\n');
+  keyFile('2026-07-28T09:40:00Z'));
 
 await put('critique/fail-edited-after-locking/CRITIQUE-A.md',
-  review({ reviewer: 'A', locked: '2026-07-28T09:12:00Z', primary: 'Fine.', scores: GOOD })
+  review({ reviewer: 'A', id: 'rev-a', locked: '2026-07-28T09:12:00Z', primary: 'Fine.', scores: GOOD })
     .replace('production-readiness: 8', 'production-readiness: 9'));
-await put('critique/fail-edited-after-locking/CRITIQUE-B.md', review({ reviewer: 'B',
+await put('critique/fail-edited-after-locking/CRITIQUE-B.md', review({ reviewer: 'B', id: 'rev-b',
   locked: '2026-07-28T09:31:00Z', primary: 'The drawing crowds the price.', scores: GOOD }));
 await put('critique/fail-edited-after-locking/key.json',
-  JSON.stringify({ opened: '2026-07-28T09:40:00Z' }, null, 2) + '\n');
+  keyFile('2026-07-28T09:40:00Z'));
+
+
+await put('critique/fail-reviewer-is-builder/CRITIQUE-A.md', review({ reviewer: 'A',
+  id: 'build-agent-1', locked: '2026-07-28T09:12:00Z', primary: 'The lede runs long.', scores: GOOD }));
+await put('critique/fail-reviewer-is-builder/CRITIQUE-B.md', review({ reviewer: 'B', id: 'rev-b',
+  locked: '2026-07-28T09:31:00Z', primary: 'The drawing crowds the price.', scores: GOOD }));
+await put('critique/fail-reviewer-is-builder/key.json', keyFile('2026-07-28T09:40:00Z'));
+
+await put('critique/fail-key-never-opened/CRITIQUE-A.md', review({ reviewer: 'A', id: 'rev-a',
+  locked: '2026-07-28T09:12:00Z', primary: 'The lede runs long.', scores: GOOD }));
+await put('critique/fail-key-never-opened/CRITIQUE-B.md', review({ reviewer: 'B', id: 'rev-b',
+  locked: '2026-07-28T09:31:00Z', primary: 'The drawing crowds the price.', scores: GOOD }));
+await put('critique/fail-key-never-opened/key.json', keyFile(null));
+
+await put('critique/fail-different-sheets/CRITIQUE-A.md', review({ reviewer: 'A', id: 'rev-a',
+  locked: '2026-07-28T09:12:00Z', primary: 'The lede runs long.', scores: GOOD }));
+await put('critique/fail-different-sheets/CRITIQUE-B.md', review({ reviewer: 'B', id: 'rev-b',
+  locked: '2026-07-28T09:31:00Z', primary: 'The drawing crowds the price.', scores: GOOD,
+  sheet: 'ff'.repeat(32) }));
+await put('critique/fail-different-sheets/key.json', keyFile('2026-07-28T09:40:00Z'));
+
+/* The generic criticism buried in the notes rather than the headline. Reading only
+   primary-criticism lets this through, which is why the whole review is scanned. */
+await put('critique/fail-generic-buried/CRITIQUE-A.md', review({ reviewer: 'A', id: 'rev-a',
+  locked: '2026-07-28T09:12:00Z', primary: 'The price sits below the fold at 1280.',
+  scores: GOOD, notes: 'Competent, but it could be any business in the trade — interchangeable.' }));
+await put('critique/fail-generic-buried/CRITIQUE-B.md', review({ reviewer: 'B', id: 'rev-b',
+  locked: '2026-07-28T09:31:00Z', primary: 'The drawing crowds the price.', scores: GOOD }));
+await put('critique/fail-generic-buried/key.json', keyFile('2026-07-28T09:40:00Z'));
+
+await put('critique/fail-label-names-subject/CRITIQUE-A.md', review({ reviewer: 'A', id: 'rev-a',
+  locked: '2026-07-28T09:12:00Z', primary: 'The lede runs long.', scores: GOOD,
+  label: 'chandlery-with' }));
+await put('critique/fail-label-names-subject/CRITIQUE-B.md', review({ reviewer: 'B', id: 'rev-b',
+  locked: '2026-07-28T09:31:00Z', primary: 'The drawing crowds the price.', scores: GOOD,
+  label: 'chandlery-without' }));
+await put('critique/fail-label-names-subject/key.json', keyFile('2026-07-28T09:40:00Z'));
+
+console.log('critique fixtures include the hardened cases');
 
 console.log('fixtures written');

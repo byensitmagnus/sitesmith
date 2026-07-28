@@ -1,7 +1,13 @@
 ---
 reviewer: A
+reviewer-id: rev-a
+run-id: run-2026-07-28-a91f
+label: L7
 locked: 2026-07-28T09:12:00Z
 sha256: 85a46231b2ed1261587a26467cf39e9eb2a4ee22c7f5f5e2db97bb1c86b47434
+brief-sha256: b1b1b1b1b1b1b1b1b1b1b1b1b1b1b1b1b1b1b1b1b1b1b1b1b1b1b1b1b1b1b1b1
+rubric-sha256: r2r2r2r2r2r2r2r2r2r2r2r2r2r2r2r2r2r2r2r2r2r2r2r2r2r2r2r2r2r2r2r2
+sheet-sha256: s3s3s3s3s3s3s3s3s3s3s3s3s3s3s3s3s3s3s3s3s3s3s3s3s3s3s3s3s3s3s3s3
 ---
 primary-criticism: It looks like a generic AI-generated template: system font, off-white, one accent.
 direction: 8
