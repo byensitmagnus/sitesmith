@@ -75,6 +75,7 @@ body{margin:0;background:var(--ground);color:var(--ink);
        text-transform:uppercase;text-decoration:none}
 .brand svg{width:20px;height:auto;flex:none}
 .navtoggle{display:none;margin-left:auto;background:none;border:1px solid var(--rule-2);
+   font-family:var(--font-display);letter-spacing:.16em;text-transform:uppercase;
            color:var(--ink);font:var(--text-small) var(--font-body);
            padding:var(--space-2) var(--space-3);cursor:pointer}
 nav.main{margin-left:auto;display:flex;gap:var(--space-5)}
@@ -112,6 +113,11 @@ form{margin-top:var(--space-4);max-width:520px}
 .f input,.f select,.f textarea{width:100%;font:var(--text-body)/1.5 var(--font-body);
   padding:var(--space-3);background:var(--ground-2);color:var(--ink);
   border:1px solid var(--rule-2);border-radius:var(--radius-edge)}
+.f select{appearance:none;-webkit-appearance:none;padding-right:calc(var(--space-6));
+  background-image:linear-gradient(45deg,transparent 50%,var(--metal) 50%),
+                   linear-gradient(135deg,var(--metal) 50%,transparent 50%);
+  background-position:calc(100% - 20px) 55%, calc(100% - 13px) 55%;
+  background-size:7px 7px, 7px 7px;background-repeat:no-repeat}
 .f textarea{min-height:96px;resize:vertical}
 .f .note{font:var(--text-small)/1.6 var(--font-body);color:var(--ink-3);margin:var(--space-2) 0 0}
 .f [aria-invalid=true]{border-color:var(--bad);background:var(--bad-soft)}
@@ -135,8 +141,12 @@ footer{border-top:1px solid var(--rule);margin-top:var(--space-7);padding-top:va
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 @media (max-width:900px){
   .frame{grid-template-columns:minmax(0,1fr);gap:0}
-  .standing{position:static;min-height:0;max-width:320px;padding-bottom:var(--space-5)}
-  .standing svg{max-height:none}
+  .standing{position:static;min-height:0;max-width:210px;padding:var(--space-5) 0;order:2;
+            margin-inline:auto}
+  .standing svg{max-height:46vh}
+  .column{display:contents}
+  .top{order:1}
+  .column > :not(.top){order:3}
   .navtoggle{display:block}
   nav.main{flex-basis:100%;margin-left:0;flex-direction:column;gap:var(--space-3);
            padding-top:var(--space-4)}
@@ -262,7 +272,7 @@ footer{border-top:1px solid var(--rule);margin-top:var(--space-7);padding-top:va
     </main>
 
     <footer>
-      <p>Marrow &amp; Kell, bellfounders. A fictional foundry, built as a design pilot.
+      <p>Marrow &amp; Kell, bellfounders. There is no such foundry and there is no such tenor.
         Weights and notes shown are invented and are not those of any real ring.</p>
     </footer>
   </div>

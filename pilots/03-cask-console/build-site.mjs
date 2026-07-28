@@ -59,9 +59,11 @@ body{margin:0;background:var(--bg);color:var(--ink);
         letter-spacing:.02em}
 .bar .clock{margin-left:auto;font:var(--text-small)/1 var(--font-mono);color:var(--ink-2);
             font-variant-numeric:tabular-nums}
-.bar .count{font:600 var(--text-small)/1 var(--font-mono);color:var(--ink);
-            background:var(--surface-2);padding:var(--space-2) var(--space-3);
-            border-radius:var(--radius-edge);font-variant-numeric:tabular-nums}
+.bar .count{font:600 var(--text-small)/1 var(--font-mono);color:var(--ink-2);
+            padding:var(--space-2) 0 var(--space-2) var(--space-4);
+            border-left:2px solid var(--line-2);font-variant-numeric:tabular-nums}
+.bar .count b{color:var(--bad);font-weight:700}
+.bar .count b:empty{display:none}
 
 /* ── filters: buttons, not a select, because gloves ───────────────────── */
 .filters{display:flex;gap:var(--space-2);flex-wrap:wrap;padding:var(--space-5) 0 var(--space-3)}
@@ -69,8 +71,8 @@ body{margin:0;background:var(--bg);color:var(--ink);
   padding:var(--space-3) var(--space-4);min-height:48px;
   background:var(--surface);color:var(--ink);border:2px solid var(--line-2);
   border-radius:var(--radius-edge);cursor:pointer;transition:border-color var(--motion-fast) var(--ease)}
-.filters button[aria-pressed=true]{background:var(--accent);color:var(--on-accent);
-                                   border-color:var(--accent)}
+.filters button[aria-pressed=true]{background:var(--ink);color:var(--bg);
+                                   border-color:var(--ink)}
 
 /* ── the board ────────────────────────────────────────────────────────── */
 table{width:100%;border-collapse:collapse}
@@ -90,20 +92,21 @@ td svg{height:128px;width:auto;color:var(--ink);display:block}
 .state{display:block;font:800 var(--text-state)/1 var(--font-body);letter-spacing:.08em;
        text-transform:uppercase;padding:var(--space-3) var(--space-4);
        border-radius:var(--radius-edge);white-space:nowrap;text-align:center;min-width:11ch}
-.s-out{background:var(--accent);color:var(--on-accent)}
-.s-due{background:var(--ink);color:var(--bg)}
+.s-out{background:transparent;color:var(--ink-2);box-shadow:inset 0 0 0 2px var(--line-2)}
+.s-due{background:var(--accent);color:var(--on-accent)}
 .s-late{background:var(--bad);color:var(--on-bad)}
 .s-in{background:var(--ok);color:var(--on-ok)}
 /* the left edge carries the same state before a word is read */
 tr.row td:first-child{position:relative;padding-left:var(--space-5)}
 tr.row td:first-child::before{content:"";position:absolute;left:0;top:0;bottom:0;width:6px}
-tr.row.r-out td:first-child::before{background:var(--accent)}
-tr.row.r-due td:first-child::before{background:var(--ink-2)}
+tr.row.r-out td:first-child::before{background:var(--line-2)}
+tr.row.r-due td:first-child::before{background:var(--accent)}
 tr.row.r-late td:first-child::before{background:var(--bad)}
-.act{font:650 var(--text-small)/1 var(--font-body);min-height:48px;
-     padding:var(--space-3) var(--space-4);background:var(--surface-2);color:var(--ink);
-     border:2px solid var(--line-2);border-radius:var(--radius-edge);cursor:pointer;white-space:nowrap}
-.act:hover{border-color:var(--ink-2)}
+.act{font:700 var(--text-body)/1 var(--font-body);min-height:48px;
+     padding:var(--space-3) var(--space-5);background:var(--surface-3);color:var(--ink);
+     border:2px solid var(--ink-3);border-radius:var(--radius-edge);cursor:pointer;white-space:nowrap;
+     box-shadow:var(--elev-1)}
+.act:hover{border-color:var(--ink);background:var(--surface-2)}
 .act[disabled]{color:var(--ink-3);border-color:var(--line);cursor:not-allowed}
 
 /* ── booking in ───────────────────────────────────────────────────────── */
@@ -151,6 +154,8 @@ h2{font:650 var(--text-h2)/1.3 var(--font-display);margin:var(--space-7) 0 var(-
 .log td{padding:var(--space-2) var(--space-4) var(--space-2) 0;font-variant-numeric:tabular-nums;
         border-bottom:1px solid var(--line)}
 .log svg{height:20px;opacity:.7}
+.log-empty{color:var(--ink-3);font:var(--text-small)/1.6 var(--font-body);max-width:52ch;
+           margin:var(--space-3) 0 0}
 footer{border-top:1px solid var(--line);margin-top:var(--space-7);
        padding:var(--space-4) 0 var(--space-8);color:var(--ink-3);font-size:var(--text-small)}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
@@ -162,12 +167,13 @@ footer{border-top:1px solid var(--line);margin-top:var(--space-7);
 @media (max-width:620px){
   thead{position:absolute;left:-9999px}
   table,tbody,tr.row,tr.row td{display:block;width:100%}
-  tr.row{display:grid;grid-template-columns:44px minmax(0,1fr);gap:var(--space-2) var(--space-4);
-         align-items:center;padding:var(--space-4) 0;border-bottom:1px solid var(--line)}
-  tr.row td{border:0;padding:0}
-  tr.row td:first-child{grid-row:1/span 4}
-  tr.row td:last-child{padding-top:var(--space-2)}
-  tr.row .act{width:100%}
+  tr.row{display:grid;grid-template-columns:96px minmax(0,1fr);gap:var(--space-2) var(--space-4);
+         align-items:start;padding:var(--space-4) 0;border-bottom:1px solid var(--line)}
+  tr.row td{border:0;padding:0;min-width:0}
+  tr.row td:first-child{grid-row:1/span 4;align-self:center}
+  tr.row td:first-child svg{height:84px;max-width:100%}
+  tr.row td:last-child{grid-column:2;padding-top:var(--space-2)}
+  tr.row .act{width:100%;white-space:normal;padding:var(--space-3) var(--space-2)}
   tr.book.open td{padding:var(--space-4) 0 var(--space-5)}
   .log{font-size:var(--text-micro)}
   .log td,.log th{padding-right:var(--space-3)}
@@ -182,7 +188,7 @@ footer{border-top:1px solid var(--line);margin-top:var(--space-7);
     <a class="mark" href="/">${MK} Stalbridge cask desk</a>
     <h1 class="line">Cellar, Thursday morning</h1>
     <span class="clock">06:40 · dray in at 07:15</span>
-    <span class="count"><span data-on-trade>0</span> on trade</span>
+    <span class="count"><span data-on-trade>0</span> on trade<b data-late-count></b></span>
   </div>
 
   <div class="filters" role="group" aria-label="Show">
@@ -210,15 +216,17 @@ footer{border-top:1px solid var(--line);margin-top:var(--space-7);
     <p class="status" role="status" data-status></p>
 
     <h2>Booked in this week</h2>
-    <table class="log">
+    <p class="log-empty" data-log-empty>Nothing booked in yet this week. The first cask you book
+       in appears here with its condition and ullage.</p>
+    <table class="log" data-log-table hidden>
       <thead><tr><th scope="col">When</th><th scope="col">Size</th><th scope="col">Where</th>
         <th scope="col">Casks</th><th scope="col">Condition</th><th scope="col">Ullage</th></tr></thead>
-      <tbody data-log><tr><td colspan="6" style="color:var(--ink-3)">Nothing booked in yet this week.</td></tr></tbody>
+      <tbody data-log></tbody>
     </table>
   </main>
 
   <footer>
-    <p>Stalbridge Brewery cask desk. A fictional brewery, built as a design pilot. Casks, gyles
+    <p>Stalbridge Brewery cask desk. Invented brewery, invented cellar, invented week. Casks, gyles
       and accounts here are invented; the duty rules they follow are not.</p>
   </footer>
 </div>
@@ -241,6 +249,7 @@ const emptyBox = document.querySelector('[data-empty]');
 const statusEl = document.querySelector('[data-status]');
 const captionEl = document.querySelector('[data-caption]');
 const onTradeEl = document.querySelector('[data-on-trade]');
+const lateEl = document.querySelector('[data-late-count]');
 const logBody = document.querySelector('[data-log]');
 const filters = [...document.querySelectorAll('[data-filter]')];
 
@@ -255,6 +264,8 @@ const visible = () => OUT.filter(c => filter === 'all' ||
 function render(message) {
   const rows = visible();
   onTradeEl.textContent = String(OUT.reduce((s, c) => s + c.qty, 0));
+  const late = OUT.filter(c => c.due < 0).reduce((s, c) => s + c.qty, 0);
+  lateEl.textContent = late ? \`, \${late} late\` : '';
   captionEl.textContent = \`\${rows.length} of \${OUT.length} consignments · \` +
     \`\${rows.reduce((s, c) => s + c.qty, 0)} casks\`;
   board.innerHTML = '';
@@ -398,7 +409,9 @@ function renderLog() {
   logBody.innerHTML = booked.length
     ? booked.map(b => \`<tr><td>\${b.when}</td><td>\${CASK_SVG[b.size]}</td><td>\${b.pub}</td>
         <td>\${b.n}</td><td>\${b.cond}</td><td>\${b.ullage ?? '—'}</td></tr>\`).join('')
-    : '<tr><td colspan="6" style="color:var(--ink-3)">Nothing booked in yet this week.</td></tr>';
+    : '';
+  document.querySelector('[data-log-table]').hidden = booked.length === 0;
+  document.querySelector('[data-log-empty]').hidden = booked.length > 0;
 }
 
 filters.forEach(b => b.addEventListener('click', () => {

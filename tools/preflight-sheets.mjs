@@ -10,11 +10,16 @@
  * label drawn from a random shuffle, writes the sheets under that label and nothing else, and
  * puts the mapping in a key file the reviewers are never given a path to.
  *
- * Two panels per sheet, because those are the two things a designer looks at and they answer
- * different questions:
+ * The sheet is a scroll strip: the page captured at successive viewport heights, in order,
+ * which is what a visitor actually gets. The first frame is the first screen at 1:1.
  *
- *   1. the first screen at 1:1 — what a visitor gets, at the size they get it
- *   2. the whole page scaled to fit — the rhythm, and whether it holds up past the fold
+ * It was one full-page capture, and that was wrong in a way that cost a real review. A
+ * `position: sticky` element renders pinned at the top of a full-page screenshot with dead
+ * ground below it for the rest of the page, because the capture expands the viewport to the
+ * document height and sticky then has nowhere to travel. Both blind reviewers made "the left
+ * column is empty for two thirds of the page" their primary criticism of a page whose drawing
+ * stays beside the text at every scroll position in a real browser. The page was right and
+ * the instrument was wrong. Frames at viewport height cannot make that mistake.
  *
  * The sheets are the only thing the reviewers see. Not the repository, not the directions, not
  * the evidence packs, and not each other's reviews.
@@ -113,48 +118,52 @@ for (const s of assign) {
     await page.goto(`http://127.0.0.1:${s.port}/`, { waitUntil: 'networkidle', timeout: 30000 });
     await page.waitForTimeout(500);
 
-    const fold = await page.screenshot({ type: 'png' });
-    const whole = await page.screenshot({ type: 'png', fullPage: true });
     const wholeHeight = await page.evaluate(() =>
       Math.max(document.documentElement.scrollHeight, document.body.scrollHeight));
+
+    /* One frame per viewport height, scrolled to. The last frame is clamped to the bottom of
+       the document rather than scrolling past it, so the footer is seen once, not twice. */
+    const frames = [];
+    const maxScroll = Math.max(0, wholeHeight - size.height);
+    for (let y = 0; frames.length < 8; y += size.height) {
+      const at = Math.min(y, maxScroll);
+      await page.evaluate((v) => window.scrollTo(0, v), at);
+      await page.waitForTimeout(220);
+      frames.push({ at, png: await page.screenshot({ type: 'png' }) });
+      if (at >= maxScroll) break;
+    }
     await ctx.close();
 
-    /* Two panels side by side on desktop, stacked on mobile. The captions say which panel is
-       which and nothing else — no file name, because the file name would name the subject. */
-    const scaled = Math.min(1, 900 / wholeHeight);
+    /* Frames laid left to right on desktop, in rows on mobile. Captions carry the scroll
+       position and nothing else — a file name would name the subject. */
+    const cols = view === 'desktop' ? 3 : 5;
     const sheet = `<!doctype html><html lang="en"><head><meta charset="utf-8"><style>
       *{box-sizing:border-box}
       body{margin:0;background:#101012;color:#8e8c88;padding:20px;
            font:11px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.06em}
-      .g{display:flex;gap:20px;align-items:flex-start}
+      .g{display:grid;grid-template-columns:repeat(${cols},max-content);gap:20px;align-items:start}
       figure{margin:0;background:#191919;border:1px solid #2a2a2c}
-      .p{display:block;background:#fff;overflow:hidden}
-      .p img{display:block}
+      .p{display:block;background:#fff;overflow:hidden;width:${size.width}px;height:${size.height}px}
+      .p img{display:block;width:${size.width}px}
       figcaption{padding:7px 10px;border-top:1px solid #2a2a2c;text-transform:uppercase;color:#77756f}
       h1{font:inherit;text-transform:uppercase;letter-spacing:.22em;color:#c8c6c1;margin:0 0 16px}
+      p.n{margin:0 0 16px;color:#6d6b66;text-transform:uppercase}
     </style></head><body>
       <h1>${s.label} &middot; ${view}</h1>
+      <p class="n">${frames.length} screen(s) at ${size.width}&times;${size.height},
+         in order &mdash; the page is ${wholeHeight}px tall</p>
       <div class="g">
-        <figure>
-          <span class="p" style="width:${size.width}px;height:${size.height}px">
-            <img src="data:image/png;base64,${fold.toString('base64')}" style="width:${size.width}px">
-          </span>
-          <figcaption>first screen, actual size &mdash; ${size.width}&times;${size.height}</figcaption>
-        </figure>
-        <figure>
-          <span class="p" style="width:${Math.round(size.width * scaled)}px">
-            <img src="data:image/png;base64,${whole.toString('base64')}"
-                 style="width:${Math.round(size.width * scaled)}px">
-          </span>
-          <figcaption>whole page &mdash; ${wholeHeight}px tall at ${Math.round(scaled * 100)}%</figcaption>
-        </figure>
+        ${frames.map((f, i) => `<figure>
+          <span class="p"><img src="data:image/png;base64,${f.png.toString('base64')}"></span>
+          <figcaption>screen ${i + 1} &mdash; scrolled ${f.at}px</figcaption>
+        </figure>`).join('')}
       </div>
     </body></html>`;
 
     const tmp = join(out, `.sheet-${s.label}-${view}.html`);
     await writeFile(tmp, sheet);
     const sp = await browser.newPage({
-      viewport: { width: size.width + Math.round(size.width * scaled) + 100, height: 1000 },
+      viewport: { width: cols * (size.width + 22) + 60, height: 1000 },
     });
     await sp.goto(pathToFileURL(tmp).href, { waitUntil: 'networkidle' });
     await sp.waitForTimeout(400);
@@ -165,7 +174,8 @@ for (const s of assign) {
 
     sheets[`${s.label}-${view}.jpg`] =
       createHash('sha256').update(await readFile(file)).digest('hex');
-    console.log(`  ${s.label}  ${view.padEnd(8)} ${size.width}px  whole page ${wholeHeight}px`);
+    console.log(`  ${s.label}  ${view.padEnd(8)} ${size.width}px  ${frames.length} screen(s), ` +
+      `page ${wholeHeight}px`);
   }
 }
 
