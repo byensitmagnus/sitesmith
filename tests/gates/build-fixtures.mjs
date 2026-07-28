@@ -453,6 +453,40 @@ await put('critique/fail-generic-buried/CRITIQUE-B.md', review({ reviewer: 'B', 
   locked: '2026-07-28T09:31:00Z', primary: 'The drawing crowds the price.', scores: GOOD }));
 await put('critique/fail-generic-buried/key.json', keyFile('2026-07-28T09:40:00Z'));
 
+/* PASS — the tell appears only in a sentence that denies it, and the sentence wraps. Both are
+   real: reviewers wrote "sells off coils, not a generic disabled state" and "the ground is warm
+   rather than neutral, which is the difference / between a foundry and a template", and a scan
+   that read lines and ignored the clause failed three praising sentences on a real review. The
+   line break is inside the second clause on purpose — that is what broke it. */
+await put('critique/pass-generic-only-denied/CRITIQUE-A.md', review({ reviewer: 'A', id: 'rev-a',
+  locked: '2026-07-28T09:12:00Z', primary: 'The batch number is the smallest thing on the page.',
+  scores: GOOD,
+  notes: 'The out-of-stock row names the coil and its landing date, which is a business that\n' +
+    'sells off coils, not a generic disabled state.' }));
+await put('critique/pass-generic-only-denied/CRITIQUE-B.md', review({ reviewer: 'B', id: 'rev-b',
+  locked: '2026-07-28T09:31:00Z', primary: 'The drawing crowds the price.', scores: GOOD,
+  notes: 'The ground is warm rather than neutral, which is the difference\nbetween a foundry and a template.' }));
+await put('critique/pass-generic-only-denied/key.json', keyFile('2026-07-28T09:40:00Z'));
+
+/* FAIL — conceding the failure and adding to it is not denying it. "not just generic" says the
+   page IS generic, and the negation check must not read the word "not" and stop there. */
+await put('critique/fail-generic-conceded/CRITIQUE-A.md', review({ reviewer: 'A', id: 'rev-a',
+  locked: '2026-07-28T09:12:00Z', primary: 'The lede runs long at 375.', scores: GOOD,
+  notes: 'This is not just generic, it is the category default with the serif swapped out.' }));
+await put('critique/fail-generic-conceded/CRITIQUE-B.md', review({ reviewer: 'B', id: 'rev-b',
+  locked: '2026-07-28T09:31:00Z', primary: 'The drawing crowds the price.', scores: GOOD }));
+await put('critique/fail-generic-conceded/key.json', keyFile('2026-07-28T09:40:00Z'));
+
+/* FAIL — a genuine buried criticism that happens to sit after a denial elsewhere in the same
+   review. One denied sentence must not buy amnesty for the next one. */
+await put('critique/fail-generic-buried-after-denial/CRITIQUE-A.md', review({ reviewer: 'A', id: 'rev-a',
+  locked: '2026-07-28T09:12:00Z', primary: 'The lede runs long at 375.', scores: GOOD,
+  notes: 'The mark is drawn rather than an off-the-shelf glyph. The body below it, though, is\n' +
+    'boilerplate: three equal cards on an off-white ground.' }));
+await put('critique/fail-generic-buried-after-denial/CRITIQUE-B.md', review({ reviewer: 'B', id: 'rev-b',
+  locked: '2026-07-28T09:31:00Z', primary: 'The drawing crowds the price.', scores: GOOD }));
+await put('critique/fail-generic-buried-after-denial/key.json', keyFile('2026-07-28T09:40:00Z'));
+
 await put('critique/fail-label-names-subject/CRITIQUE-A.md', review({ reviewer: 'A', id: 'rev-a',
   locked: '2026-07-28T09:12:00Z', primary: 'The lede runs long.', scores: GOOD,
   label: 'chandlery-with' }));

@@ -181,6 +181,12 @@ expect('critique', 'reviews bound to different contact sheets', crit('fail-diffe
   /disagree on sheet-sha256/);
 expect('critique', 'the generic criticism buried in the notes', crit('fail-generic-buried'), 1,
   /raises the generic-template failure inside the review/);
+expect('critique', 'the generic tell only ever denied, across a line wrap',
+  crit('pass-generic-only-denied'), 0);
+expect('critique', 'the generic criticism conceded rather than denied',
+  crit('fail-generic-conceded'), 1, /generic-template failure inside the review/);
+expect('critique', 'a buried criticism after a denial in the same review',
+  crit('fail-generic-buried-after-denial'), 1, /generic-template failure inside the review/);
 expect('critique', 'a label that names the subject', crit('fail-label-names-subject'), 1,
   /label names the subject/);
 

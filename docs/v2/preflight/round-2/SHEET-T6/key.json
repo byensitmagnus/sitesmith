@@ -1,0 +1,10 @@
+{
+  "built-by": "sitesmith-build-session",
+  "seed": "ed2eab61803e5e9952b941ebbe97096d",
+  "opened": "2026-07-28T13:05:00Z",
+  "labels": {
+    "SHEET-T6": "chandlery"
+  },
+  "reviews": 2,
+  "integrity": "INCOMPLETE. The contact sheets these reviews are bound to were written to the session scratchpad and deleted from disk mid-review by something outside the run. The sheet-sha256 in each review cannot be checked against the images that were scored, and JPEG re-encoding will not reproduce the bytes. See ../ROUND-2-BLOCKER.md."
+}

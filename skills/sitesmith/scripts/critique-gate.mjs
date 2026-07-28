@@ -50,6 +50,60 @@ export const GENERIC_TELLS = [
 
 export const isGenericCriticism = (s) => GENERIC_TELLS.some((re) => re.test(String(s)));
 
+/** Where in a line the tell was found, or -1. Needed because the whole-review scan has to look
+ *  at what comes *before* the word, and `.test` does not say where it matched. */
+export const genericTellAt = (s) => {
+  let best = -1;
+  for (const re of GENERIC_TELLS) {
+    const m = String(s).match(new RegExp(re.source, re.flags.includes('g') ? re.flags : re.flags + 'g'));
+    if (!m) continue;
+    const i = String(s).search(new RegExp(re.source, re.flags));
+    if (i >= 0 && (best === -1 || i < best)) best = i;
+  }
+  return best;
+};
+
+/** A reviewer who writes "that is the behaviour of a business that sells off coils, not a
+ *  generic disabled state" has said the opposite of the failure, and so has "the difference
+ *  between a foundry and a template". The scan below reads whole lines, and matching the word
+ *  without reading the clause turned three praising sentences into three gate failures on a
+ *  real review. Negation and contrast are checked in the run-up to the match.
+ *
+ *  "not just generic" and "not only a template" are deliberately NOT negations: they concede
+ *  the failure and then add to it. */
+const NEGATORS = [
+  /\bnot\s+(?!just\b|only\b|merely\b|simply\b)(?:a |an |the |another |some |any )?[\w -]{0,24}$/i,
+  /\bnever\b[\w ,'-]{0,24}$/i,
+  /\brather than\s+(?:a |an |the )?[\w -]{0,16}$/i,
+  /\binstead of\s+(?:a |an |the )?[\w -]{0,16}$/i,
+  /\bunlike\s+(?:a |an |the )?[\w -]{0,16}$/i,
+  /\bfar from\s+(?:a |an |the )?[\w -]{0,16}$/i,
+  /\banything but\s+(?:a |an |the )?[\w -]{0,16}$/i,
+  /\b(?:difference|distance|gap|distinction)\s+between\b[\w ,'-]{0,40}$/i,
+  /\b(?:avoids?|escapes?|refuses?|resists?|sidesteps?)\b[\w ,'-]{0,24}$/i,
+  /\bno\s+(?:trace|hint|sign|whiff|sense)\s+of\b[\w ,'-]{0,16}$/i,
+];
+
+/** The tell is present but the clause denies it. Returns false when there is no tell at all. */
+export function genericMentionIsDenied(line) {
+  const at = genericTellAt(line);
+  if (at < 0) return false;
+  const before = String(line).slice(0, at);
+  return NEGATORS.some((re) => re.test(before));
+}
+
+/** Sentences, not lines. A review is prose and prose wraps: "which is the difference / between
+ *  a foundry and a template" is one clause and two lines, and reading it a line at a time threw
+ *  the negation away and failed a review for praising the page. Blank lines stay paragraph
+ *  breaks so a sentence cannot be assembled across two of them. */
+export function sentences(body) {
+  return String(body ?? '')
+    .split(/\n\s*\n/)
+    .flatMap((para) => para.replace(/\s*\n\s*/g, ' ').split(/(?<=[.!?])\s+/))
+    .map((s) => s.trim())
+    .filter(Boolean);
+}
+
 export const median = (xs) => {
   const a = [...xs].sort((x, y) => x - y);
   return a.length % 2 ? a[(a.length - 1) / 2] : (a[a.length / 2 - 1] + a[a.length / 2]) / 2;
@@ -84,6 +138,7 @@ export const REQUIRED_META = ['reviewer', 'reviewer-id', 'run-id', 'label', 'loc
 
 export function judge({ reviews, key }) {
   const problems = [];
+  const denials = [];
 
   /* The reviewers must not be whoever built the thing. A build agent reviewing its own work
      blind is still the build agent. */
@@ -174,10 +229,17 @@ export function judge({ reviews, key }) {
         `"${r.primary}". That fails regardless of the scores.`);
       continue;
     }
-    const hit = (r.body ?? '').split('\n').find((line) => isGenericCriticism(line));
+    const lines = sentences(r.body).filter((line) => isGenericCriticism(line));
+    const hit = lines.find((line) => !genericMentionIsDenied(line));
     if (hit) {
       problems.push(`${who} raises the generic-template failure inside the review: ` +
         `"${hit.trim().slice(0, 120)}"`);
+    }
+    /* A denial is reported rather than dropped. The gate deciding on its own that a sentence
+       does not count is exactly the kind of silent judgement this file exists to prevent. */
+    for (const line of lines.filter((l) => genericMentionIsDenied(l))) {
+      denials.push(`${who} names the failure only to deny it, so it does not count against ` +
+        `the review: "${line.trim().slice(0, 120)}"`);
     }
   }
 
@@ -194,6 +256,7 @@ export function judge({ reviews, key }) {
     ? [`the reviewers disagree by ${spread} points on production-readiness. That is not ` +
        'averaged away: the median stands and the disagreement is the finding.']
     : [];
+  notes.push(...denials);
 
   return { pass: problems.length === 0, problems, median: med, spread, notes,
            reviewers: reviews.length };
