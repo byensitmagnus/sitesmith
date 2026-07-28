@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Marrow &amp; Kell — bellfounders, casting and tuning since 1863</title>
+<meta name="description" content="A working bell foundry. We cast, tune and hang change-ringing bells, and we publish the partials before and after.">
+<link rel="icon" href="assets/favicon.svg">
+<style>
+:root{
+  --ground:#131110; --ground-2:#1b1815; --ground-3:#241f1a;
+  --metal:#c9ab6d; --metal-dim:#8d7748;
+  --ink:#ece5d6; --ink-2:#a99e88; --ink-3:#8b8170;
+  --rule:#332e27; --rule-2:#463f35;
+  --bad:#e08b73; --bad-soft:#2e1a15;
+  --ok:#9bc48a;
+  --focus:#c9ab6d;
+
+  --font-display:'Optima','Palatino Linotype','Iowan Old Style',Georgia,serif;
+  --font-body:ui-sans-serif,system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --font-mono:ui-monospace,'SF Mono','Cascadia Mono','Segoe UI Mono',monospace;
+  --text-micro:.6875rem; --text-small:.8125rem; --text-body:1rem; --text-lead:1.0625rem;
+  --text-h3:1.125rem; --text-h2:1.5rem; --text-display:clamp(2rem,4.4vw,3.2rem);
+  --leading-body:1.62; --measure:54ch;
+
+  --space-1:4px; --space-2:8px; --space-3:12px; --space-4:20px;
+  --space-5:32px; --space-6:48px; --space-7:72px; --space-8:112px;
+  --container:1220px; --gutter:28px;
+
+  --radius-edge:0px;
+  --elev-0:none;
+  --motion-fast:120ms; --motion-base:200ms; --ease:cubic-bezier(.2,.6,.2,1);
+}
+@media (prefers-color-scheme:light){
+  :root{
+    --ground:#eceae4; --ground-2:#e3e1da; --ground-3:#d8d6cd;
+    --metal:#6b5320; --metal-dim:#7f6631;
+    --ink:#17171a; --ink-2:#494a4d; --ink-3:#55565a;
+    --rule:#cfcec7; --rule-2:#b9b8b0;
+    --bad:#8c2f16; --bad-soft:#f4e3dd; --ok:#2f5d34; --focus:#181613;
+  }
+}
+*{box-sizing:border-box}
+html{color-scheme:dark light}
+body{margin:0;background:var(--ground);color:var(--ink);
+     font:var(--text-body)/var(--leading-body) var(--font-body);-webkit-font-smoothing:antialiased}
+:where(a,button,input,select,textarea,summary):focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.skip{position:absolute;left:-9999px}
+.skip:focus{left:var(--gutter);top:var(--space-2);background:var(--ground-2);
+            padding:var(--space-2) var(--space-3);z-index:5}
+
+/* ── the standing column ──────────────────────────────────────────────── */
+.frame{display:grid;grid-template-columns:minmax(0,300px) minmax(0,1fr);gap:var(--space-7);
+       max-width:var(--container);margin:0 auto;padding:0 var(--gutter)}
+.standing{position:sticky;top:0;align-self:start;height:100vh;
+          display:flex;flex-direction:column;justify-content:center;padding:var(--space-5) 0;
+          color:var(--metal)}
+.standing svg{width:100%;height:auto;display:block}  /* explicit height letterboxed the box and left a gap above the caption */
+.standing figcaption{font:var(--text-micro)/1.7 var(--font-mono);letter-spacing:.12em;
+                     text-transform:uppercase;color:var(--ink-3);margin-top:var(--space-4);
+                     border-top:1px solid var(--rule);padding-top:var(--space-3)}
+.column{padding:var(--space-5) 0 var(--space-8);min-width:0}
+
+/* ── header ───────────────────────────────────────────────────────────── */
+.top{display:flex;align-items:center;gap:var(--space-5);flex-wrap:wrap;
+     padding-bottom:var(--space-5);border-bottom:1px solid var(--rule)}
+.brand{display:flex;align-items:center;gap:var(--space-3);color:var(--metal);
+       font:400 var(--text-small)/1 var(--font-mono);letter-spacing:.26em;
+       text-transform:uppercase;text-decoration:none}
+.brand svg{width:20px;height:auto;flex:none}
+.navtoggle{display:none;margin-left:auto;background:none;border:1px solid var(--rule-2);
+           color:var(--ink);font:var(--text-small) var(--font-body);
+           padding:var(--space-2) var(--space-3);cursor:pointer}
+nav.main{margin-left:auto;display:flex;gap:var(--space-5)}
+nav.main a{color:var(--ink-2);text-decoration:none;font-size:var(--text-small);
+           letter-spacing:.06em;text-transform:uppercase}
+nav.main a:hover{color:var(--ink)}
+nav.main a[aria-current=page]{color:var(--metal)}
+
+h1{font:400 var(--text-display)/1.06 var(--font-display);letter-spacing:.02em;
+   text-transform:uppercase;margin:var(--space-6) 0 0;max-width:13ch}
+.lede{max-width:var(--measure);margin:var(--space-4) 0 0;color:var(--ink-2);
+      font-size:var(--text-lead)}
+h2{font:400 var(--text-h2)/1.2 var(--font-display);letter-spacing:.03em;text-transform:uppercase;
+   margin:var(--space-7) 0 var(--space-3)}
+h3{font:600 var(--text-h3)/1.35 var(--font-body);margin:var(--space-5) 0 var(--space-2)}
+p{max-width:var(--measure)}
+
+/* ── figures ──────────────────────────────────────────────────────────── */
+table{width:100%;border-collapse:collapse;margin-top:var(--space-4);max-width:640px}
+caption{text-align:left;font:var(--text-micro)/1.6 var(--font-mono);letter-spacing:.14em;
+        text-transform:uppercase;color:var(--ink-3);padding-bottom:var(--space-3)}
+th,td{text-align:right;padding:var(--space-2) 0;border-bottom:1px solid var(--rule);
+      font:var(--text-small)/1 var(--font-mono);font-variant-numeric:tabular-nums}
+th{color:var(--ink-3);font-weight:400;font-size:var(--text-micro);letter-spacing:.14em;
+   text-transform:uppercase}
+th:first-child,td:first-child{text-align:left}
+td.now{color:var(--metal)}
+
+/* ── the enquiry ──────────────────────────────────────────────────────── */
+form{margin-top:var(--space-4);max-width:520px}
+.f{margin-bottom:var(--space-4)}
+.f label{display:block;font:var(--text-micro)/1 var(--font-mono);letter-spacing:.14em;
+         text-transform:uppercase;color:var(--ink-3);margin-bottom:var(--space-2)}
+.f input,.f select,.f textarea{width:100%;font:var(--text-body)/1.5 var(--font-body);
+  padding:var(--space-3);background:var(--ground-2);color:var(--ink);
+  border:1px solid var(--rule-2);border-radius:var(--radius-edge)}
+.f textarea{min-height:96px;resize:vertical}
+.f .note{font:var(--text-micro)/1.7 var(--font-mono);color:var(--ink-3);margin:var(--space-2) 0 0}
+.f [aria-invalid=true]{border-color:var(--bad);background:var(--bad-soft)}
+.f .msg{font:var(--text-small)/1.45 var(--font-body);color:var(--bad);margin:var(--space-2) 0 0}
+.f .msg:empty{display:none}
+.summary{border:1px solid var(--bad);padding:var(--space-4);margin-bottom:var(--space-5)}
+.summary:not(.on){display:none}
+.summary h3{margin:0 0 var(--space-2);color:var(--bad);font-size:var(--text-h3)}
+.summary ul{margin:0;padding-left:var(--space-4)}
+.summary a{color:var(--bad)}
+button.send{font:600 var(--text-body)/1 var(--font-body);padding:var(--space-3) var(--space-5);
+            background:var(--metal);color:var(--ground);border:0;border-radius:var(--radius-edge);
+            cursor:pointer;transition:opacity var(--motion-fast) var(--ease)}
+button.send:hover{opacity:.88}
+.done{border:1px solid var(--metal-dim);padding:var(--space-4);margin-top:var(--space-4)}
+.done:not(.on){display:none}
+.done h3{margin:0 0 var(--space-2);color:var(--metal)}
+
+footer{border-top:1px solid var(--rule);margin-top:var(--space-7);padding-top:var(--space-4);
+       color:var(--ink-3);font-size:var(--text-small)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+@media (max-width:900px){
+  .frame{grid-template-columns:minmax(0,1fr);gap:0}
+  .standing{position:static;height:auto;max-width:190px;padding-bottom:var(--space-5)}
+  .standing svg{max-height:none}
+  .navtoggle{display:block}
+  nav.main{flex-basis:100%;margin-left:0;flex-direction:column;gap:var(--space-3);
+           padding-top:var(--space-4)}
+  nav.main:not(.open){display:none}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to the content</a>
+
+<div class="frame">
+  <figure class="standing">
+    <svg data-asset="bell-profile" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 210 250" role="img" aria-labelledby="bp">
+  <title id="bp">Half-section of a bell from crown to lip, with the five partials marked at
+    the heights they sound from</title>
+  <g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round">
+    <path d="M60 12v230" stroke-dasharray="6 6" stroke-width="1" opacity=".45"/>
+    <path d="M64 20c0-6 4-9 8-9s8 3 8 9"/>
+    <path d="M60 20h22c14 3 20 17 23 47 3 30 6 62 12 90 5 23 15 40 28 55v10H121
+             c-10-14-17-31-21-52-5-27-8-58-11-86-2-22-8-32-29-33z"
+          fill="currentColor" fill-opacity=".13"/>
+    <g stroke-width="1" stroke-dasharray="2 3" opacity=".8">
+      <path d="M60 222h96M60 186h84M60 140h64M60 92h50M60 50h38"/>
+    </g>
+  </g>
+  <g fill="currentColor" font-family="ui-monospace,'SF Mono',monospace" font-size="8.5"
+     letter-spacing=".1em" opacity=".95">
+    <text x="160" y="225">HUM</text>
+    <text x="148" y="189">PRIME</text>
+    <text x="128" y="143">TIERCE</text>
+    <text x="114" y="95">QUINT</text>
+    <text x="102" y="53">NOMINAL</text>
+  </g>
+</svg>
+    <figcaption>Tenor, 14 cwt 2 qr, St Æthelburga's — before re-tuning, March 2026</figcaption>
+  </figure>
+
+  <div class="column">
+    <div class="top">
+      <a class="brand" href="/"><svg data-asset="logo-primary" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 34 32" role="img" aria-labelledby="mk">
+  <title id="mk">Marrow and Kell: a bell</title>
+  <path fill="currentColor" d="M15 2.4c0-1 .9-1.7 2-1.7s2 .7 2 1.7c4.2 1 6 4.3 6.9 9.3.9 5.2 1.6 10.4 3.4 14
+    .9 1.8 2.2 3.3 3.7 4.6v1.4H1v-1.4c1.5-1.3 2.8-2.8 3.7-4.6 1.8-3.6 2.5-8.8 3.4-14C9 6.7 10.8 3.4 15 2.4z"/>
+</svg> Marrow &amp; Kell</a>
+      <button class="navtoggle" type="button" aria-expanded="false" aria-controls="nav">Menu</button>
+      <nav class="main" id="nav" aria-label="Main">
+        <a href="#tuning" aria-current="page">Tuning</a>
+        <a href="#casting">Casting</a>
+        <a href="#enquiry">Enquiries</a>
+      </nav>
+    </div>
+
+    <main id="main">
+      <h1>A bell is tuned by taking metal away</h1>
+      <p class="lede">There is no putting it back. We measure five partials before a bell goes
+        on the machine and we publish both sets of figures, because a foundry that will not
+        show you the before is asking you to take the after on trust.</p>
+
+      <h2 id="tuning">What re-tuning actually moves</h2>
+      <p>A bell has five partials that matter. Tuning is cutting metal from the inside at the
+        heights where each one sounds — the hum near the lip, the nominal near the shoulder.
+        Cut in the wrong place and you have moved two partials to fix one.</p>
+      <table>
+        <caption>Tenor, St Æthelburga's — cents from equal temperament</caption>
+        <thead><tr><th scope="col">Partial</th><th scope="col">Before</th>
+          <th scope="col">After</th><th scope="col">Metal off</th></tr></thead>
+        <tbody>
+          <tr><td>Hum</td><td>−38</td><td class="now">−2</td><td>4.1 kg</td></tr>
+          <tr><td>Prime</td><td>+21</td><td class="now">+1</td><td>2.8 kg</td></tr>
+          <tr><td>Tierce</td><td>−14</td><td class="now">0</td><td>1.9 kg</td></tr>
+          <tr><td>Quint</td><td>+9</td><td class="now">+3</td><td>0.6 kg</td></tr>
+          <tr><td>Nominal</td><td>0</td><td class="now">0</td><td>—</td></tr>
+        </tbody>
+      </table>
+      <p class="lede" style="margin-top:var(--space-4)">Nine kilograms came off a bell that
+        weighs seven hundred and thirty-eight. That is the whole of it.</p>
+
+      <h2 id="casting">What we will not do</h2>
+      <h3>Re-tune a bell that is cracked</h3>
+      <p>A crack in the soundbow moves as the bell is cut. We will weld it or we will re-cast
+        it, and we will say which before you commit to either.</p>
+      <h3>Work without a faculty</h3>
+      <p>Bells in a church are under faculty jurisdiction. We can advise your architect and we
+        can wait, but we will not lift a bell out of a frame on a verbal from a churchwarden.</p>
+      <h3>Quote from a photograph</h3>
+      <p>Weights and notes are on record in Dove's Guide. Everything else — the frame, the
+        fittings, the state of the headstocks — needs somebody in the tower.</p>
+
+      <h2 id="enquiry">Tell us about the ring</h2>
+      <p>We answer every enquiry ourselves, usually within a week. If the tower is in the
+        middle of a faculty application, say so — it changes what we can usefully do first.</p>
+
+      <form novalidate>
+        <div class="summary" id="summary" tabindex="-1">
+          <h3>Before we can read this</h3>
+          <ul id="summary-list"></ul>
+        </div>
+
+        <div class="f">
+          <label for="tower">Tower</label>
+          <input id="tower" name="tower" type="text" autocomplete="organization"
+                 aria-describedby="tower-msg">
+          <p class="msg" id="tower-msg"></p>
+        </div>
+
+        <div class="f">
+          <label for="bells">Bells in the ring</label>
+          <input id="bells" name="bells" type="number" inputmode="numeric" min="1" max="16"
+                 aria-describedby="bells-note bells-msg">
+          <p class="note" id="bells-note">Between 1 and 16. A ring of more than twelve is rare
+            enough that we will ring you rather than email.</p>
+          <p class="msg" id="bells-msg"></p>
+        </div>
+
+        <div class="f">
+          <label for="faculty">Faculty position</label>
+          <select id="faculty" name="faculty" aria-describedby="faculty-msg">
+            <option value="">Choose one</option>
+            <option value="granted">Granted</option>
+            <option value="applied">Applied for</option>
+            <option value="none">Not started</option>
+            <option value="na">Not a church</option>
+          </select>
+          <p class="msg" id="faculty-msg"></p>
+        </div>
+
+        <div class="f">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" autocomplete="email"
+                 aria-describedby="email-msg">
+          <p class="msg" id="email-msg"></p>
+        </div>
+
+        <div class="f">
+          <label for="detail">What is wrong with it</label>
+          <textarea id="detail" name="detail" aria-describedby="detail-note"></textarea>
+          <p class="note" id="detail-note">Optional. "The third sounds sour" is a useful
+            sentence and we will know what you mean.</p>
+        </div>
+
+        <button class="send" type="submit">Send the enquiry</button>
+
+        <div class="done" id="done" tabindex="-1" role="status">
+          <h3>That has reached us</h3>
+          <p id="done-detail"></p>
+        </div>
+      </form>
+    </main>
+
+    <footer>
+      <p>Marrow &amp; Kell, bellfounders. A fictional foundry, built as a design pilot.
+        Weights and notes shown are invented and are not those of any real ring.</p>
+    </footer>
+  </div>
+</div>
+
+<script>
+/* ── mobile navigation: a real disclosure that returns focus ───────────── */
+const toggle = document.querySelector('.navtoggle');
+const nav = document.getElementById('nav');
+toggle.addEventListener('click', () => {
+  const open = nav.classList.toggle('open');
+  toggle.setAttribute('aria-expanded', String(open));
+  if (open) nav.querySelector('a').focus();
+  else toggle.focus();
+});
+nav.addEventListener('keydown', (e) => {
+  if (e.key !== 'Escape') return;
+  nav.classList.remove('open');
+  toggle.setAttribute('aria-expanded', 'false');
+  toggle.focus();
+});
+
+/* ── the enquiry ──────────────────────────────────────────────────────── */
+const form = document.querySelector('form');
+const summary = document.getElementById('summary');
+const summaryList = document.getElementById('summary-list');
+const done = document.getElementById('done');
+
+const RULES = [
+  ['tower', v => v.trim() ? '' : 'Tell us which tower. A dedication and a village is enough.'],
+  ['bells', v => {
+    if (!v.trim()) return 'How many bells are in the ring?';
+    const n = Number(v);
+    if (!Number.isInteger(n) || n < 1 || n > 16) return 'Between 1 and 16. Rings outside that we handle by telephone.';
+    return '';
+  }],
+  ['faculty', v => v ? '' : 'Say where the faculty stands, even if the answer is not started.'],
+  ['email', v => /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v.trim()) ? '' : 'We reply by email, so we need one that works.'],
+];
+
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const failures = [];
+  for (const [id, rule] of RULES) {
+    const field = document.getElementById(id);
+    const msg = document.getElementById(id + '-msg');
+    const problem = rule(field.value);
+    msg.textContent = problem;
+    if (problem) {
+      field.setAttribute('aria-invalid', 'true');
+      failures.push({ id, problem });
+    } else {
+      field.removeAttribute('aria-invalid');
+    }
+  }
+
+  if (failures.length) {
+    summaryList.innerHTML = failures
+      .map(f => `<li><a href="#${f.id}">${f.problem}</a></li>`).join('');
+    summary.classList.add('on');
+    done.classList.remove('on');
+    summary.focus();
+    summaryList.querySelectorAll('a').forEach(a => a.addEventListener('click', (ev) => {
+      ev.preventDefault();
+      document.getElementById(a.getAttribute('href').slice(1)).focus();
+    }));
+    return;
+  }
+
+  summary.classList.remove('on');
+  const tower = document.getElementById('tower').value.trim();
+  const bells = document.getElementById('bells').value;
+  const faculty = document.getElementById('faculty');
+  document.getElementById('done-detail').textContent =
+    `${bells} bells at ${tower}, faculty ${faculty.options[faculty.selectedIndex].text.toLowerCase()}. ` +
+    `We will read it this week and reply to ${document.getElementById('email').value.trim()}.`;
+  done.classList.add('on');
+  done.focus();
+  form.querySelector('button.send').disabled = true;
+});
+</script>
+</body>
+</html>
