@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img"
+     aria-labelledby="t-km" fill="none" stroke="currentColor" stroke-width="1.4">
+  <title id="t-km">Cross-section of kernmantle rope: parallel core fibres under a woven sheath</title>
+  <!-- Drawn for Trelfall & Son. The core is straight, not laid, so almost all the strength
+       is in it and almost none of the stretch. The sheath is sacrificial. This is the
+       construction that cannot be hand-spliced, which is why it is drawn differently. -->
+  <circle cx="60" cy="60" r="52"/>
+  <circle cx="60" cy="60" r="41"/>
+  <g stroke-width=".9" opacity=".8" clip-path="url(#sheath)">
+    <path d="M-8 0l136 136M-8 18l136 136M-8 36l136 136M-8 54l136 136M-8 -18l136 136M-8 -36l136 136"/>
+    <path d="M128 0L-8 136M128 18L-8 154M128 36L-8 172M128 -18L-8 118M128 -36L-8 100M128 -54L-8 82"/>
+  </g>
+  <clipPath id="sheath"><path d="M60 8a52 52 0 110 104 52 52 0 110-104zm0 11a41 41 0 100 82 41 41 0 100-82z" clip-rule="evenodd"/></clipPath>
+  <!-- core: parallel bundles, seen end-on -->
+  <g stroke-width="1" opacity=".85">
+    <circle cx="60" cy="45" r="8"/><circle cx="47" cy="53" r="8"/><circle cx="73" cy="53" r="8"/>
+    <circle cx="60" cy="60" r="8"/><circle cx="47" cy="68" r="8"/><circle cx="73" cy="68" r="8"/>
+    <circle cx="60" cy="76" r="8"/>
+  </g>
+</svg>

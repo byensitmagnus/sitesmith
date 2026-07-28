@@ -1,0 +1,476 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Trelfall &amp; Son — rope and cordage, cut to the metre</title>
+<meta name="description" content="Sixty-one lines of rope in stock at Grimsby, cut to the metre from the coil with the batch breaking load on your ticket.">
+<link rel="icon" href="assets/favicon.svg">
+<style>
+:root{
+  --paper:#f2ece0; --paper-2:#e8e0d0; --paper-3:#dbd1bd;
+  --ink:#1d1913; --ink-2:#544c3e; --ink-3:#635a49;
+  --rule:#c3b8a3; --stamp:#8c2b18; --stamp-soft:#f0ddd6;
+  --ok:#2f5d34; --focus:#1d1913;
+
+  --font-display:'Helvetica Neue Condensed','Arial Narrow',ui-sans-serif,system-ui,sans-serif;
+  --font-body:'Helvetica Neue Condensed','Arial Narrow',ui-sans-serif,system-ui,sans-serif;
+  --font-mono:ui-monospace,'SF Mono','Cascadia Mono','Segoe UI Mono',monospace;
+  --text-micro:.6875rem; --text-small:.8125rem; --text-body:.9375rem; --text-name:1rem;
+  --text-lead:1.25rem; --text-h2:1.375rem; --text-figure:1.5rem;
+  --leading-body:1.45; --measure:34ch;
+
+  --space-1:4px; --space-2:8px; --space-3:11px; --space-4:16px;
+  --space-5:22px; --space-6:30px; --space-7:44px; --space-8:64px;
+  --container:1180px; --gutter:26px;
+
+  --radius-edge:2px;
+  --elev-0:none;
+  --motion-fast:110ms; --ease:cubic-bezier(.2,.6,.2,1);
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --paper:#161310; --paper-2:#1f1b16; --paper-3:#2b251d;
+    --ink:#efe7d6; --ink-2:#bdb2a0; --ink-3:#9d9384;
+    --rule:#3a332a; --stamp:#e8836a; --stamp-soft:#33201a;
+    --ok:#8dc48f; --focus:#efe7d6;
+  }
+}
+*{box-sizing:border-box}
+html{color-scheme:light dark}
+body{margin:0;background:var(--paper);color:var(--ink);
+     font:var(--text-body)/var(--leading-body) var(--font-body);-webkit-font-smoothing:antialiased}
+:where(a,button,input,summary):focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.sheet{max-width:var(--container);margin:0 auto;padding:0 var(--gutter)}
+.skip{position:absolute;left:-9999px}
+.skip:focus{left:var(--gutter);top:var(--space-2);background:var(--paper);padding:var(--space-2) var(--space-3);z-index:2}
+
+/* ── header: mark, trade line, live order ─────────────────────────────── */
+header{border-bottom:2px solid var(--ink)}
+.bar{display:flex;align-items:center;gap:var(--space-5);flex-wrap:wrap;
+     padding:var(--space-4) 0 var(--space-3)}
+.brand{display:flex;align-items:center;gap:var(--space-2);font-weight:700;font-size:var(--text-name);
+       letter-spacing:.01em;text-decoration:none;color:inherit}
+.brand svg{width:38px;height:19px;flex:none}
+.trade{font:var(--text-micro)/1 var(--font-mono);letter-spacing:.14em;text-transform:uppercase;
+       color:var(--ink-3)}
+.order-chip{margin-left:auto;display:flex;align-items:baseline;gap:var(--space-3);
+            font:var(--text-micro)/1 var(--font-mono);letter-spacing:.12em;text-transform:uppercase;
+            color:var(--ink-3)}
+.order-chip b{font-size:var(--text-body);letter-spacing:0;color:var(--ink);
+              font-variant-numeric:tabular-nums}
+
+/* ── the standing line ────────────────────────────────────────────────── */
+.standing{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,320px);gap:var(--space-7);
+          padding:var(--space-4) 0 var(--space-5);border-bottom:1px solid var(--rule)}
+.standing h1{margin:0;font:400 var(--text-lead)/1.32 var(--font-body);
+             max-width:var(--measure);letter-spacing:-.005em}
+.standing aside{font:var(--text-small)/1.55 var(--font-mono);color:var(--ink-2)}
+.standing b{color:var(--stamp)}
+@media (max-width:760px){.standing{grid-template-columns:minmax(0,1fr);gap:var(--space-4)}}
+
+/* ── the catalogue ────────────────────────────────────────────────────── */
+table{width:100%;border-collapse:collapse}
+caption{text-align:left;font:var(--text-micro)/1 var(--font-mono);letter-spacing:.14em;
+        text-transform:uppercase;color:var(--ink-3);padding:var(--space-6) 0 var(--space-2)}
+th{text-align:left;font:var(--text-micro)/1 var(--font-mono);letter-spacing:.14em;
+   text-transform:uppercase;color:var(--ink-3);font-weight:400;
+   padding:0 var(--space-3) var(--space-2) 0;border-bottom:1px solid var(--rule);white-space:nowrap}
+th.n,td.n{text-align:right}
+td{padding:var(--space-3) var(--space-3) var(--space-3) 0;border-bottom:1px solid var(--rule);
+   vertical-align:middle}
+tbody tr.line:hover td{background:var(--paper-2)}
+tbody tr.line:focus-within td{background:var(--paper-2);box-shadow:inset 2px 0 0 var(--ink)}
+tr.oos td{color:var(--ink-3)}
+.sec{width:72px;height:72px;display:block;color:var(--ink)}      /* one-off: see DESIGN-SYSTEM §5 */
+tr.oos .sec{opacity:.42}
+.name{font-weight:700;font-size:var(--text-name);letter-spacing:.005em}
+.sub{color:var(--ink-2);font-size:var(--text-small);display:block;margin-top:2px}
+.fig{font:var(--text-body)/1 var(--font-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+.per{color:var(--ink-3);font-size:var(--text-micro)}
+.toggle{font:var(--text-small)/1 var(--font-body);font-weight:700;background:none;color:inherit;
+        border:1px solid var(--ink);border-radius:var(--radius-edge);
+        padding:var(--space-2) var(--space-3);cursor:pointer;
+        white-space:nowrap;transition:background var(--motion-fast) var(--ease)}
+.toggle:hover{background:var(--paper-3)}
+.toggle[aria-expanded=true]{background:var(--ink);color:var(--paper)}
+.toggle[disabled]{border-color:var(--rule);color:var(--ink-3);cursor:not-allowed}
+
+/* cut controls, in their own row so the table keeps its columns */
+tr.cut{display:none}
+tr.cut.open{display:table-row}
+tr.cut td{padding:var(--space-4) 0 var(--space-5);background:var(--paper-2)}
+.cutwrap{padding-left:calc(72px + var(--space-3));max-width:60ch}
+.controls{display:flex;gap:var(--space-5);align-items:end;flex-wrap:wrap}
+.field label{display:block;font:var(--text-micro)/1 var(--font-mono);letter-spacing:.14em;
+             text-transform:uppercase;color:var(--ink-3);margin-bottom:var(--space-2)}
+.field input{font:var(--text-body)/1 var(--font-mono);font-variant-numeric:tabular-nums;
+             width:9ch;padding:var(--space-2) var(--space-3);border:1px solid var(--ink);border-radius:var(--radius-edge);
+             background:var(--paper);color:var(--ink)}
+.field input[aria-invalid=true]{border-color:var(--stamp);background:var(--stamp-soft)}
+.hint{font:var(--text-micro)/1.5 var(--font-mono);color:var(--ink-3);
+      margin:var(--space-3) 0 0;max-width:44ch}
+.err{font:var(--text-small)/1.45 var(--font-body);color:var(--stamp);font-weight:700;
+     margin:var(--space-2) 0 0;max-width:44ch}
+.err:empty{display:none}
+.linetotal{min-width:12ch}
+.linetotal .lab{display:block;font:var(--text-micro)/1 var(--font-mono);letter-spacing:.14em;
+                text-transform:uppercase;color:var(--ink-3);margin-bottom:var(--space-2)}
+.linetotal .amt{font:var(--text-figure)/1 var(--font-mono);font-variant-numeric:tabular-nums;
+                letter-spacing:-.02em}
+.add{font:700 var(--text-body)/1 var(--font-body);padding:var(--space-3) var(--space-5);
+     border:0;border-radius:var(--radius-edge);background:var(--ink);color:var(--paper);cursor:pointer;
+     transition:opacity var(--motion-fast) var(--ease)}
+.add[disabled]{background:var(--paper-3);color:var(--ink-3);cursor:not-allowed}
+
+/* ── order ────────────────────────────────────────────────────────────── */
+#order{padding:var(--space-7) 0 var(--space-8)}
+#order h2{font-size:var(--text-h2);margin:0 0 var(--space-4);letter-spacing:-.01em}
+.empty{border:1px dashed var(--rule);border-radius:var(--radius-edge);padding:var(--space-5);
+       color:var(--ink-2);max-width:var(--measure)}
+.olines{list-style:none;margin:0;padding:0;max-width:720px}
+.olines li{display:flex;align-items:baseline;gap:var(--space-4);padding:var(--space-3) 0;
+           border-bottom:1px solid var(--rule)}
+.olines .what{flex:1;min-width:0}
+.olines .amt{font:var(--text-body)/1 var(--font-mono);font-variant-numeric:tabular-nums}
+.rm{background:none;border:0;color:var(--ink-2);font:var(--text-small) var(--font-body);
+    text-decoration:underline;cursor:pointer;padding:2px 4px}
+.sum{display:flex;align-items:baseline;justify-content:space-between;max-width:720px;
+     margin-top:var(--space-4);padding-top:var(--space-3);border-top:2px solid var(--ink)}
+.sum .amt{font:var(--text-figure)/1 var(--font-mono);font-variant-numeric:tabular-nums;
+          letter-spacing:-.02em}
+.status{font:var(--text-small)/1.5 var(--font-body);color:var(--ok);margin-top:var(--space-3);
+        min-height:1.5em}
+footer{border-top:1px solid var(--rule);padding:var(--space-5) 0 var(--space-8);
+       font-size:var(--text-small);color:var(--ink-2)}
+footer nav{display:flex;gap:var(--space-5);flex-wrap:wrap;margin-bottom:var(--space-3)}
+footer a{color:inherit}
+.safety{font:var(--text-small)/1.6 var(--font-mono);color:var(--ink-2);max-width:60ch;
+        margin-top:var(--space-3)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+@media (max-width:900px){
+  th.hide,td.hide{display:none}
+  .cutwrap{padding-left:0}
+}
+@media (max-width:620px){
+  thead{position:absolute;left:-9999px}
+  caption{padding-bottom:var(--space-3)}
+  table,tbody,tr.line,tr.line td,tr.cut td{display:block;width:100%}
+  tr.cut.open{display:block;width:100%}
+  tr.line{border-bottom:1px solid var(--rule);padding:var(--space-4) 0;
+          display:grid;grid-template-columns:72px minmax(0,1fr);gap:0 var(--space-4);
+          align-items:start}
+  tr.line td{border:0;padding:0}
+  tr.line td:first-child{grid-row:1/span 5}
+  tr.line td.n{text-align:left;display:flex;justify-content:space-between;gap:var(--space-4);
+               padding:var(--space-1) 0;border-bottom:1px solid var(--rule);max-width:26ch}
+  tr.line td.n::before{content:attr(data-l);font:var(--text-micro)/1.6 var(--font-mono);
+                       letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
+  tr.line td:last-child{padding-top:var(--space-3);text-align:left}
+  tr.line td.hide{display:flex}
+  tbody tr.line:focus-within td{box-shadow:none}
+  tbody tr.line:focus-within{box-shadow:inset 2px 0 0 var(--ink)}
+  tr.cut td{padding:var(--space-4) 0 var(--space-5)}
+  .controls{gap:var(--space-4)}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#catalogue">Skip to the catalogue</a>
+
+<!-- The four constructions, defined once. Inlined rather than <img src> because
+     currentColor does not inherit across an <img> boundary: an external SVG drawn in
+     currentColor renders black wherever it is placed, including on a dark ground. -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="s-three-strand" viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="1.4">
+      <circle cx="60" cy="60" r="48" stroke-dasharray="3 4" opacity=".45"/>
+      <circle cx="60" cy="33" r="26"/><circle cx="37" cy="73" r="26"/><circle cx="83" cy="73" r="26"/>
+      <g stroke-width=".8" opacity=".7">
+        <path d="M42 27q18 -9 36 0M40 33q20 -9 40 0M40 39q20 -9 40 0M42 45q18 -9 36 0"/>
+        <path d="M19 67q18 -9 36 0M17 73q20 -9 40 0M17 79q20 -9 40 0M19 85q18 -9 36 0"/>
+        <path d="M65 67q18 -9 36 0M63 73q20 -9 40 0M63 79q20 -9 40 0M65 85q18 -9 36 0"/>
+      </g>
+    </symbol>
+    <symbol id="s-double-braid" viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="1.4">
+      <circle cx="60" cy="60" r="52"/><circle cx="60" cy="60" r="40"/>
+      <circle cx="60" cy="60" r="30" stroke-width="1.1"/>
+      <g stroke-width=".8" opacity=".75" clip-path="url(#c-cover)">
+        <path d="M-10 4l140 140M-10 24l140 140M-10 44l140 140M-10 64l140 140M-10 84l140 140M-10 -16l140 140M-10 -36l140 140"/>
+        <path d="M130 4L-10 144M130 24L-10 164M130 44L-10 184M130 64L-10 204M130 -16L-10 124M130 -36L-10 104M130 -56L-10 84"/>
+      </g>
+      <clipPath id="c-cover"><path d="M60 8a52 52 0 110 104 52 52 0 110-104zm0 12a40 40 0 100 80 40 40 0 100-80z" clip-rule="evenodd"/></clipPath>
+      <g stroke-width=".8" opacity=".6"><path d="M34 48q26 -12 52 0M32 56q28 -12 56 0M32 64q28 -12 56 0M34 72q26 -12 52 0"/></g>
+    </symbol>
+    <symbol id="s-kernmantle" viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="1.4">
+      <circle cx="60" cy="60" r="52"/><circle cx="60" cy="60" r="41"/>
+      <g stroke-width=".9" opacity=".8" clip-path="url(#c-sheath)">
+        <path d="M-8 0l136 136M-8 18l136 136M-8 36l136 136M-8 54l136 136M-8 -18l136 136M-8 -36l136 136"/>
+        <path d="M128 0L-8 136M128 18L-8 154M128 36L-8 172M128 -18L-8 118M128 -36L-8 100M128 -54L-8 82"/>
+      </g>
+      <clipPath id="c-sheath"><path d="M60 8a52 52 0 110 104 52 52 0 110-104zm0 11a41 41 0 100 82 41 41 0 100-82z" clip-rule="evenodd"/></clipPath>
+      <g stroke-width="1" opacity=".85">
+        <circle cx="60" cy="45" r="8"/><circle cx="47" cy="53" r="8"/><circle cx="73" cy="53" r="8"/>
+        <circle cx="60" cy="60" r="8"/><circle cx="47" cy="68" r="8"/><circle cx="73" cy="68" r="8"/>
+        <circle cx="60" cy="76" r="8"/>
+      </g>
+    </symbol>
+    <symbol id="s-eight-plait" viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="1.4">
+      <circle cx="60" cy="60" r="52" stroke-dasharray="3 4" opacity=".45"/>
+      <circle cx="44" cy="44" r="17"/><circle cx="76" cy="44" r="17"/>
+      <circle cx="44" cy="76" r="17"/><circle cx="76" cy="76" r="17"/>
+      <circle cx="60" cy="30" r="12" opacity=".85"/><circle cx="60" cy="90" r="12" opacity=".85"/>
+      <circle cx="30" cy="60" r="12" opacity=".85"/><circle cx="90" cy="60" r="12" opacity=".85"/>
+      <g stroke-width=".8" opacity=".65">
+        <path d="M32 40q12 -6 24 0M32 48q12 -6 24 0M64 40q12 -6 24 0M64 48q12 -6 24 0"/>
+        <path d="M32 72q12 -6 24 0M32 80q12 -6 24 0M64 72q12 -6 24 0M64 80q12 -6 24 0"/>
+      </g>
+    </symbol>
+    <symbol id="s-lay" viewBox="0 0 44 22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round">
+      <path d="M3 11c1.7 3.4 4.3 4.6 7 4.6s5.3-1.2 7-4.6 4.3-4.6 7-4.6 5.3 1.2 7 4.6 4.3 4.6 7 4.6 5.3-1.2 7-4.6"/>
+      <path d="M3 15c1.7-3.4 4.3-4.6 7-4.6s5.3 1.2 7 4.6 4.3 4.6 7 4.6 5.3-1.2 7-4.6 4.3-4.6 7-4.6 5.3 1.2 7 4.6" opacity=".72"/>
+      <path d="M3 7c1.7-3.4 4.3-4.6 7-4.6s5.3 1.2 7 4.6 4.3 4.6 7 4.6 5.3-1.2 7-4.6 4.3-4.6 7-4.6 5.3 1.2 7 4.6" opacity=".48"/>
+    </symbol>
+  </defs>
+</svg>
+
+<header>
+  <div class="sheet bar">
+    <a class="brand" href="/">
+      <svg data-asset="logo-primary" role="img" aria-label="Trelfall and Son"><use href="#s-lay"/></svg>
+      Trelfall &amp; Son
+    </a>
+    <span class="trade">Rope and cordage · cut to the metre · Grimsby</span>
+    <span class="order-chip">
+      Order <b data-order-count>0</b> cuts <b data-order-total>£0.00</b>
+    </span>
+  </div>
+</header>
+
+<main class="sheet">
+  <div class="standing">
+    <h1>Every rope on this page is cut from the coil while you wait, and the breaking load
+      beside it is the batch we will cut from.</h1>
+    <aside>Figures are minimum breaking loads for the batch named on your ticket.
+      <b>They are not safe working loads</b>, and nothing sold here is rated for lifting
+      people. Apply your own factor.</aside>
+  </div>
+
+  <table id="catalogue">
+    <caption>Stock, by construction — 5 of 61 lines</caption>
+    <thead>
+      <tr>
+        <th scope="col">Section</th>
+        <th scope="col">Rope</th>
+        <th scope="col" class="n">Ø</th>
+        <th scope="col" class="n">MBL</th>
+        <th scope="col" class="n hide">Stretch</th>
+        <th scope="col" class="n">Per metre</th>
+        <th scope="col"><span class="skip">Cut</span></th>
+      </tr>
+    </thead>
+    <tbody data-catalogue></tbody>
+  </table>
+
+  <section id="order" aria-labelledby="order-h">
+    <h2 id="order-h">Your order</h2>
+    <div data-order-body></div>
+    <p class="status" role="status" data-status></p>
+  </section>
+</main>
+
+<footer class="sheet">
+  <nav aria-label="Footer"><a href="#catalogue">Catalogue</a><a href="#order">Order</a>
+    <a href="#catalogue">Splicing and whipping</a></nav>
+  <p>Trelfall &amp; Son, rope and cordage. Grimsby. A fictional merchant, built as a design pilot.</p>
+  <p class="safety">Minimum breaking loads are for the batch named on your ticket and are not
+    safe working loads. Nothing sold here is rated for lifting people. Cut lengths cannot be
+    returned.</p>
+</footer>
+
+<script>
+/* The catalogue. Every figure here would come from stock in a real shop; the shape is what
+   matters — a coil has a remaining length, and that is what makes a cut refusable. */
+const LINES = [
+  { id:'TS12', sym:'s-three-strand', asset:'sec-three-strand',
+    name:'Three-strand polyester', sub:'Hand-spliceable. Will rotate under load.',
+    dia:'12 mm', mbl:'3.1 t', stretch:'14 %', ppm:2.40, remaining:184, batch:'TS12-2431' },
+  { id:'DB12', sym:'s-double-braid', asset:'sec-double-braid',
+    name:'Double braid polyester', sub:'Runs over a winch without hockling.',
+    dia:'12 mm', mbl:'3.8 t', stretch:'4 %', ppm:4.15, remaining:96, batch:'DB12-2426' },
+  { id:'KM11', sym:'s-kernmantle', asset:'sec-kernmantle',
+    name:'Kernmantle, low stretch', sub:'Cannot be hand-spliced. Terminate with a knot.',
+    dia:'11 mm', mbl:'3.0 t', stretch:'2 %', ppm:3.05, remaining:47, batch:'KM11-2429' },
+  { id:'EP14', sym:'s-eight-plait', asset:'sec-eight-plait',
+    name:'Eight-plait nylon', sub:'Anchor warp. Stows flat, absorbs snatch.',
+    dia:'14 mm', mbl:'4.4 t', stretch:'28 %', ppm:3.60, remaining:210, batch:'EP14-2422' },
+  { id:'PP14', sym:'s-three-strand', asset:'sec-three-strand',
+    name:'Three-strand polypropylene', sub:'Floats. Degrades in sunlight — not for standing rigging.',
+    dia:'14 mm', mbl:'2.2 t', stretch:'20 %', ppm:1.15, remaining:0, batch:'—' },
+];
+const MIN_CUT = 3;
+const WHIP = 1.80;
+const money = n => '£' + n.toFixed(2);
+
+const tbody = document.querySelector('[data-catalogue]');
+const orderBody = document.querySelector('[data-order-body]');
+const statusEl = document.querySelector('[data-status]');
+const countEl = document.querySelector('[data-order-count]');
+const totalEl = document.querySelector('[data-order-total]');
+const order = [];
+
+/* ── render the catalogue ─────────────────────────────────────────────── */
+for (const L of LINES) {
+  const oos = L.remaining === 0;
+  const tr = document.createElement('tr');
+  tr.className = 'line' + (oos ? ' oos' : '');
+  tr.innerHTML = `
+    <td><svg class="sec" data-asset="${L.asset}" role="img"
+             aria-label="Cross-section: ${L.name}"><use href="#${L.sym}"/></svg></td>
+    <td><span class="name">${L.name}</span><span class="sub">${L.sub}</span></td>
+    <td class="n fig" data-l="Ø">${L.dia}</td>
+    <td class="n fig" data-l="MBL">${L.mbl}</td>
+    <td class="n fig hide" data-l="Stretch">${L.stretch}</td>
+    <td class="n fig" data-l="Per metre">${money(L.ppm)}<span class="per"> /m</span></td>
+    <td class="n"></td>`;
+  const cell = tr.lastElementChild;
+  const btn = document.createElement('button');
+  btn.className = 'toggle';
+  btn.type = 'button';
+  if (oos) {
+    btn.disabled = true;
+    btn.textContent = 'Out of stock';
+    btn.setAttribute('aria-describedby', 'oos-' + L.id);
+    const note = document.createElement('span');
+    note.className = 'sub';
+    note.id = 'oos-' + L.id;
+    note.textContent = 'Next coil lands 12 August';
+    cell.append(btn, note);
+  } else {
+    btn.setAttribute('aria-expanded', 'false');
+    btn.setAttribute('aria-controls', 'cut-' + L.id);
+    btn.textContent = 'Cut a length';
+    cell.append(btn);
+  }
+  tbody.append(tr);
+
+  if (oos) continue;
+
+  const cutRow = document.createElement('tr');
+  cutRow.className = 'cut';
+  cutRow.id = 'cut-' + L.id;
+  cutRow.innerHTML = `
+    <td colspan="7">
+      <div class="cutwrap">
+        <div class="controls">
+          <div class="field">
+            <label for="len-${L.id}">Length, metres</label>
+            <input id="len-${L.id}" type="number" inputmode="decimal" min="${MIN_CUT}"
+                   max="${L.remaining}" step="0.5" value="" autocomplete="off"
+                   aria-describedby="hint-${L.id} err-${L.id}">
+          </div>
+          <div class="linetotal">
+            <span class="lab">Line total</span>
+            <span class="amt" data-line-total>—</span>
+          </div>
+          <button class="add" type="button" disabled>Add this cut</button>
+        </div>
+        <p class="hint" id="hint-${L.id}">Minimum ${MIN_CUT} m. ${L.remaining} m left on
+          batch ${L.batch}. Both ends whipped, ${money(WHIP)}.</p>
+        <p class="err" id="err-${L.id}" role="alert"></p>
+      </div>
+    </td>`;
+  tbody.append(cutRow);
+
+  const input = cutRow.querySelector('input');
+  const err = cutRow.querySelector('.err');
+  const lineTotal = cutRow.querySelector('[data-line-total]');
+  const add = cutRow.querySelector('.add');
+
+  function price() {
+    const v = Number(input.value);
+    if (input.value === '') {
+      err.textContent = ''; input.removeAttribute('aria-invalid');
+      lineTotal.textContent = '—'; add.disabled = true; add.removeAttribute('title');
+      return null;
+    }
+    if (!Number.isFinite(v) || v < MIN_CUT) {
+      err.textContent = `We cut a minimum of ${MIN_CUT} m. Anything shorter is offcut.`;
+      input.setAttribute('aria-invalid', 'true');
+      lineTotal.textContent = '—'; add.disabled = true;
+      return null;
+    }
+    if (v > L.remaining) {
+      err.textContent = `Batch ${L.batch} has ${L.remaining} m left. Ring us and we will splice from the next coil.`;
+      input.setAttribute('aria-invalid', 'true');
+      lineTotal.textContent = '—'; add.disabled = true;
+      return null;
+    }
+    err.textContent = ''; input.removeAttribute('aria-invalid');
+    const total = v * L.ppm + WHIP;
+    lineTotal.textContent = money(total);
+    add.disabled = false;
+    return { metres: v, total };
+  }
+
+  input.addEventListener('input', price);
+
+  btn.addEventListener('click', () => {
+    const open = cutRow.classList.toggle('open');
+    btn.setAttribute('aria-expanded', String(open));
+    btn.textContent = open ? 'Close' : 'Cut a length';
+    if (open) input.focus();
+    else btn.focus();
+  });
+
+  add.addEventListener('click', () => {
+    const p = price();
+    if (!p) return;
+    order.push({ id: L.id, name: L.name, dia: L.dia, batch: L.batch, metres: p.metres, total: p.total });
+    L.remaining = Math.round((L.remaining - p.metres) * 10) / 10;
+    input.max = L.remaining;
+    cutRow.querySelector('.hint').textContent =
+      `Minimum ${MIN_CUT} m. ${L.remaining} m left on batch ${L.batch}. Both ends whipped, ${money(WHIP)}.`;
+    input.value = '';
+    price();
+    cutRow.classList.remove('open');
+    btn.setAttribute('aria-expanded', 'false');
+    btn.textContent = 'Cut a length';
+    btn.focus();
+    renderOrder(`${p.metres} m of ${L.name} added — ${money(p.total)}, cut from batch ${L.batch}.`);
+  });
+}
+
+/* ── the order ────────────────────────────────────────────────────────── */
+function renderOrder(message) {
+  const total = order.reduce((s, l) => s + l.total, 0);
+  countEl.textContent = String(order.length);
+  totalEl.textContent = money(total);
+
+  if (!order.length) {
+    orderBody.innerHTML = `<p class="empty">Nothing cut yet. Each length you add appears here
+      with the batch it came from, so the ticket matches the coil.</p>`;
+  } else {
+    const items = order.map((l, i) => `
+      <li>
+        <span class="what"><strong>${l.metres} m</strong> ${l.name}, ${l.dia}
+          <span class="sub">batch ${l.batch}, whipped both ends</span></span>
+        <span class="amt">${money(l.total)}</span>
+        <button class="rm" type="button" data-rm="${i}">Remove</button>
+      </li>`).join('');
+    orderBody.innerHTML = `<ul class="olines">${items}</ul>
+      <div class="sum"><span>Total, ${order.length} cut${order.length > 1 ? 's' : ''}</span>
+        <span class="amt">${money(total)}</span></div>`;
+    orderBody.querySelectorAll('[data-rm]').forEach(b => b.addEventListener('click', () => {
+      const [gone] = order.splice(Number(b.dataset.rm), 1);
+      renderOrder(`${gone.metres} m of ${gone.name} removed.`);
+      document.getElementById('order-h').focus();
+    }));
+  }
+  if (message) statusEl.textContent = message;
+}
+document.getElementById('order-h').tabIndex = -1;
+renderOrder();
+</script>
+</body>
+</html>

@@ -51,6 +51,22 @@ const visibleText = (html) => html
   .replace(/<(style|script)\b[\s\S]*?<\/\1>/gi, ' ')
   .replace(/<[^>]*>/g, ' ');
 
+/* Markup only. Two things are removed before any element check runs, and both were found by
+   the gate reporting them as defects when they were not:
+
+   — Comments. A page whose comment explains why it does *not* use `<img src>` was reported
+     for shipping two images with no manifest id. Both of them were sentences.
+   — Script bodies. A page that builds its rows from a template literal containing
+     `data-asset="${L.asset}"` was reported for an asset literally named `${L.asset}`.
+
+   Removing script bodies means a statically-scanned page is only checked on the markup it
+   ships. That is a real blind spot for a page that renders its content with JavaScript, and
+   the answer is not to guess: pass a URL instead of a directory and the gate reads the
+   rendered DOM, where those rows exist as elements. */
+const markup = (html) => html
+  .replace(/<!--[\s\S]*?-->/g, ' ')
+  .replace(/<script\b[\s\S]*?<\/script>/gi, ' ');
+
 const args = process.argv.slice(2);
 const production = args.includes('--production');
 const manifestIdx = args.indexOf('--manifest');
@@ -122,7 +138,7 @@ function checkPlaceholders(file, html) {
 function checkEmptyBrandMark(file, html) {
   // An element inside a header/brand link with no text and no child image is a coloured box
   // standing in for an identity. Three legacy pages shipped exactly this.
-  const brandBlocks = html.match(/<a[^>]*class="[^"]*\b(logo|mark|brand)\b[^"]*"[\s\S]{0,400}?<\/a>/gi) ?? [];
+  const brandBlocks = markup(html).match(/<a[^>]*class="[^"]*\b(logo|mark|brand)\b[^"]*"[\s\S]{0,400}?<\/a>/gi) ?? [];
   for (const block of brandBlocks) {
     const empties = block.match(/<(i|span|div|b)\b[^>]*>\s*<\/\1>/gi) ?? [];
     if (empties.length) {
@@ -135,7 +151,7 @@ function checkEmptyBrandMark(file, html) {
 function checkFavicon(file, html) {
   // Attribute-aware: an inline SVG data URI contains `>` characters, so [^>]* truncates the
   // tag halfway through the href and the icon never gets inspected.
-  const tags = html.match(/<link\b(?:"[^"]*"|'[^']*'|[^>"'])*>/gi) ?? [];
+  const tags = markup(html).match(/<link\b(?:"[^"]*"|'[^']*'|[^>"'])*>/gi) ?? [];
   const links = tags.filter((t) => /\brel\s*=\s*["'][^"']*icon/i.test(t));
   if (!links.length) { add('block', file, 'no favicon declared', ''); return; }
   for (const l of links) {
@@ -152,25 +168,64 @@ function checkFavicon(file, html) {
 }
 
 function checkImages(file, html, manifest) {
-  const imgs = html.match(/<img\b[^>]*>/gi) ?? [];
-  for (const img of imgs) {
-    const id = (img.match(/data-asset=["']([^"']+)["']/) ?? [])[1];
+  const src = markup(html);
+  // Both kinds count. Checking only <img> left a whole category unmanifested, which is
+  // exactly what happens when drawings are inlined so that currentColor works — and
+  // inlining is the correct technique, so the gate has to follow it.
+  const imgs = src.match(/<img\b[^>]*>/gi) ?? [];
+  const svgs = (src.match(/<svg\b[^>]*>/gi) ?? [])
+    .filter((t) => !/aria-hidden\s*=\s*["']true["']/i.test(t));
+  const assets = [...imgs, ...svgs];
+  for (const el of assets) {
+    const kind = el.startsWith('<img') ? 'an image' : 'an inline svg';
+    const id = (el.match(/data-asset=["']([^"']+)["']/) ?? [])[1];
     if (!id) {
-      add('block', file, 'an image with no data-asset id', img.slice(0, 110));
+      add('block', file, `${kind} with no data-asset id`, el.replace(/\s+/g, ' ').slice(0, 110));
       continue;
     }
     const row = manifest.find((r) => r.id === id);
-    if (!row) add('block', file, `image "${id}" is not in the manifest`, '');
-    else if (row.state !== 'ready') add('block', file, `image "${id}" is ${row.state}`, row.what);
+    if (!row) add('block', file, `asset "${id}" is not in the manifest`, '');
+    else if (row.state !== 'ready') add('block', file, `asset "${id}" is ${row.state}`, row.what);
   }
-  // A page that renders no image at all is only acceptable if the direction says so.
-  return imgs.length;
+  return assets.length;
 }
 
 /* ── run ───────────────────────────────────────────────────────────────── */
 
-const files = (await Promise.all(patterns.map(resolveFiles))).flat();
-if (!files.length) { console.error(`no HTML found for ${patterns.join(' ')}`); process.exit(2); }
+/* A URL is checked against the rendered DOM, which is the only way to see a page whose rows
+   are built by script. A path is checked against the file as shipped. */
+const urls = patterns.filter((p) => /^https?:\/\//.test(p));
+const paths = patterns.filter((p) => !/^https?:\/\//.test(p));
+
+const sources = [];   // { label, html }
+for (const f of (await Promise.all(paths.map(resolveFiles))).flat()) {
+  sources.push({ label: relative(process.cwd(), f).split(sep).join('/'), html: await readFile(f, 'utf8') });
+}
+if (urls.length) {
+  const { createRequire } = await import('node:module');
+  const { pathToFileURL } = await import('node:url');
+  const requireFromCwd = createRequire(join(process.cwd(), 'package.json'));
+  let chromium;
+  try {
+    const pw = await import('playwright').catch(
+      () => import(pathToFileURL(requireFromCwd.resolve('playwright')).href));
+    chromium = pw.chromium ?? pw.default?.chromium;
+  } catch {
+    console.error('a URL was given but playwright is not installed, so the rendered DOM cannot be read');
+    process.exit(2);
+  }
+  const browser = await chromium.launch();
+  for (const u of urls) {
+    const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+    await page.goto(u, { waitUntil: 'networkidle' });
+    sources.push({ label: u, html: await page.content(), rendered: true });
+    await page.close();
+  }
+  await browser.close();
+}
+
+const files = sources.map((s) => s.label);
+if (!sources.length) { console.error(`no HTML found for ${patterns.join(' ')}`); process.exit(2); }
 
 const manifestRaw = await readFile(manifestPath, 'utf8').catch(() => null);
 if (manifestRaw === null) {
@@ -191,13 +246,11 @@ if (manifest.length && !manifest.some((r) => /logo/i.test(r.id))) {
 }
 
 let totalImages = 0;
-for (const f of files) {
-  const html = await readFile(f, 'utf8');
-  const rel = relative(process.cwd(), f).split(sep).join('/');
-  checkPlaceholders(rel, html);
-  checkEmptyBrandMark(rel, html);
-  checkFavicon(rel, html);
-  totalImages += checkImages(rel, html, manifest);
+for (const { label, html } of sources) {
+  checkPlaceholders(label, html);
+  checkEmptyBrandMark(label, html);
+  checkFavicon(label, html);
+  totalImages += checkImages(label, html, manifest);
 }
 
 /* Journeys: a site with none has not been tested for behaviour. */

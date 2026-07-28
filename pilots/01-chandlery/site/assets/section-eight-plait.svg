@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img"
+     aria-labelledby="t-8p" fill="none" stroke="currentColor" stroke-width="1.4">
+  <title id="t-8p">Cross-section of eight-plait rope: four pairs of strands plaited square</title>
+  <!-- Drawn for Trelfall & Son. Eight-plait runs flat through a hawse and stows without
+       kinking, which is why it is the anchor warp on most working boats. It is drawn square
+       because that is what it looks like end-on when it is relaxed. -->
+  <circle cx="60" cy="60" r="52" stroke-dasharray="3 4" opacity=".45"/>
+  <g>
+    <circle cx="44" cy="44" r="17"/><circle cx="76" cy="44" r="17"/>
+    <circle cx="44" cy="76" r="17"/><circle cx="76" cy="76" r="17"/>
+    <circle cx="60" cy="30" r="12" opacity=".85"/><circle cx="60" cy="90" r="12" opacity=".85"/>
+    <circle cx="30" cy="60" r="12" opacity=".85"/><circle cx="90" cy="60" r="12" opacity=".85"/>
+  </g>
+  <g stroke-width=".8" opacity=".65">
+    <path d="M32 40q12 -6 24 0M32 48q12 -6 24 0M64 40q12 -6 24 0M64 48q12 -6 24 0"/>
+    <path d="M32 72q12 -6 24 0M32 80q12 -6 24 0M64 72q12 -6 24 0M64 80q12 -6 24 0"/>
+  </g>
+</svg>

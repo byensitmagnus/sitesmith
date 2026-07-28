@@ -31,3 +31,7 @@ benchmarks/v2/measurements-*.json
 # bench/tools-package.json and bench/tools-package-lock.json are committed on purpose.
 # They pin the measurement dependencies transitively, so the image is built from a fixed
 # tree rather than whatever the registry serves that day. The key never lives here.
+
+# Pilot working directories: playwright is installed per pilot so the journeys can run.
+pilots/*/node_modules/
+pilots/*/.sitesmith/

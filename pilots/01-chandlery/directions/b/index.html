@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Direction B — the coil</title>
+<style>
+  :root{
+    --ground:#14120f; --ink:#efe7d6; --ink-2:#a3988180;
+    --serif:'Iowan Old Style','Palatino Linotype',Palatino,'Book Antiqua',Georgia,serif;
+    --mono:ui-monospace,'SF Mono','Cascadia Mono',monospace;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--ground);color:var(--ink);font:16px/1.6 var(--serif)}
+  .wrap{max-width:940px;margin:0 auto;padding:0 24px 90px;text-align:center}
+  header{display:flex;justify-content:center;padding:34px 0 0}
+  .brand{display:flex;align-items:center;gap:10px;font:400 15px/1 var(--mono);
+         letter-spacing:.24em;text-transform:uppercase;color:#cfc4ad}
+  .brand img{width:44px;filter:invert(1) opacity(.8)}
+  .object{margin:56px auto 0;width:min(60vw,380px);color:#e8dcc2;opacity:.96}
+  .object svg{width:100%;height:auto;display:block}
+  .cat{font:11px/1 var(--mono);letter-spacing:.3em;text-transform:uppercase;
+       color:#a39881;margin-top:26px}
+  h1{font-weight:400;font-size:clamp(2.1rem,5vw,3.4rem);line-height:1.08;margin:14px auto 0;
+     max-width:15ch;letter-spacing:-.015em}
+  .lede{max-width:44ch;margin:20px auto 0;color:#cbc0aa;font-size:17px}
+  dl{display:flex;justify-content:center;gap:0;margin:46px 0 0;flex-wrap:wrap}
+  dl>div{padding:0 30px;border-left:1px solid #2e2920}
+  dl>div:first-child{border-left:0}
+  dt{font:10px/1 var(--mono);letter-spacing:.22em;text-transform:uppercase;color:#a39881}
+  dd{margin:10px 0 0;font-size:29px;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+  .note{margin:52px auto 0;max-width:52ch;font:12px/1.7 var(--mono);color:#8d8471;
+        border-top:1px solid #2e2920;padding-top:18px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header><span class="brand"><img src="../../site/assets/logo.svg" alt=""> Trelfall &amp; Son</span></header>
+
+  <!-- Inlined, not <img src>. currentColor does not inherit across an <img> boundary, so an
+       external SVG drawn in currentColor renders black on this ground and disappears. -->
+  <figure class="object">
+    <svg class="plate" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img"
+         aria-labelledby="t-db" fill="none" stroke="currentColor" stroke-width="1.4">
+      <title id="t-db">Cross-section of double-braid rope: a braided core inside a braided cover</title>
+      <circle cx="60" cy="60" r="52"/>
+      <circle cx="60" cy="60" r="40"/>
+      <circle cx="60" cy="60" r="30" stroke-width="1.1"/>
+      <g stroke-width=".8" opacity=".75" clip-path="url(#cover)">
+        <path d="M-10 4l140 140M-10 24l140 140M-10 44l140 140M-10 64l140 140M-10 84l140 140M-10 -16l140 140M-10 -36l140 140"/>
+        <path d="M130 4L-10 144M130 24L-10 164M130 44L-10 184M130 64L-10 204M130 -16L-10 124M130 -36L-10 104M130 -56L-10 84"/>
+      </g>
+      <clipPath id="cover"><path d="M60 8a52 52 0 110 104 52 52 0 110-104zm0 12a40 40 0 100 80 40 40 0 100-80z" clip-rule="evenodd"/></clipPath>
+      <g stroke-width=".8" opacity=".6">
+        <path d="M34 48q26 -12 52 0M32 56q28 -12 56 0M32 64q28 -12 56 0M34 72q26 -12 52 0"/>
+      </g>
+    </svg>
+  </figure>
+
+  <p class="cat">No. 114 · double braid polyester · 12 mm</p>
+  <h1>The cover takes the wear. The core takes the load.</h1>
+  <p class="lede">Cut from the coil while you wait, whipped at both ends, with the batch
+    number of the rope we cut on your ticket.</p>
+
+  <dl>
+    <div><dt>Breaking load</dt><dd>3.8 t</dd></div>
+    <div><dt>Stretch at 20 %</dt><dd>4 %</dd></div>
+    <div><dt>Per metre</dt><dd>£4.15</dd></div>
+  </dl>
+
+  <p class="note">The figure above is a minimum breaking load for the batch on your ticket.
+    It is not a safe working load. Nothing sold here is rated for lifting people.</p>
+</div>
+</body>
+</html>

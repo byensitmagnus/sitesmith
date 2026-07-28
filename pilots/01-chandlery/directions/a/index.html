@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Direction A — the counter</title>
+<style>
+  :root{
+    --paper:#f2ece0; --paper-2:#e8e0d0; --ink:#1d1913; --ink-2:#544c3e;
+    --rule:#c3b8a3; --stamp:#8c2b18;
+    --sans:'Helvetica Neue Condensed','Arial Narrow',ui-sans-serif,system-ui,sans-serif;
+    --mono:ui-monospace,'SF Mono','Cascadia Mono',monospace;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);
+       font:15px/1.45 var(--sans);-webkit-font-smoothing:antialiased}
+  .sheet{max-width:1180px;margin:0 auto;padding:0 26px 60px}
+  header{display:flex;align-items:baseline;justify-content:space-between;
+         border-bottom:2px solid var(--ink);padding:16px 0 9px;margin-bottom:0}
+  .brand{display:flex;align-items:center;gap:9px;font-weight:700;font-size:17px;letter-spacing:.01em}
+  .brand img{width:38px}
+  .est{font:11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2)}
+  .strap{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:38px;
+         padding:14px 0 20px;border-bottom:1px solid var(--rule)}
+  .strap p{margin:0;font-size:20px;line-height:1.32;max-width:34ch;letter-spacing:-.005em}
+  .strap aside{font:12px/1.55 var(--mono);color:var(--ink-2)}
+  .strap b{color:var(--stamp)}
+  table{width:100%;border-collapse:collapse;margin-top:6px}
+  caption{text-align:left;font:11px/1 var(--mono);letter-spacing:.14em;
+          text-transform:uppercase;color:var(--ink-2);padding:22px 0 8px}
+  th{text-align:left;font:11px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;
+     color:var(--ink-2);font-weight:400;padding:0 10px 7px 0;border-bottom:1px solid var(--rule)}
+  th.n,td.n{text-align:right;font-variant-numeric:tabular-nums}
+  td{padding:11px 10px 11px 0;border-bottom:1px solid var(--rule);vertical-align:middle}
+  tr:hover td{background:var(--paper-2)}
+  .sec{width:52px;height:52px;display:block}
+  .name{font-weight:700;font-size:16px}
+  .sub{color:var(--ink-2);font-size:13px}
+  .fig{font:15px/1 var(--mono);font-variant-numeric:tabular-nums}
+  .per{color:var(--ink-2);font-size:12px}
+</style>
+</head>
+<body>
+<div class="sheet">
+  <header>
+    <span class="brand"><img src="../../site/assets/logo.svg" alt=""> Trelfall &amp; Son</span>
+    <span class="est">Rope and cordage · cut to the metre · Grimsby</span>
+  </header>
+
+  <div class="strap">
+    <p>Every rope on this page is cut from the coil while you wait, and the breaking load
+      beside it is the batch we will cut from.</p>
+    <aside>Loads are minimum breaking loads for the batch named on your ticket.
+      <b>They are not safe working loads</b> and nothing here is rated for lifting people.
+      Apply your own factor.</aside>
+  </div>
+
+  <table>
+    <caption>Stock, by construction — 4 of 61 lines</caption>
+    <thead>
+      <tr><th scope="col">Section</th><th scope="col">Rope</th><th scope="col" class="n">Ø</th>
+          <th scope="col" class="n">MBL</th><th scope="col" class="n">Stretch</th>
+          <th scope="col" class="n">Per metre</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><img class="sec" src="../../site/assets/section-three-strand.svg" alt="Three-strand section"></td>
+        <td><span class="name">Three-strand polyester</span><br><span class="sub">Hand-spliceable. Will rotate under load.</span></td>
+        <td class="n fig">12 mm</td><td class="n fig">3.1 t</td><td class="n fig">14 %</td>
+        <td class="n fig">£2.40<span class="per"> /m</span></td>
+      </tr>
+      <tr>
+        <td><img class="sec" src="../../site/assets/section-double-braid.svg" alt="Double-braid section"></td>
+        <td><span class="name">Double braid polyester</span><br><span class="sub">Runs over a winch without hockling.</span></td>
+        <td class="n fig">12 mm</td><td class="n fig">3.8 t</td><td class="n fig">4 %</td>
+        <td class="n fig">£4.15<span class="per"> /m</span></td>
+      </tr>
+      <tr>
+        <td><img class="sec" src="../../site/assets/section-kernmantle.svg" alt="Kernmantle section"></td>
+        <td><span class="name">Kernmantle, low stretch</span><br><span class="sub">Cannot be hand-spliced. Terminate with a knot.</span></td>
+        <td class="n fig">11 mm</td><td class="n fig">3.0 t</td><td class="n fig">2 %</td>
+        <td class="n fig">£3.05<span class="per"> /m</span></td>
+      </tr>
+      <tr>
+        <td><img class="sec" src="../../site/assets/section-eight-plait.svg" alt="Eight-plait section"></td>
+        <td><span class="name">Eight-plait nylon</span><br><span class="sub">Anchor warp. Stows flat, absorbs snatch.</span></td>
+        <td class="n fig">14 mm</td><td class="n fig">4.4 t</td><td class="n fig">28 %</td>
+        <td class="n fig">£3.60<span class="per"> /m</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</body>
+</html>
