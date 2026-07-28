@@ -134,6 +134,42 @@ expect('production', 'a shop with no evidence pack',
 expect('production', 'a sourced price that ends a sentence',
   prod('pass-sourced-price-ends-sentence', ['--mode', 'E']), 0);
 
+/* ══ visual asset engine ════════════════════════════════════════════════
+   Every one of these runs against the mock provider. No network call, no key, no credit. */
+
+const VFIX = join(ROOT, 'tests/gates/visual');
+const va = (args) => run(join(S, 'visual-assets.mjs'), args, ROOT);
+const plan = (f, extra = []) => va(['check', join(VFIX, 'plan', f, 'VISUAL-SOURCE-PLAN.md'), ...extra]);
+const rec = (f) => va(['record', 'x', '--json', join(VFIX, 'record', `${f}.json`)]);
+
+expect('visual', 'a complete plan whose assets are all in the manifest',
+  plan('complete', [join(VFIX, 'plan/complete/ASSET-MANIFEST.md')]), 0);
+expect('visual', 'a plan missing lighting and factual risk', plan('fail-incomplete'), 1,
+  /no lighting|no factualRisk/);
+expect('visual', 'a plan asking for a third attempt', plan('fail-too-many-attempts'), 1,
+  /two iterations is the ceiling/);
+expect('visual', 'a plan with a strategy that is not one of the four',
+  plan('fail-bad-strategy'), 1, /is not one of reuse, stock, generate, edit/);
+expect('visual', 'an asset planned but never listed in the manifest',
+  plan('fail-not-in-manifest', [join(VFIX, 'plan/fail-not-in-manifest/ASSET-MANIFEST.md')]), 1,
+  /planned, but no row in/);
+
+expect('visual', 'a complete generated-asset record', rec('pass'), 0);
+expect('visual', 'a real product with a generated environment around it',
+  rec('pass-real-product-context'), 0);
+expect('visual', 'a remote generation link used as the asset', rec('fail-remote-url'), 1,
+  /A generation link expires/);
+expect('visual', 'a recorded hash that is not the file s', rec('fail-wrong-hash'), 1,
+  /file hashes to/);
+expect('visual', 'approved without a visual QA pass', rec('fail-approved-without-qa'), 1,
+  /Technically clean is not approved/);
+expect('visual', 'a synthetic product presented as a stocked one',
+  rec('fail-synthetic-as-stocked'), 1, /may not be/);
+expect('visual', 'a generated asset that does not admit it', rec('fail-not-marked-synthetic'), 1,
+  /must record synthetic/);
+expect('visual', 'text baked into the pixels', rec('fail-baked-text'), 1,
+  /Real HTML text belongs in the page/);
+
 /* ══ journey ════════════════════════════════════════════════════════════ */
 
 {

@@ -1,0 +1,8 @@
+[
+  {
+    "id": "supplied",
+    "capabilities": [],
+    "paid": false,
+    "note": "the client sent a logo and nothing else"
+  }
+]

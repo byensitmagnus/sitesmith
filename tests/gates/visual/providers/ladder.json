@@ -1,0 +1,17 @@
+[
+  {
+    "id": "openai",
+    "capabilities": [
+      "text-to-image",
+      "image-edit"
+    ],
+    "paid": true
+  },
+  {
+    "id": "supplied",
+    "capabilities": [
+      "text-to-image"
+    ],
+    "paid": false
+  }
+]

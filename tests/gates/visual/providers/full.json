@@ -1,0 +1,19 @@
+[
+  {
+    "id": "mock",
+    "capabilities": [
+      "text-to-image",
+      "image-to-image",
+      "image-edit",
+      "background-replace",
+      "generative-expand",
+      "upscale",
+      "style-reference"
+    ],
+    "paid": false,
+    "models": [
+      "mock-1"
+    ],
+    "note": "deterministic fixture provider"
+  }
+]

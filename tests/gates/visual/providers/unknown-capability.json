@@ -1,0 +1,10 @@
+[
+  {
+    "id": "mock",
+    "capabilities": [
+      "text-to-image",
+      "text-to-hologram"
+    ],
+    "paid": false
+  }
+]

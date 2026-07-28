@@ -1,0 +1,24 @@
+[
+  {
+    "id": "bench-rope",
+    "role": "product materiality, first screen",
+    "file": "one.webp",
+    "sourceType": "generated",
+    "provider": "mock",
+    "model": "mock-1",
+    "generationId": "00000000-0000-4000-8000-000000000001",
+    "promptSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "referenceSha256": "none",
+    "settings": "seed=7;ratio=3:2",
+    "sha256": "6b7fa434f92a8b80aab02d9bf1a12e49ffcae424e4013a1c4f68b67e3d2bbcd0",
+    "synthetic": true,
+    "licence": "generated, owned",
+    "focal": "48% 52%",
+    "crops": "1440x960; 390x488",
+    "alt": "Three-strand polyester on an oak bench",
+    "approval": "approved",
+    "visualQa": true,
+    "productTruth": "synthetic-illustrative",
+    "bakedText": true
+  }
+]

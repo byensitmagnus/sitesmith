@@ -16,23 +16,80 @@
     "`alwaysLoaded` list below is the entire standing cost."
   ],
   "version": "2.1",
-  "alwaysLoaded": ["SKILL.md", "v2/10-core.md", "one file from v2/modes/"],
+  "alwaysLoaded": [
+    "SKILL.md",
+    "v2/10-core.md",
+    "one file from v2/modes/"
+  ],
   "commands": {
     "$comment": "Seven verbs, fewer than any competitor, each bound to a span of the pipeline. impeccable declares roughly twenty-three; a vocabulary a user cannot hold is a vocabulary they do not use.",
-    "init": { "steps": ["brief", "inspect", "evidence", "brand"], "summary": "Understand the subject and what already exists. Produces BRIEF.md, EVIDENCE.md, BRAND.md, ASSET-MANIFEST.md." },
-    "shape": { "steps": ["directions", "comps", "choose", "contract", "interactions"], "summary": "Three contrasting directions, one chosen with reasons, then the contract and the interaction contract written from the winner." },
-    "build": { "steps": ["structure", "implement", "journeys"], "summary": "Section order, the pages, and the journeys that exercise them." },
-    "audit": { "steps": ["verify", "fidelity", "diversity", "production"], "summary": "Does it work, does it render the direction it chose, is it its own site, and is it finished." },
-    "harden": { "steps": ["journeys", "production"], "summary": "Close the states and the assets. Re-run what the audit failed." },
-    "polish": { "steps": ["critique", "targeted-polish"], "summary": "The visual judgement, then the one round of work it names." },
-    "doctor": { "steps": [], "summary": "Is the installation itself correct: paths, dependencies, version drift, canonical/provider sync." }
+    "init": {
+      "steps": [
+        "brief",
+        "inspect",
+        "evidence",
+        "brand",
+        "visual-plan"
+      ],
+      "summary": "Understand the subject and what already exists. Produces BRIEF.md, EVIDENCE.md, BRAND.md, ASSET-MANIFEST.md, VISUAL-SOURCE-PLAN.md."
+    },
+    "shape": {
+      "steps": [
+        "visual-assets",
+        "directions",
+        "comps",
+        "choose",
+        "contract",
+        "interactions"
+      ],
+      "summary": "Make the assets the plan calls for, then three contrasting directions, one chosen with reasons, then the contract and the interaction contract written from the winner."
+    },
+    "build": {
+      "steps": [
+        "structure",
+        "implement",
+        "journeys"
+      ],
+      "summary": "Section order, the pages, and the journeys that exercise them."
+    },
+    "audit": {
+      "steps": [
+        "verify",
+        "fidelity",
+        "diversity",
+        "production"
+      ],
+      "summary": "Does it work, does it render the direction it chose, is it its own site, and is it finished."
+    },
+    "harden": {
+      "steps": [
+        "journeys",
+        "production"
+      ],
+      "summary": "Close the states and the assets. Re-run what the audit failed."
+    },
+    "polish": {
+      "steps": [
+        "critique",
+        "targeted-polish"
+      ],
+      "summary": "The visual judgement, then the one round of work it names."
+    },
+    "doctor": {
+      "steps": [],
+      "summary": "Is the installation itself correct: paths, dependencies, version drift, canonical/provider sync."
+    }
   },
   "steps": [
     {
       "id": "brief",
       "name": "Brief and existing repository",
-      "reads": ["v2/00-done.md"],
-      "produces": ["BRIEF.md"],
+      "reads": [
+        "v2/00-done.md"
+      ],
+      "produces": [
+        "BRIEF.md"
+      ],
       "gate": null,
       "note": "Items 1 to 6 of the done list. If two readings lead to materially different sites, ask one question; otherwise infer, write it down and proceed."
     },
@@ -47,86 +104,156 @@
     {
       "id": "evidence",
       "name": "Evidence pack",
-      "reads": ["v2/05-evidence.md"],
-      "produces": ["EVIDENCE.md"],
+      "reads": [
+        "v2/05-evidence.md"
+      ],
+      "produces": [
+        "EVIDENCE.md"
+      ],
       "gate": null,
       "note": "Research, not design. Nothing here picks a colour. A direction reachable without this file did not need it."
     },
     {
       "id": "brand",
       "name": "Brand and asset inventory",
-      "reads": ["v2/15-brand.md", "v2/25-assets.md"],
-      "produces": ["BRAND.md", "ASSET-MANIFEST.md"],
+      "reads": [
+        "v2/15-brand.md",
+        "v2/25-assets.md"
+      ],
+      "produces": [
+        "BRAND.md",
+        "ASSET-MANIFEST.md"
+      ],
       "gate": null,
       "note": "What the subject already owns, before anything is invented. A client with a logo, a palette and a photo library hands them over here or nowhere."
     },
     {
+      "id": "visual-plan",
+      "name": "Visual source plan",
+      "reads": [
+        "v2/26-visual-assets.md",
+        "v2/25-assets.md"
+      ],
+      "produces": [
+        "VISUAL-SOURCE-PLAN.md"
+      ],
+      "gate": "scripts/visual-assets.mjs check VISUAL-SOURCE-PLAN.md ASSET-MANIFEST.md",
+      "note": "Written before anything is generated, so the brief decides the picture rather than the picture deciding the brief. Every field is required; a blank factual-risk fails."
+    },
+    {
+      "id": "visual-assets",
+      "name": "Make the assets",
+      "reads": [
+        "v2/26-visual-assets.md",
+        "VISUAL-SOURCE-PLAN.md"
+      ],
+      "produces": [
+        "site assets on disk",
+        "ASSET-MANIFEST.md rows"
+      ],
+      "gate": "scripts/visual-assets.mjs record ASSET-MANIFEST.md --json records.json",
+      "note": "Capability routing, never a hardcoded tool name. Reuse and licensed material come before generation. A cost preflight prints before any paid call and spends nothing; with no provider at all, write ASSET-REQUESTS.md and stay a draft."
+    },
+    {
       "id": "directions",
       "name": "Three contrasting directions",
-      "reads": ["v2/20-direction-lab.md"],
-      "produces": ["directions/a|b|c/NOTE.md"],
+      "reads": [
+        "v2/20-direction-lab.md"
+      ],
+      "produces": [
+        "directions/a|b|c/NOTE.md"
+      ],
       "gate": null,
       "tool": "scripts/search.py \"<subject> <trade>\" --candidates"
     },
     {
       "id": "comps",
       "name": "Visual comps",
-      "reads": ["v2/20-direction-lab.md"],
-      "produces": ["directions/a|b|c/index.html"],
+      "reads": [
+        "v2/20-direction-lab.md"
+      ],
+      "produces": [
+        "directions/a|b|c/index.html"
+      ],
       "gate": "scripts/direction-check.mjs directions/",
       "note": "Rendered pages using real copy. 15 to 20 minutes each: a comp that takes an hour is a page, and building a page before the direction is chosen is what this step exists to prevent."
     },
     {
       "id": "choose",
       "name": "Reasoned choice and rejections",
-      "reads": ["v2/20-direction-lab.md"],
-      "produces": ["DIRECTION.md"],
+      "reads": [
+        "v2/20-direction-lab.md"
+      ],
+      "produces": [
+        "DIRECTION.md"
+      ],
       "gate": "scripts/direction-history.mjs check DIRECTION.md <url> --project <name>",
       "note": "Scores, the winner, the signature-selector, and both rejections with a specific reason each."
     },
     {
       "id": "contract",
       "name": "Design-system contract",
-      "reads": ["v2/30-contract.md"],
-      "produces": ["DESIGN-SYSTEM.md"],
+      "reads": [
+        "v2/30-contract.md"
+      ],
+      "produces": [
+        "DESIGN-SYSTEM.md"
+      ],
       "gate": null,
       "note": "Written FROM the winning comp — its ground, its type, its rhythm — not the comp adjusted to fit a contract that already existed."
     },
     {
       "id": "interactions",
       "name": "Interaction contract",
-      "reads": ["v2/40-interaction.md"],
-      "produces": ["INTERACTIONS.md"],
+      "reads": [
+        "v2/40-interaction.md"
+      ],
+      "produces": [
+        "INTERACTIONS.md"
+      ],
       "gate": null,
       "note": "Primary actions with observable outcomes, states and how each is reached, keyboard and focus. A state with no way in is deleted or wired."
     },
     {
       "id": "structure",
       "name": "Structure before style",
-      "reads": ["v2/modes/<mode>.md"],
+      "reads": [
+        "v2/modes/<mode>.md"
+      ],
       "produces": [],
       "gate": null
     },
     {
       "id": "implement",
       "name": "Stack-specific implementation",
-      "reads": ["blocks/README.md", "data/stacks/<stack>.csv"],
-      "produces": ["the site"],
+      "reads": [
+        "blocks/README.md",
+        "data/stacks/<stack>.csv"
+      ],
+      "produces": [
+        "the site"
+      ],
       "gate": "scripts/token-drift.mjs \"<pages>\" --contract DESIGN-SYSTEM.md",
       "note": "Blocks supply structure, semantics, states and responsive behaviour — never the look. Where a stack is detected in `inspect`, its adapter notes are read here and nowhere else."
     },
     {
       "id": "journeys",
       "name": "Journeys",
-      "reads": ["v2/40-interaction.md"],
-      "produces": ["journeys/*.spec.mjs"],
+      "reads": [
+        "v2/40-interaction.md"
+      ],
+      "produces": [
+        "journeys/*.spec.mjs"
+      ],
       "gate": "scripts/journey.mjs journeys/ --base <url>"
     },
     {
       "id": "verify",
       "name": "Technical verify",
       "reads": [],
-      "produces": [".sitesmith/shots/"],
+      "produces": [
+        ".sitesmith/shots/"
+      ],
       "gate": "scripts/verify.mjs <url> --out .sitesmith/shots"
     },
     {
@@ -148,22 +275,30 @@
     {
       "id": "production",
       "name": "Production gate",
-      "reads": ["v2/25-assets.md"],
+      "reads": [
+        "v2/25-assets.md"
+      ],
       "produces": [],
       "gate": "scripts/production-gate.mjs <url> --manifest ASSET-MANIFEST.md --mode <M|E|P> --production"
     },
     {
       "id": "critique",
       "name": "Visual critique",
-      "reads": ["v2/50-critique.md"],
-      "produces": ["CRITIQUE.md"],
+      "reads": [
+        "v2/50-critique.md"
+      ],
+      "produces": [
+        "CRITIQUE.md"
+      ],
       "gate": "scripts/critique-gate.mjs <dir>",
       "note": "On screenshots, blind, and only once the technical gate is green: a broken layout cannot be assessed for art direction."
     },
     {
       "id": "targeted-polish",
       "name": "Targeted polish",
-      "reads": ["v2/50-critique.md"],
+      "reads": [
+        "v2/50-critique.md"
+      ],
       "produces": [],
       "gate": null,
       "note": "One round, driven by the criticisms the review actually made. Not a second design pass."
@@ -171,8 +306,12 @@
     {
       "id": "report",
       "name": "Production report",
-      "reads": ["v2/00-done.md"],
-      "produces": ["PRODUCTION-REPORT.md"],
+      "reads": [
+        "v2/00-done.md"
+      ],
+      "produces": [
+        "PRODUCTION-REPORT.md"
+      ],
       "gate": null,
       "note": "All fourteen of the done list, what changed, what could not be done, and every gate's verdict. The honest record, including failures."
     }
