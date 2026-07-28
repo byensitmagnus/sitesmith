@@ -38,9 +38,26 @@ const PLACEHOLDER_TEXT = [
   /\bdummy (?:text|content|data)\b/i,
   /\bnot included in this\b/i,
   /\bis not real\b/i,
-  /\bexample\.com\b/i,
   /\bunlock your potential\b/i,
 ];
+
+/* Reserved and example identifiers. A page carrying one of these is not finished, whatever
+   else is true of it: the address, the number or the domain is a stand-in that survived. */
+const DUMMY_IDENTIFIERS = [
+  [/\bexample\.(com|org|net)\b/i, 'a reserved example domain'],
+  [/\b(your|company|yourdomain)\.(com|co\.uk)\b/i, 'a stand-in domain'],
+  [/\b[\w.+-]+@(example|test|domain|email|yourcompany)\.[a-z.]{2,}/i, 'a stand-in email address'],
+  [/\b555[-\s]?\d{3}[-\s]?\d{4}\b/, 'a North American 555 fictional telephone number'],
+  [/\b123 (Main|High) (St|Street|Road)\b/i, 'a stand-in street address'],
+  [/\b(01234|12345)\s?567\s?89\d\b/, 'a stand-in telephone number'],
+  [/\b\+1 \(555\)/, 'a 555 telephone number'],
+  [/\bAnytown\b/i, 'a stand-in place name'],
+];
+
+/* Mode M and E cannot ship without something to look at. Mode P usually should not have one.
+   The gate only enforces the first half: a marketing or commerce page whose only asset is
+   its own logo has no visual argument, which is the legacy set's central failure. */
+const MODES = { M: 'marketing', E: 'e-commerce', P: 'product UI' };
 
 /* What a visitor actually reads. Three things are deliberately excluded:
    an input's placeholder attribute, which is a real UI affordance; the contents of <style>
@@ -71,9 +88,15 @@ const args = process.argv.slice(2);
 const production = args.includes('--production');
 const manifestIdx = args.indexOf('--manifest');
 const manifestPath = manifestIdx >= 0 ? args[manifestIdx + 1] : 'ASSET-MANIFEST.md';
-// The manifest's own path looks like a positional argument. Left in, the gate scans the
-// manifest as though it were a page and reports it for having no favicon.
-const patterns = args.filter((a, i) => !a.startsWith('--') && i !== manifestIdx + 1);
+const modeIdx = args.indexOf('--mode');
+const mode = modeIdx >= 0 ? String(args[modeIdx + 1] ?? '').toUpperCase() : null;
+if (mode && !MODES[mode]) { console.error(`--mode must be one of ${Object.keys(MODES).join(', ')}`); process.exit(2); }
+// A flag's value looks like a positional argument. Left in, the gate scans the manifest as
+// though it were a page and reports it for having no favicon. The `idx < 0` guards matter:
+// indexOf returns -1 when the flag is absent, so an unguarded `i !== idx + 1` silently
+// swallows argument 0 — which is the only positional argument in the common case.
+const isFlagValue = (i) => (manifestIdx >= 0 && i === manifestIdx + 1) || (modeIdx >= 0 && i === modeIdx + 1);
+const patterns = args.filter((a, i) => !a.startsWith('--') && !isFlagValue(i));
 
 if (!patterns.length) {
   console.error('usage: production-gate.mjs "<html glob or directory>" [--manifest ASSET-MANIFEST.md] [--production]');
@@ -135,6 +158,17 @@ function checkPlaceholders(file, html) {
   }
 }
 
+function checkDummyIdentifiers(file, html) {
+  const text = visibleText(html);
+  for (const [re, what] of DUMMY_IDENTIFIERS) {
+    const m = text.match(re);
+    if (m) {
+      add('block', file, `${what} is still on the page`,
+        `"${text.slice(Math.max(0, text.indexOf(m[0]) - 40), text.indexOf(m[0]) + m[0].length + 40).replace(/\s+/g, ' ').trim()}"`);
+    }
+  }
+}
+
 function checkEmptyBrandMark(file, html) {
   // An element inside a header/brand link with no text and no child image is a coloured box
   // standing in for an identity. Three legacy pages shipped exactly this.
@@ -167,15 +201,26 @@ function checkFavicon(file, html) {
   }
 }
 
+/* An inline SVG data URI is markup inside an attribute value. Scanning for elements without
+   removing it counts the favicon as an unmanifested asset on the page, which it is not — the
+   favicon has its own check. */
+const stripDataUris = (s) => s
+  .replace(/(href|src|content)\s*=\s*"data:[^"]*"/gi, '$1="data:"')
+  .replace(/(href|src|content)\s*=\s*'data:[^']*'/gi, "$1='data:'");
+
+function assetElements(html) {
+  const src = stripDataUris(markup(html));
+  return [
+    ...(src.match(/<img\b[^>]*>/gi) ?? []),
+    ...(src.match(/<svg\b[^>]*>/gi) ?? []).filter((t) => !/aria-hidden\s*=\s*["']true["']/i.test(t)),
+  ];
+}
+
 function checkImages(file, html, manifest) {
-  const src = markup(html);
   // Both kinds count. Checking only <img> left a whole category unmanifested, which is
   // exactly what happens when drawings are inlined so that currentColor works — and
   // inlining is the correct technique, so the gate has to follow it.
-  const imgs = src.match(/<img\b[^>]*>/gi) ?? [];
-  const svgs = (src.match(/<svg\b[^>]*>/gi) ?? [])
-    .filter((t) => !/aria-hidden\s*=\s*["']true["']/i.test(t));
-  const assets = [...imgs, ...svgs];
+  const assets = assetElements(html);
   for (const el of assets) {
     const kind = el.startsWith('<img') ? 'an image' : 'an inline svg';
     const id = (el.match(/data-asset=["']([^"']+)["']/) ?? [])[1];
@@ -248,9 +293,37 @@ if (manifest.length && !manifest.some((r) => /logo/i.test(r.id))) {
 let totalImages = 0;
 for (const { label, html } of sources) {
   checkPlaceholders(label, html);
+  checkDummyIdentifiers(label, html);
   checkEmptyBrandMark(label, html);
   checkFavicon(label, html);
   totalImages += checkImages(label, html, manifest);
+}
+
+/* A marketing or commerce page whose only asset is its own logo has no visual argument.
+   That is the legacy set's central failure — a roofing company with no photograph of a roof
+   and a product page whose product is a hatched box — so it is a blocking finding, not a
+   warning, when the mode is declared. */
+if (mode === 'M' || mode === 'E') {
+  const nonLogo = manifest.filter((r) => !/logo|favicon|icon/i.test(r.id));
+  if (!nonLogo.length) {
+    add('block', manifestPath,
+      `a ${MODES[mode]} page with no asset other than its own mark`,
+      'mode ' + mode + ' cannot substitute for imagery; see v2/modes/ and v2/25-assets.md');
+  } else if (!nonLogo.some((r) => r.state === 'ready')) {
+    add('block', manifestPath,
+      `a ${MODES[mode]} page whose only ready asset is its own mark`, '');
+  }
+  const rendered = new Set();
+  for (const { html } of sources) {
+    for (const el of assetElements(html)) {
+      const id = (el.match(/data-asset=["']([^"']+)["']/) ?? [])[1];
+      if (id) rendered.add(id);
+    }
+  }
+  if (![...rendered].some((id) => !/logo|favicon|icon/i.test(id))) {
+    add('block', 'the pages', `nothing but the mark is rendered on a ${MODES[mode]} page`,
+      `rendered: ${[...rendered].join(', ') || 'nothing'}`);
+  }
 }
 
 /* Journeys: a site with none has not been tested for behaviour. */

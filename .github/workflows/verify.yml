@@ -104,6 +104,12 @@ jobs:
 
       # The gallery makes the claims, so it is held to them. This also catches a
       # thumbnail or a benchmark link that was renamed but not updated.
+      - name: every gate against work it must accept and work it must reject
+        working-directory: .
+        run: |
+          cp -r benchmarks/node_modules tests/gates/node_modules
+          node tools/gate-fixtures.mjs
+
       - name: the gallery must pass its own script
         working-directory: benchmarks
         run: node ../skills/sitesmith/scripts/verify.mjs http://localhost:4322/ --out /tmp/gallery

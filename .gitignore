@@ -35,3 +35,6 @@ benchmarks/v2/measurements-*.json
 # Pilot working directories: playwright is installed per pilot so the journeys can run.
 pilots/*/node_modules/
 pilots/*/.sitesmith/
+
+# Fixture working directory: playwright is installed here so the journey fixtures can run.
+tests/gates/node_modules/

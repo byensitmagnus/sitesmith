@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en-GB"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>Painted counter</title>
+<style>*{box-sizing:border-box}
+body{margin:0;background:#111;color:#eee;font:16px/1.5 system-ui,sans-serif;padding:26px}
+label{display:block;font:12px ui-monospace,monospace;letter-spacing:.12em;text-transform:uppercase;
+color:#9aa;margin-bottom:6px}
+input{font:16px ui-monospace,monospace;padding:10px;width:8ch;background:#1b1f22;color:#eee;
+border:2px solid #3a4249;border-radius:2px}
+button{font:600 16px system-ui;padding:11px 18px;background:#f0a92c;color:#171308;border:0;
+border-radius:2px;min-height:44px}
+:focus-visible{outline:3px solid #f0a92c;outline-offset:2px}
+.err{color:#ff8168;font-weight:600;min-height:1.4em}
+.total{font:600 26px ui-monospace,monospace}
+</style></head>
+<body><h1>Cut to length</h1>
+<label for="len">Length, metres</label>
+<input id="len" type="number" value="24" aria-describedby="err">
+<p class="err" id="err" role="alert"></p>
+<p>Line total <span class="total" data-total>£101.40</span></p>
+<button type="button" data-add>Add this cut</button>
+<p role="status" data-status></p></body></html>

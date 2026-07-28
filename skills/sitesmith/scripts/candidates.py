@@ -153,25 +153,40 @@ def contrasting_candidates(query, domain=None, pool=25, k=3, project=None):
                 return h
         return None
 
-    seed = next((i for i, _ in ranked if not _repeats_history(lbl[i])), ranked[0][0])
+    # A family repeat is excluded rather than merely penalised: penalising kept the first
+    # seat clear but still let a renamed variant take second or third, and recording
+    # "Flat Design" only to be handed "Flat Design Mobile" is not anti-repeat.
+    #
+    # Where the data genuinely has too few fresh rows — some queries match four rows in
+    # total — the honest answer is to fill the remaining seats with repeats and say so,
+    # not to invent a third direction. The first seat is never a repeat while any fresh
+    # row exists, because that is the one the lab is most likely to build from.
+    fresh = [i for i, _ in ranked if not _repeats_history(lbl[i])]
+    stale = [i for i, _ in ranked if _repeats_history(lbl[i])]
+    exhausted = len(fresh) < k
+    candidate_pool = fresh + (stale if exhausted else [])
+
+    seed = candidate_pool[0] if candidate_pool else ranked[0][0]
     if seed != ranked[0][0]:
         for i, _ in ranked:
             if i == seed:
                 break
             prev = _repeats_history(lbl[i])
-            rejected.append({
-                "label": lbl[i],
-                "reason": f"scored {norm[i]:.2f}, but repeats “{prev}” from an earlier direction "
-                          f"in this project",
-            })
-    chosen.append({"idx": seed, "why": "strongest match for the query", "score": norm[seed]})
+            if prev:
+                rejected.append({
+                    "label": lbl[i],
+                    "reason": f"scored {norm[i]:.2f}, but repeats “{prev}” from an earlier "
+                              f"direction in this project",
+                })
+    chosen.append({"idx": seed, "why": "strongest match for the query", "score": norm[seed],
+                   "repeat_of": _repeats_history(lbl[seed])})
 
     # Then repeatedly take the row that is furthest from everything already chosen, with
     # relevance as a tiebreak. Distance dominates on purpose: the point is not to find the
     # second-best answer, it is to find a different one.
     while len(chosen) < k:
         best, best_val = None, -1.0
-        for i, _ in ranked:
+        for i in candidate_pool:
             if any(c["idx"] == i for c in chosen):
                 continue
             far = min(_distance(toks[i], toks[c["idx"]], lbl[i], lbl[c["idx"]]) for c in chosen)
@@ -181,12 +196,31 @@ def contrasting_candidates(query, domain=None, pool=25, k=3, project=None):
                 best, best_val, best_far = i, value, far
         if best is None:
             break
+        prev = _repeats_history(lbl[best])
         chosen.append({
             "idx": best,
-            "why": f"furthest from the others already chosen ({best_far:.2f} apart)",
+            "why": (f"furthest from the others already chosen ({best_far:.2f} apart)" +
+                    (f" — and a repeat of “{prev}”, taken only because the data has no third "
+                     f"fresh answer for this query" if prev else "")),
             "score": norm[best],
             "distance": best_far,
+            "repeat_of": prev,
         })
+
+    # Anything excluded for repeating an earlier winner, said out loud rather than silently
+    # dropped, so the reader can see what the anti-repeat rule cost them.
+    for i, _ in ranked:
+        if any(c["idx"] == i for c in chosen) or not _repeats_history(lbl[i]):
+            continue
+        if any(x["label"] == lbl[i] for x in rejected):
+            continue
+        rejected.append({
+            "label": lbl[i],
+            "reason": f"scored {norm[i]:.2f}, but repeats “{_repeats_history(lbl[i])}” from an "
+                      f"earlier direction in this project",
+        })
+        if len(rejected) >= 6:
+            break
 
     # Everything that scored well and was dropped for being too close to a chosen row. This
     # is the honest part: it says what the search would have handed over by default.
@@ -209,7 +243,10 @@ def contrasting_candidates(query, domain=None, pool=25, k=3, project=None):
          for n, a in enumerate(chosen) for b in chosen[n + 1:]),
         default=0.0,
     )
-    if top_score >= 2.0 and separation >= 0.6:
+    if exhausted:
+        confidence, because = "low", ("every strong match repeats an earlier direction in this "
+                                      "project, so these are repeats and are marked as such")
+    elif top_score >= 2.0 and separation >= 0.6:
         confidence, because = "high", "the query matched strongly and the three are far apart"
     elif separation < 0.4:
         confidence, because = "low", ("the data has no genuinely different answers for this query — "
@@ -226,11 +263,13 @@ def contrasting_candidates(query, domain=None, pool=25, k=3, project=None):
         "confidence": confidence,
         "confidence_because": because,
         "separation": round(separation, 2),
-        "repeats": sorted(history & {_label(data[c["idx"]]) for c in chosen}),
+        "repeats": sorted({lbl[c["idx"]] for c in chosen if _repeats_history(lbl[c["idx"]])}),
+        "pool_exhausted": exhausted,
         "candidates": [{
             "label": _label(data[c["idx"]]),
             "why": c["why"],
             "relevance": round(c["score"], 2),
+            "repeat_of": c.get("repeat_of"),
             "row": {k2: v for k2, v in data[c["idx"]].items()
                     if k2 in config["output_cols"] and str(v).strip()},
         } for c in chosen],

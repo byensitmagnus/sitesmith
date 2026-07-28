@@ -1,0 +1,174 @@
+#!/usr/bin/env node
+/**
+ * The visual critique gate, enforced. Original work, MIT.
+ *
+ *   node scripts/critique-gate.mjs <dir>
+ *
+ * <dir> holds one `CRITIQUE-<reviewer>.md` per reviewer and one `key.json`. The rules are in
+ * v2/50-critique.md; this is the part of them a script can hold.
+ *
+ * It exists because a blind review that is only described is a blind review that will not
+ * happen. The three things most likely to go wrong are: one reviewer instead of two, the key
+ * opened before the reviews were locked, and a good average hiding the one criticism that
+ * matters. All three fail here.
+ *
+ * A review file:
+ *
+ *     ---
+ *     reviewer: A
+ *     locked: 2026-07-28T09:12:00Z
+ *     sha256: <hash of the body below, excluding this frontmatter>
+ *     ---
+ *     primary-criticism: The price is the smallest figure on a page about price.
+ *     direction: 8
+ *     specificity: 9
+ *     type: 7
+ *     colour: 8
+ *     assets: 8
+ *     hierarchy: 7
+ *     production-readiness: 8
+ *
+ * key.json:  { "opened": "<ISO timestamp or null>", "labels": { "L1": "…" } }
+ */
+
+import { readFile, readdir } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
+import { join } from 'node:path';
+
+export const CRITERIA = ['direction', 'specificity', 'type', 'colour', 'assets',
+                         'hierarchy', 'production-readiness'];
+export const THRESHOLD = 8;      // median production-readiness must reach this
+export const FLOOR = 4;          // no criterion may score below this from either reviewer
+
+/** The failure mode the whole v2.1 layer exists to prevent. Matched against the reviewer's
+ *  one-sentence answer to "what is the main thing wrong with this page". */
+export const GENERIC_TELLS = [
+  /\bgeneric\b/i, /\bAI[- ]?(generated|template|slop)\b/i, /\btemplate\b/i,
+  /\bcould be any (company|business|brand)\b/i, /\binterchangeable\b/i,
+  /\bboilerplate\b/i, /\boff[- ]the[- ]shelf\b/i, /\blooks like every other\b/i,
+];
+
+export const isGenericCriticism = (s) => GENERIC_TELLS.some((re) => re.test(String(s)));
+
+export const median = (xs) => {
+  const a = [...xs].sort((x, y) => x - y);
+  return a.length % 2 ? a[(a.length - 1) / 2] : (a[a.length / 2 - 1] + a[a.length / 2]) / 2;
+};
+
+/** Split frontmatter from body, and hash the body exactly as the reviewer would have. */
+export function parseReview(text) {
+  const m = text.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n([\s\S]*)$/);
+  if (!m) return { error: 'no frontmatter' };
+  const meta = {};
+  for (const line of m[1].split('\n')) {
+    const kv = line.match(/^\s*([\w-]+)\s*:\s*(.*?)\s*$/);
+    if (kv) meta[kv[1]] = kv[2];
+  }
+  const body = m[2];
+  const scores = {};
+  let primary = null;
+  for (const line of body.split('\n')) {
+    const kv = line.match(/^\s*([\w-]+)\s*:\s*(.*?)\s*$/);
+    if (!kv) continue;
+    if (kv[1] === 'primary-criticism') primary = kv[2];
+    else if (CRITERIA.includes(kv[1])) scores[kv[1]] = Number(kv[2]);
+  }
+  return { meta, body, scores, primary,
+           bodyHash: createHash('sha256').update(body.trim()).digest('hex') };
+}
+
+export function judge({ reviews, key }) {
+  const problems = [];
+
+  if (reviews.length < 2) {
+    problems.push(`a blind review needs two independent reviewers; found ${reviews.length}. ` +
+      'One reviewer is an opinion, and a reviewer who knows which page is which finds reasons.');
+  }
+
+  const names = new Set(reviews.map((r) => r.meta?.reviewer));
+  if (reviews.length >= 2 && names.size < reviews.length) {
+    problems.push('two review files carry the same reviewer name, so they are not independent');
+  }
+
+  for (const r of reviews) {
+    const who = r.meta?.reviewer ?? r.file;
+    if (r.error) { problems.push(`${r.file}: ${r.error}`); continue; }
+    if (!r.meta.locked) problems.push(`${who} is not locked: no locked timestamp`);
+    if (!r.meta.sha256) problems.push(`${who} carries no sha256, so it cannot be shown unchanged`);
+    else if (r.meta.sha256 !== r.bodyHash) {
+      problems.push(`${who} was edited after locking: recorded ${r.meta.sha256.slice(0, 12)}, ` +
+        `body hashes to ${r.bodyHash.slice(0, 12)}`);
+    }
+    const missing = CRITERIA.filter((c) => !Number.isFinite(r.scores[c]));
+    if (missing.length) problems.push(`${who} did not score: ${missing.join(', ')}`);
+    if (!r.primary) problems.push(`${who} gave no primary criticism`);
+    for (const [c, v] of Object.entries(r.scores)) {
+      if (v < FLOOR) problems.push(`${who} scored ${c} ${v}, below the floor of ${FLOOR}`);
+    }
+  }
+
+  /* The key must not have been opened before every review was locked. */
+  if (!key || key.opened === undefined) {
+    problems.push('key.json is missing or has no `opened` field, so the order cannot be shown');
+  } else if (key.opened !== null) {
+    const opened = Date.parse(key.opened);
+    for (const r of reviews) {
+      const locked = Date.parse(r.meta?.locked ?? '');
+      if (!Number.isFinite(locked)) continue;
+      if (opened < locked) {
+        problems.push(`the key was opened at ${key.opened}, before ${r.meta.reviewer} locked ` +
+          `at ${r.meta.locked}. That reviewer knew which page they were scoring.`);
+      }
+    }
+  }
+
+  /* The primary-criticism test, which overrides the numbers. */
+  for (const r of reviews) {
+    if (r.primary && isGenericCriticism(r.primary)) {
+      problems.push(`${r.meta?.reviewer ?? r.file} names the generic-template failure as the ` +
+        `main problem: "${r.primary}". That fails regardless of the scores.`);
+    }
+  }
+
+  const readiness = reviews.map((r) => r.scores?.['production-readiness'])
+    .filter((n) => Number.isFinite(n));
+  const med = readiness.length ? median(readiness) : null;
+  if (med === null) problems.push('no production-readiness scores to take a median of');
+  else if (med < THRESHOLD) {
+    problems.push(`median production-readiness is ${med}, under the threshold of ${THRESHOLD}`);
+  }
+
+  const spread = readiness.length >= 2 ? Math.max(...readiness) - Math.min(...readiness) : 0;
+  const notes = spread >= 3
+    ? [`the reviewers disagree by ${spread} points on production-readiness. That is not ` +
+       'averaged away: the median stands and the disagreement is the finding.']
+    : [];
+
+  return { pass: problems.length === 0, problems, median: med, spread, notes,
+           reviewers: reviews.length };
+}
+
+/* ── run ───────────────────────────────────────────────────────────────── */
+
+if (import.meta.url === `file://${process.argv[1].replace(/\\/g, '/')}` ||
+    process.argv[1]?.endsWith('critique-gate.mjs')) {
+  const dir = process.argv[2];
+  if (!dir) { console.error('usage: critique-gate.mjs <dir with CRITIQUE-*.md and key.json>'); process.exit(2); }
+
+  const entries = await readdir(dir).catch(() => {
+    console.error(`no such directory: ${dir}`); process.exit(2);
+  });
+  const reviews = [];
+  for (const f of entries.filter((n) => /^CRITIQUE-.+\.md$/.test(n)).sort()) {
+    reviews.push({ file: f, ...parseReview(await readFile(join(dir, f), 'utf8')) });
+  }
+  const key = await readFile(join(dir, 'key.json'), 'utf8').then(JSON.parse, () => null);
+
+  const v = judge({ reviews, key });
+  console.log(`\n  critique gate — ${v.reviewers} reviewer(s)` +
+    (v.median !== null ? `, median production-readiness ${v.median}` : '') + '\n');
+  for (const p of v.problems) console.log(`  FAIL  ${p}`);
+  for (const n of v.notes) console.log(`  note  ${n}`);
+  console.log(`\n  ${v.pass ? 'PASS — the review stands' : `FAIL — ${v.problems.length} problem(s)`}\n`);
+  process.exit(v.pass ? 0 : 1);
+}
