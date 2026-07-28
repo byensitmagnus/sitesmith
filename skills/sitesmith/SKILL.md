@@ -10,8 +10,14 @@ A website is not done when the code compiles, and it is not done when the checks
 checks are a floor. It is done when it has the fourteen things in
 [v2/00-done.md](v2/00-done.md), and has been rendered, looked at, measured and corrected.
 
-**Read [v2/](v2/README.md). That is the skill.** `references/` is the upstream material this
-descends from, kept for attribution and not read during a build.
+**Read [v2/](v2/README.md). That is the skill.** The pipeline it follows is declared once, in
+[PIPELINE.json](PIPELINE.json) — which is also what the command vocabulary and the provider
+packages are generated from. `references/` is the upstream material this descends from, kept
+for attribution and not read during a build.
+
+**Progressive disclosure is mandatory.** What is always in context is this file, the sixty
+core rules, and one mode file. Everything else is read at its step and put down again. A
+routine task must never pull the whole rule set or the 1.4 MB of data into context.
 
 ---
 
@@ -57,8 +63,11 @@ vocabulary, materials, colours that are already true, constraints, references an
 anti-references, and what assets actually exist. Research, not design — nothing here picks a
 colour. A direction that could have been reached without this file did not need it.
 
-**4. Start `ASSET-MANIFEST.md`.** [v2/25-assets.md](v2/25-assets.md). Every non-text thing the
-site needs, including the logo and the favicon, each `ready`, `needed` or `substitute`.
+**4. Inventory the brand and the assets.** [v2/15-brand.md](v2/15-brand.md) and
+[v2/25-assets.md](v2/25-assets.md). What the subject already owns — logo, colour with its
+source, type, photography, voice — separated into what is fixed and what is open, before
+anything is invented. Then `ASSET-MANIFEST.md`: every non-text thing the site needs, each
+`ready`, `needed` or `substitute`.
 
 **5. Run the direction lab.** [v2/20-direction-lab.md](v2/20-direction-lab.md). Three comps
 that are *structurally* different, one chosen with reasons, two recorded with the reason they
@@ -103,8 +112,27 @@ Squint. Then the rubric: direction, specificity, type, colour, assets, hierarchy
 production-readiness. If the main criticism is "looks like a generic AI template", it fails
 whatever the scores say.
 
-**13. Walk the done list.** [v2/00-done.md](v2/00-done.md), all fourteen. Report what you
-changed and what you could not.
+**13. Walk the done list and write `PRODUCTION-REPORT.md`.** [v2/00-done.md](v2/00-done.md),
+all fourteen, plus every gate's verdict, what changed, and what could not be done. The honest
+record, failures included.
+
+## 2b. Seven commands
+
+The pipeline above is what happens; these are what you ask for. Declared once in
+[PIPELINE.json](PIPELINE.json).
+
+| Command | Steps | What it produces |
+| --- | --- | --- |
+| `init` | brief, inspect, evidence, brand | `BRIEF.md`, `EVIDENCE.md`, `BRAND.md`, `ASSET-MANIFEST.md` |
+| `shape` | directions, comps, choose, contract, interactions | three comps, `DIRECTION.md`, `DESIGN-SYSTEM.md`, `INTERACTIONS.md` |
+| `build` | structure, implement, journeys | the site and its journeys |
+| `audit` | verify, fidelity, diversity, production | four verdicts |
+| `harden` | journeys, production | the states and assets the audit failed |
+| `polish` | critique, targeted polish | `CRITIQUE.md` and one round of work |
+| `doctor` | — | whether the installation itself is correct |
+
+Seven verbs, fewer than any of the four audited skills. A vocabulary a user cannot hold is a
+vocabulary they do not use.
 
 ## 3. Precedence
 

@@ -95,7 +95,9 @@ if (mode && !MODES[mode]) { console.error(`--mode must be one of ${Object.keys(M
 // though it were a page and reports it for having no favicon. The `idx < 0` guards matter:
 // indexOf returns -1 when the flag is absent, so an unguarded `i !== idx + 1` silently
 // swallows argument 0 — which is the only positional argument in the common case.
-const isFlagValue = (i) => (manifestIdx >= 0 && i === manifestIdx + 1) || (modeIdx >= 0 && i === modeIdx + 1);
+const evIdx = args.indexOf('--evidence');
+const isFlagValue = (i) => (manifestIdx >= 0 && i === manifestIdx + 1) ||
+  (modeIdx >= 0 && i === modeIdx + 1) || (evIdx >= 0 && i === evIdx + 1);
 const patterns = args.filter((a, i) => !a.startsWith('--') && !isFlagValue(i));
 
 if (!patterns.length) {
@@ -216,6 +218,55 @@ function assetElements(html) {
   ];
 }
 
+
+/* Commerce claims that must be traceable. A shop may only state a figure it can point at:
+   an invented price, review count, delivery promise, stock level, warranty or certification
+   is the one failure mode that turns a design exercise into a false statement about a real
+   business. Mode E's prose already forbids it; nothing mechanical checked it until now.
+
+   Each entry is [pattern, what it is]. A match is only a finding when the same claim cannot
+   be found in EVIDENCE.md, or carried on the element as data-source. */
+const COMMERCE_CLAIMS = [
+  [/[£$€]\s?\d[\d,.]*/g, 'a price'],
+  [/\b\d[\d,]*\s*(?:\+\s*)?(?:reviews?|ratings?|customers?|clients?)\b/gi, 'a review or customer count'],
+  [/\b\d(?:\.\d)?\s*(?:out of|\/)\s*5\b/gi, 'a star rating'],
+  [/\b(?:next[- ]day|same[- ]day|24[- ]hour|free)\s+(?:delivery|shipping|dispatch)\b/gi, 'a delivery promise'],
+  [/\bships?\s+(?:today|tomorrow|within\s+\d+)/gi, 'a dispatch promise'],
+  [/\b\d+\s+(?:left|remaining|in stock)\b/gi, 'a stock figure'],
+  [/\b(?:\d+[- ]year|lifetime)\s+(?:guarantee|warranty)\b/gi, 'a warranty'],
+  [/\b(?:ISO|BS EN|EN)\s?\d{3,}[\d:-]*/g, 'a standard or certification'],
+  [/\b(?:CE|UKCA)[- ]marked\b/gi, 'a conformity mark'],
+  [/\bcertified\s+(?:to|by|under)\s+\S+/gi, 'a certification'],
+];
+
+/** Is this claim traceable? Either the evidence pack contains the same string, or the element
+ *  carries a data-source attribute naming where it came from. */
+function claimIsSourced(claim, evidence, html) {
+  if (evidence && evidence.includes(claim)) return true;
+  const normalised = claim.replace(/[\s,]/g, '');
+  if (evidence && evidence.replace(/[\s,]/g, '').includes(normalised)) return true;
+  const near = new RegExp('data-source=["\'][^"\']+["\'][^>]*>[^<]*' +
+    claim.replace(/[.*+?^${}()|[\]\\]/g, '\\function checkImages(file, html, manifest) {'), 'i');
+  return near.test(html);
+}
+
+function checkCommerceClaims(file, html, evidence) {
+  if (mode !== 'E') return;
+  const text = visibleText(html);
+  const seen = new Set();
+  for (const [re, what] of COMMERCE_CLAIMS) {
+    for (const m of text.matchAll(re)) {
+      const claim = m[0].trim();
+      if (seen.has(claim)) continue;
+      seen.add(claim);
+      if (claimIsSourced(claim, evidence, html)) continue;
+      add('block', file, `${what} with no source: "${claim}"`,
+        'a shop may only state a figure it can point at. Put it in EVIDENCE.md, or carry a ' +
+        'data-source on the element, or take it off the page.');
+    }
+  }
+}
+
 function checkImages(file, html, manifest) {
   // Both kinds count. Checking only <img> left a whole category unmanifested, which is
   // exactly what happens when drawings are inlined so that currentColor works — and
@@ -272,6 +323,10 @@ if (urls.length) {
 const files = sources.map((s) => s.label);
 if (!sources.length) { console.error(`no HTML found for ${patterns.join(' ')}`); process.exit(2); }
 
+const evidenceIdx = args.indexOf('--evidence');
+const evidencePath = evidenceIdx >= 0 ? args[evidenceIdx + 1] : 'EVIDENCE.md';
+const evidenceRaw = await readFile(evidencePath, 'utf8').catch(() => null);
+
 const manifestRaw = await readFile(manifestPath, 'utf8').catch(() => null);
 if (manifestRaw === null) {
   add('block', manifestPath, 'no asset manifest', 'every project needs one; see v2/25-assets.md');
@@ -294,9 +349,16 @@ let totalImages = 0;
 for (const { label, html } of sources) {
   checkPlaceholders(label, html);
   checkDummyIdentifiers(label, html);
+  checkCommerceClaims(label, html, evidenceRaw);
   checkEmptyBrandMark(label, html);
   checkFavicon(label, html);
   totalImages += checkImages(label, html, manifest);
+}
+
+if (mode === 'E' && evidenceRaw === null) {
+  add('block', evidencePath, 'a shop with no evidence pack',
+    'mode E checks every price, rating, delivery promise, stock figure, warranty and ' +
+    'certification against EVIDENCE.md. Without it, none of them can be traced.');
 }
 
 /* A marketing or commerce page whose only asset is its own logo has no visual argument.

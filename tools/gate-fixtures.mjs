@@ -125,6 +125,12 @@ expect('production', 'a shop whose only asset is its own mark',
   /no asset other than its own mark|nothing but the mark is rendered/);
 expect('production', 'stand-in identifiers that survived', prod('fail-dummy-identifiers'), 1,
   /example domain|stand-in street address|stand-in place name|555/);
+expect('production', 'invented commerce facts in a shop',
+  prod('fail-invented-commerce-facts', ['--mode', 'E']), 1,
+  /with no source/);
+expect('production', 'a shop with no evidence pack',
+  prod('fail-labelled-placeholder', ['--mode', 'E']), 1,
+  /no evidence pack|placeholder language/);
 
 /* ══ journey ════════════════════════════════════════════════════════════ */
 

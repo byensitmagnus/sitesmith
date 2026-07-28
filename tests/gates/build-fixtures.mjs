@@ -463,4 +463,19 @@ await put('critique/fail-label-names-subject/key.json', keyFile('2026-07-28T09:4
 
 console.log('critique fixtures include the hardened cases');
 
+
+/* Mode E may only state figures it can point at. The evidence pack carries the one price the
+   shop publishes; the negative fixture adds a rating, a customer count, a delivery promise, a
+   stock figure, a warranty and a certification that nothing sources. */
+const SHOP_EVIDENCE = "# EVIDENCE — Halloughton Rope\n\n## 7. Asset reality and figures\n\nPrices are the counter's own, taken from the 2026 trade list:\n\n- Double braid polyester, 12 mm — £4.15 per metre.\n\nNo rating, delivery promise, stock figure, warranty or certification is published, because\nnone has been measured. The counter telephone is 01472 604 118.\n";
+await put('production/pass-complete/EVIDENCE.md', SHOP_EVIDENCE);
+await put('production/fail-invented-commerce-facts/EVIDENCE.md', SHOP_EVIDENCE);
+await put('production/fail-invented-commerce-facts/ASSET-MANIFEST.md', '# manifest\n\n' + MANIFEST_HEAD +
+  row('logo-primary', 'Three strands in a lay') + row('favicon', 'The mark at 32px') +
+  row('sec-double-braid', 'Cross-section, double braid'));
+await put('production/fail-invented-commerce-facts/journeys/x.spec.mjs', 'process.exit(0);\n');
+await put('production/fail-invented-commerce-facts/site/index.html',
+  shop(`<p>Rated 4.8 out of 5 by 1,240 customers. Next-day delivery on every order.
+     Only 3 left in stock. Lifetime guarantee. Certified to ISO 9001.</p>`));
+
 console.log('fixtures written');
