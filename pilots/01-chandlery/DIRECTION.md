@@ -50,6 +50,32 @@ page. The buyer sets a length against the row they are already looking at, and t
 appears in the row's last column. Nothing about A's structure changes; one column gains an
 input.
 
+## The signature, as a thing on the page
+
+- signature-selector: .sec, .bench
+- signature-min-share: 5
+
+Two drawings and one rule: the cross-section is a column of the table, and the bench rule
+runs the full width above it. Both are instruments rather than illustrations — the section is
+what a chandler compares before buying, the rule is what the transaction is settled by. If
+either shrinks back to an icon beside the type, the direction has gone.
+
+## What the revision changed
+
+The catalogue idea was right and under-built: the page measured 2.06 % imagery, which is to
+say it was carried by type and hairlines with a small diagram in the first column.
+
+Two changes, no new direction:
+
+1. **The bench rule.** A boxwood metre rule, graduated, brass end-cap worn, running the full
+   width above the catalogue. Rope is sold by the metre and this is the instrument the whole
+   transaction is settled by — every price below is a price per one of these. It is the
+   materiality the page was missing, at the size the object actually is.
+2. **The cross-sections went from 72px to 112px**, where the lay, the braid and the parallel
+   core are readable rather than merely present.
+
+Together: 7.74 % of the first screen against the 4 % that diagram-led commits to.
+
 ## Axis record
 
 - composition: dense index starting immediately, no hero

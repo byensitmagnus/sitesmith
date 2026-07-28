@@ -21,6 +21,28 @@ from. It is there because a bell genuinely cannot be photographed usefully — f
 you see the underside, from the chamber you see the frame — so the drawing is not a stand-in
 for a photograph, it is the view the trade actually uses.
 
+## What the revision changed
+
+The direction was chosen and then not built. The dark palette sat in the CSS default and the
+light one behind `prefers-color-scheme: light`, and the browser defaults to light — so the
+page a visitor actually got was a limewash editorial page at luminance 0.823, and the drawing
+occupied 4.47 % of the first screen.
+
+Three changes, no new direction:
+
+1. **Dark is now the only scheme.** v2 core D7 permits one controlled theme where the
+   environment justifies it: a bell lives in a tower with one window, and a white line drawing
+   needs a dark ground to read as a plate rather than a diagram. The light block is gone
+   rather than adjusted, because a translation of a design is a second design.
+2. **The column is a fixed 440px track** and the drawing fills it — 17.81 % of the first
+   screen against the 12 % that "object-led" commits to.
+3. **The fill deepened** from .13 to .22 so the section reads as cast metal with mass rather
+   than as a wireframe.
+
+One defect found doing it: the UA stylesheet gives `<figure>` a 40px side margin, so a 440px
+track rendered a 360px drawing and the measurement sat at 11.93 % — just under the threshold,
+and for a reason that had nothing to do with the design.
+
 ## The risk this direction takes, and what holds it back
 
 A is the closest of the three to **anti-reference 2: the dark luxury landing page** — black
@@ -55,6 +77,16 @@ bell, in letters sized to be read from a ringing chamber floor. It is also image
 M, which the mode allows only for an editorial manifesto, and a foundry taking commissions is
 not that. It gives a visitor nothing to check and no way to start. Its lettering discipline
 survives into the built site as the display face.
+
+## The signature, as a thing on the page
+
+- signature-selector: .standing
+- signature-min-share: 12
+
+The standing column is the signature and it is measurable: the half-section holds the left
+edge of the document for its whole length, at a size where the wall thickening into the
+soundbow is legible. If it ever shrinks to a thumbnail beside the type, the direction has
+gone, and `direction-fidelity.mjs` says so.
 
 ## Axis record
 

@@ -478,4 +478,16 @@ await put('production/fail-invented-commerce-facts/site/index.html',
   shop(`<p>Rated 4.8 out of 5 by 1,240 customers. Next-day delivery on every order.
      Only 3 left in stock. Lifetime guarantee. Certified to ISO 9001.</p>`));
 
+/* PASS — a sourced price written where a sentence ends. The price pattern used to take the
+   full stop with the figure, so "£4.15." was looked up in the evidence pack as "£4.15." and
+   never found, and a shop was blocked for stating a price it had sourced. Reproduced on
+   pilot 1 against a real EVIDENCE.md; the fixture is here so it stays fixed. */
+await put('production/pass-sourced-price-ends-sentence/EVIDENCE.md', SHOP_EVIDENCE);
+await put('production/pass-sourced-price-ends-sentence/ASSET-MANIFEST.md', '# manifest\n\n' + MANIFEST_HEAD +
+  row('logo-primary', 'Three strands in a lay') + row('favicon', 'The mark at 32px') +
+  row('sec-double-braid', 'Cross-section, double braid'));
+await put('production/pass-sourced-price-ends-sentence/journeys/x.spec.mjs', 'process.exit(0);\n');
+await put('production/pass-sourced-price-ends-sentence/site/index.html',
+  shop('<p>Double braid polyester in 12 mm is cut from the coil at £4.15.</p>'));
+
 console.log('fixtures written');

@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 54" role="img" aria-labelledby="mr"
+     fill="none" stroke="currentColor">
+  <title id="mr">A boxwood metre rule, graduated in centimetres, as it lies on the cutting bench</title>
+  <!-- Drawn for Trelfall &amp; Son. The whole shop is a length: rope is sold by the metre, cut
+       from the coil while you wait, and the rule on the bench is the instrument the entire
+       transaction is settled by. It runs the width of the catalogue because that is what it
+       does on the bench — every price on the page is a price per one of these. -->
+  <rect x="1" y="14" width="1198" height="26" rx="1" stroke-width="1.5"
+        fill="currentColor" fill-opacity=".07"/>
+  <g stroke-width="1">
+    <!-- centimetre graduations, every 12px; every tenth runs long -->
+    <path d="M13 14v7M25 14v7M37 14v7M49 14v7M61 14v7M73 14v7M85 14v7M97 14v7M109 14v7"/>
+    <path d="M133 14v7M145 14v7M157 14v7M169 14v7M181 14v7M193 14v7M205 14v7M217 14v7M229 14v7"/>
+    <path d="M253 14v7M265 14v7M277 14v7M289 14v7M301 14v7M313 14v7M325 14v7M337 14v7M349 14v7"/>
+    <path d="M373 14v7M385 14v7M397 14v7M409 14v7M421 14v7M433 14v7M445 14v7M457 14v7M469 14v7"/>
+    <path d="M493 14v7M505 14v7M517 14v7M529 14v7M541 14v7M553 14v7M565 14v7M577 14v7M589 14v7"/>
+    <path d="M613 14v7M625 14v7M637 14v7M649 14v7M661 14v7M673 14v7M685 14v7M697 14v7M709 14v7"/>
+    <path d="M733 14v7M745 14v7M757 14v7M769 14v7M781 14v7M793 14v7M805 14v7M817 14v7M829 14v7"/>
+    <path d="M853 14v7M865 14v7M877 14v7M889 14v7M901 14v7M913 14v7M925 14v7M937 14v7M949 14v7"/>
+    <path d="M973 14v7M985 14v7M997 14v7M1009 14v7M1021 14v7M1033 14v7M1045 14v7M1057 14v7M1069 14v7"/>
+    <path d="M1093 14v7M1105 14v7M1117 14v7M1129 14v7M1141 14v7M1153 14v7M1165 14v7M1177 14v7M1189 14v7"/>
+  </g>
+  <g stroke-width="1.6">
+    <path d="M1 14v13M121 14v13M241 14v13M361 14v13M481 14v13M601 14v13M721 14v13M841 14v13M961 14v13M1081 14v13M1199 14v13"/>
+  </g>
+  <g fill="currentColor" stroke="none" font-family="ui-monospace,'SF Mono',monospace"
+     font-size="9" letter-spacing=".08em" opacity=".85">
+    <text x="4" y="51">0</text><text x="116" y="51">10</text><text x="236" y="51">20</text>
+    <text x="356" y="51">30</text><text x="476" y="51">40</text><text x="596" y="51">50</text>
+    <text x="716" y="51">60</text><text x="836" y="51">70</text><text x="956" y="51">80</text>
+    <text x="1076" y="51">90</text><text x="1180" y="51">100</text>
+  </g>
+  <!-- the brass end-cap, worn -->
+  <rect x="1" y="14" width="7" height="26" fill="currentColor" fill-opacity=".3" stroke-width="1.5"/>
+</svg>

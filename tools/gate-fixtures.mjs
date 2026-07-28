@@ -131,6 +131,8 @@ expect('production', 'invented commerce facts in a shop',
 expect('production', 'a shop with no evidence pack',
   prod('fail-labelled-placeholder', ['--mode', 'E']), 1,
   /no evidence pack|placeholder language/);
+expect('production', 'a sourced price that ends a sentence',
+  prod('pass-sourced-price-ends-sentence', ['--mode', 'E']), 0);
 
 /* ══ journey ════════════════════════════════════════════════════════════ */
 

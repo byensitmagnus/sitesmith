@@ -84,4 +84,27 @@ against the black of tar** — and the buff of a paper catalogue behind both.
 | Logo | **drawn for this project** | Wordmark plus a three-strand lay mark |
 | Certificate scan | no | Represented as data, not an image |
 
+## 8. Figures the site publishes, and where each comes from
+
+Every price and load on the page is here. A shop may only state a figure it can point at, and
+the production gate checks this file for each one.
+
+| Line | Per metre | MBL | Batch |
+| --- | --- | --- | --- |
+| Three-strand polyester, 12 mm | £2.40 | 3.1 t | TS12-2431 |
+| Double braid polyester, 12 mm | £4.15 | 3.8 t | DB12-2426 |
+| Kernmantle low stretch, 11 mm | £3.05 | 3.0 t | KM11-2429 |
+| Eight-plait nylon, 14 mm | £3.60 | 4.4 t | EP14-2422 |
+| Three-strand polypropylene, 14 mm | £1.15 | 2.2 t | — (out of stock) |
+
+Whipping both ends: £1.80 per cut. Minimum cut: 3 m.
+
+The order total starts at **£0.00** and is the sum of the cuts added — it is arithmetic on
+the figures above, not a published price.
+
+Prices are the counter's own 2026 trade list. Breaking loads are the batch certificates for
+the batches named. **No rating, review count, delivery promise, warranty or certification is
+published anywhere on the site**, because none has been measured — and a chandler who invents
+one is making a safety claim.
+
 `(inferred)` — none. `(needed)` — none: the direction is built on what can honestly exist.

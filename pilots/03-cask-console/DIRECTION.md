@@ -43,6 +43,36 @@ at once.
 Its scoping idea was right and is grafted in: booking a dray in narrows the board to that
 pub, because that is the moment when one account is the whole job.
 
+## The signature, as a thing on the page
+
+- signature-selector: .state
+- signature-min-share: 3
+
+The state chip is the signature and it is the one thing that has to survive four feet, a
+cellar light and a scratched screen. It is a filled block carrying a word, repeated once per
+consignment, with the same state echoed as a bar on the row's left edge so the board is
+scannable before any word is read. If it ever shrinks back to a bordered label in the fifth
+column, the instrument has become a table again.
+
+## What the revision changed
+
+The direction was chosen and then not built. The cellar palette sat in the CSS default and
+the light one behind `prefers-color-scheme: light`, so the screen a viewer got was a pale
+office dashboard at luminance 0.853, with the silhouettes at 0.55 % of the first screen and
+the state a small bordered word.
+
+Four changes, no new direction:
+
+1. **Dark is the only scheme.** A wall-mounted screen in a cellar is a controlled
+   environment, which is the case v2 core D7 permits one theme for. The light block is gone,
+   not adjusted.
+2. **Status dominates.** The chip is a filled block at 17px, 800 weight, minimum eleven
+   characters wide, and every row carries a 6px bar of the same state on its left edge.
+   Colour is still never the only signal — the word is inside the block.
+3. **The figures are instrument-sized.** Cask counts went from 26px to 40px.
+4. **The silhouette is sized for the distance it is read at** — 128px, taking assets from
+   0.55 % to 5.08 % against the 4 % diagram-led commits to.
+
 ## Axis record
 
 - composition: a single table at read-across-the-room scale, no chrome above it

@@ -46,3 +46,60 @@ with genuinely different evidence packs arrived at one look — which is the sam
 legacy audit, reached a second time by a different route.
 
 The gates that would have caught it did not exist until now.
+
+---
+
+# After one revision, measured the same way
+
+Everything above is the before-baseline and is not edited. Below is the same measurement run
+against the same three pilots after a single revision round. No gate was changed to let a
+pilot through; the one gate edit in this round is a fix to a gate that was **wrongly blocking**
+a pilot, and it is covered by a fixture that fails without it.
+
+| | ground | luminance | display face | assets, share of first screen | mono caps | hairlines |
+| --- | --- | --- | --- | --- | --- | --- |
+| 01 chandlery | `rgb(242,236,224)` | 0.842 | Helvetica Neue Condensed | **7.74 %** | 21 | 88 |
+| 02 foundry | `rgb(26,21,18)` | **0.008** | Optima | **17.81 %** | 0 | 59 |
+| 03 cask console | `rgb(11,19,27)` | **0.006** | ui-sans-serif | **5.08 %** | 34 | 8 |
+
+The luminance band went from 0.031 across three off-whites to 0.836 across one paper ground
+and two different blacks — a warm one and a cool one, because a foundry is sooty and a cellar
+is stainless steel under fluorescent light. Imagery went from 0.55–4.47 % to 5.08–17.81 %.
+
+`direction-fidelity.mjs`, the gate that failed all three, now passes all three:
+
+```
+01 chandlery      PASS   ground light 0.842 · condensed · assets 7.74 % ≥ 4 %  · signature .sec, .bench 9.91 %
+02 foundry        PASS   ground dark  0.008 · serif     · assets 17.81 % ≥ 12 % · signature .standing 30.56 %
+03 cask console   PASS   ground dark  0.006 · sans      · assets 5.08 % ≥ 4 %  · signature .state 3.21 %
+```
+
+`portfolio-diversity.mjs` passes with no exception, at the shared-device limit rather than
+under it: chandlery and cask still share mono caps and tabular figures; chandlery and foundry
+still share hairlines and flat surfaces. Two per pair is the limit and no pair exceeds it.
+
+## What each pilot actually changed
+
+**01 chandlery** kept its direction and gained the object the trade is settled by. A graduated
+boxwood bench rule now runs the full width above the catalogue, and the construction
+cross-sections went from 72 px to 112 px — the size at which a lay is distinguishable from a
+braid, which *is* the purchase decision in that trade. Nothing about the structure moved.
+
+**02 foundry** was already the right idea in the wrong scheme. The light block was deleted
+rather than reordered, so the near-black it declared is now the only ground it has. The bell
+profile fills a 440 px column at full height (30.56 % of the first screen), the section drawing
+carries more fill, and the mono eyebrows became cast inscription capitals — which is what the
+evidence pack recorded in the first place and also removes a device all three shared.
+
+**03 cask console** became an instrument instead of a page about one. State is a filled block
+with a left-edge bar per row, the filters and the booking panel sit on real elevation, the
+cask silhouettes are 128 px, and the ground is a cool slate that puts it in a different family
+from the foundry for the reason the two rooms are different.
+
+## The gate fix, stated plainly
+
+The commerce check reads each published price and looks it up in `EVIDENCE.md`. Its price
+pattern took the sentence-ending full stop with the figure, so a price written at the end of a
+sentence was looked up as `£4.15.` and never found. A shop was blocked for stating a price it
+had sourced. One line; fixture `production/pass-sourced-price-ends-sentence` fails without it.
+

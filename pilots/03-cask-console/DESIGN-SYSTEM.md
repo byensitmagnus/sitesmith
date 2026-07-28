@@ -6,12 +6,25 @@
 
 ## 1. Ground and colour
 
-Near-black with one amber. The amber is the only warm thing on the screen and it marks the
+**One theme, and it is dark.** v2 core D7 permits a single controlled theme where the
+environment is controlled and the contract says why. This screen is wall-mounted in a cellar
+under fixed lighting; there is no daylight condition to design a second palette for. The
+light scheme was removed rather than adjusted, because a translation of a design is a second
+design — and while it existed, the browser's default served it to everyone.
+
+**A cool slate, not a near-black.** The cellar is stainless steel under fluorescent light,
+and the ground says so. It is deliberately a different kind of dark from the foundry's warm,
+sooty black — two dark screens that measure the same are one screen twice, whatever their
+subjects.
+
+One amber against it. The amber is the only warm thing on the screen and it marks the
 one thing the cellar is tracking — stock that is still out. Red is reserved for late, and
 appears nowhere else, which matches the one colour that already means something in this
 world: a condemned cask tag.
 
-**Colour is never the whole signal.** Every state is also a word in a bordered chip. That is
+**Colour is never the whole signal.** Every state is a filled block carrying a word, echoed
+as a bar on the row's left edge so the board is scannable at four feet before any word is
+read. That is
 anti-reference 2 and it is a hard rule here, not a preference.
 
 ## 2. Type
@@ -37,7 +50,10 @@ the journey asserts it.
 `--radius-edge: 3px` — just enough to read as a control rather than a table cell, and not
 enough to look like a card. There are no cards on this screen.
 
-`--elev-0: none`. Separation is a rule. A shadow on a dark ground at four feet is invisible.
+**Elevation is real here, and only here.** An instrument has raised controls: the filter
+buttons and the booking panel sit on `--elev-1`, a hard 2px lip over a soft drop. That is
+what a physical control surface does, and a flat rectangle at four feet does not read as
+something you press. Everything that is *not* a control stays flat and separated by a rule.
 
 Motion: a border colour on hover, 100ms. Nothing else moves. A screen in a cellar with a dray
 waiting is not the place for a transition, and hover is not available on a wall mount anyway.
@@ -74,17 +90,18 @@ duty rules are not.
 
 ```css contract
 :root{
-  --bg:#0e1012; --surface:#15181b; --surface-2:#1c2126; --surface-3:#242b31;
+  --bg:#0b131b; --surface:#111d27; --surface-2:#17262f; --surface-3:#1f313c;
   --ink:#eceff1; --ink-2:#a4adb5; --ink-3:#8a939b;
-  --line:#262b30; --line-2:#39424a;
+  --line:#1d3040; --line-2:#2f4d63;
   --accent:#f0a92c; --on-accent:#171308; --accent-soft:#33270f;
-  --bad:#ff8168; --bad-soft:#331812; --ok:#7fd18d; --ok-soft:#12291a; --focus:#f0a92c;
+  --bad:#ff8168; --bad-soft:#331812; --on-bad:#2a0f0a;
+  --ok:#7fd18d; --ok-soft:#12291a; --on-ok:#0c2413; --focus:#f0a92c;
 
   --font-body:ui-sans-serif,system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
   --font-display:ui-sans-serif,system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
   --font-mono:ui-monospace,'SF Mono','Cascadia Mono','Segoe UI Mono',monospace;
   --text-micro:.75rem; --text-small:.9375rem; --text-body:1.125rem;
-  --text-figure:1.625rem; --text-h2:1.25rem;
+  --text-figure:2.5rem; --text-state:1.0625rem; --text-h2:1.25rem;
   --leading-body:1.4; --measure:62ch;
 
   --space-1:4px; --space-2:8px; --space-3:12px; --space-4:16px;
@@ -93,14 +110,7 @@ duty rules are not.
 
   --radius-edge:3px;
   --elev-0:none;
+  --elev-1:0 2px 0 var(--line-2), 0 6px 18px rgb(0 0 0 / .45);
   --motion-fast:100ms; --ease:cubic-bezier(.2,.6,.2,1);
-}
-@media (prefers-color-scheme:light){
-  :root{
-    --bg:#eceef0; --surface:#fbfbfc; --surface-2:#f1f3f5; --surface-3:#e4e8ea;
-    --ink:#12161a; --ink-2:#4a525a; --ink-3:#586069; --line:#d2d7db; --line-2:#b4bcc3;
-    --accent:#7a4d00; --on-accent:#ffffff; --accent-soft:#f7ecd6;
-    --bad:#8f2711; --bad-soft:#f7e2dd; --ok:#1f5e2c; --ok-soft:#e0efe3; --focus:#12161a;
-  }
 }
 ```

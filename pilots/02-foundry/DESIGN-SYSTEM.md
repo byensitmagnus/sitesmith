@@ -74,7 +74,7 @@ real is not a disclaimer, it is the same argument.
 
 ```css contract
 :root{
-  --ground:#131110; --ground-2:#1b1815; --ground-3:#241f1a;
+  --ground:#1a1512; --ground-2:#221c17; --ground-3:#2b241d;
   --metal:#c9ab6d; --metal-dim:#8d7748;
   --ink:#ece5d6; --ink-2:#a99e88; --ink-3:#8b8170;
   --rule:#332e27; --rule-2:#463f35;
@@ -94,14 +94,5 @@ real is not a disclaimer, it is the same argument.
   --radius-edge:0px;
   --elev-0:none;
   --motion-fast:120ms; --motion-base:200ms; --ease:cubic-bezier(.2,.6,.2,1);
-}
-@media (prefers-color-scheme:light){
-  :root{
-    --ground:#eceae4; --ground-2:#e3e1da; --ground-3:#d8d6cd;
-    --metal:#6b5320; --metal-dim:#7f6631;
-    --ink:#17171a; --ink-2:#494a4d; --ink-3:#55565a;
-    --rule:#cfcec7; --rule-2:#b9b8b0;
-    --bad:#8c2f16; --bad-soft:#f4e3dd; --ok:#2f5d34; --focus:#17171a;
-  }
 }
 ```

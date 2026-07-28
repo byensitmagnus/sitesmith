@@ -256,7 +256,7 @@ function checkCommerceClaims(file, html, evidence) {
   const seen = new Set();
   for (const [re, what] of COMMERCE_CLAIMS) {
     for (const m of text.matchAll(re)) {
-      const claim = m[0].trim();
+      const claim = m[0].trim().replace(/[.,;:]+$/, '');
       if (seen.has(claim)) continue;
       seen.add(claim);
       if (claimIsSourced(claim, evidence, html)) continue;

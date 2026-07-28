@@ -7,7 +7,8 @@ import { readFile, writeFile } from 'node:fs/promises';
 
 const strip = (s) => s.replace(/<!--[\s\S]*?-->/g, '').replace(/\n\s*\n/g, '\n').trim();
 const profile = strip(await readFile('site/assets/bell-profile.svg', 'utf8'))
-  .replace('<svg ', '<svg data-asset="bell-profile" ');
+  .replace('<svg ', '<svg data-asset="bell-profile" ')
+  .replace('fill-opacity=".13"', 'fill-opacity=".22"');
 const markRaw = strip(await readFile('site/assets/mark.svg', 'utf8'));
 const markWith = (extra = '') => markRaw.replace('<svg ', `<svg data-asset="logo-primary" ${extra}`);
 
@@ -21,7 +22,7 @@ const html = `<!doctype html>
 <link rel="icon" href="assets/favicon.svg">
 <style>
 :root{
-  --ground:#131110; --ground-2:#1b1815; --ground-3:#241f1a;
+  --ground:#1a1512; --ground-2:#221c17; --ground-3:#2b241d;
   --metal:#c9ab6d; --metal-dim:#8d7748;
   --ink:#ece5d6; --ink-2:#a99e88; --ink-3:#8b8170;
   --rule:#332e27; --rule-2:#463f35;
@@ -44,17 +45,8 @@ const html = `<!doctype html>
   --elev-0:none;
   --motion-fast:120ms; --motion-base:200ms; --ease:cubic-bezier(.2,.6,.2,1);
 }
-@media (prefers-color-scheme:light){
-  :root{
-    --ground:#eceae4; --ground-2:#e3e1da; --ground-3:#d8d6cd;
-    --metal:#6b5320; --metal-dim:#7f6631;
-    --ink:#17171a; --ink-2:#494a4d; --ink-3:#55565a;
-    --rule:#cfcec7; --rule-2:#b9b8b0;
-    --bad:#8c2f16; --bad-soft:#f4e3dd; --ok:#2f5d34; --focus:#181613;
-  }
-}
 *{box-sizing:border-box}
-html{color-scheme:dark light}
+html{color-scheme:dark}   /* one controlled theme; see DESIGN-SYSTEM.md §1 */
 body{margin:0;background:var(--ground);color:var(--ink);
      font:var(--text-body)/var(--leading-body) var(--font-body);-webkit-font-smoothing:antialiased}
 :where(a,button,input,select,textarea,summary):focus-visible{outline:2px solid var(--focus);outline-offset:2px}
@@ -63,14 +55,15 @@ body{margin:0;background:var(--ground);color:var(--ink);
             padding:var(--space-2) var(--space-3);z-index:5}
 
 /* ── the standing column ──────────────────────────────────────────────── */
-.frame{display:grid;grid-template-columns:minmax(0,300px) minmax(0,1fr);gap:var(--space-7);
+.frame{display:grid;grid-template-columns:440px minmax(0,1fr);gap:var(--space-7);
        max-width:var(--container);margin:0 auto;padding:0 var(--gutter)}
-.standing{position:sticky;top:0;align-self:start;height:100vh;
-          display:flex;flex-direction:column;justify-content:center;padding:var(--space-5) 0;
-          color:var(--metal)}
+.standing{margin:0;   /* the UA stylesheet gives figure a 40px side margin, which ate 80px of the track */
+          position:sticky;top:0;align-self:start;min-height:100vh;
+          display:flex;flex-direction:column;justify-content:center;gap:var(--space-4);
+          padding:var(--space-5) 0;color:var(--metal)}
 .standing svg{width:100%;height:auto;display:block}  /* explicit height letterboxed the box and left a gap above the caption */
-.standing figcaption{font:var(--text-micro)/1.7 var(--font-mono);letter-spacing:.12em;
-                     text-transform:uppercase;color:var(--ink-3);margin-top:var(--space-4);
+.standing figcaption{font:var(--text-small)/1.7 var(--font-display);letter-spacing:.14em;
+                     text-transform:uppercase;color:var(--ink-3);margin:0;
                      border-top:1px solid var(--rule);padding-top:var(--space-3)}
 .column{padding:var(--space-5) 0 var(--space-8);min-width:0}
 
@@ -78,7 +71,7 @@ body{margin:0;background:var(--ground);color:var(--ink);
 .top{display:flex;align-items:center;gap:var(--space-5);flex-wrap:wrap;
      padding-bottom:var(--space-5);border-bottom:1px solid var(--rule)}
 .brand{display:flex;align-items:center;gap:var(--space-3);color:var(--metal);
-       font:400 var(--text-small)/1 var(--font-mono);letter-spacing:.26em;
+       font:400 var(--text-lead)/1 var(--font-display);letter-spacing:.22em;
        text-transform:uppercase;text-decoration:none}
 .brand svg{width:20px;height:auto;flex:none}
 .navtoggle{display:none;margin-left:auto;background:none;border:1px solid var(--rule-2);
@@ -101,25 +94,26 @@ p{max-width:var(--measure)}
 
 /* ── figures ──────────────────────────────────────────────────────────── */
 table{width:100%;border-collapse:collapse;margin-top:var(--space-4);max-width:640px}
-caption{text-align:left;font:var(--text-micro)/1.6 var(--font-mono);letter-spacing:.14em;
+caption{text-align:left;font:var(--text-small)/1.6 var(--font-display);letter-spacing:.16em;
         text-transform:uppercase;color:var(--ink-3);padding-bottom:var(--space-3)}
-th,td{text-align:right;padding:var(--space-2) 0;border-bottom:1px solid var(--rule);
-      font:var(--text-small)/1 var(--font-mono);font-variant-numeric:tabular-nums}
-th{color:var(--ink-3);font-weight:400;font-size:var(--text-micro);letter-spacing:.14em;
-   text-transform:uppercase}
+th,td{text-align:right;padding:var(--space-3) 0;border-bottom:1px solid var(--rule);
+      font:400 var(--text-lead)/1 var(--font-display);letter-spacing:.02em}
+/* tabular figures are for the cents table alone: it is the only column compared downward */
+th{color:var(--ink-3);font-weight:400;font-size:var(--text-small);letter-spacing:.16em;
+   text-transform:uppercase;font-family:var(--font-display)}
 th:first-child,td:first-child{text-align:left}
 td.now{color:var(--metal)}
 
 /* ── the enquiry ──────────────────────────────────────────────────────── */
 form{margin-top:var(--space-4);max-width:520px}
 .f{margin-bottom:var(--space-4)}
-.f label{display:block;font:var(--text-micro)/1 var(--font-mono);letter-spacing:.14em;
+.f label{display:block;font:var(--text-small)/1 var(--font-display);letter-spacing:.14em;
          text-transform:uppercase;color:var(--ink-3);margin-bottom:var(--space-2)}
 .f input,.f select,.f textarea{width:100%;font:var(--text-body)/1.5 var(--font-body);
   padding:var(--space-3);background:var(--ground-2);color:var(--ink);
   border:1px solid var(--rule-2);border-radius:var(--radius-edge)}
 .f textarea{min-height:96px;resize:vertical}
-.f .note{font:var(--text-micro)/1.7 var(--font-mono);color:var(--ink-3);margin:var(--space-2) 0 0}
+.f .note{font:var(--text-small)/1.6 var(--font-body);color:var(--ink-3);margin:var(--space-2) 0 0}
 .f [aria-invalid=true]{border-color:var(--bad);background:var(--bad-soft)}
 .f .msg{font:var(--text-small)/1.45 var(--font-body);color:var(--bad);margin:var(--space-2) 0 0}
 .f .msg:empty{display:none}
@@ -141,7 +135,7 @@ footer{border-top:1px solid var(--rule);margin-top:var(--space-7);padding-top:va
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 @media (max-width:900px){
   .frame{grid-template-columns:minmax(0,1fr);gap:0}
-  .standing{position:static;height:auto;max-width:190px;padding-bottom:var(--space-5)}
+  .standing{position:static;min-height:0;max-width:320px;padding-bottom:var(--space-5)}
   .standing svg{max-height:none}
   .navtoggle{display:block}
   nav.main{flex-basis:100%;margin-left:0;flex-direction:column;gap:var(--space-3);
