@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 38 34" role="img" aria-labelledby="kk"
+     fill="none" stroke="currentColor" stroke-width="2">
+  <title id="kk">Kilderkin, eighteen gallons</title>
+  <!-- The same construction as the firkin, on a wider viewBox so that at a shared height it
+       renders visibly broader. That is the honest representation: a kilderkin is twice the
+       volume in a cask only a little taller, so the difference the eye should pick up at
+       four feet is width, and the earlier version drew both on a 30-unit box where the
+       difference all but vanished at 40px. -->
+  <path d="M7 2h24c2.6 4.6 3.8 9.6 3.8 15s-1.2 10.4-3.8 15H7c-2.6-4.6-3.8-9.6-3.8-15S4.4 6.6 7 2z"/>
+  <path d="M3.4 11h31.2M3.4 23h31.2" stroke-width="1.4" opacity=".55"/>
+</svg>

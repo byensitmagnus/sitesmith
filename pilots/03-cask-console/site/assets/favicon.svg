@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 22">
+  <!-- The shive and keystone, on the desk's own ground. -->
+  <rect width="36" height="22" fill="#0e1012"/>
+  <g fill="none" stroke="#f0a92c" stroke-width="2.4">
+    <circle cx="10" cy="11" r="7"/>
+    <path d="M10 6v10" stroke-width="1.8" opacity=".65"/>
+    <path d="M23 4h9l-2.4 14h-4.2L23 4z"/>
+  </g>
+</svg>

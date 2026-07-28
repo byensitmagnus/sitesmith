@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 34" role="img" aria-labelledby="fk"
+     fill="none" stroke="currentColor" stroke-width="2">
+  <title id="fk">Firkin, nine gallons</title>
+  <!-- Drawn for the cask desk. A firkin and a kilderkin differ in proportion, not in kind,
+       and the team reads which is which across the cellar faster from a silhouette than
+       from a word. Squat: taller than it is wide by about a fifth. -->
+  <path d="M7 4h16c1.4 4 2 8.2 2 13s-.6 9-2 13H7c-1.4-4-2-8.2-2-13s.6-9 2-13z"/>
+  <path d="M5 12h20M5 22h20" stroke-width="1.4" opacity=".55"/>
+</svg>

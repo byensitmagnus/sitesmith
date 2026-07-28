@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 22" role="img" aria-labelledby="mk"
+     fill="none" stroke="currentColor" stroke-width="2">
+  <title id="mk">Stalbridge cask desk: a shive and a keystone</title>
+  <!-- The two bungs every cask carries. The round shive goes in the belly, the tapered
+       keystone in the head, and between them they are the only two things a cellarman ever
+       knocks in or out. Not a rounded square with a stroke through it. -->
+  <circle cx="10" cy="11" r="8"/>
+  <path d="M10 5v12" stroke-width="1.5" opacity=".6"/>
+  <path d="M23 3h9l-2.5 16h-4L23 3z"/>
+</svg>
