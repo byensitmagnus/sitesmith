@@ -65,13 +65,18 @@ export const PROVIDER_ORDER = [
 /** A runtime declares itself like this. `capabilities` is a subset of CAPABILITIES; `models` is
  *  free-form and only ever recorded, never interpreted. A provider that cannot say what it can
  *  do is treated as if it can do nothing. */
-export function describeProvider({ id, capabilities = [], models = [], paid = null, note = '' }) {
+export function describeProvider({ id, capabilities = [], models = [], paid = null, batch = 1,
+                                   note = '' }) {
   const known = PROVIDER_ORDER.find((p) => p.id === id);
   const bad = capabilities.filter((c) => !CAPABILITIES.includes(c));
   return {
     id,
     known: Boolean(known),
     paid: paid ?? known?.paid ?? true,
+    /* How many candidates the provider returns from one request. The cost preflight divides by
+       it, and getting this wrong is not cosmetic: four candidates read as four calls instead of
+       one overstated a real bill by a factor of three. */
+    batch: Math.max(1, Number(batch) || 1),
     capabilities: capabilities.filter((c) => CAPABILITIES.includes(c)),
     unknownCapabilities: bad,
     models,
@@ -89,23 +94,33 @@ export function route(capability, providers) {
   return null;
 }
 
-/** What a run would cost, before anything is called. Never spends. */
+/** What a run would cost, before anything is called. Never spends.
+ *
+ *  Candidates and calls are not the same number and reporting them as one overstates the bill.
+ *  Most providers batch: four candidates can be one request with `num_images: 4`. A provider
+ *  declares `batch` (default 1, meaning one image per call) and the preflight divides. */
 export function costPreflight(plan, providers) {
   const rows = [];
   for (const item of plan.assets) {
-    if (item.strategy === 'reuse' || item.strategy === 'stock') {
-      rows.push({ id: item.id, capability: null, provider: item.strategy, calls: 0, paid: false });
+    const free = item.strategy === 'reuse' || item.strategy === 'stock' || item.strategy === 'drawn';
+    if (free) {
+      rows.push({ id: item.id, capability: null, provider: item.strategy,
+                  candidates: 0, calls: 0, paid: false });
       continue;
     }
     const cap = item.capability ?? 'text-to-image';
     const p = route(cap, providers);
-    const calls = (item.candidates ?? 0) + (item.maxAttempts ?? 0);
-    rows.push({ id: item.id, capability: cap, provider: p?.id ?? null, calls: p ? calls : 0,
+    const batch = Math.max(1, Number(p?.batch ?? 1));
+    const candidates = item.candidates ?? 0;
+    const calls = Math.ceil(candidates / batch) + (item.maxAttempts ?? 0);
+    rows.push({ id: item.id, capability: cap, provider: p?.id ?? null,
+                candidates, calls: p ? calls : 0, batch,
                 paid: Boolean(p?.paid), unroutable: !p });
   }
   return {
     rows,
     paidCalls: rows.filter((r) => r.paid).reduce((s, r) => s + r.calls, 0),
+    paidImages: rows.filter((r) => r.paid).reduce((s, r) => s + r.candidates + (r.calls - Math.ceil(r.candidates / r.batch)), 0),
     unroutable: rows.filter((r) => r.unroutable).map((r) => r.id),
     needsApproval: rows.some((r) => r.paid && r.calls > 0),
   };
@@ -120,14 +135,20 @@ export const PLAN_FIELDS = [
   'lighting', 'aspectRatios', 'crops', 'focal', 'antiReferences', 'mustNotChange',
   'factualRisk', 'maxAttempts',
 ];
-export const STRATEGIES = ['reuse', 'stock', 'generate', 'edit'];
+/* `drawn` is the fifth answer and it spends nothing: a diagram, a plan or a glyph made in code.
+   25-assets.md already ranks it above generation for subjects whose world is not photogenic,
+   and without it here a plan has to lie about how a hand-drawn glyph was made. */
+export const STRATEGIES = ['reuse', 'stock', 'drawn', 'generate', 'edit'];
 
 export function parsePlan(markdown) {
   const assets = [];
   const problems = [];
-  /* One `## <id>` per asset, then `- field: value` lines. Markdown because a human has to read
-     and argue with this before a single credit is spent. */
-  const blocks = String(markdown).split(/^##\s+/m).slice(1);
+  /* One ``## `id` `` per asset — the heading is a code span, and a heading that is not one is
+     prose. A real plan has prose in it: the strategy in a line, what is deliberately not here,
+     why an answer is honest. Reading every `##` as an asset turned three of those into three
+     assets with thirty missing fields between them. */
+  const blocks = String(markdown).split(/^##\s+/m).slice(1)
+    .filter((b) => /^`[^`]+`\s*$/.test(b.split(/\r?\n/)[0].trim()));
   for (const block of blocks) {
     const id = block.split(/\r?\n/)[0].trim().replace(/^`|`$/g, '');
     const item = { id };
@@ -301,10 +322,11 @@ if (isMain) {
       const pre = costPreflight(plan, ps);
       console.log('\n  cost preflight — nothing has been called\n');
       for (const r of pre.rows) {
-        console.log(`  ${String(r.id).padEnd(22)} ${String(r.capability ?? '—').padEnd(20)} ` +
-          `${String(r.provider ?? 'UNROUTABLE').padEnd(10)} ${r.calls} call(s)${r.paid ? ' PAID' : ''}`);
+        console.log(`  ${String(r.id).padEnd(22)} ${String(r.capability ?? '—').padEnd(16)} ` +
+          `${String(r.provider ?? 'UNROUTABLE').padEnd(10)} ${String(r.candidates).padStart(2)} image(s)` +
+          `  ${String(r.calls).padStart(2)} call(s)${r.paid ? '  PAID' : ''}`);
       }
-      console.log(`\n  ${pre.paidCalls} paid call(s) would be made.`);
+      console.log(`\n  ${pre.paidCalls} paid call(s), up to ${pre.paidImages} image(s).`);
       if (pre.unroutable.length) {
         console.log(`  ${pre.unroutable.length} asset(s) no provider can serve: ${pre.unroutable.join(', ')}`);
         console.log('  Write ASSET-REQUESTS.md and keep the project a draft.');
