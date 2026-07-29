@@ -77,7 +77,7 @@ The three sites were built by three agents in separate contexts, with no shared 
 no shared workspace, no shared screenshots, and no sight of each other's work. They were given
 the same skill and three unrelated trades. They converged anyway.
 
-A blind reviewer who saw only the sheets, and who could not read this table, arrived at the
+An assignment-blinded reviewer who saw only the sheets, and was never given this table, reached the
 same place unprompted: *"one studio and one method, three real executions — the shared hand
 shows in structure, not styling."* That reviewer named the hairlines, the tabular figures, the
 single accent, the square buttons, and the same rhetorical move of headlining a refusal. Two

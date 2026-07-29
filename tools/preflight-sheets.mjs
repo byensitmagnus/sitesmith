@@ -1,6 +1,10 @@
 #!/usr/bin/env node
 /**
- * Contact sheets for the blind visual preflight. Original work, MIT.
+ * Contact sheets for the assignment-blinded visual preflight. Original work, MIT.
+ *
+ * Assignment-blinded is the accurate word: this withholds which subject is which, and the
+ * ceremony in open-key.mjs proves it stayed withheld until both reviews locked. It does not
+ * put the reviewer anywhere the key is unreachable, so it is not technical blindness.
  *
  *   node tools/preflight-sheets.mjs --out <dir> [--seed <hex>]
  *

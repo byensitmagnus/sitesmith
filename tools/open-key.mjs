@@ -1,14 +1,20 @@
 #!/usr/bin/env node
 /**
- * Open a sealed blind-review key, after both reviews are locked. Original work, MIT.
+ * Open the sealed key of an assignment-blinded review, after both reviews are locked.
+ * Original work, MIT.
  *
  *   node tools/open-key.mjs --round <dir> --sealed <path> --reviews <dir> [--reviews <dir>]
  *
- * The key says which label was which project. Committing it before the reviews are written is
- * how a blind review stops being blind, and that is exactly what happened in rounds 3 to 6:
- * KEY-MASTER.json sat in the repository, on the same filesystem the reviewers were working on,
- * while they worked. Nobody handed them the path, and "they were not given the path" is not
- * isolation.
+ * **Assignment-blinded, not blind.** What this enforces is that the label-to-project mapping
+ * was withheld until both reviews were locked, and that each review is bound by hash to the
+ * round it claims to be reviewing and to its own unedited body. What it cannot enforce is that
+ * a reviewer running on this host had no path to the sealed file: it does, procedurally, and
+ * a procedure is not a boundary. Technical blindness needs the review to run somewhere the key
+ * cannot be reached from — a container with no mount, or another machine.
+ *
+ * Rounds 3 to 6 did not reach even the withheld-assignment bar: KEY-MASTER.json was committed
+ * to the repository the reviewers were reading. "They were not given the path" is not a
+ * withheld assignment, it is an unlocked door nobody mentioned.
  *
  * So the key is generated outside the tree and stays there. This is the one door back in, and
  * it will not open until it can prove the reviews were finished first:

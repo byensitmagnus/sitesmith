@@ -1,30 +1,44 @@
-# Round 7 — the first review that was actually blind
+# Round 7 — assignment-blinded, and the first round whose result is worth reading
 
 Three pilots, built by three agents who never met, measured by two reviewers who saw only
-scroll strips and a one-line brief, against a key that was outside the repository and outside
-both reviewer workspaces until after both of them had locked.
+scroll strips and a one-line brief, against a key held outside the repository and outside both
+reviewer workspaces until after both of them had locked.
 
 **7.67 / 10 across the portfolio. Zero of three reach 8. The round does not pass.**
 
-## Why this round counts and rounds 3 to 6 do not
+## What "assignment-blinded" means, and what it does not
 
-`KEY-MASTER.json` was committed to the repository in rounds 3 to 6, and the reviewers for
-those rounds worked on the same filesystem while it sat there. Nobody handed them the path.
-"They were not given the path" is not isolation, and a review that cannot be shown to have
-been blind is not evidence, whatever it concluded.
+Call this **assignment-blinded**, not blind. The distinction is the whole point of the section.
 
-This round was run differently:
+**What is enforced.** The mapping from label to project was not in the repository, not in
+either reviewer's workspace, and not in anything either reviewer was given. Each review is
+bound by hash to this round's rubric, sheets and brief, and to its own body, and carries the
+time it locked. `tools/open-key.mjs` would not release the mapping until all of that verified
+and the last lock was already in the past. Those properties are checkable by anyone with the
+repository, after the fact, without trusting this note.
 
-- the key was generated and then moved out of the tree, to a directory no reviewer path
-  reaches, before either reviewer was dispatched;
-- each reviewer got a fresh directory containing six JPEGs, one rubric, one `RUN.json` and
-  three one-line briefs, and nothing else;
+**What is not enforced.** The reviewers ran as agents on this machine, with shell access, on
+the same filesystem as the sealed key. Nothing technically stopped a reviewer from searching
+for it. What stopped them was that they were told not to and had no reason to — which is a
+procedure, not a boundary. A claim of technical blindness would require the review to run
+somewhere the key cannot be reached from at all: a container with no mount, or another host.
+That is what the Docker probes are for, and until they exist this is the honest word.
+
+Rounds 3 to 6 do not even reach this bar. `KEY-MASTER.json` was **committed to the repository**
+while those reviewers worked, so the mapping was inside the tree they were reading. "They were
+not given the path" is not a withheld assignment; it is an unlocked door nobody mentioned.
+
+Concretely, this round:
+
+- the key was generated and moved out of the tree before either reviewer was dispatched;
+- each reviewer got a fresh directory holding six JPEGs, one rubric, one `RUN.json` and three
+  one-line briefs, and nothing else;
 - `find` over both workspaces returns zero files matching `KEY*`;
 - the sheets were committed **before** dispatch, so `sheet-sha256` can still be checked;
-- each review carries the run id and the rubric, sheet and brief hashes, plus a hash of its
-  own body and the time it locked;
-- `tools/open-key.mjs` refused to open until all of that verified, and recorded the open time.
-  It is tested in CI against six ways a review could be wrong.
+- each review carries the run id, the rubric, sheet and brief hashes, a hash of its own body,
+  and the time it locked;
+- `open-key.mjs` recorded the open time, and is tested in CI against six ways a review could
+  be wrong.
 
 Locks at 14:59:23Z and 15:00:32Z. Key opened at 15:02:31Z. In that order, on the record.
 
