@@ -243,12 +243,22 @@ export function judge(dir, m, sigShare) {
   return { pass: problems.length === 0, problems, notes };
 }
 
-/* ── run ───────────────────────────────────────────────────────────────── */
+/* ── run ───────────────────────────────────────────────────────────────────
+   Only when this file is what was invoked. Every function above is exported so the axis
+   contract can be tested directly against the documentation, and without this guard the
+   import printed a usage line and exited 2 before the test could ask a single question. */
+
+const invokedDirectly = process.argv[1] &&
+  pathToFileURL(process.argv[1]).href === import.meta.url;
 
 const args = process.argv.slice(2);
 const [dirPath, url] = args.filter((a) => !a.startsWith('--'));
 const outIdx = args.indexOf('--out');
 const out = outIdx >= 0 ? args[outIdx + 1] : null;
+
+if (!invokedDirectly) {
+  // Imported as a library. The parser and the expectations are the API; the CLI is not.
+} else {
 
 if (!dirPath || !url) {
   console.error('usage: direction-fidelity.mjs <DIRECTION.md> <url> [--out DIR]');
@@ -320,3 +330,5 @@ for (const p of v.problems) console.log(`  FAIL  ${p}`);
 for (const n of v.notes) console.log(`  note  ${n}`);
 console.log(`\n  ${v.pass ? 'PASS — the site renders the direction it chose' : `FAIL — ${v.problems.length} axis/axes not delivered`}\n`);
 process.exit(v.pass ? 0 : 1);
+
+} // end: invoked directly

@@ -32,6 +32,13 @@ jobs:
       - name: the sealed key opens only when it should
         run: node tools/test-open-key.mjs
 
+      # DIRECTION.md's axis record is a machine-readable contract, and the risk with a
+      # documented contract is that the document and the parser drift apart silently. This
+      # reads the fenced block out of v2/20-direction-lab.md and requires the parser to
+      # accept it, then checks every trap and every vocabulary word the doc lists.
+      - name: the documented axis record is the one the gate parses
+        run: node tools/test-direction-format.mjs
+
       # Does our own output obey our own absolute rules? Until now nothing asked.
       # A ratchet against tools/conformance-baseline.json: the recorded debt is
       # allowed, any increase fails. See docs/v2/CONFLICTS.md for why the debt exists.
