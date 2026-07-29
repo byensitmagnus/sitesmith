@@ -1,0 +1,13 @@
+{
+  "run-id": "preflight-r8-9a30a531f2d2",
+  "rubric-sha256": "e61d08d6d3b8bee0820e186475235668af9f98d61c8029bbd29b9f52181875a5",
+  "briefs": {
+    "SHEET-B4": "dbc91e84035f9aa8747d70e0f58092659012a8a4e84dc6003c0796be1703cfca",
+    "SHEET-K7": "641c741f5a3964a19d779cb18672b88e5f4909b14b63700fd05e8ec9dc34c902",
+    "SHEET-W1": "d22847f0b468b5cd62822e9a062231d25505861c4d2af1717a37d0e811a5ebc8"
+  },
+  "sheet-sha256": "6faca7563a00d7c42eca410e99baae1b67de753201e05109bb89be2bc4c5c9d9",
+  "sheets-present": true,
+  "key-sealed": true,
+  "note": "Assignment-blinded. The label-to-project mapping is held outside this repository and outside every reviewer workspace until both reviews are locked. It is not technical isolation: reviewers run on the same host."
+}
