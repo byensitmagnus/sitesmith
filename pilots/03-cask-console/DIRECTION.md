@@ -49,6 +49,17 @@ used for a pressed control, a heading, a rule, a hover or a section.
   the largest a 44px control can carry without eating its own corner. No cards. No shadows. No
   left colour bars.
 
+## Axis record
+
+<!-- The machine-readable block direction-fidelity.mjs reads. Transcribed from the prose
+     above and from what the built page measures; the page is unchanged. -->
+
+- composition: a whitewashed log page that goes to ink only where casks are late
+- type: condensed capitals display over a system sans, mono tabular figures throughout
+- colour: light limewash ground, ink reserved for the late band, one condemned-tag red
+- imagery: deliberately imageless, one drawn cask at three true volume ratios
+- rhythm: three unequal blocks, graded row height and rule weight
+
 ## The signature
 
 The **ink band** is the direction. It is full bleed, it carries the late work and its controls,

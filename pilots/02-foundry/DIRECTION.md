@@ -123,3 +123,14 @@ section was missing from the pack, so it has been written back as `EVIDENCE.md` 
 the tuning table, the 1,568 lb arithmetic on 14 cwt, and the twelve-bell bound that
 `JOURNEY-INTENT.md` requires the form to explain. Every figure on the page now resolves to that
 file. Nothing was published that is not in it.
+
+## Axis record
+
+<!-- The machine-readable block direction-fidelity.mjs reads. Transcribed from the prose
+     above and from what the built page measures; the page is unchanged. -->
+
+- composition: a full-bleed photograph floor to ceiling, then a two-state tuning book beside the argument
+- type: system sans display over a system sans body, mono reserved for cents and kilograms
+- colour: near-black ground, one metal accent that only ever marks metal removed
+- imagery: photography-led, three process photographs, one lighting treatment
+- rhythm: one continuous field, sections divided by a single hairline

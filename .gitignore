@@ -38,3 +38,7 @@ pilots/*/.sitesmith/
 
 # Fixture working directory: playwright is installed here so the journey fixtures can run.
 tests/gates/node_modules/
+
+# The blind-review key never enters the repository until both reviews are locked.
+# A key an agent can read from the working tree is not a sealed key.
+docs/v2/preflight/*/KEY-MASTER.json

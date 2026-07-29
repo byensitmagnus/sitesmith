@@ -143,3 +143,14 @@ classes of number appear and are marked in the markup with `data-source`:
 No rating, review count, delivery date, warranty or certification appears anywhere, because
 none has been measured. The out-of-stock line publishes no restock date for the same reason and
 says so in the words.
+
+## Axis record
+
+<!-- The machine-readable block direction-fidelity.mjs reads. Transcribed from the prose
+     above and from what the built page measures; the page is unchanged. -->
+
+- composition: five ropes lying parallel across one bench, a fixed figure column beside them, cut buttons down one edge
+- type: condensed grotesque display over a system sans, tabular figures for every measured quantity
+- colour: warm paper ground, one stamp red reserved for the cut control
+- imagery: photography-led, five product bands in one light at one scale
+- rhythm: stacked bands of equal weight, hairline between, no card

@@ -107,6 +107,11 @@ expect('direction', 'a note that claims what the page does not render',
   for (const [p, s] of backups) writeFileSync(p, s);
 }
 
+expect('direction', 'an axis record written as prose headings',
+  run(join(S, 'direction-fidelity.mjs'),
+      [join(FIX, 'direction/fail-axis-record-is-prose/NOTE.md'), 'http://127.0.0.1:4611/'], ROOT),
+  1, /axis record is missing or not in the documented form/);
+
 /* ══ production-gate ════════════════════════════════════════════════════ */
 
 const prod = (fixture, extra = []) => run(join(S, 'production-gate.mjs'),

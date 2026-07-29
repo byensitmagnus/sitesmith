@@ -179,6 +179,20 @@ async function install(target, providers, { quiet = false } = {}) {
                        files: files.length + 1 };
     if (!quiet) say(`  ${name.padEnd(7)} → ${cfg.dir}  (${files.length + 1} files)`);
   }
+  /* The gates need playwright and axe-core, and the installer used to place neither, so a
+     fresh project ran verify, read 'axe violations: not run', and shipped. verify now fails
+     closed on that, and this puts the pinned manifest where one npm command fixes it. */
+  const deps = JSON.parse(await readFile(join(SKILL, 'scripts/package.json'), 'utf8'));
+  const pinned = Object.entries(deps.devDependencies).map(([k, v]) => `${k}@${v}`);
+  await writeFile(join(target, 'sitesmith-gates.package.json'),
+    JSON.stringify(deps, null, 2) + '\n');
+  if (!quiet) {
+    say('');
+    say('  the gates need these, pinned in sitesmith-gates.package.json:');
+    say(`    npm i -D ${pinned.join(' ')} && npx playwright install chromium`);
+    say('  verify.mjs fails closed without axe-core, so an unchecked page will not pass.');
+  }
+
   await writeFile(join(target, '.sitesmith-install.json'),
     JSON.stringify({ installed: providers, manifest,
       skillFiles: Object.fromEntries(await Promise.all(

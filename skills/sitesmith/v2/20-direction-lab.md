@@ -181,3 +181,40 @@ answers whether three options were actually put on the table.
 Then, and only then, [`30-contract.md`](30-contract.md). The contract is written **from the
 winning comp** — its ground, its type, its rhythm — rather than the comp being adjusted to
 fit a contract that already existed.
+
+---
+
+## The axis record, verbatim
+
+`DIRECTION.md` must contain this block. `scripts/direction-fidelity.mjs` parses it and checks
+the built page against every line, so the **shape is a contract, not a suggestion**:
+
+```markdown
+## Axis record
+
+- composition: <how the page is arranged>
+- type: <display face> over <body face>, <what the figures are set in>
+- colour: <ground>, <the one accent and what it is reserved for>
+- imagery: <photography-led | diagram-led | object-led | deliberately imageless>, <treatment>
+- rhythm: <how sections are separated>
+
+- signature-selector: <css selector>
+- signature-min-share: <percent of the first screen it must occupy>
+```
+
+Five lines, each beginning `- ` and the axis name, then a colon. Prose headings such as
+`- **Type and scale.** …` do not parse: the gate reads the axis as `undefined` and fails the
+page for declaring nothing, which looks like a design fault and is a formatting one.
+
+Two lines the parser reads literally:
+
+- **`type`** — name the *display* face first. The parser reads the clause before the word
+  `over`, so "condensed grotesque display over a system sans" checks the display face and
+  ignores the body face. Writing "a system sans with a condensed display" checks the wrong one.
+- **`colour`** — state the ground in words the parser can classify: `light`, `paper`, `white`,
+  `off-white`, `cream`, `buff`, `stone`, `limewash` on one side; `dark`, `near-black`, `black`,
+  `ink ground`, `inverted` on the other. A colour axis with no ground word is reported as
+  unclassifiable and the ground is not checked at all.
+
+Two independent builders wrote considered directions and produced documents the toolchain could
+not read, because this block was never written down. That is what this section exists to stop.

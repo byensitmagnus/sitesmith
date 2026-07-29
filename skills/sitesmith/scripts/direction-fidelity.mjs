@@ -176,6 +176,21 @@ export function judge(dir, m, sigShare) {
   const problems = [];
   const notes = [];
 
+  /* Before judging the page, check that the document is readable. Two independent builders
+     wrote considered directions as prose headings, the parser read every axis as undefined, and
+     the gate failed their pages for "declaring undefined" — which reads as a design fault and
+     is a formatting one. A builder following that signal changes the typeface of a page that
+     was never wrong. Say what is actually the matter. */
+  const AXES_REQUIRED = ['composition', 'type', 'colour', 'imagery', 'rhythm'];
+  const missing = AXES_REQUIRED.filter((a) => !dir.axes?.[a]);
+  if (missing.length) {
+    problems.push(`the axis record is missing or not in the documented form: no ${missing.join(', ')}. ` +
+      'It is five lines, each "- <axis>: <value>" — see v2/20-direction-lab.md, "The axis ' +
+      'record, verbatim". Prose headings such as "- **Type and scale.** …" do not parse, and ' +
+      'nothing below this line is a judgement about the page.');
+    return { pass: false, problems, notes, m, sigShare, unreadable: true };
+  }
+
   const g = groundExpectation(dir.axes.colour ?? '');
   if (!g) notes.push('the colour axis does not state a ground, so it cannot be checked');
   else if (g.want === 'dark' && m.luminance > g.max) {
@@ -241,6 +256,22 @@ if (!dirPath || !url) {
 }
 
 const dir = parseDirection(await readFile(dirPath, 'utf8'));
+
+/* Read the document before opening a browser. An unreadable axis record is a fact about the
+   file, and launching Chromium to discover it wastes a minute and then reports a page defect
+   that is not one. */
+{
+  const need = ['composition', 'type', 'colour', 'imagery', 'rhythm'].filter((a) => !dir.axes?.[a]);
+  if (need.length) {
+    console.log('\n  direction fidelity\n');
+    console.log(`  FAIL  the axis record is missing or not in the documented form: no ${need.join(', ')}.`);
+    console.log('        It is five lines, each "- <axis>: <value>" — see v2/20-direction-lab.md,');
+    console.log('        "The axis record, verbatim". Prose headings such as "- **Type and scale.** …"');
+    console.log('        do not parse, and nothing here is a judgement about the page.\n');
+    process.exit(1);
+  }
+}
+
 const pw = await loadPlaywright();
 const chromium = pw.chromium ?? pw.default?.chromium;
 const browser = await chromium.launch();

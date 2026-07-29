@@ -1,0 +1,10 @@
+{
+  "name": "sitesmith-gates",
+  "private": true,
+  "type": "module",
+  "description": "What the SiteSmith gates need in order to run. Installed by bin/sitesmith.mjs.",
+  "devDependencies": {
+    "playwright": "1.62.0",
+    "axe-core": "4.12.1"
+  }
+}

@@ -185,10 +185,10 @@
         "v2/20-direction-lab.md"
       ],
       "produces": [
-        "DIRECTION.md"
+        "DIRECTION.md (with the verbatim axis record from v2/20-direction-lab.md)"
       ],
       "gate": "scripts/direction-history.mjs check DIRECTION.md <url> --project <name>",
-      "note": "Scores, the winner, the signature-selector, and both rejections with a specific reason each."
+      "note": "Scores, the winner, the signature-selector, and both rejections with a specific reason each. The axis record has a fixed machine-readable shape and direction-fidelity parses it: five  lines plus signature-selector and signature-min-share. Prose headings do not parse, and the gate then fails the page for declaring nothing."
     },
     {
       "id": "contract",
