@@ -34,7 +34,7 @@ Three things follow, and they are the whole rebuild:
 
 ## Axis record
 
-- composition: a wide poster, then a two-column shop — goods beside a basket that stays put
+- composition: a wide poster, then the goods laid out two across, so two constructions are in the eye at once
 - type: warm serif display over a system sans interface, with tabular figures reserved for the
   numbers that are compared down a column and used nowhere else
 - colour: near-white ground so the photographs carry the colour; one oak accent taken from the

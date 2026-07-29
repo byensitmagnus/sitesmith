@@ -31,7 +31,7 @@ html{color-scheme:dark}
 body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 var(--ui);
      -webkit-font-smoothing:antialiased}
 img{max-width:100%;display:block}
-.shell{max-width:1320px;margin:0 auto;padding:0 var(--pad)}
+.shell{max-width:none;padding:0 var(--pad)}   /* an instrument fills the screen */
 .skip{position:absolute;left:-9999px}
 .skip:focus{left:12px;top:10px;z-index:9;background:var(--panel);padding:10px 14px;border:2px solid var(--ink)}
 :where(button,input,select,a):focus-visible{outline:3px solid var(--warn);outline-offset:2px}
@@ -56,7 +56,7 @@ img{max-width:100%;display:block}
 
 /* ── the board ────────────────────────────────────────────────────────── */
 main{padding-block:clamp(16px,2.4vw,26px) clamp(30px,5vw,60px)}
-.lede{color:var(--ink-2);font-size:.96rem;margin:0 0 clamp(14px,2vw,20px);max-width:64ch}
+.lede{color:var(--ink-2);font-size:.96rem;margin:0 0 clamp(14px,2vw,20px);max-width:82ch}
 .lede b{color:var(--ink);font-weight:600}
 
 .job{display:grid;grid-template-columns:14px minmax(0,1fr);
@@ -95,7 +95,7 @@ main{padding-block:clamp(16px,2.4vw,26px) clamp(30px,5vw,60px)}
 
 /* the book-in, inline and always open — a cellarman in gloves gets controls,
    not a button that produces controls */
-.bookin{grid-column:2;display:grid;grid-template-columns:minmax(0,340px) 116px auto 1fr;gap:10px 12px;
+.bookin{grid-column:2;display:grid;grid-template-columns:minmax(0,300px) 116px auto 1fr;gap:10px 12px;
         align-items:end;padding:clamp(12px,1.6vw,15px) 0 clamp(13px,1.8vw,17px);
         margin-top:clamp(11px,1.6vw,14px);background:var(--panel-2);
         padding-inline:clamp(12px,1.6vw,16px);border-radius:2px}
