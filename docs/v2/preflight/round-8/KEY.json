@@ -1,0 +1,95 @@
+{
+  "seed": "fa4279e20d737d206f18b4b4dae23a87",
+  "sheet-sha256": "6faca7563a00d7c42eca410e99baae1b67de753201e05109bb89be2bc4c5c9d9",
+  "assignment": {
+    "SHEET-K7": {
+      "subject": "tannery",
+      "seat": 1
+    },
+    "SHEET-W1": {
+      "subject": "seed-library",
+      "seat": 3
+    },
+    "SHEET-B4": {
+      "subject": "tideworks",
+      "seat": 2
+    }
+  },
+  "note": "Written before any reviewer saw a sheet. The reviewers are never given this path.",
+  "run-id": "preflight-r8-9a30a531f2d2",
+  "rubric-sha256": "e61d08d6d3b8bee0820e186475235668af9f98d61c8029bbd29b9f52181875a5",
+  "reviewers": [
+    "reviewer-w-r8",
+    "reviewer-x-r8"
+  ],
+  "first-locked": "2026-07-29T18:56:30.000Z",
+  "last-locked": "2026-07-29T18:58:43.000Z",
+  "opened": "2026-07-29T19:02:56.867Z",
+  "reviews": [
+    {
+      "file": "docs/v2/preflight/round-8/reviews/W/PORTFOLIO-W.md",
+      "reviewer": "W",
+      "reviewer-id": "reviewer-w-r8",
+      "label": null,
+      "locked": "2026-07-29T18:58:43Z",
+      "body-sha256": "5971c732b99f87b8622e7ea09e5cf10073a785711c007f8a57748c1ad1212596"
+    },
+    {
+      "file": "docs/v2/preflight/round-8/reviews/W/SHEET-B4/CRITIQUE-W.md",
+      "reviewer": "W",
+      "reviewer-id": "reviewer-w-r8",
+      "label": "SHEET-B4",
+      "locked": "2026-07-29T18:58:43Z",
+      "body-sha256": "3e61d06e0957c5cb94f1f8b2d46093d6b81f541f713289b43216a4e616bbec3f"
+    },
+    {
+      "file": "docs/v2/preflight/round-8/reviews/W/SHEET-K7/CRITIQUE-W.md",
+      "reviewer": "W",
+      "reviewer-id": "reviewer-w-r8",
+      "label": "SHEET-K7",
+      "locked": "2026-07-29T18:58:43Z",
+      "body-sha256": "72ed5854cf68c02a6948eaadfe88379444a4aa00adee40b95862f55b1c5cc1a4"
+    },
+    {
+      "file": "docs/v2/preflight/round-8/reviews/W/SHEET-W1/CRITIQUE-W.md",
+      "reviewer": "W",
+      "reviewer-id": "reviewer-w-r8",
+      "label": "SHEET-W1",
+      "locked": "2026-07-29T18:58:43Z",
+      "body-sha256": "dcc856574954fd04b147ae8097a867316e41ef5a2f102e9d42b1b5f3b712bf84"
+    },
+    {
+      "file": "docs/v2/preflight/round-8/reviews/X/PORTFOLIO-X.md",
+      "reviewer": "X",
+      "reviewer-id": "reviewer-x-r8",
+      "label": null,
+      "locked": "2026-07-29T18:56:30Z",
+      "body-sha256": "be5f9fa2bff8ac0be2c3cf133abae4f27e42093f553285d969f38987ba1fbca1"
+    },
+    {
+      "file": "docs/v2/preflight/round-8/reviews/X/SHEET-B4/CRITIQUE-X.md",
+      "reviewer": "X",
+      "reviewer-id": "reviewer-x-r8",
+      "label": "SHEET-B4",
+      "locked": "2026-07-29T18:56:30Z",
+      "body-sha256": "0e569783e21201d95b1609d8448b5b7a3a143a6b413b01250110b908691eb4b2"
+    },
+    {
+      "file": "docs/v2/preflight/round-8/reviews/X/SHEET-K7/CRITIQUE-X.md",
+      "reviewer": "X",
+      "reviewer-id": "reviewer-x-r8",
+      "label": "SHEET-K7",
+      "locked": "2026-07-29T18:56:30Z",
+      "body-sha256": "96ddf14a56748f8bb6e97a809f8462781a0cde3bb061fb7f86d0e4f72d1b5500"
+    },
+    {
+      "file": "docs/v2/preflight/round-8/reviews/X/SHEET-W1/CRITIQUE-X.md",
+      "reviewer": "X",
+      "reviewer-id": "reviewer-x-r8",
+      "label": "SHEET-W1",
+      "locked": "2026-07-29T18:56:30Z",
+      "body-sha256": "a21dc64e022244b20072dbca89d8ab7567641abb1b0f9562c3a33961ba492cf4"
+    }
+  ],
+  "ceremony": "Generated outside the repository, held outside every reviewer workspace, and committed only after both reviews were locked. Each review above is bound to this round's run id and to the rubric, sheet and brief hashes, and to its own body hash, so it can be shown not to have been written or edited after the labels were known."
+}
