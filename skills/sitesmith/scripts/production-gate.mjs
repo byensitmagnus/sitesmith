@@ -184,6 +184,58 @@ function checkEmptyBrandMark(file, html) {
   }
 }
 
+/* Other people's marks: customer logos, partner logos, certification badges.
+   The strongest proof a page can carry and the easiest to fabricate, so it is permitted only
+   where the evidence pack names who lent it. Absent that, the page does not have a logo wall
+   — which is usually a better page, because it has to make its case some other way. */
+function checkBorrowedMarks(file, html, evidence, manifest) {
+  const m = markup(html);
+  const walls = m.match(
+    /<[^>]*class="[^"]*\b(client|customer|partner|logo-?wall|logos|accreditation|certification|badges)\b[^"]*"[\s\S]{0,2000}?<\/(section|div|ul)>/gi) ?? [];
+  if (!walls.length) return;
+
+  for (const wall of walls) {
+    /* Who is claimed. An alt or an aria-label on each borrowed mark is the only place a name
+       lives once the image is a logo rather than a word. */
+    const names = [...wall.matchAll(/(?:alt|aria-label|title)=["']([^"']{2,80})["']/gi)]
+      .map((x) => x[1].trim())
+      .filter((n) => !/^(logo|client logo|partner logo|customer logo|badge|icon)$/i.test(n));
+
+    if (!names.length) {
+      add('block', file, 'a row of borrowed marks that names nobody',
+        'each customer, partner or certification mark states whose it is, or it is not evidence');
+      continue;
+    }
+    if (evidence === null) {
+      add('block', file, `borrowed marks with no evidence pack: ${names.slice(0, 4).join(', ')}`,
+        'a logo wall is permitted only where EVIDENCE.md names who lent each mark');
+      continue;
+    }
+    for (const name of names) {
+      /* Match on the distinctive words of the name, so "Ashby & Rowe Ltd" still matches
+         an evidence line that writes "Ashby and Rowe". */
+      const words = name.split(/[^\p{L}\p{N}]+/u).filter((w) => w.length > 3);
+      const found = words.length
+        ? words.some((w) => new RegExp(`\\b${w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'i').test(evidence))
+        : new RegExp(name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i').test(evidence);
+      if (!found) {
+        add('block', file, `"${name}" appears as a borrowed mark and is nowhere in EVIDENCE.md`,
+          'never an invented endorsement; see v2/24-asset-plan.md');
+      }
+    }
+  }
+
+  /* And no stand-ins, at any state. A substitute customer logo is a fabricated endorsement
+     whatever the manifest row calls it, so this one is not covered by the general state rule. */
+  for (const row of manifest) {
+    if (!/\b(client|customer|partner|certification|accreditation|badge)\b/i.test(row.id)) continue;
+    if (row.state === 'substitute' || row.state === 'needed') {
+      add('block', file, `"${row.id}" is ${row.state}`,
+        'there is no stand-in for someone else\'s endorsement');
+    }
+  }
+}
+
 function checkFavicon(file, html) {
   // Attribute-aware: an inline SVG data URI contains `>` characters, so [^>]* truncates the
   // tag halfway through the href and the icon never gets inspected.
@@ -345,8 +397,52 @@ for (const row of manifest) {
   if (row.state !== 'ready') add('block', manifestPath, `asset "${row.id}" is ${row.state}`, row.what);
   if (!row.licence) add('block', manifestPath, `asset "${row.id}" has no licence`, '');
 }
-if (manifest.length && !manifest.some((r) => /logo/i.test(r.id))) {
-  add('block', manifestPath, 'no logo row in the manifest', 'a mark is an asset, not a detail');
+/* Two rules that both get called "the logo rule" and are opposites.
+
+   One: the site's own mark. If the page renders one — and nearly every page does — it is an
+   asset and it belongs in the manifest. Three independently built sites all drew a mark and
+   none of the three recorded it, which is a missing instruction rather than three oversights.
+   This used to demand a logo row from every manifest unconditionally, which is wrong the
+   other way: it would fail a page that deliberately has no mark, and it said nothing about
+   whether the mark the page actually renders was ever recorded.
+
+   Two: other people's marks — customers, partners, certifications. Those are permitted only
+   when the brief carries real named evidence, and where they appear they must never be a
+   substitute, because a stand-in endorsement is a fabricated endorsement. That half is
+   checked in checkBorrowedMarks below, against EVIDENCE.md. */
+if (manifest.length) {
+  const BRAND = /<a[^>]*class="[^"]*\b(brand|logo|mark|ident|wordmark|masthead__link)\b[^"]*"[\s\S]{0,1200}?<\/a>/i;
+  for (const { label, html } of sources) {
+    const el = markup(html).match(BRAND);
+    if (!el) continue;
+
+    /* Where the mark carries a data-asset, that id is the answer and nothing is inferred:
+       the row either exists or it does not. Matching on the *word* "logo" appearing in some
+       id was the old rule, and it failed three builds that had each recorded their mark
+       correctly under the name `mark`. A gate that reports a fault the work does not have
+       costs more than one that reports nothing. */
+    const ids = [...el[0].matchAll(/data-asset=["']([^"']+)["']/g)].map((m) => m[1]);
+    if (ids.length) {
+      for (const id of ids) {
+        if (!manifest.some((r) => r.id === id)) {
+          add('block', manifestPath, `the mark renders as "${id}" and the manifest has no such row`,
+            'a mark is an asset like any other picture — see v2/24-asset-plan.md');
+        }
+      }
+      continue;
+    }
+
+    /* No data-asset on the mark. Then the question is whether *any* row plausibly records it,
+       and a miss here is reported as a warning, because the gate is now inferring. */
+    const looksLikeMark = manifest.some((r) => /\b(logo|wordmark|mark|ident|brand)\b/i.test(r.id));
+    if (!looksLikeMark) {
+      add('block', manifestPath, 'the page renders a brand mark that the manifest does not list',
+        'a mark is an asset like any other picture — see v2/24-asset-plan.md');
+    } else {
+      add('warn', label, 'the brand mark carries no data-asset id',
+        'without one the gate cannot tell which manifest row is the mark, and neither can a reader');
+    }
+  }
 }
 
 let totalImages = 0;
@@ -355,6 +451,7 @@ for (const { label, html } of sources) {
   checkDummyIdentifiers(label, html);
   checkCommerceClaims(label, html, evidenceRaw);
   checkEmptyBrandMark(label, html);
+  checkBorrowedMarks(label, html, evidenceRaw, manifest);
   checkFavicon(label, html);
   totalImages += checkImages(label, html, manifest);
 }

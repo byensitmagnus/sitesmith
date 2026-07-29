@@ -76,13 +76,21 @@ part of the skill works.
 **Assets is 6 on five of six reviews and 7 on the sixth.** It is the lowest axis on every
 page, and no page scores above 7 on it. That is the finding.
 
-`production-gate` reached the same conclusion from the other direction, without seeing a
-sheet: it blocks all three because none of the three manifests has a logo row, and blocks the
-foundry additionally for an inline `<svg>` with no `data-asset` id. Every one of the three
-agents drew a mark. Not one of them recorded it as an asset.
+> **Corrected 2026-07-29.** This paragraph originally read that `production-gate` blocked all
+> three because no manifest had a logo row, and that all three agents drew a mark and none
+> recorded it. That was wrong, and it was my error, not theirs. All three recorded their mark
+> — `mark-lay`, `mark`, `mark` — and the gate was matching on the word "logo" appearing in an
+> id. I read three identical failures as a missing instruction and never opened the manifests.
+> See `GATES.md` for the corrected table and the rule that replaced it.
 
-Two instruments that cannot see each other both say the weakest thing about these sites is the
-pictures and the record of the pictures.
+`production-gate` finds one real asset fault, in the foundry: a drawing of the five partials
+of a bell, rendered inline with an `aria-label` and no manifest id — an asset on the page that
+the asset record does not know about. The other two are production-ready.
+
+So the two instruments do not say the same thing, and the honest reading is narrower than the
+one I first wrote. The gate says the *records* are very nearly right. The reviewers, who never
+saw a manifest, say the *pictures* are the weakest thing on all three pages. It is the reviews
+that carry this finding, and they carry it on their own.
 
 ## The specific asset criticisms, both reviewers
 

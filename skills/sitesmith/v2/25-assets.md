@@ -79,18 +79,37 @@ In order of preference:
    is typographic and imagery is not load-bearing. If this is the answer, `DIRECTION.md` says
    so and the manifest still lists the logo and the favicon, which cannot be designed out.
 
-## The logo is an asset
+## The mark is an asset
 
-A rounded rectangle filled with the accent colour is not a logo. It is the shape of a logo.
+A rounded rectangle filled with the accent colour is not a mark. It is the shape of a mark.
 
-The manifest must carry a `logo-primary` row whose state is `ready`, and the gate checks that
-the header mark is not an empty element with a background colour. Acceptable answers, in
-order: the client's real logo file; a wordmark set in the site's display face with a
-deliberate adjustment; a drawn mark. Any of the three is fine. An empty `<i>` or `<span>`
-with `background: var(--accent)` is not.
+If the page renders a brand mark, the manifest has a row for it, and the rendered mark carries
+`data-asset="<that id>"` so the two can be matched. The id does not have to contain the word
+"logo" — `mark`, `mark-lay` and `wordmark` are all fine, and a gate that insisted otherwise
+failed three builds that had each recorded their mark correctly.
+
+Acceptable answers, in order: the client's real logo file; a wordmark set in the site's display
+face with a deliberate adjustment; a drawn mark. An empty `<i>` or `<span>` with
+`background: var(--accent)` is not one of the three.
 
 The favicon is the same rule. Nine 32×32 rounded rectangles with two white strokes in them is
 what happens when the favicon is treated as a checkbox.
+
+**Other people's marks are a different rule entirely** — customer logos, partner logos,
+certification badges. Those are permitted only where `EVIDENCE.md` names who lent each one,
+they are never `substitute` or `needed`, and they are never invented. See
+[24-asset-plan.md](24-asset-plan.md), "Marks, and customer logos, which are not the same
+thing", for why the two rules point in opposite directions.
+
+## What the pictures are for comes first
+
+This file is the *record*: what each asset is, where it came from, what licence it carries and
+whether it exists yet. It is not the *plan*. Assets scored lowest of the seven criteria on
+every page of the last review round while every row here was correct, which is what a good
+record of the wrong pictures looks like.
+
+[24-asset-plan.md](24-asset-plan.md) is written first and answers the question this file
+cannot: what is each picture doing, and whose job does it serve.
 
 ## Checking
 

@@ -29,6 +29,7 @@
         "inspect",
         "evidence",
         "brand",
+        "asset-plan",
         "visual-plan"
       ],
       "summary": "Understand the subject and what already exists. Produces BRIEF.md, EVIDENCE.md, BRAND.md, ASSET-MANIFEST.md, VISUAL-SOURCE-PLAN.md."
@@ -126,6 +127,20 @@
       ],
       "gate": null,
       "note": "What the subject already owns, before anything is invented. A client with a logo, a palette and a photo library hands them over here or nowhere."
+    },
+    {
+      "id": "asset-plan",
+      "name": "Asset plan",
+      "reads": [
+        "v2/24-asset-plan.md",
+        "EVIDENCE.md",
+        "BRAND.md"
+      ],
+      "produces": [
+        "ASSET-PLAN.md"
+      ],
+      "gate": "scripts/asset-plan.mjs check ASSET-PLAN.md",
+      "note": "What each picture is for, before anything is sourced or generated. Two assignment-blinded reviewers scored assets the lowest criterion on all three round-7 builds while every picture was correctly sourced, licensed and cropped — so the gap was here, one step earlier than the sourcing engine. One block per asset: what it carries, whose job from the brief it serves, how it is used. A page whose visitor is choosing between things needs an asset that puts the options in one frame. No component is mandatory; the plan is. Re-checked at the production gate against DIRECTION.md and the manifest."
     },
     {
       "id": "visual-plan",
@@ -276,10 +291,11 @@
       "id": "production",
       "name": "Production gate",
       "reads": [
-        "v2/25-assets.md"
+        "v2/25-assets.md",
+        "v2/24-asset-plan.md"
       ],
       "produces": [],
-      "gate": "scripts/production-gate.mjs <url> --manifest ASSET-MANIFEST.md --mode <M|E|P> --production"
+      "gate": "scripts/asset-plan.mjs check ASSET-PLAN.md --manifest ASSET-MANIFEST.md --direction DIRECTION.md && scripts/production-gate.mjs <url> --manifest ASSET-MANIFEST.md --mode <M|E|P> --production"
     },
     {
       "id": "critique",

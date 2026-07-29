@@ -38,23 +38,37 @@ Reported, not gated. Distinct values over loose literals.
 Spacing and font-size are chosen at the call site far more often than colour is. Three agents
 who never met all tokenised their palette and all improvised their scale.
 
-## What fails — 1: production-gate, all three
+## What fails — 1: production-gate
+
+> **Corrected 2026-07-29, after the round.** What this section originally said was wrong, and
+> the correction matters more than the original finding, so it is written here rather than
+> quietly amended.
+>
+> It read: *"Every one of the three built a mark. Not one of them recorded it as an asset."*
+> That is false. All three recorded their mark. `01-chandlery` recorded it as `mark-lay`,
+> with a paragraph about why it is a rope seen end on; `02-foundry` and `03-cask-console`
+> both recorded theirs as `mark`.
+>
+> The gate required a manifest id matching the *word* "logo". Three builds that had each done
+> the work correctly failed for having called the row `mark`. I read three identical failures
+> as evidence of a missing instruction, wrote that up as the round's second finding, and did
+> not check the manifests. The rule now matches the `data-asset` on the rendered mark, which
+> is the mechanism the manifest already uses everywhere else.
 
 Run from each pilot's own root, which is where `journeys/` sits beside `site/`.
 
-| pilot | blocking |
+| pilot | blocking, under the corrected rule |
 | --- | --- |
-| 01-chandlery | 1 — no logo row in `ASSET-MANIFEST.md` |
-| 02-foundry | 2 — no logo row; one inline `<svg>` with no `data-asset` id |
-| 03-cask-console | 1 — no logo row in `ASSET-MANIFEST.md` |
+| 01-chandlery | none — production-ready |
+| 02-foundry | 1 — one inline `<svg>` with no `data-asset` id |
+| 03-cask-console | none — production-ready |
 
-Every one of the three built a mark. Not one of them recorded it as an asset. Three agents
-with no contact with each other made the same omission, which makes it an instruction fault
-rather than three oversights: the skill asks for a mark and does not say that the mark is a
-row in the manifest like any other picture.
+The foundry's remaining block is real: a drawing of the five partials of a bell, rendered
+inline, carrying an `aria-label` and no manifest id. That is an asset on the page that the
+asset record does not know about, which is the thing this rule is for.
 
-Not fixed here. The pilots are not to be patched while the review is in flight, and the fix
-belongs in the skill's wording, not in three manifests.
+Nothing was patched to produce this table. The pilots are byte-identical to what their build
+agents left; the gate was wrong and the gate changed.
 
 ## What fails — 2: portfolio-diversity, 5 findings
 

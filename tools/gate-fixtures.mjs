@@ -25,6 +25,7 @@
 
 import { spawnSync, spawn } from 'node:child_process';
 import { createServer } from 'node:http';
+import { existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { join } from 'node:path';
 
@@ -112,6 +113,30 @@ expect('direction', 'an axis record written as prose headings',
       [join(FIX, 'direction/fail-axis-record-is-prose/NOTE.md'), 'http://127.0.0.1:4611/'], ROOT),
   1, /axis record is missing or not in the documented form/);
 
+/* ══ asset-plan ═════════════════════════════════════════════════════════
+   Assets scored 6 on five of six assignment-blinded reviews, the lowest criterion on every
+   page, and every picture involved was sourced, licensed, recorded and cropped correctly.
+   The gap was upstream of all of that: what is each picture for. These fixtures hold the
+   answer to that question to the same standard as the rest. */
+
+const ap = (fixture) => {
+  const dir = join(FIX, 'asset-plan', fixture);
+  const extra = [];
+  if (existsSync(join(dir, 'ASSET-MANIFEST.md'))) extra.push('--manifest', 'ASSET-MANIFEST.md');
+  if (existsSync(join(dir, 'DIRECTION.md'))) extra.push('--direction', 'DIRECTION.md');
+  return run(join(S, 'asset-plan.mjs'), ['check', 'ASSET-PLAN.md', ...extra], dir);
+};
+
+expect('asset-plan', 'assets that each carry an argument', ap('pass-carrying-assets'), 0);
+expect('asset-plan', 'a page that declares imagery is not load-bearing and means it',
+  ap('pass-deliberately-imageless'), 0);
+expect('asset-plan', 'every field filled in and none of them saying anything',
+  ap('fail-decoration'), 1, /says nothing about this subject/);
+expect('asset-plan', 'a comparison the page invites and no asset enables',
+  ap('fail-no-comparative'), 1, /none is comparative/);
+expect('asset-plan', 'other people\'s marks resting on nothing',
+  ap('fail-invented-logos'), 1, /marks resting on no evidence|fabricated endorsement/);
+
 /* ══ production-gate ════════════════════════════════════════════════════ */
 
 const prod = (fixture, extra = []) => run(join(S, 'production-gate.mjs'),
@@ -119,6 +144,20 @@ const prod = (fixture, extra = []) => run(join(S, 'production-gate.mjs'),
   join(FIX, 'production', fixture));
 
 expect('production', 'a complete page with every asset ready', prod('pass-complete', ['--mode', 'E']), 0);
+
+/* The two logo rules, which are opposites and both used to be called "the logo rule".
+   The mark the page renders must be recorded; other people's marks must be lent. */
+expect('production', 'a brand mark on the page that the manifest never lists',
+  prod('fail-unlisted-mark', ['--mode', 'E']), 1,
+  /the mark renders as "logo-primary" and the manifest has no such row/);
+expect('production', 'customers named on the page and nowhere in the evidence pack',
+  prod('fail-invented-endorsement', ['--mode', 'E']), 1,
+  /nowhere in EVIDENCE\.md/);
+expect('production', 'customers who agreed in writing to be named',
+  prod('pass-evidenced-endorsement', ['--mode', 'E']), 0);
+expect('production', 'a stand-in where someone else\'s endorsement should be',
+  prod('fail-substitute-endorsement', ['--mode', 'E']), 1,
+  /no stand-in for someone else/);
 expect('production', 'a labelled placeholder', prod('fail-labelled-placeholder'), 1,
   /placeholder language/);
 expect('production', 'an asset that is needed or substitute', prod('fail-asset-needed'), 1,

@@ -69,6 +69,17 @@ source, type, photography, voice — separated into what is fixed and what is op
 anything is invented. Then `ASSET-MANIFEST.md`: every non-text thing the site needs, each
 `ready`, `needed` or `substitute`.
 
+**4b. Plan what the pictures are for.** [v2/24-asset-plan.md](v2/24-asset-plan.md), before
+anything is sourced or generated. Two assignment-blinded reviewers scored assets the lowest
+criterion on all three of the last builds, and every picture involved was correctly sourced,
+licensed, recorded and cropped — so the gap was one step earlier than the sourcing engine.
+`ASSET-PLAN.md` says, per asset, what it carries, whose job it serves and how it is used. If
+the visitor's job is to choose between things, something has to put them in one frame.
+
+```bash
+node scripts/asset-plan.mjs check ASSET-PLAN.md
+```
+
 **5. Run the direction lab.** [v2/20-direction-lab.md](v2/20-direction-lab.md). Three comps
 that are *structurally* different, one chosen with reasons, two recorded with the reason they
 lost. Starting points, three at a time and deliberately contrasting:
@@ -156,6 +167,7 @@ When two things disagree, the higher row wins.
 | [v2/10-core.md](v2/10-core.md) | Once per build |
 | [v2/modes/](v2/modes/README.md) | After routing — one file only |
 | [v2/20-direction-lab.md](v2/20-direction-lab.md) | Step 5 |
+| [v2/24-asset-plan.md](v2/24-asset-plan.md) | Step 4b — before anything is sourced |
 | [v2/25-assets.md](v2/25-assets.md) | Step 4, and again at step 11 |
 | [v2/30-contract.md](v2/30-contract.md) | Step 6 — after the direction is chosen, never before |
 | [v2/40-interaction.md](v2/40-interaction.md) | Step 7 |
