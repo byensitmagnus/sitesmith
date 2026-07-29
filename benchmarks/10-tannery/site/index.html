@@ -1,0 +1,1219 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Falkner &amp; Vane, vegetable tannery, Walsall</title>
+<meta name="description" content="Six bark-tanned leathers drawn to scale on one baseline, and the pit calendar that decides when each one ships. Oak and mimosa, in pits, in the same Walsall yard since 1878. Sold by the hide to the trade.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Falkner &amp; Vane, vegetable tannery, Walsall">
+<meta property="og:description" content="Six leathers drawn edge on, on one baseline, against rules a millimetre apart, with the nine to fourteen month pit calendar beside them. Trade only, by the hide.">
+<meta property="og:locale" content="en_GB">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23e6dcc6'/%3E%3Crect x='5' y='26' width='22' height='2' fill='%23241a11'/%3E%3Crect x='5' y='22' width='22' height='3' fill='%23241a11'/%3E%3Crect x='5' y='18' width='22' height='3' fill='%23241a11'/%3E%3Crect x='5' y='13' width='22' height='4' fill='%23241a11'/%3E%3Crect x='5' y='7' width='22' height='5' fill='%23241a11'/%3E%3Crect x='5' y='2' width='22' height='4' fill='%23241a11'/%3E%3C/svg%3E">
+<style>
+/* ══ contract ═══════════════════════════════════════════════════════════════
+   Copied verbatim from site/DESIGN-SYSTEM.md. Derived from comp A. */
+:root{
+  /* spacing: one step of 8px, ramp 0.5 1 1.5 2 3 4 6 8 12 */
+  --step:8px;
+  --space-1:4px; --space-2:8px; --space-3:12px; --space-4:16px;
+  --space-5:24px; --space-6:32px; --space-7:48px; --space-8:64px; --space-9:96px;
+
+  /* type: base 17px, ratio 1.25, eight roles */
+  --text-micro:0.6875rem; --text-small:0.8125rem; --text-body:1.0625rem;
+  --text-lead:1.25rem; --text-h3:1.3125rem; --text-h2:1.75rem;
+  --text-h1:2.5rem; --text-display:3.25rem;
+  --leading-tight:1.08; --leading-body:1.58;
+  --measure:64ch;
+
+  /* shape: hard corners, both values zero. Pit copings, bench, a ruled page. */
+  --radius-inner:0; --radius-outer:0;
+
+  /* elevation: none. Separation is by rule and by ground. */
+  --elev-0:none; --elev-1:none; --elev-2:none;
+
+  /* container and grid */
+  --container:1120px; --gutter:clamp(20px,5vw,40px); --grid-columns:12;
+
+  /* colour: the buff of undyed bark-tanned leather, ink at the strength of oak
+     liquor, one russet accent that is the colour oak-tanned leather reaches */
+  --bg:#e6dcc6; --surface:#efe7d6;
+  --line:#b9a882; --rule:#9c8a5f;
+  --ink:#241a11; --ink-2:#5a4a34;
+  --accent:#8f3a16; --on-accent:#f6efdf;
+  --bad:#8f2216;
+
+  /* the reversed inset: the pit section, and only that */
+  --pit-bg:#16110a; --pit-ink:#e7ddc7; --pit-ink-2:#a99a80;
+  --pit-line:#3d3220; --pit-rule:#57482f;
+  --pit-accent:#e0954f; --pit-on-accent:#16110a;
+
+  /* families: one serif, one monospace for every measured figure */
+  --font-display:Georgia,"Iowan Old Style","Palatino Linotype","Book Antiqua",serif;
+  --font-body:Georgia,"Iowan Old Style","Palatino Linotype","Book Antiqua",serif;
+  --font-mono:"DejaVu Sans Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,"Liberation Mono",monospace;
+
+  /* motion */
+  --motion-fast:120ms; --motion-base:200ms;
+  --ease:cubic-bezier(.2,.6,.2,1);
+
+  color-scheme:light dark;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --bg:#17110a; --surface:#1e170e;
+    --line:#4d3f2a; --rule:#6a583a;
+    --ink:#e8dec8; --ink-2:#b2a17f;
+    --accent:#e0954f; --on-accent:#17110a;
+    --bad:#e08a7c;
+    --pit-bg:#e6dcc6; --pit-ink:#241a11; --pit-ink-2:#5a4a34;
+    --pit-line:#b9a882; --pit-rule:#9c8a5f;
+    --pit-accent:#8f3a16; --pit-on-accent:#f6efdf;
+  }
+}
+
+/* ══ ground ════════════════════════════════════════════════════════════════ */
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--bg);color:var(--ink);
+  font:var(--text-body)/var(--leading-body) var(--font-body);
+  text-rendering:optimizeLegibility;
+}
+.wrap{max-width:var(--container);margin:0 auto;padding-inline:var(--gutter)}
+main{display:block}
+h1,h2,h3{margin:0;font-family:var(--font-display);font-weight:400;
+  line-height:var(--leading-tight);letter-spacing:-.012em}
+h1{font-size:var(--text-h1)}
+h2{font-size:var(--text-h2)}
+h3{font-size:var(--text-h3)}
+p{margin:0 0 var(--space-5);max-width:var(--measure)}
+a{color:inherit;text-underline-offset:.18em;text-decoration-thickness:1px}
+:where(a,button,select,input,textarea,[tabindex]):focus-visible{
+  outline:2px solid var(--accent);outline-offset:3px;border-radius:var(--radius-inner);
+}
+.mono{font-family:var(--font-mono);font-variant-numeric:tabular-nums}
+.eyebrow{
+  font:var(--text-micro)/1.7 var(--font-mono);letter-spacing:.19em;text-transform:uppercase;
+  color:var(--ink-2);margin:0 0 var(--space-4);
+}
+.skip{position:absolute;left:-9999px;top:0}
+.skip:focus{left:var(--gutter);top:var(--space-2);z-index:9;background:var(--accent);
+  color:var(--on-accent);padding:var(--space-2) var(--space-4);font-family:var(--font-mono);
+  font-size:var(--text-small)}
+
+/* ══ the tally: 28 strokes, 19 inked. The signature device. ════════════════ */
+.tally{
+  display:block;height:10px;width:280px;max-width:100%;
+  background-image:
+    repeating-linear-gradient(90deg,var(--ink) 0 1.5px,transparent 1.5px 10px),
+    repeating-linear-gradient(90deg,var(--rule) 0 1.5px,transparent 1.5px 10px);
+  background-size:190px 100%,90px 50%;
+  background-position:0 0,190px bottom;
+  background-repeat:no-repeat;
+}
+.rule{border-top:1px solid var(--rule);position:relative}
+.rule .tally{position:absolute;top:-5px;left:0}
+
+/* ══ masthead ══════════════════════════════════════════════════════════════ */
+.masthead{padding:var(--space-4) 0 var(--space-3)}
+.masthead__top{display:flex;flex-wrap:wrap;gap:var(--space-5);align-items:flex-end;
+  justify-content:space-between}
+.mark{display:inline-block;text-decoration:none}
+.mark svg{display:block;height:30px;width:auto}
+.mark--foot svg{height:20px}
+.mark__w{fill:var(--ink)}
+nav{margin-top:var(--space-4)}
+.nav{display:flex;flex-wrap:wrap;gap:var(--space-5);list-style:none;margin:0;padding:0;
+  font:var(--text-micro)/1 var(--font-mono);letter-spacing:.16em;text-transform:uppercase}
+.nav a{display:flex;align-items:center;padding:0;text-decoration:none;color:var(--ink-2);
+  border-bottom:2px solid transparent;min-height:44px}
+.nav a:hover{color:var(--ink)}
+.nav a[aria-current]{color:var(--ink);border-bottom-color:var(--accent)}
+
+/* ══ buttons ═══════════════════════════════════════════════════════════════ */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:var(--space-2);
+  min-height:44px;padding:var(--space-3) var(--space-5);
+  font:var(--text-small)/1 var(--font-mono);letter-spacing:.13em;text-transform:uppercase;
+  border:1.5px solid var(--accent);background:var(--accent);color:var(--on-accent);
+  border-radius:var(--radius-inner);cursor:pointer;text-decoration:none;
+  transition:background var(--motion-fast) var(--ease),color var(--motion-fast) var(--ease);
+}
+.btn:hover{background:transparent;color:var(--accent)}
+.btn:active{transform:translateY(1px)}
+.btn--quiet{background:transparent;color:var(--ink-2);border-color:var(--rule)}
+.btn--quiet:hover{color:var(--ink);border-color:var(--ink)}
+.btn:disabled{border-color:var(--line);background:transparent;color:var(--ink-2);
+  opacity:.62;cursor:not-allowed}
+.btn:disabled:hover{background:transparent}
+
+/* ══ sections ══════════════════════════════════════════════════════════════ */
+section{padding:var(--space-8) 0 var(--space-9)}
+.sec-head{margin-bottom:var(--space-6)}
+.lede{font-size:var(--text-lead);max-width:58ch}
+
+/* ══ the plate ═════════════════════════════════════════════════════════════ */
+#plate h1{font-size:var(--text-display);letter-spacing:-.024em;max-width:20ch}
+.opening{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  gap:var(--space-5) var(--space-8);align-items:start;
+  margin:var(--space-6) 0 var(--space-7)}
+.opening p{margin:0;max-width:46ch}
+.key{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--space-6);
+  margin:0;padding:var(--space-4) 0 0}
+.key div{margin:0}
+.key dt{font:var(--text-micro)/1 var(--font-mono);letter-spacing:.16em;text-transform:uppercase;
+  color:var(--ink-2);margin-bottom:var(--space-2)}
+.key dd{margin:0;font-size:var(--text-small);color:var(--ink-2);line-height:1.45}
+.key dd b{color:var(--ink);font-weight:400}
+
+.plate{border-bottom:1.5px solid var(--ink-2)}
+.row{
+  display:grid;grid-template-columns:minmax(0,1fr) minmax(0,560px) 96px;
+  gap:var(--space-6);align-items:center;
+  border-top:1px solid var(--line);padding:var(--space-2) 0;
+  transition:opacity var(--motion-base) var(--ease);
+}
+.plate[data-active] .row{opacity:.42}
+.plate[data-active] .row[data-picked]{opacity:1}
+.row__id b{display:block;font-weight:400;font-size:var(--text-h3);line-height:1.22}
+.row__use{display:block;font:var(--text-micro)/1.5 var(--font-mono);letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink-2);margin-top:var(--space-1)}
+.row__tag{display:inline-block;margin-top:var(--space-2);padding:2px var(--space-2);
+  font:var(--text-micro)/1.5 var(--font-mono);letter-spacing:.14em;text-transform:uppercase;
+  border:1px solid var(--ink);color:var(--ink)}
+.row__tag[hidden]{display:none}
+.row__fig{text-align:right;font-family:var(--font-mono);font-variant-numeric:tabular-nums}
+.row__fig .mm{display:block;font-size:var(--text-lead);letter-spacing:-.02em}
+.row__fig .mm i{font-style:normal;font-size:var(--text-micro);letter-spacing:.08em}
+.row__temper{display:block;font-size:var(--text-micro);letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink-2);margin-top:var(--space-1)}
+
+.sec{display:block;width:100%;height:auto}
+.sec__rule line{stroke:var(--rule);stroke-width:1;opacity:.75}
+.sec__base{stroke:var(--ink-2);stroke-width:1.5;fill:none}
+.sec__body{fill:var(--ink);fill-opacity:.9}
+.sec__grain{fill:none;stroke:var(--bg);stroke-width:3;stroke-linecap:butt}
+.sec__halo{fill:none;stroke:var(--bg);stroke-width:5;visibility:hidden}
+.sec__ghost{fill:none;stroke:var(--ink);stroke-width:2;stroke-dasharray:7 5;visibility:hidden}
+.row[data-ghosted] .sec__halo,.row[data-ghosted] .sec__ghost{visibility:visible}
+.row[data-picked] .sec__body{fill-opacity:1}
+.row[data-picked] .sec__base{stroke:var(--ink);stroke-width:2.5}
+
+/* ══ the compare control ═══════════════════════════════════════════════════ */
+.compare{display:flex;flex-wrap:wrap;align-items:flex-end;gap:var(--space-5);
+  margin-top:var(--space-6)}
+.field{display:flex;flex-direction:column;gap:var(--space-2);min-width:0}
+.field>label{font:var(--text-micro)/1 var(--font-mono);letter-spacing:.16em;
+  text-transform:uppercase;color:var(--ink-2)}
+.field .hint{font-size:var(--text-small);color:var(--ink-2);max-width:44ch}
+select,input[type=text],input[type=number]{
+  font:var(--text-body)/1.3 var(--font-body);color:var(--ink);background:var(--surface);
+  border:1.5px solid var(--rule);border-radius:var(--radius-inner);
+  padding:var(--space-3) var(--space-4);min-height:44px;max-width:100%;
+}
+select:hover,input:hover{border-color:var(--ink-2)}
+input[type=number]{width:9ch;font-family:var(--font-mono)}
+.compare__out{
+  margin:var(--space-5) 0 0;padding:var(--space-4) var(--space-5);max-width:74ch;
+  border-left:3px solid var(--ink-2);background:var(--surface);
+  font-size:var(--text-small);line-height:1.55;
+}
+.compare__out[data-state=error]{border-left-color:var(--bad);color:var(--ink)}
+.compare__out b{font-weight:400;font-family:var(--font-mono);font-variant-numeric:tabular-nums}
+
+/* ══ the specification table ═══════════════════════════════════════════════ */
+.tablewrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:620px;font-size:var(--text-small)}
+caption{text-align:left;font-size:var(--text-small);color:var(--ink-2);
+  margin-bottom:var(--space-4);max-width:var(--measure)}
+th,td{text-align:left;padding:var(--space-3) var(--space-4) var(--space-3) 0;
+  border-bottom:1px solid var(--line);vertical-align:baseline}
+thead th{font:var(--text-micro)/1.4 var(--font-mono);letter-spacing:.14em;
+  text-transform:uppercase;color:var(--ink-2);border-bottom:1.5px solid var(--ink-2)}
+tbody th{font-weight:400;font-size:var(--text-body)}
+td.num{font-family:var(--font-mono);font-variant-numeric:tabular-nums;text-align:right;
+  padding-right:var(--space-6)}
+.note{font-size:var(--text-small);color:var(--ink-2);max-width:var(--measure);
+  margin-top:var(--space-5)}
+
+/* ══ the pit: the one inset, palette reversed ══════════════════════════════ */
+.pit{
+  --bg:var(--pit-bg);--ink:var(--pit-ink);--ink-2:var(--pit-ink-2);
+  --line:var(--pit-line);--rule:var(--pit-rule);
+  --accent:var(--pit-accent);--on-accent:var(--pit-on-accent);
+  --surface:var(--pit-bg);
+  background:var(--bg);color:var(--ink);
+}
+.pit__head{display:grid;grid-template-columns:minmax(0,1fr) 240px;gap:var(--space-8);
+  align-items:start;margin-bottom:var(--space-7)}
+.pit__head p:last-child{margin-bottom:0}
+.yard{display:block;width:100%;height:auto}
+.yard__down{fill:var(--ink);stroke:none}
+.yard__open{fill:none;stroke:var(--ink-2);stroke-width:1.5}
+figure{margin:0}
+figcaption{font-size:var(--text-small);line-height:1.5;
+  color:var(--ink-2);margin-top:var(--space-4);max-width:60ch}
+.cal figcaption{max-width:72ch;margin-top:var(--space-5);
+  border-top:1px solid var(--line);padding-top:var(--space-4)}
+
+/* ══ the calendar ══════════════════════════════════════════════════════════ */
+.cal{margin-top:var(--space-6)}
+.cal__scale{display:grid;grid-template-columns:224px minmax(0,1fr) 96px;gap:var(--space-5);
+  align-items:end;margin-bottom:var(--space-2)}
+.cal__ticks{position:relative;height:18px;
+  font:var(--text-micro)/1 var(--font-mono);letter-spacing:.09em;color:var(--ink-2)}
+.cal__ticks span{position:absolute;bottom:0;white-space:nowrap}
+.cal__ticks .t-mid{transform:translateX(-50%)}
+.cal__ticks .t-end{right:0}
+.cal__ticks .t-now{color:var(--accent)}
+.cal__rows{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.cal__row{display:grid;grid-template-columns:224px minmax(0,1fr) 96px;gap:var(--space-5);
+  align-items:center;border-bottom:1px solid var(--line);padding:var(--space-3) 0}
+.cal__name{font-size:var(--text-small);line-height:1.3}
+.cal__pitdate{display:block;font:var(--text-micro)/1.5 var(--font-mono);letter-spacing:.06em;
+  color:var(--ink-2);margin-top:2px}
+.cal__track{position:relative;height:26px;
+  background-image:repeating-linear-gradient(90deg,var(--line) 0 1px,transparent 1px 4.1667%)}
+.cal__win{position:absolute;top:0;bottom:0;left:var(--wx);width:var(--ww);
+  border:1px dashed var(--ink-2)}
+.cal__pit{position:absolute;top:7px;height:12px;left:var(--px);width:var(--pw);
+  border:1px solid var(--ink-2);
+  background-image:repeating-linear-gradient(135deg,var(--ink-2) 0 2px,transparent 2px 6px)}
+.cal__bar{position:absolute;top:7px;height:12px;left:var(--x);width:var(--w);
+  min-width:3px;background:var(--ink)}
+.cal__now{position:absolute;top:-4px;bottom:-4px;left:45.8%;width:2px;background:var(--accent)}
+.cal__fig{font:var(--text-small)/1 var(--font-mono);font-variant-numeric:tabular-nums;
+  text-align:right}
+.cal__key{display:flex;flex-wrap:wrap;gap:var(--space-5);list-style:none;margin:var(--space-5) 0 0;
+  padding:0;font:var(--text-micro)/1.4 var(--font-mono);letter-spacing:.08em;color:var(--ink-2)}
+.cal__key li{display:flex;align-items:center;gap:var(--space-2)}
+.k{display:inline-block;width:26px;height:10px;flex:none}
+.k--lead{background:var(--ink)}
+.k--pit{border:1px solid var(--ink-2);
+  background-image:repeating-linear-gradient(135deg,var(--ink-2) 0 2px,transparent 2px 6px)}
+.k--win{border:1px dashed var(--ink-2)}
+.k--now{width:2px;background:var(--accent);height:14px}
+
+/* ══ buying ════════════════════════════════════════════════════════════════ */
+.terms{list-style:none;margin:0;padding:0;
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-7) var(--space-8)}
+.terms li{border-top:1.5px solid var(--ink-2);padding-top:var(--space-4);max-width:44ch}
+.terms h3{font:var(--text-micro)/1 var(--font-mono);letter-spacing:.17em;text-transform:uppercase;
+  color:var(--ink-2);margin-bottom:var(--space-3)}
+.terms p{margin:0;font-size:var(--text-body)}
+
+/* ══ the enquiry ═══════════════════════════════════════════════════════════ */
+.enq{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-6) var(--space-8);
+  max-width:860px}
+.enq .field{gap:var(--space-2)}
+.enq .field--wide{grid-column:1/-1}
+.enq .actions{grid-column:1/-1;display:flex;gap:var(--space-5);align-items:center;flex-wrap:wrap}
+.err{display:block;font:var(--text-small)/1.4 var(--font-mono);color:var(--bad);margin-top:2px}
+.err[hidden]{display:none}
+[aria-invalid=true]{border-color:var(--bad);border-width:2px}
+.summary{border:2px solid var(--bad);padding:var(--space-4) var(--space-5);
+  margin-bottom:var(--space-6);max-width:var(--measure)}
+.summary[hidden]{display:none}
+.summary h3{font-size:var(--text-body);margin-bottom:var(--space-3)}
+.summary ul{margin:0;padding-left:var(--space-5);font-size:var(--text-small)}
+.summary a{color:var(--bad)}
+.note-out{margin-top:var(--space-7);border-top:1.5px solid var(--ink-2);padding-top:var(--space-5)}
+.note-out[hidden]{display:none}
+.note-out h3{font:var(--text-micro)/1 var(--font-mono);letter-spacing:.17em;
+  text-transform:uppercase;color:var(--ink-2);margin-bottom:var(--space-4)}
+.note-out dl{display:grid;grid-template-columns:14ch minmax(0,1fr);gap:var(--space-2) var(--space-5);
+  margin:0;font:var(--text-small)/1.5 var(--font-mono);max-width:64ch}
+.note-out dt{color:var(--ink-2);letter-spacing:.08em;text-transform:uppercase;
+  font-size:var(--text-micro);padding-top:3px}
+.note-out dd{margin:0}
+.note-out p{font-size:var(--text-small);color:var(--ink-2);margin:var(--space-5) 0 0}
+
+/* ══ footer ════════════════════════════════════════════════════════════════ */
+footer{padding:var(--space-7) 0 var(--space-8);border-top:1px solid var(--rule)}
+.foot{display:flex;flex-wrap:wrap;gap:var(--space-6) var(--space-8);justify-content:space-between}
+.foot p{font-size:var(--text-small);color:var(--ink-2);margin:0;max-width:40ch}
+.foot .tally{margin-top:var(--space-3)}
+
+/* ══ widths ════════════════════════════════════════════════════════════════ */
+@media (max-width:1000px){
+  .pit__head{grid-template-columns:minmax(0,1fr) 200px;gap:var(--space-6)}
+}
+@media (max-width:900px){
+  :root{--text-h1:2.125rem;--text-h2:1.5rem;--text-display:2.375rem}
+  .opening{grid-template-columns:1fr;gap:var(--space-5);align-items:start;
+    margin-bottom:var(--space-6)}
+  .row{grid-template-columns:minmax(0,1fr) auto;gap:var(--space-3) var(--space-5);
+    padding:var(--space-4) 0}
+  .row__id{grid-column:1;grid-row:1}
+  .row__fig{grid-column:2;grid-row:1;align-self:start}
+  .sec{grid-column:1/-1;grid-row:2;max-width:560px}
+  .key{grid-template-columns:1fr;gap:var(--space-4)}
+  .pit__head{grid-template-columns:1fr}
+  .yard{max-width:260px}
+  .cal__scale{grid-template-columns:1fr;gap:0}
+  .cal__scale .cal__spacer{display:none}
+  .cal__row{grid-template-columns:minmax(0,1fr) auto;gap:var(--space-2) var(--space-4)}
+  .cal__name{grid-column:1}
+  .cal__fig{grid-column:2}
+  .cal__track{grid-column:1/-1;margin-top:var(--space-2)}
+  .terms{grid-template-columns:1fr;gap:var(--space-6)}
+  .enq{grid-template-columns:1fr}
+  .t-sm{display:none}
+}
+@media (max-width:620px){
+  :root{--text-lead:1.1875rem;--text-display:2.25rem}
+  section{padding:var(--space-6) 0 var(--space-8)}
+  .mark svg{height:22px}
+  .btn{padding:var(--space-3) var(--space-4);letter-spacing:.09em}
+  .masthead__top{gap:var(--space-4);align-items:center;flex-wrap:nowrap}
+  .nav{gap:var(--space-2) var(--space-5)}
+  .note-out dl{grid-template-columns:1fr;gap:0}
+  .note-out dt{padding-top:var(--space-3)}
+  .opening{margin-top:var(--space-5)}
+}
+@media (prefers-reduced-motion:reduce){
+  *{transition-duration:1ms !important;animation-duration:1ms !important}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to the plate</a>
+
+<header class="masthead" id="top">
+  <div class="wrap">
+    <div class="masthead__top">
+      <a class="mark" href="#top" aria-label="Falkner and Vane, home">
+        <svg data-asset="mark-fv" viewBox="0 0 280 44" role="img"
+             aria-label="Falkner and Vane, set as a wordmark over a tally of twenty-eight strokes with nineteen inked, one for each pit in the yard and one inked for each pit in use.">
+          <text class="mark__w" x="0" y="22" font-family="Georgia,'Iowan Old Style',serif"
+                font-size="21" letter-spacing="3.4">FALKNER &amp; VANE</text>
+          <g class="mark__t">
+            <rect x="0" y="32" width="1.6" height="10"/><rect x="10" y="32" width="1.6" height="10"/>
+            <rect x="20" y="32" width="1.6" height="10"/><rect x="30" y="32" width="1.6" height="10"/>
+            <rect x="40" y="32" width="1.6" height="10"/><rect x="50" y="32" width="1.6" height="10"/>
+            <rect x="60" y="32" width="1.6" height="10"/><rect x="70" y="32" width="1.6" height="10"/>
+            <rect x="80" y="32" width="1.6" height="10"/><rect x="90" y="32" width="1.6" height="10"/>
+            <rect x="100" y="32" width="1.6" height="10"/><rect x="110" y="32" width="1.6" height="10"/>
+            <rect x="120" y="32" width="1.6" height="10"/><rect x="130" y="32" width="1.6" height="10"/>
+            <rect x="140" y="32" width="1.6" height="10"/><rect x="150" y="32" width="1.6" height="10"/>
+            <rect x="160" y="32" width="1.6" height="10"/><rect x="170" y="32" width="1.6" height="10"/>
+            <rect x="180" y="32" width="1.6" height="10"/>
+          </g>
+          <g class="mark__o">
+            <rect x="190" y="37" width="1.6" height="5"/><rect x="200" y="37" width="1.6" height="5"/>
+            <rect x="210" y="37" width="1.6" height="5"/><rect x="220" y="37" width="1.6" height="5"/>
+            <rect x="230" y="37" width="1.6" height="5"/><rect x="240" y="37" width="1.6" height="5"/>
+            <rect x="250" y="37" width="1.6" height="5"/><rect x="260" y="37" width="1.6" height="5"/>
+            <rect x="270" y="37" width="1.6" height="5"/>
+          </g>
+        </svg>
+      </a>
+      <a class="btn" href="#enquiry">Write an enquiry</a>
+    </div>
+    <nav aria-label="Sections of this page">
+      <ul class="nav">
+        <li><a href="#plate">The leathers</a></li>
+        <li><a href="#spec">Specification</a></li>
+        <li><a href="#pits">The pits</a></li>
+        <li><a href="#buying">Buying</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <section id="plate" aria-labelledby="plate-h">
+    <div class="wrap">
+      <p class="eyebrow">Vegetable tannery &middot; Walsall &middot; since 1878</p>
+      <h1 id="plate-h">Six leathers, drawn to scale.</h1>
+      <div class="opening">
+        <p class="lede">We tan hides in oak and mimosa bark, in pits, over months rather than
+        the day a chrome tannery takes. We sell by the hide to saddlers, bookbinders and two
+        shoemakers. We do not sell to the public.</p>
+        <p>What separates these six is not colour. It is thickness in millimetres, temper and
+        grain, so here they are: drawn edge on, all six standing on one baseline against rules a
+        millimetre apart, thinnest first.</p>
+      </div>
+
+      <div class="plate" id="the-plate">
+        <div class="row" data-row="sheep">
+          <div class="row__id">
+            <b>Oak-tanned sheep</b>
+            <span class="row__use">endpapers, doublures</span>
+            <span class="row__tag" data-tag="sheep" hidden></span>
+          </div>
+          <svg class="sec" viewBox="0 0 560 132" role="img" data-asset="plate-sections"
+               aria-label="Oak-tanned sheep, drawn in section: 0.8 millimetres thick, very soft temper, smooth grain. The overhang at the right hand end is the temper, drawn as an ordering.">
+            <g class="sec__rule">
+              <line x1="40" y1="62" x2="372" y2="62"/>
+              <line x1="40" y1="40" x2="372" y2="40"/>
+              <line x1="40" y1="18" x2="372" y2="18"/>
+            </g>
+            <polyline class="sec__base" points="40,84 372,84 372,99"/>
+            <polygon class="sec__body" points="56,66.4 372,66.4 385.8,67.1 399.1,69.2 412,72.6 424.5,77.4 436.5,83.6 448.1,91.2 459.3,100.1 470,110.4 470,128 459.3,117.7 448.1,108.8 436.5,101.2 424.5,95 412,90.2 399.1,86.8 385.8,84.7 372,84 56,84"/>
+            <polyline class="sec__grain" points="56,66.4 372,66.4 385.8,67.1 399.1,69.2 412,72.6 424.5,77.4 436.5,83.6 448.1,91.2 459.3,100.1 470,110.4"/>
+            <rect class="sec__halo" data-ghost="sheep" x="56" width="316" y="0" height="0"/>
+            <rect class="sec__ghost" data-ghost="sheep" x="56" width="316" y="0" height="0"/>
+          </svg>
+          <div class="row__fig">
+            <span class="mm">0.8<i> mm</i></span>
+            <span class="row__temper">very soft</span>
+          </div>
+        </div>
+        <div class="row" data-row="goat">
+          <div class="row__id">
+            <b>Oak-tanned goat</b>
+            <span class="row__use">full-leather bindings</span>
+            <span class="row__tag" data-tag="goat" hidden></span>
+          </div>
+          <svg class="sec" viewBox="0 0 560 132" role="img" data-asset="plate-sections"
+               aria-label="Oak-tanned goat, drawn in section: 1.2 millimetres thick, soft temper, pronounced, irregular grain. The overhang at the right hand end is the temper, drawn as an ordering.">
+            <g class="sec__rule">
+              <line x1="40" y1="62" x2="372" y2="62"/>
+              <line x1="40" y1="40" x2="372" y2="40"/>
+              <line x1="40" y1="18" x2="372" y2="18"/>
+            </g>
+            <polyline class="sec__base" points="40,84 372,84 372,99"/>
+            <polygon class="sec__body" points="56,57.6 372,57.6 385.8,58.1 399.1,59.6 412,62.1 424.5,65.6 436.5,70.1 448.1,75.6 459.3,82.1 470,89.6 470,116 459.3,108.5 448.1,102 436.5,96.5 424.5,92 412,88.5 399.1,86 385.8,84.5 372,84 56,84"/>
+            <polyline class="sec__grain" points="56,57.6 372,57.6 385.8,58.1 399.1,59.6 412,62.1 424.5,65.6 436.5,70.1 448.1,75.6 459.3,82.1 470,89.6" stroke-dasharray="6 4 2 8 4 3"/>
+            <rect class="sec__halo" data-ghost="goat" x="56" width="316" y="0" height="0"/>
+            <rect class="sec__ghost" data-ghost="goat" x="56" width="316" y="0" height="0"/>
+          </svg>
+          <div class="row__fig">
+            <span class="mm">1.2<i> mm</i></span>
+            <span class="row__temper">soft</span>
+          </div>
+        </div>
+        <div class="row" data-row="mimosa">
+          <div class="row__id">
+            <b>Mimosa calf</b>
+            <span class="row__use">repair work, matching</span>
+            <span class="row__tag" data-tag="mimosa" hidden></span>
+          </div>
+          <svg class="sec" viewBox="0 0 560 132" role="img" data-asset="plate-sections"
+               aria-label="Mimosa calf, drawn in section: 1.3 millimetres thick, medium temper, fine grain. The overhang at the right hand end is the temper, drawn as an ordering.">
+            <g class="sec__rule">
+              <line x1="40" y1="62" x2="372" y2="62"/>
+              <line x1="40" y1="40" x2="372" y2="40"/>
+              <line x1="40" y1="18" x2="372" y2="18"/>
+            </g>
+            <polyline class="sec__base" points="40,84 372,84 372,99"/>
+            <polygon class="sec__body" points="56,55.4 372,55.4 385.8,55.7 399.1,56.7 412,58.2 424.5,60.4 436.5,63.2 448.1,66.7 459.3,70.7 470,75.4 470,104 459.3,99.3 448.1,95.3 436.5,91.8 424.5,89 412,86.8 399.1,85.3 385.8,84.3 372,84 56,84"/>
+            <polyline class="sec__grain" points="56,55.4 372,55.4 385.8,55.7 399.1,56.7 412,58.2 424.5,60.4 436.5,63.2 448.1,66.7 459.3,70.7 470,75.4" stroke-dasharray="2 3"/>
+            <rect class="sec__halo" data-ghost="mimosa" x="56" width="316" y="0" height="0"/>
+            <rect class="sec__ghost" data-ghost="mimosa" x="56" width="316" y="0" height="0"/>
+          </svg>
+          <div class="row__fig">
+            <span class="mm">1.3<i> mm</i></span>
+            <span class="row__temper">medium</span>
+          </div>
+        </div>
+        <div class="row" data-row="calf">
+          <div class="row__id">
+            <b>Oak-tanned calf</b>
+            <span class="row__use">book boards, spines</span>
+            <span class="row__tag" data-tag="calf" hidden></span>
+          </div>
+          <svg class="sec" viewBox="0 0 560 132" role="img" data-asset="plate-sections"
+               aria-label="Oak-tanned calf, drawn in section: 1.4 millimetres thick, firm temper, fine, close grain. The overhang at the right hand end is the temper, drawn as an ordering.">
+            <g class="sec__rule">
+              <line x1="40" y1="62" x2="372" y2="62"/>
+              <line x1="40" y1="40" x2="372" y2="40"/>
+              <line x1="40" y1="18" x2="372" y2="18"/>
+            </g>
+            <polyline class="sec__base" points="40,84 372,84 372,99"/>
+            <polygon class="sec__body" points="56,53.2 372,53.2 385.8,53.4 399.1,53.8 412,54.6 424.5,55.7 436.5,57.1 448.1,58.8 459.3,60.9 470,63.2 470,94 459.3,91.7 448.1,89.6 436.5,87.9 424.5,86.5 412,85.4 399.1,84.6 385.8,84.2 372,84 56,84"/>
+            <polyline class="sec__grain" points="56,53.2 372,53.2 385.8,53.4 399.1,53.8 412,54.6 424.5,55.7 436.5,57.1 448.1,58.8 459.3,60.9 470,63.2" stroke-dasharray="2 3"/>
+            <rect class="sec__halo" data-ghost="calf" x="56" width="316" y="0" height="0"/>
+            <rect class="sec__ghost" data-ghost="calf" x="56" width="316" y="0" height="0"/>
+          </svg>
+          <div class="row__fig">
+            <span class="mm">1.4<i> mm</i></span>
+            <span class="row__temper">firm</span>
+          </div>
+        </div>
+        <div class="row" data-row="belly">
+          <div class="row__id">
+            <b>Bark-tanned cowhide, belly</b>
+            <span class="row__use">linings, gussets</span>
+            <span class="row__tag" data-tag="belly" hidden></span>
+          </div>
+          <svg class="sec" viewBox="0 0 560 132" role="img" data-asset="plate-sections"
+               aria-label="Bark-tanned cowhide, belly, drawn in section: 2.4 millimetres thick, soft temper, loose, stretchy grain. The overhang at the right hand end is the temper, drawn as an ordering.">
+            <g class="sec__rule">
+              <line x1="40" y1="62" x2="372" y2="62"/>
+              <line x1="40" y1="40" x2="372" y2="40"/>
+              <line x1="40" y1="18" x2="372" y2="18"/>
+            </g>
+            <polyline class="sec__base" points="40,84 372,84 372,99"/>
+            <polygon class="sec__body" points="56,31.2 372,31.2 385.8,31.7 399.1,33.2 412,35.7 424.5,39.2 436.5,43.7 448.1,49.2 459.3,55.7 470,63.2 470,116 459.3,108.5 448.1,102 436.5,96.5 424.5,92 412,88.5 399.1,86 385.8,84.5 372,84 56,84"/>
+            <polyline class="sec__grain" points="56,31.2 372,31.2 385.8,31.7 399.1,33.2 412,35.7 424.5,39.2 436.5,43.7 448.1,49.2 459.3,55.7 470,63.2" stroke-dasharray="14 8"/>
+            <rect class="sec__halo" data-ghost="belly" x="56" width="316" y="0" height="0"/>
+            <rect class="sec__ghost" data-ghost="belly" x="56" width="316" y="0" height="0"/>
+          </svg>
+          <div class="row__fig">
+            <span class="mm">2.4<i> mm</i></span>
+            <span class="row__temper">soft</span>
+          </div>
+        </div>
+        <div class="row" data-row="shoulder">
+          <div class="row__id">
+            <b>Bark-tanned cowhide, shoulder</b>
+            <span class="row__use">saddlery, belts</span>
+            <span class="row__tag" data-tag="shoulder" hidden></span>
+          </div>
+          <svg class="sec" viewBox="0 0 560 132" role="img" data-asset="plate-sections"
+               aria-label="Bark-tanned cowhide, shoulder, drawn in section: 3.2 millimetres thick, very firm temper, coarse grain. The overhang at the right hand end is the temper, drawn as an ordering.">
+            <g class="sec__rule">
+              <line x1="40" y1="62" x2="372" y2="62"/>
+              <line x1="40" y1="40" x2="372" y2="40"/>
+              <line x1="40" y1="18" x2="372" y2="18"/>
+            </g>
+            <polyline class="sec__base" points="40,84 372,84 372,99"/>
+            <polygon class="sec__body" points="56,13.6 372,13.6 385.8,13.7 399.1,13.8 412,14.2 424.5,14.6 436.5,15.2 448.1,15.8 459.3,16.7 470,17.6 470,88 459.3,87.1 448.1,86.3 436.5,85.6 424.5,85 412,84.6 399.1,84.3 385.8,84.1 372,84 56,84"/>
+            <polyline class="sec__grain" points="56,13.6 372,13.6 385.8,13.7 399.1,13.8 412,14.2 424.5,14.6 436.5,15.2 448.1,15.8 459.3,16.7 470,17.6" stroke-dasharray="9 6"/>
+            <rect class="sec__halo" data-ghost="shoulder" x="56" width="316" y="0" height="0"/>
+            <rect class="sec__ghost" data-ghost="shoulder" x="56" width="316" y="0" height="0"/>
+          </svg>
+          <div class="row__fig">
+            <span class="mm">3.2<i> mm</i></span>
+            <span class="row__temper">very firm</span>
+          </div>
+        </div>
+      </div>
+
+      <dl class="key">
+        <div>
+          <dt>The rules</dt>
+          <dd><b>One millimetre apart.</b> The height of every strip is its measured thickness
+          at that scale, and the flat run is the part that is on the bench. This much is a
+          measurement.</dd>
+        </div>
+        <div>
+          <dt>The overhang</dt>
+          <dd><b>Temper.</b> How far the far end falls past the bench edge is the temper column
+          turned into an ordering, very firm through to very soft. It is not a measurement.</dd>
+        </div>
+        <div>
+          <dt>The top edge</dt>
+          <dd><b>Grain.</b> A rhythm cut into the grain side: close and even for a fine grain,
+          long and open for a coarse one. A notation, not a picture of a hide.</dd>
+        </div>
+      </dl>
+
+      <form class="compare" id="compare" novalidate>
+        <div class="field">
+          <label for="cmp-a">Lay</label>
+          <select id="cmp-a" data-cmp="a">
+            <option value="">choose a leather</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="cmp-b">over</label>
+          <select id="cmp-b" data-cmp="b">
+            <option value="">choose a leather</option>
+          </select>
+        </div>
+        <button type="button" class="btn btn--quiet" data-clear disabled
+                aria-describedby="cmp-out">Clear</button>
+      </form>
+      <p class="compare__out" id="cmp-out" role="status" data-out>The two most binders end up
+      deciding between, a 1.2&nbsp;mm goat and a 1.4&nbsp;mm calf, are two tenths of a
+      millimetre apart. Lay any two of the six over each other and the thinner is drawn as a
+      dashed outline on the thicker one&rsquo;s baseline, so that difference becomes a shape
+      instead of a number to hold in your head.</p>
+    </div>
+  </section>
+
+  <div class="wrap"><div class="rule"><span class="tally" aria-hidden="true"></span></div></div>
+
+  <section id="spec" aria-labelledby="spec-h">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">The figures, without the drawing</p>
+        <h2 id="spec-h">Specification</h2>
+      </div>
+      <div class="tablewrap" tabindex="0" role="group" aria-labelledby="spec-h">
+        <table>
+          <caption>The six leathers available from this yard, ordered by thickness. Lead times
+          are measured from order and are as at July 2026.</caption>
+          <thead>
+            <tr>
+              <th scope="col">Leather</th>
+              <th scope="col">Thickness</th>
+              <th scope="col">Temper</th>
+              <th scope="col">Grain</th>
+              <th scope="col">Typical use</th>
+              <th scope="col">Lead time</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Oak-tanned sheep</th>
+              <td class="num">0.8 mm</td><td>very soft</td><td>smooth</td>
+              <td>endpapers, doublures</td><td class="num">5 months</td>
+            </tr>
+            <tr>
+              <th scope="row">Oak-tanned goat</th>
+              <td class="num">1.2 mm</td><td>soft</td><td>pronounced, irregular</td>
+              <td>full-leather bindings</td><td class="num">11 months</td>
+            </tr>
+            <tr>
+              <th scope="row">Mimosa calf</th>
+              <td class="num">1.3 mm</td><td>medium</td><td>fine</td>
+              <td>repair work, matching</td><td class="num">3 weeks</td>
+            </tr>
+            <tr>
+              <th scope="row">Oak-tanned calf</th>
+              <td class="num">1.4 mm</td><td>firm</td><td>fine, close</td>
+              <td>book boards, spines</td><td class="num">4 weeks</td>
+            </tr>
+            <tr>
+              <th scope="row">Bark-tanned cowhide, belly</th>
+              <td class="num">2.4 mm</td><td>soft</td><td>loose, stretchy</td>
+              <td>linings, gussets</td><td class="num">6 weeks</td>
+            </tr>
+            <tr>
+              <th scope="row">Bark-tanned cowhide, shoulder</th>
+              <td class="num">3.2 mm</td><td>very firm</td><td>coarse</td>
+              <td>saddlery, belts</td><td class="num">6 weeks</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note">Prices are quoted per hide and vary by size and by grade, so there is no
+      price on this page and there is not one anywhere else either. Minimum order is one hide,
+      and there is no trade account to open first.</p>
+    </div>
+  </section>
+
+  <section id="pits" class="pit" aria-labelledby="pits-h">
+    <div class="wrap">
+      <div class="pit__head">
+        <div>
+          <p class="eyebrow">Why the goat is eleven months</p>
+          <h2 id="pits-h">Nine to fourteen months. Nothing changes that.</h2>
+          <p style="margin-top:var(--space-5)">A chrome tannery takes a day. Bark takes nine to
+          fourteen months, and no amount of ordering earlier changes what happens in the pit.
+          The bark is English oak, from one coppice in Shropshire, and mimosa, imported. There
+          are twenty-eight pits in this yard and nineteen of them are down.</p>
+          <p>So a lead time here is not a statement about how busy we are. It is a statement
+          about where a particular hide has got to.</p>
+        </div>
+        <figure>
+            <svg class="yard" viewBox="0 0 220 116" role="img" data-asset="plan-yard"
+       aria-label="Twenty-eight pits drawn as a count, in four rows of seven. Nineteen are inked to show they are in use and nine are left open.">
+    <rect class="yard__down" x="1" y="1" width="26" height="24"/>
+    <rect class="yard__down" x="33" y="1" width="26" height="24"/>
+    <rect class="yard__down" x="65" y="1" width="26" height="24"/>
+    <rect class="yard__down" x="97" y="1" width="26" height="24"/>
+    <rect class="yard__down" x="129" y="1" width="26" height="24"/>
+    <rect class="yard__down" x="161" y="1" width="26" height="24"/>
+    <rect class="yard__down" x="193" y="1" width="26" height="24"/>
+    <rect class="yard__down" x="1" y="31" width="26" height="24"/>
+    <rect class="yard__down" x="33" y="31" width="26" height="24"/>
+    <rect class="yard__down" x="65" y="31" width="26" height="24"/>
+    <rect class="yard__down" x="97" y="31" width="26" height="24"/>
+    <rect class="yard__down" x="129" y="31" width="26" height="24"/>
+    <rect class="yard__down" x="161" y="31" width="26" height="24"/>
+    <rect class="yard__down" x="193" y="31" width="26" height="24"/>
+    <rect class="yard__down" x="1" y="61" width="26" height="24"/>
+    <rect class="yard__down" x="33" y="61" width="26" height="24"/>
+    <rect class="yard__down" x="65" y="61" width="26" height="24"/>
+    <rect class="yard__down" x="97" y="61" width="26" height="24"/>
+    <rect class="yard__down" x="129" y="61" width="26" height="24"/>
+    <rect class="yard__open" x="161" y="61" width="26" height="24"/>
+    <rect class="yard__open" x="193" y="61" width="26" height="24"/>
+    <rect class="yard__open" x="1" y="91" width="26" height="24"/>
+    <rect class="yard__open" x="33" y="91" width="26" height="24"/>
+    <rect class="yard__open" x="65" y="91" width="26" height="24"/>
+    <rect class="yard__open" x="97" y="91" width="26" height="24"/>
+    <rect class="yard__open" x="129" y="91" width="26" height="24"/>
+    <rect class="yard__open" x="161" y="91" width="26" height="24"/>
+    <rect class="yard__open" x="193" y="91" width="26" height="24"/>
+  </svg>
+          <figcaption>Twenty-eight pits, nineteen down. Drawn as a count, not as a survey of
+          the yard.</figcaption>
+        </figure>
+      </div>
+
+      <h3 id="cal-h">What that looks like from today</h3>
+      <figure class="cal" data-asset="chart-pits" aria-labelledby="cal-h">
+        <div class="cal__scale" aria-hidden="true">
+          <div class="cal__spacer"></div>
+          <div class="cal__ticks">
+            <span>Aug 2025</span>
+            <span class="t-mid t-sm" style="left:20.8%">Jan 2026</span>
+            <span class="t-mid t-now" style="left:45.8%">July 2026</span>
+            <span class="t-mid t-sm" style="left:70.8%">Jan 2027</span>
+            <span class="t-end">Jul 2027</span>
+          </div>
+          <div class="cal__spacer"></div>
+        </div>
+        <ol class="cal__rows">
+          <li class="cal__row">
+            <div class="cal__name">Mimosa calf</div>
+            <div class="cal__track" aria-hidden="true">
+              <span class="cal__bar" style="--x:45.8%;--w:2.9%"></span>
+              <span class="cal__now"></span>
+            </div>
+            <div class="cal__fig">3 weeks</div>
+          </li>
+          <li class="cal__row">
+            <div class="cal__name">Oak-tanned calf</div>
+            <div class="cal__track" aria-hidden="true">
+              <span class="cal__bar" style="--x:45.8%;--w:3.8%"></span>
+              <span class="cal__now"></span>
+            </div>
+            <div class="cal__fig">4 weeks</div>
+          </li>
+          <li class="cal__row">
+            <div class="cal__name">Bark-tanned cowhide, shoulder</div>
+            <div class="cal__track" aria-hidden="true">
+              <span class="cal__bar" style="--x:45.8%;--w:5.7%"></span>
+              <span class="cal__now"></span>
+            </div>
+            <div class="cal__fig">6 weeks</div>
+          </li>
+          <li class="cal__row">
+            <div class="cal__name">Bark-tanned cowhide, belly</div>
+            <div class="cal__track" aria-hidden="true">
+              <span class="cal__bar" style="--x:45.8%;--w:5.7%"></span>
+              <span class="cal__now"></span>
+            </div>
+            <div class="cal__fig">6 weeks</div>
+          </li>
+          <li class="cal__row">
+            <div class="cal__name">Oak-tanned sheep
+              <span class="cal__pitdate">in pit since February 2026</span></div>
+            <div class="cal__track" aria-hidden="true">
+              <span class="cal__win" style="--wx:62.5%;--ww:20.8%"></span>
+              <span class="cal__pit" style="--px:25%;--pw:20.8%"></span>
+              <span class="cal__bar" style="--x:45.8%;--w:20.8%"></span>
+              <span class="cal__now"></span>
+            </div>
+            <div class="cal__fig">5 months</div>
+          </li>
+          <li class="cal__row">
+            <div class="cal__name">Oak-tanned goat
+              <span class="cal__pitdate">in pit since August 2025</span></div>
+            <div class="cal__track" aria-hidden="true">
+              <span class="cal__win" style="--wx:37.5%;--ww:20.8%"></span>
+              <span class="cal__pit" style="--px:0%;--pw:45.8%"></span>
+              <span class="cal__bar" style="--x:45.8%;--w:45.8%"></span>
+              <span class="cal__now"></span>
+            </div>
+            <div class="cal__fig">11 months</div>
+          </li>
+        </ol>
+        <ul class="cal__key">
+          <li><i class="k k--lead" aria-hidden="true"></i> from order</li>
+          <li><i class="k k--pit" aria-hidden="true"></i> already in the pit</li>
+          <li><i class="k k--win" aria-hidden="true"></i> nine to fourteen months from that pit date</li>
+          <li><i class="k k--now" aria-hidden="true"></i> today, July 2026</li>
+        </ul>
+        <figcaption>Two of the six are in pits now, so their pit dates are drawn as well, with
+        the nine to fourteen months that follows each of them. The five months quoted for sheep
+        lands inside its window; the eleven months quoted for goat lands after its window has
+        closed. Both figures come from the yard, and the one we quote is the lead time, counted
+        from your order. Weeks are set out at 30.44 days to the month.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section id="buying" aria-labelledby="buying-h">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">What it costs, and what it does not</p>
+        <h2 id="buying-h">How a hide is bought</h2>
+      </div>
+      <ul class="terms">
+        <li>
+          <h3>By the hide</h3>
+          <p>Minimum order is one hide. There is no trade account to open and no minimum spend
+          to reach first.</p>
+        </li>
+        <li>
+          <h3>Quoted, not listed</h3>
+          <p>Every hide is priced individually, by size and by grade, because no two are the
+          same size. That is why there is no price anywhere on this page.</p>
+        </li>
+        <li>
+          <h3>Trade only</h3>
+          <p>We sell to saddlers, bookbinders and shoemakers. We do not sell to the public. If
+          you want one skin for one project at home, this is not the right yard, and we would
+          rather say so now than take the order.</p>
+        </li>
+        <li>
+          <h3>Nobody is named</h3>
+          <p>Two shoemakers and a number of binders buy here regularly. None of them has agreed
+          to be named, so you will find no list of customers on this page and no quotation from
+          one.</p>
+        </li>
+        <li>
+          <h3>Thursdays</h3>
+          <p>The pit yard can be visited by appointment, on Thursdays. It is the best way to
+          settle a question about temper, because temper is a thing you decide with your
+          hands.</p>
+        </li>
+        <li>
+          <h3>Oak and mimosa</h3>
+          <p>Five of the six are tanned in English oak bark from one coppice in Shropshire. The
+          sixth is tanned in mimosa, which is imported.</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <div class="wrap"><div class="rule"><span class="tally" aria-hidden="true"></span></div></div>
+
+  <section id="enquiry" aria-labelledby="enq-h">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">What to do next</p>
+        <h2 id="enq-h">Write the enquiry</h2>
+      </div>
+      <p class="lede">There is no price list to read, so an enquiry has to say what you need
+      before we can answer it. This writes one out for you, with the lead time on the leather
+      you chose already in it.</p>
+
+      <div class="summary" id="enq-summary" role="alert" tabindex="-1" hidden>
+        <h3>The enquiry is not finished yet</h3>
+        <ul data-summary-list></ul>
+      </div>
+
+      <form class="enq" id="enq-form" novalidate>
+        <div class="field">
+          <label for="enq-leather">Leather</label>
+          <select id="enq-leather" name="leather" aria-describedby="enq-leather-hint enq-leather-err">
+            <option value="">choose a leather</option>
+          </select>
+          <span class="hint" id="enq-leather-hint">Six to choose from, ordered by thickness.</span>
+          <span class="err" id="enq-leather-err" hidden></span>
+        </div>
+        <div class="field">
+          <label for="enq-hides">Hides</label>
+          <input type="number" id="enq-hides" name="hides" value="1" min="1" step="1"
+                 inputmode="numeric" aria-describedby="enq-hides-hint enq-hides-err">
+          <span class="hint" id="enq-hides-hint">Minimum order is one hide.</span>
+          <span class="err" id="enq-hides-err" hidden></span>
+        </div>
+        <div class="field field--wide">
+          <label for="enq-for">What it is for</label>
+          <input type="text" id="enq-for" name="for"
+                 aria-describedby="enq-for-hint enq-for-err">
+          <span class="hint" id="enq-for-hint">The binding and its size, so we can pick a hide
+          big enough. For instance: quarter-bound octavo, 210 by 135.</span>
+          <span class="err" id="enq-for-err" hidden></span>
+        </div>
+        <div class="field field--wide">
+          <label for="enq-who">Your name and trade</label>
+          <input type="text" id="enq-who" name="who"
+                 aria-describedby="enq-who-hint enq-who-err">
+          <span class="hint" id="enq-who-hint">We sell to the trade only, so tell us which one.</span>
+          <span class="err" id="enq-who-err" hidden></span>
+        </div>
+        <div class="actions">
+          <button type="submit" class="btn" data-submit>Write the enquiry</button>
+          <button type="button" class="btn btn--quiet" data-reset>Start again</button>
+        </div>
+      </form>
+
+      <div class="note-out" id="enq-note" role="status" tabindex="-1" hidden>
+        <h3 data-note-h>The enquiry, written out</h3>
+        <dl data-note-body></dl>
+        <p>Take it to the yard on a Thursday, by appointment, or send it ahead. Every hide is
+        quoted on its own, so the price comes back with the hide we have picked for you and not
+        before.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div>
+        <a class="mark mark--foot" href="#top" aria-label="Falkner and Vane, back to the top">
+          <svg data-asset="mark-fv" viewBox="0 0 280 44" role="img"
+               aria-label="Falkner and Vane, wordmark over the tally of twenty-eight pits.">
+            <text class="mark__w" x="0" y="22" font-family="Georgia,'Iowan Old Style',serif"
+                  font-size="21" letter-spacing="3.4">FALKNER &amp; VANE</text>
+            <g class="mark__t">
+              <rect x="0" y="32" width="1.6" height="10"/><rect x="10" y="32" width="1.6" height="10"/>
+              <rect x="20" y="32" width="1.6" height="10"/><rect x="30" y="32" width="1.6" height="10"/>
+              <rect x="40" y="32" width="1.6" height="10"/><rect x="50" y="32" width="1.6" height="10"/>
+              <rect x="60" y="32" width="1.6" height="10"/><rect x="70" y="32" width="1.6" height="10"/>
+              <rect x="80" y="32" width="1.6" height="10"/><rect x="90" y="32" width="1.6" height="10"/>
+              <rect x="100" y="32" width="1.6" height="10"/><rect x="110" y="32" width="1.6" height="10"/>
+              <rect x="120" y="32" width="1.6" height="10"/><rect x="130" y="32" width="1.6" height="10"/>
+              <rect x="140" y="32" width="1.6" height="10"/><rect x="150" y="32" width="1.6" height="10"/>
+              <rect x="160" y="32" width="1.6" height="10"/><rect x="170" y="32" width="1.6" height="10"/>
+              <rect x="180" y="32" width="1.6" height="10"/>
+            </g>
+            <g class="mark__o">
+              <rect x="190" y="37" width="1.6" height="5"/><rect x="200" y="37" width="1.6" height="5"/>
+              <rect x="210" y="37" width="1.6" height="5"/><rect x="220" y="37" width="1.6" height="5"/>
+              <rect x="230" y="37" width="1.6" height="5"/><rect x="240" y="37" width="1.6" height="5"/>
+              <rect x="250" y="37" width="1.6" height="5"/><rect x="260" y="37" width="1.6" height="5"/>
+              <rect x="270" y="37" width="1.6" height="5"/>
+            </g>
+          </svg>
+        </a>
+      </div>
+      <p>Falkner &amp; Vane. Vegetable tannery, Walsall. Tanning in the same pit yard since
+      1878, in oak and in mimosa.</p>
+      <p>Trade only. Minimum order one hide. Pit yard by appointment, Thursdays. Every figure
+      on this page is measured, and nothing on it came from a camera.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  /* The six, and nothing that is not in the specification table above. */
+  var L = {
+    sheep:    { name: 'Oak-tanned sheep',              mm: 0.8, temper: 'very soft', grain: 'smooth',                use: 'endpapers, doublures',  lead: '5 months' },
+    goat:     { name: 'Oak-tanned goat',               mm: 1.2, temper: 'soft',      grain: 'pronounced, irregular', use: 'full-leather bindings', lead: '11 months' },
+    mimosa:   { name: 'Mimosa calf',                   mm: 1.3, temper: 'medium',    grain: 'fine',                  use: 'repair work, matching', lead: '3 weeks' },
+    calf:     { name: 'Oak-tanned calf',               mm: 1.4, temper: 'firm',      grain: 'fine, close',           use: 'book boards, spines',   lead: '4 weeks' },
+    belly:    { name: 'Bark-tanned cowhide, belly',    mm: 2.4, temper: 'soft',      grain: 'loose, stretchy',       use: 'linings, gussets',      lead: '6 weeks' },
+    shoulder: { name: 'Bark-tanned cowhide, shoulder', mm: 3.2, temper: 'very firm', grain: 'coarse',                use: 'saddlery, belts',       lead: '6 weeks' }
+  };
+  var ORDER = ['sheep', 'goat', 'mimosa', 'calf', 'belly', 'shoulder'];
+  var TEMPER = ['very firm', 'firm', 'medium', 'soft', 'very soft'];
+
+  /* Geometry shared with the drawing, so the overlay lands on the same baseline. */
+  var MM = 22, BASE = 84;
+
+  function fill(sel) {
+    ORDER.forEach(function (id) {
+      var o = document.createElement('option');
+      o.value = id;
+      o.textContent = L[id].name + ', ' + L[id].mm.toFixed(1) + ' mm';
+      sel.appendChild(o);
+    });
+  }
+
+  /* ── the compare control ───────────────────────────────────────────────── */
+  var plate = document.getElementById('the-plate');
+  var a = document.querySelector('[data-cmp=a]');
+  var b = document.querySelector('[data-cmp=b]');
+  var out = document.querySelector('[data-out]');
+  var clear = document.querySelector('[data-clear]');
+  var REST = out.innerHTML;
+
+  fill(a); fill(b);
+
+  function rows() { return plate.querySelectorAll('.row'); }
+
+  function reset() {
+    plate.removeAttribute('data-active');
+    Array.prototype.forEach.call(rows(), function (r) {
+      r.removeAttribute('data-picked');
+      r.removeAttribute('data-ghosted');
+      var tag = r.querySelector('.row__tag');
+      tag.hidden = true; tag.textContent = '';
+    });
+    clear.disabled = true;
+  }
+
+  function ghost(rowId, otherId) {
+    var t = L[otherId].mm * MM;
+    var row = plate.querySelector('.row[data-row=' + rowId + ']');
+    Array.prototype.forEach.call(row.querySelectorAll('[data-ghost]'), function (rect) {
+      rect.setAttribute('y', String(BASE - t));
+      rect.setAttribute('height', String(t));
+    });
+    row.setAttribute('data-ghosted', '');
+  }
+
+  function say(html, state) {
+    out.innerHTML = html;
+    if (state) { out.setAttribute('data-state', state); } else { out.removeAttribute('data-state'); }
+  }
+
+  function compare() {
+    var x = a.value, y = b.value;
+    if (!x || !y) { reset(); say(REST); return; }
+    if (x === y) {
+      reset();
+      clear.disabled = false;
+      say('Choose two different leathers. Laying ' + L[x].name.toLowerCase() +
+          ' over itself shows nothing.', 'error');
+      return;
+    }
+    reset();
+    plate.setAttribute('data-active', '');
+    [[x, 'A'], [y, 'B']].forEach(function (p) {
+      var row = plate.querySelector('.row[data-row=' + p[0] + ']');
+      row.setAttribute('data-picked', '');
+      var tag = row.querySelector('.row__tag');
+      tag.textContent = p[1];
+      tag.hidden = false;
+    });
+    ghost(x, y); ghost(y, x);
+    clear.disabled = false;
+
+    var d = Math.round(Math.abs(L[x].mm - L[y].mm) * 10) / 10;
+    var thick = L[x].mm >= L[y].mm ? x : y;
+    var thin = thick === x ? y : x;
+    var msg;
+    if (d === 0) {
+      msg = '<b>Same thickness.</b> ' + L[x].name + ' and ' + L[y].name +
+            ' are both ' + L[x].mm.toFixed(1) + ' mm, so the two outlines sit on top of each other. ';
+    } else {
+      msg = '<b>' + d.toFixed(1) + ' mm.</b> ' + L[thick].name + ' is ' + d.toFixed(1) +
+            ' mm thicker than ' + L[thin].name.toLowerCase() + ' (' + L[thick].mm.toFixed(1) +
+            ' against ' + L[thin].mm.toFixed(1) + '). ';
+    }
+    var ti = TEMPER.indexOf(L[x].temper), tj = TEMPER.indexOf(L[y].temper);
+    if (ti === tj) {
+      msg += 'Both are ' + L[x].temper + '. ';
+    } else {
+      var firmer = ti < tj ? x : y;
+      var softer = firmer === x ? y : x;
+      msg += 'The ' + short(firmer) + ' is ' + L[firmer].temper + ' where the ' + short(softer) +
+             ' is ' + L[softer].temper + ', which is the larger difference of the two. ';
+    }
+    msg += 'Grain: ' + L[x].grain + ' against ' + L[y].grain + '. ' +
+           'Lead times, ' + L[x].lead + ' and ' + L[y].lead + '.';
+    say(msg);
+  }
+
+  function short(id) {
+    return id === 'belly' ? 'belly' : id === 'shoulder' ? 'shoulder' : L[id].name.split(' ').pop();
+  }
+
+  a.addEventListener('change', compare);
+  b.addEventListener('change', compare);
+  clear.addEventListener('click', function () {
+    a.value = ''; b.value = '';
+    reset(); say(REST);
+    a.focus();
+  });
+
+  /* ── the enquiry ───────────────────────────────────────────────────────── */
+  var form = document.getElementById('enq-form');
+  var leather = document.getElementById('enq-leather');
+  var hides = document.getElementById('enq-hides');
+  var note = document.getElementById('enq-note');
+  var body = note.querySelector('[data-note-body]');
+  var summary = document.getElementById('enq-summary');
+  var summaryList = summary.querySelector('[data-summary-list]');
+
+  fill(leather);
+
+  /* Choosing on the plate is the same decision, so it carries into the form. */
+  a.addEventListener('change', function () { if (a.value && !leather.value) leather.value = a.value; });
+
+  function setErr(field, message) {
+    var box = document.getElementById(field.id + '-err');
+    if (message) {
+      box.textContent = message; box.hidden = false;
+      field.setAttribute('aria-invalid', 'true');
+    } else {
+      box.textContent = ''; box.hidden = true;
+      field.removeAttribute('aria-invalid');
+    }
+    return message;
+  }
+
+  function validate() {
+    var bad = [];
+    var f = document.getElementById('enq-for');
+    var w = document.getElementById('enq-who');
+    if (setErr(leather, leather.value ? '' : 'Choose one of the six leathers.'))
+      bad.push([leather, 'Choose one of the six leathers.']);
+    if (setErr(f, f.value.trim() ? '' : 'Say what the hide is for, and how big it has to be.'))
+      bad.push([f, 'Say what the hide is for, and how big it has to be.']);
+    if (setErr(w, w.value.trim() ? '' : 'Give a name and a trade. We sell to the trade only.'))
+      bad.push([w, 'Give a name and a trade. We sell to the trade only.']);
+    var n = parseInt(hides.value, 10);
+    if (setErr(hides, (n >= 1 && String(n) === String(hides.value).trim()) ? ''
+        : 'A whole number of hides, one or more.'))
+      bad.push([hides, 'A whole number of hides, one or more.']);
+    return bad;
+  }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var bad = validate();
+    if (bad.length) {
+      note.hidden = true;
+      summaryList.innerHTML = '';
+      bad.forEach(function (pair) {
+        var li = document.createElement('li');
+        var link = document.createElement('a');
+        link.href = '#' + pair[0].id;
+        link.textContent = pair[1];
+        link.addEventListener('click', function (ev) { ev.preventDefault(); pair[0].focus(); });
+        li.appendChild(link);
+        summaryList.appendChild(li);
+      });
+      summary.hidden = false;
+      summary.focus();
+      return;
+    }
+    summary.hidden = true;
+    var k = leather.value, n = parseInt(hides.value, 10);
+    var lines = [
+      ['To', 'Falkner &amp; Vane, pit yard, Walsall'],
+      ['Leather', esc(L[k].name) + ', ' + L[k].mm.toFixed(1) + ' mm, ' + esc(L[k].temper) +
+        ', ' + esc(L[k].grain) + ' grain'],
+      ['Hides', String(n) + (n === 1 ? ' hide' : ' hides')],
+      ['For', esc(document.getElementById('enq-for').value.trim())],
+      ['Lead time', esc(L[k].lead) + ' from order, as quoted at July 2026'],
+      ['From', esc(document.getElementById('enq-who').value.trim())],
+      ['Price', 'to be quoted, by size and grade']
+    ];
+    body.innerHTML = lines.map(function (r) {
+      return '<dt>' + r[0] + '</dt><dd>' + r[1] + '</dd>';
+    }).join('');
+    note.hidden = false;
+    note.focus();
+  });
+
+  document.querySelector('[data-reset]').addEventListener('click', function () {
+    form.reset();
+    [leather, hides, document.getElementById('enq-for'), document.getElementById('enq-who')]
+      .forEach(function (f) { setErr(f, ''); });
+    summary.hidden = true;
+    note.hidden = true;
+    leather.focus();
+  });
+
+  function esc(s) {
+    return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
+  /* ── which section you are in ──────────────────────────────────────────── */
+  var links = {};
+  Array.prototype.forEach.call(document.querySelectorAll('.nav a'), function (el) {
+    links[el.getAttribute('href').slice(1)] = el;
+  });
+  if ('IntersectionObserver' in window) {
+    var seen = {};
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) { seen[en.target.id] = en.isIntersecting; });
+      var current = null;
+      Object.keys(links).forEach(function (id) { if (seen[id] && !current) current = id; });
+      Object.keys(links).forEach(function (id) {
+        if (id === current) { links[id].setAttribute('aria-current', 'true'); }
+        else { links[id].removeAttribute('aria-current'); }
+      });
+    }, { rootMargin: '-25% 0px -60% 0px' });
+    Object.keys(links).forEach(function (id) {
+      var s = document.getElementById(id);
+      if (s) io.observe(s);
+    });
+  }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+{
+  "url": "http://127.0.0.1:4703/",
+  "fontStress": false,
+  "widths": {
+    "375": {
+      "status": 200,
+      "screenshot": "375.png",
+      "horizontalOverflowPx": 0,
+      "title": "Duty board — Tideworks, Middle Level & tidal Ouse"
+    },
+    "768": {
+      "status": 200,
+      "screenshot": "768.png",
+      "horizontalOverflowPx": 0,
+      "title": "Duty board — Tideworks, Middle Level & tidal Ouse"
+    },
+    "1440": {
+      "status": 200,
+      "screenshot": "1440.png",
+      "horizontalOverflowPx": 0,
+      "title": "Duty board — Tideworks, Middle Level & tidal Ouse"
+    }
+  },
+  "structure": [],
+  "consoleErrors": [],
+  "failedRequests": [],
+  "brokenLinks": [],
+  "axe": {
+    "violations": [],
+    "passes": 0
+  }
+}

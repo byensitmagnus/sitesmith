@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Comp B — the printed tide table</title>
+<style>
+  :root{
+    --paper:#F2F1EC; --band:#E7E5DE; --ink:#15181A; --ink-2:#5C6165; --rule:#C8C5BC; --bad:#A32017;
+    --serif:Georgia,"Iowan Old Style","Palatino Linotype",serif;
+    --mono:ui-monospace,"Cascadia Mono",Consolas,"SF Mono",Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.5 var(--serif);font-variant-numeric:tabular-nums}
+  .sheet{max-width:900px;margin:0 auto;padding:0 28px 64px}
+  header{display:flex;justify-content:space-between;align-items:baseline;border-bottom:3px double var(--ink);padding:18px 0 8px}
+  header b{font-family:var(--mono);letter-spacing:.16em;font-size:13px}
+  header span{font-family:var(--mono);font-size:12px;color:var(--ink-2)}
+  h1{font-size:34px;font-weight:400;margin:22px 0 4px;letter-spacing:-.01em}
+  .lede{margin:0 0 22px;font-size:17px;color:var(--ink-2);max-width:60ch}
+  .lede b{color:var(--ink)}
+  section{background:var(--band);margin:0 -28px;padding:20px 28px 24px}
+  section+section{background:var(--paper)}
+  h2{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+     color:var(--ink-2);margin:0 0 10px;font-weight:400}
+  table{border-collapse:collapse;width:100%;font-family:var(--mono);font-size:13px}
+  caption{text-align:left;font-family:var(--serif);font-size:15px;color:var(--ink-2);padding-bottom:8px}
+  th,td{text-align:left;padding:6px 14px 6px 0;border-bottom:1px solid var(--rule)}
+  th{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2);font-weight:400}
+  td.n{text-align:right;padding-right:22px}
+  .shut{color:var(--bad)}
+  .hw{font-family:var(--mono);font-size:13px;margin:0 0 18px}
+  .hw b{letter-spacing:.06em}
+</style>
+</head>
+<body>
+<div class="sheet">
+  <header><p style="margin:0"><b>TIDEWORKS</b></p><p style="margin:0"><span>Middle Level &amp; tidal Ouse · as at 04:40</span></p></header>
+  <h1>Keeper's duty board</h1>
+  <p class="lede">High water at Denver <b>05:12</b> and <b>17:38</b> today; <b>06:01</b> and <b>18:29</b> tomorrow. Six locks, five of them workable this tide. Six boats waiting.</p>
+
+  <section>
+    <h2>Locks — windows today</h2>
+    <table>
+      <caption>Hours either side of high water, given as clock times. Sill depths are at mean low water.</caption>
+      <tr><th>Lock</th><th>Morning</th><th>Evening</th><th class="n">Sill MLW</th><th>State at 04:40</th></tr>
+      <tr><td>Salter's Lode</td><td>04:27–05:42</td><td>16:53–18:08</td><td class="n">0.4 m</td><td>open, shuts in 1 h 02</td></tr>
+      <tr><td>Marmont</td><td>03:42–06:12</td><td>16:08–18:38</td><td class="n">0.7 m</td><td>open, shuts in 1 h 32</td></tr>
+      <tr><td>Stanground</td><td>03:12–07:12</td><td>15:38–19:38</td><td class="n">1.1 m</td><td>open, shuts in 2 h 32</td></tr>
+      <tr><td>Ashline</td><td>02:12–08:12</td><td>14:38–20:38</td><td class="n">1.6 m</td><td>open, shuts in 3 h 32</td></tr>
+      <tr><td>Denver</td><td>01:12–09:12</td><td>13:38–21:38</td><td class="n">2.2 m</td><td>open, shuts in 4 h 32</td></tr>
+      <tr><td>Welches Dam</td><td>—</td><td>—</td><td class="n">—</td><td class="shut">out of service since 2006</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2>Waiting — priority order</h2>
+    <table>
+      <caption>Commercial with a timed cargo, then commercial, then leisure by waiting time.</caption>
+      <tr><th>#</th><th>Boat</th><th>Type</th><th class="n">Draught</th><th>For</th><th>Over the sill</th></tr>
+      <tr><td>1</td><td>Wisbech Trader</td><td>commercial, timed</td><td class="n">1.6 m</td><td>Denver</td><td>clear</td></tr>
+      <tr><td>2</td><td>Kesteven</td><td>commercial, aggregate</td><td class="n">1.8 m</td><td>Denver</td><td>clear</td></tr>
+      <tr><td>4</td><td>Marigold</td><td>leisure cruiser</td><td class="n">0.8 m</td><td>Salter's Lode</td><td class="shut">needs 0.4 m of tide</td></tr>
+    </table>
+  </section>
+</div>
+</body>
+</html>

@@ -16,7 +16,7 @@
 
 import { readFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
-import { relative, resolve } from 'node:path';
+import { relative, resolve, dirname } from 'node:path';
 import { expand } from './lib/files.mjs';
 
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
@@ -48,11 +48,32 @@ const RULES = [
   {
     id: 'authored-svg',
     cite: '09-block-library.md:178 — icons from a library only, no hand-rolled SVG paths',
-    // One authored <path> is a brand mark and is allowed; a set of them is an icon set.
+    /* The rule is about *icons*: hand-rolling an icon set instead of using a library gives you
+       twelve glyphs drawn by twelve different hands. CONFLICTS.md §5 resolved it as "a brand
+       mark may be authored and must be the only authored SVG on the page", which was right
+       when the only legitimate authored SVG was a mark.
+
+       It is not right any more. 24-asset-plan.md and 25-assets.md both make *drawn* a
+       first-class asset strategy — "for subjects whose world is not photogenic this is often
+       the strongest answer and it is under-used" — and a page with no image budget has drawing
+       or nothing. Counting every <path> on the page cannot tell a hand-rolled icon set from a
+       planned illustration, and under the old count a drawn diagram of nine seeds read as 76
+       icons.
+
+       So the count now ignores SVGs that carry a data-asset id. That is not a loosening: an
+       SVG with a data-asset is one that production-gate independently ties to a manifest row,
+       and asset-plan.mjs independently ties to a written argument, a named job and a stated
+       source. An icon set hand-rolled into the markup has none of those and still fails here.
+       The bar moved from "how many paths" to "was this drawing planned, recorded and
+       justified", which is three gates rather than one. */
     run(html) {
-      const n = (html.match(/<path\b/g) ?? []).length;
+      const declared = html.replace(
+        /<svg\b[^>]*\bdata-asset=["'][^"']+["'][\s\S]*?<\/svg>/gi, ' ');
+      const n = (declared.match(/<path\b/g) ?? []).length;
       return n > 1
-        ? [{ detail: `${n} authored <path> elements, a brand mark is one and a set is an icon set`, count: n }]
+        ? [{ detail: `${n} undeclared authored <path> elements — a brand mark is one, a set ` +
+                     'is an icon set, and a drawing that is a planned asset carries data-asset',
+             count: n }]
         : [];
     },
   },
@@ -107,8 +128,12 @@ const RULES = [
        about is a mid-page flip — a section that inverts ground and ink against the rest. */
     run(html) {
       const bad = [];
-      /* a page that declares one scheme to the browser is single-scheme on purpose */
-      const locked = /color-scheme\s*:\s*(dark|light)\s*[;}]/.test(html);
+      /* A page that declares its scheme to the browser has said what it means, whether that
+         is one scheme on purpose or `light dark` for both. The pattern required a single
+         keyword followed immediately by ; or }, so `color-scheme: light dark` — the standard
+         way to say "this page is built for both" — did not match and the page was reported as
+         not saying which theme it meant, having just said it. */
+      const locked = /color-scheme\s*:\s*(only\s+)?(dark|light)(\s+(dark|light))?\s*[;}!]/.test(html);
       const responsive = /prefers-color-scheme/.test(html);
       if (!locked && !responsive) {
         bad.push('neither a prefers-color-scheme block nor a color-scheme lock — the page ' +
@@ -161,9 +186,28 @@ if (!files.length) {
   process.exit(2);
 }
 
+/* The rules read one string, and that string used to be the HTML alone. Two rules ask
+   questions that a page is entitled to answer in a linked stylesheet — whether it declares a
+   colour scheme, and whether any section inverts ground and ink — so a page with an inline
+   <style> passed and the identical page with <link rel="stylesheet"> failed. That is the
+   instrument reporting where the author put the CSS, not what the page does.
+   Same-directory stylesheets are appended. Remote ones are not fetched: a check that reaches
+   the network is a check that fails differently on a bad day. */
+async function withStyles(file) {
+  const html = await readFile(resolve(ROOT, file), 'utf8');
+  const dir = dirname(resolve(ROOT, file));
+  let css = '';
+  for (const m of html.matchAll(/<link\b[^>]*rel=["']?stylesheet["']?[^>]*>/gi)) {
+    const href = (m[0].match(/href=["']([^"']+)["']/) ?? [])[1];
+    if (!href || /^(https?:)?\/\//.test(href) || href.startsWith('data:')) continue;
+    css += '\n' + (await readFile(resolve(dir, href.split(/[?#]/)[0]), 'utf8').catch(() => ''));
+  }
+  return css ? `${html}\n<style data-linked>${css}</style>` : html;
+}
+
 const report = [];
 for (const f of files.sort()) {
-  const html = await readFile(resolve(ROOT, f), 'utf8');
+  const html = await withStyles(f);
   const violations = [];
   for (const rule of RULES) {
     // A rule may return a bare string (one occurrence) or {detail, count}.

@@ -1,0 +1,340 @@
+/* Tideworks duty board — the contract in DESIGN-SYSTEM.md, copied verbatim.
+   The night sheet is the default because the shift starts at 04:40 in the dark.
+   The day sheet is reached from the chrome bar, not from the machine's preference:
+   a hut screen is switched by the keeper when the sun comes up, and the board must
+   open in the state the shift opens in. */
+
+:root{
+  color-scheme:dark;
+
+  /* spacing — one step of 4px, ramp 0.5 1 1.5 2 3 4 6 8 12 × step */
+  --step:4px;
+  --space-1:2px;  --space-2:4px;  --space-3:6px;  --space-4:8px;  --space-5:12px;
+  --space-6:16px; --space-7:24px; --space-8:32px; --space-9:48px;
+
+  /* type — base 15px, ratio 1.2, rounded to the nearest pixel */
+  --text-micro:0.6875rem;
+  --text-small:0.8125rem;
+  --text-body:0.9375rem;
+  --text-lead:1.125rem;
+  --text-h3:1.375rem;
+  --text-h2:1.625rem;
+  --text-h1:1.9375rem;
+  --text-display:2.3125rem;
+  --leading-tight:1.15; --leading-body:1.45; --leading-status:1.7;
+  --measure:70ch;
+
+  /* shape */
+  --radius-inner:1px; --radius-outer:2px; --radius-full:999px;
+
+  /* elevation — none, deliberately; the board is one continuous ruled field */
+  --elev-0:none; --elev-1:none; --elev-2:none;
+
+  /* container and grid */
+  --container:1360px; --gutter:clamp(16px,3vw,28px); --grid-columns:12;
+  --lane-label:152px; --lane-tail:112px;
+
+  /* colour — the night sheet */
+  --bg:#0B0F12; --surface:#11171B; --surface-2:#151D22;
+  --line:#232E35; --line-strong:#5A6C77;
+  --ink:#E6EDF1; --ink-2:#9AAAB4;
+  --accent:#4FD07A; --on-accent:#06130B;
+  --go:#4FD07A; --warn:#F0B429; --bad:#FF6B5E;
+
+  /* families — one, and it is a monospace */
+  --font-mono:ui-monospace,"Cascadia Mono","Cascadia Code",Consolas,"SF Mono",Menlo,"DejaVu Sans Mono",monospace;
+  --font-display:var(--font-mono); --font-body:var(--font-mono);
+
+  /* motion */
+  --motion-fast:110ms; --motion-base:180ms; --motion-slow:280ms;
+  --ease:cubic-bezier(.2,.6,.2,1);
+}
+
+/* the day sheet — designed, not inverted. In the night sheet the chrome bar and the
+   fields sit above the ground; on paper they sit below it. Both mean "separated from
+   the ground", and the signal colours are re-picked to hold AA on paper rather than
+   dimmed versions of the night ones. */
+:root[data-sheet="day"]{
+  color-scheme:light;
+  --bg:#E9ECEC; --surface:#DDE2E3; --surface-2:#FAFCFC;
+  --line:#C7CFD1; --line-strong:#6E7C84;
+  --ink:#0E1519; --ink-2:#4C5A63;
+  --accent:#15693A; --on-accent:#FFFFFF;
+  --go:#15693A; --warn:#7A4F00; --bad:#B3231A;
+}
+
+/* ── base ─────────────────────────────────────────────────────────────── */
+
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:var(--font-body); font-size:var(--text-body); line-height:var(--leading-body);
+  font-variant-numeric:tabular-nums; font-feature-settings:"tnum" 1;
+}
+h1,h2,h3{font-family:var(--font-display);line-height:var(--leading-tight);margin:0}
+p,ul,ol{margin:0}
+b,strong{font-weight:700}
+[hidden]{display:none !important}
+
+.vh{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
+    clip:rect(0 0 0 0);white-space:nowrap;border:0}
+
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+.skip{position:absolute;left:var(--gutter);top:-100px;z-index:2;
+      background:var(--surface-2);color:var(--ink);text-decoration:none;
+      padding:var(--space-4) var(--space-6);border:1px solid var(--line-strong);
+      border-radius:var(--radius-outer)}
+.skip:focus{top:var(--space-5)}
+
+.pad{max-width:var(--container);margin-inline:auto;padding-inline:var(--gutter)}
+
+/* ── chrome bar ───────────────────────────────────────────────────────── */
+
+.chrome{background:var(--surface);border-bottom:1px solid var(--line)}
+.chrome .pad{height:56px;display:flex;align-items:center;justify-content:space-between;
+             gap:var(--space-6)}
+.ident{display:flex;align-items:center;gap:var(--space-5);min-width:0}
+.mark{flex:none;color:var(--ink)}
+.mark .mk-gone{stroke:var(--ink-2)}
+.mark .mk-bar{fill:var(--accent)}
+.ident__name{font-size:var(--text-small);letter-spacing:.18em}
+.ident__where{font-size:var(--text-small);color:var(--ink-2);white-space:nowrap;
+              overflow:hidden;text-overflow:ellipsis}
+.chrome__right{display:flex;align-items:center;gap:var(--space-6);flex:none}
+.asat{font-size:var(--text-small);white-space:nowrap}
+.asat .k{color:var(--ink-2)}
+.sheet-btn{font:inherit;font-size:var(--text-small);color:var(--ink-2);
+           background:transparent;border:1px solid var(--line-strong);
+           border-radius:var(--radius-outer);min-height:44px;padding-inline:var(--space-5);
+           cursor:pointer;white-space:nowrap;
+           transition:color var(--motion-fast) var(--ease),border-color var(--motion-fast) var(--ease)}
+.sheet-btn:hover{color:var(--ink);border-color:var(--ink-2)}
+
+@media (max-width:639px){
+  .ident__where{display:none}
+  .chrome .pad{gap:var(--space-5)}
+}
+
+/* ── status ───────────────────────────────────────────────────────────── */
+
+main{padding-block:var(--space-7) var(--space-9)}
+.status{display:grid;gap:var(--space-5) var(--space-8);align-items:start}
+.status h1{font-size:var(--text-h2);letter-spacing:-.01em}
+.status__line{font-size:var(--text-lead);line-height:var(--leading-status);
+              color:var(--ink-2);max-width:var(--measure)}
+.status__line b{color:var(--ink);font-size:var(--text-h3);line-height:var(--leading-tight);
+                letter-spacing:-.01em;white-space:nowrap}
+.status__line .go{color:var(--warn)}
+.status__tide{font-size:var(--text-small);color:var(--ink-2);max-width:var(--measure)}
+.status__tide b{color:var(--ink)}
+
+@media (min-width:1040px){
+  .status{grid-template-columns:334px minmax(0,1fr)}
+  .status h1{grid-column:1;grid-row:1}
+  .status__tide{grid-column:1;grid-row:2;max-width:none}
+  .status__line{grid-column:2;grid-row:1/span 2;padding-top:var(--space-1)}
+}
+
+/* ── sections ─────────────────────────────────────────────────────────── */
+
+.band{border-top:1px solid var(--line);margin-top:var(--space-8);padding-top:var(--space-6)}
+.band>h2{font-size:var(--text-micro);text-transform:uppercase;letter-spacing:.14em;
+         color:var(--ink-2);font-weight:400;margin-bottom:var(--space-6)}
+.band>h2 .count{color:var(--ink);margin-left:var(--space-5);letter-spacing:.14em}
+.note{font-size:var(--text-small);color:var(--ink-2);max-width:var(--measure);
+      margin-bottom:var(--space-6)}
+.sub{display:block;font-size:var(--text-small);font-weight:400;color:var(--ink-2);
+     line-height:1.35;margin-top:var(--space-1)}
+
+/* ── the instrument ───────────────────────────────────────────────────── */
+
+.tidechart{margin:0}
+.tidechart__cap{font-size:var(--text-small);color:var(--ink-2);max-width:var(--measure);
+                margin-bottom:var(--space-6)}
+.axis,.lane{display:grid;grid-template-columns:var(--lane-label) minmax(0,1fr) var(--lane-tail)}
+.axis{align-items:end}
+.axis__scale{position:relative;height:34px;font-size:var(--text-micro);color:var(--ink-2)}
+.axis__now,.axis__hw{position:absolute;top:0;font-weight:400;white-space:nowrap}
+.axis__now{left:43.137%;transform:translateX(-100%);padding-right:var(--space-3);color:var(--ink)}
+.axis__hw{left:49.412%;padding-left:var(--space-3)}
+.axis__t{position:absolute;bottom:0;left:var(--at);transform:translateX(-50%);font-style:normal}
+.axis__t--first{transform:none}
+.axis__t--last{transform:translateX(-100%)}
+
+.lanes{list-style:none;padding:0;border-top:1px solid var(--line)}
+.lane{align-items:center;height:34px}
+.lane__name{font-size:var(--text-small);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+            padding-right:var(--space-5)}
+.lane__tail{font-size:var(--text-small);color:var(--ink-2);text-align:right}
+.lane--closing .lane__tail{color:var(--warn)}
+.lane--shut .lane__tail{color:var(--ink-2)}
+
+.lane__track{position:relative;height:34px}
+.bar{position:absolute;left:var(--from);width:var(--span);border-radius:var(--radius-inner)}
+.bar--gone{top:15px;height:4px;background:var(--line-strong)}
+.bar--left{top:10px;height:14px;background:var(--go)}
+.lane--closing .bar--left{background:var(--warn)}
+.rule{position:absolute;top:0;bottom:0}
+.rule--now{left:43.137%;width:2px;background:var(--ink)}
+.rule--hw{left:49.412%;width:1px;
+          background:repeating-linear-gradient(var(--ink-2) 0 4px,transparent 4px 8px)}
+.strike{position:absolute;top:16px;left:0;right:0;height:1px;background:var(--line-strong)}
+.lane__closed{position:absolute;top:7px;left:0;background:var(--bg);padding-right:var(--space-5);
+              font-size:var(--text-small);color:var(--bad)}
+
+@media (max-width:719px){
+  .axis{grid-template-columns:minmax(0,1fr)}
+  .axis__pad{display:none}
+  .lane{grid-template-columns:minmax(0,1fr) auto;
+        grid-template-areas:"name tail" "track track";
+        height:auto;padding-block:var(--space-4);row-gap:var(--space-2)}
+  .lane__name{grid-area:name;padding-right:var(--space-4)}
+  .lane__tail{grid-area:tail}
+  .lane__track{grid-area:track;height:26px}
+  .bar--gone{top:11px}
+  .bar--left{top:6px}
+  .strike{top:12px}
+  .lane__closed{top:3px}
+  .lanes>.lane+.lane{border-top:1px solid var(--line)}
+}
+
+/* ── tables ───────────────────────────────────────────────────────────── */
+
+/* The scroll shadow only paints when there is somewhere to scroll: the two `local` panels
+   sit under the two `scroll` ones and cover them until the content moves. At 375 the lock
+   table is wider than a phone in a hut, and an edge with no affordance is an edge nobody
+   drags. */
+.scroller{overflow-x:auto}
+.scroller--wide{
+  background:
+    linear-gradient(to right,var(--bg) 62%,transparent) left/26px 100% no-repeat local,
+    linear-gradient(to left,var(--bg) 62%,transparent) right/26px 100% no-repeat local,
+    radial-gradient(farthest-side at 0 50%,color-mix(in srgb,var(--ink) 34%,transparent),transparent) left/14px 100% no-repeat scroll,
+    radial-gradient(farthest-side at 100% 50%,color-mix(in srgb,var(--ink) 34%,transparent),transparent) right/14px 100% no-repeat scroll;
+}
+.grid{border-collapse:collapse;width:100%;min-width:470px;font-size:var(--text-small)}
+.grid caption{caption-side:top;text-align:left;color:var(--ink-2);max-width:var(--measure);
+              padding-bottom:var(--space-6)}
+.grid th,.grid td{text-align:left;vertical-align:top;
+                  padding:var(--space-4) var(--space-6) var(--space-4) 0;
+                  border-bottom:1px solid var(--line)}
+.grid thead th{font-size:var(--text-micro);text-transform:uppercase;letter-spacing:.12em;
+               color:var(--ink-2);font-weight:400;padding-bottom:var(--space-3);
+               border-bottom:1px solid var(--line-strong)}
+.grid tbody th{font-weight:700;white-space:nowrap}
+.grid .num{text-align:right;padding-right:var(--space-8);white-space:nowrap}
+.grid--locks{min-width:520px}
+.grid--locks th:nth-child(1){width:32%}
+.grid--locks th:nth-child(2){width:22%}
+.grid--locks th:nth-child(3){width:16%}
+.grid--locks th:nth-child(4){width:30%}
+.grid--log{min-width:0}
+.wins .win{display:block;white-space:nowrap}
+.wins .win__k{display:inline-block;width:9ch;font-size:var(--text-micro);
+              text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.wins .win+.win{margin-top:var(--space-2)}
+.wins .win--pm{color:var(--ink-2)}
+.grid tbody th .sub{white-space:normal}
+.grid tr.is-shut th,.grid tr.is-shut td{color:var(--ink-2)}
+.grid .vessel{font-style:italic;font-weight:700}
+.sub--warn{color:var(--warn)}
+
+.st{display:inline-flex;align-items:center;gap:var(--space-3);white-space:nowrap;font-weight:700}
+.st .dot{width:7px;height:7px;border-radius:var(--radius-full);background:currentColor;flex:none}
+.st--go{color:var(--go)} .st--warn{color:var(--warn)} .st--bad{color:var(--bad)}
+
+/* ── the waiting queue ────────────────────────────────────────────────── */
+
+.queue{list-style:none;padding:0;counter-reset:q;border-top:1px solid var(--line-strong)}
+.q{counter-increment:q;display:grid;gap:var(--space-2) var(--space-6);
+   padding:var(--space-5) 0 var(--space-5) var(--space-8);position:relative;
+   border-bottom:1px solid var(--line)}
+.q::before{content:counter(q);position:absolute;left:0;top:var(--space-5);
+           font-size:var(--text-small);color:var(--ink-2)}
+.q .vessel{font-style:italic;font-weight:700;font-size:var(--text-body)}
+.q__for>b{font-weight:700}
+.q__sill,.q__for,.q__since,.q__boat{min-width:0;font-size:var(--text-small)}
+
+/* Between 720 and 1040 the four fields pair up rather than stacking: at 768 a queue of six
+   boats one field per line is seven screens of scrolling for a shift's work. */
+@media (min-width:720px) and (max-width:1039px){
+  .q{grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);align-items:start;
+     padding-left:var(--space-9);column-gap:var(--space-7)}
+  .q::before{left:var(--space-5)}
+  .q__boat{grid-column:1;grid-row:1}
+  .q__for{grid-column:1;grid-row:2}
+  .q__sill{grid-column:2;grid-row:1}
+  .q__since{grid-column:2;grid-row:2}
+}
+
+@media (min-width:1040px){
+  .q{grid-template-columns:minmax(0,1.05fr) minmax(0,0.85fr) minmax(0,1.5fr) minmax(0,0.8fr);
+     align-items:start;padding-left:var(--space-9)}
+  .q::before{left:var(--space-5)}
+  .q__since{text-align:right}
+}
+
+/* ── passage log and its form ─────────────────────────────────────────── */
+
+.empty{font-size:var(--text-small);color:var(--ink-2);max-width:var(--measure);
+       border-left:2px solid var(--line-strong);padding:var(--space-4) 0 var(--space-4) var(--space-6)}
+
+.logform{margin-top:var(--space-8);border-top:1px solid var(--line);padding-top:var(--space-7);
+         max-width:960px}
+.fields{display:grid;gap:var(--space-7) var(--space-7);
+        grid-template-columns:repeat(auto-fit,minmax(190px,1fr))}
+.field{min-width:0}
+.field>label{display:block;font-size:var(--text-micro);text-transform:uppercase;
+             letter-spacing:.12em;color:var(--ink-2);margin-bottom:var(--space-2)}
+.hint{font-size:var(--text-small);color:var(--ink-2);margin-bottom:var(--space-4);
+      line-height:1.35}
+.field select,.field input{font:inherit;font-size:var(--text-body);width:100%;
+  min-height:44px;padding:var(--space-4);color:var(--ink);background:var(--surface-2);
+  border:1px solid var(--line-strong);border-radius:var(--radius-outer)}
+.field select:hover,.field input:hover{border-color:var(--ink-2)}
+.field .err{display:block;margin-top:var(--space-3);font-size:var(--text-small);color:var(--bad)}
+.field .err::before{content:"";display:inline-block;width:7px;height:7px;
+                    background:var(--bad);margin-right:var(--space-3)}
+.field.is-bad select,.field.is-bad input{border-color:var(--bad);border-left-width:2px}
+
+.errsum{border:1px solid var(--bad);border-left-width:2px;padding:var(--space-6);
+        margin-bottom:var(--space-7);max-width:var(--measure)}
+.errsum h3{font-size:var(--text-body);color:var(--bad);margin-bottom:var(--space-4)}
+.errsum ul{padding-left:var(--space-7);font-size:var(--text-small)}
+.errsum li+li{margin-top:var(--space-2)}
+.errsum a{color:var(--ink)}
+
+.btn{font:inherit;font-size:var(--text-body);font-weight:700;margin-top:var(--space-7);
+     min-height:44px;padding-inline:var(--space-8);cursor:pointer;
+     color:var(--on-accent);background:var(--accent);
+     border:1px solid transparent;border-radius:var(--radius-outer);
+     transition:background var(--motion-fast) var(--ease)}
+.btn:hover{background:color-mix(in srgb,var(--accent) 88%,var(--ink))}
+.btn:active{background:color-mix(in srgb,var(--accent) 88%,var(--bg))}
+
+.status-msg{margin-top:var(--space-6);font-size:var(--text-small);color:var(--go);
+            font-weight:700;min-height:1px}
+.status-msg:empty{margin:0}
+
+#log-body tr.is-new{animation:in var(--motion-fast) var(--ease)}
+@keyframes in{from{opacity:0}to{opacity:1}}
+
+/* ── conventions ──────────────────────────────────────────────────────── */
+
+.conventions{border-top:1px solid var(--line-strong);margin-top:var(--space-9);
+             padding-block:var(--space-7) var(--space-9)}
+.conventions h2{font-size:var(--text-micro);text-transform:uppercase;letter-spacing:.14em;
+                color:var(--ink-2);font-weight:400;margin-bottom:var(--space-6)}
+.conventions ul{list-style:none;padding:0;display:grid;gap:var(--space-5);
+                max-width:var(--measure);font-size:var(--text-small);color:var(--ink-2)}
+.conventions li{padding-left:var(--space-6);border-left:1px solid var(--line)}
+.conventions b{color:var(--ink)}
+.foot-note{margin-top:var(--space-7);font-size:var(--text-small);color:var(--ink-2);
+           max-width:var(--measure)}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:1ms !important;animation-iteration-count:1 !important;
+                       transition-duration:1ms !important}
+}

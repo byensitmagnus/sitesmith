@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Comp C — master and detail</title>
+<style>
+  :root{
+    --bg:#2B3338; --pane:#333C42; --card:#3B454B; --line:#4E5A61;
+    --ink:#EDF1F2; --ink-2:#AEB9BF; --amber:#F2A413; --bad:#FF7A6B;
+    --cond:"Arial Narrow","Helvetica Neue Condensed","Roboto Condensed",Arial,sans-serif;
+    --sans:system-ui,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 var(--sans);font-variant-numeric:tabular-nums}
+  .top{display:flex;justify-content:space-between;padding:14px 20px;border-bottom:1px solid var(--line);font-family:var(--cond);letter-spacing:.06em}
+  .split{display:grid;grid-template-columns:340px minmax(0,1fr)}
+  .master{border-right:2px solid var(--line);padding:16px 18px 40px}
+  .detail{background:var(--pane);padding:16px 22px 40px}
+  h1{font-family:var(--cond);font-size:30px;letter-spacing:.02em;margin:0 0 4px;text-transform:uppercase}
+  .sub{margin:0 0 18px;color:var(--ink-2);font-size:14px}
+  h2{font-family:var(--cond);font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-2);margin:0 0 10px}
+  ol{list-style:none;margin:0;padding:0}
+  li{display:grid;grid-template-columns:22px minmax(0,1fr);gap:8px;padding:9px 8px;border-bottom:1px solid var(--line)}
+  li.sel{background:var(--card);box-shadow:inset 3px 0 0 var(--amber)}
+  li b{font-family:var(--cond);font-size:17px;letter-spacing:.02em}
+  li span{display:block;color:var(--ink-2);font-size:12px}
+  .card{background:var(--card);border-radius:10px;padding:16px 18px;margin-bottom:14px}
+  .card h3{font-family:var(--cond);font-size:20px;margin:0 0 6px;letter-spacing:.02em;text-transform:uppercase}
+  .kv{display:grid;grid-template-columns:auto auto;gap:4px 18px;font-size:14px;margin:0}
+  .kv dt{color:var(--ink-2)}
+  .warn{color:var(--bad)}
+  figure{margin:0}
+  figcaption{color:var(--ink-2);font-size:12px;margin-top:8px}
+</style>
+</head>
+<body>
+<div class="top"><span>TIDEWORKS · MIDDLE LEVEL &amp; TIDAL OUSE</span><span>AS AT 04:40</span></div>
+<div class="split">
+  <div class="master">
+    <h1>Waiting</h1>
+    <p class="sub">Priority order. Six boats.</p>
+    <ol>
+      <li><span>1</span><span><b>Wisbech Trader</b><span>commercial, timed cargo · 1.6 m · Denver</span></span></li>
+      <li><span>2</span><span><b>Kesteven</b><span>commercial, aggregate · 1.8 m · Denver</span></span></li>
+      <li><span>3</span><span><b>Little Ouse</b><span>commercial, empty · 0.9 m · Denver</span></span></li>
+      <li class="sel"><span>4</span><span><b>Marigold</b><span>leisure cruiser · 0.8 m · Salter's Lode · waiting 6 h 00</span></span></li>
+      <li><span>5</span><span><b>Corbie</b><span>leisure narrowboat · 0.6 m · Stanground</span></span></li>
+      <li><span>6</span><span><b>Halcyon</b><span>leisure cruiser · 1.0 m · Marmont</span></span></li>
+    </ol>
+  </div>
+  <div class="detail">
+    <h2>Marigold at Salter's Lode</h2>
+    <div class="card">
+      <h3>Salter's Lode</h3>
+      <dl class="kv">
+        <dt>Window</dt><dd>HW −0:45 to HW +0:30 · 04:27 – 05:42</dd>
+        <dt>Shuts in</dt><dd>1 h 02</dd>
+        <dt>Sill at MLW</dt><dd>0.4 m</dd>
+        <dt>Draught</dt><dd class="warn">0.8 m — 0.4 m over the sill at MLW</dd>
+      </dl>
+    </div>
+    <div class="card">
+      <figure>
+        <svg viewBox="0 0 460 150" width="100%" height="150" role="img" aria-label="Long section of Salter's Lode: chamber, sill at 0.4 m over datum, and Marigold's 0.8 m draught marked against it">
+          <rect x="0" y="46" width="460" height="80" fill="#22333B"/>
+          <path d="M0 46 H460" stroke="#AEB9BF" stroke-width="1"/>
+          <path d="M60 126 H190 V96 H300 V126 H420" stroke="#EDF1F2" stroke-width="2" fill="none"/>
+          <path d="M190 96 H300" stroke="#F2A413" stroke-width="3" fill="none"/>
+          <text x="196" y="90" fill="#F2A413" font-size="12" font-family="Arial Narrow, Arial">sill 0.4 m over datum</text>
+          <path d="M96 46 h84 v30 h-84 z" fill="#EDF1F2" opacity=".85"/>
+          <path d="M96 76 H180" stroke="#FF7A6B" stroke-width="3"/>
+          <text x="96" y="36" fill="#EDF1F2" font-size="12" font-family="Arial Narrow, Arial">Marigold, draught 0.8 m</text>
+        </svg>
+        <figcaption>Drawn from the brief's figures. The board carries no tide heights, so the water line is indicative.</figcaption>
+      </figure>
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Comp C — the year, as one object — Cleeve Seed Library</title>
+<style>
+  :root{
+    --ground:#f7f6f1; --card:#ffffff; --line:#dcd9cf;
+    --ink:#22241f; --ink-2:#5b6055; --spring:#2f6b46; --autumn:#a8541c;
+    --sans:system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--ground);color:var(--ink);font:16px/1.6 var(--sans)}
+  .c{max-width:1000px;margin:0 auto;padding:0 28px}
+  header{padding:18px 0;font-weight:600}
+  .hero{text-align:center;padding:28px 0 48px}
+  h1{font:600 40px/1.15 var(--sans);margin:0 auto 14px;max-width:20ch}
+  .sub{color:var(--ink-2);max-width:56ch;margin:0 auto 28px}
+  .ring{display:block;margin:0 auto;width:min(560px,88vw);height:auto}
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;padding:8px 0 56px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px}
+  .card h3{margin:0 0 8px;font-size:18px}
+  .card p{margin:0;color:var(--ink-2);font-size:15px}
+</style>
+</head>
+<body>
+<header class="c">Cleeve Seed Library</header>
+<main>
+  <section class="hero c">
+    <h1>One turn of the year, and the seed comes home</h1>
+    <p class="sub">Free vegetable seed inside Cleeve Branch Library, Gloucestershire. Borrow up to six packets in spring; save seed from your best plants and bring some back in autumn.</p>
+    <svg class="ring" viewBox="0 0 560 300" role="img" aria-label="The borrowing year drawn as a loop: borrow in spring, grow through summer, save and return in autumn.">
+      <circle cx="280" cy="150" r="118" fill="none" stroke="var(--line)" stroke-width="2"/>
+      <path d="M280 32a118 118 0 0 1 104 174" fill="none" stroke="var(--spring)" stroke-width="7" stroke-linecap="round"/>
+      <path d="M176 206a118 118 0 0 1 104-174" fill="none" stroke="var(--autumn)" stroke-width="7" stroke-linecap="round"/>
+      <circle cx="280" cy="32" r="9" fill="var(--spring)"/>
+      <circle cx="384" cy="206" r="9" fill="var(--spring)"/>
+      <circle cx="176" cy="206" r="9" fill="var(--autumn)"/>
+      <text x="280" y="14" text-anchor="middle" font-size="15" fill="var(--ink)">Spring — borrow six</text>
+      <text x="470" y="228" text-anchor="middle" font-size="15" fill="var(--ink)">Summer — grow</text>
+      <text x="92" y="228" text-anchor="middle" font-size="15" fill="var(--ink)">Autumn — bring back</text>
+      <text x="280" y="145" text-anchor="middle" font-size="46" fill="var(--ink)">6</text>
+      <text x="280" y="172" text-anchor="middle" font-size="14" fill="var(--ink-2)">packets a visit</text>
+    </svg>
+  </section>
+  <section class="c cards">
+    <div class="card"><h3>Free, with no catch to read</h3><p>No membership fee, no deposit, and no penalty if you return nothing. The branch provides the drawers and the space.</p></div>
+    <div class="card"><h3>Five easy, four not</h3><p>Runner bean, pea, tomato, lettuce and French bean can be saved by a beginner. Kale, squash, beetroot and carrot cross with their neighbours.</p></div>
+    <div class="card"><h3>96 of 412</h3><p>412 members have registered since 2019. 96 brought seed back in autumn 2025. We think that is low.</p></div>
+  </section>
+</main>
+</body>
+</html>

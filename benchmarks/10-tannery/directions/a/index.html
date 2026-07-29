@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Comp A — the plate — Falkner &amp; Vane</title>
+<style>
+  :root{
+    --bg:#e6dcc6; --ink:#241a11; --ink-2:#5a4a34; --line:#b9a882; --accent:#8f3a16;
+    --serif:Georgia,"Iowan Old Style","Palatino Linotype","Book Antiqua",serif;
+    --mono:"DejaVu Sans Mono",ui-monospace,Menlo,Consolas,"Liberation Mono",monospace;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 var(--serif)}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 32px}
+  header{padding:18px 0 0}
+  .mark{font:600 22px/1 var(--serif);letter-spacing:.14em;text-transform:uppercase}
+  .tally{height:9px;margin-top:7px;
+    background-image:
+      repeating-linear-gradient(90deg,var(--ink) 0 1.5px,transparent 1.5px 11px),
+      repeating-linear-gradient(90deg,var(--line) 0 1.5px,transparent 1.5px 11px);
+    background-size:209px 100%,99px 55%;
+    background-position:0 0,209px bottom;background-repeat:no-repeat}
+  nav{margin-top:10px;font:12px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2)}
+  nav a{color:inherit;margin-right:20px}
+  h1{font:400 46px/1.06 var(--serif);margin:34px 0 14px;max-width:15ch}
+  .lede{max-width:62ch;margin:0 0 8px;color:var(--ink-2)}
+  .scale{font:12px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);
+    border-top:1px solid var(--line);padding-top:8px;margin:26px 0 4px}
+  .plate{border-bottom:1px solid var(--line)}
+  .row{display:grid;grid-template-columns:minmax(0,1fr) 560px 84px;gap:24px;align-items:center;
+    border-top:1px solid var(--line);padding:6px 0}
+  .row b{font-weight:400;font-size:19px;display:block}
+  .row span{font:12px/1.4 var(--mono);color:var(--ink-2);text-transform:uppercase;letter-spacing:.06em}
+  .fig{font:15px/1 var(--mono);text-align:right;font-variant-numeric:tabular-nums}
+  svg{display:block;width:100%;height:auto}
+  .r{stroke:var(--line);stroke-width:1}
+  .b{stroke:var(--ink);stroke-width:1.5}
+  .s{fill:var(--ink);opacity:.86}
+  .g{stroke:var(--ink);stroke-width:2;fill:none}
+  @media(max-width:900px){.row{grid-template-columns:1fr;gap:6px}.fig{text-align:left}}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <div class="mark">Falkner &amp; Vane</div>
+  <div class="tally"></div>
+  <nav><a href="#">Choose</a><a href="#">When</a><a href="#">Buying</a><a href="#">The yard</a></nav>
+</div></header>
+<main class="wrap">
+  <h1>Six leathers, drawn to scale.</h1>
+  <p class="lede">Bark-tanned in pits in Walsall since 1878, in oak and mimosa, over months
+  rather than the day a chrome tannery takes. Sold by the hide to saddlers, bookbinders and
+  shoemakers. Not sold to the public.</p>
+  <p class="scale">Drawn in section on one baseline. Rules are 1 mm apart.</p>
+  <div class="plate">
+    <div class="row">
+      <div><b>Oak-tanned calf</b><span>book boards, spines</span></div>
+      <svg viewBox="0 0 560 118" aria-label="Calf, 1.4 mm">
+        <line class="r" x1="40" y1="60" x2="520" y2="60"/><line class="r" x1="40" y1="38" x2="520" y2="38"/>
+        <line class="b" x1="40" y1="82" x2="520" y2="82"/>
+        <polygon class="s" points="60,51 380,51 470,62 470,93 380,82 60,82"/>
+        <polyline class="g" points="60,51 380,51 470,62" stroke-dasharray="1 3"/>
+      </svg>
+      <div class="fig">1.4 mm<br>firm</div>
+    </div>
+    <div class="row">
+      <div><b>Oak-tanned goat</b><span>full-leather bindings</span></div>
+      <svg viewBox="0 0 560 118" aria-label="Goat, 1.2 mm">
+        <line class="r" x1="40" y1="60" x2="520" y2="60"/><line class="r" x1="40" y1="38" x2="520" y2="38"/>
+        <line class="b" x1="40" y1="82" x2="520" y2="82"/>
+        <polygon class="s" points="60,56 380,56 470,88 470,114 380,82 60,82"/>
+        <polyline class="g" points="60,56 380,56 470,88" stroke-dasharray="4 6 2 9"/>
+      </svg>
+      <div class="fig">1.2 mm<br>soft</div>
+    </div>
+    <div class="row">
+      <div><b>Bark-tanned cowhide, shoulder</b><span>saddlery, belts</span></div>
+      <svg viewBox="0 0 560 118" aria-label="Shoulder, 3.2 mm">
+        <line class="r" x1="40" y1="60" x2="520" y2="60"/><line class="r" x1="40" y1="38" x2="520" y2="38"/>
+        <line class="b" x1="40" y1="82" x2="520" y2="82"/>
+        <polygon class="s" points="60,12 380,12 470,17 470,87 380,82 60,82"/>
+        <polyline class="g" points="60,12 380,12 470,17" stroke-dasharray="7 5"/>
+      </svg>
+      <div class="fig">3.2 mm<br>very firm</div>
+    </div>
+  </div>
+</main>
+</body>
+</html>
