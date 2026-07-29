@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Tests for search v3. Original work, MIT. Run from skills/sitesmith/scripts/.
+Tests for search v3. Original work, MIT. AI-generated additions: (C).
+Run from skills/sitesmith/scripts/.
 
     python ../../../tests/gates/search_v3_test.py
 
@@ -16,6 +17,7 @@ Three claims are made about --candidates and each is checked here rather than as
 """
 
 import json
+import csv
 import shutil
 import sys
 import tempfile
@@ -184,6 +186,47 @@ with tempfile.TemporaryDirectory() as tmp:
         check("nor after two recorded winners",
               all(x["label"] not in (w1, w2) for x in c3["candidates"]),
               [x["label"] for x in c3["candidates"]])
+
+# ── 5. the visible dials alter candidate formation ───────────────────────
+with tempfile.TemporaryDirectory() as tmp:
+    original_data = C.DATA_DIR
+    original_history = C.HISTORY
+    C.DATA_DIR = Path(tmp)
+    C.HISTORY = Path(tmp) / "history.jsonl"
+    C.CSV_CONFIG["dial-test"] = {
+        "file": "dial-test.csv",
+        "search_cols": ["Style Category", "Keywords"],
+        "output_cols": ["Style Category", "Keywords"],
+    }
+    rows = [
+        {"Style Category": "Quiet Grid", "Keywords": "website interface restrained calm static airy"},
+        {"Style Category": "Kinetic Blast", "Keywords": "website interface experimental bold kinetic motion"},
+        {"Style Category": "Dense Console", "Keywords": "website interface cockpit dense compact data"},
+    ]
+    with (Path(tmp) / "dial-test.csv").open("w", encoding="utf-8", newline="") as handle:
+        writer = csv.DictWriter(handle, fieldnames=rows[0].keys())
+        writer.writeheader()
+        writer.writerows(rows)
+
+    quiet_dials = {"visual_density": 2, "motion_intensity": 2, "aesthetic_boldness": 2}
+    loud_dials = {"visual_density": 4, "motion_intensity": 9, "aesthetic_boldness": 9}
+    dense_dials = {"visual_density": 9, "motion_intensity": 3, "aesthetic_boldness": 5}
+    quiet = C.contrasting_candidates("website interface", "dial-test", dials=quiet_dials)
+    loud = C.contrasting_candidates("website interface", "dial-test", dials=loud_dials)
+    dense = C.contrasting_candidates("website interface", "dial-test", dials=dense_dials)
+
+    check("quiet dials select the restrained candidate first",
+          quiet["candidates"][0]["label"] == "Quiet Grid", quiet["candidates"][0]["label"])
+    check("bold motion dials select the kinetic candidate first",
+          loud["candidates"][0]["label"] == "Kinetic Blast", loud["candidates"][0]["label"])
+    check("high density selects the console candidate first",
+          dense["candidates"][0]["label"] == "Dense Console", dense["candidates"][0]["label"])
+    check("candidate output records the exact dial contract", loud.get("dials") == loud_dials,
+          loud.get("dials"))
+
+    del C.CSV_CONFIG["dial-test"]
+    C.DATA_DIR = original_data
+    C.HISTORY = original_history
 
 print(f"\n{len(PASS)} passed, {len(FAIL)} failed")
 sys.exit(1 if FAIL else 0)

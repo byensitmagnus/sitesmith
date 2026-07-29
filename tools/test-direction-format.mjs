@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 /**
- * The DIRECTION.md axis record is a machine-readable contract. This tests it. Original work, MIT.
+ * The DIRECTION.md axis record is a machine-readable contract. This tests it. Original work,
+ * MIT. AI-generated additions: (C).
  *
  *   node tools/test-direction-format.mjs
  *
@@ -23,6 +24,7 @@ import { fileURLToPath } from 'node:url';
 import { join } from 'node:path';
 import {
   parseDirection, groundExpectation, typeExpectation, imageryExpectation, rhythmExpectation,
+  directionContractProblems,
 } from '../skills/sitesmith/scripts/direction-fidelity.mjs';
 
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
@@ -56,6 +58,49 @@ ok('the documented block carries a signature selector', Boolean(documented.signa
   documented.signature ?? 'none');
 ok('the documented block carries a minimum share', Number.isFinite(documented.signatureMinShare),
   String(documented.signatureMinShare));
+for (const dial of ['visual-density', 'motion-intensity', 'aesthetic-boldness']) {
+  ok(`the documented block names ${dial}`,
+    new RegExp(`^\\s*[-*]\\s*${dial}\\s*:`, 'im').test(fenced[1]));
+}
+
+const dialled = parseDirection([
+  '- composition: a dense index',
+  '- type: condensed grotesque over a system sans',
+  '- colour: a light paper ground',
+  '- imagery: deliberately imageless',
+  '- rhythm: one continuous field',
+  '- visual-density: 8',
+  '- motion-intensity: 3',
+  '- aesthetic-boldness: 7',
+  '- signature-selector: .index',
+  '- signature-min-share: 8',
+].join('\n'));
+ok('the three direction dials parse as integers',
+  JSON.stringify(dialled.dials) === JSON.stringify({
+    visualDensity: 8,
+    motionIntensity: 3,
+    aestheticBoldness: 7,
+  }), JSON.stringify(dialled.dials));
+ok('a complete dial contract has no format problem', directionContractProblems(dialled).length === 0,
+  directionContractProblems(dialled).join('; '));
+
+const missingDials = parseDirection([
+  '- composition: a dense index', '- type: sans over sans', '- colour: light ground',
+  '- imagery: deliberately imageless', '- rhythm: one continuous field',
+  '- signature-selector: .index',
+].join('\n'));
+ok('missing dials are reported as a contract fault',
+  directionContractProblems(missingDials).some((problem) => /visual-density/.test(problem)));
+
+const invalidDials = parseDirection([
+  '- composition: a dense index', '- type: sans over sans', '- colour: light ground',
+  '- imagery: deliberately imageless', '- rhythm: one continuous field',
+  '- visual-density: 11', '- motion-intensity: 0', '- aesthetic-boldness: seven',
+  '- signature-selector: .index',
+].join('\n'));
+ok('dial values outside integer 1-10 are rejected',
+  directionContractProblems(invalidDials).filter((problem) => /1 and 10/.test(problem)).length === 3,
+  directionContractProblems(invalidDials).join('; '));
 
 /* ── 2. every trap the documentation warns about ───────────────────────────── */
 
