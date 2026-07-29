@@ -65,7 +65,7 @@ main{padding-block:clamp(16px,2.4vw,26px) clamp(30px,5vw,60px)}
      padding:0 clamp(14px,2vw,22px) 0 0}
 .job .head{grid-column:2;display:flex;align-items:center;gap:clamp(14px,2.4vw,26px);
            flex-wrap:wrap;padding:clamp(13px,1.8vw,17px) 0 0}
-.job .head .who{flex:1 1 14ch;min-width:0}
+.job .head .who{flex:0 1 auto;min-width:0;margin-right:auto;max-width:34ch}
 .job .spine{align-self:stretch;background:var(--out)}
 .job.late .spine{background:var(--late)}
 .job.today .spine{background:var(--today)}
@@ -86,11 +86,12 @@ main{padding-block:clamp(16px,2.4vw,26px) clamp(30px,5vw,60px)}
 .who{min-width:0}
 .who .pub{font:600 1.14rem/1.25 var(--ui);margin:0 0 3px}
 .who .meta{margin:0;color:var(--ink-3);font:400 .88rem/1.4 var(--fig)}
-.state{display:inline-flex;align-items:center;gap:8px;margin-left:auto;flex:none;
+.state{display:inline-flex;align-items:center;gap:8px;flex:none;order:-1;
        font:800 .92rem/1 var(--ui);letter-spacing:.09em;text-transform:uppercase;
        padding:11px 15px;border-radius:2px}
-.job.late .state{background:var(--late);color:var(--late-ink)}
-.job.today .state{background:var(--today);color:var(--today-ink)}
+.job.late .state{background:var(--late);color:var(--late-ink);font-size:1.06rem;
+                 padding:13px 19px;box-shadow:0 0 0 4px rgb(255 106 77 / .22)}
+.job.today .state{background:transparent;color:var(--today);box-shadow:inset 0 0 0 2px var(--today)}
 .job.out .state{background:transparent;color:var(--ink-2);box-shadow:inset 0 0 0 2px var(--line-2)}
 
 /* the book-in, inline and always open — a cellarman in gloves gets controls,

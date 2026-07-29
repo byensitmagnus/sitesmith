@@ -102,8 +102,12 @@ figcaption{font:600 .74rem/1.5 var(--grot);letter-spacing:.14em;text-transform:u
              font:600 1.06rem/1 var(--num);font-variant-numeric:tabular-nums}
 .partials td:first-child{text-align:left;font:400 1rem/1 var(--sans);color:var(--ink)}
 .partials .now{color:var(--metal)}
+.partials .fig{display:inline-block;transition:margin-right .45s cubic-bezier(.2,.7,.2,1)}
 .bar{position:relative;display:block;height:9px;background:var(--ground-3);margin-top:7px;
-     max-width:180px;margin-left:auto}
+     width:180px;margin-left:auto}
+.partials td.v{position:relative}
+/* the figure sits over the half of the track its own bar occupies */
+.partials .flat .fig{left:auto;right:calc(90px - 2ch)}
 .bar i{position:absolute;top:0;bottom:0;background:var(--metal-2);
        transition:left .45s cubic-bezier(.2,.7,.2,1),width .45s cubic-bezier(.2,.7,.2,1)}
 .bar.on i{background:var(--metal)}
@@ -133,7 +137,10 @@ figcaption{font:600 .74rem/1.5 var(--grot);letter-spacing:.14em;text-transform:u
                    linear-gradient(135deg,var(--metal) 50%,transparent 50%);
   background-position:calc(100% - 22px) 56%, calc(100% - 15px) 56%;
   background-size:7px 7px,7px 7px;background-repeat:no-repeat}
-.f textarea{min-height:104px;resize:vertical}
+.f textarea{min-height:104px;resize:none}
+.f input[type=number]{-moz-appearance:textfield;appearance:textfield}
+.f input[type=number]::-webkit-outer-spin-button,
+.f input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
 .f .note{font-size:.88rem;color:var(--ink-3);margin:7px 0 0}
 .f [aria-invalid=true]{border-color:var(--bad);background:var(--bad-soft)}
 .f .msg{font-size:.9rem;font-weight:600;color:var(--bad);margin:7px 0 0}
@@ -347,7 +354,7 @@ let state = 'before';
 rowsEl.innerHTML = PARTIALS.map((p, i) => `
   <tr>
     <td>${p.name}</td>
-    <td class="v" data-v="${i}">${cents(p.before)}
+    <td class="v" data-v="${i}"><span class="fig">${cents(p.before)}</span>
       <span class="bar" data-bar="${i}"><i></i><span class="mid"></span></span></td>
     <td>${p.off}</td>
   </tr>`).join('');
@@ -357,7 +364,10 @@ function draw() {
   PARTIALS.forEach((p, i) => {
     const v = on ? p.after : p.before;
     const cell = document.querySelector(`[data-v="${i}"]`);
-    cell.childNodes[0].nodeValue = cents(v) + ' ';
+    const fig = cell.querySelector('.fig');
+    fig.textContent = cents(v);
+    /* a flat partial has no bar to sit over, so its figure centres on the tick instead */
+    fig.style.marginRight = v === 0 ? '82px' : v < 0 ? '90px' : '0';
     cell.classList.toggle('now', on);
     const bar = document.querySelector(`[data-bar="${i}"]`);
     bar.classList.toggle('on', on);
