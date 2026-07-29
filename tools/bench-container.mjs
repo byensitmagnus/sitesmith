@@ -536,7 +536,15 @@ async function inspectMounts(name, arm, probing, timeoutMs = 30000) {
     }
     await sleep(400);
   }
-  return { ok: false, reason: 'the container never appeared for inspection' };
+  /* The container is started with --rm, so a short-lived one can be gone before the first
+     poll and this loop then spends its whole timeout looking for something already removed.
+     That is a race in the runner, not a fact about the isolation: on the first real run of
+     this gate the treatment arm reported "never appeared" with every isolation check inside
+     it passing. Reporting it as a mount mismatch would have read as a broken experiment.
+
+     Callers pre-read the table with mountsFromCreate() before starting the container, so
+     this path now only reports what it actually is. */
+  return { ok: false, reason: 'the container was gone before it could be inspected', raced: true };
 }
 
 function runContainer(args, command, secret, timeoutMs, name) {
@@ -563,6 +571,41 @@ function runContainer(args, command, secret, timeoutMs, name) {
   });
 }
 
+/** Read the mount table the daemon *will* give this container, without racing it.
+ *
+ *  `docker create` applies the identical argument list and returns a container that exists
+ *  and has not started, so its mounts can be read deterministically and then thrown away.
+ *  The container under test is still started separately by `docker run` with the same
+ *  arguments, so nothing about what is measured changes — this is a second, disposable
+ *  container used only to ask the daemon what those arguments mean.
+ *
+ *  The alternative was dropping --rm from the run so the exited container could be inspected
+ *  afterwards. That would have changed the invocation the two arms share, which is the one
+ *  thing this runner is built to keep identical. */
+function mountsFromCreate(args, arm, probing) {
+  const createArgs = args.map((a) => (a === 'run' ? 'create' : a))
+    .filter((a) => a !== '--rm' && a !== '-i');
+  const i = createArgs.indexOf('--name');
+  if (i >= 0) createArgs[i + 1] = `${createArgs[i + 1]}-mountcheck`;
+
+  const made = docker(createArgs);
+  if (made.status !== 0) {
+    return { ok: false, reason: `could not create a container to read mounts: ${made.stderr.trim().slice(0, 200)}` };
+  }
+  const id = made.stdout.trim();
+  try {
+    const r = docker(['inspect', '--format', '{{json .Mounts}}', id]);
+    if (r.status !== 0) return { ok: false, reason: 'created container would not inspect' };
+    let mounts = [];
+    try { mounts = JSON.parse(r.stdout.trim()); } catch { return { ok: false, reason: 'unparseable mount table' }; }
+    const got = mounts.map((m) => `${m.Destination}${m.RW ? '' : ':ro'}`).sort();
+    const want = expectedMounts(arm, probing);
+    return { ok: JSON.stringify(got) === JSON.stringify(want), got, want, source: 'docker create' };
+  } finally {
+    docker(['rm', '-f', id]);
+  }
+}
+
 async function freshWorkspace(id, files = {}) {
   const ws = join(LAB, id);
   await rm(ws, { recursive: true, force: true });
@@ -585,9 +628,12 @@ async function probe() {
     const ws = await freshWorkspace(`probe-${arm}`, { 'BRIEF.md': 'Probe workspace. Build nothing.\n' });
     const name = runName(`probe-${arm}`);
 
-    const running = runContainer(containerArgs({ workspace: ws, arm, name, image, probing: true }),
-      'bash /probe/probe.sh', null, 8 * 60 * 1000, name);
-    const mounts = await inspectMounts(name, arm, true);
+    const args = containerArgs({ workspace: ws, arm, name, image, probing: true });
+    /* Read what the daemon makes of these arguments before anything starts, so a container
+       that exits quickly cannot make the check report a mount fault it does not have. */
+    let mounts = mountsFromCreate(args, arm, true);
+    const running = runContainer(args, 'bash /probe/probe.sh', null, 8 * 60 * 1000, name);
+    if (!mounts.ok && !mounts.reason) mounts = await inspectMounts(name, arm, true);
     const { code, out } = await running;
 
     await writeFile(join(ws, 'probe.log'), out);
@@ -742,9 +788,13 @@ async function runOne(slot, secret, fp, gate, spentSoFar, image) {
   const runtime = await assertRuntime(gate, `run ${slot.index + 1}`);
 
   const started = new Date().toISOString();
-  const running = runContainer(containerArgs({ workspace: ws, arm, name, image }),
-    generationCommand(GENERATION_PROMPT), secret, RUN_TIMEOUT_MS, name);
-  const mounts = await inspectMounts(name, arm, false);
+  const args = containerArgs({ workspace: ws, arm, name, image });
+  /* Same as the probe: read the mount table off a created-but-unstarted copy so a fast exit
+     cannot be mistaken for a mount fault. A generation run is long enough that the race has
+     never fired here, but a check that is right by luck is not a check. */
+  let mounts = mountsFromCreate(args, arm, false);
+  const running = runContainer(args, generationCommand(GENERATION_PROMPT), secret, RUN_TIMEOUT_MS, name);
+  if (!mounts.ok && !mounts.reason) mounts = await inspectMounts(name, arm, false);
   const r = await running;
   const finished = new Date().toISOString();
 
