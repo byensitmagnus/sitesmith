@@ -26,6 +26,12 @@ jobs:
       # the docs, and a smoke test of every search domain, stack and design system.
       - run: python tools/check-repo.py
 
+      # The blind-review key opens only after the reviews are locked, bound to this round's
+      # hashes, and unedited since. Rounds 3 to 6 committed the key while reviewers were
+      # working on the same filesystem, so this is the check that was missing then.
+      - name: the sealed key opens only when it should
+        run: node tools/test-open-key.mjs
+
       # Does our own output obey our own absolute rules? Until now nothing asked.
       # A ratchet against tools/conformance-baseline.json: the recorded debt is
       # allowed, any increase fails. See docs/v2/CONFLICTS.md for why the debt exists.
