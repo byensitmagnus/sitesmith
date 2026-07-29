@@ -245,8 +245,12 @@ function claimIsSourced(claim, evidence, html) {
   if (evidence && evidence.includes(claim)) return true;
   const normalised = claim.replace(/[\s,]/g, '');
   if (evidence && evidence.replace(/[\s,]/g, '').includes(normalised)) return true;
-  const near = new RegExp('data-source=["\'][^"\']+["\'][^>]*>[^<]*' +
-    claim.replace(/[.*+?^${}()|[\]\\]/g, '\\function checkImages(file, html, manifest) {'), 'i');
+  /* The escape hatch: a figure that is arithmetic rather than a published price may carry a
+     `data-source` saying so. The replacement string here had been clobbered with a stray
+     function signature, so every escaped character expanded to that text and the pattern could
+     never match — the hatch was documented and did not exist. */
+  const near = new RegExp('data-source=["\'][^"\']*["\'][^>]*>[^<]*' +
+    claim.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i');
   return near.test(html);
 }
 

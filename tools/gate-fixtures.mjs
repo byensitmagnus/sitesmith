@@ -133,6 +133,10 @@ expect('production', 'a shop with no evidence pack',
   /no evidence pack|placeholder language/);
 expect('production', 'a sourced price that ends a sentence',
   prod('pass-sourced-price-ends-sentence', ['--mode', 'E']), 0);
+expect('production', 'an arithmetic figure that carries a data-source',
+  prod('pass-arithmetic-carries-a-source', ['--mode', 'E']), 0);
+expect('production', 'the same figure with no data-source',
+  prod('fail-arithmetic-without-a-source', ['--mode', 'E']), 1, /with no source/);
 
 /* ══ visual asset engine ════════════════════════════════════════════════
    Every one of these runs against the mock provider. No network call, no key, no credit. */
@@ -148,8 +152,8 @@ expect('visual', 'a plan missing lighting and factual risk', plan('fail-incomple
   /no lighting|no factualRisk/);
 expect('visual', 'a plan asking for a third attempt', plan('fail-too-many-attempts'), 1,
   /two iterations is the ceiling/);
-expect('visual', 'a plan with a strategy that is not one of the four',
-  plan('fail-bad-strategy'), 1, /is not one of reuse, stock, generate, edit/);
+expect('visual', 'a plan with a strategy that is not one of the five',
+  plan('fail-bad-strategy'), 1, /is not one of reuse, stock, drawn, generate, edit/);
 expect('visual', 'an asset planned but never listed in the manifest',
   plan('fail-not-in-manifest', [join(VFIX, 'plan/fail-not-in-manifest/ASSET-MANIFEST.md')]), 1,
   /planned, but no row in/);

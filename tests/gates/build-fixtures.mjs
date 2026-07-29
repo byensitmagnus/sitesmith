@@ -512,6 +512,30 @@ await put('production/fail-invented-commerce-facts/site/index.html',
   shop(`<p>Rated 4.8 out of 5 by 1,240 customers. Next-day delivery on every order.
      Only 3 left in stock. Lifetime guarantee. Certified to ISO 9001.</p>`));
 
+/* PASS — a figure that is arithmetic rather than a published price, marked with `data-source`.
+   The gate documents this escape hatch and it did not work: the replacement string in the
+   pattern that looks for a nearby data-source had been clobbered with a stray function
+   signature, so every escaped character in the claim expanded to that text and the pattern
+   could never match. Found on the rebuilt shop, where the live cut total is length times the
+   published per-metre price and is not a price the shop publishes. */
+await put('production/pass-arithmetic-carries-a-source/EVIDENCE.md', SHOP_EVIDENCE);
+await put('production/pass-arithmetic-carries-a-source/ASSET-MANIFEST.md', '# manifest\n\n' + MANIFEST_HEAD +
+  row('logo-primary', 'Three strands in a lay') + row('favicon', 'The mark at 32px') +
+  row('sec-double-braid', 'Cross-section, double braid'));
+await put('production/pass-arithmetic-carries-a-source/journeys/x.spec.mjs', 'process.exit(0);\n');
+await put('production/pass-arithmetic-carries-a-source/site/index.html',
+  shop('<p>This cut: <b data-source="length times the published price per metre">£24.90</b></p>'));
+
+/* FAIL — the same unsourced figure without the attribute. Together these two prove the hatch
+   opens for a marked figure and stays shut for an unmarked one. */
+await put('production/fail-arithmetic-without-a-source/EVIDENCE.md', SHOP_EVIDENCE);
+await put('production/fail-arithmetic-without-a-source/ASSET-MANIFEST.md', '# manifest\n\n' + MANIFEST_HEAD +
+  row('logo-primary', 'Three strands in a lay') + row('favicon', 'The mark at 32px') +
+  row('sec-double-braid', 'Cross-section, double braid'));
+await put('production/fail-arithmetic-without-a-source/journeys/x.spec.mjs', 'process.exit(0);\n');
+await put('production/fail-arithmetic-without-a-source/site/index.html',
+  shop('<p>This cut: <b>£24.90</b></p>'));
+
 /* PASS — a sourced price written where a sentence ends. The price pattern used to take the
    full stop with the figure, so "£4.15." was looked up in the evidence pack as "£4.15." and
    never found, and a shop was blocked for stating a price it had sourced. Reproduced on
