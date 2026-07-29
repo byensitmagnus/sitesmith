@@ -48,4 +48,3 @@ building one customer website. The boundary is in [RELEASE-MAP.md](RELEASE-MAP.m
 
 The round-7 pilots remain byte-identical failed controls at 7.67. Historical reviews and mappings
 remain under `docs/v2/preflight/`. They are records, not templates and not production steps.
-

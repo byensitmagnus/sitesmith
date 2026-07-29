@@ -115,4 +115,3 @@ if (command !== 'detect') {
 }
 
 await detect();
-

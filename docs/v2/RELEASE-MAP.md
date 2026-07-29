@@ -58,4 +58,3 @@ lab: explicit benchmark request -> isolated runs -> review -> claim
    hidden house style.
 5. Repository status documents agree, all existing gates stay green, and the research corpus is
    unchanged.
-
