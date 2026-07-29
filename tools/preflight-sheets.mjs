@@ -36,16 +36,76 @@ const ROOT = fileURLToPath(new URL('..', import.meta.url));
 
 /* The subjects, and the one line of each brief a reviewer needs in order to judge whether the
    page serves it. Nothing here names the pilot, the direction it chose, or the repository. */
+/* `states` are the frames after the scroll strip: the page doing the thing it is for. Round 2
+   scored three pages on first paint alone, and both reviewers concluded the rope counter had no
+   length field — it has one, behind nothing, but a static capture cannot show a filled control,
+   a refusal or a success. Each state is a plain async step; a step that throws is skipped and
+   reported rather than silently dropped. */
 const SUBJECTS = [
   { id: 'chandlery', dir: 'pilots/01-chandlery/site', port: 4501,
     trade: 'A rope and cordage merchant on a fishing dock.',
-    task: 'A rigger needs to compare rope constructions and order a cut length.' },
+    task: 'A rigger needs to compare rope constructions and order a cut length.',
+    states: [
+      { name: 'a length priced, and one refused', run: async (p) => {
+        await p.fill('[data-metres="DB12"]', '25');
+        await p.fill('[data-metres="TS12"]', '1');
+        await p.locator('[data-metres="TS12"]').blur();
+        await p.waitForTimeout(120);
+        await p.locator('[data-err="TS12"]').scrollIntoViewIfNeeded();
+      } },
+      { name: 'two cuts on the ticket', run: async (p) => {
+        await p.click('[data-add="DB12"]');
+        await p.fill('[data-metres="KM11"]', '18');
+        await p.click('[data-add="KM11"]');
+        await p.waitForTimeout(160);
+        await p.locator('.basket').scrollIntoViewIfNeeded();
+      } },
+    ] },
   { id: 'foundry', dir: 'pilots/02-foundry/site', port: 4502,
     trade: 'A bell foundry that re-tunes church bells.',
-    task: 'A parish needs to understand what re-tuning does and send an enquiry.' },
+    task: 'A parish needs to understand what re-tuning does and send an enquiry.',
+    states: [
+      { name: 'the ring after tuning', run: async (p) => {
+        await p.click('[data-state="after"]');
+        await p.waitForTimeout(700);
+        await p.locator('.partials').scrollIntoViewIfNeeded();
+      } },
+      { name: 'an enquiry refused, then sent', run: async (p) => {
+        await p.fill('#tower', 'St Æthelburga, Bishopsgate');
+        await p.fill('#bells', '19');
+        await p.fill('#email', 'not-an-address');
+        await p.click('.send');
+        await p.waitForTimeout(200);
+        await p.locator('#bells').scrollIntoViewIfNeeded();
+      } },
+      { name: 'the enquiry sent', run: async (p) => {
+        await p.fill('#bells', '8');
+        await p.fill('#email', 'warden@example.org');
+        await p.selectOption('#faculty', 'applied');
+        await p.fill('#wrong', 'The third sounds sour.');
+        await p.click('.send');
+        await p.waitForTimeout(250);
+        await p.locator('[data-sent]').scrollIntoViewIfNeeded();
+      } },
+    ] },
   { id: 'cask', dir: 'pilots/03-cask-console/site', port: 4503,
     trade: 'A brewery cellar desk tracking casks out on trade.',
-    task: 'A cellarman needs to see what is overdue and book a consignment back in.' },
+    task: 'A cellarman needs to see what is overdue and book a consignment back in.',
+    states: [
+      { name: 'a book-in refused', run: async (p) => {
+        await p.evaluate(() => localStorage.clear());
+        await p.reload({ waitUntil: 'networkidle' });
+        await p.click('[data-book="c2"]');
+        await p.waitForTimeout(180);
+      } },
+      { name: 'the consignment booked back in', run: async (p) => {
+        await p.selectOption('[data-cond="c2"]', 'Ullage short');
+        await p.fill('[data-ull="c2"]', '11');
+        await p.click('[data-book="c2"]');
+        await p.waitForTimeout(220);
+        await p.locator('.done').scrollIntoViewIfNeeded();
+      } },
+    ] },
 ];
 
 const VIEWS = {
@@ -93,7 +153,7 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const servers = [];
 for (const s of assign) {
   servers.push(spawn(process.execPath,
-    [join(ROOT, 'benchmarks/serve.mjs'), join(ROOT, s.dir), String(s.port)], { stdio: 'ignore' }));
+    [join(ROOT, 'benchmarks/serve.mjs'), String(s.port), join(ROOT, s.dir)], { stdio: 'ignore' }));
 }
 for (const s of assign) {
   let up = false;
@@ -132,6 +192,19 @@ for (const s of assign) {
       frames.push({ at, png: await page.screenshot({ type: 'png' }) });
       if (at >= maxScroll) break;
     }
+
+    /* Then the page doing the thing it is for. Each state runs on top of the last, so the
+       sequence reads as one visitor working through the task rather than three unrelated
+       captures. A step that throws is reported in the caption instead of vanishing. */
+    for (const st of s.states ?? []) {
+      try {
+        await st.run(page);
+        await page.waitForTimeout(180);
+        frames.push({ label: st.name, png: await page.screenshot({ type: 'png' }) });
+      } catch (err) {
+        console.log(`    state "${st.name}" did not run: ${String(err).split('\n')[0].slice(0, 90)}`);
+      }
+    }
     await ctx.close();
 
     /* Frames laid left to right on desktop, in rows on mobile. Captions carry the scroll
@@ -150,12 +223,11 @@ for (const s of assign) {
       p.n{margin:0 0 16px;color:#6d6b66;text-transform:uppercase}
     </style></head><body>
       <h1>${s.label} &middot; ${view}</h1>
-      <p class="n">${frames.length} screen(s) at ${size.width}&times;${size.height},
-         in order &mdash; the page is ${wholeHeight}px tall</p>
+      <p class="n">${frames.filter(f=>!f.label).length} screen(s) scrolled, then ${frames.filter(f=>f.label).length} state(s) &mdash; ${size.width}&times;${size.height}, in order</p>
       <div class="g">
         ${frames.map((f, i) => `<figure>
           <span class="p"><img src="data:image/png;base64,${f.png.toString('base64')}"></span>
-          <figcaption>screen ${i + 1} &mdash; scrolled ${f.at}px</figcaption>
+          <figcaption>${f.label ? f.label : `screen ${i + 1} &mdash; scrolled ${f.at}px`}</figcaption>
         </figure>`).join('')}
       </div>
     </body></html>`;
