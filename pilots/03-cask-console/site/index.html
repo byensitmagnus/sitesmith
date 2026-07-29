@@ -97,7 +97,8 @@ main{padding-block:clamp(16px,2.4vw,26px) clamp(30px,5vw,60px)}
    not a button that produces controls */
 .bookin{grid-column:2;display:grid;grid-template-columns:minmax(0,1fr) 116px auto;gap:10px 12px;
         align-items:end;padding:clamp(12px,1.6vw,15px) 0 clamp(13px,1.8vw,17px);
-        border-top:1px solid var(--line);margin-top:clamp(11px,1.6vw,14px)}
+        margin-top:clamp(11px,1.6vw,14px);background:var(--panel-2);
+        padding-inline:clamp(12px,1.6vw,16px);border-radius:2px}
 @media (max-width:560px){.bookin{grid-template-columns:minmax(0,1fr) 116px}
   .bookin .go{grid-column:1/-1;order:3}
   .why{order:2}}
