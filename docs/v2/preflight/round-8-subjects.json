@@ -1,0 +1,23 @@
+[
+  {
+    "id": "tannery",
+    "dir": "benchmarks/10-tannery/site",
+    "port": 4711,
+    "trade": "A tannery that tans hides with bark, in pits, over months.",
+    "task": "A bookbinder needs to choose a hide for a specific binding and know when it can ship."
+  },
+  {
+    "id": "seed-library",
+    "dir": "benchmarks/11-seed-library/site",
+    "port": 4712,
+    "trade": "A free public seed library where members borrow seed and return seed they have saved.",
+    "task": "A first-time saver needs to borrow seed this week and understand what they are promising in return."
+  },
+  {
+    "id": "tideworks",
+    "dir": "benchmarks/12-tideworks/site",
+    "port": 4713,
+    "trade": "An internal duty board for a keeper working six locks on a tidal river.",
+    "task": "A keeper coming on shift needs to know which locks are workable in the next four hours and which waiting boats can be taken."
+  }
+]

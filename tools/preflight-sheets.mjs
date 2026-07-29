@@ -45,7 +45,7 @@ const ROOT = fileURLToPath(new URL('..', import.meta.url));
    length field — it has one, behind nothing, but a static capture cannot show a filled control,
    a refusal or a success. Each state is a plain async step; a step that throws is skipped and
    reported rather than silently dropped. */
-const SUBJECTS = [
+const PILOTS = [
   { id: 'chandlery', dir: 'pilots/01-chandlery/site', port: 4501,
     trade: 'A rope and cordage merchant on a fishing dock.',
     task: 'A rigger needs to compare rope constructions and order a cut length.',
@@ -71,7 +71,28 @@ const flag = (name, fallback = null) => {
   return i >= 0 && i + 1 < args.length && !args[i + 1].startsWith('--') ? args[i + 1] : fallback;
 };
 const out = flag('out');
-if (!out) { console.error('usage: preflight-sheets.mjs --out <dir> [--seed <hex>]'); process.exit(2); }
+if (!out) {
+  console.error('usage: preflight-sheets.mjs --out <dir> [--seed <hex>] [--subjects <file.json>]');
+  process.exit(2);
+}
+
+/* Which pages this round is about. The three pilots were hardcoded here, which was fine while
+   they were the only subjects and wrong the moment there was a second round of builds — an
+   editable constant is how a tool quietly measures last round's work. A subjects file is a
+   list of { id, dir, port, trade, task }: `trade` and `task` are the only two lines a reviewer
+   is given, and neither may name the subject, its direction, or this repository. */
+const subjectsFile = flag('subjects');
+const SUBJECTS = subjectsFile
+  ? JSON.parse(await readFile(join(ROOT, subjectsFile), 'utf8'))
+  : PILOTS;
+
+for (const s of SUBJECTS) {
+  const missing = ['id', 'dir', 'port', 'trade', 'task'].filter((k) => !s[k]);
+  if (missing.length) {
+    console.error(`subject ${s.id ?? '?'} has no ${missing.join(', ')}`);
+    process.exit(2);
+  }
+}
 
 /* ── the shuffle ────────────────────────────────────────────────────────────
    Labels are drawn without replacement from a shuffle seeded by real randomness, and the seed
