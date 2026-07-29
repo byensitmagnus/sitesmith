@@ -88,11 +88,25 @@ const RULES = [
   {
     id: 'div-product-preview',
     cite: '05-ai-tells.md:54,84 — no div-built fake product UI in the hero',
-    // Simulated application chrome is the ban. A labelled excerpt is not.
+    /* Simulated application chrome is the ban. A labelled excerpt is not, and neither is an
+       actual application.
+
+       The two words carrying the rule are **div-built** and **fake**: the tell is a marketing
+       hero containing a picture of software, assembled from inert divs and spans, with traffic
+       lights and a fake toolbar, standing in for a screenshot nobody took. Matching class names
+       alone cannot tell that from a real tool's real chrome bar, and it failed a keeper's duty
+       board for calling its actual top bar `chrome` — a bar with a working button in it that
+       the page's own journey drives.
+
+       So the region has to be inert to count. A fake preview has nothing in it that does
+       anything, which is exactly what makes it a picture; a real toolbar has controls. A
+       marketing hero that assembles a fake product UI out of divs still fails, unchanged. */
     run(html) {
       const hero = html.slice(0, html.search(/<\/header>|<hr\b|<section\b/i) + 1 || html.length);
       const chrome = /class="[^"]*\b(window|titlebar|browser|chrome|toolbar|sidebar|tab-bar|traffic-lights?)\b/i;
-      return chrome.test(hero) ? ['hero contains simulated application chrome'] : [];
+      if (!chrome.test(hero)) return [];
+      const interactive = /<(button|a\b[^>]*\bhref|input|select|textarea|summary)\b/i.test(hero);
+      return interactive ? [] : ['hero contains simulated application chrome, built of inert elements'];
     },
   },
   {

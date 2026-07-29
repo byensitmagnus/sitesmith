@@ -166,6 +166,45 @@ This file measures the rules. [TOKEN-DISCIPLINE.md](TOKEN-DISCIPLINE.md) measure
 output, and finds that not one of the eleven pages has a spacing scale or a type scale —
 including the control, which scores no worse than the nine builds on either.
 
+## Addendum, 2026-07-29 — the rules were written against marketing pages
+
+Three new benchmarks were built from unrelated briefs: a tannery, a public seed library, and a
+lock keeper's internal duty board. Between them they tripped **four** conformance rules. Three
+of the four were the instrument, not the page, and all three failed the same way — the rule was
+written with a marketing landing page in mind and misread anything else.
+
+**§5 revised — `authored-svg`.** The resolution above says "a brand mark may be authored and
+must be the only authored SVG on the page". That was right when a mark was the only legitimate
+authored SVG. `24-asset-plan.md` now makes *drawn* a first-class asset strategy, and a build
+with no image budget has drawing or nothing, so a planned diagram of nine seeds counted as 76
+icons. The rule now ignores SVGs carrying `data-asset`. That is stricter than it looks: such an
+SVG must also match a manifest row at `production-gate` and carry a written argument, a named
+job and a source at `asset-plan`. A hand-rolled icon set has none of those and still fails.
+
+**`theme-lock` — two faults, both instrument.** It read the HTML only, so a page that declared
+its colour scheme in a linked stylesheet was reported as not saying which theme it meant. And
+it required a single keyword, so `color-scheme: light dark` — the standard way to say "built
+for both" — did not match. Linked same-directory stylesheets are read in now, which also makes
+the rule's actual subject, a mid-page ground-and-ink inversion, visible for the first time,
+because those rules live in CSS.
+
+**`div-product-preview` — instrument.** The tell is a marketing hero containing a picture of
+software assembled from inert divs. The check matched class names, so it failed a duty board
+for calling its real top bar `chrome` — a bar with a working button that the page's own journey
+drives. The two words carrying the rule are *div-built* and *fake*: the region must now be
+inert to count. A fake product UI built of divs in a marketing hero still fails.
+
+**The fourth was real.** 21 em-dashes on one page and 3 on another, which is the rule doing
+exactly its job.
+
+**What to take from this.** These rules were extracted from a reference set aimed at landing
+pages, and the ratio noted below — 4:1 prohibitions to positives — is not the only cost of
+that. A prohibition written against one page type will misfire on another, and it will misfire
+*as a design criticism*, which is the expensive kind: the page looks wrong, the author changes
+something that was right, and nobody learns the rule was inapplicable. Three of the four here
+would have done that. Before adding any absolute, ask which page types it was written for and
+what it does on the others.
+
 ## What this means for the rewrite
 
 1. **The ratio is the target.** 4:1 against is why output is careful rather than good. The
