@@ -1,0 +1,95 @@
+{
+  "seed": "5216e5d227095e72466910c23caf9093",
+  "sheet-sha256": "44175f7f9fd9b00ab3e73ab2ced62bfffb82274da7651b6ab20e900d919d26b4",
+  "assignment": {
+    "SHEET-M2": {
+      "subject": "chandlery",
+      "seat": 1
+    },
+    "SHEET-R9": {
+      "subject": "foundry",
+      "seat": 2
+    },
+    "SHEET-W1": {
+      "subject": "cask",
+      "seat": 3
+    }
+  },
+  "note": "Written before any reviewer saw a sheet. The reviewers are never given this path.",
+  "run-id": "preflight-r7-dbea3050956a",
+  "rubric-sha256": "d9932ed6dc486719d74e6884db7a087bc9563bea07006233790845e2d49cf4f8",
+  "reviewers": [
+    "reviewer-u-blind",
+    "reviewer-v-blind"
+  ],
+  "first-locked": "2026-07-29T14:59:23.000Z",
+  "last-locked": "2026-07-29T15:00:32.000Z",
+  "opened": "2026-07-29T15:02:31.207Z",
+  "reviews": [
+    {
+      "file": "docs/v2/preflight/round-7/reviews/U/PORTFOLIO-U.md",
+      "reviewer": "U",
+      "reviewer-id": "reviewer-u-blind",
+      "label": null,
+      "locked": "2026-07-29T14:59:23Z",
+      "body-sha256": "95faeaa5b80b1f0f91a804a80d56ddbfd1e2f30b348e836660c454b20cdd2e48"
+    },
+    {
+      "file": "docs/v2/preflight/round-7/reviews/U/SHEET-M2/CRITIQUE-U.md",
+      "reviewer": "U",
+      "reviewer-id": "reviewer-u-blind",
+      "label": "SHEET-M2",
+      "locked": "2026-07-29T14:59:23Z",
+      "body-sha256": "288acb3cc4dcd47636e71c2744d86237dccbe4c1086f323da6e5d495efdb1472"
+    },
+    {
+      "file": "docs/v2/preflight/round-7/reviews/U/SHEET-R9/CRITIQUE-U.md",
+      "reviewer": "U",
+      "reviewer-id": "reviewer-u-blind",
+      "label": "SHEET-R9",
+      "locked": "2026-07-29T14:59:23Z",
+      "body-sha256": "3dd5c420b9f53bc5755a29d13dd36e2ee2c7fe3d77068b66bf11c726605b7e4c"
+    },
+    {
+      "file": "docs/v2/preflight/round-7/reviews/U/SHEET-W1/CRITIQUE-U.md",
+      "reviewer": "U",
+      "reviewer-id": "reviewer-u-blind",
+      "label": "SHEET-W1",
+      "locked": "2026-07-29T14:59:23Z",
+      "body-sha256": "27f59ad41da53b106127f6b5c6c09649b0c511a5227007f5d01b823ac8f8bd76"
+    },
+    {
+      "file": "docs/v2/preflight/round-7/reviews/V/PORTFOLIO-V.md",
+      "reviewer": "V",
+      "reviewer-id": "reviewer-v-blind",
+      "label": null,
+      "locked": "2026-07-29T15:00:32Z",
+      "body-sha256": "a812bc243b865cccc60b87c795940bee3b4bb27f0944d4d5fbd7822888a1aab8"
+    },
+    {
+      "file": "docs/v2/preflight/round-7/reviews/V/SHEET-M2/CRITIQUE-V.md",
+      "reviewer": "V",
+      "reviewer-id": "reviewer-v-blind",
+      "label": "SHEET-M2",
+      "locked": "2026-07-29T15:00:32Z",
+      "body-sha256": "ed32cdad7fb44f0be64fe9dab149d96591c11fddf978705f7e9a645a259706d5"
+    },
+    {
+      "file": "docs/v2/preflight/round-7/reviews/V/SHEET-R9/CRITIQUE-V.md",
+      "reviewer": "V",
+      "reviewer-id": "reviewer-v-blind",
+      "label": "SHEET-R9",
+      "locked": "2026-07-29T15:00:32Z",
+      "body-sha256": "757f51a638b1dda62ab9d5f4f80d8c42ecc662ab051e4bde46d3c3bdee87f659"
+    },
+    {
+      "file": "docs/v2/preflight/round-7/reviews/V/SHEET-W1/CRITIQUE-V.md",
+      "reviewer": "V",
+      "reviewer-id": "reviewer-v-blind",
+      "label": "SHEET-W1",
+      "locked": "2026-07-29T15:00:32Z",
+      "body-sha256": "51f5053fc3df1f109110e0d3f4b288759a6c7e03529ff7adada2794f5890b2f3"
+    }
+  ],
+  "ceremony": "Generated outside the repository, held outside every reviewer workspace, and committed only after both reviews were locked. Each review above is bound to this round's run id and to the rubric, sheet and brief hashes, and to its own body hash, so it can be shown not to have been written or edited after the labels were known."
+}
