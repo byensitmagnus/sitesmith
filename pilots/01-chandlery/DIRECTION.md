@@ -28,9 +28,11 @@ Three things follow, and they are the whole rebuild:
 2. **The control is on the page.** No disclosure, no "cut a length" button that produces a
    field. Every line carries a length input, a stepper, a live price and an add control, all
    visible on load. The first one sits above the fold at 1440×900.
-3. **The basket is furniture, not an afterthought.** A bordered panel that holds its place in
-   the layout from the first paint, with real guidance in it before anything is added, and the
-   batch printed against every cut after.
+3. **The ticket is a counter docket, not a rail.** It does not exist before anything is cut,
+   because a docket does not. It arrives along the foot of the window with the first cut,
+   carries the count, the total and the batch of every length, and goes away when the last one
+   is removed. A quarter of the width standing open and empty was the previous answer and it
+   was wrong.
 
 ## Axis record
 
@@ -40,7 +42,7 @@ Three things follow, and they are the whole rebuild:
 - colour: near-white ground so the photographs carry the colour; one oak accent taken from the
   bench in the pictures; the stamp red spent once, on the safety band
 - imagery: product photography, one treatment, cool flat overcast daylight, cut ends at 62% 50%
-- rhythm: a poster, a band, then evenly weighted product rows under one rule
+- rhythm: a poster, a band, then a two-across field of goods with no rule between them
 
 ## What the page refuses to do
 
