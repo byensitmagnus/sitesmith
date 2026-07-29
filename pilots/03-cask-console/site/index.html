@@ -79,7 +79,8 @@ main{padding-block:clamp(16px,2.4vw,26px) clamp(30px,5vw,60px)}
                  transparent 32% 68%,var(--ink-2) 68% 71%,transparent 71% 100%)}
 .size .n{font:700 clamp(1.7rem,3vw,2.15rem)/1 var(--fig);font-variant-numeric:tabular-nums;
          letter-spacing:-.03em}
-.size .u{font:600 .68rem/1.3 var(--ui);letter-spacing:.11em;text-transform:uppercase;color:var(--ink-3)}
+.size .u{display:block;margin-top:3px;font:600 .68rem/1.3 var(--ui);letter-spacing:.11em;
+         text-transform:uppercase;color:var(--ink-3);white-space:nowrap}
 
 .who{padding:clamp(14px,2vw,18px) 0;min-width:0}
 .who .pub{font:600 1.14rem/1.25 var(--ui);margin:0 0 3px}
@@ -111,8 +112,9 @@ main{padding-block:clamp(16px,2.4vw,26px) clamp(30px,5vw,60px)}
 .bookin input{font-family:var(--fig);font-variant-numeric:tabular-nums}
 .bookin [aria-invalid=true]{border-color:var(--late);background:#2b1310}
 .go{font:800 .92rem/1 var(--ui);letter-spacing:.06em;padding:15px 20px;min-height:48px;
-    background:var(--ink);color:var(--bg);border:0;border-radius:2px;cursor:pointer;white-space:nowrap}
-.go:hover{background:var(--ok);color:var(--ok-ink)}
+    background:var(--panel-3);color:var(--ink);border:2px solid var(--line-2);border-radius:2px;
+    cursor:pointer;white-space:nowrap}
+.go:hover{background:var(--panel-2);border-color:var(--ink-2)}
 .why{grid-column:1/-1;margin:0;font:600 .88rem/1.4 var(--ui);color:var(--late)}
 .why:empty{display:none}
 
@@ -129,8 +131,7 @@ main{padding-block:clamp(16px,2.4vw,26px) clamp(30px,5vw,60px)}
 .log .undo{background:none;border:0;color:var(--ink-2);font:600 .84rem/1 var(--ui);
            text-decoration:underline;cursor:pointer;padding:8px 0}
 .log .undo:hover{color:var(--late)}
-.said{margin:14px 0 0;padding:12px 14px;background:var(--panel);border-left:3px solid var(--ok);
-      font-size:.94rem;color:var(--ink)}
+.said{margin:10px 0 0;font-size:.9rem;color:var(--ink-3)}
 .said:empty{display:none}
 footer{border-top:1px solid var(--line);margin-top:clamp(26px,4vw,44px);padding-block:22px 40px}
 footer p{margin:0 0 7px;color:var(--ink-3);font-size:.88rem;max-width:70ch}

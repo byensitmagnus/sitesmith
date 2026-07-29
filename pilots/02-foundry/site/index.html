@@ -49,7 +49,10 @@ img{max-width:100%;display:block}
 
 /* ── the claim, over the cut ──────────────────────────────────────────── */
 .open{position:relative;isolation:isolate;border-bottom:1px solid var(--rule)}
-.open img{width:100%;height:clamp(300px,44vw,520px);object-fit:cover;object-position:34% 46%}
+.open img{width:100%;height:clamp(430px,44vw,520px);object-fit:cover;object-position:34% 46%}
+@media (max-width:640px){.open img{height:520px}
+  h1{font-size:clamp(1.72rem,8vw,2.4rem)}
+  .open p{font-size:.98rem;margin-bottom:18px}}
 .open::after{content:"";position:absolute;inset:0;
   background:linear-gradient(92deg,var(--ground) 4%,rgb(16 14 12 / .82) 44%,rgb(16 14 12 / .12) 78%)}
 .open .say{position:absolute;inset:0;z-index:2;display:flex;align-items:center}
@@ -58,9 +61,10 @@ h1{font:700 clamp(2rem,5.4vw,3.5rem)/1.02 var(--grot);letter-spacing:.005em;
    text-transform:uppercase;margin:0 0 16px;max-width:15ch}
 h1 em{font-style:normal;color:var(--metal);display:block}
 .open p{margin:0 0 22px;max-width:44ch;color:var(--ink-2);font-size:clamp(1rem,1.6vw,1.12rem)}
-.cta{display:inline-flex;align-items:center;gap:10px;background:var(--metal);color:var(--ground);
-     font:700 .92rem/1 var(--grot);letter-spacing:.14em;text-transform:uppercase;
-     padding:17px 26px;text-decoration:none;min-height:48px}
+.cta{display:inline-flex;align-items:center;gap:6px 10px;flex-wrap:wrap;max-width:100%;
+     background:var(--metal);color:var(--ground);
+     font:700 .92rem/1.2 var(--grot);letter-spacing:.14em;text-transform:uppercase;
+     padding:15px 22px;text-decoration:none;min-height:48px}
 .cta:hover{background:var(--ink)}
 .cta small{font:400 .72rem/1 var(--sans);letter-spacing:0;text-transform:none;opacity:.72}
 
@@ -173,7 +177,7 @@ footer p{margin:0 0 8px;color:var(--ink-3);font-size:.9rem;max-width:66ch}
     <p>There is no putting it back. We measure five partials before a bell goes on the machine
        and we publish both sets, because a foundry that will not show you the before is asking
        you to take the after on trust.</p>
-    <a class="cta" href="#enquiry">Tell us about the ring <small>, we answer within a week</small></a>
+    <a class="cta" href="#enquiry">Tell us about the ring <small>We answer within a week</small></a>
   </div></div>
 </div>
 
@@ -322,7 +326,7 @@ const PARTIALS = [
   { name:'Prime',   before: 21, after: 1, off:'2.8 kg' },
   { name:'Tierce',  before:-14, after: 0, off:'1.9 kg' },
   { name:'Quint',   before:  9, after: 3, off:'0.6 kg' },
-  { name:'Nominal', before:  0, after: 0, off:',' },
+  { name:'Nominal', before:  0, after: 0, off:'–' },
 ];
 const SCALE = 45;                       // cents at the full half-width of the bar
 const rowsEl = document.querySelector('[data-rows]');

@@ -308,7 +308,7 @@ function priceOf(L) {
   err.textContent = problem;
   input.setAttribute('aria-invalid', problem ? 'true' : 'false');
   add.disabled = Boolean(problem);
-  cost.textContent = problem ? ',' : money(m * L.per);
+  cost.textContent = problem ? '–' : money(m * L.per);
   return problem ? null : { metres: m, total: m * L.per };
 }
 
