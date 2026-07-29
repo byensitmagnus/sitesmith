@@ -164,3 +164,91 @@ jobs:
           node $V http://localhost:4321/01-saas-landing/ --widths nonsense --out /tmp/c3 >/dev/null 2>&1
           [ $? -eq 2 ] || { echo "::error::invalid --widths must exit 2"; exit 1; }
           echo "exit contract holds"
+
+      # The tamper case the exit contract above never covered: every line of it passes
+      # --no-axe, which is the *waiver*. The failure that shipped a page was axe being
+      # absent and the run saying PASS anyway. So take axe away from a page that is
+      # otherwise clean and require a non-zero exit.
+      - name: a page whose accessibility was never checked must not pass
+        working-directory: benchmarks
+        run: |
+          V=../skills/sitesmith/scripts/verify.mjs
+          U=http://localhost:4321/01-saas-landing/
+          set +e
+          node $V "$U" --out /tmp/axe-present >/dev/null 2>&1
+          [ $? -eq 0 ] || { echo "::error::01-saas-landing must pass with axe present, or this test proves nothing"; exit 1; }
+
+          mv node_modules/@axe-core /tmp/axe-hidden
+          node $V "$U" --out /tmp/axe-absent > /tmp/axe-absent.log 2>&1
+          code=$?
+          mv /tmp/axe-hidden node_modules/@axe-core
+
+          [ $code -eq 1 ] || {
+            echo "::error::with @axe-core/playwright absent, the same clean page exited $code — it must be 1"
+            cat /tmp/axe-absent.log; exit 1; }
+          grep -q "NOT RUN" /tmp/axe-absent.log || {
+            echo "::error::the report must say the scan did not run, not stay silent"; exit 1; }
+
+          # And the waiver still has to work, or the only way past a missing axe is to
+          # uninstall the gate.
+          mv node_modules/@axe-core /tmp/axe-hidden
+          node $V "$U" --no-axe --out /tmp/axe-waived >/dev/null 2>&1
+          code=$?
+          mv /tmp/axe-hidden node_modules/@axe-core
+          [ $code -eq 0 ] || { echo "::error::--no-axe must remain an explicit way past (expected exit 0, got $code)"; exit 1; }
+          echo "fails closed without axe, and --no-axe is the only way past"
+
+  clean-install:
+    name: a clean install can run the gates
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      # The normal case, from nothing. The installer used to write a manifest, print an
+      # npm command, and leave the project unable to run the accessibility gate. This
+      # starts with an empty directory and finishes by running the real gate from it.
+      - name: install into an empty directory
+        run: |
+          mkdir -p /tmp/fresh
+          node bin/sitesmith.mjs install --to /tmp/fresh --provider claude
+          npx --yes --prefix /tmp/fresh playwright install --with-deps chromium
+
+      - name: the pinned versions are the versions on disk
+        working-directory: /tmp/fresh
+        run: |
+          node -e '
+            const want = require("./sitesmith-gates.package.json").devDependencies;
+            let bad = 0;
+            for (const [name, version] of Object.entries(want)) {
+              const got = require(name + "/package.json").version;
+              const ok = got === version;
+              if (!ok) bad++;
+              console.log(`  ${ok ? "ok  " : "MISS"}  ${name.padEnd(24)} want ${version}, got ${got}`);
+            }
+            if (bad) { console.error(`::error::${bad} dependency version(s) drifted from the pin`); process.exit(1); }
+          '
+
+      - name: the skill landed where the provider looks
+        run: |
+          test -f /tmp/fresh/.claude/skills/sitesmith/SKILL.md \
+            || { echo "::error::no SKILL.md at .claude/skills/sitesmith — the pack did not install"; exit 1; }
+          test -f /tmp/fresh/.claude/skills/sitesmith/PIPELINE.json \
+            || { echo "::error::the pipeline did not install"; exit 1; }
+
+      # The point of the whole job: not that files were copied, but that the gate runs
+      # from the fresh project and actually performs the accessibility scan there.
+      - name: run the real gate from the fresh install
+        run: |
+          node benchmarks/serve.mjs 4331 benchmarks &
+          for i in $(seq 1 30); do curl -sf http://localhost:4331/01-saas-landing/ >/dev/null && break; sleep 1; done
+          cd /tmp/fresh
+          node .claude/skills/sitesmith/scripts/verify.mjs \
+            http://localhost:4331/01-saas-landing/ --out /tmp/fresh-shots | tee /tmp/fresh.log
+          grep -qE "axe violations : [0-9]+ \(" /tmp/fresh.log \
+            || { echo "::error::axe did not actually run in the fresh install"; cat /tmp/fresh.log; exit 1; }
+
+      - name: doctor agrees
+        run: node bin/sitesmith.mjs doctor --to /tmp/fresh
