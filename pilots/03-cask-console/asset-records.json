@@ -1,0 +1,24 @@
+[
+  {
+    "id": "cellar-ground",
+    "role": "a very low-contrast texture behind the standing header only, never behind data",
+    "file": "site/assets/cellar-1600.webp",
+    "sourceType": "generated",
+    "provider": "artlist",
+    "model": "Seedream 5.0 Pro (modelId 2615)",
+    "generationId": "019facea-68e4-7bca-83c1-fb533c62aa3a",
+    "promptSha256": "c4c8f4fef04a8b8154d63f17b6a8b34b892266065f7c2ff31161c785036d17b6",
+    "referenceSha256": "none",
+    "settings": "16:9; 2k; num_images=3; no seed exposed",
+    "sha256": "a05d34ab0e12cf33e5bb89a0ccf910270b59ae440a994a83ab021a23972a6ec9",
+    "synthetic": true,
+    "licence": "generated via Artlist AI Suite, owned",
+    "focal": "50% 50%",
+    "crops": "1600x260; 800x200",
+    "alt": "decorative, empty alt — it carries no information and is hidden from assistive technology",
+    "approval": "approved",
+    "visualQa": true,
+    "iterations": 0,
+    "productTruth": "n/a"
+  }
+]

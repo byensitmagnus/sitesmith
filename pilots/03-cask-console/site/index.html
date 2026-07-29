@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cask desk — Stalbridge Brewery</title>
+<meta name="description" content="What is out on trade, what is late, and booking it back in.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23141c26'/><rect x='8' y='6' width='16' height='20' rx='5' fill='none' stroke='%23e9edf1' stroke-width='2.4'/><path d='M7 13h18M7 19h18' stroke='%23e9edf1' stroke-width='2'/></svg>">
+<style>
+/* ── Stalbridge cask desk ──────────────────────────────────────────────────
+   A tool, read standing up, often in gloves, at arm's length. Severity is the
+   only hierarchy: what is late is loudest, first, and marked three ways —
+   position, a coloured spine, and the biggest word in the card. There is no
+   hero and nothing opens to reveal a control. */
+:root{
+  --bg:#141c26; --panel:#1c2733; --panel-2:#25313f; --panel-3:#30404f;
+  --ink:#e9edf1; --ink-2:#a3aeb9; --ink-3:#8592a0;
+  --line:#2c3a49; --line-2:#41525f;
+  --late:#ff6a4d; --late-ink:#2b0e07;
+  --today:#f2b23c; --today-ink:#2a1c00;
+  --out:#5d7f9c;
+  --ok:#4ec98a; --ok-ink:#04241a;
+  --ui:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,system-ui,sans-serif;
+  --fig:ui-monospace,SFMono-Regular,"Cascadia Mono","Segoe UI Mono",monospace;
+  --pad:clamp(14px,2.4vw,26px);
+}
+*{box-sizing:border-box}
+html{color-scheme:dark}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 var(--ui);
+     -webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+.shell{max-width:1320px;margin:0 auto;padding:0 var(--pad)}
+.skip{position:absolute;left:-9999px}
+.skip:focus{left:12px;top:10px;z-index:9;background:var(--panel);padding:10px 14px;border:2px solid var(--ink)}
+:where(button,input,select,a):focus-visible{outline:3px solid var(--today);outline-offset:2px}
+
+/* ── standing header: the room, and the count that matters ────────────── */
+.desk{position:relative;border-bottom:2px solid var(--line-2);overflow:hidden}
+.desk .tex{position:absolute;inset:0;z-index:0}
+.desk .tex img{width:100%;height:100%;object-fit:cover;opacity:.18;filter:saturate(.5)}
+.desk .tex::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,rgb(20 28 38 / .55),rgb(20 28 38 / .93))}
+.desk .shell{position:relative;z-index:1;display:flex;align-items:baseline;gap:clamp(12px,2vw,28px);
+             flex-wrap:wrap;padding-block:clamp(16px,2.4vw,24px)}
+.desk h1{font:700 clamp(1.12rem,2.2vw,1.44rem)/1.1 var(--ui);margin:0;letter-spacing:-.01em}
+.desk .when{color:var(--ink-2);font-size:.95rem}
+.tally{margin-left:auto;display:flex;align-items:baseline;gap:clamp(14px,2vw,26px)}
+.tally div{text-align:right}
+.tally dt{font:600 .66rem/1 var(--ui);letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3)}
+.tally dd{margin:5px 0 0;font:700 clamp(1.5rem,3vw,2.05rem)/1 var(--fig);
+          font-variant-numeric:tabular-nums;letter-spacing:-.03em}
+.tally .l dd{color:var(--late)}
+.tally .t dd{color:var(--today)}
+
+/* ── the board ────────────────────────────────────────────────────────── */
+main{padding-block:clamp(16px,2.4vw,26px) clamp(30px,5vw,60px)}
+.lede{color:var(--ink-2);font-size:.96rem;margin:0 0 clamp(14px,2vw,20px);max-width:64ch}
+.lede b{color:var(--ink);font-weight:600}
+
+.job{display:grid;grid-template-columns:14px minmax(150px,190px) minmax(0,1fr) minmax(0,420px);
+     gap:0 clamp(14px,2vw,24px);align-items:center;
+     background:var(--panel);border:1px solid var(--line);margin-bottom:12px;
+     padding:0 clamp(14px,2vw,22px) 0 0}
+.job .spine{align-self:stretch;background:var(--out)}
+.job.late .spine{background:var(--late)}
+.job.today .spine{background:var(--today)}
+@media (max-width:1080px){
+  .job{grid-template-columns:14px minmax(0,1fr);padding:0 0 clamp(14px,2vw,18px) 0}
+  .job .spine{grid-row:1/span 3}
+  .job > *:not(.spine){grid-column:2}
+  .size{padding-top:14px}
+}
+
+/* size: a glyph drawn to real relative volume, so the shape carries the quantity */
+.size{display:flex;align-items:center;gap:12px;padding:clamp(14px,2vw,18px) 0}
+.size svg{width:52px;height:52px;flex:none;color:var(--ink-2)}
+.size .n{font:700 clamp(1.7rem,3vw,2.15rem)/1 var(--fig);font-variant-numeric:tabular-nums;
+         letter-spacing:-.03em}
+.size .u{font:600 .68rem/1.3 var(--ui);letter-spacing:.11em;text-transform:uppercase;color:var(--ink-3)}
+
+.who{padding:clamp(14px,2vw,18px) 0;min-width:0}
+.who .pub{font:600 1.14rem/1.25 var(--ui);margin:0 0 3px}
+.who .meta{margin:0;color:var(--ink-3);font:400 .88rem/1.4 var(--fig)}
+.state{display:inline-flex;align-items:center;gap:8px;margin-top:10px;
+       font:800 .92rem/1 var(--ui);letter-spacing:.09em;text-transform:uppercase;
+       padding:11px 15px;border-radius:2px}
+.job.late .state{background:var(--late);color:var(--late-ink)}
+.job.today .state{background:var(--today);color:var(--today-ink)}
+.job.out .state{background:transparent;color:var(--ink-2);box-shadow:inset 0 0 0 2px var(--line-2)}
+
+/* the book-in, inline and always open — a cellarman in gloves gets controls,
+   not a button that produces controls */
+.bookin{display:grid;grid-template-columns:minmax(0,1fr) 104px auto;gap:10px;
+        align-items:end;padding:clamp(12px,1.6vw,16px) 0}
+@media (max-width:560px){.bookin{grid-template-columns:minmax(0,1fr) 104px;padding-right:var(--pad)}
+  .bookin .go{grid-column:1/-1}}
+@media (max-width:1080px){.bookin{padding-right:var(--pad)}}
+.bookin label{display:block;font:600 .66rem/1 var(--ui);letter-spacing:.12em;
+              text-transform:uppercase;color:var(--ink-3);margin-bottom:6px}
+.bookin select,.bookin input{width:100%;font:600 .98rem/1 var(--ui);padding:13px 12px;
+  background:var(--panel-2);color:var(--ink);border:2px solid var(--line-2);border-radius:2px;
+  min-height:48px}
+.bookin select{appearance:none;-webkit-appearance:none;padding-right:34px;
+  background-image:linear-gradient(45deg,transparent 50%,var(--ink-2) 50%),
+                   linear-gradient(135deg,var(--ink-2) 50%,transparent 50%);
+  background-position:calc(100% - 18px) 55%,calc(100% - 12px) 55%;
+  background-size:6px 6px,6px 6px;background-repeat:no-repeat}
+.bookin input{font-family:var(--fig);font-variant-numeric:tabular-nums}
+.bookin [aria-invalid=true]{border-color:var(--late);background:#2b1310}
+.go{font:800 .92rem/1 var(--ui);letter-spacing:.06em;padding:15px 20px;min-height:48px;
+    background:var(--ink);color:var(--bg);border:0;border-radius:2px;cursor:pointer;white-space:nowrap}
+.go:hover{background:var(--ok);color:var(--ok-ink)}
+.why{grid-column:1/-1;margin:0;font:600 .88rem/1.4 var(--ui);color:var(--late)}
+.why:empty{display:none}
+
+/* ── booked in ────────────────────────────────────────────────────────── */
+.done h2{font:700 1.06rem/1.2 var(--ui);margin:clamp(26px,4vw,40px) 0 4px}
+.done .none{color:var(--ink-3);font-size:.94rem;margin:0;max-width:60ch}
+.log{list-style:none;margin:12px 0 0;padding:0;display:grid;gap:8px}
+.log li{display:grid;grid-template-columns:6px minmax(0,1fr) auto;gap:0 14px;align-items:center;
+        background:var(--panel);border:1px solid var(--line);padding:0 14px 0 0}
+.log li .tick{align-self:stretch;background:var(--ok)}
+.log .txt{padding:12px 0;font-size:.96rem}
+.log .txt b{font-weight:600}
+.log .txt span{display:block;color:var(--ink-3);font:400 .86rem/1.4 var(--fig);margin-top:2px}
+.log .undo{background:none;border:0;color:var(--ink-2);font:600 .84rem/1 var(--ui);
+           text-decoration:underline;cursor:pointer;padding:8px 0}
+.log .undo:hover{color:var(--late)}
+.said{margin:14px 0 0;padding:12px 14px;background:var(--panel);border-left:3px solid var(--ok);
+      font-size:.94rem;color:var(--ink)}
+.said:empty{display:none}
+footer{border-top:1px solid var(--line);margin-top:clamp(26px,4vw,44px);padding-block:22px 40px}
+footer p{margin:0 0 7px;color:var(--ink-3);font-size:.88rem;max-width:70ch}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<a class="skip" href="#board">Skip to the board</a>
+
+<header class="desk">
+  <div class="tex"><img src="assets/cellar-1600.webp"
+       srcset="assets/cellar-800.webp 800w, assets/cellar-1600.webp 1600w" sizes="100vw"
+       width="1600" height="260" data-asset="cellar-ground" alt="" aria-hidden="true"></div>
+  <div class="shell">
+    <h1>Cask desk</h1>
+    <p class="when">Cellar, Thursday · 06:40 · dray in at 07:15</p>
+    <dl class="tally">
+      <div class="l"><dt>Late</dt><dd data-tally-late>0</dd></div>
+      <div class="t"><dt>Due today</dt><dd data-tally-today>0</dd></div>
+      <div><dt>Casks out</dt><dd data-tally-out>0</dd></div>
+    </dl>
+  </div>
+</header>
+
+<main class="shell" id="board">
+  <p class="lede"><b>Late first, then due today.</b> Book a consignment back in from its own row —
+    condition and ullage go on the record with it, because a cask coming back is a duty entry
+    and not just a count.</p>
+  <div data-jobs></div>
+
+  <section class="done" aria-labelledby="log-h">
+    <h2 id="log-h">Booked in this week</h2>
+    <div data-log></div>
+    <p class="said" role="status" data-said></p>
+  </section>
+</main>
+
+<footer class="shell">
+  <p>Stalbridge Brewery cask desk. Invented brewery, invented cellar, invented week.</p>
+  <p>Casks, gyles and accounts here are made up; the duty rules they follow are not.</p>
+</footer>
+
+<script>
+/* ── the week ───────────────────────────────────────────────────────────
+   Cask sizes are the trade's own: firkin 9 gallons, kilderkin 18, barrel 36.
+   Every figure is in EVIDENCE.md. */
+const SIZES = {
+  firkin:    { gal: 9,  h: 0.63 },
+  kilderkin: { gal: 18, h: 0.79 },
+  barrel:    { gal: 36, h: 1.00 },
+};
+const OUT = [
+  { id:'c1', pub:'The Feathers, Marram',  gyle:214, size:'kilderkin', n:4, due: 0 },
+  { id:'c2', pub:'Sowerby Arms',          gyle:212, size:'firkin',    n:2, due:-3 },
+  { id:'c3', pub:'Kell & Anchor',         gyle:214, size:'firkin',    n:6, due: 4 },
+  { id:'c4', pub:'The Bridge, Halloughton',gyle:209,size:'kilderkin', n:3, due: 0 },
+];
+const CONDITIONS = ['Sound, straight back out', 'Sound, needs a wash', 'Ullage short',
+                    'Hoop sprung', 'Shive damaged'];
+
+const STORE = 'stalbridge-bookings-v1';
+const load = () => { try { return JSON.parse(localStorage.getItem(STORE)) || []; } catch { return []; } };
+const save = (b) => { try { localStorage.setItem(STORE, JSON.stringify(b)); } catch { /* private mode */ } };
+let booked = load();
+
+const jobsEl = document.querySelector('[data-jobs]');
+const logEl = document.querySelector('[data-log]');
+const saidEl = document.querySelector('[data-said]');
+
+/* Severity is the order: late, then due today, then out on trade. Within a band, the
+   latest first. Nothing here is alphabetical — a cellar desk is not a directory. */
+const rank = (c) => (c.due < 0 ? 0 : c.due === 0 ? 1 : 2);
+const outstanding = () => OUT.filter((c) => !booked.some((b) => b.id === c.id))
+  .sort((a, b) => rank(a) - rank(b) || a.due - b.due);
+
+const stateOf = (c) => c.due < 0 ? ['late', `${Math.abs(c.due)} days late`]
+  : c.due === 0 ? ['today', 'Due back today'] : ['out', `Due in ${c.due} days`];
+
+const glyph = (size) => {
+  const h = SIZES[size].h, w = h * 0.82, top = (1 - h) / 2;
+  const x = (1 - w) / 2 * 52, y = top * 52, W = w * 52, H = h * 52;
+  return `<svg viewBox="0 0 52 52" role="img" data-asset="cask-glyphs" aria-label="${size}, ${SIZES[size].gal} gallons"
+      fill="none" stroke="currentColor" stroke-width="2.6" stroke-linejoin="round">
+    <rect x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${W.toFixed(1)}" height="${H.toFixed(1)}" rx="${(W*0.3).toFixed(1)}"/>
+    <path d="M${(x-2).toFixed(1)} ${(y+H*0.32).toFixed(1)}h${(W+4).toFixed(1)}M${(x-2).toFixed(1)} ${(y+H*0.68).toFixed(1)}h${(W+4).toFixed(1)}" stroke-width="2"/>
+  </svg>`;
+};
+
+function drawBoard() {
+  const rows = outstanding();
+  jobsEl.innerHTML = rows.map((c) => {
+    const [cls, word] = stateOf(c);
+    return `
+    <article class="job ${cls}" data-job="${c.id}">
+      <span class="spine" aria-hidden="true"></span>
+      <div class="size">
+        ${glyph(c.size)}
+        <div><span class="n">${c.n}</span>
+          <span class="u">${c.size}${c.n > 1 ? 's' : ''} · ${c.n * SIZES[c.size].gal} gal</span></div>
+      </div>
+      <div class="who">
+        <p class="pub">${c.pub}</p>
+        <p class="meta">Gyle ${c.gyle}</p>
+        <span class="state">${word}</span>
+      </div>
+      <div class="bookin">
+        <div>
+          <label for="cond-${c.id}">Condition</label>
+          <select id="cond-${c.id}" data-cond="${c.id}">
+            <option value="">Not checked</option>
+            ${CONDITIONS.map((x) => `<option>${x}</option>`).join('')}
+          </select>
+        </div>
+        <div>
+          <label for="ull-${c.id}">Ullage, pt</label>
+          <input id="ull-${c.id}" type="number" inputmode="decimal" min="0" max="72" step="1"
+                 data-ull="${c.id}" placeholder="0">
+        </div>
+        <button class="go" type="button" data-book="${c.id}">Book in</button>
+        <p class="why" data-why="${c.id}"></p>
+      </div>
+    </article>`;
+  }).join('') || `<p class="lede" style="margin:0">Nothing outstanding. Every consignment is
+    back in the yard.</p>`;
+
+  const late = rows.filter((c) => c.due < 0).reduce((s, c) => s + c.n, 0);
+  const today = rows.filter((c) => c.due === 0).reduce((s, c) => s + c.n, 0);
+  const out = rows.reduce((s, c) => s + c.n, 0);
+  document.querySelector('[data-tally-late]').textContent = String(late);
+  document.querySelector('[data-tally-today]').textContent = String(today);
+  document.querySelector('[data-tally-out]').textContent = String(out);
+}
+
+function drawLog() {
+  if (!booked.length) {
+    logEl.innerHTML = `<p class="none">Nothing booked in yet this week. The first cask you book
+      in appears here with its condition and ullage, and stays there if the screen is
+      refreshed.</p>`;
+    return;
+  }
+  logEl.innerHTML = `<ul class="log">${booked.map((b, i) => `
+    <li>
+      <span class="tick" aria-hidden="true"></span>
+      <span class="txt"><b>${b.n} × ${b.size}</b> from ${b.pub}
+        <span>gyle ${b.gyle} · ${b.cond.toLowerCase()} · ullage ${b.ull} pt</span></span>
+      <button class="undo" type="button" data-undo="${i}">Undo</button>
+    </li>`).join('')}</ul>`;
+}
+
+document.addEventListener('click', (e) => {
+  const book = e.target.closest('[data-book]');
+  if (book) {
+    const id = book.dataset.book;
+    const c = OUT.find((x) => x.id === id);
+    const cond = document.querySelector(`[data-cond="${id}"]`);
+    const ull = document.querySelector(`[data-ull="${id}"]`);
+    const why = document.querySelector(`[data-why="${id}"]`);
+    const n = ull.value.trim() === '' ? NaN : Number(ull.value);
+
+    let problem = '';
+    if (!cond.value) problem = 'Say what condition it came back in — it goes on the duty record.';
+    else if (!Number.isFinite(n)) problem = 'Ullage in pints, even if that is 0.';
+    else if (n < 0 || n > 72) problem = 'Ullage is between 0 and 72 pints.';
+
+    why.textContent = problem;
+    cond.setAttribute('aria-invalid', String(problem === 'Say what condition it came back in — it goes on the duty record.'));
+    ull.setAttribute('aria-invalid', String(Boolean(problem) && !cond.getAttribute('aria-invalid').includes('true')));
+    if (problem) { (cond.value ? ull : cond).focus(); return; }
+
+    booked.unshift({ id, pub:c.pub, gyle:c.gyle, size:c.size, n:c.n, cond:cond.value, ull:n });
+    save(booked);
+    drawBoard(); drawLog();
+    saidEl.textContent = `${c.n} × ${c.size} back in from ${c.pub} — ${cond.value.toLowerCase()}, ullage ${n} pt.`;
+    return;
+  }
+  const undo = e.target.closest('[data-undo]');
+  if (undo) {
+    const [gone] = booked.splice(Number(undo.dataset.undo), 1);
+    save(booked);
+    drawBoard(); drawLog();
+    saidEl.textContent = `${gone.pub} put back on the board.`;
+  }
+});
+
+drawBoard();
+drawLog();
+</script>
+</body>
+</html>
