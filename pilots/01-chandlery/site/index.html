@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Trelfall &amp; Son — rope and cordage, cut to the metre</title>
+<title>Trelfall &amp; Son , rope and cordage, cut to the metre</title>
 <meta name="description" content="Rope cut to the metre from the coil at the counter in Grimsby. Five constructions, each with the breaking load of the batch it comes off.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23fbfaf8'/><g fill='none' stroke='%23191713' stroke-width='2.6'><path d='M4 16c3-7 6-7 9 0s6 7 9 0 5-6 6-3'/></g></svg>">
 <style>
@@ -178,7 +178,7 @@ footer p{margin:0 0 8px;max-width:70ch}
   <div class="say"><div class="card">
     <h1>Rope, cut to the metre while you wait</h1>
     <p class="lede">Five constructions. Tell us how long you need it and we cut it off the
-      coil — the breaking load beside each one is the batch we will cut from.</p>
+      coil, the breaking load beside each one is the batch we will cut from.</p>
   </div></div>
 </div>
 
@@ -231,12 +231,12 @@ const LINES = [
     note:'Anchor warp. Stows flat, absorbs snatch.',
     alt:'A cut end of eight-plait nylon anchor warp on the bench, eight chunky strands crossing in a square plait, the end whipped with twine' },
   /* No photograph. Polypropylene is sold in the trade's safety blue and hazard orange, and the
-     three-strand study on this page is white polyester — showing it here would put a picture of
+     three-strand study on this page is white polyester, showing it here would put a picture of
      a different material against this line's price and load. The line is out of stock, so the
      row states the construction in words until the next coil is on the bench and shot. */
   { id:'PP14', name:'Three-strand polypropylene', dia:'14 mm', mbl:'2.2 t', stretch:'20 %',
     per:1.15, batch:null, coil:0, asset:null,
-    note:'Floats. Degrades in sunlight — not for standing rigging.', alt:null },
+    note:'Floats. Degrades in sunlight, not for standing rigging.', alt:null },
 ];
 const MIN_CUT = 3;
 const money = (n) => '£' + n.toFixed(2);
@@ -302,13 +302,13 @@ function priceOf(L) {
 
   let problem = '';
   if (!Number.isFinite(m) || input.value.trim() === '') problem = 'Tell us how many metres you need.';
-  else if (m < MIN_CUT) problem = `The minimum cut is ${MIN_CUT} m — we cannot sell a shorter length off the coil.`;
+  else if (m < MIN_CUT) problem = `The minimum cut is ${MIN_CUT} m, we cannot sell a shorter length off the coil.`;
   else if (m > L.coil) problem = `There is ${L.coil} m on this coil. Ask at the counter for more and we will order it in.`;
 
   err.textContent = problem;
   input.setAttribute('aria-invalid', problem ? 'true' : 'false');
   add.disabled = Boolean(problem);
-  cost.textContent = problem ? '—' : money(m * L.per);
+  cost.textContent = problem ? ',' : money(m * L.per);
   return problem ? null : { metres: m, total: m * L.per };
 }
 
@@ -353,7 +353,7 @@ document.addEventListener('click', (e) => {
     if (!p) { document.querySelector(`[data-metres="${L.id}"]`).focus(); return; }
     cuts.push({ ...p, name: L.name, dia: L.dia, batch: L.batch });
     drawBasket();
-    saidEl.textContent = `${p.metres} m of ${L.name} added — ${money(p.total)}, off batch ${L.batch}.`;
+    saidEl.textContent = `${p.metres} m of ${L.name} added, ${money(p.total)}, off batch ${L.batch}.`;
     return;
   }
   const drop = e.target.closest('[data-drop]');

@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Cask desk — Stalbridge Brewery</title>
+<title>Cask desk , Stalbridge Brewery</title>
 <meta name="description" content="What is out on trade, what is late, and booking it back in.">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23141c26'/><rect x='8' y='6' width='16' height='20' rx='5' fill='none' stroke='%23e9edf1' stroke-width='2.4'/><path d='M7 13h18M7 19h18' stroke='%23e9edf1' stroke-width='2'/></svg>">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23141c26'/><path d='M8 11a5 5 0 0 1 16 0v10a5 5 0 0 1-16 0zM7 13h18M7 19h18' fill='none' stroke='%23e9edf1' stroke-width='2.2'/></svg>">
 <style>
 /* ── Stalbridge cask desk ──────────────────────────────────────────────────
    A tool, read standing up, often in gloves, at arm's length. Severity is the
@@ -73,7 +73,10 @@ main{padding-block:clamp(16px,2.4vw,26px) clamp(30px,5vw,60px)}
 
 /* size: a glyph drawn to real relative volume, so the shape carries the quantity */
 .size{display:flex;align-items:center;gap:12px;padding:clamp(14px,2vw,18px) 0}
-.size svg{width:52px;height:52px;flex:none;color:var(--ink-2)}
+.cask{width:38px;flex:none;align-self:center;border:2.4px solid var(--ink-2);
+      border-radius:44% / 22%;
+      background:repeating-linear-gradient(180deg,transparent 0 29%,var(--ink-2) 29% 32%,
+                 transparent 32% 68%,var(--ink-2) 68% 71%,transparent 71% 100%)}
 .size .n{font:700 clamp(1.7rem,3vw,2.15rem)/1 var(--fig);font-variant-numeric:tabular-nums;
          letter-spacing:-.03em}
 .size .u{font:600 .68rem/1.3 var(--ui);letter-spacing:.11em;text-transform:uppercase;color:var(--ink-3)}
@@ -153,7 +156,7 @@ footer p{margin:0 0 7px;color:var(--ink-3);font-size:.88rem;max-width:70ch}
 </header>
 
 <main class="shell" id="board">
-  <p class="lede"><b>Late first, then due today.</b> Book a consignment back in from its own row —
+  <p class="lede"><b>Late first, then due today.</b> Book a consignment back in from its own row ,
     condition and ullage go on the record with it, because a cask coming back is a duty entry
     and not just a count.</p>
   <div data-jobs></div>
@@ -198,7 +201,7 @@ const logEl = document.querySelector('[data-log]');
 const saidEl = document.querySelector('[data-said]');
 
 /* Severity is the order: late, then due today, then out on trade. Within a band, the
-   latest first. Nothing here is alphabetical — a cellar desk is not a directory. */
+   latest first. Nothing here is alphabetical, a cellar desk is not a directory. */
 const rank = (c) => (c.due < 0 ? 0 : c.due === 0 ? 1 : 2);
 const outstanding = () => OUT.filter((c) => !booked.some((b) => b.id === c.id))
   .sort((a, b) => rank(a) - rank(b) || a.due - b.due);
@@ -206,15 +209,10 @@ const outstanding = () => OUT.filter((c) => !booked.some((b) => b.id === c.id))
 const stateOf = (c) => c.due < 0 ? ['late', `${Math.abs(c.due)} days late`]
   : c.due === 0 ? ['today', 'Due back today'] : ['out', `Due in ${c.due} days`];
 
-const glyph = (size) => {
-  const h = SIZES[size].h, w = h * 0.82, top = (1 - h) / 2;
-  const x = (1 - w) / 2 * 52, y = top * 52, W = w * 52, H = h * 52;
-  return `<svg viewBox="0 0 52 52" role="img" data-asset="cask-glyphs" aria-label="${size}, ${SIZES[size].gal} gallons"
-      fill="none" stroke="currentColor" stroke-width="2.6" stroke-linejoin="round">
-    <rect x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${W.toFixed(1)}" height="${H.toFixed(1)}" rx="${(W*0.3).toFixed(1)}"/>
-    <path d="M${(x-2).toFixed(1)} ${(y+H*0.32).toFixed(1)}h${(W+4).toFixed(1)}M${(x-2).toFixed(1)} ${(y+H*0.68).toFixed(1)}h${(W+4).toFixed(1)}" stroke-width="2"/>
-  </svg>`;
-};
+const glyph = (size) =>
+  `<span class="cask" data-asset="cask-glyphs" role="img"
+        aria-label="${size}, ${SIZES[size].gal} gallons"
+        style="height:${Math.round(SIZES[size].h * 52)}px"></span>`;
 
 function drawBoard() {
   const rows = outstanding();
@@ -288,19 +286,19 @@ document.addEventListener('click', (e) => {
     const n = ull.value.trim() === '' ? NaN : Number(ull.value);
 
     let problem = '';
-    if (!cond.value) problem = 'Say what condition it came back in — it goes on the duty record.';
+    if (!cond.value) problem = 'Say what condition it came back in, it goes on the duty record.';
     else if (!Number.isFinite(n)) problem = 'Ullage in pints, even if that is 0.';
     else if (n < 0 || n > 72) problem = 'Ullage is between 0 and 72 pints.';
 
     why.textContent = problem;
-    cond.setAttribute('aria-invalid', String(problem === 'Say what condition it came back in — it goes on the duty record.'));
+    cond.setAttribute('aria-invalid', String(problem === 'Say what condition it came back in, it goes on the duty record.'));
     ull.setAttribute('aria-invalid', String(Boolean(problem) && !cond.getAttribute('aria-invalid').includes('true')));
     if (problem) { (cond.value ? ull : cond).focus(); return; }
 
     booked.unshift({ id, pub:c.pub, gyle:c.gyle, size:c.size, n:c.n, cond:cond.value, ull:n });
     save(booked);
     drawBoard(); drawLog();
-    saidEl.textContent = `${c.n} × ${c.size} back in from ${c.pub} — ${cond.value.toLowerCase()}, ullage ${n} pt.`;
+    saidEl.textContent = `${c.n} × ${c.size} back in from ${c.pub}, ${cond.value.toLowerCase()}, ullage ${n} pt.`;
     return;
   }
   const undo = e.target.closest('[data-undo]');

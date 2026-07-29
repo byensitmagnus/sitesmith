@@ -100,8 +100,26 @@ const RULES = [
   {
     id: 'theme-lock',
     cite: '09-block-library.md:126 — one theme for the whole page, no mid-page inversion',
+    /* The rule forbids inverting the theme partway down a page. The check used to fail any
+       page WITHOUT a prefers-color-scheme block, which is the opposite of what the rule says:
+       a deliberately single-scheme page has one theme for the whole page and no inversion, so
+       it satisfies the rule perfectly and was being failed for it. What the rule is actually
+       about is a mid-page flip — a section that inverts ground and ink against the rest. */
     run(html) {
-      return /prefers-color-scheme/.test(html) ? [] : ['no prefers-color-scheme block — page has one hardcoded theme'];
+      const bad = [];
+      /* a page that declares one scheme to the browser is single-scheme on purpose */
+      const locked = /color-scheme\s*:\s*(dark|light)\s*[;}]/.test(html);
+      const responsive = /prefers-color-scheme/.test(html);
+      if (!locked && !responsive) {
+        bad.push('neither a prefers-color-scheme block nor a color-scheme lock — the page ' +
+          'does not say which theme it means');
+      }
+      /* the inversion the rule is named for: a section rule that swaps ground and ink */
+      const inverts = html.match(/\.[\w-]+\s*\{[^}]*background\s*:\s*var\(--(ink|text|fg)[^)]*\)[^}]*color\s*:\s*var\(--(paper|bg|ground|surface)/gi);
+      if (inverts && inverts.length > 2) {
+        bad.push(`${inverts.length} section rules invert ground and ink mid-page`);
+      }
+      return bad;
     },
   },
 ];

@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Marrow &amp; Kell — bellfounders, tuning and casting</title>
+<title>Marrow &amp; Kell , bellfounders, tuning and casting</title>
 <meta name="description" content="We re-tune church bells by taking metal off, and we publish both sets of figures. Tell us about the ring.">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23100e0c'/><path d='M9 23c0-6 1.5-8 1.5-11a5.5 5.5 0 0 1 11 0c0 3 1.5 5 1.5 11z' fill='none' stroke='%23c6a86a' stroke-width='2.2'/><path d='M7 23h18' stroke='%23c6a86a' stroke-width='2.2'/></svg>">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23100e0c'/><path d='M9 23c0-6 1.5-8 1.5-11a5.5 5.5 0 0 1 11 0c0 3 1.5 5 1.5 11H9M7 23h18' fill='none' stroke='%23c6a86a' stroke-width='2.2'/></svg>">
 <style>
 /* ── Marrow & Kell ─────────────────────────────────────────────────────────
    A foundry at night: the metal is lit and everything else is not. The page is
@@ -173,7 +173,7 @@ footer p{margin:0 0 8px;color:var(--ink-3);font-size:.9rem;max-width:66ch}
     <p>There is no putting it back. We measure five partials before a bell goes on the machine
        and we publish both sets, because a foundry that will not show you the before is asking
        you to take the after on trust.</p>
-    <a class="cta" href="#enquiry">Tell us about the ring <small>— we answer within a week</small></a>
+    <a class="cta" href="#enquiry">Tell us about the ring <small>, we answer within a week</small></a>
   </div></div>
 </div>
 
@@ -183,7 +183,7 @@ footer p{margin:0 0 8px;color:var(--ink-3);font-size:.9rem;max-width:66ch}
   <div class="tune">
     <div>
       <p style="color:var(--ink-2);margin:0 0 20px;max-width:46ch">A bell has five partials that
-        matter. Tuning cuts metal from the inside at the heights where each one sounds — the hum
+        matter. Tuning cuts metal from the inside at the heights where each one sounds, the hum
         near the lip, the nominal near the shoulder. Cut in the wrong place and you have moved
         two partials to fix one.</p>
       <figure>
@@ -201,7 +201,7 @@ footer p{margin:0 0 8px;color:var(--ink-3);font-size:.9rem;max-width:66ch}
         <button type="button" data-state="after" aria-pressed="false">After</button>
       </div>
       <table class="partials">
-        <caption>Tenor, St Æthelburga's — cents from equal temperament</caption>
+        <caption>Tenor, St Æthelburga's, cents from equal temperament</caption>
         <thead>
           <tr><th scope="col">Partial</th><th scope="col">Cents</th><th scope="col">Metal off</th></tr>
         </thead>
@@ -227,8 +227,8 @@ footer p{margin:0 0 8px;color:var(--ink-3);font-size:.9rem;max-width:66ch}
     </div>
     <div>
       <h3>Quote from a photograph</h3>
-      <p>Weights and notes are on record. Everything else — the frame, the fittings, the state
-         of the headstocks — needs somebody in the tower.</p>
+      <p>Weights and notes are on record. Everything else, the frame, the fittings, the state
+         of the headstocks, needs somebody in the tower.</p>
     </div>
   </div>
 </section>
@@ -255,7 +255,7 @@ footer p{margin:0 0 8px;color:var(--ink-3);font-size:.9rem;max-width:66ch}
     <div>
       <h2 id="ask-h">Tell us about the ring</h2>
       <p style="color:var(--ink-2);max-width:44ch">We answer every enquiry ourselves, usually
-        within a week. If the tower is in the middle of a faculty application, say so — it
+        within a week. If the tower is in the middle of a faculty application, say so, it
         changes what we can usefully do first.</p>
       <div class="sent" data-sent aria-live="polite">
         <h3>Enquiry sent</h3>
@@ -322,7 +322,7 @@ const PARTIALS = [
   { name:'Prime',   before: 21, after: 1, off:'2.8 kg' },
   { name:'Tierce',  before:-14, after: 0, off:'1.9 kg' },
   { name:'Quint',   before:  9, after: 3, off:'0.6 kg' },
-  { name:'Nominal', before:  0, after: 0, off:'—' },
+  { name:'Nominal', before:  0, after: 0, off:',' },
 ];
 const SCALE = 45;                       // cents at the full half-width of the bar
 const rowsEl = document.querySelector('[data-rows]');
@@ -356,7 +356,7 @@ function draw() {
   const worst = Math.max(...PARTIALS.map((p) => Math.abs(on ? p.after : p.before)));
   sumEl.innerHTML = on
     ? `After: nothing further than <b>${worst}</b> cents from true, and <b>9.4 kg</b> of bronze gone for good.`
-    : `Before: the worst partial is <b>${worst}</b> cents out — a third of a semitone, and audible from the ground.`;
+    : `Before: the worst partial is <b>${worst}</b> cents out, a third of a semitone, and audible from the ground.`;
 }
 
 document.querySelectorAll('[data-state]').forEach((b) => {
@@ -387,15 +387,15 @@ form.addEventListener('submit', (e) => {
 
   say('tower', ''); say('bells', ''); say('faculty', ''); say('email', '');
 
-  if (!v('tower')) { say('tower', 'We need the tower — it is how we find the bells on record.'); problems.push('tower'); }
+  if (!v('tower')) { say('tower', 'We need the tower, it is how we find the bells on record.'); problems.push('tower'); }
   if (!v('bells')) { say('bells', 'How many bells are in the ring?'); problems.push('bells'); }
   else if (!Number.isInteger(bells) || bells < 1 || bells > 16) {
-    say('bells', 'Between 1 and 16. Above twelve we would rather ring you — put the tower in and we will call.');
+    say('bells', 'Between 1 and 16. Above twelve we would rather ring you, put the tower in and we will call.');
     problems.push('bells');
   }
   if (!v('faculty')) { say('faculty', 'Say where the faculty stands, even if that is "I do not know".'); problems.push('faculty'); }
   if (!/^[^@\s]+@[^@\s.]+\.[^@\s]+$/.test(v('email'))) {
-    say('email', 'We need an address that works — this is the only way we answer.');
+    say('email', 'We need an address that works, this is the only way we answer.');
     problems.push('email');
   }
 
