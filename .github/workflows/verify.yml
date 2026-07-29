@@ -216,6 +216,61 @@ jobs:
           [ $code -eq 0 ] || { echo "::error::--no-axe must remain an explicit way past (expected exit 0, got $code)"; exit 1; }
           echo "fails closed without axe, and --no-axe is the only way past"
 
+  isolation:
+    name: the benchmark isolation holds
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      # This machine has no container runtime and no WSL to host one, which is written up in
+      # docs/v2/BENCHMARK-BLOCKER.md. The runner has Docker, so the part that could not be
+      # checked locally is checked here instead of being asserted.
+      #
+      # The probe is UNPAID and takes no credential: bench/probe.sh contains no
+      # ANTHROPIC_API_KEY and the selftest asserts that it does not. Nothing in this job can
+      # spend anything, and the eighteen generations are deliberately not run here.
+      - name: the runner's own rules, before it touches Docker
+        run: node tools/bench-container.mjs selftest
+
+      - name: docker is real here
+        run: |
+          docker version --format '{{.Server.Version}}'
+          docker info --format 'storage={{.Driver}} arch={{.Architecture}}'
+
+      - name: build from the committed base lock
+        run: node tools/bench-container.mjs build
+
+      - name: internal network and egress proxy
+        run: node tools/bench-container.mjs up
+
+      # The claim the whole benchmark rests on: the two arms differ by one read-only mount
+      # and by nothing else, the network cannot reach anything but the one allowed host, and
+      # a container cannot read which arm it is in.
+      - name: probe both arms
+        run: node tools/bench-container.mjs probe
+
+      - name: what the probe recorded
+        if: always()
+        run: |
+          for f in benchmarks/v2/runs/probe*.json benchmarks/v2/runs/image-build.json; do
+            [ -e "$f" ] || continue
+            echo "::group::$f"; cat "$f"; echo; echo "::endgroup::"
+          done
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: isolation-probe
+          path: benchmarks/v2/runs/
+          if-no-files-found: warn
+
+      - name: down
+        if: always()
+        run: node tools/bench-container.mjs down || true
+
   clean-install:
     name: a clean install can run the gates
     runs-on: ubuntu-latest
