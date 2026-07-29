@@ -17,6 +17,7 @@ import { fileURLToPath } from 'node:url';
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
 const PIPELINE = join(ROOT, 'skills/sitesmith/PIPELINE.json');
 const ROUTER = join(ROOT, 'skills/sitesmith/scripts/stack-router.mjs');
+const CLI = join(ROOT, 'bin/sitesmith.mjs');
 const failures = [];
 
 async function check(name, fn) {
@@ -119,6 +120,50 @@ try {
 } finally {
   await Promise.all(projects.map((project) => rm(project, { recursive: true, force: true })));
 }
+
+await check('generated provider packs expose the default journey but no lab step', async () => {
+  const out = await mkdtemp(join(tmpdir(), 'sitesmith-pack-'));
+  try {
+    const result = spawnSync(process.execPath, [CLI, 'pack', '--provider', 'codex', '--out', out], {
+      cwd: ROOT,
+      encoding: 'utf8',
+    });
+    assert.equal(result.status, 0, (result.stderr || result.stdout).trim());
+    const pack = await readFile(join(out, 'AGENTS.md'), 'utf8');
+    assert.match(pack, /init\s*→\s*build\s*→\s*audit/i);
+    assert.doesNotMatch(pack, /### diversity|portfolio diversity/i);
+    assert.doesNotMatch(pack, /`shape`/i);
+  } finally {
+    await rm(out, { recursive: true, force: true });
+  }
+});
+
+await check('public product documents agree on the compact journey', async () => {
+  const [skill, readme, state, plugin, marketplace] = await Promise.all([
+    readFile(join(ROOT, 'skills/sitesmith/SKILL.md'), 'utf8'),
+    readFile(join(ROOT, 'README.md'), 'utf8'),
+    readFile(join(ROOT, 'docs/v2/STATE.md'), 'utf8'),
+    readFile(join(ROOT, '.claude-plugin/plugin.json'), 'utf8'),
+    readFile(join(ROOT, '.claude-plugin/marketplace.json'), 'utf8'),
+  ]);
+  for (const [name, text] of Object.entries({ skill, readme, state })) {
+    assert.match(text, /init\s*(?:→|->)\s*build\s*(?:→|->)\s*audit/i, `${name} has no journey`);
+  }
+  assert.doesNotMatch(`${plugin}\n${marketplace}`, /12-step/i);
+  assert.doesNotMatch(state, /HEAD is `/i);
+});
+
+await check('the capability manifest no longer reports shipped product features as missing', async () => {
+  const manifest = JSON.parse(await readFile(join(ROOT, 'docs/v2/CAPABILITY-MANIFEST.json'), 'utf8'));
+  const capabilities = new Map(manifest.capabilities.map((item) => [item.id, item]));
+  for (const id of ['guided-variation-dials', 'command-vocabulary', 'install-update-doctor',
+                    'provider-packages']) {
+    assert.equal(capabilities.get(id)?.sitesmithStatus, 'complete', `${id} is not complete`);
+  }
+  const stack = capabilities.get('stack-specific-implementation');
+  assert.match(stack?.sitesmithFile ?? '', /stack-router\.mjs/);
+  assert.doesNotMatch(stack?.evidence ?? '', /^none\b/i);
+});
 
 if (failures.length) {
   console.error(`\n${failures.length} product-flow failure(s):\n`);
