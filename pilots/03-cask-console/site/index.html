@@ -73,7 +73,7 @@ main{padding-block:clamp(16px,2.4vw,26px) clamp(30px,5vw,60px)}
   .job .head,.bookin{padding-right:var(--pad)}}
 
 /* size: a glyph drawn to real relative volume, so the shape carries the quantity */
-.size{display:flex;align-items:center;gap:12px;flex:none}
+.size{display:flex;align-items:center;gap:12px;flex:none;width:clamp(150px,15vw,178px)}
 .cask{width:38px;flex:none;align-self:center;border:2.4px solid var(--ink-2);
       border-radius:44% / 22%;
       background:repeating-linear-gradient(180deg,transparent 0 29%,var(--ink-2) 29% 32%,
@@ -95,7 +95,7 @@ main{padding-block:clamp(16px,2.4vw,26px) clamp(30px,5vw,60px)}
 
 /* the book-in, inline and always open — a cellarman in gloves gets controls,
    not a button that produces controls */
-.bookin{grid-column:2;display:grid;grid-template-columns:minmax(0,1fr) 116px auto;gap:10px 12px;
+.bookin{grid-column:2;display:grid;grid-template-columns:minmax(0,340px) 116px auto 1fr;gap:10px 12px;
         align-items:end;padding:clamp(12px,1.6vw,15px) 0 clamp(13px,1.8vw,17px);
         margin-top:clamp(11px,1.6vw,14px);background:var(--panel-2);
         padding-inline:clamp(12px,1.6vw,16px);border-radius:2px}

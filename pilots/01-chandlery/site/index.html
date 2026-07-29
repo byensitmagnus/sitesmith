@@ -21,7 +21,7 @@
   --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif;
   --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,system-ui,sans-serif;
   --mono:ui-monospace,SFMono-Regular,"SF Mono","Cascadia Mono","Segoe UI Mono",monospace;
-  --gutter:clamp(18px,4vw,44px); --container:1240px;
+  --gutter:clamp(18px,4vw,44px); --container:1000px;
   --r:3px;
 }
 @media (prefers-color-scheme:dark){
@@ -72,7 +72,7 @@ h1{font:600 clamp(1.6rem,3.4vw,2.3rem)/1.14 var(--serif);margin:0 0 10px;letter-
 
 /* ── shop layout: the goods, and a basket that stays put ──────────────── */
 .shop{padding-block:clamp(26px,2.6vw,36px)}
-.shop > section{max-width:920px}
+.shop > section{max-width:none}   /* one width for the whole page, header included */
 .sectitle{font:600 1.24rem/1.3 var(--serif);margin:0 0 4px}
 .secnote{color:var(--ink-2);font-size:.95rem;margin:0 0 16px;max-width:58ch}
 
@@ -112,7 +112,7 @@ h1{font:600 clamp(1.6rem,3.4vw,2.3rem)/1.14 var(--serif);margin:0 0 10px;letter-
 .cost{min-width:9ch}
 .cost .fig{font:600 1.24rem/1 var(--serif);letter-spacing:-.01em;
            color:var(--ink);display:block}
-.add{margin-left:auto;font:700 1rem/1 var(--sans);padding:14px 22px;border:0;border-radius:var(--r);
+.add{margin-left:auto;font:700 .96rem/1 var(--sans);padding:14px 18px;white-space:nowrap;border:0;border-radius:var(--r);
      background:var(--ink);color:var(--paper);cursor:pointer;min-height:48px}
 .add:hover{background:var(--ink-2)}
 .add[disabled]{background:var(--paper-3);color:var(--ink-3);cursor:not-allowed}
