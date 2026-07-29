@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Product-flow contract for SiteSmith v1.0. Original work, MIT.
+ * Product-flow contract for SiteSmith v1.0. Original work, MIT. AI-generated: (C).
  *
  * The installed skill has one ordinary journey: init -> build -> audit. Research-only
  * benchmarks and sealed reviews may exist in this repository, but they cannot leak into that
@@ -127,4 +127,3 @@ if (failures.length) {
 }
 
 console.log('\nPASS — compact product flow and stack routing hold\n');
-

@@ -15,27 +15,28 @@
     "ordinary task must never pull the whole rule set or the 1.4 MB of data into context. The",
     "`alwaysLoaded` list below is the entire standing cost."
   ],
-  "version": "2.1",
+  "version": "2.2",
+  "defaultJourney": [
+    "init",
+    "build",
+    "audit"
+  ],
   "alwaysLoaded": [
     "SKILL.md",
     "v2/10-core.md",
     "one file from v2/modes/"
   ],
   "commands": {
-    "$comment": "Seven verbs, fewer than any competitor, each bound to a span of the pipeline. impeccable declares roughly twenty-three; a vocabulary a user cannot hold is a vocabulary they do not use.",
+    "$comment": "Three ordinary commands form the default journey. harden, polish and doctor are targeted tools, never mandatory phases. Benchmark machinery is lab-only and is not a product command.",
     "init": {
       "steps": [
         "brief",
         "inspect",
+        "stack",
         "evidence",
         "brand",
         "asset-plan",
-        "visual-plan"
-      ],
-      "summary": "Understand the subject and what already exists. Produces BRIEF.md, EVIDENCE.md, BRAND.md, ASSET-MANIFEST.md, VISUAL-SOURCE-PLAN.md."
-    },
-    "shape": {
-      "steps": [
+        "visual-plan",
         "visual-assets",
         "directions",
         "comps",
@@ -43,24 +44,26 @@
         "contract",
         "interactions"
       ],
-      "summary": "Make the assets the plan calls for, then three contrasting directions, one chosen with reasons, then the contract and the interaction contract written from the winner."
+      "summary": "Understand the subject, detect its stack, plan its real assets, compare three directions and record the chosen design and interaction contracts."
     },
     "build": {
       "steps": [
         "structure",
         "implement",
-        "journeys"
+        "journeys",
+        "preview"
       ],
-      "summary": "Section order, the pages, and the journeys that exercise them."
+      "summary": "Build in the detected stack, wire the journeys and render the changed surface through the fast preview loop."
     },
     "audit": {
       "steps": [
         "verify",
         "fidelity",
-        "diversity",
-        "production"
+        "production",
+        "critique",
+        "report"
       ],
-      "summary": "Does it work, does it render the direction it chose, is it its own site, and is it finished."
+      "summary": "Run the release checks once, inspect the screenshots and write the honest production report."
     },
     "harden": {
       "steps": [
@@ -101,6 +104,16 @@
       "produces": [],
       "gate": null,
       "note": "Framework, styling system, tokens, component library, CLAUDE.md / AGENTS.md / README, existing assets. An established stack is a decision already made. Adopt it."
+    },
+    {
+      "id": "stack",
+      "name": "Detect one implementation stack",
+      "reads": [],
+      "produces": [
+        ".sitesmith/STACK.md"
+      ],
+      "gate": "scripts/stack-router.mjs detect . --write",
+      "note": "Detect the established stack from project files and bind the build to exactly one adapter. Next.js and Astro outrank their optional React dependency. An unknown or ambiguous stack is reported instead of guessed."
     },
     {
       "id": "evidence",
@@ -243,7 +256,8 @@
       "name": "Stack-specific implementation",
       "reads": [
         "blocks/README.md",
-        "data/stacks/<stack>.csv"
+        ".sitesmith/STACK.md",
+        "data/stacks/<detected-stack>.csv"
       ],
       "produces": [
         "the site"
@@ -261,6 +275,16 @@
         "journeys/*.spec.mjs"
       ],
       "gate": "scripts/journey.mjs journeys/ --base <url>"
+    },
+    {
+      "id": "preview",
+      "name": "Fast changed-surface preview",
+      "reads": [],
+      "produces": [
+        ".sitesmith/shots/preview/"
+      ],
+      "gate": "scripts/verify.mjs <changed-url> --out .sitesmith/shots/preview --no-axe",
+      "note": "The ordinary edit loop renders only the changed surface at the required widths and catches console, link and overflow faults. The explicit axe waiver is preview-only; audit runs the canonical accessibility scan before release."
     },
     {
       "id": "verify",
@@ -282,6 +306,7 @@
     {
       "id": "diversity",
       "name": "Portfolio diversity",
+      "scope": "lab",
       "reads": [],
       "produces": [],
       "gate": "scripts/portfolio-diversity.mjs <url> <url> <url>",
@@ -306,8 +331,8 @@
       "produces": [
         "CRITIQUE.md"
       ],
-      "gate": "scripts/critique-gate.mjs <dir>",
-      "note": "On screenshots, blind, and only once the technical gate is green: a broken layout cannot be assessed for art direction."
+      "gate": null,
+      "note": "One screenshot-based product review, only once the technical gate is green. Sealed mappings, two-reviewer locks and critique-gate.mjs belong to explicit benchmark work, not to an ordinary customer-site audit."
     },
     {
       "id": "targeted-polish",
