@@ -1,0 +1,19 @@
+{
+  "seed": "8337bbbab4efd2fad422ddb5db321e16",
+  "sheet-sha256": "8aba70dd8e55687f624550599ef7a992f14f80ef6af22d2ac013084a88bcec6b",
+  "assignment": {
+    "SHEET-B4": {
+      "subject": "chandlery",
+      "seat": 3
+    },
+    "SHEET-W1": {
+      "subject": "foundry",
+      "seat": 2
+    },
+    "SHEET-M2": {
+      "subject": "cask",
+      "seat": 1
+    }
+  },
+  "note": "Written before any reviewer saw a sheet. The reviewers are never given this path."
+}
