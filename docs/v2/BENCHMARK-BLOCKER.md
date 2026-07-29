@@ -1,5 +1,28 @@
 # The isolated benchmark cannot run on this machine
 
+> **Update, 2026-07-29. The isolation now runs — in CI, not here.** The machine below still has
+> no container runtime, and everything in this file about *this machine* is still true. What
+> changed is that the GitHub runner has Docker, so the mechanical gate stopped being an
+> assertion about untested code and became a green check.
+>
+> `.github/workflows/verify.yml`, job **the benchmark isolation holds**, on every push: build
+> from the committed base lock, bring up the `--internal` network and the egress proxy, probe
+> both arms, tear down. Both arms report `verdict pass` and `bind mounts exactly as expected`.
+> The control cannot see the skill (`skill_absent denied`); the treatment can and cannot write
+> to it (`skill_present ok`, `skill_readonly denied`); neither can reach any host but the one
+> allowed endpoint, read a host path, or find the marker in its filesystem or environment.
+>
+> The first run of that job **failed**, and the failure was the runner rather than the
+> isolation: containers run with `--rm`, so a short-lived one was removed before the mount
+> inspection could poll it, and the gate reported "the container never appeared for
+> inspection" while every isolation check inside it passed. Fixed by reading the mount table
+> off a created-but-unstarted copy, which is deterministic. That bug had never fired locally
+> because the gate had never been able to run locally at all.
+>
+> **Still not done, and still unpaid:** `discovery` and `run-all` spend model credits. The
+> eighteen generations are deliberately absent from CI — a paid call belongs behind an
+> explicit decision, not behind a push. No benchmark figure is claimed anywhere.
+
 > Checked, not assumed. This is the one thing in the release plan that is blocked, and it is
 > blocked on the environment rather than on the code.
 
