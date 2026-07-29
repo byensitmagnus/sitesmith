@@ -228,8 +228,19 @@ def _gallery_assets() -> None:
                 fail(f"index.html:{line}", f"{attr} points at missing {target}")
 
 
-@check("every benchmark appears in the gallery with a thumbnail")
+@check("the gallery shows every benchmark, or honestly shows none")
 def _gallery_coverage() -> None:
+    """The gallery may not pick and choose.
+
+    It was 'every benchmark has a card', which caught the real fault of adding a benchmark
+    and forgetting the gallery. Then v1.0 entered visual preflight and the gallery was
+    emptied on purpose, so the check failed a page that was telling the truth.
+
+    Both states are honest and a third is not. Showing all of them is honest. Showing none
+    of them, and saying so, is honest. Showing a chosen few is the failure worth catching,
+    because a hand-picked gallery reads as the whole portfolio. So the check now asks which
+    state the page has declared and holds it to that one.
+    """
     html = (ROOT / "index.html").read_text(encoding="utf-8")
     bench = ROOT / "benchmarks"
     pages = sorted(p.parent.relative_to(bench).as_posix() for p in bench.glob("*/index.html"))
@@ -237,8 +248,22 @@ def _gallery_coverage() -> None:
     # The block harness is generated from skills/sitesmith/blocks and is not a brief,
     # so it is verified like a benchmark but does not claim a card in the gallery.
     pages = [p for p in pages if p != "blocks"]
+
+    # The declaration is a fixed sentence, not a mood, so it cannot be satisfied by accident.
+    PREFLIGHT = "SiteSmith v1.0 is in visual preflight."
+    shown = [p for p in pages if f'href="benchmarks/{p}/"' in html]
+
+    if PREFLIGHT in html:
+        for page in shown:
+            fail(
+                "index.html",
+                f"declares visual preflight but still shows benchmarks/{page} — "
+                "a partial gallery reads as the whole portfolio",
+            )
+        return
+
     for page in pages:
-        if f'href="benchmarks/{page}/"' not in html:
+        if page not in shown:
             fail("index.html", f"benchmarks/{page} has no card in the gallery")
         thumb = ROOT / "gallery" / "thumbs" / f"{page.replace('/', '-')}.png"
         if not thumb.exists():
