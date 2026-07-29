@@ -20,6 +20,8 @@
   --today:#f2b23c; --today-ink:#2a1c00;
   --out:#5d7f9c;
   --ok:#4ec98a; --ok-ink:#04241a;
+  /* validation is not a severity, so it borrows no severity colour */
+  --warn:#c9d3dd; --warn-ink:#141c26;
   --ui:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,system-ui,sans-serif;
   --fig:ui-monospace,SFMono-Regular,"Cascadia Mono","Segoe UI Mono",monospace;
   --pad:clamp(14px,2.4vw,26px);
@@ -32,7 +34,7 @@ img{max-width:100%;display:block}
 .shell{max-width:1320px;margin:0 auto;padding:0 var(--pad)}
 .skip{position:absolute;left:-9999px}
 .skip:focus{left:12px;top:10px;z-index:9;background:var(--panel);padding:10px 14px;border:2px solid var(--ink)}
-:where(button,input,select,a):focus-visible{outline:3px solid var(--today);outline-offset:2px}
+:where(button,input,select,a):focus-visible{outline:3px solid var(--warn);outline-offset:2px}
 
 /* ── standing header: the room, and the count that matters ────────────── */
 .desk{position:relative;border-bottom:2px solid var(--line-2);overflow:hidden}
@@ -46,7 +48,7 @@ img{max-width:100%;display:block}
 .desk .when{color:var(--ink-2);font-size:.95rem}
 .tally{margin-left:auto;display:flex;align-items:baseline;gap:clamp(14px,2vw,26px)}
 .tally div{text-align:right}
-.tally dt{font:600 .66rem/1 var(--ui);letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3)}
+.tally dt{font:400 .8rem/1 var(--ui);color:var(--ink-3)}
 .tally dd{margin:5px 0 0;font:700 clamp(1.5rem,3vw,2.05rem)/1 var(--fig);
           font-variant-numeric:tabular-nums;letter-spacing:-.03em}
 .tally .l dd{color:var(--late)}
@@ -57,35 +59,34 @@ main{padding-block:clamp(16px,2.4vw,26px) clamp(30px,5vw,60px)}
 .lede{color:var(--ink-2);font-size:.96rem;margin:0 0 clamp(14px,2vw,20px);max-width:64ch}
 .lede b{color:var(--ink);font-weight:600}
 
-.job{display:grid;grid-template-columns:14px minmax(150px,190px) minmax(0,1fr) minmax(0,420px);
-     gap:0 clamp(14px,2vw,24px);align-items:center;
+.job{display:grid;grid-template-columns:14px minmax(0,1fr);
+     gap:0 clamp(14px,2vw,22px);
      background:var(--panel);border:1px solid var(--line);margin-bottom:12px;
      padding:0 clamp(14px,2vw,22px) 0 0}
+.job .head{grid-column:2;display:flex;align-items:center;gap:clamp(14px,2.4vw,26px);
+           flex-wrap:wrap;padding:clamp(13px,1.8vw,17px) 0 0}
+.job .head .who{flex:1 1 14ch;min-width:0}
 .job .spine{align-self:stretch;background:var(--out)}
 .job.late .spine{background:var(--late)}
 .job.today .spine{background:var(--today)}
-@media (max-width:1080px){
-  .job{grid-template-columns:14px minmax(0,1fr);padding:0 0 clamp(14px,2vw,18px) 0}
-  .job .spine{grid-row:1/span 3}
-  .job > *:not(.spine){grid-column:2}
-  .size{padding-top:14px}
-}
+@media (max-width:1080px){.job{padding-right:0}
+  .job .head,.bookin{padding-right:var(--pad)}}
 
 /* size: a glyph drawn to real relative volume, so the shape carries the quantity */
-.size{display:flex;align-items:center;gap:12px;padding:clamp(14px,2vw,18px) 0}
+.size{display:flex;align-items:center;gap:12px;flex:none}
 .cask{width:38px;flex:none;align-self:center;border:2.4px solid var(--ink-2);
       border-radius:44% / 22%;
       background:repeating-linear-gradient(180deg,transparent 0 29%,var(--ink-2) 29% 32%,
                  transparent 32% 68%,var(--ink-2) 68% 71%,transparent 71% 100%)}
 .size .n{font:700 clamp(1.7rem,3vw,2.15rem)/1 var(--fig);font-variant-numeric:tabular-nums;
          letter-spacing:-.03em}
-.size .u{display:block;margin-top:3px;font:600 .68rem/1.3 var(--ui);letter-spacing:.11em;
-         text-transform:uppercase;color:var(--ink-3);white-space:nowrap}
+.size .u{display:block;margin-top:3px;font:400 .8rem/1.3 var(--ui);color:var(--ink-3);
+         white-space:nowrap}
 
-.who{padding:clamp(14px,2vw,18px) 0;min-width:0}
+.who{min-width:0}
 .who .pub{font:600 1.14rem/1.25 var(--ui);margin:0 0 3px}
 .who .meta{margin:0;color:var(--ink-3);font:400 .88rem/1.4 var(--fig)}
-.state{display:inline-flex;align-items:center;gap:8px;margin-top:10px;
+.state{display:inline-flex;align-items:center;gap:8px;margin-left:auto;flex:none;
        font:800 .92rem/1 var(--ui);letter-spacing:.09em;text-transform:uppercase;
        padding:11px 15px;border-radius:2px}
 .job.late .state{background:var(--late);color:var(--late-ink)}
@@ -94,13 +95,14 @@ main{padding-block:clamp(16px,2.4vw,26px) clamp(30px,5vw,60px)}
 
 /* the book-in, inline and always open — a cellarman in gloves gets controls,
    not a button that produces controls */
-.bookin{display:grid;grid-template-columns:minmax(0,1fr) 104px auto;gap:10px;
-        align-items:end;padding:clamp(12px,1.6vw,16px) 0}
-@media (max-width:560px){.bookin{grid-template-columns:minmax(0,1fr) 104px;padding-right:var(--pad)}
-  .bookin .go{grid-column:1/-1}}
+.bookin{grid-column:2;display:grid;grid-template-columns:minmax(0,1fr) 116px auto;gap:10px 12px;
+        align-items:end;padding:clamp(12px,1.6vw,15px) 0 clamp(13px,1.8vw,17px);
+        border-top:1px solid var(--line);margin-top:clamp(11px,1.6vw,14px)}
+@media (max-width:560px){.bookin{grid-template-columns:minmax(0,1fr) 116px}
+  .bookin .go{grid-column:1/-1;order:3}
+  .why{order:2}}
 @media (max-width:1080px){.bookin{padding-right:var(--pad)}}
-.bookin label{display:block;font:600 .66rem/1 var(--ui);letter-spacing:.12em;
-              text-transform:uppercase;color:var(--ink-3);margin-bottom:6px}
+.bookin label{display:block;font:400 .82rem/1 var(--ui);color:var(--ink-3);margin-bottom:6px}
 .bookin select,.bookin input{width:100%;font:600 .98rem/1 var(--ui);padding:13px 12px;
   background:var(--panel-2);color:var(--ink);border:2px solid var(--line-2);border-radius:2px;
   min-height:48px}
@@ -110,12 +112,14 @@ main{padding-block:clamp(16px,2.4vw,26px) clamp(30px,5vw,60px)}
   background-position:calc(100% - 18px) 55%,calc(100% - 12px) 55%;
   background-size:6px 6px,6px 6px;background-repeat:no-repeat}
 .bookin input{font-family:var(--fig);font-variant-numeric:tabular-nums}
-.bookin [aria-invalid=true]{border-color:var(--late);background:#2b1310}
+.bookin [aria-invalid=true]{border-color:var(--warn);background-color:var(--panel-3);
+                            box-shadow:inset 3px 0 0 var(--warn)}
 .go{font:800 .92rem/1 var(--ui);letter-spacing:.06em;padding:15px 20px;min-height:48px;
     background:var(--panel-3);color:var(--ink);border:2px solid var(--line-2);border-radius:2px;
     cursor:pointer;white-space:nowrap}
 .go:hover{background:var(--panel-2);border-color:var(--ink-2)}
-.why{grid-column:1/-1;margin:0;font:600 .88rem/1.4 var(--ui);color:var(--late)}
+.why{grid-column:1/-1;margin:0;padding:9px 12px;background:var(--panel-3);
+     border-left:3px solid var(--warn);font:600 .88rem/1.4 var(--ui);color:var(--ink)}
 .why:empty{display:none}
 
 /* ── booked in ────────────────────────────────────────────────────────── */
@@ -131,7 +135,7 @@ main{padding-block:clamp(16px,2.4vw,26px) clamp(30px,5vw,60px)}
 .log .undo{background:none;border:0;color:var(--ink-2);font:600 .84rem/1 var(--ui);
            text-decoration:underline;cursor:pointer;padding:8px 0}
 .log .undo:hover{color:var(--late)}
-.said{margin:10px 0 0;font-size:.9rem;color:var(--ink-3)}
+.said{position:absolute;left:-9999px}   /* announced, never drawn: the board is the receipt */
 .said:empty{display:none}
 footer{border-top:1px solid var(--line);margin-top:clamp(26px,4vw,44px);padding-block:22px 40px}
 footer p{margin:0 0 7px;color:var(--ink-3);font-size:.88rem;max-width:70ch}
@@ -222,14 +226,16 @@ function drawBoard() {
     return `
     <article class="job ${cls}" data-job="${c.id}">
       <span class="spine" aria-hidden="true"></span>
-      <div class="size">
-        ${glyph(c.size)}
-        <div><span class="n">${c.n}</span>
-          <span class="u">${c.size}${c.n > 1 ? 's' : ''} · ${c.n * SIZES[c.size].gal} gal</span></div>
-      </div>
-      <div class="who">
-        <p class="pub">${c.pub}</p>
-        <p class="meta">Gyle ${c.gyle}</p>
+      <div class="head">
+        <div class="size">
+          ${glyph(c.size)}
+          <div><span class="n">${c.n}</span>
+            <span class="u">${c.size}${c.n > 1 ? 's' : ''} · ${c.n * SIZES[c.size].gal} gal</span></div>
+        </div>
+        <div class="who">
+          <p class="pub">${c.pub}</p>
+          <p class="meta">gyle ${c.gyle}</p>
+        </div>
         <span class="state">${word}</span>
       </div>
       <div class="bookin">
