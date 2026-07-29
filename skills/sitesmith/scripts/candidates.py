@@ -92,8 +92,47 @@ def record_choice(domain, label, project=None):
         f.write(json.dumps({"domain": domain, "label": label, "project": project}) + "\n")
 
 
-def contrasting_candidates(query, domain=None, pool=25, k=3, project=None):
+def _normalise_dials(dials):
+    if dials is None:
+        return None
+    names = ("visual_density", "motion_intensity", "aesthetic_boldness")
+    if set(dials) != set(names):
+        raise ValueError(f"dials must contain exactly: {', '.join(names)}")
+    out = {}
+    for name in names:
+        value = dials[name]
+        if isinstance(value, bool) or not isinstance(value, int) or not 1 <= value <= 10:
+            raise ValueError(f"{name} must be an integer from 1 to 10")
+        out[name] = value
+    return out
+
+
+def _dial_terms(dials):
+    """Translate visible design intent into vocabulary the existing BM25 data can rank."""
+    if not dials:
+        return []
+    terms = []
+    density = dials["visual_density"]
+    motion = dials["motion_intensity"]
+    boldness = dials["aesthetic_boldness"]
+    if density <= 3:
+        terms += ["airy", "whitespace"]
+    elif density >= 8:
+        terms += ["cockpit", "dense", "compact", "data"]
+    if motion <= 3:
+        terms += ["static"]
+    elif motion >= 8:
+        terms += ["kinetic", "motion"]
+    if boldness <= 3:
+        terms += ["restrained", "calm"]
+    elif boldness >= 8:
+        terms += ["experimental", "bold"]
+    return terms
+
+
+def contrasting_candidates(query, domain=None, pool=25, k=3, project=None, dials=None):
     """Return k candidates chosen for mutual contrast, with the reasoning kept."""
+    dials = _normalise_dials(dials)
     domain = domain or detect_domain(query)
     config = CSV_CONFIG.get(domain, CSV_CONFIG["style"])
     path = DATA_DIR / config["file"]
@@ -105,7 +144,9 @@ def contrasting_candidates(query, domain=None, pool=25, k=3, project=None):
 
     bm25 = BM25()
     bm25.fit(documents)
-    ranked = [(i, s) for i, s in bm25.score(query) if s > 0][:pool]
+    dial_terms = _dial_terms(dials)
+    effective_query = " ".join([query, *dial_terms])
+    ranked = [(i, s) for i, s in bm25.score(effective_query) if s > 0][:pool]
     if not ranked:
         # A dead end here stalls the direction lab, so say where the query would land.
         elsewhere = []
@@ -259,6 +300,8 @@ def contrasting_candidates(query, domain=None, pool=25, k=3, project=None):
     return {
         "domain": domain,
         "query": query,
+        "dials": dials,
+        "dial_terms": dial_terms,
         "file": config["file"],
         "confidence": confidence,
         "confidence_because": because,
@@ -289,6 +332,10 @@ def format_candidates(r):
         f"**Separation:** {r['separation']} (0 = identical vocabulary, 1 = nothing in common)",
         "",
     ]
+    if r.get("dials"):
+        d = r["dials"]
+        out.insert(2, "**Dials:** density {visual_density} · motion {motion_intensity} · "
+                   "boldness {aesthetic_boldness}".format(**d))
     if r["repeats"]:
         out += [f"> **Repeat warning:** {', '.join(r['repeats'])} has been used before on this "
                 f"project. Using it again is allowed; say in DIRECTION.md that it is a repeat.", ""]

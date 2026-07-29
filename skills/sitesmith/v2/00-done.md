@@ -62,6 +62,11 @@ Who reads this, what they already believe, and what visual language answers that
 stated before any colour is chosen, naming the page kind, the audience, the language and the
 family it belongs to.
 
+The same brief records three justified integers from 1 to 10: `visual-density`,
+`motion-intensity` and `aesthetic-boldness`. They are copied into `DIRECTION.md` and passed to
+candidate search. A value that cannot be explained from the audience, task or evidence is a
+hidden default written as a number.
+
 *"B2B incident tooling for engineers who distrust marketing pages, in a restrained editorial
 language closer to a technical journal than a SaaS site."*
 

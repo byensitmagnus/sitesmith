@@ -64,6 +64,7 @@ for (const dial of ['visual-density', 'motion-intensity', 'aesthetic-boldness'])
 }
 
 const dialled = parseDirection([
+  '- direction-version: 2.2',
   '- composition: a dense index',
   '- type: condensed grotesque over a system sans',
   '- colour: a light paper ground',
@@ -85,6 +86,7 @@ ok('a complete dial contract has no format problem', directionContractProblems(d
   directionContractProblems(dialled).join('; '));
 
 const missingDials = parseDirection([
+  '- direction-version: 2.2',
   '- composition: a dense index', '- type: sans over sans', '- colour: light ground',
   '- imagery: deliberately imageless', '- rhythm: one continuous field',
   '- signature-selector: .index',
@@ -93,6 +95,7 @@ ok('missing dials are reported as a contract fault',
   directionContractProblems(missingDials).some((problem) => /visual-density/.test(problem)));
 
 const invalidDials = parseDirection([
+  '- direction-version: 2.2',
   '- composition: a dense index', '- type: sans over sans', '- colour: light ground',
   '- imagery: deliberately imageless', '- rhythm: one continuous field',
   '- visual-density: 11', '- motion-intensity: 0', '- aesthetic-boldness: seven',

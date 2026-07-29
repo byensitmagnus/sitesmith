@@ -192,7 +192,7 @@
         "directions/a|b|c/NOTE.md"
       ],
       "gate": null,
-      "tool": "scripts/search.py \"<subject> <trade>\" --candidates"
+      "tool": "scripts/search.py \"<subject> <trade>\" --candidates --density <1-10> --motion <1-10> --boldness <1-10>"
     },
     {
       "id": "comps",

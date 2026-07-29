@@ -70,6 +70,12 @@ if __name__ == "__main__":
     # Three contrasting candidates, rather than the top three (which are near each other)
     parser.add_argument("--candidates", "-c", action="store_true",
                         help="Three contrasting starting points with confidence, near-misses and repeats")
+    parser.add_argument("--density", type=int, choices=range(1, 11),
+                        help="Visual density dial, 1 airy to 10 packed")
+    parser.add_argument("--motion", type=int, choices=range(1, 11),
+                        help="Motion intensity dial, 1 static to 10 cinematic")
+    parser.add_argument("--boldness", type=int, choices=range(1, 11),
+                        help="Aesthetic boldness dial, 1 conventional to 10 experimental")
     parser.add_argument("--record", action="store_true",
                         help="Record the query as a chosen direction, so later --candidates runs avoid repeating it")
     parser.add_argument("--stack", "-s", choices=AVAILABLE_STACKS, help=f"Stack-specific search. Available: {', '.join(AVAILABLE_STACKS)}")
@@ -97,7 +103,17 @@ if __name__ == "__main__":
     # Three contrasting candidates
     if args.candidates:
         from candidates import contrasting_candidates, format_candidates
-        result = contrasting_candidates(args.query, args.domain, project=args.project_name)
+        dial_values = (args.density, args.motion, args.boldness)
+        if any(value is not None for value in dial_values) and not all(
+                value is not None for value in dial_values):
+            parser.error("--density, --motion and --boldness must be supplied together")
+        dials = None if args.density is None else {
+            "visual_density": args.density,
+            "motion_intensity": args.motion,
+            "aesthetic_boldness": args.boldness,
+        }
+        result = contrasting_candidates(
+            args.query, args.domain, project=args.project_name, dials=dials)
         if args.json:
             import json
             print(json.dumps(result, indent=2, ensure_ascii=False))

@@ -97,7 +97,47 @@ export function parseDirection(md) {
   }
   const sig = md.match(/^\s*[-*]?\s*signature-selector\s*:\s*(.+?)\s*$/im);
   const share = md.match(/^\s*[-*]?\s*signature-min-share\s*:\s*([\d.]+)\s*$/im);
-  return { axes, signature: sig?.[1]?.trim() ?? null, signatureMinShare: share ? Number(share[1]) : 6 };
+  const version = md.match(/^\s*[-*]?\s*direction-version\s*:\s*([\d.]+)\s*$/im);
+  const dial = (name) => {
+    const match = md.match(new RegExp(`^\\s*[-*]?\\s*${name}\\s*:\\s*(.+?)\\s*$`, 'im'));
+    if (!match) return null;
+    const value = Number(match[1]);
+    return Number.isInteger(value) ? value : match[1].trim();
+  };
+  return {
+    version: version ? Number(version[1]) : null,
+    axes,
+    dials: {
+      visualDensity: dial('visual-density'),
+      motionIntensity: dial('motion-intensity'),
+      aestheticBoldness: dial('aesthetic-boldness'),
+    },
+    signature: sig?.[1]?.trim() ?? null,
+    signatureMinShare: share ? Number(share[1]) : 6,
+  };
+}
+
+/** Validate only the document contract. Historical pre-2.2 directions remain readable; every
+ * direction written by the current skill declares 2.2 and therefore carries all three dials. */
+export function directionContractProblems(dir) {
+  const problems = [];
+  const missing = AXES.filter((axis) => !dir.axes?.[axis]);
+  if (missing.length) {
+    problems.push(`the axis record is missing or not in the documented form: no ${missing.join(', ')}`);
+  }
+  if ((dir.version ?? 0) >= 2.2) {
+    const dials = [
+      ['visual-density', dir.dials?.visualDensity],
+      ['motion-intensity', dir.dials?.motionIntensity],
+      ['aesthetic-boldness', dir.dials?.aestheticBoldness],
+    ];
+    for (const [name, value] of dials) {
+      if (!Number.isInteger(value) || value < 1 || value > 10) {
+        problems.push(`${name} must be an integer between 1 and 10`);
+      }
+    }
+  }
+  return problems;
 }
 
 /* ── measure ───────────────────────────────────────────────────────────── */
@@ -181,10 +221,9 @@ export function judge(dir, m, sigShare) {
      the gate failed their pages for "declaring undefined" — which reads as a design fault and
      is a formatting one. A builder following that signal changes the typeface of a page that
      was never wrong. Say what is actually the matter. */
-  const AXES_REQUIRED = ['composition', 'type', 'colour', 'imagery', 'rhythm'];
-  const missing = AXES_REQUIRED.filter((a) => !dir.axes?.[a]);
-  if (missing.length) {
-    problems.push(`the axis record is missing or not in the documented form: no ${missing.join(', ')}. ` +
+  const contractProblems = directionContractProblems(dir);
+  if (contractProblems.length) {
+    problems.push(`${contractProblems.join('; ')}. ` +
       'It is five lines, each "- <axis>: <value>" — see v2/20-direction-lab.md, "The axis ' +
       'record, verbatim". Prose headings such as "- **Type and scale.** …" do not parse, and ' +
       'nothing below this line is a judgement about the page.');
@@ -271,10 +310,10 @@ const dir = parseDirection(await readFile(dirPath, 'utf8'));
    file, and launching Chromium to discover it wastes a minute and then reports a page defect
    that is not one. */
 {
-  const need = ['composition', 'type', 'colour', 'imagery', 'rhythm'].filter((a) => !dir.axes?.[a]);
-  if (need.length) {
+  const contractProblems = directionContractProblems(dir);
+  if (contractProblems.length) {
     console.log('\n  direction fidelity\n');
-    console.log(`  FAIL  the axis record is missing or not in the documented form: no ${need.join(', ')}.`);
+    for (const problem of contractProblems) console.log(`  FAIL  ${problem}.`);
     console.log('        It is five lines, each "- <axis>: <value>" — see v2/20-direction-lab.md,');
     console.log('        "The axis record, verbatim". Prose headings such as "- **Type and scale.** …"');
     console.log('        do not parse, and nothing here is a judgement about the page.\n');

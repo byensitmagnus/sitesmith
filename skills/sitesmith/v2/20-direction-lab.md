@@ -16,12 +16,38 @@ decided before anyone asks what the page should be, and every later choice fits 
 ## Contents
 
 - [1. What "structurally different" means](#1-what-structurally-different-means)
+- [The three visible dials](#the-three-visible-dials)
 - [2. The five axes](#2-the-five-axes)
 - [3. What a comp is](#3-what-a-comp-is)
 - [4. Choosing](#4-choosing)
 - [5. Recording the rejections](#5-recording-the-rejections)
 - [6. The anti-repeat rule](#6-the-anti-repeat-rule)
 - [7. Checking the three are actually different](#7-checking-the-three-are-actually-different)
+
+---
+
+## The three visible dials
+
+Before searching for directions, record three integers from 1 to 10 in `BRIEF.md`:
+
+- **Visual density** — 1 is gallery-airy; 10 is cockpit-packed.
+- **Motion intensity** — 1 is static apart from state feedback; 10 is choreographed motion.
+- **Aesthetic boldness** — 1 follows familiar conventions; 10 takes a controlled structural risk.
+
+Infer them from the audience, task, evidence and platform. State one sentence of reasoning for
+each. They are visible controls, not a universal preset hidden in the skill. Product UI normally
+earns lower motion and boldness than a campaign page, but the brief decides.
+
+Pass the same values to the candidate search. The search adds intent vocabulary before ranking,
+so a quiet brief and a kinetic brief do not start from the same first candidate:
+
+```bash
+python scripts/search.py "<subject> <trade>" --candidates \
+  --density <1-10> --motion <1-10> --boldness <1-10>
+```
+
+The chosen values are copied unchanged into `DIRECTION.md`. Changing a dial later is a direction
+change, not polish.
 
 ---
 
@@ -126,6 +152,7 @@ become one average.
 
 `DIRECTION.md` contains, for each of the three:
 
+- the three visible dial values shared with `BRIEF.md`,
 - its five axis values,
 - its score on the five criteria,
 - for the two that lost: **what specifically it did well, and the specific reason it lost.**
@@ -192,17 +219,24 @@ the built page against every line, so the **shape is a contract, not a suggestio
 ```markdown
 ## Axis record
 
+- direction-version: 2.2
 - composition: <how the page is arranged>
 - type: <display face> over <body face>, <what the figures are set in>
 - colour: <ground>, <the one accent and what it is reserved for>
 - imagery: <photography-led | diagram-led | object-led | deliberately imageless>, <treatment>
 - rhythm: <how sections are separated>
 
+- visual-density: <1-10>
+- motion-intensity: <1-10>
+- aesthetic-boldness: <1-10>
+
 - signature-selector: <css selector>
 - signature-min-share: <percent of the first screen it must occupy>
 ```
 
-Five lines, each beginning `- ` and the axis name, then a colon. Prose headings such as
+Five axis lines and three dial lines, each beginning `- ` and the field name, then a colon.
+New directions declare `direction-version: 2.2`; that makes all three dial lines mandatory.
+Prose headings such as
 `- **Type and scale.** …` do not parse: the gate reads the axis as `undefined` and fails the
 page for declaring nothing, which looks like a design fault and is a formatting one.
 
