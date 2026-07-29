@@ -1,0 +1,11 @@
+{
+  "run-id": "preflight-r4-b48f995fe958",
+  "rubric-sha256": "d9932ed6dc486719d74e6884db7a087bc9563bea07006233790845e2d49cf4f8",
+  "briefs": {
+    "SHEET-K7": "90ae6956f71c381e243e9218aba459a9a481b2ffa3995bbded03d193c9f97a37",
+    "SHEET-M2": "9d72c9d9684f16cdb35c39bcc76153295ba9e3a5076bdeb59a6024f19c947db7",
+    "SHEET-R9": "882cea58700fc5fcb9c2feb28bb11f0e05a4a87d182e7e1e2779ef803b7365a6"
+  },
+  "sheet-sha256": "841c7a8ddd8c5399f06306e5e968136585a054e1d9d87ff727aa87fed95e74c0",
+  "sheets-present": true
+}
