@@ -223,14 +223,19 @@ jobs:
           node bin/sitesmith.mjs install --to /tmp/fresh --provider claude
           npx --yes --prefix /tmp/fresh playwright install --with-deps chromium
 
+      # Read each package.json off disk rather than through require(). A package may decline
+      # to export "./package.json" — axe-core does — and asking through the resolver turns a
+      # version check into ERR_PACKAGE_PATH_NOT_EXPORTED, which says nothing about versions.
       - name: the pinned versions are the versions on disk
         working-directory: /tmp/fresh
         run: |
           node -e '
-            const want = require("./sitesmith-gates.package.json").devDependencies;
+            const { readFileSync } = require("fs");
+            const want = JSON.parse(readFileSync("sitesmith-gates.package.json")).devDependencies;
             let bad = 0;
             for (const [name, version] of Object.entries(want)) {
-              const got = require(name + "/package.json").version;
+              let got = "not installed";
+              try { got = JSON.parse(readFileSync(`node_modules/${name}/package.json`)).version; } catch {}
               const ok = got === version;
               if (!ok) bad++;
               console.log(`  ${ok ? "ok  " : "MISS"}  ${name.padEnd(24)} want ${version}, got ${got}`);
