@@ -1,37 +1,37 @@
-/* The Cleeve Seed Library — tokens copied verbatim from DESIGN-SYSTEM.md §1. */
+/* The Cleeve Seed Library: tokens copied verbatim from DESIGN-SYSTEM.md §1. */
 
 :root{
   color-scheme:light dark;
 
-  /* spacing — one step of 8px; ramp is 0.5 1 1.5 2 3 4 6 8 12 × step */
+  /* spacing: one step of 8px; ramp is 0.5 1 1.5 2 3 4 6 8 12 × step */
   --step:8px;
   --space-1:4px; --space-2:8px; --space-3:12px; --space-4:16px;
   --space-5:24px; --space-6:32px; --space-7:48px; --space-8:64px; --space-9:96px;
 
-  /* type — base 1rem; heading roles are ×1.333 each step, rounded to 0.0625rem */
+  /* type: base 1rem; heading roles are ×1.333 each step, rounded to 0.0625rem */
   --text-micro:0.75rem; --text-small:0.875rem; --text-body:1rem; --text-lead:1.125rem;
   --text-h3:1.3125rem; --text-h2:1.75rem; --text-h1:2.3125rem; --text-display:3.1875rem;
   --leading-tight:1.06; --leading-heading:1.2; --leading-body:1.6;
   --measure:64ch;
 
-  /* families — two, plus a monospace that carries the figures */
+  /* families: two, plus a monospace that carries the figures */
   --font-display:'Iowan Old Style','Palatino Linotype',Palatino,'Book Antiqua',Georgia,serif;
   --font-body:system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
   --font-mono:ui-monospace,'Cascadia Mono','Segoe UI Mono',Consolas,'DejaVu Sans Mono',monospace;
 
-  /* shape — square at both ends of the scale */
+  /* shape: square at both ends of the scale */
   --radius-inner:0; --radius-outer:0;
 
-  /* elevation — three levels, all of them none. Paper does not cast a shadow. */
+  /* elevation: three levels, all of them none. Paper does not cast a shadow. */
   --elev-0:none; --elev-1:none; --elev-2:none;
 
-  /* rules — the only separator this page owns */
+  /* rules: the only separator this page owns */
   --rule-hair:1px; --rule-hard:2px;
 
   /* container and grid */
   --container:1180px; --gutter:clamp(16px,4vw,32px); --grid-columns:12;
 
-  /* colour — buff paper, ink, one stamp red. Light is the default scheme. */
+  /* colour: buff paper, ink, one stamp red. Light is the default scheme. */
   --paper:#f1e8d8;
   --paper-2:#e8ddc9;
   --line:#cbbda4;
@@ -104,7 +104,7 @@ i{font-style:italic}
   .masthead__nav a{font-size:var(--text-micro)}
 }
 @media (max-width:699px){
-  /* The wordmark and the counter share the first line — the counter is the only item that
+  /* The wordmark and the counter share the first line, because the counter is the only item that
      changes, so it stays where it can be seen. The three destinations take the second.
      Document order, visual order and focus order are the same at every width. */
   .masthead__row{gap:0 var(--space-4)}

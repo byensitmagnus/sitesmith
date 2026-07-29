@@ -39,9 +39,13 @@ const RULES = [
   {
     id: 'em-dash',
     cite: '09-block-library.md:125 — "ZERO em-dashes anywhere on the page… non-negotiable"',
+    /* All four spellings of the same character. It matched the literal and `&mdash;` only, so
+       `&#8212;` and `&#x2014;` passed a rule whose own wording is "anywhere on the page" while
+       a reader saw exactly the same dash. A builder found this by fixing every dash on their
+       page rather than the three the regex caught, and reported the gap instead of banking it. */
     run(html) {
       const text = visibleText(html);
-      const n = [...text.matchAll(/&mdash;|—/g)].length;
+      const n = [...text.matchAll(/&mdash;|&#8212;|&#x2014;|—/gi)].length;
       return n ? [{ detail: `${n} em-dash${n > 1 ? 'es' : ''}`, count: n }] : [];
     },
   },
