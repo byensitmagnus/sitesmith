@@ -1,18 +1,18 @@
 {
-  "seed": "d36f6722bc3f8f8d589596397d83f60b",
-  "sheet-sha256": "f4b5f0016dd5701f4725e497da2df3ee004fa58418f04bbce312c44c36824c27",
+  "seed": "ef3f8cd48a4ce920aed7910c3bf37588",
+  "sheet-sha256": "0152b16085a509eeee44fd41c03be6717f1a9e9096a4b96d78b537c5221057b2",
   "assignment": {
-    "SHEET-M2": {
+    "SHEET-B4": {
       "subject": "chandlery",
       "seat": 1
     },
     "SHEET-K7": {
       "subject": "foundry",
-      "seat": 3
+      "seat": 2
     },
     "SHEET-R9": {
       "subject": "cask",
-      "seat": 2
+      "seat": 3
     }
   },
   "note": "Written before any reviewer saw a sheet. The reviewers are never given this path."
