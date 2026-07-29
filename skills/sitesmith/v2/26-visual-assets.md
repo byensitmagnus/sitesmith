@@ -70,6 +70,13 @@ wrote down.
 
 ## 3. The plan comes first
 
+> **Two plans, and this is the second one.** [24-asset-plan.md](24-asset-plan.md) settles what
+> each picture is *for* — what the visitor learns, whose job it serves, whether a comparison is
+> possible. This file settles where it *comes from*. Getting the sourcing right while the first
+> question goes unasked is exactly what happened in round 7: every picture correctly sourced,
+> licensed, recorded and cropped, and assets still the lowest-scoring criterion on every page.
+> Write `ASSET-PLAN.md` first.
+
 `VISUAL-SOURCE-PLAN.md` is written **before** anything is generated, so the brief decides the
 picture instead of the picture deciding the brief. One `## <id>` block per asset. Every field
 is required, and the parser fails on a blank one.
