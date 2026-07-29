@@ -1,7 +1,7 @@
 {
   "$schema": "https://www.schemastore.org/claude-code-marketplace.json",
   "name": "sitesmith",
-  "description": "One skill for building websites that do not look AI-generated. Routes by mode, enforces a 12-step build loop, and renders and measures the result instead of stopping at the code.",
+  "description": "One skill for building websites that do not look AI-generated. Routes by mode and stack, then follows init, build and audit before making a release claim.",
   "owner": {
     "name": "sitesmith contributors",
     "url": "https://github.com/byensitmagnus/sitesmith"

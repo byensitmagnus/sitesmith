@@ -216,7 +216,7 @@
         "DIRECTION.md (with the verbatim axis record from v2/20-direction-lab.md)"
       ],
       "gate": "scripts/direction-history.mjs check DIRECTION.md <url> --project <name>",
-      "note": "Scores, the winner, the signature-selector, and both rejections with a specific reason each. The axis record has a fixed machine-readable shape and direction-fidelity parses it: five  lines plus signature-selector and signature-min-share. Prose headings do not parse, and the gate then fails the page for declaring nothing."
+      "note": "Scores, the winner, the three visible dial values, the signature-selector, and both rejections with a specific reason each. Direction v2.2 has a fixed machine-readable shape: five axes, three integer dials, signature-selector and signature-min-share. Prose headings do not parse."
     },
     {
       "id": "contract",

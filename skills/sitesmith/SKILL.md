@@ -44,106 +44,68 @@ marketing and its order admin is product UI. One design system across all of the
 | "Build a pricing table / nav / hero" | **COMPONENT** | [blocks/](blocks/README.md) |
 | "Review this UI / is it accessible?" | **AUDIT** | [v2/00-done.md](v2/00-done.md), then the mode file |
 
-## 2. The build process
+## 2. Three-command product loop
 
-The order is the design. **Evidence, then direction, then contract** — tokens fixed before a
-direction is chosen is how nine different subjects converge on one look, and that is measured,
-not asserted: [docs/v2/LEGACY-VISUAL-AUDIT.md](../../docs/v2/LEGACY-VISUAL-AUDIT.md).
+The ordinary journey is **`init → build → audit`**. The internal order still matters, but the
+user should not have to operate nineteen implementation steps. The exact machine-readable
+sequence lives in [PIPELINE.json](PIPELINE.json).
 
-**1. Write `BRIEF.md`.** Business goal, primary action, audience, sitemap, page inventory, and
-what done means here. Items 1 to 6 of [v2/00-done.md](v2/00-done.md). If two readings lead to
-materially different sites, ask **one** question. Otherwise infer, write it down, proceed.
+### `init` — decide what will be built
 
-**2. Inspect what exists.** Framework, styling system, tokens, component library,
-`CLAUDE.md` / `AGENTS.md` / `README`, existing assets. An established stack is a decision
-already made. Adopt it.
+1. Write `BRIEF.md`, including the three justified 1–10 dials: visual density, motion
+   intensity and aesthetic boldness.
+2. Inspect the existing repository and run `scripts/stack-router.mjs detect . --write`. It
+   selects one adapter; Next.js and Astro outrank their optional React dependency.
+3. Write the evidence, brand and asset records. Plan what every picture carries before
+   sourcing or generating it.
+4. Build three structurally different comps. Pass the dials to candidate search, choose one
+   with reasons, and write `DIRECTION.md`, `DESIGN-SYSTEM.md` and `INTERACTIONS.md` from it.
 
-**3. Write `EVIDENCE.md`.** [v2/05-evidence.md](v2/05-evidence.md). The subject's artefacts,
-vocabulary, materials, colours that are already true, constraints, references and
-anti-references, and what assets actually exist. Research, not design — nothing here picks a
-colour. A direction that could have been reached without this file did not need it.
-
-**4. Inventory the brand and the assets.** [v2/15-brand.md](v2/15-brand.md) and
-[v2/25-assets.md](v2/25-assets.md). What the subject already owns — logo, colour with its
-source, type, photography, voice — separated into what is fixed and what is open, before
-anything is invented. Then `ASSET-MANIFEST.md`: every non-text thing the site needs, each
-`ready`, `needed` or `substitute`.
-
-**4b. Plan what the pictures are for.** [v2/24-asset-plan.md](v2/24-asset-plan.md), before
-anything is sourced or generated. Two assignment-blinded reviewers scored assets the lowest
-criterion on all three of the last builds, and every picture involved was correctly sourced,
-licensed, recorded and cropped — so the gap was one step earlier than the sourcing engine.
-`ASSET-PLAN.md` says, per asset, what it carries, whose job it serves and how it is used. If
-the visitor's job is to choose between things, something has to put them in one frame.
+The order is **evidence → direction → contract**. A contract written before the direction is
+the mechanism that made unrelated subjects converge on one house style.
 
 ```bash
-node scripts/asset-plan.mjs check ASSET-PLAN.md
-```
-
-**5. Run the direction lab.** [v2/20-direction-lab.md](v2/20-direction-lab.md). Three comps
-that are *structurally* different, one chosen with reasons, two recorded with the reason they
-lost. Starting points, three at a time and deliberately contrasting:
-
-```bash
-python scripts/search.py "<subject> <trade> <what it is made of>" --candidates -p "<Project>"
+python scripts/search.py "<subject> <trade>" --candidates \
+  --density <1-10> --motion <1-10> --boldness <1-10>
 node scripts/direction-check.mjs directions/
 ```
 
-**6. Write `DESIGN-SYSTEM.md` from the winning comp.** [v2/30-contract.md](v2/30-contract.md).
-The ground, the type, the rhythm and the edge come from the comp that won; the contract writes
-them down so the second page knows them. Not the other way round.
+### `build` — make it work in the detected stack
 
-**7. Write `INTERACTIONS.md`.** [v2/40-interaction.md](v2/40-interaction.md). Primary actions
-and what observably happens, the states per surface and how each is reached, keyboard and
-focus. A state with no way in is deleted or wired.
-
-**8. Structure before style.** Section order per page, from the argument the mode file gives
-you. What the eye hits first, second, third.
-
-**9. Build.** [blocks/](blocks/README.md) supplies structure, semantics, states and responsive
-behaviour — never the look. Real content, semantic HTML, every state from
-[v2/10-core.md](v2/10-core.md) section F. Three widths: 375, 768, 1440.
-
-**10. Wire the journeys.** At least one per surface, driving the real page and asserting what
-changed. `journeys/*.spec.mjs`.
-
-**11. Technical gate.** Does it work.
+Structure the argument, read only `.sitesmith/STACK.md` and its named adapter, implement every
+state, and wire at least one journey per surface. The edit loop renders only the changed
+surface:
 
 ```bash
-node scripts/verify.mjs http://localhost:5173 --out .sitesmith/shots
-node scripts/verify.mjs http://localhost:5173 --font-stress --no-axe
+node scripts/verify.mjs <changed-url> --out .sitesmith/shots/preview --no-axe
+```
+
+That explicit axe waiver is preview-only. It keeps a visual iteration cheap; it can never
+produce a release verdict.
+
+### `audit` — make one release decision
+
+Run the canonical verification once, including axe, direction fidelity, token drift, journeys
+and the production gate. Open the screenshots and write one specific critique. Then walk all
+fourteen items in [v2/00-done.md](v2/00-done.md) and write `PRODUCTION-REPORT.md`, including
+every failure.
+
+```bash
+node scripts/verify.mjs <url> --out .sitesmith/shots
+node scripts/direction-fidelity.mjs DIRECTION.md <url>
 node scripts/token-drift.mjs "<pages>" --contract DESIGN-SYSTEM.md
-node scripts/journey.mjs journeys/ --base http://localhost:5173
+node scripts/journey.mjs journeys/ --base <url>
 node scripts/production-gate.mjs "<pages>" --manifest ASSET-MANIFEST.md --production
 ```
 
-**12. Visual critique gate.** [v2/50-critique.md](v2/50-critique.md). Separate, and only once
-step 11 is green — a broken layout cannot be assessed for art direction. Open the screenshots.
-Squint. Then the rubric: direction, specificity, type, colour, assets, hierarchy,
-production-readiness. If the main criticism is "looks like a generic AI template", it fails
-whatever the scores say.
+`harden` reruns only the functional or production checks that failed. `polish` applies one
+round driven by a specific screenshot criticism. `doctor` checks the installation. None is a
+mandatory fourth phase.
 
-**13. Walk the done list and write `PRODUCTION-REPORT.md`.** [v2/00-done.md](v2/00-done.md),
-all fourteen, plus every gate's verdict, what changed, and what could not be done. The honest
-record, failures included.
-
-## 2b. Seven commands
-
-The pipeline above is what happens; these are what you ask for. Declared once in
-[PIPELINE.json](PIPELINE.json).
-
-| Command | Steps | What it produces |
-| --- | --- | --- |
-| `init` | brief, inspect, evidence, brand | `BRIEF.md`, `EVIDENCE.md`, `BRAND.md`, `ASSET-MANIFEST.md` |
-| `shape` | directions, comps, choose, contract, interactions | three comps, `DIRECTION.md`, `DESIGN-SYSTEM.md`, `INTERACTIONS.md` |
-| `build` | structure, implement, journeys | the site and its journeys |
-| `audit` | verify, fidelity, diversity, production | four verdicts |
-| `harden` | journeys, production | the states and assets the audit failed |
-| `polish` | critique, targeted polish | `CRITIQUE.md` and one round of work |
-| `doctor` | — | whether the installation itself is correct |
-
-Seven verbs, fewer than any of the four audited skills. A vocabulary a user cannot hold is a
-vocabulary they do not use.
+Portfolio diversity, assignment-blinded reviews, sealed keys and container isolation belong
+to the repository's benchmark lab. They run only for an explicit benchmark task, never while
+building one customer website. The boundary is recorded in
+[RELEASE-MAP.md](../../docs/v2/RELEASE-MAP.md).
 
 ## 3. Precedence
 
@@ -162,17 +124,17 @@ When two things disagree, the higher row wins.
 
 | File | When |
 | --- | --- |
-| [v2/00-done.md](v2/00-done.md) | First, and again at step 13 |
-| [v2/05-evidence.md](v2/05-evidence.md) | Step 3 |
+| [v2/00-done.md](v2/00-done.md) | First in `init`, and again at the end of `audit` |
+| [v2/05-evidence.md](v2/05-evidence.md) | `init` — before direction work |
 | [v2/10-core.md](v2/10-core.md) | Once per build |
 | [v2/modes/](v2/modes/README.md) | After routing — one file only |
-| [v2/20-direction-lab.md](v2/20-direction-lab.md) | Step 5 |
-| [v2/24-asset-plan.md](v2/24-asset-plan.md) | Step 4b — before anything is sourced |
-| [v2/25-assets.md](v2/25-assets.md) | Step 4, and again at step 11 |
-| [v2/30-contract.md](v2/30-contract.md) | Step 6 — after the direction is chosen, never before |
-| [v2/40-interaction.md](v2/40-interaction.md) | Step 7 |
-| [v2/50-critique.md](v2/50-critique.md) | Step 12 |
-| [blocks/](blocks/README.md) | Step 9 |
+| [v2/20-direction-lab.md](v2/20-direction-lab.md) | `init` — after evidence, before the contract |
+| [v2/24-asset-plan.md](v2/24-asset-plan.md) | `init` — before anything is sourced |
+| [v2/25-assets.md](v2/25-assets.md) | `init`, and again during `audit` |
+| [v2/30-contract.md](v2/30-contract.md) | `init` — after the direction is chosen, never before |
+| [v2/40-interaction.md](v2/40-interaction.md) | End of `init`, then journeys in `build` |
+| [v2/50-critique.md](v2/50-critique.md) | `audit`, after technical verification |
+| [blocks/](blocks/README.md) | `build` |
 | [references/06-redesign-audit.md](references/06-redesign-audit.md) | REDESIGN only |
 | [references/](references/README.md) | Provenance. Not during a build. |
 
@@ -200,15 +162,17 @@ The final question, every time: **would a designer look at this and say a machin
 
 | Script | Purpose | Needs |
 | --- | --- | --- |
-| `scripts/search.py --candidates` | Three *contrasting* starting points with confidence, near-misses and repeat warnings | Python 3.10+ |
+| `scripts/stack-router.mjs` | Detect Next.js, React/Vite or Astro and record one adapter | Node 18+ |
+| `scripts/search.py --candidates` | Three contrasting starts shaped by visible dials, with repeat warnings | Python 3.10+ |
 | `scripts/direction-check.mjs` | Are the three comps actually three directions | Node 18+, playwright optional |
 | `scripts/verify.mjs` | Screenshots at 3 widths, axe in both schemes, links, console, overflow, `--font-stress` | Node 18+, `npx playwright install chromium` |
 | `scripts/token-drift.mjs` | Values used that the contract never declared | Node 18+ |
 | `scripts/journey.mjs` | Runs the interaction journeys | Node 18+, playwright |
 | `scripts/production-gate.mjs` | Placeholders, unmanifested images, empty brand marks, missing journeys | Node 18+ |
 
-The scripts are optional and the skill degrades without them, but never skip steps 11 and 12
-because a script is unavailable — open the page in a browser and look instead.
+The prose still works without the scripts, but an `audit` cannot pass until the canonical checks
+have actually run. If a browser tool is unavailable, open the page manually and report that the
+mechanical release verdict is missing.
 
 ## 7. Attribution
 

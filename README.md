@@ -11,9 +11,13 @@ stopping when the code compiles.
 > library. It replaced a set of four vendored skills that carried 978 rules, 735 of them
 > prohibitions.
 >
-> **v2 is not yet proven.** An isolated benchmark — three briefs, three runs with the skill and
-> three without, blind-graded — is running now. Until it reports, the claim on this page is a
-> claim. [Method.](benchmarks/v2/README.md)
+> **Product status.** The ordinary workflow is `init → build → audit`: one command chooses a
+> direction, one builds in the detected stack, and one makes the release decision. The benchmark
+> lab is separate and never runs during a customer-site build.
+>
+> **Evidence boundary.** Round 8's three independent builds scored 8.21 and all cleared the fixed
+> threshold. The isolated 18-run skill-vs-control experiment has not run, so SiteSmith does not
+> claim that it measurably improves an arbitrary agent yet. [Method.](benchmarks/v2/README.md)
 
 ### [→ Open the gallery](https://byensitmagnus.github.io/sitesmith/)
 
@@ -44,8 +48,12 @@ Three things cause it, and rule lists only fix the first:
 ## What sitesmith does about it
 
 **Routes first.** New build, redesign, single component, audit, or product UI — each takes a
-different path with different governing rules. Marketing pages are governed by three dials
-(variance, motion, density). Product UI is governed by the UX rules. They don't mix.
+different path with different governing rules. Next.js, React/Vite and Astro are detected from the
+project and bound to one matching adapter instead of receiving generic framework advice.
+
+**Makes variation visible.** Density, motion and aesthetic boldness are recorded as justified
+1–10 values in the brief and direction. They alter candidate ranking, so a quiet public service
+and a kinetic campaign do not begin from the same hidden house style.
 
 **Commits to a direction before writing CSS.** One line, stated out loud: *"Reading this as: B2B SaaS
 landing for technical buyers, with a Linear-style minimalist language, leaning toward Tailwind +
@@ -90,10 +98,11 @@ The nine v1 builds pass the technical floor and the control does not:
 That is a real result about a real checker, and it is **not** a result about the skill: a person
 wrote those nine pages while reading the rules. The control was written to be bad.
 
-The v2 benchmark answers the actual question — does an agent handed a brief produce a better
-website with this than without it — with eighteen isolated runs, blind grading and every run
-published including the bad ones. [Method, and the four weaknesses of the
-design.](benchmarks/v2/README.md) It has not reported yet.
+The v2 benchmark is designed to answer the narrower transfer question — does an agent handed a
+brief produce a better website with this than without it — with eighteen isolated runs and every
+run published including the bad ones. [Method, and the weaknesses of the
+design.](benchmarks/v2/README.md) The isolation probe is green; the paid generation runs have not
+started, so no transfer claim is made.
 
 ## Install
 
@@ -104,25 +113,26 @@ claude plugin marketplace add byensitmagnus/sitesmith
 claude plugin install sitesmith@sitesmith
 ```
 
-**Any agent that reads `~/.claude/skills` or `~/.agents/skills`** (Codex, Grok, Cursor and others)
+**Claude, Codex and Cursor provider packs from one canonical pipeline**
 
 ```bash
 git clone https://github.com/byensitmagnus/sitesmith.git
-cp -r sitesmith/skills/sitesmith ~/.claude/skills/
+node sitesmith/bin/sitesmith.mjs install --to . --provider all
 ```
 
-**Optional — the verification script**
-
-```bash
-npm i -D playwright @axe-core/playwright && npx playwright install chromium
-```
-
-Without it the skill still works; steps 10–11 become a manual browser check. Without Python 3.10+
-the palette search degrades to choosing by hand from the reference files.
+The installer copies the skill, generates each provider entry point from `PIPELINE.json`, installs
+the pinned Playwright/axe dependencies and runs `doctor`. To install only the prose skill, use
+`--no-deps`; canonical verification then fails closed until the dependencies exist.
 
 ## Use it
 
-Just ask. The skill triggers on its own.
+```bash
+init
+build
+audit
+```
+
+Or just ask normally; the skill routes the request itself.
 
 ```
 Build a landing page for a company that does flat-roof repair in Sheffield.
@@ -151,12 +161,14 @@ skills/sitesmith/
   references/               v1 upstream, kept for attribution. NOT read during a build
   data/                     28 CSV datasets — 161 palettes, 73 font pairings, 84 styles
   scripts/
-    search.py               query the datasets
+    stack-router.mjs        detect Next.js, React/Vite or Astro and bind one adapter
+    search.py               query the datasets; dials alter candidate formation
     verify.mjs              3 widths, axe both schemes, links, console, overflow,
                             document structure, --font-stress
     token-drift.mjs         values used that the contract never declared
 benchmarks/                 v1: nine sites and the control. Legacy, kept for the measurements
   v2/                       the isolated benchmark: briefs, runs, rubric, results
+docs/v2/preflight/          historical review lab, never part of a normal website build
 index.html                  the gallery, published to GitHub Pages
 tools/                      repo self-checks, conformance ratchet, benchmark harness
 ```
@@ -186,13 +198,11 @@ reasoning is in [LICENSE-AUDIT.md](LICENSE-AUDIT.md).
 Original to this repo, MIT: `SKILL.md`, all of `v2/`, all of `blocks/`, `06-redesign-audit.md`,
 `10-setup.md`, `verify.mjs`, `token-drift.mjs`, `tools/`, the benchmarks and the docs.
 
-**Where the four are still ahead.** Worth saying on the front page rather than in a footnote:
-impeccable has the more mature product — a CLI installer, live browser iteration, hooks that fire
-while you edit, and a concept-selection flow that generates several directions before choosing one.
-taste-skill has image-first workflows and a brandkit that starts from meaning. frontend-design is
-the sharpest single statement about taking one reasoned aesthetic risk. ui-ux-pro-max has the
-larger, better-maintained dataset. sitesmith's strengths are verification and cross-page
-consistency; it is not yet their equal at forming a visual direction.
+**Where the four are still ahead.** Impeccable has live browser iteration and framework hooks that
+SiteSmith deliberately has not copied. Taste-skill still has the broader image-first workflow.
+Frontend-design remains the sharpest short statement of aesthetic ambition, and ui-ux-pro-max is
+the upstream maintainer of the datasets. SiteSmith's distinct product is the combined, auditable
+loop: evidence, visible variation, stack-aware implementation and rendered release proof.
 
 ## Contributing
 

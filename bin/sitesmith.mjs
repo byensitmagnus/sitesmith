@@ -139,6 +139,8 @@ async function buildPack(provider, outDir) {
     '',
     'Design, build, audit and polish websites that do not look AI-generated.',
     '',
+    `**Default journey:** ${p.defaultJourney.join(' → ')}`,
+    '',
     '## Always loaded',
     '',
     ...p.alwaysLoaded.map((f) => `- \`${f}\``),
@@ -155,7 +157,7 @@ async function buildPack(provider, outDir) {
     '## Steps',
     '',
   ];
-  for (const s of p.steps) {
+  for (const s of p.steps.filter((item) => item.scope !== 'lab')) {
     body.push(`### ${s.id} — ${s.name}`, '',
       `**Reads.** ${(s.reads ?? []).map((r) => `\`${r}\``).join(', ') || '—'}`, '',
       `**Produces.** ${(s.produces ?? []).map((r) => `\`${r}\``).join(', ') || '—'}`, '',
