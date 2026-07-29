@@ -113,11 +113,12 @@ jobs:
           git diff --exit-code -- benchmarks/blocks/index.html \
             || { echo "::error::benchmarks/blocks/index.html is stale — run node tools/build-block-harness.mjs"; exit 1; }
 
-      - name: nine builds and the block harness must pass
+      - name: every build and the block harness must pass
         working-directory: benchmarks
         run: |
           for b in 01-saas-landing 02-product-page 03-dashboard 04-local-service 05-editorial \
-                   06-redesign/after 07-multistep-form 08-documentation 09-data-entry blocks; do
+                   06-redesign/after 07-multistep-form 08-documentation 09-data-entry blocks \
+                   10-tannery/site 11-seed-library/site 12-tideworks/site; do
             echo "::group::$b"
             node ../skills/sitesmith/scripts/verify.mjs "http://localhost:4321/$b/" \
               --out "/tmp/$(echo $b | tr / -)"
@@ -154,7 +155,8 @@ jobs:
         working-directory: benchmarks
         run: |
           for b in 01-saas-landing 02-product-page 03-dashboard 04-local-service 05-editorial \
-                   06-redesign/after 07-multistep-form 08-documentation 09-data-entry blocks; do
+                   06-redesign/after 07-multistep-form 08-documentation 09-data-entry blocks \
+                   10-tannery/site 11-seed-library/site 12-tideworks/site; do
             node ../skills/sitesmith/scripts/verify.mjs "http://localhost:4321/$b/" \
               --font-stress --no-axe --out "/tmp/stress-$(echo $b | tr / -)" \
               || { echo "::error::$b overflows under a wide font"; exit 1; }
