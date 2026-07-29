@@ -2,9 +2,10 @@
   "name": "sitesmith-gates",
   "private": true,
   "type": "module",
-  "description": "What the SiteSmith gates need in order to run. Installed by bin/sitesmith.mjs.",
+  "description": "What the SiteSmith gates need in order to run. Installed by `sitesmith install`. verify.mjs loads 'playwright' and '@axe-core/playwright' by exactly those specifiers, so those are what is pinned. axe-core is pinned as well because it is the engine the wrapper drives, and an unpinned engine changes what counts as a violation from one machine to the next.",
   "devDependencies": {
     "playwright": "1.62.0",
+    "@axe-core/playwright": "4.12.1",
     "axe-core": "4.12.1"
   }
 }

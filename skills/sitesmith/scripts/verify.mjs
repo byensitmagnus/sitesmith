@@ -262,7 +262,7 @@ const overflowing = Object.entries(report.widths).filter(([, w]) => w.horizontal
 const badStatus = Object.entries(report.widths).filter(([, w]) => (w.status ?? 0) >= 400);
 
 /* A gate that cannot run its accessibility check and still says PASS is worse than no gate: it
-   tells you the thing was checked. axe-core is not installed by `sitesmith install`, so a page
+   tells you the thing was checked. @axe-core/playwright was not installed by `sitesmith install`,
    built in a fresh project reported "axe violations: not run" and passed, and the builder had no
    reason to look twice — not run is not failed, and it read as fine.
    This fails closed. `--no-axe` is the only way past it, it has to be typed, and it prints what
@@ -296,9 +296,10 @@ if (asJson) {
   console.log(`  broken links   : ${report.brokenLinks.length}`);
   console.log(`  axe violations : ${report.axe ? `${report.axe.violations.length} (${serious.length} serious/critical)`
     : axeWaived ? 'NOT RUN — waived with --no-axe, so this page is unchecked for accessibility'
-    : 'NOT RUN — axe-core is missing, and an unchecked page does not pass'}`);
+    : 'NOT RUN — @axe-core/playwright is missing, and an unchecked page does not pass'}`);
   if (axeBlocks) {
-    console.log('      install it where this runs: npm i -D axe-core, or `sitesmith doctor` to see what else is absent');
+    console.log('      install it where this runs: npm i -D @axe-core/playwright axe-core');
+    console.log('      or `sitesmith doctor` to see what else is absent');
   }
   for (const v of serious) {
     console.log(`      [${v.scheme ?? '?'}] ${v.impact.padEnd(8)} ${v.id} — ${v.help} (${v.nodes} nodes)`);

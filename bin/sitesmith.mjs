@@ -2,7 +2,7 @@
 /**
  * The product layer. Original work, MIT.
  *
- *   node bin/sitesmith.mjs install [--to <dir>] [--provider claude|codex|cursor|all]
+ *   node bin/sitesmith.mjs install [--to <dir>] [--provider claude|codex|cursor|all] [--no-deps]
  *   node bin/sitesmith.mjs update  [--to <dir>]
  *   node bin/sitesmith.mjs doctor  [--to <dir>]
  *   node bin/sitesmith.mjs pack    --provider <p> --out <dir>
@@ -47,6 +47,7 @@ const PROVIDERS = {
             what: 'Cursor reads .mdc rule files with frontmatter globs.' },
 };
 
+let installFailed = false;
 const say = (s = '') => console.log(s);
 const sha = (b) => createHash('sha256').update(b).digest('hex');
 
@@ -62,15 +63,24 @@ async function walk(dir, base = dir, out = []) {
 
 /* ── doctor ───────────────────────────────────────────────────────────────
    Names what is missing rather than reporting that something went wrong. */
-async function doctor(target) {
+async function doctor(target, { onlyTarget = false } = {}) {
   const rows = [];
   const add = (name, ok, detail) => rows.push({ name, ok, detail });
 
   const node = process.versions.node;
   add('node', Number(node.split('.')[0]) >= 20, `${node} — 20 or newer`);
 
+  /* The target first, and when a target was named, only the target.
+     This looked in this repository's benchmarks/node_modules first, so `doctor --to <empty
+     dir>` reported every gate ready by finding a copy that the target could never load.
+     Doctor answers one question: can the gates run where you are about to run them. When
+     nobody names a where, falling back to the repository's own copy is right, because that
+     is the repository checking itself. */
+  const candidates = onlyTarget
+    ? [join(target ?? '.', 'node_modules/playwright')]
+    : [join(target ?? '.', 'node_modules/playwright'), join(ROOT, 'benchmarks/node_modules/playwright')];
   let pw = null;
-  for (const p of [join(ROOT, 'benchmarks/node_modules/playwright'), join(target ?? '.', 'node_modules/playwright')]) {
+  for (const p of candidates) {
     if (existsSync(p)) { pw = p; break; }
   }
   add('playwright', Boolean(pw), pw ? relative(ROOT, pw).replace(/\\/g, '/') || pw
@@ -84,9 +94,18 @@ async function doctor(target) {
       : 'installed but will not launch — `npx playwright install chromium`');
   } else add('chromium', false, 'cannot check without playwright');
 
-  const axe = existsSync(join(dirname(pw ?? ''), 'axe-core')) ||
-              existsSync(join(ROOT, 'benchmarks/node_modules/axe-core'));
-  add('axe-core', axe, axe ? 'present' : 'not found — the accessibility gate cannot run');
+  /* Ask the question verify.mjs asks, by the specifier verify.mjs uses.
+     This used to test whether an `axe-core` directory existed. axe-core is a transitive
+     dependency of the wrapper, so it is on disk in projects where '@axe-core/playwright'
+     is not, and doctor reported the accessibility gate ready in exactly the case where it
+     could not run. A readiness check that resolves a different name than the thing it is
+     vouching for is not a check. */
+  const axe = spawnSync(process.execPath, ['-e',
+    'require.resolve("@axe-core/playwright");require.resolve("axe-core");console.log("ok")'],
+    { cwd: pw ? dirname(dirname(pw)) : (target ?? '.'), encoding: 'utf8' });
+  add('@axe-core/playwright', axe.status === 0, axe.status === 0
+    ? 'resolves, and so does the axe-core engine under it'
+    : 'not resolvable — verify.mjs skips the accessibility scan, and fails closed rather than passing');
 
   add('git', spawnSync('git', ['--version'], { encoding: 'utf8' }).status === 0,
     'used to record what a run was built from');
@@ -179,19 +198,61 @@ async function install(target, providers, { quiet = false } = {}) {
                        files: files.length + 1 };
     if (!quiet) say(`  ${name.padEnd(7)} → ${cfg.dir}  (${files.length + 1} files)`);
   }
-  /* The gates need playwright and axe-core, and the installer used to place neither, so a
-     fresh project ran verify, read 'axe violations: not run', and shipped. verify now fails
-     closed on that, and this puts the pinned manifest where one npm command fixes it. */
+  /* The gates need playwright and @axe-core/playwright, and the installer used to place
+     neither, so a fresh project ran verify, read 'axe violations: not run', and shipped.
+     verify fails closed on that now. But printing the npm command and trusting someone to
+     run it is the same bet one step later: the pinned manifest was written, the command was
+     printed, and the project still had no axe. So it installs them. */
   const deps = JSON.parse(await readFile(join(SKILL, 'scripts/package.json'), 'utf8'));
   const pinned = Object.entries(deps.devDependencies).map(([k, v]) => `${k}@${v}`);
   await writeFile(join(target, 'sitesmith-gates.package.json'),
     JSON.stringify(deps, null, 2) + '\n');
-  if (!quiet) {
-    say('');
-    say('  the gates need these, pinned in sitesmith-gates.package.json:');
-    say(`    npm i -D ${pinned.join(' ')} && npx playwright install chromium`);
-    say('  verify.mjs fails closed without axe-core, so an unchecked page will not pass.');
+
+  if (has('no-deps')) {
+    if (!quiet) {
+      say('');
+      say('  --no-deps: the gates are not installed. Without them verify cannot check');
+      say('  accessibility, and it will fail closed rather than pass an unchecked page:');
+      say(`    npm i -D ${pinned.join(' ')} && npx playwright install chromium`);
+    }
+    return manifest;
   }
+
+  if (!quiet) say(`\n  installing the pinned gate dependencies into ${target}`);
+  /* npm is a .cmd on Windows, and since Node 20 spawning a .cmd without a shell fails with
+     EINVAL by design. The first version passed an args array with shell:true, which works but
+     concatenates rather than escapes (DEP0190); dropping shell:true then installed nothing at
+     all, silently, which is worse. Both are avoided by handing the shell one already-safe
+     string: every argument here is a literal or a `name@version`, and the only path involved
+     is cwd, which is passed out of band. */
+  const run = (line) => spawnSync(line, {
+    cwd: target, encoding: 'utf8', shell: true,
+    stdio: quiet ? 'ignore' : 'inherit',
+  });
+
+  const r = run(`npm install --save-dev --no-audit --no-fund ${pinned.join(' ')}`);
+  const b = r.status === 0 ? run('npx playwright install chromium') : { status: 1 };
+
+  /* Then check, rather than trust the exit code. An install that reports success and leaves
+     the target unable to resolve what verify imports is the exact failure this change exists
+     to stop, so the last word goes to the resolver rather than to npm. */
+  const resolves = spawnSync(process.execPath, ['-e',
+    Object.keys(deps.devDependencies).map((d) => `require.resolve(${JSON.stringify(d)})`).join(';')],
+    { cwd: target, encoding: 'utf8' }).status === 0;
+
+  if (!resolves) {
+    say('');
+    say(`  the gate dependencies did not install into ${target}` +
+        (r.status === 0 ? '.' : ` (npm exited ${r.status}).`));
+    say('  run this there, and every gate will work:');
+    say(`    npm i -D ${pinned.join(' ')} && npx playwright install chromium`);
+    installFailed = true;
+    return manifest;
+  }
+  if (b.status !== 0 && !quiet) {
+    say('\n  chromium did not download; everything else resolves. `npx playwright install chromium`');
+  }
+  if (!quiet) say(`\n  gate dependencies resolve in ${target}: ${pinned.join(', ')}`);
 
   await writeFile(join(target, '.sitesmith-install.json'),
     JSON.stringify({ installed: providers, manifest,
@@ -205,7 +266,7 @@ async function install(target, providers, { quiet = false } = {}) {
 const target = flag('to', process.cwd() === ROOT ? homedir() : process.cwd());
 
 if (cmd === 'doctor') {
-  process.exit(await doctor(target));
+  process.exit(await doctor(target, { onlyTarget: args.includes('--to') }));
 } else if (cmd === 'install' || cmd === 'update') {
   const want = flag('provider', 'all');
   const providers = want === 'all' ? Object.keys(PROVIDERS) : want.split(',').map((s) => s.trim());
@@ -216,7 +277,10 @@ if (cmd === 'doctor') {
   await install(target, providers);
   say(`\n  ${cmd === 'install' ? 'installed' : 'updated'}. Each pack's entry point is generated ` +
       'from PIPELINE.json, so the three cannot drift.\n');
-  if (!has('no-doctor')) await doctor(target);
+  const rc = has('no-doctor') ? 0 : await doctor(target, { onlyTarget: args.includes('--to') });
+  /* An install that could not place what the gates need has installed nothing usable, and
+     reporting that with exit 0 is how CI goes green over a broken environment. */
+  process.exit(installFailed ? 1 : rc);
 } else if (cmd === 'pack') {
   const provider = flag('provider');
   const out = flag('out');
@@ -227,7 +291,7 @@ if (cmd === 'doctor') {
   say(await buildPack(provider, out));
 } else {
   console.error(`usage:
-  sitesmith.mjs install [--to <dir>] [--provider claude|codex|cursor|all] [--no-doctor]
+  sitesmith.mjs install [--to <dir>] [--provider claude|codex|cursor|all] [--no-doctor] [--no-deps]
   sitesmith.mjs update  [--to <dir>]
   sitesmith.mjs doctor  [--to <dir>]
   sitesmith.mjs pack    --provider <p> --out <dir>`);
