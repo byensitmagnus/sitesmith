@@ -1,0 +1,746 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Cask desk · Stalbridge Brewery</title>
+<meta name="description" content="The cellar desk at Stalbridge Brewery. What is late back from the pubs, what is due today, what is still on trade, and the book-in for casks coming off the dray.">
+<meta name="theme-color" content="#141310">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Cask desk · Stalbridge Brewery">
+<meta property="og:description" content="Late back first, then due today, then on trade. Book a consignment in from the row it sits on.">
+<meta property="og:locale" content="en_GB">
+<link rel="icon" data-asset="favicon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 48'%3E%3Crect width='40' height='48' fill='%23EAE6DD'/%3E%3Cpath fill='%23141310' fill-rule='evenodd' d='M7.5 3H32.5C36.2 11 38 17.4 38 24C38 30.6 36.2 37 32.5 45H7.5C3.8 37 2 30.6 2 24C2 17.4 3.8 11 7.5 3ZM3.7 13.8H36.3V16.9H3.7ZM3.7 31.1H36.3V34.2H3.7ZM20 20.7A3.3 3.3 0 1 0 20.01 20.7Z'/%3E%3C/svg%3E">
+<style>
+/* ── Stalbridge cask desk ────────────────────────────────────────────────
+   Single controlled theme. This is a wall-mounted screen in a cellar under a
+   fixed fluorescent tube; the scheme is not the operating system's to decide.
+   Core rule D7. Every pairing below is computed, not eyeballed, and the
+   figures are in DESIGN-SYSTEM.md.                                        */
+:root{
+  color-scheme:light;
+  --wash:#EAE6DD;         /* whitewashed brick, the page ground   L 0.793 */
+  --wash-2:#E1DCD0;       /* the standing bar                             */
+  --ink:#141310;          /* the band, all primary ink            L 0.0065 */
+  --ink-2:#2A261F;        /* field fill on the band                       */
+  --ink-rule:#3A362E;     /* hairline on the band                         */
+  --dim-on-ink:#CFC9BB;   /* 11.3:1 on ink                                */
+  --steel:#5E5A51;        /* 5.5:1 on wash                                */
+  --hair:#BEB8A8;
+  --late:#B3121F;         /* condemned-tag red, on light   5.6:1 on wash   */
+  --late-on-ink:#FF6A5C;  /* the same signal, on the band  6.6:1 on ink    */
+
+  --cond:"Bahnschrift Condensed","Arial Narrow","Helvetica Neue Condensed",
+    "Liberation Sans Narrow","DejaVu Sans Condensed",system-ui,sans-serif;
+  --mono:"Consolas","Cascadia Mono","SF Mono","DejaVu Sans Mono",ui-monospace,monospace;
+
+  --s1:4px; --s2:8px; --s3:12px; --s4:16px; --s5:24px; --s6:32px; --s7:48px;
+  --pad:clamp(14px,2.2vw,32px);
+  --r:2px;
+  --fast:90ms;
+}
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--wash);color:var(--ink);
+  font-family:var(--mono);font-size:15px;line-height:1.45;
+  -webkit-text-size-adjust:100%;
+  font-variant-numeric:tabular-nums;
+}
+h1,h2,h3,p,ul,figure{margin:0;padding:0}
+ul{list-style:none}
+:where(a){color:inherit}
+
+/* surfaces ─ one control set, two grounds */
+.on-ink{
+  --sfc-bg:var(--ink); --sfc-fg:var(--wash); --sfc-dim:var(--dim-on-ink);
+  --sfc-edge:var(--wash); --sfc-field:var(--ink-2); --sfc-rule:var(--ink-rule);
+  --sfc-late:var(--late-on-ink); --sfc-focus:var(--wash);
+  --sfc-btn-bg:var(--wash); --sfc-btn-fg:var(--ink);
+}
+.on-wash{
+  --sfc-bg:var(--wash); --sfc-fg:var(--ink); --sfc-dim:var(--steel);
+  --sfc-edge:var(--ink); --sfc-field:#fff; --sfc-rule:var(--hair);
+  --sfc-late:var(--late); --sfc-focus:var(--ink);
+  --sfc-btn-bg:var(--ink); --sfc-btn-fg:var(--wash);
+}
+
+/* ── the standing bar ────────────────────────────────────────────────── */
+.chrome{
+  position:relative;isolation:isolate;
+  background:var(--wash-2);border-bottom:3px solid var(--ink);
+  padding:var(--s3) var(--pad);
+  display:flex;flex-wrap:wrap;align-items:baseline;gap:var(--s3) var(--s5);
+}
+.chrome::before{
+  content:"";position:absolute;inset:0;z-index:-1;
+  background:url("assets/cellar-800.webp") center/cover no-repeat;
+  opacity:.17;filter:grayscale(.55);
+}
+@media (min-width:801px){
+  .chrome::before{background-image:url("assets/cellar-1600.webp")}
+}
+.mark{display:flex;align-items:center;gap:var(--s2);flex:0 0 auto}
+.mark svg{width:19px;height:23px;flex:0 0 auto;color:var(--ink)}
+.mark h1{
+  font-family:var(--cond);font-weight:700;text-transform:uppercase;
+  letter-spacing:.055em;font-size:21px;line-height:1;white-space:nowrap;
+}
+.mark h1 b{font-weight:700}
+.mark h1 span{font-weight:400;color:var(--steel)}
+.chrome nav{display:flex;flex-wrap:wrap;gap:var(--s1)}
+.chrome nav a{
+  font-size:12px;letter-spacing:.1em;text-transform:uppercase;
+  padding:0 var(--s3);text-decoration:none;border:1.5px solid transparent;border-radius:var(--r);
+  min-height:44px;min-width:44px;display:flex;align-items:center;
+}
+.chrome nav a:hover{border-color:var(--steel)}
+.standing{
+  margin-left:auto;font-size:13px;color:var(--steel);letter-spacing:.01em;
+}
+.standing b{color:var(--ink);font-weight:400}
+
+/* the last thing that happened ─ mode P section 8 */
+.last{
+  background:var(--ink);color:var(--dim-on-ink);
+  padding:7px var(--pad);font-size:13px;
+  border-bottom:1px solid var(--ink-rule);
+}
+.last b{color:var(--wash);font-weight:400}
+.last:focus-visible{outline:3px solid var(--wash);outline-offset:-4px}
+
+/* ── blocks ──────────────────────────────────────────────────────────── */
+.band--late{background:var(--ink);color:var(--wash);padding:var(--s5) var(--pad) var(--s3)}
+.block{padding:var(--s5) var(--pad) var(--s3)}
+.block--record{padding-bottom:var(--s6)}
+/* The quiet index: its fields sit on the ground rather than on white, so the
+   third block reads third. The 1.5px ink edge still carries the boundary. */
+.block--trade{--sfc-field:#F3F0EA}
+
+.bhead{
+  display:flex;align-items:baseline;flex-wrap:wrap;gap:var(--s2) var(--s4);
+  padding-bottom:var(--s3);
+}
+.band--late .bhead{border-bottom:1px solid var(--ink-rule)}
+.block--due .bhead{border-bottom:3px solid var(--ink)}
+.block--trade .bhead,.block--record .bhead{border-bottom:1.5px solid var(--steel)}
+
+.state{
+  font-family:var(--cond);font-weight:700;text-transform:uppercase;
+  letter-spacing:.012em;line-height:.84;
+}
+.band--late .state{font-size:clamp(46px,5.9vw,78px)}
+.block--due .state{font-size:clamp(30px,3vw,38px);line-height:.9}
+.block--trade .state,.block--record .state{font-size:clamp(22px,2vw,26px);line-height:1}
+.tally{font-size:14px;color:var(--sfc-dim)}
+.tally b{font-weight:400;color:var(--sfc-fg)}
+
+/* ── a consignment row ───────────────────────────────────────────────── */
+.row{
+  display:grid;gap:var(--s3) var(--s5);align-items:center;
+  grid-template-columns:104px minmax(0,1fr) auto;
+  padding:var(--s4) 0;border-bottom:1px solid var(--sfc-rule);
+}
+.row:last-child{border-bottom:0}
+.row--md{grid-template-columns:104px minmax(0,1fr) auto;padding:var(--s3) 0}
+.row--sm{grid-template-columns:104px minmax(0,1fr) auto;padding:10px 0}
+
+.late-n{line-height:1}
+.late-n .n{
+  font-size:40px;font-weight:700;color:var(--sfc-late);line-height:.9;display:block;
+}
+.late-n .u{
+  display:block;font-size:11px;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--sfc-dim);margin-top:3px;
+}
+.row--md .late-n .n,.row--sm .late-n .n{font-size:15px;color:var(--sfc-fg);font-weight:400}
+.row--md .late-n .u,.row--sm .late-n .u{letter-spacing:.11em}
+
+.ident{min-width:0}
+.pub{
+  font-family:var(--cond);font-weight:700;text-transform:uppercase;
+  letter-spacing:.01em;line-height:.98;overflow-wrap:break-word;
+}
+.row--lg .pub{font-size:clamp(26px,2.5vw,34px)}
+.row--md .pub{font-size:clamp(21px,1.9vw,26px)}
+.row--sm .pub{font-size:19px}
+.meta{font-size:14px;color:var(--sfc-dim);margin-top:5px;overflow-wrap:break-word}
+.row--sm .meta{font-size:13px;margin-top:2px}
+
+.casks{display:flex;align-items:flex-end;gap:5px;margin-top:9px;flex-wrap:wrap}
+.casks svg{color:var(--sfc-fg);opacity:.92;flex:0 0 auto}
+.row--sm .casks{margin-top:5px}
+
+/* ── the book-in ─────────────────────────────────────────────────────── */
+.bookin{display:flex;flex-wrap:wrap;align-items:flex-end;gap:var(--s3);min-width:0}
+.fld{display:flex;flex-direction:column;min-width:0}
+.lab,legend{
+  font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--sfc-dim);margin:0 0 5px;padding:0;
+}
+.num{
+  font:inherit;font-size:17px;height:52px;width:82px;padding:0 10px;
+  background:var(--sfc-field);color:var(--sfc-fg);
+  border:1.5px solid var(--sfc-edge);border-radius:var(--r);
+  font-variant-numeric:tabular-nums;
+}
+.num::-webkit-outer-spin-button,.num::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.num[type=number]{-moz-appearance:textfield;appearance:textfield}
+.row--sm .num{height:46px;width:72px;font-size:15px}
+
+.cond{border:0;margin:0;padding:0;min-width:0}
+.seg{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0}
+.seg label{
+  position:relative;display:flex;align-items:center;justify-content:center;
+  height:52px;padding:0 var(--s3);cursor:pointer;
+  border:1.5px solid var(--sfc-edge);border-right-width:0;
+  font-size:12px;letter-spacing:.07em;text-transform:uppercase;text-align:center;
+  color:var(--sfc-fg);background:transparent;
+}
+.seg label:first-of-type{border-radius:var(--r) 0 0 var(--r)}
+.seg label:last-of-type{border-right-width:1.5px;border-radius:0 var(--r) var(--r) 0}
+.row--sm .seg label{height:46px;font-size:11px;padding:0 var(--s2)}
+.seg input{position:absolute;opacity:0;width:100%;height:100%;left:0;top:0;margin:0;cursor:pointer}
+.seg input:checked + span{font-weight:700}
+.seg label:has(input:checked){background:var(--sfc-fg);color:var(--sfc-bg)}
+.seg label:has(input:focus-visible){outline:3px solid var(--sfc-focus);outline-offset:2px;z-index:2}
+.seg label:hover{background:color-mix(in srgb,var(--sfc-fg) 14%,transparent)}
+.seg label:has(input:checked):hover{background:var(--sfc-fg)}
+
+.go{
+  font-family:var(--cond);font-weight:700;text-transform:uppercase;letter-spacing:.06em;
+  font-size:21px;height:56px;padding:0 var(--s5);border:0;border-radius:var(--r);
+  background:var(--sfc-btn-bg);color:var(--sfc-btn-fg);cursor:pointer;
+  transition:opacity var(--fast) linear;white-space:nowrap;
+}
+.row--md .go{font-size:19px;height:52px}
+.row--sm .go{font-size:17px;height:46px;padding:0 var(--s4)}
+.go:hover{opacity:.86}
+.go:active{opacity:.72}
+
+:where(a,button,input,select,[tabindex]):focus-visible{
+  outline:3px solid var(--sfc-focus,var(--ink));outline-offset:2px;
+}
+.chrome{--sfc-focus:var(--ink)}
+
+.err{
+  grid-column:1/-1;margin-top:var(--s2);padding:11px var(--s4);
+  border:2px solid var(--sfc-late);border-radius:var(--r);
+  color:var(--sfc-fg);font-size:15px;max-width:78ch;
+}
+.err b{color:var(--sfc-late);font-weight:700;text-transform:uppercase;letter-spacing:.06em}
+.err[hidden]{display:none}
+.num[aria-invalid="true"]{border-color:var(--sfc-late);border-width:2.5px}
+.cond.is-bad .seg label{border-color:var(--sfc-late);border-width:2.5px}
+.cond.is-bad .seg label:not(:last-of-type){border-right-width:0}
+
+/* ── nothing to do ───────────────────────────────────────────────────── */
+.none{display:flex;align-items:baseline;gap:var(--s4);flex-wrap:wrap;padding:var(--s5) 0 var(--s4)}
+.none .h{font-family:var(--cond);font-weight:700;text-transform:uppercase;font-size:clamp(26px,2.6vw,34px);line-height:1}
+.none p{font-size:14px;color:var(--sfc-dim)}
+.none[hidden]{display:none}
+
+/* ── the record ──────────────────────────────────────────────────────── */
+.scroller{overflow-x:auto;margin-top:var(--s3)}
+.scroller:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+table{border-collapse:collapse;width:100%;min-width:340px}
+caption{text-align:left;font-size:14px;color:var(--steel);padding-bottom:var(--s2)}
+th{
+  text-align:left;font-weight:400;font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--steel);padding:0 var(--s3) var(--s2) 0;border-bottom:1.5px solid var(--steel);
+  white-space:nowrap;
+}
+td{padding:11px var(--s3) 11px 0;border-bottom:1px solid var(--hair);font-size:14px;vertical-align:top}
+th:last-child,td:last-child{padding-right:0}
+td .p{font-family:var(--cond);font-weight:700;text-transform:uppercase;font-size:17px;letter-spacing:.01em}
+td .g{color:var(--steel);font-size:13px}
+td .c{text-transform:capitalize}
+.num-col{text-align:right;padding-left:var(--s5)}
+th:nth-child(1){width:11%}
+th:nth-child(2){width:24%}
+th:nth-child(3){width:17%}
+th:nth-child(4){width:11%}
+th:nth-child(5){width:22%}
+th:nth-child(6){width:15%}
+tbody tr:first-child td{background:linear-gradient(var(--wash-2),var(--wash-2))}
+tfoot td{border-bottom:0;padding-top:var(--s3);font-size:14px;color:var(--steel)}
+tfoot b{color:var(--ink);font-weight:400}
+.scrap{color:var(--late)}
+@media (max-width:900px){.c-gal{display:none}}
+/* At phone width the ledger sets tighter rather than scrolling sideways:
+   a cellarman in gloves should not have to drag a table. */
+@media (max-width:560px){
+  table{min-width:0}
+  th,td{font-size:12px;padding-right:var(--s2)}
+  td .p{font-size:15px}
+  td .g{font-size:11px}
+  .num-col{padding-left:var(--s2)}
+}
+
+/* ── foot ────────────────────────────────────────────────────────────── */
+footer{
+  background:var(--ink);color:var(--dim-on-ink);padding:var(--s5) var(--pad);
+  font-size:13px;display:grid;gap:var(--s3);
+}
+footer p{max-width:74ch}
+footer b{color:var(--wash);font-weight:400}
+.sprite{position:absolute;left:0;top:0;width:0;height:0;overflow:hidden}
+
+/* ── widths ──────────────────────────────────────────────────────────── */
+@media (max-width:1200px){
+  .row,.row--md,.row--sm{grid-template-columns:104px minmax(0,1fr)}
+  .bookin{grid-column:1/-1;padding-top:var(--s1)}
+  .bookin .fld--cond{flex:1 1 300px}
+  .bookin .go{flex:1 1 180px}
+}
+@media (max-width:720px){
+  .row,.row--md,.row--sm{grid-template-columns:76px minmax(0,1fr);gap:var(--s2) var(--s4)}
+  .late-n .n{font-size:32px}
+  .bookin{gap:var(--s2)}
+  .bookin .fld--n{flex:1 1 96px}
+  .bookin .fld--cond{flex:1 1 100%}
+  .bookin .go{flex:1 1 100%}
+  .num{width:100%}
+  .standing{margin-left:0;flex-basis:100%}
+  .casks svg{transform:scale(.86);transform-origin:bottom left;margin-right:-4px}
+}
+@media (max-width:460px){
+  .chrome{padding:var(--s2) var(--pad);gap:var(--s2) var(--s3)}
+  .chrome nav{gap:0}
+  .chrome nav a{font-size:11px;letter-spacing:.03em;padding:0 7px}
+  .seg label{padding:0 2px;font-size:11px;letter-spacing:.02em}
+  .row--lg .pub{font-size:25px}
+}
+@media (prefers-reduced-motion:reduce){*{transition-duration:0ms!important;animation:none!important}}
+</style>
+</head>
+<body>
+
+<svg class="sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- One drawing. A cask in profile: two hoops and the shive on the belly.
+         Placed at three heights in the cube-root ratio of 9, 18 and 36 gallons. -->
+    <symbol id="cask" viewBox="0 0 40 48">
+      <path fill="currentColor" fill-rule="evenodd"
+        d="M7.5 3H32.5C36.2 11 38 17.4 38 24C38 30.6 36.2 37 32.5 45H7.5C3.8 37 2 30.6 2 24C2 17.4 3.8 11 7.5 3ZM3.7 13.8H36.3V16.9H3.7ZM3.7 31.1H36.3V34.2H3.7ZM20 20.7A3.3 3.3 0 1 0 20.01 20.7Z"/>
+    </symbol>
+  </defs>
+</svg>
+
+<header class="chrome on-wash" data-asset="cellar-ground">
+  <div class="mark">
+    <svg viewBox="0 0 40 48" data-asset="mark" aria-hidden="true" focusable="false"><use href="#cask"/></svg>
+    <h1><b>Stalbridge</b> <span>cask desk</span></h1>
+  </div>
+  <nav aria-label="Board">
+    <a href="#late">Late back</a>
+    <a href="#due">Due today</a>
+    <a href="#trade">On trade</a>
+    <a href="#record">Record</a>
+  </nav>
+  <p class="standing">Board as at <b>Thu 06:40</b>, dray <b>07:15</b>. Out on trade:
+    <b id="standing-casks">33 casks</b>, <b id="standing-gal">468 gallons</b>.</p>
+</header>
+
+<p class="last" id="last-action" role="status"></p>
+
+<main>
+  <section class="band--late on-ink" id="late" aria-labelledby="late-h">
+    <div class="bhead">
+      <h2 class="state" id="late-h" tabindex="-1">Late back</h2>
+      <p class="tally" id="late-tally"></p>
+    </div>
+    <ul id="late-rows"></ul>
+    <div class="none" id="late-none" hidden>
+      <p class="h">Nothing late back</p>
+      <p id="late-none-note"></p>
+    </div>
+  </section>
+
+  <section class="block block--due on-wash" id="due" aria-labelledby="due-h">
+    <div class="bhead">
+      <h2 class="state" id="due-h" tabindex="-1">Due today</h2>
+      <p class="tally" id="due-tally"></p>
+    </div>
+    <ul id="due-rows"></ul>
+    <div class="none" id="due-none" hidden>
+      <p class="h">Nothing due today</p>
+      <p>Everything dated today is booked in. The next casks due back are in the list below.</p>
+    </div>
+  </section>
+
+  <section class="block block--trade on-wash" id="trade" aria-labelledby="trade-h">
+    <div class="bhead">
+      <h2 class="state" id="trade-h" tabindex="-1">On trade</h2>
+      <p class="tally" id="trade-tally"></p>
+    </div>
+    <ul id="trade-rows"></ul>
+    <div class="none" id="trade-none" hidden>
+      <p class="h">Nothing on trade</p>
+      <p>Every cask that left the brewery is back. The next drop empties this list again.</p>
+    </div>
+  </section>
+
+  <section class="block block--record on-wash" id="record" aria-labelledby="record-h">
+    <div class="bhead">
+      <h2 class="state" id="record-h">This week</h2>
+      <p class="tally" id="record-tally"></p>
+    </div>
+    <div class="scroller" tabindex="0" role="region" aria-label="This week's record of casks booked in">
+      <table>
+        <caption>Casks booked back in, most recent first. Duty is paid at the duty point, so
+          every line here is a record of a movement and the list is added to, never edited.</caption>
+        <thead>
+          <tr><th scope="col">When</th><th scope="col">Pub and gyle</th><th scope="col">Casks</th>
+            <th scope="col" class="c-gal num-col">Gallons</th><th scope="col">Condition</th>
+            <th scope="col" class="num-col">Ullage</th></tr>
+        </thead>
+        <tbody id="record-rows"></tbody>
+        <tfoot><tr><td colspan="6" id="record-foot"></td></tr></tfoot>
+      </table>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <p>A cask goes from this screen to the wash and nowhere else. It cannot go back on the filling
+    line until it has been through, and a cask returned <b>wet</b> still has beer in it, so its
+    ullage is recorded here before it is tipped. <b>Condemned</b> casks go to scrap.</p>
+  <p>Cask sizes are the trade's own: a firkin is <b>9 gallons</b>, a kilderkin <b>18</b>, a
+    barrel <b>36</b>. Board as at <b>Thu 06:40</b>, showing the working week of gyle 214.
+    Bookings are held on this screen and survive a reload.</p>
+</footer>
+
+<script>
+"use strict";
+(function () {
+  /* Heights are the cube roots of 9, 18 and 36 normalised to the barrel:
+     0.630, 0.794, 1.000. The glyph is the volume, so these are the data. */
+  var SIZE = {
+    firkin:    { gal: 9,  w: 29, h: 35 },
+    kilderkin: { gal: 18, w: 37, h: 44 },
+    barrel:    { gal: 36, w: 46, h: 55 }
+  };
+  var CONDITIONS = [
+    { id: "sound",     label: "Sound",   dest: "wash"  },
+    { id: "wet",       label: "Wet",     dest: "wash"  },
+    { id: "dirty",     label: "Dirty",   dest: "wash"  },
+    { id: "condemned", label: "Condemn", dest: "scrap" }
+  ];
+  var BOARD_TIME = "Thu 06:40";
+
+  /* The working week. EVIDENCE.md section 8. */
+  var CONSIGNMENTS = [
+    { id:"c1", pub:"The Royal Oak",  gyle:211, casks:6, size:"kilderkin", dropped:"Thu", due:"Fri",   late:6 },
+    { id:"c2", pub:"The Feathers",   gyle:214, casks:2, size:"firkin",    dropped:"Tue", due:"Mon",   late:3, note:"2 of 4 already back" },
+    { id:"c3", pub:"The Bell",       gyle:209, casks:3, size:"firkin",    dropped:"Wed", due:"Tue",   late:2 },
+    { id:"c4", pub:"The White Hart", gyle:216, casks:2, size:"barrel",    dropped:"Sat", due:"today", late:0 },
+    { id:"c5", pub:"The Crown",      gyle:217, casks:5, size:"firkin",    dropped:"Sat", due:"today", late:0 },
+    { id:"c6", pub:"The Ship",       gyle:218, casks:4, size:"kilderkin", dropped:"Mon", due:"Sat",   late:0, ahead:2 },
+    { id:"c7", pub:"The Greyhound",  gyle:218, casks:2, size:"firkin",    dropped:"Mon", due:"Sat",   late:0, ahead:2 },
+    { id:"c8", pub:"The Feathers",   gyle:219, casks:6, size:"firkin",    dropped:"Tue", due:"Mon",   late:0, ahead:4 },
+    { id:"c9", pub:"The Swan",       gyle:220, casks:3, size:"kilderkin", dropped:"Wed", due:"Tue",   late:0, ahead:5 }
+  ];
+
+  /* The record as it stood when the board was drawn. EVIDENCE.md section 8.2. */
+  var SEED = [
+    { when:"Wed 15:20", pub:"The Feathers", gyle:214, casks:2, size:"firkin",    condition:"dirty",     ullage:0 },
+    { when:"Wed 11:05", pub:"The Anchor",   gyle:210, casks:3, size:"firkin",    condition:"wet",       ullage:4 },
+    { when:"Tue 16:40", pub:"The Bell",     gyle:208, casks:1, size:"kilderkin", condition:"condemned", ullage:2 },
+    { when:"Tue 09:15", pub:"The Ship",     gyle:212, casks:4, size:"firkin",    condition:"sound",     ullage:0 }
+  ];
+
+  var KEY = "stalbridge.cask-desk.v1";
+  var memory = null;
+
+  function load() {
+    if (memory) return memory;
+    var stored = null;
+    try { stored = JSON.parse(window.localStorage.getItem(KEY) || "null"); } catch (e) { stored = null; }
+    memory = (stored && Array.isArray(stored.bookings)) ? stored : { bookings: [] };
+    return memory;
+  }
+  function save() {
+    try { window.localStorage.setItem(KEY, JSON.stringify(memory)); } catch (e) { /* held in memory */ }
+  }
+
+  /* ── helpers ─────────────────────────────────────────────────────── */
+  function el(id) { return document.getElementById(id); }
+  function gallons(casks, size) { return casks * SIZE[size].gal; }
+  function plural(n, word) { return n + " " + word + (n === 1 ? "" : "s"); }
+  function destOf(condition) {
+    for (var i = 0; i < CONDITIONS.length; i++) if (CONDITIONS[i].id === condition) return CONDITIONS[i].dest;
+    return "wash";
+  }
+  function esc(s) {
+    return String(s).replace(/[&<>"]/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c];
+    });
+  }
+  function ullageText(n) { return n > 0 ? n + " gal" : "–"; }
+
+  function remaining(c) {
+    var used = 0, b = load().bookings;
+    for (var i = 0; i < b.length; i++) if (b[i].cid === c.id) used += b[i].casks;
+    return Math.max(0, c.casks - used);
+  }
+  function outstanding() {
+    return CONSIGNMENTS.filter(function (c) { return remaining(c) > 0; });
+  }
+  function stateOf(c) { return c.late > 0 ? "late" : (c.due === "today" ? "due" : "trade"); }
+
+  function totals(list) {
+    var casks = 0, gal = 0, pubs = [];
+    list.forEach(function (c) {
+      var r = remaining(c); casks += r; gal += gallons(r, c.size);
+      if (pubs.indexOf(c.pub) === -1) pubs.push(c.pub);
+    });
+    return { pubs: pubs.length, casks: casks, gal: gal };
+  }
+
+  /* ── markup ──────────────────────────────────────────────────────── */
+  function caskStrip(n, size) {
+    var s = SIZE[size], out = "", shown = Math.min(n, 8), i;
+    for (i = 0; i < shown; i++) {
+      out += '<svg width="' + s.w + '" height="' + s.h + '" viewBox="0 0 40 48" data-asset="cask-glyph" aria-hidden="true" focusable="false"><use href="#cask"/></svg>';
+    }
+    if (n > shown) out += '<span class="meta" style="margin:0">and ' + (n - shown) + ' more</span>';
+    return '<div class="casks">' + out + "</div>";
+  }
+
+  function rowHTML(c, density) {
+    var r = remaining(c), id = c.id, cap = gallons(r, c.size);
+    var lead = c.late > 0
+      ? '<span class="n">' + c.late + '</span><span class="u">days late</span>'
+      : (c.due === "today"
+          ? '<span class="n">today</span><span class="u">due back</span>'
+          : '<span class="n">' + c.due + '</span><span class="u">due back</span>');
+
+    var meta = "gyle " + c.gyle + " · " + plural(r, c.size) + ", " + cap + " gallons · dropped " + c.dropped;
+    if (c.late > 0) meta += ", due back " + c.due;
+    if (c.note) meta += " · " + c.note;
+
+    var seg = "";
+    CONDITIONS.forEach(function (k) {
+      seg += '<label><input type="radio" name="cond-' + id + '" value="' + k.id + '"' +
+             ' aria-describedby="err-' + id + '"><span>' + k.label + "</span></label>";
+    });
+
+    return '<li class="row row--' + density + '">' +
+      '<p class="late-n">' + lead + "</p>" +
+      '<div class="ident"><p class="pub">' + esc(c.pub) + "</p>" +
+        '<p class="meta">' + meta + "</p>" + caskStrip(r, c.size) + "</div>" +
+      '<form class="bookin" data-cid="' + id + '" novalidate>' +
+        '<div class="fld fld--n"><label class="lab" for="casks-' + id + '">Casks back</label>' +
+          '<input class="num" id="casks-' + id + '" name="casks" type="number" inputmode="numeric" min="1" max="' + r +
+          '" step="1" value="' + r + '" aria-describedby="err-' + id + '"></div>' +
+        '<div class="fld fld--n"><label class="lab" for="ull-' + id + '">Ullage, gallons</label>' +
+          '<input class="num" id="ull-' + id + '" name="ullage" type="number" inputmode="numeric" min="0" max="' + cap +
+          '" step="1" aria-describedby="err-' + id + '"></div>' +
+        '<fieldset class="cond fld fld--cond"><legend>Condition</legend><div class="seg">' + seg + "</div></fieldset>" +
+        '<button class="go" type="submit">Book in</button>' +
+      "</form>" +
+      '<p class="err" id="err-' + id + '" role="alert" hidden></p>' +
+      "</li>";
+  }
+
+  function recordRows() {
+    var made = load().bookings.slice().reverse();
+    return made.concat(SEED);
+  }
+
+  /* ── render ──────────────────────────────────────────────────────── */
+  /* A dray is unloaded a consignment at a time, but a cellarman may well have
+     started counting two rows before booking the first. Re-rendering the board
+     must not throw away what is already in the other rows. */
+  function snapshot() {
+    var s = {};
+    Array.prototype.forEach.call(document.querySelectorAll(".bookin"), function (f) {
+      var chosen = f.querySelector('input[type="radio"]:checked');
+      s[f.getAttribute("data-cid")] = {
+        casks: f.querySelector('[name="casks"]').value,
+        ull: f.querySelector('[name="ullage"]').value,
+        cond: chosen ? chosen.value : ""
+      };
+    });
+    return s;
+  }
+  function restore(s) {
+    Object.keys(s).forEach(function (cid) {
+      var f = document.querySelector('.bookin[data-cid="' + cid + '"]');
+      if (!f) return;
+      var v = s[cid], casks = f.querySelector('[name="casks"]');
+      if (v.casks !== "" && Number(v.casks) <= Number(casks.max)) casks.value = v.casks;
+      f.querySelector('[name="ullage"]').value = v.ull;
+      if (v.cond) {
+        var r = f.querySelector('input[value="' + v.cond + '"]');
+        if (r) r.checked = true;
+      }
+    });
+  }
+
+  function render(skipCid) {
+    var keep = snapshot();
+    if (skipCid) delete keep[skipCid];
+    var out = outstanding();
+    var late  = out.filter(function (c) { return stateOf(c) === "late"; })
+                   .sort(function (a, b) { return b.late - a.late; });
+    var due   = out.filter(function (c) { return stateOf(c) === "due"; });
+    var trade = out.filter(function (c) { return stateOf(c) === "trade"; })
+                   .sort(function (a, b) { return a.ahead - b.ahead; });
+
+    fill("late-rows", late, "lg");
+    fill("due-rows", due, "md");
+    fill("trade-rows", trade, "sm");
+
+    tally("late-tally", late, "late back");
+    tally("due-tally", due, "due back today");
+    tally("trade-tally", trade, "still out");
+
+    el("late-none").hidden = late.length > 0;
+    el("due-none").hidden = due.length > 0;
+    el("trade-none").hidden = trade.length > 0;
+    if (late.length === 0) {
+      var next = due.length ? due : trade;
+      el("late-none-note").textContent = next.length
+        ? "Next back: " + next[0].pub + ", " + plural(remaining(next[0]), next[0].size) +
+          (next[0].due === "today" ? ", today." : ", " + next[0].due + ".")
+        : "Every cask is in. The board is clear.";
+    }
+
+    var all = totals(out);
+    el("standing-casks").textContent = plural(all.casks, "cask");
+    el("standing-gal").textContent = all.gal + " gallons";
+
+    var rec = recordRows(), rcasks = 0, rgal = 0, html = "";
+    rec.forEach(function (b) {
+      rcasks += b.casks; rgal += gallons(b.casks, b.size);
+      html += "<tr><td>" + esc(b.when) + "</td>" +
+        '<td><span class="p">' + esc(b.pub) + '</span><br><span class="g">gyle ' + b.gyle + "</span></td>" +
+        "<td>" + plural(b.casks, b.size) + "</td>" +
+        '<td class="c-gal num-col">' + gallons(b.casks, b.size) + "</td>" +
+        '<td><span class="c">' + b.condition + "</span>" +
+        (destOf(b.condition) === "scrap" ? '<br><span class="g scrap">to scrap</span>' : '<br><span class="g">to wash</span>') +
+        '</td><td class="num-col">' + ullageText(b.ullage) + "</td></tr>";
+    });
+    el("record-rows").innerHTML = html;
+    el("record-tally").textContent = plural(rec.length, "movement");
+    el("record-foot").innerHTML = "Booked back this week: <b>" + plural(rcasks, "cask") +
+      "</b>, <b>" + rgal + " gallons</b>. Ullage recorded on " +
+      rec.filter(function (b) { return b.ullage > 0; }).length + " of them.";
+
+    restore(keep);
+  }
+
+  function fill(id, list, density) {
+    el(id).innerHTML = list.map(function (c) { return rowHTML(c, density); }).join("");
+  }
+  function tally(id, list, word) {
+    var t = totals(list);
+    el(id).innerHTML = t.casks === 0 ? "" :
+      "<b>" + plural(t.casks, "cask") + "</b> " + word + " at <b>" + plural(t.pubs, "pub") +
+      "</b> · <b>" + t.gal + " gallons</b>";
+  }
+
+  function setLast(text) { el("last-action").innerHTML = text; }
+  function lastFromRecord() {
+    var rec = recordRows();
+    if (!rec.length) { setLast("No casks booked in yet this week."); return; }
+    var b = rec[0];
+    setLast("Last booked in: <b>" + plural(b.casks, b.size) + "</b> from <b>" + esc(b.pub) +
+      "</b>, gyle " + b.gyle + ", " + b.condition + ", ullage " + ullageText(b.ullage) +
+      ", to " + destOf(b.condition) + ". <b>" + esc(b.when) + "</b>.");
+  }
+
+  /* ── the book-in ─────────────────────────────────────────────────── */
+  document.addEventListener("submit", function (ev) {
+    var form = ev.target;
+    if (!form.classList || !form.classList.contains("bookin")) return;
+    ev.preventDefault();
+
+    var cid = form.getAttribute("data-cid");
+    var c = null;
+    CONSIGNMENTS.forEach(function (x) { if (x.id === cid) c = x; });
+    if (!c) return;
+
+    var max = remaining(c);
+    var casksEl = form.querySelector('input[name="casks"]');
+    var ullEl = form.querySelector('input[name="ullage"]');
+    var condEl = form.querySelector('input[name="cond-' + cid + '"]:checked');
+    var errEl = el("err-" + cid);
+    var fieldset = form.querySelector("fieldset");
+
+    var casks = casksEl.value.trim() === "" ? NaN : Number(casksEl.value);
+    var ull = ullEl.value.trim() === "" ? NaN : Number(ullEl.value);
+    var cond = condEl ? condEl.value : "";
+    var cap = gallons(Number.isFinite(casks) && casks > 0 ? Math.min(casks, max) : max, c.size);
+
+    var missing = [], bad = [];
+    if (!Number.isFinite(casks) || casks < 1 || casks > max || casks % 1 !== 0) {
+      bad.push("how many casks came back, 1 to " + max);
+      casksEl.setAttribute("aria-invalid", "true");
+    } else { casksEl.removeAttribute("aria-invalid"); }
+
+    var radios = form.querySelectorAll('input[type="radio"]');
+    if (!cond) {
+      missing.push("the condition they came back in");
+      fieldset.classList.add("is-bad");
+      for (var q = 0; q < radios.length; q++) radios[q].setAttribute("aria-invalid", "true");
+    } else {
+      fieldset.classList.remove("is-bad");
+      for (var q2 = 0; q2 < radios.length; q2++) radios[q2].removeAttribute("aria-invalid");
+    }
+
+    if (!Number.isFinite(ull) || ull < 0 || ull > cap || ull % 1 !== 0) {
+      if (ullEl.value.trim() === "") missing.push("the ullage in gallons, nil is 0");
+      else bad.push("an ullage of 0 to " + cap + " gallons, which is what these casks hold");
+      ullEl.setAttribute("aria-invalid", "true");
+    } else { ullEl.removeAttribute("aria-invalid"); }
+
+    if (cond === "wet" && Number.isFinite(ull) && ull === 0) {
+      bad.push("an ullage above nil, because a cask returned wet still has beer in it");
+      ullEl.setAttribute("aria-invalid", "true");
+    }
+
+    if (missing.length || bad.length) {
+      var parts = [];
+      if (missing.length) parts.push("Enter " + missing.join(" and ") + ".");
+      if (bad.length) parts.push("Needs " + bad.join(", and ") + ".");
+      errEl.innerHTML = "<b>Not booked in.</b> " + esc(parts.join(" "));
+      errEl.hidden = false;
+      var firstBad = form.querySelector('[aria-invalid="true"]');
+      if (firstBad) firstBad.focus();
+      return;
+    }
+
+    errEl.hidden = true;
+    errEl.textContent = "";
+
+    load().bookings.push({
+      cid: cid, when: BOARD_TIME, pub: c.pub, gyle: c.gyle,
+      casks: casks, size: c.size, condition: cond, ullage: ull
+    });
+    save();
+
+    var block = stateOf(c);
+    render(cid);
+    lastFromRecord();
+
+    /* Focus stays where the work is. If the consignment is still part back,
+       the casks field for it is re-focused; if it has left the board, focus
+       goes to the heading of the block it was in. */
+    var back = document.getElementById("casks-" + cid);
+    if (back) { back.focus(); }
+    else {
+      var head = document.getElementById(block === "late" ? "late-h" : block === "due" ? "due-h" : "trade-h");
+      if (head) head.focus();
+    }
+  });
+
+  load();
+  render();
+  lastFromRecord();
+})();
+</script>
+</body>
+</html>

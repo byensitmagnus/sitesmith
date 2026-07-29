@@ -85,3 +85,39 @@ like in a tower with one window.
 
 Nothing marked `(needed)`. The direction is built on the drawing because the drawing is what
 the trade uses when a photograph will not do.
+
+## 8. The published tuning book — St Æthelburga's tenor
+
+> Restored to this file during the rebuild. `BRIEF.md` states that the published cents figures
+> and metal-off weights are the St Æthelburga's tenor and appear here, and that they are
+> invented for this exercise and are not those of any real ring. The section itself was missing
+> from the pack, so it is written back in full and every figure the page publishes is drawn from
+> it and from sections 2 to 5 above.
+
+The bell: the tenor of a ring of eight. **14 cwt**, nominal **C sharp**, tuned true-harmonic in
+**1904**, back on our machine in **2019**. 14 cwt is **1,568 lb** (112 lb to the hundredweight).
+
+Every value is **cents away from true-harmonic**: nought is where that partial should sit, a
+minus is flat of it and a plus is sharp of it. Each partial is cut from a different height of
+the inside wall.
+
+| Partial | Cut at | 1904, as it came in | 2019, as it went out | Metal off |
+| --- | --- | --- | --- | --- |
+| Hum | the crown | −31 | −4 | 2 lb |
+| Prime | the upper waist | +18 | +3 | 3 lb |
+| Tierce | the lower waist | −22 | −5 | 4 lb |
+| Quint | above the soundbow | +14 | +2 | 5 lb |
+| Nominal | the lip | −9 | +2 | 9 lb |
+
+**Total metal off: 23 lb**, off a bell of 1,568 lb.
+
+The nominal's after figure is the `+2 cents on the nominal` given as the exemplar in section 5.
+
+**The unflattering figure.** The tierce came in 22 cents flat and went out 5 cents flat, and it
+stays there. Bringing it the rest of the way meant cutting the lower waist thinner than the
+foundry is willing to leave a bell that has to keep swinging. The foundry publishes the five
+rather than take the metal.
+
+**The bound on an enquiry.** From `JOURNEY-INTENT.md`: a ring of more than **twelve** bells is
+rare enough that the foundry rings rather than emails, so an enquiry form is bounded at one to
+twelve and says why.

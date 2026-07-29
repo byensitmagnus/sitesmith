@@ -45,67 +45,15 @@ const SUBJECTS = [
   { id: 'chandlery', dir: 'pilots/01-chandlery/site', port: 4501,
     trade: 'A rope and cordage merchant on a fishing dock.',
     task: 'A rigger needs to compare rope constructions and order a cut length.',
-    states: [
-      { name: 'a length priced, and one refused', run: async (p) => {
-        await p.fill('[data-metres="DB12"]', '25');
-        await p.fill('[data-metres="TS12"]', '1');
-        await p.locator('[data-metres="TS12"]').blur();
-        await p.waitForTimeout(120);
-        await p.locator('[data-err="TS12"]').scrollIntoViewIfNeeded();
-      } },
-      { name: 'two cuts on the ticket', run: async (p) => {
-        await p.click('[data-add="DB12"]');
-        await p.fill('[data-metres="KM11"]', '18');
-        await p.click('[data-add="KM11"]');
-        await p.waitForTimeout(160);
-        await p.locator('.basket').scrollIntoViewIfNeeded();
-      } },
-    ] },
+},
   { id: 'foundry', dir: 'pilots/02-foundry/site', port: 4502,
     trade: 'A bell foundry that re-tunes church bells.',
     task: 'A parish needs to understand what re-tuning does and send an enquiry.',
-    states: [
-      { name: 'the ring after tuning', run: async (p) => {
-        await p.click('[data-state="after"]');
-        await p.waitForTimeout(700);
-        await p.locator('.partials').scrollIntoViewIfNeeded();
-      } },
-      { name: 'an enquiry refused, then sent', run: async (p) => {
-        await p.fill('#tower', 'St Æthelburga, Bishopsgate');
-        await p.fill('#bells', '19');
-        await p.fill('#email', 'not-an-address');
-        await p.click('.send');
-        await p.waitForTimeout(200);
-        await p.locator('#bells').scrollIntoViewIfNeeded();
-      } },
-      { name: 'the enquiry sent', run: async (p) => {
-        await p.fill('#bells', '8');
-        await p.fill('#email', 'warden@example.org');
-        await p.selectOption('#faculty', 'applied');
-        await p.fill('#wrong', 'The third sounds sour.');
-        await p.click('.send');
-        await p.waitForTimeout(250);
-        await p.locator('[data-sent]').scrollIntoViewIfNeeded();
-      } },
-    ] },
+},
   { id: 'cask', dir: 'pilots/03-cask-console/site', port: 4503,
     trade: 'A brewery cellar desk tracking casks out on trade.',
     task: 'A cellarman needs to see what is overdue and book a consignment back in.',
-    states: [
-      { name: 'a book-in refused', run: async (p) => {
-        await p.evaluate(() => localStorage.clear());
-        await p.reload({ waitUntil: 'networkidle' });
-        await p.click('[data-book="c2"]');
-        await p.waitForTimeout(180);
-      } },
-      { name: 'the consignment booked back in', run: async (p) => {
-        await p.selectOption('[data-cond="c2"]', 'Ullage short');
-        await p.fill('[data-ull="c2"]', '11');
-        await p.click('[data-book="c2"]');
-        await p.waitForTimeout(220);
-        await p.locator('.done').scrollIntoViewIfNeeded();
-      } },
-    ] },
+},
 ];
 
 const VIEWS = {

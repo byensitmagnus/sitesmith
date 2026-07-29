@@ -78,3 +78,61 @@ tag** — nothing else in the cellar is red.
 Mode P is the one mode where "deliberately imageless" is usually the right answer. The two
 drawings that exist earn their place by carrying information — cask size — that a word would
 take longer to read at four feet.
+
+---
+
+## 8. The working week on the desk
+
+The pack above ships the trade, the rules and one worked movement. A desk that shows one
+consignment cannot show the ordering the brief demands, nor "how many casks are at each pub",
+so the week below was constructed **from** the pack's own primitives and is recorded here so
+that every figure printed on the screen is sourced in this file. Anchors are marked.
+
+Board as at **Thursday 06:40**; the dray is expected at **07:15** (BRIEF).
+Cask sizes are the trade's own: **firkin 9 gallons, kilderkin 18, barrel 36** (section 1, BRIEF).
+
+### 8.1 Out on trade, by operational severity
+
+| # | Pub | Gyle | Casks | Size | Gallons | Dropped | Due back | Days late |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 1 | The Royal Oak | 211 | 6 | kilderkin | 108 | Thu | Fri | 6 |
+| 2 | The Feathers | 214 | 2 | firkin | 18 | Tue | Mon | 3 |
+| 3 | The Bell | 209 | 3 | firkin | 27 | Wed | Tue | 2 |
+| 4 | The White Hart | 216 | 2 | barrel | 72 | Sat | Thu (today) | nil |
+| 5 | The Crown | 217 | 5 | firkin | 45 | Sat | Thu (today) | nil |
+| 6 | The Ship | 218 | 4 | kilderkin | 72 | Mon | Sat | nil |
+| 7 | The Greyhound | 218 | 2 | firkin | 18 | Mon | Sat | nil |
+| 8 | The Feathers | 219 | 6 | firkin | 54 | Tue | Mon | nil |
+| 9 | The Swan | 220 | 3 | kilderkin | 54 | Wed | Tue | nil |
+
+**Anchor.** Row 2 is section 2's own sentence: four firkins of gyle 214 dropped at the Feathers
+Tuesday, two back dirty. The two that came back are entry 1 of the record below, which is why
+two firkins of that consignment are still out.
+
+Derived totals, arithmetic only:
+
+- Late back: **3 consignments, 11 casks, 153 gallons**.
+- Due today: **2 consignments, 7 casks, 117 gallons**.
+- On trade, not yet due: **4 consignments, 15 casks, 198 gallons**.
+- All out: **9 consignments, 33 casks, 468 gallons**.
+
+### 8.2 The record, this week so far
+
+| When | Pub | Gyle | Casks | Size | Condition | Ullage | To |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| Wed 15:20 | The Feathers | 214 | 2 | firkin | dirty | nil | wash |
+| Wed 11:05 | The Anchor | 210 | 3 | firkin | wet | 4 gallons | wash |
+| Tue 16:40 | The Bell | 208 | 1 | kilderkin | condemned | 2 gallons | scrap |
+| Tue 09:15 | The Ship | 212 | 4 | firkin | sound | nil | wash |
+
+Booked back this week: **10 casks, 99 gallons**.
+
+### 8.3 Rules the screen enforces, all from sections 1 to 5
+
+- Ullage may not exceed the capacity of the casks being booked in: count x size, in gallons.
+- A cask returned **wet** has beer in it, so its ullage may not be nil.
+- Every booking goes **to the wash**; a **condemned** cask goes to scrap instead. Nothing goes
+  back to the filling line from this screen.
+- Condition and ullage are part of the booking, because the movement is a duty record.
+
+Pub names are fictional, as the subject is. They are names, not figures.

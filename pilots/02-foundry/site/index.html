@@ -1,0 +1,1057 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Marrow &amp; Kell, bellfounders: re-tuning rings of bells</title>
+<meta name="description" content="We re-tune rings of bells by cutting metal from the inside at the five heights where the partials sound. St Æthelburga's tenor went out 23 lb lighter. A cracked bell is not a tuning job.">
+<meta name="theme-color" content="#0b0d0c">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Marrow &amp; Kell, bellfounders: re-tuning rings of bells">
+<meta property="og:description" content="Metal is cut from the inside of a bell at the five heights where its partials sound. Nothing is added and nothing goes back on. The tuning book is published in full, including the partial we did not get.">
+<meta property="og:image" content="assets/swarf-1400.webp">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 33 33'%3E%3Crect width='33' height='33' fill='%230b0d0c'/%3E%3Cg stroke='%23e8e3d7' fill='none'%3E%3Cpath stroke-width='3' d='M10.8 5H17M17 11.5h3.6M12.6 18H17M17 24.5h2.8M15.2 31H17'/%3E%3Cpath stroke-width='1.4' d='M17 2.5v31'/%3E%3C/g%3E%3C/svg%3E">
+<style>
+/* ============================================================
+   MARROW & KELL. One controlled dark theme.
+   The environment is the argument: a bell in a tower with one
+   window. Declared, not inherited; see DIRECTION.md.
+   ============================================================ */
+:root{
+  color-scheme: dark;
+
+  /* ground: near-black with the green of old bell patina in it */
+  --pit:#0b0d0c;
+  --floor:#111412;
+  --bench:#161a17;
+  --rule:#333a34;
+
+  /* ink */
+  --bone:#e8e3d7;      /* limewash / freshly cut metal   15.2:1 on pit */
+  --loam:#a8a294;      /* warm grey                       7.7:1 on pit */
+  --ghost:#8b8578;     /* where a partial used to be      5.1:1 on floor */
+  --edge:#7c7c72;      /* every control boundary          4.2:1 worst case */
+
+  /* the one accent: the casting pit at pour, the only bright
+     thing in the building. One meaning: our intervention. */
+  --lamp:#f0a63c;      /* 9.5:1 on pit */
+  --on-lamp:#0b0d0c;
+
+  --page:1240px;
+  --gut:clamp(1.25rem,4vw,3.5rem);
+  --head:60px;
+
+  /* one spacing step, one ramp */
+  --s1:.5rem; --s2:1rem; --s3:1.5rem; --s4:2.25rem;
+  --s5:3.5rem; --s6:5rem; --s7:7rem;
+
+  --t-hero:clamp(2.5rem,6.2vw,4.4rem);
+  --t-h2:clamp(1.55rem,3vw,2.35rem);
+  --t-lede:clamp(1.02rem,1.35vw,1.22rem);
+  --t-body:1rem;
+  --t-small:.8125rem;
+  --t-micro:.6875rem;
+  --t-figure:clamp(3rem,6.5vw,4.75rem);
+
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Liberation Sans",sans-serif;
+  --mono:ui-monospace,"Cascadia Mono","SF Mono","Segoe UI Mono","Roboto Mono",Menlo,Consolas,"Liberation Mono",monospace;
+
+  --m-fast:140ms; --m-base:320ms; --m-slow:520ms;
+  --ease:cubic-bezier(.2,.6,.2,1);
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  background:var(--pit);
+  color:var(--bone);
+  font:var(--t-body)/1.6 var(--sans);
+  overflow-wrap:break-word;
+}
+img{display:block;max-width:100%}
+h1,h2,h3,p,ul,ol,figure,fieldset{margin:0}
+ul{padding:0;list-style:none}
+fieldset{border:0;padding:0;min-width:0}
+button{font:inherit;color:inherit}
+a{color:var(--bone)}
+:focus-visible{outline:2px solid var(--lamp);outline-offset:3px}
+::selection{background:var(--lamp);color:var(--on-lamp)}
+
+.vh{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;
+    clip-path:inset(50%);white-space:nowrap;border:0}
+
+.skip{position:absolute;left:var(--s2);top:-100px;z-index:20;background:var(--lamp);
+      color:var(--on-lamp);padding:.7rem 1.1rem;font-weight:700;
+      letter-spacing:.05em;text-transform:uppercase;font-size:var(--t-small);
+      text-decoration:none;transition:top var(--m-fast)}
+.skip:focus{top:var(--s2)}
+
+.wrap{max-width:var(--page);margin-inline:auto;padding-inline:var(--gut)}
+
+/* ---------- type roles ---------- */
+.eyebrow{
+  font:700 var(--t-micro)/1.2 var(--mono);
+  letter-spacing:.22em;text-transform:uppercase;color:var(--loam);
+}
+h1,h2{
+  font-weight:700;line-height:.94;letter-spacing:.045em;
+  text-transform:uppercase;text-wrap:balance;
+}
+h1{font-size:var(--t-hero)}
+h2{font-size:var(--t-h2)}
+h3{font-weight:700;font-size:1.0625rem;letter-spacing:.06em;text-transform:uppercase;line-height:1.2}
+.lede{font-size:var(--t-lede);line-height:1.55;color:var(--bone);max-width:34em}
+.prose{color:var(--loam);max-width:34em}
+.prose p + p{margin-top:var(--s2)}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1}
+
+/* ---------- buttons ---------- */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:.5rem;
+  min-height:48px;padding:.85rem 1.5rem;border:1px solid transparent;
+  border-radius:0;font-weight:700;font-size:var(--t-small);
+  letter-spacing:.1em;text-transform:uppercase;text-decoration:none;
+  cursor:pointer;transition:background var(--m-fast),color var(--m-fast),border-color var(--m-fast);
+}
+.btn--primary{background:var(--lamp);color:var(--on-lamp);border-color:var(--lamp)}
+.btn--primary:hover{background:#ffbe5c;border-color:#ffbe5c}
+.btn--primary:active{background:#d98f26;border-color:#d98f26}
+.btn--ghost{background:transparent;color:var(--bone);border-color:var(--edge)}
+.btn--ghost:hover{border-color:var(--bone);background:#1a1f1b}
+.btn--sm{min-height:44px;padding:.6rem 1.05rem;font-size:var(--t-micro);letter-spacing:.12em}
+
+/* ---------- masthead ---------- */
+.masthead{border-bottom:1px solid var(--rule)}
+.masthead > div{
+  display:flex;align-items:center;gap:var(--s3);
+  min-height:var(--head);
+  max-width:var(--page);margin-inline:auto;padding:.7rem var(--gut);
+}
+.mark{display:flex;align-items:center;gap:.75rem;margin-right:auto}
+.mark svg{height:34px;width:auto;flex:none;color:var(--bone)}
+.mark__name{font-weight:700;font-size:.9375rem;letter-spacing:.14em;text-transform:uppercase;line-height:1}
+.mark__role{display:block;margin-top:.3rem;font:var(--t-micro)/1 var(--mono);
+  letter-spacing:.24em;text-transform:uppercase;color:var(--loam)}
+.masthead nav{display:none}
+.masthead nav a{
+  font:700 var(--t-micro)/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;
+  color:var(--loam);text-decoration:none;padding:.85rem .1rem;display:inline-block;
+  border-bottom:1px solid transparent;transition:color var(--m-fast),border-color var(--m-fast);
+}
+.masthead nav a:hover{color:var(--bone);border-bottom-color:var(--lamp)}
+@media(min-width:1000px){
+  :root{--head:76px}
+  .masthead nav{display:flex;gap:var(--s4)}
+}
+
+/* ---------- hero ---------- */
+.hero{display:grid;grid-template-columns:minmax(0,1fr);border-bottom:1px solid var(--rule)}
+.hero__copy{padding:var(--s4) var(--gut) var(--s5)}
+.hero h1{margin-top:var(--s3);max-width:14ch}
+.hero .lede{margin-top:var(--s3)}
+.hero__acts{display:flex;flex-wrap:wrap;gap:var(--s2);margin-top:var(--s4)}
+.hero__acts .btn{flex:1 1 100%}
+@media(min-width:560px){.hero__acts .btn{flex:0 0 auto}}
+.hero__caveat{
+  margin-top:var(--s3);padding-top:var(--s3);border-top:1px solid var(--rule);
+  font-size:var(--t-small);color:var(--loam);max-width:36em;
+}
+.hero__caveat a{color:var(--bone);text-underline-offset:.25em;text-decoration-color:var(--edge)}
+.hero__caveat a:hover{text-decoration-color:var(--lamp)}
+.hero__figure{position:relative;height:clamp(300px,74vw,430px);margin:0}
+.hero__figure img{width:100%;height:100%;object-fit:cover;object-position:34% 46%}
+.figcap{
+  position:absolute;left:0;bottom:0;right:0;
+  padding:4rem var(--gut) 1rem;
+  background:linear-gradient(to top,rgba(6,8,7,.97) 0%,rgba(6,8,7,.9) 46%,rgba(6,8,7,0) 100%);
+  font:var(--t-micro)/1.5 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--bone);
+}
+@media(min-width:1000px){
+  .hero{grid-template-columns:minmax(0,1fr) minmax(0,44%)}
+  .hero__copy{
+    display:flex;flex-direction:column;justify-content:center;
+    min-height:min(78vh,720px);
+    padding:var(--s6) clamp(2rem,4vw,4rem) var(--s6)
+            max(var(--gut),calc((100% - var(--page))/2 + var(--gut)));
+  }
+  .hero__figure{height:auto}
+  .figcap{padding:3rem clamp(1.5rem,2.4vw,2.25rem) 1.1rem}
+}
+@media(min-width:1000px){
+  .hero__copy{padding-inline-start:max(var(--gut),calc((100vw - var(--page))/2 + var(--gut)))}
+}
+
+/* ---------- section shell ---------- */
+.band{padding-block:var(--s6);border-bottom:1px solid var(--rule)}
+.band__head{max-width:42rem}
+.band__head .eyebrow{display:block;margin-bottom:var(--s2)}
+.band__head h2 + .lede{margin-top:var(--s3)}
+
+/* ---------- 01 refusals ---------- */
+.refusals{margin-top:var(--s5);display:grid;gap:var(--s4);
+  grid-template-columns:minmax(0,1fr)}
+@media(min-width:860px){.refusals{grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--s4)}}
+.refusal{border-top:2px solid var(--bone);padding-top:var(--s3)}
+.refusal__no{font:700 var(--t-micro)/1 var(--mono);letter-spacing:.2em;color:var(--lamp)}
+.refusal h3{margin-top:var(--s2)}
+.refusal p{margin-top:var(--s2);color:var(--loam);font-size:.9375rem}
+
+/* ---------- 02 partials ---------- */
+.split{display:grid;gap:var(--s4);grid-template-columns:minmax(0,1fr)}
+@media(min-width:900px){
+  .split{grid-template-columns:minmax(0,20rem) minmax(0,1fr);gap:clamp(2rem,6vw,6rem)}
+}
+.heights{margin-top:var(--s4);border-left:1px solid var(--rule);padding-left:var(--s3);
+  display:grid;gap:.85rem;list-style:none}
+.heights li{position:relative;display:flex;justify-content:space-between;
+  align-items:baseline;gap:var(--s2)}
+.heights li::before{content:"";position:absolute;left:calc(-1 * var(--s3) - 1px);top:.5em;
+  width:.7rem;height:1px;background:var(--edge)}
+.heights b{font-weight:700;font-size:.8125rem;letter-spacing:.14em;text-transform:uppercase}
+.heights span{font:var(--t-micro)/1 var(--mono);letter-spacing:.06em;color:var(--loam);
+  text-align:right}
+.heights__cap{margin-top:var(--s4);display:block}
+
+.bleed{width:100%;margin-top:var(--s5);position:relative}
+.bleed img{width:100%;height:clamp(260px,42vw,520px);object-fit:cover;object-position:48% 58%}
+
+/* ---------- 03 the tuning bench ---------- */
+.bench{display:grid;gap:var(--s4);grid-template-columns:minmax(0,1fr);margin-top:var(--s5)}
+@media(min-width:1000px){
+  .bench{
+    grid-template-columns:minmax(0,17.5rem) minmax(0,1fr);
+    grid-template-areas:"switch table" "figure table" "aside table" "aside note";
+    align-items:start;column-gap:clamp(2rem,5vw,4.5rem);row-gap:var(--s4);
+  }
+  .bench__switch{grid-area:switch}
+  .bench__table{grid-area:table}
+  .bench__figure{grid-area:figure}
+  .bench__aside{grid-area:aside}
+  .bench__foot{grid-area:note}
+  .bench__foot .book__note{margin-top:0}
+}
+.switch{display:flex;flex-wrap:wrap;gap:0;border:1px solid var(--edge)}
+.switch button{
+  flex:1 1 8rem;min-width:0;background:transparent;border:0;cursor:pointer;
+  padding:.8rem .9rem;text-align:left;
+  transition:background var(--m-fast),color var(--m-fast);
+}
+.switch button + button{border-left:1px solid var(--edge)}
+.switch button b{display:block;font:700 1.0625rem/1.1 var(--mono);letter-spacing:.04em}
+.switch button span{display:block;margin-top:.3rem;font-size:var(--t-micro);
+  letter-spacing:.1em;text-transform:uppercase;color:var(--loam)}
+.switch button:hover{background:#1a1f1b}
+.switch button[aria-pressed="true"]{background:var(--bone);color:var(--pit)}
+.switch button[aria-pressed="true"] span{color:#3d4139}
+.switch__hint{margin-top:var(--s2);font-size:var(--t-small);color:var(--loam)}
+
+.bench__figure{margin-top:var(--s2)}
+.bench__figure .eyebrow{display:block}
+.bench__figure .fig{
+  display:block;margin-top:.6rem;font:700 var(--t-figure)/.9 var(--mono);
+  font-variant-numeric:tabular-nums;color:var(--lamp);letter-spacing:-.02em;
+}
+.bench__figure .fig small{font-size:.34em;letter-spacing:.08em;margin-left:.28em;vertical-align:.42em}
+.bench__figure p{margin-top:var(--s2);font-size:var(--t-small);color:var(--loam);max-width:22em}
+
+.bench__aside{border-top:1px solid var(--rule);padding-top:var(--s3)}
+.bench__aside h3{color:var(--bone)}
+.bench__aside p{margin-top:var(--s2);font-size:.9375rem;color:var(--loam)}
+
+.book{width:100%;border-collapse:collapse;table-layout:fixed}
+.book caption{
+  text-align:left;padding-bottom:var(--s3);font-size:var(--t-small);
+  color:var(--loam);border-bottom:1px solid var(--rule);
+}
+.book th,.book td{padding:.8rem .3rem;vertical-align:middle;text-align:left}
+.book thead th{
+  font:700 .625rem/1.3 var(--mono);letter-spacing:.06em;text-transform:uppercase;
+  color:var(--loam);padding-top:var(--s3);overflow-wrap:normal;
+}
+.book tbody tr{border-top:1px solid var(--rule)}
+.book tbody th{
+  font-weight:700;font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;
+  padding-left:0;overflow-wrap:normal;
+}
+.book tbody th small{
+  display:block;margin-top:.3rem;font:var(--t-micro)/1.3 var(--mono);
+  letter-spacing:.08em;text-transform:none;color:var(--loam);font-weight:400;
+}
+.c-cents,.c-metal{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums;
+  font-size:.8125rem}
+.c-cents{color:var(--bone);font-weight:700}
+.c-metal{color:var(--loam);padding-right:0}
+.is-after .c-metal{color:var(--lamp)}
+.book col.w-name{width:4.75rem}
+.book col.w-track{width:auto}
+.book col.w-cents{width:2.75rem}
+.book col.w-metal{width:3rem}
+.book tbody th small{display:none}
+@media(min-width:560px){
+  .book th,.book td{padding:.85rem .5rem}
+  .book col.w-name{width:30%}.book col.w-cents{width:4.5rem}.book col.w-metal{width:5rem}
+  .book tbody th small{display:block}
+  .book tbody th{font-size:.875rem;letter-spacing:.1em}
+  .book thead th{font-size:var(--t-micro);letter-spacing:.14em}
+  .c-cents,.c-metal{font-size:.9375rem}
+}
+@media(min-width:1000px){.book col.w-name{width:24%}.book col.w-cents{width:6rem}.book col.w-metal{width:6rem}}
+
+.track{position:relative;display:block;height:30px;background:var(--floor);
+  border-left:1px solid var(--rule);border-right:1px solid var(--rule)}
+.track__was{position:absolute;top:6px;bottom:6px;background:rgba(232,227,215,.12);
+  transition:left var(--m-slow) var(--ease),width var(--m-slow) var(--ease)}
+.track__ghost{position:absolute;top:1px;bottom:1px;width:2px;background:var(--ghost);
+  transform:translateX(-1px);z-index:1}
+.track__bar{position:absolute;top:6px;bottom:6px;background:var(--ghost);
+  transition:left var(--m-slow) var(--ease),width var(--m-slow) var(--ease),
+             background var(--m-base) var(--ease)}
+.is-after .track__bar{background:var(--lamp)}
+.track__zero{position:absolute;left:50%;top:-4px;bottom:-4px;width:1px;background:var(--bone);z-index:3}
+.c-scale{display:flex;justify-content:space-between;padding-top:.55rem;
+  font:var(--t-micro)/1 var(--mono);letter-spacing:.1em;color:var(--loam)}
+.book tfoot td{padding-top:0}
+.book__note{margin-top:var(--s4);font-size:var(--t-small);color:var(--loam);max-width:44em}
+
+/* ---------- 04 enquiry ---------- */
+.enquiry{display:grid;grid-template-columns:minmax(0,1fr);border-bottom:1px solid var(--rule)}
+.enquiry__pane{padding:var(--s6) var(--gut)}
+.enquiry__figure{margin:0;position:relative;order:-1}
+.enquiry__figure img{width:100%;height:clamp(220px,44vw,320px);object-fit:cover;object-position:50% 50%}
+.enquiry__figure::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(to top,rgba(11,13,12,.8),rgba(11,13,12,0) 45%)}
+@media(min-width:1000px){
+  /* Deliberately not sticky: a sticky column renders as a dead black band in a
+     full-page capture, which is how this page gets reviewed. */
+  .enquiry{grid-template-columns:minmax(0,1fr) minmax(0,36%)}
+  .enquiry__figure{order:0;height:auto}
+  .enquiry__figure img{height:100%;min-height:100%}
+  .enquiry__figure::after{
+    background:linear-gradient(to right,rgba(11,13,12,.92),rgba(11,13,12,0) 42%)}
+  .enquiry__pane{
+    padding:var(--s5) clamp(2rem,4vw,4rem) var(--s5)
+            max(var(--gut),calc((100vw - var(--page))/2 + var(--gut)));
+  }
+}
+.form{margin-top:var(--s5);max-width:38rem}
+.field{margin-top:var(--s4)}
+.row{display:grid;gap:0 var(--s3);grid-template-columns:minmax(0,1fr)}
+@media(min-width:620px){
+  .row{grid-template-columns:repeat(2,minmax(0,1fr));align-items:start}
+  /* both hints in a row reserve three lines, so the two controls sit on one
+     line without the taller field dragging its neighbour down when an error
+     appears under it. */
+  .row > .field .hint{min-height:4.8em}
+}
+.field > label,.field legend{
+  display:block;font-weight:700;font-size:.9375rem;letter-spacing:.02em;color:var(--bone);
+}
+.hint{display:block;margin-top:.4rem;font-size:var(--t-small);color:var(--loam);max-width:40em}
+.control{
+  display:block;width:100%;margin-top:.7rem;
+  background:var(--bench);color:var(--bone);
+  border:1px solid var(--edge);border-radius:0;
+  padding:.85rem .9rem;font:var(--t-body)/1.4 var(--sans);
+  min-height:50px;appearance:none;
+  transition:border-color var(--m-fast),background var(--m-fast);
+}
+textarea.control{resize:none;min-height:7.5rem;line-height:1.55}
+.control::-webkit-outer-spin-button,.control::-webkit-inner-spin-button{appearance:none;margin:0}
+.control:hover{border-color:var(--bone)}
+.control:focus-visible{border-color:var(--lamp);background:#1c211d;outline-offset:1px}
+.control[aria-invalid="true"]{border-color:var(--lamp);border-left-width:4px;padding-left:.75rem}
+
+.choices{display:grid;gap:.5rem;margin-top:.8rem}
+@media(min-width:620px){.choices{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.choice{display:flex;align-items:center;gap:.7rem;padding:.75rem .9rem;min-height:50px;
+  border:1px solid var(--edge);cursor:pointer;
+  transition:border-color var(--m-fast),background var(--m-fast)}
+.choice:hover{border-color:var(--bone);background:var(--floor)}
+.choice input{
+  appearance:none;flex:none;width:18px;height:18px;margin:0;
+  border:1px solid var(--edge);background:var(--pit);cursor:pointer;
+  display:grid;place-content:center;
+}
+.choice input::before{content:"";width:8px;height:8px;background:var(--lamp);
+  transform:scale(0);transition:transform var(--m-fast) var(--ease)}
+.choice input:checked::before{transform:scale(1)}
+.choice input:checked{border-color:var(--lamp)}
+.choice:has(input:checked){border-color:var(--lamp);background:var(--bench)}
+.choice span{font-size:.9375rem}
+.choice:has(input:focus-visible){outline:2px solid var(--lamp);outline-offset:3px}
+
+.err{display:block;margin-top:.55rem;font-size:var(--t-small);font-weight:700;color:var(--lamp)}
+.err:empty{display:none}
+
+.summary{border:1px solid var(--lamp);border-left-width:4px;padding:var(--s3);background:var(--floor)}
+.summary h3{color:var(--lamp)}
+.summary ul{margin-top:var(--s2);display:grid;gap:.5rem}
+.summary a{color:var(--bone);font-size:.9375rem;text-underline-offset:.25em}
+.summary a:hover{color:var(--lamp)}
+
+.form__foot{margin-top:var(--s4);display:flex;flex-wrap:wrap;align-items:center;gap:var(--s3)}
+.form__foot p{font-size:var(--t-small);color:var(--loam);max-width:24em}
+
+.receipt{margin-top:var(--s5);max-width:38rem;border-top:2px solid var(--lamp);padding-top:var(--s3)}
+.receipt h3{color:var(--lamp)}
+.receipt > p{margin-top:var(--s2);color:var(--loam);font-size:.9375rem;max-width:36em}
+.receipt dl{margin:var(--s4) 0 0;display:grid;gap:0}
+.receipt div{display:grid;gap:.25rem;padding:.8rem 0;border-top:1px solid var(--rule);
+  grid-template-columns:minmax(0,1fr)}
+@media(min-width:560px){.receipt div{grid-template-columns:11rem minmax(0,1fr);gap:var(--s2)}}
+.receipt dt{font:700 var(--t-micro)/1.4 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--loam)}
+.receipt dd{margin:0;font-size:.9375rem}
+.receipt__act{margin-top:var(--s4)}
+.linkish{background:none;border:0;padding:0;cursor:pointer;font-size:var(--t-small);
+  font-weight:700;letter-spacing:.06em;color:var(--bone);
+  text-decoration:underline;text-underline-offset:.3em;text-decoration-color:var(--edge)}
+.linkish:hover{color:var(--lamp);text-decoration-color:var(--lamp)}
+
+/* ---------- footer ---------- */
+.foot{padding-block:var(--s5)}
+.foot__grid{display:grid;gap:var(--s4);grid-template-columns:minmax(0,1fr)}
+@media(min-width:760px){.foot__grid{grid-template-columns:minmax(0,1fr) minmax(0,1.2fr)}}
+.foot__name{font-weight:700;font-size:.9375rem;letter-spacing:.14em;text-transform:uppercase}
+.foot address{font-style:normal;margin-top:var(--s2);color:var(--loam);font-size:.9375rem}
+.foot address a{color:var(--bone);text-underline-offset:.25em;text-decoration-color:var(--edge)}
+.foot address a:hover{text-decoration-color:var(--lamp)}
+.foot ul{display:grid;gap:.7rem}
+.foot li{color:var(--loam);font-size:.9375rem;padding-left:var(--s3);
+  border-left:1px solid var(--rule)}
+
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition-duration:1ms!important;animation-duration:1ms!important}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to the content</a>
+
+<header class="masthead">
+ <div>
+  <span class="mark">
+    <svg viewBox="0 0 17 33" role="img" aria-label="Marrow and Kell: the five partials of a bell ruled against true, flat to the left and sharp to the right" focusable="false">
+      <g stroke="currentColor" fill="none" stroke-linecap="butt">
+        <path stroke-width="2.8" d="M2.8 4H9M9 10.5h3.6M4.6 17H9M9 23.5h2.8M7.2 30H9"/>
+        <path stroke-width="1.3" d="M9 1.5v30"/>
+      </g>
+    </svg>
+    <span class="mark__name">Marrow &amp; Kell<span class="mark__role">Bellfounders</span></span>
+  </span>
+  <nav aria-label="Sections of this page">
+    <a href="#refusals">What we will not do</a>
+    <a href="#partials">The five partials</a>
+    <a href="#bench">The tuning book</a>
+  </nav>
+  <a class="btn btn--primary btn--sm" href="#enquiry">Enquire</a>
+ </div>
+</header>
+
+<main id="main">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero" aria-labelledby="h-hero">
+    <div class="hero__copy">
+      <p class="eyebrow">Bell tuning and frame work, Suffolk</p>
+      <h1 id="h-hero">A tuned bell is a lighter bell</h1>
+      <p class="lede">We re-tune rings of bells. Metal is cut from the inside wall at the five
+        heights where the partials sound, until the bell agrees with itself. Nothing is added,
+        and nothing goes back on.</p>
+      <div class="hero__acts">
+        <a class="btn btn--primary" href="#enquiry">Enquire about your ring</a>
+        <a class="btn btn--ghost" href="#bench">See what came off the tenor</a>
+      </div>
+      <p class="hero__caveat">A cracked bell is not a tuning job, and we will say so before we
+        quote for anything. <a href="#refusals">Three things we will not do</a>.</p>
+    </div>
+    <figure class="hero__figure">
+      <picture>
+        <source media="(max-width:620px)" srcset="assets/swarf-390.webp" width="390" height="488">
+        <source media="(max-width:1100px)" srcset="assets/swarf-800.webp" width="800" height="533">
+        <img src="assets/swarf-1400.webp" width="1400" height="933" fetchpriority="high" decoding="sync"
+             data-asset="swarf"
+             alt="A curl of bronze swarf lifting off the cutting tool inside a bell, the fresh cut bright against the dark patina around it.">
+      </picture>
+      <figcaption class="figcap">Swarf off the soundbow. Every curl is a partial moving.</figcaption>
+    </figure>
+  </section>
+
+  <!-- ============ REFUSALS ============ -->
+  <section class="band" id="refusals" aria-labelledby="h-refusals">
+    <div class="wrap">
+      <div class="band__head">
+        <span class="eyebrow">Before anything else</span>
+        <h2 id="h-refusals">Three things we will not do</h2>
+        <p class="lede">Tuning is permanent, and a foundry that will take any job is a foundry
+          that will take yours. These are the three we turn down most often.</p>
+      </div>
+      <ul class="refusals">
+        <li class="refusal">
+          <p class="refusal__no">01</p>
+          <h3>Tune a cracked bell</h3>
+          <p>A crack is not a tuning fault and cutting metal will not close it. A cracked bell is
+            a different job and often a different firm: it is welded, re-cast, or hung dead and
+            chimed. We will tell you which before we quote for anything.</p>
+        </li>
+        <li class="refusal">
+          <p class="refusal__no">02</p>
+          <h3>Lift a bell on a verbal</h3>
+          <p>Bells in a church are under faculty jurisdiction. Your diocese decides, not your
+            churchwarden and not us. We are content to advise while the application is in, and to
+            wait while it is heard. That wait is normal and we plan around it.</p>
+        </li>
+        <li class="refusal">
+          <p class="refusal__no">03</p>
+          <h3>Quote from a photograph</h3>
+          <p>Weights and notes are matters of record and we will look them up ourselves. The
+            frame, the fittings and the state of the headstocks need somebody standing in the
+            tower, and that somebody is us.</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ THE FIVE PARTIALS ============ -->
+  <section class="band" id="partials" aria-labelledby="h-partials">
+    <div class="wrap">
+      <div class="split">
+        <div class="band__head">
+          <span class="eyebrow">What re-tuning is</span>
+          <h2 id="h-partials">One bell, five notes, five heights</h2>
+          <span class="eyebrow heights__cap" id="heights-cap">Crown at the top, lip at the bottom</span>
+          <ol class="heights" aria-labelledby="heights-cap">
+            <li><b>Hum</b><span>the crown</span></li>
+            <li><b>Prime</b><span>the upper waist</span></li>
+            <li><b>Tierce</b><span>the lower waist</span></li>
+            <li><b>Quint</b><span>above the soundbow</span></li>
+            <li><b>Nominal</b><span>the lip</span></li>
+          </ol>
+        </div>
+        <div class="prose">
+          <p>A bell does not sound one note. It sounds five that matter: the hum, the prime, the
+            tierce, the quint and the nominal. Each of them comes off a different height of the
+            inside wall, and a bell is in tune with itself when the five stand in the right
+            relation to one another. The trade calls that relation true-harmonic.</p>
+          <p>To move one of them you take metal away from the height it sounds from. Cut at the
+            lip and the nominal moves. Cut at the crown and the hum moves. There is no other
+            lever, which is why the last thing we do before the machine starts is agree exactly
+            how much is coming off and from where.</p>
+          <p>Bell metal is roughly 78&nbsp;% copper to 22&nbsp;% tin. It is hard, it is brittle,
+            and once it is off it is off.</p>
+        </div>
+      </div>
+    </div>
+    <figure class="bleed">
+      <picture>
+        <source media="(max-width:620px)" srcset="assets/bell-390.webp" width="390" height="390">
+        <source media="(max-width:1100px)" srcset="assets/bell-800.webp" width="800" height="533">
+        <img src="assets/bell-1400.webp" width="1400" height="933" decoding="sync"
+             data-asset="bell-on-the-machine"
+             alt="A church bell standing mouth up on the bed of a vertical boring machine in a dark foundry, the tool head lowered into it.">
+      </picture>
+      <figcaption class="figcap">Mouth up on the machine. Out of the frame, out of the
+        tower.</figcaption>
+    </figure>
+  </section>
+
+  <!-- ============ THE TUNING BOOK ============ -->
+  <section class="band" id="bench" aria-labelledby="h-bench">
+    <div class="wrap">
+      <div class="band__head">
+        <span class="eyebrow">The tuning book, published in full</span>
+        <h2 id="h-bench">What came off St&nbsp;Æthelburga's tenor</h2>
+        <p class="lede">14&nbsp;cwt, nominal C sharp, tuned true-harmonic in 1904. It came back on
+          our machine in 2019. Every figure is cents away from true: nought is where the partial
+          should sit, a minus is flat of it and a plus is sharp.</p>
+      </div>
+
+      <div class="bench" id="benchRoot">
+
+        <div class="bench__switch">
+          <div class="switch" role="group" aria-label="Which state of the tuning book to show">
+            <button type="button" data-state="before" aria-pressed="true">
+              <b>1904</b><span>As it came in</span>
+            </button>
+            <button type="button" data-state="after" aria-pressed="false">
+              <b>2019</b><span>As it went out</span>
+            </button>
+          </div>
+          <p class="switch__hint">Switch the book and the bars move to where the partials
+            finished. The pale mark stays where each one started.</p>
+          <p class="vh" role="status" id="benchStatus">Showing the 1904 figures, as the bell came in.</p>
+        </div>
+
+        <div class="bench__table">
+          <table class="book" id="book">
+            <caption>St Æthelburga's tenor: five partials, in cents from true-harmonic, with the
+              weight of metal taken off each band.</caption>
+            <colgroup>
+              <col class="w-name"><col class="w-track"><col class="w-cents"><col class="w-metal">
+            </colgroup>
+            <thead>
+              <tr>
+                <th scope="col">Partial</th>
+                <th scope="col"><span class="vh">Drawn to scale, flat to the left and sharp to the right</span></th>
+                <th scope="col" class="c-cents">Cents</th>
+                <th scope="col" class="c-metal">Metal off</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr data-before="-31" data-after="-4" data-metal="2">
+                <th scope="row">Hum<small>cut at the crown</small></th>
+                <td><span class="track"><span class="track__was"></span><span class="track__ghost"></span><span class="track__bar"></span><span class="track__zero"></span></span></td>
+                <td class="c-cents">−31</td>
+                <td class="c-metal">–</td>
+              </tr>
+              <tr data-before="18" data-after="3" data-metal="3">
+                <th scope="row">Prime<small>cut at the upper waist</small></th>
+                <td><span class="track"><span class="track__was"></span><span class="track__ghost"></span><span class="track__bar"></span><span class="track__zero"></span></span></td>
+                <td class="c-cents">+18</td>
+                <td class="c-metal">–</td>
+              </tr>
+              <tr data-before="-22" data-after="-5" data-metal="4">
+                <th scope="row">Tierce<small>cut at the lower waist</small></th>
+                <td><span class="track"><span class="track__was"></span><span class="track__ghost"></span><span class="track__bar"></span><span class="track__zero"></span></span></td>
+                <td class="c-cents">−22</td>
+                <td class="c-metal">–</td>
+              </tr>
+              <tr data-before="14" data-after="2" data-metal="5">
+                <th scope="row">Quint<small>cut above the soundbow</small></th>
+                <td><span class="track"><span class="track__was"></span><span class="track__ghost"></span><span class="track__bar"></span><span class="track__zero"></span></span></td>
+                <td class="c-cents">+14</td>
+                <td class="c-metal">–</td>
+              </tr>
+              <tr data-before="-9" data-after="2" data-metal="9">
+                <th scope="row">Nominal<small>cut at the lip</small></th>
+                <td><span class="track"><span class="track__was"></span><span class="track__ghost"></span><span class="track__bar"></span><span class="track__zero"></span></span></td>
+                <td class="c-cents">−9</td>
+                <td class="c-metal">–</td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td></td>
+                <td><span class="c-scale"><span>−40</span><span>true</span><span>+40</span></span></td>
+                <td colspan="2"></td>
+              </tr>
+            </tfoot>
+          </table>
+          <noscript>
+            <p class="book__note">Without scripting the table shows the 1904 figures. The 2019
+              figures were: hum −4, prime +3, tierce −5, quint +2, nominal +2 cents, for 2, 3, 4,
+              5 and 9 lb of metal off those five bands.</p>
+          </noscript>
+        </div>
+
+        <div class="bench__figure">
+          <span class="eyebrow">Metal off the tenor</span>
+          <span class="fig num">23<small>lb</small></span>
+          <p>Off a bell of 1,568&nbsp;lb. That is the whole price of the work in one figure, and
+            it does not go back on.</p>
+        </div>
+
+        <div class="bench__aside">
+          <h3>The one we did not get</h3>
+          <p>The tierce came in 22 cents flat and went out 5 cents flat, and it will stay 5 cents
+            flat. Bringing it the rest of the way meant cutting the lower waist thinner than we
+            are willing to leave a bell that has to keep swinging. We would rather publish the
+            five than take the metal.</p>
+        </div>
+
+        <div class="bench__foot">
+          <p class="book__note">Weights and notes are matters of record: any ring in the country
+            can be checked in Dove's Guide, and we expect ours to be. The cents are ours, taken
+            off the bell before the tool went in and again after it came out.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ENQUIRY ============ -->
+  <section class="enquiry" id="enquiry" aria-labelledby="h-enquiry">
+    <div class="enquiry__pane">
+      <div class="band__head">
+        <span class="eyebrow">Start here</span>
+        <h2 id="h-enquiry">Tell us about your ring</h2>
+        <p class="lede">We answer these ourselves. What we need first is the tower, the number of
+          bells and where you are with the faculty, because that last one changes what is worth
+          doing first. We will not quote from this.</p>
+      </div>
+
+      <form class="form" id="enquiryForm" novalidate>
+        <div id="summaryMount"></div>
+
+        <div class="field">
+          <label for="tower">Tower or church</label>
+          <span class="hint" id="tower-hint">As it is written in Dove's Guide, if you have it to
+            hand. The village will usually do.</span>
+          <input class="control" id="tower" name="tower" type="text" autocomplete="organization"
+                 aria-describedby="tower-hint tower-err">
+          <span class="err" id="tower-err"></span>
+        </div>
+
+        <div class="row">
+        <div class="field">
+          <label for="bells">Bells in the ring</label>
+          <span class="hint" id="bells-hint">One to twelve. Above twelve is rare enough that we
+            would rather ring you than write, so leave a number and we will call.</span>
+          <input class="control" id="bells" name="bells" type="text" inputmode="numeric"
+                 autocomplete="off" aria-describedby="bells-hint bells-err">
+          <span class="err" id="bells-err"></span>
+        </div>
+
+        <div class="field">
+          <label for="tenor">Tenor weight, if you know it</label>
+          <span class="hint" id="tenor-hint">In hundredweight, as it is quoted on the record. We
+            will look it up if you have not got it.</span>
+          <input class="control" id="tenor" name="tenor" type="text" autocomplete="off"
+                 aria-describedby="tenor-hint">
+        </div>
+        </div>
+
+        <fieldset class="field">
+          <legend>Where are you with the faculty?</legend>
+          <span class="hint" id="fac-hint">Work on a church bell needs permission from the
+            diocese. Knowing where you are changes what we can usefully do first, and it is not a
+            problem if the answer is nowhere.</span>
+          <div class="choices" role="radiogroup" aria-describedby="fac-hint fac-err" aria-labelledby="fac-legend">
+            <label class="choice"><input type="radio" name="faculty" value="Not started yet"><span>Not started yet</span></label>
+            <label class="choice"><input type="radio" name="faculty" value="Application with the diocese"><span>Application with the diocese</span></label>
+            <label class="choice"><input type="radio" name="faculty" value="Faculty granted"><span>Faculty granted</span></label>
+            <label class="choice"><input type="radio" name="faculty" value="Not a church bell"><span>Not a church bell</span></label>
+          </div>
+          <span class="err" id="fac-err"></span>
+        </fieldset>
+
+        <div class="row">
+        <div class="field">
+          <label for="name">Your name</label>
+          <span class="hint" id="name-hint">And your office if you hold one: churchwarden, tower
+            captain, architect.</span>
+          <input class="control" id="name" name="name" type="text" autocomplete="name"
+                 aria-describedby="name-hint name-err">
+          <span class="err" id="name-err"></span>
+        </div>
+
+        <div class="field">
+          <label for="email">Email</label>
+          <span class="hint" id="email-hint">We answer by email unless you have asked us to
+            ring.</span>
+          <input class="control" id="email" name="email" type="email" autocomplete="email"
+                 aria-describedby="email-hint email-err">
+          <span class="err" id="email-err"></span>
+        </div>
+        </div>
+
+        <div class="field">
+          <label for="phone">Telephone</label>
+          <span class="hint" id="phone-hint">We ring rather than write when a ring is large or a
+            bell is cracked.</span>
+          <input class="control" id="phone" name="phone" type="tel" autocomplete="tel"
+                 aria-describedby="phone-hint phone-err">
+          <span class="err" id="phone-err"></span>
+        </div>
+
+        <div class="field">
+          <label for="notes">What you have noticed</label>
+          <span class="hint" id="notes-hint">Out of tune with itself, a bell gone silent, a crack
+            you can see or hear. In your own words is fine.</span>
+          <textarea class="control" id="notes" name="notes" rows="4"
+                    aria-describedby="notes-hint"></textarea>
+        </div>
+
+        <div class="form__foot">
+          <button class="btn btn--primary" type="submit">Send the enquiry</button>
+          <p>We read every one. If what you describe is not a tuning job, we will say so and we
+            will not send you a quotation for one.</p>
+        </div>
+      </form>
+
+      <div id="receipt" hidden></div>
+    </div>
+
+    <figure class="enquiry__figure">
+      <picture>
+        <source media="(max-width:620px)" srcset="assets/bronze-390.webp" width="390" height="390">
+        <source media="(max-width:1100px)" srcset="assets/bronze-800.webp" width="800" height="450">
+        <img src="assets/bronze-1400.webp" width="1400" height="788" decoding="sync"
+             data-asset="bronze-after"
+             alt="The inside wall of a bell after tuning: bright machined bands crossing the older dark patina, tool marks running across them.">
+      </picture>
+    </figure>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap foot__grid">
+    <div>
+      <p class="foot__name">Marrow &amp; Kell, bellfounders</p>
+      <address>
+        The Bell Yard, Ballingdon, Sudbury, Suffolk<br>
+        <a href="mailto:foundry@marrowandkell.co.uk">foundry@marrowandkell.co.uk</a>
+      </address>
+    </div>
+    <ul>
+      <li>Weights and notes are matters of record. Dove's Guide has them and so do we.</li>
+      <li>Bell metal, roughly 78&nbsp;% copper to 22&nbsp;% tin.</li>
+      <li>A cracked bell is not a tuning job.</li>
+    </ul>
+  </div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ---------------- the tuning book ---------------- */
+  var SCALE = 40;                       /* cents mapped to half the track */
+  var root  = document.getElementById('benchRoot');
+  var rows  = Array.prototype.slice.call(document.querySelectorAll('#book tbody tr'));
+  var btns  = Array.prototype.slice.call(root.querySelectorAll('.switch button'));
+  var status= document.getElementById('benchStatus');
+
+  function pos(v) {                     /* -> {left, width} in per cent */
+    var mag = Math.min(Math.abs(v), SCALE) / SCALE * 50;
+    return v < 0 ? { left: 50 - mag, width: mag } : { left: 50, width: mag };
+  }
+  function sign(v) { return (v < 0 ? '−' : '+') + Math.abs(v); }
+
+  function paint(state) {
+    var after = state === 'after';
+    rows.forEach(function (tr) {
+      var before = Number(tr.dataset.before);
+      var value  = Number(after ? tr.dataset.after : tr.dataset.before);
+      var g = pos(before), b = pos(value);
+      var ghost = tr.querySelector('.track__ghost');
+      var bar   = tr.querySelector('.track__bar');
+      var was   = tr.querySelector('.track__was');
+      ghost.style.left = (before < 0 ? g.left : g.left + g.width) + '%';
+      was.style.left   = g.left + '%';
+      was.style.width  = g.width + '%';
+      bar.style.left   = b.left + '%';
+      bar.style.width  = b.width + '%';
+      tr.querySelector('.c-cents').textContent = sign(value);
+      tr.querySelector('.c-metal').textContent = after ? tr.dataset.metal + ' lb' : '–';
+    });
+    root.classList.toggle('is-after', after);
+    btns.forEach(function (b) {
+      b.setAttribute('aria-pressed', String(b.dataset.state === state));
+    });
+    status.textContent = after
+      ? 'Showing the 2019 figures, as the bell went out. Twenty three pounds of metal off, across five bands.'
+      : 'Showing the 1904 figures, as the bell came in. No metal off yet.';
+  }
+
+  btns.forEach(function (b) {
+    b.addEventListener('click', function () { paint(b.dataset.state); });
+  });
+  paint('before');
+
+  /* ---------------- the enquiry ---------------- */
+  var form    = document.getElementById('enquiryForm');
+  var mount   = document.getElementById('summaryMount');
+  var receipt = document.getElementById('receipt');
+
+  var FACULTY_NOTE = {
+    'Not started yet':
+      'Nothing is lost by starting with us. We can measure and advise while the application is drawn up.',
+    'Application with the diocese':
+      'Good. We will work to the date it is heard rather than the other way round.',
+    'Faculty granted':
+      'Then the next step is somebody of ours in the tower, not a quotation.',
+    'Not a church bell':
+      'Then the faculty does not apply, and the timetable is yours rather than the diocese’s.'
+    };
+
+  function val(id) { return document.getElementById(id).value.trim(); }
+
+  function setError(id, message) {
+    var field = document.getElementById(id);
+    var slot  = document.getElementById(id + '-err');
+    if (slot) slot.textContent = message || '';
+    if (!field) return;
+    if (message) field.setAttribute('aria-invalid', 'true');
+    else field.removeAttribute('aria-invalid');
+  }
+
+  function setRadioError(message) {
+    document.getElementById('fac-err').textContent = message || '';
+    var group = form.querySelector('.choices');
+    if (message) group.setAttribute('aria-invalid', 'true');
+    else group.removeAttribute('aria-invalid');
+  }
+
+  function clearErrors() {
+    ['tower', 'bells', 'name', 'email', 'phone'].forEach(function (id) { setError(id, ''); });
+    setRadioError('');
+    mount.innerHTML = '';
+  }
+
+  function faculty() {
+    var picked = form.querySelector('input[name="faculty"]:checked');
+    return picked ? picked.value : '';
+  }
+
+  function validate() {
+    var problems = [];
+
+    if (!val('tower')) {
+      problems.push({ id: 'tower', message: 'Give us the tower or the church. We will not know which ring you mean without it.' });
+    }
+
+    var bells = val('bells');
+    var n = Number(bells);
+    if (!bells) {
+      problems.push({ id: 'bells', message: 'Say how many bells are in the ring.' });
+    } else if (!/^\d+$/.test(bells)) {
+      problems.push({ id: 'bells', message: 'Bells in the ring has to be a whole number, so eight rather than “about eight”.' });
+    } else if (n < 1) {
+      problems.push({ id: 'bells', message: 'A ring has at least one bell.' });
+    } else if (n > 12) {
+      problems.push({ id: 'bells', message: 'Twelve is as far as this form goes. A ring larger than twelve is rare enough that we would rather talk it through, so leave a telephone number below and we will call you.' });
+      if (!val('phone')) {
+        problems.push({ id: 'phone', message: 'Above twelve bells we ring rather than write, so we need a number to call.' });
+      }
+    }
+
+    if (!faculty()) {
+      problems.push({ id: 'faculty', message: 'Tell us where you are with the faculty. It changes what we can usefully do first, and nowhere is a fine answer.' });
+    }
+
+    if (!val('name')) {
+      problems.push({ id: 'name', message: 'Give us a name to reply to.' });
+    }
+
+    var email = val('email');
+    if (!email) {
+      problems.push({ id: 'email', message: 'Give us an email address to reply to.' });
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) {
+      problems.push({ id: 'email', message: 'That address is missing an @ or a domain, so our reply would not reach you.' });
+    }
+
+    return problems;
+  }
+
+  function showSummary(problems) {
+    var box = document.createElement('div');
+    box.className = 'summary';
+    box.setAttribute('role', 'alert');
+    box.id = 'errorSummary';
+
+    var h = document.createElement('h3');
+    h.textContent = problems.length === 1
+      ? 'One thing to put right before this can go'
+      : problems.length + ' things to put right before this can go';
+    box.appendChild(h);
+
+    var list = document.createElement('ul');
+    problems.forEach(function (p) {
+      var li = document.createElement('li');
+      var a  = document.createElement('a');
+      a.href = '#' + (p.id === 'faculty' ? 'faculty-first' : p.id);
+      a.textContent = p.message;
+      a.addEventListener('click', function (e) {
+        e.preventDefault();
+        focusProblem(p.id);
+      });
+      li.appendChild(a);
+      list.appendChild(li);
+    });
+    box.appendChild(list);
+    mount.appendChild(box);
+  }
+
+  function focusProblem(id) {
+    var target = id === 'faculty'
+      ? form.querySelector('input[name="faculty"]')
+      : document.getElementById(id);
+    if (!target) return;
+    target.focus();
+    if (target.scrollIntoView) target.scrollIntoView({ block: 'center' });
+  }
+
+  function line(term, description) {
+    var row = document.createElement('div');
+    var dt  = document.createElement('dt');
+    var dd  = document.createElement('dd');
+    dt.textContent = term;
+    dd.textContent = description;
+    row.appendChild(dt);
+    row.appendChild(dd);
+    return row;
+  }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    clearErrors();
+
+    var problems = validate();
+    if (problems.length) {
+      problems.forEach(function (p) {
+        if (p.id === 'faculty') setRadioError(p.message);
+        else setError(p.id, p.message);
+      });
+      form.querySelector('input[name="faculty"]').id = 'faculty-first';
+      showSummary(problems);
+      focusProblem(problems[0].id);
+      return;
+    }
+
+    var picked = faculty();
+    receipt.innerHTML = '';
+
+    var wrap = document.createElement('div');
+    wrap.className = 'receipt';
+
+    var h = document.createElement('h3');
+    h.id = 'receiptHead';
+    h.tabIndex = -1;
+    h.textContent = 'Your enquiry is with the foundry';
+    wrap.appendChild(h);
+
+    var intro = document.createElement('p');
+    intro.textContent = 'This is what we have, word for word. ' + (FACULTY_NOTE[picked] || '');
+    wrap.appendChild(intro);
+
+    var dl = document.createElement('dl');
+    dl.appendChild(line('Tower or church', val('tower')));
+    dl.appendChild(line('Bells in the ring', val('bells')));
+    dl.appendChild(line('Tenor weight', val('tenor') || 'Not given, we will look it up'));
+    dl.appendChild(line('Faculty', picked));
+    dl.appendChild(line('Name', val('name')));
+    dl.appendChild(line('Email', val('email')));
+    dl.appendChild(line('Telephone', val('phone') || 'Not given'));
+    dl.appendChild(line('What you have noticed', val('notes') || 'Nothing added'));
+    wrap.appendChild(dl);
+
+    var foot = document.createElement('p');
+    foot.textContent = 'We answer these ourselves, in the order they arrive. If what you have described is not a tuning job we will say so, and we will not send you a quotation for one.';
+    wrap.appendChild(foot);
+
+    var actions = document.createElement('p');
+    actions.className = 'receipt__act';
+    var again = document.createElement('button');
+    again.type = 'button';
+    again.className = 'linkish';
+    again.textContent = 'Change something and send it again';
+    again.addEventListener('click', function () {
+      receipt.hidden = true;
+      receipt.innerHTML = '';
+      form.hidden = false;
+      document.getElementById('tower').focus();
+    });
+    actions.appendChild(again);
+    wrap.appendChild(actions);
+
+    receipt.appendChild(wrap);
+    form.hidden = true;
+    receipt.hidden = false;
+    h.focus();
+  });
+})();
+</script>
+</body>
+</html>
