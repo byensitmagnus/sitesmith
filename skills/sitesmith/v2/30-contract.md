@@ -41,6 +41,12 @@ consistent *with*.
 Write `DESIGN-SYSTEM.md` at the project root **before the first page**. It has five parts.
 Parts 1, 4 and 5 are checked mechanically. Parts 2 and 3 are checked by reading.
 
+**The project root, not beside the page.** The contract governs every page in the project, so
+it sits above all of them — whether they are at the root, under `site/`, under `dist/`, or in
+a framework's own output directory. Three independent builds put it in two different places
+because a check downstream assumed the page was its sibling, and one builder moved the
+contract to satisfy the check. The check was wrong and is fixed; the rule here is the rule.
+
 A page uses values the contract declares, **or a one-off the contract documents**. Anything
 else is drift.
 

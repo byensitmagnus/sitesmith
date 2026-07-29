@@ -49,14 +49,23 @@ jobs:
 
       # Any page with a DESIGN-SYSTEM.md beside it may only use values that
       # contract declares. One benchmark has one today; the rest are the backlog.
+      # The page is next to the contract in the older benchmarks and under site/ in the newer
+      # ones, so this used to pass a path that did not exist and fail the contract for it.
+      # Three independent builds put DESIGN-SYSTEM.md in two different places, which says the
+      # layout was never stated rather than that two of them were careless. Find the page
+      # either way; a contract with no page at all is still a failure, and says so.
       - name: design-system contracts hold
         run: |
           fail=0
-          for c in benchmarks/*/DESIGN-SYSTEM.md; do
+          for c in benchmarks/*/DESIGN-SYSTEM.md benchmarks/*/site/DESIGN-SYSTEM.md; do
             [ -e "$c" ] || continue
-            echo "::group::$c"
-            node skills/sitesmith/scripts/token-drift.mjs \
-              "$(dirname "$c")/index.html" --contract "$c" || fail=1
+            d=$(dirname "$c")
+            if   [ -e "$d/index.html" ];      then page="$d/index.html"
+            elif [ -e "$d/site/index.html" ]; then page="$d/site/index.html"
+            else echo "::error::$c has no index.html beside it or under site/"; fail=1; continue
+            fi
+            echo "::group::$c → $page"
+            node skills/sitesmith/scripts/token-drift.mjs "$page" --contract "$c" || fail=1
             echo "::endgroup::"
           done
           # Every block reads from the reference contract, so a literal in a block
