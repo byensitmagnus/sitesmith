@@ -71,9 +71,8 @@ h1{font:600 clamp(1.6rem,3.4vw,2.3rem)/1.14 var(--serif);margin:0 0 10px;letter-
 .band b{color:var(--stamp)}
 
 /* ── shop layout: the goods, and a basket that stays put ──────────────── */
-.shop{display:grid;grid-template-columns:minmax(0,1fr) 336px;gap:clamp(28px,4vw,56px);
-      padding-block:clamp(26px,2.6vw,36px);align-items:start}
-@media (max-width:1000px){.shop{grid-template-columns:minmax(0,1fr)}}
+.shop{padding-block:clamp(26px,2.6vw,36px)}
+.shop > section{max-width:920px}
 .sectitle{font:600 1.24rem/1.3 var(--serif);margin:0 0 4px}
 .secnote{color:var(--ink-2);font-size:.95rem;margin:0 0 16px;max-width:58ch}
 
@@ -90,18 +89,15 @@ h1{font:600 clamp(1.6rem,3.4vw,2.3rem)/1.14 var(--serif);margin:0 0 10px;letter-
 .name{font:600 1.2rem/1.25 var(--serif);margin:0 0 3px}
 .blurb{color:var(--ink-2);font-size:.95rem;margin:0 0 12px;max-width:52ch}
 
-.specs{display:flex;flex-wrap:wrap;gap:0 26px;margin:0 0 14px;padding:0;list-style:none}
-.specs div{display:flex;flex-direction:column;gap:2px}
-.specs dt{font:600 .68rem/1 var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
-.specs dd{margin:0;font:600 1.06rem/1.2 var(--serif);letter-spacing:.005em}
-.specs .batch dd{font-size:.86rem;font-weight:400;color:var(--ink-2)}
+.specs{margin:0 0 14px;font:1.02rem/1.75 var(--serif);color:var(--ink-2)}
+.specs b{color:var(--ink);font-weight:600;white-space:nowrap}
+.specs .batch{display:block;font-size:.9rem;color:var(--ink-3)}
 
 /* The buying controls. Always on the page — never behind a disclosure. */
 .buy{display:flex;flex-wrap:wrap;align-items:flex-end;gap:14px;
      background:var(--paper-2);border:1px solid var(--rule);border-radius:var(--r);
      padding:14px 16px}
-.buy label{display:block;font:600 .68rem/1 var(--sans);letter-spacing:.1em;
-           text-transform:uppercase;color:var(--ink-3);margin-bottom:6px}
+.buy .say{font:1.06rem/1 var(--serif);color:var(--ink);white-space:nowrap}
 .metres{display:flex;align-items:stretch;border:2px solid var(--ink);border-radius:var(--r);
         background:var(--paper);overflow:hidden}
 .metres button{width:42px;border:0;background:transparent;color:var(--ink);cursor:pointer;
@@ -125,12 +121,18 @@ h1{font:600 clamp(1.6rem,3.4vw,2.3rem)/1.14 var(--serif);margin:0 0 10px;letter-
 .gone .restock{font-size:.95rem;color:var(--ink-2);margin:0}
 
 /* ── the basket ───────────────────────────────────────────────────────── */
-.basket{position:sticky;top:20px;border:2px solid var(--ink);border-radius:var(--r);
-        background:var(--paper);overflow:hidden}
-@media (max-width:1000px){.basket{position:static}}
-.basket h2{font:600 1.1rem/1 var(--serif);margin:0;padding:16px 18px;
-           background:var(--ink);color:var(--paper)}
-.basket .body{padding:16px 18px}
+/* The ticket is a counter docket: it is not there until something is on it, and then it is
+   across the foot of the window where a docket sits on a counter. */
+.basket{position:fixed;left:0;right:0;bottom:0;z-index:8;background:var(--paper);
+        border-top:2px solid var(--ink);box-shadow:0 -8px 24px rgb(25 23 19 / .1);
+        transform:translateY(101%);transition:transform .28s cubic-bezier(.2,.7,.2,1)}
+.basket.on{transform:none}
+@media (prefers-reduced-motion:reduce){.basket{transition:none}}
+.basket .body{max-width:var(--container);margin:0 auto;padding:14px var(--gutter) 16px;
+              display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px clamp(20px,4vw,48px);
+              align-items:end}
+@media (max-width:720px){.basket .body{grid-template-columns:minmax(0,1fr)}}
+.basket h2{font:600 .96rem/1 var(--serif);margin:0 0 8px;grid-column:1/-1}
 .guide{margin:0;color:var(--ink-2);font-size:.95rem}
 .guide b{color:var(--ink);display:block;margin-bottom:6px;font-size:1rem}
 .cuts{list-style:none;margin:0 0 4px;padding:0}
@@ -142,6 +144,13 @@ h1{font:600 clamp(1.6rem,3.4vw,2.3rem)/1.14 var(--serif);margin:0 0 10px;letter-
 .cuts .drop{grid-column:2/3;justify-self:end;background:none;border:0;padding:2px 0;
             font:600 .82rem/1 var(--sans);color:var(--ink-2);text-decoration:underline;cursor:pointer}
 .cuts .drop:hover{color:var(--stamp)}
+.basket .end{display:flex;flex-direction:column;align-items:flex-end;gap:7px;text-align:right}
+@media (max-width:720px){.basket .end{align-items:stretch;text-align:left}}
+.take{display:inline-block;font:700 1rem/1 var(--sans);padding:15px 24px;border-radius:var(--r);
+      background:var(--ink);color:var(--paper);text-decoration:none;min-height:48px;
+      white-space:nowrap}
+.take:hover{background:var(--oak)}
+.basket .smallprint{margin:0;max-width:34ch}
 .total{display:flex;align-items:baseline;justify-content:space-between;gap:12px;
        margin-top:14px;padding-top:12px;border-top:2px solid var(--ink)}
 .total span{font:600 .72rem/1 var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
@@ -152,7 +161,9 @@ h1{font:600 clamp(1.6rem,3.4vw,2.3rem)/1.14 var(--serif);margin:0 0 10px;letter-
 .smallprint{margin:14px 0 0;font-size:.86rem;color:var(--ink-3);line-height:1.5}
 
 footer{border-top:1px solid var(--rule);margin-top:clamp(30px,5vw,60px)}
-footer .wrap{padding-block:26px 46px;color:var(--ink-2);font-size:.92rem}
+footer .wrap{padding-block:26px 120px;color:var(--ink-2);font-size:.92rem}
+address{font-style:normal;font:1.02rem/1.75 var(--serif);color:var(--ink-2);max-width:56ch;margin:0 0 14px}
+address b{display:block;color:var(--ink);font-size:1.14rem;margin-bottom:2px}
 footer p{margin:0 0 8px;max-width:70ch}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
@@ -190,20 +201,29 @@ footer p{margin:0 0 8px;max-width:70ch}
     <div data-lines></div>
   </section>
 
-  <aside class="basket" aria-labelledby="basket-h">
-    <h2 id="basket-h">Your cuts</h2>
+  <aside class="basket" aria-labelledby="basket-h" data-dock>
     <div class="body">
+      <h2 id="basket-h">Your ticket</h2>
       <div data-basket></div>
-      <p class="done" role="status" data-said></p>
-      <p class="smallprint" id="counter">Whipping both ends is £1.80 a cut. Minimum cut 3 m.
-        A cut length cannot be returned, so we read the ticket back to you before the knife.</p>
+      <div class="end">
+        <a class="take" href="#counter">Take this to the counter</a>
+        <p class="smallprint">Whipping both ends is £1.80 a cut. We read the ticket back to you
+          before the knife.</p>
+      </div>
+      <p class="done skip" role="status" data-said></p>
     </div>
   </aside>
 </main>
 
-<footer>
+<footer id="counter">
   <div class="wrap">
-    <p>Trelfall &amp; Son, rope and cordage. Grimsby.</p>
+    <address>
+      <b>Trelfall &amp; Son</b>
+      Fish Dock Road, Grimsby DN31 3NW<br>
+      Open Monday to Saturday, 7am to 4pm. Closed for the dinner hour, 12 to 1.<br>
+      We do not take orders by telephone: a cut length cannot be returned, so we read
+      the ticket back to you at the bench before the knife goes near the coil.
+    </address>
     <p>No such counter exists: the shop, the lines and the batch numbers were written for a
       design exercise.</p>
   </div>
@@ -261,17 +281,14 @@ linesEl.innerHTML = LINES.map((L) => {
     <div>
       <h3 class="name">${L.name}</h3>
       <p class="blurb">${L.note}</p>
-      <dl class="specs">
-        <div><dt>Diameter</dt><dd>${L.dia}</dd></div>
-        <div><dt>Breaking load</dt><dd>${L.mbl}</dd></div>
-        <div><dt>Stretch</dt><dd>${L.stretch}</dd></div>
-        <div><dt>Per metre</dt><dd>${money(L.per)}</dd></div>
-        ${L.batch ? `<div class="batch"><dt>Batch</dt><dd>${L.batch}</dd></div>` : ''}
-      </dl>
+      <p class="specs"><b>${L.dia}</b> diameter, breaking load <b>${L.mbl}</b>,
+        stretches <b>${L.stretch}</b>, <b>${money(L.per)}</b> the metre.
+        ${L.batch ? `<span class="batch">Cut from batch ${L.batch}, certificate at the counter.</span>` : ''}</p>
       ${gone ? `<div class="buy"><p class="restock">Out of stock. The next coil lands 12 August.</p></div>`
       : `<div class="buy">
+        <span class="say" id="say-${L.id}">Cut me</span>
         <div>
-          <label for="m-${L.id}">Length, metres</label>
+          <label class="skip" for="m-${L.id}">Length in metres</label>
           <div class="metres">
             <button type="button" data-step="-1" data-for="${L.id}" aria-label="One metre less">&minus;</button>
             <input id="m-${L.id}" type="number" inputmode="decimal" min="${MIN_CUT}" max="${L.coil}"
@@ -280,9 +297,9 @@ linesEl.innerHTML = LINES.map((L) => {
             <button type="button" data-step="1" data-for="${L.id}" aria-label="One metre more">+</button>
           </div>
         </div>
+        <span class="say">metres, which comes to</span>
         <div class="cost">
-          <label id="c-${L.id}">This cut</label>
-          <span class="fig" data-cost="${L.id}" aria-labelledby="c-${L.id}"
+          <span class="fig" data-cost="${L.id}" aria-label="cost of this cut"
                 data-source="length times the published price per metre">${money(10 * L.per)}</span>
         </div>
         <button class="add" type="button" data-add="${L.id}">Add to the ticket</button>
@@ -313,23 +330,24 @@ function priceOf(L) {
 }
 
 /* ── the basket ───────────────────────────────────────────────────────── */
+const dock = document.querySelector('[data-dock]');
+
 function drawBasket() {
-  if (!cuts.length) {
-    basketEl.innerHTML = `<p class="guide"><b>Nothing on the ticket yet.</b>
-      Set a length against any line and add it. Each cut appears here with the batch it came
-      off, so what you carry out matches what the certificate says.</p>`;
-    return;
-  }
+  /* A counter docket does not exist before anything is cut, so there is no empty state to
+     write and no rail standing open beside the goods. */
+  dock.classList.toggle('on', cuts.length > 0);
+  if (!cuts.length) { basketEl.innerHTML = ''; return; }
   const total = cuts.reduce((s, c) => s + c.total, 0);
   basketEl.innerHTML =
     `<ul class="cuts">${cuts.map((c, i) => `
       <li>
-        <span class="what">${c.metres} m ${c.name}, ${c.dia}</span>
+        <span class="what">${c.metres}&nbsp;m of ${c.name}</span>
         <span class="amt">${money(c.total)}</span>
-        <span class="from">batch ${c.batch}</span>
+        <span class="from">${c.dia}, batch ${c.batch}</span>
         <button class="drop" type="button" data-drop="${i}">Remove</button>
       </li>`).join('')}</ul>
-     <div class="total"><span>Ticket total</span><b data-source="the sum of the cuts above">${money(total)}</b></div>`;
+     <div class="total"><span>${cuts.length} cut${cuts.length > 1 ? 's' : ''}</span>
+       <b data-source="the sum of the cuts above">${money(total)}</b></div>`;
 }
 
 document.addEventListener('input', (e) => {

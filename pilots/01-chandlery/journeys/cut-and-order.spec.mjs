@@ -22,10 +22,11 @@ const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
 page.on('pageerror', (e) => problems.push('page error: ' + e.message));
 await page.goto(BASE, { waitUntil: 'networkidle' });
 
-/* ── 1. the ticket starts empty and says so in words ────────────────────── */
-const guide = await page.locator('.guide').innerText();
-check('the empty ticket explains what will appear', /nothing on the ticket yet/i.test(guide), guide.slice(0, 60));
-check('the empty ticket says why the batch is recorded', /batch/i.test(guide));
+/* ── 1. there is no ticket until something is cut ───────────────────────── */
+check('no docket stands open before the first cut',
+  !(await page.locator('[data-dock]').evaluate((e) => e.classList.contains('on'))));
+check('and nothing of it is on screen',
+  (await page.locator('.cuts').count()) === 0);
 
 /* ── 2. the buying control is on the page, not behind a disclosure ──────── */
 const visibleInputs = await page.locator('input[data-metres]:visible').count();
@@ -64,8 +65,14 @@ check('and the price comes back', (await cost.innerText()).trim() === '£103.75'
 /* ── 6. adding the cut changes the ticket, with the batch on it ─────────── */
 await page.click('[data-add="DB12"]');
 await page.waitForTimeout(80);
+check('the docket arrives with the first cut',
+  await page.locator('[data-dock]').evaluate((e) => e.classList.contains('on')));
+check('and it offers somewhere to take it',
+  await page.locator('.take').isVisible());
 const ticket = await page.locator('.cuts').innerText();
-check('the cut appears on the ticket', /25 m Double braid polyester/i.test(ticket), ticket.slice(0, 80));
+check('the cut appears on the ticket',
+  /25\s*m of Double braid polyester/i.test(ticket),
+  ticket.split('\n').join(' ').slice(0, 80));
 check('the ticket names the batch it was cut from', /DB12-2426/.test(ticket));
 check('the ticket total is the cut', (await page.locator('.total b').innerText()).trim() === '£103.75');
 check('and it is said out loud for a screen reader',
@@ -84,6 +91,10 @@ await page.click('[data-drop="0"]');
 await page.waitForTimeout(80);
 check('removing a cut restores the total', (await page.locator('.total b').innerText()).trim() === '£24.00',
   await page.locator('.total b').innerText());
+await page.click('[data-drop="0"]');
+await page.waitForTimeout(90);
+check('and emptying it puts the docket away again',
+  !(await page.locator('[data-dock]').evaluate((e) => e.classList.contains('on'))));
 
 /* ── 8. the out-of-stock line offers no control and says when it returns ── */
 check('the out-of-stock line has no length field',
