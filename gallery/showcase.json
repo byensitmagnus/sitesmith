@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "status": "reset",
+  "target": 8,
+  "approved": [],
+  "groups": [
+    {
+      "id": "round-8",
+      "cases": [
+        "10-tannery/site",
+        "11-seed-library/site",
+        "12-tideworks/site"
+      ],
+      "individualReview": "pass",
+      "portfolioDiversity": "fail",
+      "report": "docs/v2/preflight/round-8/diversity/portfolio.json"
+    }
+  ]
+}

@@ -279,7 +279,7 @@
       "competitorSha": "—",
       "sitesmithStatus": "partial",
       "decision": "implement",
-      "rationale": "No competitor benchmarks its own effect. SiteSmith has the harness — pinned base digest, internal network, exact-host egress proxy, two gates, 63 self-tests — but has not run the 18 generations, so the claim is unproven.",
+      "rationale": "No competitor benchmarks its own effect. SiteSmith retains a harness with a pinned base digest, internal network, exact-host egress proxy, two gates and 63 self-tests, but the proposed 18 paid generations were retired before generation, so no comparative claim is made.",
       "sitesmithFile": "tools/bench-container.mjs, bench/",
       "evidence": "63 runner self-tests pass; probe and generations not yet run",
       "licence": "original",

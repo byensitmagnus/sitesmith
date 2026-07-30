@@ -1,5 +1,9 @@
 # The isolated benchmark cannot run on this machine
 
+> **Archived decision, 30 July 2026.** The paid study described below was retired before
+> generation. The runner and unpaid CI isolation probe remain reproducibility evidence, but
+> `discovery` and `run-all` are not pending work or release blockers.
+
 > **Update, 2026-07-29. The isolation now runs — in CI, not here.** The machine below still has
 > no container runtime, and everything in this file about *this machine* is still true. What
 > changed is that the GitHub runner has Docker, so the mechanical gate stopped being an
@@ -19,9 +23,8 @@
 > off a created-but-unstarted copy, which is deterministic. That bug had never fired locally
 > because the gate had never been able to run locally at all.
 >
-> **Still not done, and still unpaid:** `discovery` and `run-all` spend model credits. The
-> eighteen generations are deliberately absent from CI — a paid call belongs behind an
-> explicit decision, not behind a push. No benchmark figure is claimed anywhere.
+> **Retired and unpaid:** `discovery` and `run-all` spend model credits. The eighteen generations
+> are absent from CI and are no longer planned. No benchmark figure is claimed anywhere.
 
 > Checked, not assumed. This is the one thing in the release plan that is blocked, and it is
 > blocked on the environment rather than on the code.

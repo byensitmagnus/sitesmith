@@ -228,16 +228,17 @@ def _gallery_assets() -> None:
                 fail(f"index.html:{line}", f"{attr} points at missing {target}")
 
 
-@check("the gallery only shows review-cleared benchmark cases")
+@check("the public showcase contains only portfolio-cleared cases")
 def _gallery_coverage() -> None:
-    """A case earns a gallery card by clearing the published review threshold.
+    """An individual score is necessary and insufficient for showcase eligibility.
 
-    The previous contract allowed only every benchmark or none. That made sense while every
-    page was a v1 test fixture, but became false as soon as Round 8 produced three reviewed
-    v2 cases. The source of truth is now the opened assignment key plus the result rows marked
-    ``meets 8``. Legacy fixtures remain in the repository and may not silently become proof.
+    Round 8 proved the gap: all three pages cleared the individual threshold while the
+    rendered portfolio failed five diversity checks and both reviewers described one studio
+    and one method. The committed showcase manifest now owns eligibility, and its diversity
+    report has to agree. A reset state is allowed, but it must show zero benchmark cases.
     """
     html = (ROOT / "index.html").read_text(encoding="utf-8")
+    readme = (ROOT / "README.md").read_text(encoding="utf-8")
     bench = ROOT / "benchmarks"
     pages = sorted(p.parent.relative_to(bench).as_posix() for p in bench.glob("*/index.html"))
     pages += sorted(p.parent.relative_to(bench).as_posix() for p in bench.glob("*/*/index.html"))
@@ -245,35 +246,66 @@ def _gallery_coverage() -> None:
     # so it is verified like a benchmark but does not claim a card in the gallery.
     pages = [p for p in pages if p != "blocks"]
 
-    shown = [p for p in pages if f'href="benchmarks/{p}/"' in html]
-    round_dir = ROOT / "docs" / "v2" / "preflight" / "round-8"
-    key = json.loads((round_dir / "KEY.json").read_text(encoding="utf-8"))
-    result = (round_dir / "RESULT.md").read_text(encoding="utf-8")
-    cleared = set(re.findall(r"^\| (SHEET-[A-Z0-9]+) \|.*\| meets 8 \|$", result, re.MULTILINE))
+    manifest_path = ROOT / "gallery" / "showcase.json"
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    status = manifest.get("status")
+    target = manifest.get("target")
+    approved = manifest.get("approved", [])
 
-    expected: dict[str, str] = {}
-    for label, assignment in key["assignment"].items():
-        if label not in cleared:
+    if status not in {"reset", "ready"}:
+        fail("gallery/showcase.json", f"status must be reset or ready, got {status!r}")
+    if not isinstance(target, int) or target < 1:
+        fail("gallery/showcase.json", "target must be a positive integer")
+    if len(approved) != len(set(approved)):
+        fail("gallery/showcase.json", "approved contains duplicate paths")
+    for page in approved:
+        if page not in pages:
+            fail("gallery/showcase.json", f"approved path has no benchmark page: {page}")
+
+    portfolio_eligible: set[str] = set()
+    for group in manifest.get("groups", []):
+        report_path = ROOT / group.get("report", "")
+        if not report_path.is_file():
+            fail("gallery/showcase.json", f"{group.get('id')} report does not exist: {group.get('report')}")
             continue
-        subject = assignment["subject"]
-        matches = [p for p in pages if p.endswith(f"-{subject}/site")]
-        if len(matches) != 1:
-            fail("docs/v2/preflight/round-8/KEY.json", f"{subject} maps to {len(matches)} benchmark pages")
-            continue
-        expected[label] = matches[0]
+        report = json.loads(report_path.read_text(encoding="utf-8"))
+        actual = "pass" if report.get("verdict", {}).get("pass") else "fail"
+        declared = group.get("portfolioDiversity")
+        if actual != declared:
+            fail("gallery/showcase.json", f"{group.get('id')} declares diversity {declared}, report says {actual}")
+        individual = group.get("individualReview")
+        if individual not in {"pass", "fail"}:
+            fail("gallery/showcase.json", f"{group.get('id')} individualReview must be pass or fail")
+        for page in group.get("cases", []):
+            if page not in pages:
+                fail("gallery/showcase.json", f"{group.get('id')} case has no benchmark page: {page}")
+            if actual == "pass" and individual == "pass":
+                portfolio_eligible.add(page)
 
-    for label, page in expected.items():
-        if page not in shown:
-            fail("index.html", f"review-cleared {label} has no card for benchmarks/{page}")
-        for width in ("desktop", "mobile"):
-            sheet = f"docs/v2/preflight/round-8/sheets/{label}-{width}.jpg"
-            if sheet not in html:
-                fail("index.html", f"review-cleared {label} does not show its {width} review sheet")
+    if status == "reset":
+        if approved:
+            fail("gallery/showcase.json", "reset status requires an empty approved list")
+        if 'data-showcase-status="reset"' not in html:
+            fail("index.html", "showcase manifest is reset but the page does not declare the reset")
+    elif len(approved) < target:
+        fail("gallery/showcase.json", f"ready status requires {target} approved cases, found {len(approved)}")
 
-    allowed = set(expected.values())
+    # Benchmark fixtures can be linked as evidence or embedded as diagnostic controls.
+    # Only an explicit showcase marker makes a page a public portfolio claim.
+    shown = [p for p in pages if f'data-showcase-case="{p}"' in html]
+    allowed = set(approved)
     for page in shown:
         if page not in allowed:
-            fail("index.html", f"benchmarks/{page} is shown without a published score meeting 8")
+            fail("index.html", f"benchmarks/{page} is shown without portfolio approval")
+    for page in approved:
+        if page not in portfolio_eligible:
+            fail("gallery/showcase.json", f"approved case lacks both page and portfolio approval: {page}")
+        if page not in shown:
+            fail("index.html", f"approved benchmark has no public showcase card: {page}")
+    for page in pages:
+        live = f"https://byensitmagnus.github.io/sitesmith/benchmarks/{page}/"
+        if live in readme and page not in allowed:
+            fail("README.md", f"links {page} as a public case without portfolio approval")
 
 
 @check("search.py answers on every domain and every stack")

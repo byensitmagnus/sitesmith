@@ -1,10 +1,17 @@
 # Round 8 — assets stopped being the worst thing on the page
 
+> **Correction — 30 July 2026.** The three pages passed their individual review threshold, but
+> the set fails the portfolio-diversity gate in five ways. Both reviewers also described one
+> studio and one method. The public showcase is therefore **0/8**, not 3/8. The original reviews
+> below remain unchanged evidence; their scores never established portfolio eligibility. See the
+> [rendered diversity report](diversity/portfolio.json).
+
 Three new builds from three unrelated briefs, by three agents who never met, using the skill
 after the asset-plan step was added. Two assignment-blinded reviewers, the same seven criteria,
 the same 1–10 scale, the same threshold of 8. No threshold moved and no gate was made easier.
 
-**8.21 across the portfolio. 3 of 3 reach 8.** Round 7 was 7.67 and 0 of 3.
+**8.21 mean individual-review score. 3 of 3 reach the individual bar.** Round 7 was 7.67 and
+0 of 3. This is not a portfolio-diversity verdict.
 
 | label | subject | W | X | combined | |
 | --- | --- | --- | --- | --- | --- |
@@ -71,6 +78,12 @@ table with no affordance passes every gate this repository has and fails two rea
 not an argument for a new gate; it is the case for keeping both instruments.
 
 ## The portfolio question
+
+**Portfolio verdict: fail.** The rendered comparison records five convergences: the two light
+pages share a warm ground family; all three use letterspaced uppercase mono labels; all three use
+hairline separators; all three use tabular figures as a motif; and all three avoid elevation. That
+matches the reviewers' qualitative finding below. None of these pages is a current public
+showcase case.
 
 Both reviewers, independently: one studio and one method, three genuinely different executions.
 Both named the same shared devices — mono eyebrows, single hairline dividers, label/value

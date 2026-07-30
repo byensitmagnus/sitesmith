@@ -1,5 +1,9 @@
 # Release gap plan
 
+> **Archived 30 July 2026.** This plan predates the current `init → build → audit` product state.
+> The paid 18-run study in gap 8 was retired before generation and is not a release requirement.
+> Use [STATE.md](STATE.md) for current truth.
+
 Eight P0 gaps stand between `48aa17c` and version 1.0. Four P1 items are recorded and
 deferred. No new architecture: every P0 is a missing part of the pipeline that already
 exists, and the gate layer is frozen.
@@ -20,16 +24,15 @@ competitor commits in [`FINAL-COMPETITOR-AUDIT.md`](FINAL-COMPETITOR-AUDIT.md).
 | 5 | **command-vocabulary** — named commands, declared as data | missing | one canonical source | `init, shape, build, audit, harden, polish, doctor` exist and are bound to pipeline steps |
 | 6 | **install-update-doctor** | missing | `tools/` + canonical source | one documented command installs into a fresh temporary directory; `update` and `doctor` work |
 | 7 | **provider-packages** — Claude, Codex, Cursor from one source | missing | generator over the canonical source | all three trees regenerate identically and a drift check fails when they do not |
-| 8 | **measured-proof** — the 18 isolated generations | partial | the frozen runner at `f73fb89` | both probes green, 18 runs reported with medians, no token count used as quality |
+| 8 | **measured-proof** — the 18 isolated generations | retired | retained historical runner | removed from release scope; no comparative claim made |
 
 ### Ordering
 
-Gaps 1 and 2 are inside the pilot revision, which is the next action. Gap 4 is a production-gate
-rule and rides with it. Gaps 5, 6 and 7 are the product layer and belong after the benchmark,
-in phase 8. Gap 8 is the benchmark itself.
+This ordering is historical. Gap 8 no longer gates a release; the current product order is recorded
+in [STATE.md](STATE.md).
 
-That gives the sequence the mission already sets: revise the pilots → blind preflight →
-freeze → benchmark → product layer → release. Nothing here reorders it.
+The original sequence was pilot revision → assignment-blinded preflight → freeze → benchmark →
+product layer → release. It is retained here as provenance, not as the current roadmap.
 
 ---
 
@@ -61,6 +64,6 @@ because they change what "catching up" means:
 `google-fonts.csv` are large without being pipelines. Neither is a gap, and this plan does not
 treat them as one.
 
-**No competitor measures its own output.** None of the four has a benchmark, an isolation
-harness, or a claim about its effect that a reader could check. That is SiteSmith's strongest
-position and it is currently unproven — which is exactly why gap 8 is P0 and not P1.
+**No competitor measures its own output.** None of the four had a benchmark or an isolation
+harness in this audit. SiteSmith keeps its checker evidence narrow and makes no comparative
+effect claim; the retired study is not silently presented as future proof.

@@ -310,7 +310,7 @@
       "reads": [],
       "produces": [],
       "gate": "scripts/portfolio-diversity.mjs <url> <url> <url>",
-      "note": "Only when the project is one of several. A single site cannot repeat itself."
+      "note": "Lab-only, but mandatory before any multi-site set enters the public showcase. An individual score cannot override a failed portfolio-diversity result."
     },
     {
       "id": "production",

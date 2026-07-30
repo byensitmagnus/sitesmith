@@ -104,7 +104,8 @@ mandatory fourth phase.
 
 Portfolio diversity, assignment-blinded reviews, sealed keys and container isolation belong
 to the repository's benchmark lab. They run only for an explicit benchmark task, never while
-building one customer website. The boundary is recorded in
+building one customer website. They are mandatory before benchmark pages enter the public
+showcase: an individual critique pass is necessary and insufficient. The boundary is recorded in
 [RELEASE-MAP.md](../../docs/v2/RELEASE-MAP.md).
 
 ## 3. Precedence

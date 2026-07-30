@@ -1,6 +1,10 @@
-# v2 benchmark — does the skill change what an agent produces?
+# Archived v2 benchmark design
 
 > Original work, MIT.
+
+> **Status, 30 July 2026:** retired before generation. This directory preserves the proposed
+> reproducible method and the unpaid isolation probe. The eighteen paid runs are not pending and
+> are not part of the release plan. SiteSmith makes no skill-versus-control claim.
 
 The v1 benchmarks measured nine pages a person wrote while consulting the skill. That
 answers "can these pages pass a checker", which is not the question anyone has. The question
@@ -71,7 +75,7 @@ By reading, blind, on the rubric — because no script has an opinion about thes
 The automatic columns are a floor. A site can pass every one of them and be worthless, which
 is the entire reason the rubric exists.
 
-## Running it
+## Historical runner
 
 ```bash
 node tools/bench.mjs init  <brief> <arm> <n>     # scaffold a run, write the manifest
@@ -80,7 +84,8 @@ node tools/bench.mjs grade  <brief>               # shuffle, strip labels, open 
 ```
 
 `init` refuses to scaffold without a clean git tree, because a run whose skill commit is
-"main, roughly" is not reproducible.
+"main, roughly" is not reproducible. These commands document the retained harness; `run-all` is
+not a current project step.
 
 ## Honesty conditions
 

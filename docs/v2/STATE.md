@@ -1,6 +1,6 @@
 ---
 title: SiteSmith current state
-updated: 2026-07-29
+updated: 2026-07-30
 ai_generated: "(C)"
 ---
 
@@ -27,18 +27,18 @@ building one customer website. The boundary is in [RELEASE-MAP.md](RELEASE-MAP.m
   outrank the React dependency they include.
 - New direction contracts record visual density, motion intensity and aesthetic boldness as
   integers from 1 to 10. Tests prove those values alter candidate formation.
-- Round 8 scored 8.21 across three independent builds, with 3 of 3 above the fixed threshold of 8.
-  Assets moved from 6.17 to 8.67 after the asset-plan step; production-readiness did not rise, so
-  this is evidence about that criterion rather than generally warmer reviews.
+- Round 8 averaged 8.21 across three individual page reviews, with 3 of 3 above the fixed page
+  threshold. Assets moved from 6.17 to 8.67 after the asset-plan step. The set still failed the
+  portfolio-diversity gate in five ways, so none is a current showcase case.
 - The CI isolation probe runs both benchmark arms from the pinned image on an internal network
   behind the exact-host proxy.
 
 ## What is not proven
 
-- The paid 18-run skill-vs-control experiment has not run. SiteSmith therefore makes no claim that
-  it measurably improves an arbitrary external agent.
-- The new visible dials address the measured house-style mechanism, but no new portfolio review
-  has established that convergence is gone.
+- The proposed paid 18-run skill-vs-control experiment was retired before generation. SiteSmith
+  makes no claim that it measurably improves an arbitrary external agent.
+- The new visible dials address the measured house-style mechanism, but Round 8 proved that
+  convergence remains. The public showcase is reset to 0/8 until a diverse set passes.
 - Auto-detection covers Next.js, React/Vite and Astro. The other bundled stack datasets remain
   searchable guidance, not automatic adapters.
 - Round-8 reviewers found the tannery's mobile specification table technically scrollable but

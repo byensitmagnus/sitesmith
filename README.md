@@ -1,14 +1,16 @@
 # SiteSmith
 
-**Build websites worth shipping, not website-shaped output.**
+**A browser release loop for coding agents that build websites.**
 
 SiteSmith is a website-building skill for coding agents. It chooses a visual direction, builds in
 the detected stack, and checks the result in a real browser before it calls the site done. The
 ordinary workflow is three commands: `init → build → audit`.
 
-**[Open the live showcase](https://byensitmagnus.github.io/sitesmith/)** ·
+**[Open the live project page](https://byensitmagnus.github.io/sitesmith/)** ·
 **[Install SiteSmith](#install)** ·
-**[Read the Round 8 result](docs/v2/preflight/round-8/RESULT.md)**
+**[Why the showcase was reset](docs/v2/preflight/round-8/RESULT.md)**
+
+![SiteSmith project page showing its browser release rig and a deliberately blocked control page](gallery/sitesmith-home.png)
 
 > **Where this is.** The canonical layer is [`skills/sitesmith/v2/`](skills/sitesmith/v2/README.md):
 > a definition of done, sixty core rules, three mode files, a design-system contract and a block
@@ -18,36 +20,22 @@ ordinary workflow is three commands: `init → build → audit`.
 > **Product status.** V2 is pre-release on `main`. The benchmark lab is separate and never runs
 > during a customer-site build.
 >
-> **Evidence boundary.** Round 8's three independent builds scored 8.21 and all cleared the fixed
-> threshold. The isolated 18-run skill-vs-control experiment has not run, so SiteSmith does not
-> claim that it measurably improves an arbitrary agent yet. [Method.](benchmarks/v2/README.md)
+> **Evidence boundary.** SiteSmith's browser checks catch accessibility, links, console and
+> overflow defects. Round 8's three pages averaged 8.21 in individual review, but the set failed
+> portfolio diversity. SiteSmith does not claim that it measurably improves an arbitrary agent.
 
-## Three reviewed builds
+## Showcase reset: 0/8
 
-<table>
-  <tr>
-    <td width="33%">
-      <a href="https://byensitmagnus.github.io/sitesmith/benchmarks/10-tannery/site/"><img src="docs/v2/preflight/round-8/sheets/SHEET-K7-desktop.jpg" alt="Falkner and Vane tannery website review sheet"></a><br>
-      <strong>Falkner &amp; Vane</strong><br>Blind review: <strong>8.57</strong>
-    </td>
-    <td width="33%">
-      <a href="https://byensitmagnus.github.io/sitesmith/benchmarks/11-seed-library/site/"><img src="docs/v2/preflight/round-8/sheets/SHEET-W1-desktop.jpg" alt="Cleeve Seed Library website review sheet"></a><br>
-      <strong>Cleeve Seed Library</strong><br>Blind review: <strong>8.00</strong>
-    </td>
-    <td width="33%">
-      <a href="https://byensitmagnus.github.io/sitesmith/benchmarks/12-tideworks/site/"><img src="docs/v2/preflight/round-8/sheets/SHEET-B4-desktop.jpg" alt="Tideworks duty board review sheet"></a><br>
-      <strong>Tideworks duty board</strong><br>Blind review: <strong>8.07</strong>
-    </td>
-  </tr>
-</table>
+The three Round 8 pages cleared the individual score threshold. They still looked like one studio
+using one recipe. The rendered set failed on five shared devices: warm light grounds, uppercase mono
+labels, hairline separators, tabular figures and no elevation. Both assignment-blinded reviewers
+independently reached the same portfolio finding.
 
-Three separate agents built these from unrelated briefs. Two assignment-blinded reviewers scored
-them against the same fixed seven-criterion rubric. The portfolio scored **8.21**, and all three
-cleared 8. [Method, reviews, faults, and integrity limits.](docs/v2/preflight/round-8/RESULT.md)
-
-**Showcase status: 3/8.** Five more builds must earn the same bar before this repository claims an
-eight-site portfolio. The nine v1 pages remain as technical fixtures, not visual proof. There is no
-head-to-head evidence that SiteSmith beats another skill yet.
+They remain committed as benchmark evidence, but none is presented as showcase work. The public
+manifest now requires both an individual pass and a rendered portfolio-diversity pass, and CI checks
+that the website tells the same truth. [Raw diversity report](docs/v2/preflight/round-8/diversity/portfolio.json)
+· [reviews and correction](docs/v2/preflight/round-8/RESULT.md) ·
+[public manifest](gallery/showcase.json)
 
 ---
 
@@ -82,7 +70,7 @@ restrained motion."* Everything downstream follows from that sentence.
 
 **Renders and measures.** A bundled Playwright script screenshots at 375/768/1440, runs axe in
 **both** colour schemes, collects console errors, checks every link and detects horizontal overflow.
-Step 11 of the build process is *look at the screenshots*.
+The audit is incomplete until someone opens those screenshots and writes a specific criticism.
 
 **Treats anti-slop as judgement, not a ban list.** A purple gradient is slop when it's the accent
 because no palette was chosen. It's correct when it's the brand. The skill distinguishes the two —
@@ -119,11 +107,8 @@ The nine v1 builds pass the technical floor and the control does not:
 That is a real result about a real checker, and it is **not** a result about the skill: a person
 wrote those nine pages while reading the rules. The control was written to be bad.
 
-The v2 benchmark is designed to answer the narrower transfer question — does an agent handed a
-brief produce a better website with this than without it — with eighteen isolated runs and every
-run published including the bad ones. [Method, and the weaknesses of the
-design.](benchmarks/v2/README.md) The isolation probe is green; the paid generation runs have not
-started, so no transfer claim is made.
+The proposed eighteen-run skill-versus-control study was retired before generation. Its design is
+kept as historical methodology, not a pending promise. No transfer claim is made.
 
 ## Install
 
@@ -190,7 +175,7 @@ skills/sitesmith/
 benchmarks/                 v1: nine sites and the control. Legacy, kept for the measurements
   v2/                       the isolated benchmark: briefs, runs, rubric, results
 docs/v2/preflight/          historical review lab, never part of a normal website build
-index.html                  the gallery, published to GitHub Pages
+index.html                  the project page, published to GitHub Pages
 tools/                      repo self-checks, conformance ratchet, benchmark harness
 ```
 

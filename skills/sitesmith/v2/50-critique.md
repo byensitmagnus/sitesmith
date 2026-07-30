@@ -23,9 +23,10 @@ Merging them is how "PASS" came to mean "no defects found" and got read as "this
 
 - [1. What it runs on](#1-what-it-runs-on)
 - [2. The rubric](#2-the-rubric)
-- [3. Blind review](#3-blind-review)
+- [3. Assignment-blinded review](#3-assignment-blinded-review)
 - [4. The primary-criticism test](#4-the-primary-criticism-test)
 - [5. What a failure produces](#5-what-a-failure-produces)
+- [6. The public-portfolio gate](#6-the-public-portfolio-gate)
 
 ---
 
@@ -75,7 +76,7 @@ Each score under 7 requires one sentence naming the specific thing, with the scr
 region. "Feels generic" is not a finding. "Every section is a centred column of the same
 width on the same ground, so the page has no rhythm below the hero" is.
 
-## 3. Blind review
+## 3. Assignment-blinded review
 
 **Two independent reviewers.** Neither sees the other's scores until both are written and
 locked.
@@ -136,3 +137,19 @@ step to go back to:
 
 Going back to the direction lab after a build is expensive and is supposed to be. That cost
 is the reason the lab comes first.
+
+## 6. The public-portfolio gate
+
+Passing the page gate makes one page eligible for further review. It does **not** make the page
+showcase material. A public portfolio is a separate product surface and must prove that the skill
+does not keep applying one recognisable studio method to unrelated briefs.
+
+Before any benchmark case enters the public showcase, run `portfolio-diversity.mjs` on the full
+candidate set and ask both assignment-blinded reviewers the portfolio question: *with the copy and
+logos removed, could the closest pair be the same site?* The portfolio fails if either reviewer
+answers yes, describes one studio or one method, or the mechanical diversity gate fails. Numeric
+page scores cannot average that failure away.
+
+The public manifest must then agree with the rendered report. A failed group remains evidence, but
+none of its pages is an approved showcase case. This lab-only rule does not run for an ordinary
+single customer website; it is mandatory whenever this repository publishes a multi-site claim.

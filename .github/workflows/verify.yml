@@ -26,7 +26,7 @@ jobs:
       # the docs, and a smoke test of every search domain, stack and design system.
       - run: python tools/check-repo.py
 
-      # The blind-review key opens only after the reviews are locked, bound to this round's
+      # The assignment-blinded review key opens only after the reviews are locked, bound to this round's
       # hashes, and unedited since. Rounds 3 to 6 committed the key while reviewers were
       # working on the same filesystem, so this is the check that was missing then.
       - name: the sealed key opens only when it should
@@ -124,6 +124,14 @@ jobs:
               --out "/tmp/$(echo $b | tr / -)"
             echo "::endgroup::"
           done
+
+      # Individual review scores are not showcase eligibility. Round 8 cleared the page-level
+      # threshold and still rendered as one house style five different ways. The committed
+      # manifest names that result as a failure; this reruns the browser measurement and fails
+      # if the public status ever disagrees with what the pages actually render.
+      - name: showcase status matches rendered portfolio diversity
+        working-directory: benchmarks
+        run: node ../tools/showcase-gate.mjs --base http://localhost:4321 --out /tmp/showcase
 
       # The gallery makes the claims, so it is held to them. This also catches a
       # thumbnail or a benchmark link that was renamed but not updated.
@@ -231,7 +239,8 @@ jobs:
       #
       # The probe is UNPAID and takes no credential: bench/probe.sh contains no
       # ANTHROPIC_API_KEY and the selftest asserts that it does not. Nothing in this job can
-      # spend anything, and the eighteen generations are deliberately not run here.
+      # spend anything. The proposed eighteen paid generations were retired and are not a
+      # pending release step.
       - name: the runner's own rules, before it touches Docker
         run: node tools/bench-container.mjs selftest
 

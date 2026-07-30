@@ -1,0 +1,130 @@
+{
+  "sites": [
+    {
+      "label": "tannery",
+      "url": "http://127.0.0.1:4321/10-tannery/site/",
+      "m": {
+        "groundRgb": [
+          230,
+          220,
+          198
+        ],
+        "ground": "rgb(230, 220, 198)",
+        "luminance": 0.721,
+        "displayFamily": "Georgia",
+        "assetShare": 16.16,
+        "rasterImages": 0,
+        "strokeOnlySvgs": 0,
+        "monoCaps": 52,
+        "hairlines": 155,
+        "tabularNums": 42,
+        "shadowed": 0,
+        "cards": 0,
+        "firstScreen": {
+          "hasTable": true,
+          "columns": 4,
+          "heroTextShare": 2.8,
+          "largestAssetShare": 5.7
+        }
+      }
+    },
+    {
+      "label": "seed-library",
+      "url": "http://127.0.0.1:4321/11-seed-library/site/",
+      "m": {
+        "groundRgb": [
+          241,
+          232,
+          216
+        ],
+        "ground": "rgb(241, 232, 216)",
+        "luminance": 0.814,
+        "displayFamily": "Iowan Old Style",
+        "assetShare": 8.81,
+        "rasterImages": 0,
+        "strokeOnlySvgs": 4,
+        "monoCaps": 27,
+        "hairlines": 56,
+        "tabularNums": 54,
+        "shadowed": 0,
+        "cards": 0,
+        "firstScreen": {
+          "hasTable": false,
+          "columns": 5,
+          "heroTextShare": 12.1,
+          "largestAssetShare": 0.98
+        }
+      }
+    },
+    {
+      "label": "tideworks",
+      "url": "http://127.0.0.1:4321/12-tideworks/site/",
+      "m": {
+        "groundRgb": [
+          11,
+          15,
+          18
+        ],
+        "ground": "rgb(11, 15, 18)",
+        "luminance": 0.005,
+        "displayFamily": "ui-monospace",
+        "assetShare": 0,
+        "rasterImages": 0,
+        "strokeOnlySvgs": 0,
+        "monoCaps": 28,
+        "hairlines": 83,
+        "tabularNums": 348,
+        "shadowed": 0,
+        "cards": 0,
+        "firstScreen": {
+          "hasTable": true,
+          "columns": 2,
+          "heroTextShare": 0.8,
+          "largestAssetShare": 0
+        }
+      }
+    }
+  ],
+  "verdict": {
+    "pass": false,
+    "problems": [
+      "palette: tannery, seed-library share the light-warm ground family within 0.093 luminance. That is one palette recipe with the hue rotated, which is what the legacy set did nine times.",
+      "device: all 3 sites use letterspaced uppercase mono labels (tannery, seed-library, tideworks). A device every site shares belongs to the portfolio, not to any of them.",
+      "device: all 3 sites use hairline borders as the separator (tannery, seed-library, tideworks). A device every site shares belongs to the portfolio, not to any of them.",
+      "device: all 3 sites use tabular figures as a motif (tannery, seed-library, tideworks). A device every site shares belongs to the portfolio, not to any of them.",
+      "device: all 3 sites use no elevation anywhere (tannery, seed-library, tideworks). A device every site shares belongs to the portfolio, not to any of them."
+    ],
+    "notes": [],
+    "sigs": [
+      {
+        "label": "tannery",
+        "sig": "table+split4"
+      },
+      {
+        "label": "seed-library",
+        "sig": "split5+bigtype"
+      },
+      {
+        "label": "tideworks",
+        "sig": "table+split2"
+      }
+    ],
+    "fams": [
+      {
+        "label": "tannery",
+        "family": "light-warm",
+        "lum": 0.721
+      },
+      {
+        "label": "seed-library",
+        "family": "light-warm",
+        "lum": 0.814
+      },
+      {
+        "label": "tideworks",
+        "family": "dark-cool",
+        "lum": 0.005
+      }
+    ]
+  }
+}

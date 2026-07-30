@@ -3,302 +3,245 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>SiteSmith: build websites worth shipping</title>
-  <meta name="description" content="SiteSmith gives coding agents a design direction, a stack-specific build path, and a browser-based release gate. See three independently built, blind-reviewed websites.">
-  <meta name="theme-color" content="#f3efe3">
+  <title>SiteSmith: the browser decides when the site is done</title>
+  <meta name="description" content="SiteSmith is an open-source browser release harness for coding agents. It builds in your stack, checks the rendered page, and blocks defects before release.">
+  <meta name="theme-color" content="#2447ff">
   <link rel="canonical" href="https://byensitmagnus.github.io/sitesmith/">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="SiteSmith: build websites worth shipping">
-  <meta property="og:description" content="A website-building skill that chooses a direction, builds in your stack, and checks the browser before it calls the site done.">
+  <meta property="og:title" content="SiteSmith: the browser decides when the site is done">
+  <meta property="og:description" content="A browser release harness for coding agents that build websites.">
   <meta property="og:url" content="https://byensitmagnus.github.io/sitesmith/">
-  <meta property="og:image" content="https://byensitmagnus.github.io/sitesmith/docs/v2/preflight/round-8/sheets/SHEET-K7-desktop.jpg">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='5' fill='%23171711'/><path d='M8 23V9h5l3 6 3-6h5v14' fill='none' stroke='%23c9ff36' stroke-width='3'/></svg>">
+  <meta property="og:image" content="https://byensitmagnus.github.io/sitesmith/gallery/sitesmith-home.png">
+  <meta property="og:image:width" content="1440">
+  <meta property="og:image:height" content="900">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23071125'/><path d='M6 7h20v5H11v3h12v10H6v-5h12v-3H6z' fill='%23ffe45a'/></svg>">
   <link rel="stylesheet" href="site.css">
   <script src="site.js" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
 
-  <div class="release-strip" aria-label="Release status">
-    <span>Open source</span>
-    <span>V2 pre-release on main</span>
-    <span>MIT</span>
-  </div>
-
-  <header class="site-header">
-    <a class="brand" href="./" aria-label="SiteSmith home">
-      <span class="brand-mark" aria-hidden="true">M</span>
-      <span>sitesmith</span>
+  <header class="topbar">
+    <a class="wordmark" href="./" aria-label="SiteSmith home">
+      <span class="wordmark-stamp" aria-hidden="true">SS</span>
+      <span>SiteSmith</span>
     </a>
     <nav aria-label="Primary navigation">
-      <a href="#work">Work</a>
-      <a href="#method">Method</a>
-      <a href="#proof">Proof</a>
-      <a class="nav-cta" href="#install">Install</a>
+      <a href="#loop">The loop</a>
+      <a href="#evidence">Evidence</a>
+      <a href="#sources">Sources</a>
+      <a class="topbar-install" href="#install">Install</a>
     </nav>
   </header>
 
-  <main id="main">
+  <main id="main" data-showcase-status="reset">
     <section class="hero" aria-labelledby="hero-title">
       <div class="hero-copy">
-        <p class="eyebrow">A website-building skill for coding agents</p>
-        <h1 id="hero-title">Websites, not <em>website-shaped</em> output.</h1>
-        <p class="hero-lead">SiteSmith chooses a visual direction, builds in your actual stack, and checks the result in a browser before it calls the site done.</p>
+        <p class="hero-kicker">Open-source release harness for coding agents</p>
+        <h1 id="hero-title">Your agent says <span>done.</span> SiteSmith opens the browser.</h1>
+        <p class="hero-lead">Choose a direction, build in the detected stack, then render the actual page at three widths. Broken links, accessibility failures, console errors and overflow get a release verdict, not a shrug.</p>
         <div class="hero-actions">
-          <a class="button button-primary" href="#install">Install SiteSmith</a>
-          <a class="text-link" href="#work">See 3 reviewed builds <span aria-hidden="true">↓</span></a>
+          <a class="action action-light" href="#install">Install SiteSmith</a>
+          <a class="action action-ghost" href="https://github.com/byensitmagnus/sitesmith">View source</a>
         </div>
-        <dl class="hero-facts" aria-label="Round 8 results">
-          <div>
-            <dt>3 / 3</dt>
-            <dd>cleared the fixed bar</dd>
-          </div>
-          <div>
-            <dt>8.21</dt>
-            <dd>portfolio score</dd>
-          </div>
-          <div>
-            <dt>2</dt>
-            <dd>assignment-blinded reviewers</dd>
-          </div>
-        </dl>
+        <div class="truth-ticket">
+          <strong>Showcase reset: 0/8</strong>
+          <span>Three individually reviewed pages converged on one house style. We pulled them.</span>
+        </div>
       </div>
 
-      <figure class="hero-case">
-        <a href="benchmarks/10-tannery/site/" aria-label="Open the tannery benchmark site">
-          <picture>
-            <source media="(max-width: 700px)" srcset="docs/v2/preflight/round-8/sheets/SHEET-K7-mobile.jpg">
-            <img src="docs/v2/preflight/round-8/sheets/SHEET-K7-desktop.jpg" width="3966" height="1992" alt="Six views of a warm editorial tannery website with drawn leather profiles, specifications, timelines, and an enquiry form">
-          </picture>
-        </a>
-        <figcaption>
-          <span><b>01</b> Falkner &amp; Vane tannery</span>
-          <span class="score">Blind review <b>8.57</b></span>
-        </figcaption>
-      </figure>
+      <div class="test-rig" aria-label="Live browser test rig">
+        <div class="rig-head">
+          <div class="rig-title">
+            <span class="rig-light" aria-hidden="true"></span>
+            <span>Deliberately broken control</span>
+          </div>
+          <strong>11 blockers</strong>
+        </div>
+
+        <div class="rig-controls">
+          <div class="viewport-switcher" role="group" aria-label="Preview width">
+            <button type="button" data-viewport="375" aria-pressed="false"><b>375</b><span>phone</span></button>
+            <button type="button" data-viewport="768" aria-pressed="false"><b>768</b><span>tablet</span></button>
+            <button type="button" data-viewport="1440" aria-pressed="true"><b>1440</b><span>desktop</span></button>
+          </div>
+          <a href="benchmarks/06-redesign/before/">Open specimen</a>
+        </div>
+
+        <div class="rig-screen" data-screen>
+          <div class="rig-stage" data-stage>
+            <img data-specimen src="benchmarks/results/06-redesign-before/1440.png" width="2880" height="5472" alt="Desktop render of the deliberately generic ShiftFlow control page">
+          </div>
+        </div>
+
+        <div class="rig-verdict">
+          <div class="blocked-stamp">
+            <span>release</span>
+            <strong>blocked</strong>
+          </div>
+          <dl class="rig-findings">
+            <div><dt>8</dt><dd>dead links</dd></div>
+            <div><dt>2</dt><dd>serious axe</dd></div>
+            <div><dt>1</dt><dd>mobile overflow</dd></div>
+            <div><dt>0</dt><dd>console errors</dd></div>
+          </dl>
+        </div>
+      </div>
     </section>
 
-    <section class="loop" id="method" aria-labelledby="loop-title">
-      <div class="section-intro compact">
-        <p class="eyebrow">The ordinary workflow</p>
-        <h2 id="loop-title">Three commands. One finished site.</h2>
+    <section class="loop-section" id="loop" aria-labelledby="loop-title">
+      <div class="loop-heading">
+        <p>One short operating loop</p>
+        <h2 id="loop-title">The work changes. The release standard does not.</h2>
       </div>
-      <ol class="loop-steps">
-        <li>
-          <span class="step-number">01</span>
-          <h3>init</h3>
-          <p>Read the brief, detect the stack, choose a direction, and set density, motion, and boldness.</p>
-        </li>
-        <li>
-          <span class="step-number">02</span>
-          <h3>build</h3>
-          <p>Use the matching framework adapter, design tokens, real assets, and the right interaction states.</p>
-        </li>
-        <li>
-          <span class="step-number">03</span>
-          <h3>audit</h3>
-          <p>Render 375, 768, and 1440. Check axe, links, console errors, overflow, and the screenshots themselves.</p>
-        </li>
+
+      <div class="loop-console">
+        <div class="loop-tabs" role="tablist" aria-label="SiteSmith workflow">
+          <button id="tab-init" type="button" role="tab" aria-selected="false" aria-controls="panel-init" tabindex="-1">init</button>
+          <button id="tab-build" type="button" role="tab" aria-selected="false" aria-controls="panel-build" tabindex="-1">build</button>
+          <button id="tab-audit" type="button" role="tab" aria-selected="true" aria-controls="panel-audit">audit</button>
+        </div>
+
+        <div class="loop-panels">
+          <article id="panel-init" role="tabpanel" aria-labelledby="tab-init" hidden>
+            <div>
+              <p class="panel-state">Decide before CSS</p>
+              <h3>Turn evidence into a visual direction.</h3>
+              <p>SiteSmith reads the brief, detects the stack, plans real assets and compares three structurally different directions before a design contract exists.</p>
+            </div>
+            <ul>
+              <li>BRIEF.md</li>
+              <li>DIRECTION.md</li>
+              <li>ASSET-PLAN.md</li>
+              <li>DESIGN-SYSTEM.md</li>
+            </ul>
+          </article>
+
+          <article id="panel-build" role="tabpanel" aria-labelledby="tab-build" hidden>
+            <div>
+              <p class="panel-state">Build in context</p>
+              <h3>Use the repo's stack and wire a real journey.</h3>
+              <p>Next.js, React/Vite and Astro route to different adapters. The build follows the chosen direction and implements states, interaction and content without inventing proof.</p>
+            </div>
+            <ul>
+              <li>Stack adapter</li>
+              <li>Interaction contract</li>
+              <li>Responsive states</li>
+              <li>Working journey</li>
+            </ul>
+          </article>
+
+          <article id="panel-audit" role="tabpanel" aria-labelledby="tab-audit">
+            <div>
+              <p class="panel-state">The browser gets the last word</p>
+              <h3>Render, measure, look, then release.</h3>
+              <p>The audit runs the hard checks and opens every screenshot. A technical pass is only the floor; a named visual criticism still has to be corrected.</p>
+            </div>
+            <ul>
+              <li>375 / 768 / 1440</li>
+              <li>Axe in both schemes</li>
+              <li>Links, console, overflow</li>
+              <li>Screenshot critique</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="evidence-section" id="evidence" aria-labelledby="evidence-title">
+      <div class="evidence-lead">
+        <p>Proof has edges</p>
+        <h2 id="evidence-title">The checker works. Visual variety is not yet proven.</h2>
+        <p class="evidence-summary">That distinction is now enforced in code. An individual page score can no longer put a case in the public showcase.</p>
+      </div>
+
+      <div class="evidence-board">
+        <div class="proven-list">
+          <h3>What works now</h3>
+          <ul>
+            <li><span aria-hidden="true">✓</span> Browser screenshots at 375, 768 and 1440</li>
+            <li><span aria-hidden="true">✓</span> Accessibility checks in both colour schemes</li>
+            <li><span aria-hidden="true">✓</span> Dead links, console errors and overflow detection</li>
+            <li><span aria-hidden="true">✓</span> Next.js, React/Vite and Astro routing</li>
+          </ul>
+        </div>
+        <aside class="not-proven" aria-labelledby="not-proven-title">
+          <span class="zero-eight" aria-hidden="true">0/8</span>
+          <h3 id="not-proven-title">No approved showcase yet.</h3>
+          <p>Round 8 averaged 8.21 in individual review. As a set, it failed five diversity checks and both reviewers saw one studio and one method.</p>
+          <a href="docs/v2/preflight/round-8/RESULT.md">Read the correction</a>
+        </aside>
+      </div>
+    </section>
+
+    <section class="reset-section" aria-labelledby="reset-title">
+      <div class="reset-copy">
+        <p>Failed portfolio gate</p>
+        <h2 id="reset-title">We rejected our own showcase.</h2>
+        <p>These five repeated decisions appeared across unrelated briefs. The pages remain benchmark evidence, but none gets a showcase badge.</p>
+        <a class="report-link" href="docs/v2/preflight/round-8/diversity/portfolio.json">Open the rendered report</a>
+      </div>
+      <ol class="failure-list">
+        <li><span>Warm ground family</span><b>2 of 3</b></li>
+        <li><span>Uppercase mono labels</span><b>3 of 3</b></li>
+        <li><span>Hairline separators</span><b>3 of 3</b></li>
+        <li><span>Tabular figures as motif</span><b>3 of 3</b></li>
+        <li><span>No elevation</span><b>3 of 3</b></li>
       </ol>
     </section>
 
-    <section class="showcase" id="work" aria-labelledby="work-title">
-      <div class="section-intro split-intro">
-        <div>
-          <p class="eyebrow">Current proof</p>
-          <h2 id="work-title">Three sites that earned their place.</h2>
-        </div>
-        <p>The nine v1 pages are still useful test fixtures. They are not the showcase. These three were built by separate agents from unrelated briefs, then scored by two reviewers who did not know which page they had.</p>
+    <section class="sources-section" id="sources" aria-labelledby="sources-title">
+      <div class="sources-copy">
+        <p>Open-source lineage</p>
+        <h2 id="sources-title">Four strong inputs. No inherited victory.</h2>
+        <p>SiteSmith combines ideas from these projects into one reproducible loop. That is architecture, not proof of better output. The output still has to earn the claim.</p>
       </div>
-
-      <div class="case-grid">
-        <article class="case-card case-wide">
-          <a class="case-image" href="benchmarks/10-tannery/site/" aria-label="Open the tannery benchmark">
-            <picture>
-              <source media="(max-width: 700px)" srcset="docs/v2/preflight/round-8/sheets/SHEET-K7-mobile.jpg">
-              <img src="docs/v2/preflight/round-8/sheets/SHEET-K7-desktop.jpg" width="3966" height="1992" loading="lazy" alt="Desktop review sheet for an editorial tannery website">
-            </picture>
-          </a>
-          <div class="case-meta">
-            <div>
-              <p class="case-index">01 / B2B editorial</p>
-              <h3>Falkner &amp; Vane</h3>
-              <p>Six hides explained through scaled drawings, material comparisons, and an enquiry journey.</p>
-            </div>
-            <div class="case-result">
-              <b>8.57</b>
-              <span>review score</span>
-            </div>
-          </div>
-          <div class="case-links">
-            <a href="benchmarks/10-tannery/site/">Open site</a>
-            <a href="https://github.com/byensitmagnus/sitesmith/blob/main/docs/v2/preflight/round-8/RESULT.md">Read review</a>
-          </div>
-        </article>
-
-        <article class="case-card">
-          <a class="case-image" href="benchmarks/11-seed-library/site/" aria-label="Open the seed library benchmark">
-            <picture>
-              <source media="(max-width: 700px)" srcset="docs/v2/preflight/round-8/sheets/SHEET-W1-mobile.jpg">
-              <img src="docs/v2/preflight/round-8/sheets/SHEET-W1-desktop.jpg" width="3966" height="1992" loading="lazy" alt="Desktop review sheet for a community seed library website with botanical drawings">
-            </picture>
-          </a>
-          <div class="case-meta">
-            <div>
-              <p class="case-index">02 / Community service</p>
-              <h3>Cleeve Seed Library</h3>
-              <p>A lending system made legible with seed drawings, seasonal logic, and one honest number.</p>
-            </div>
-            <div class="case-result">
-              <b>8.00</b>
-              <span>review score</span>
-            </div>
-          </div>
-          <div class="case-links">
-            <a href="benchmarks/11-seed-library/site/">Open site</a>
-            <a href="https://github.com/byensitmagnus/sitesmith/blob/main/docs/v2/preflight/round-8/RESULT.md">Read review</a>
-          </div>
-        </article>
-
-        <article class="case-card case-dark">
-          <a class="case-image" href="benchmarks/12-tideworks/site/" aria-label="Open the tideworks benchmark">
-            <picture>
-              <source media="(max-width: 700px)" srcset="docs/v2/preflight/round-8/sheets/SHEET-B4-mobile.jpg">
-              <img src="docs/v2/preflight/round-8/sheets/SHEET-B4-desktop.jpg" width="3966" height="1992" loading="lazy" alt="Desktop review sheet for a dark tidal lock operations board">
-            </picture>
-          </a>
-          <div class="case-meta">
-            <div>
-              <p class="case-index">03 / Operational product UI</p>
-              <h3>Tideworks duty board</h3>
-              <p>An imageless operations surface where tide, time, depth, and priority carry the design.</p>
-            </div>
-            <div class="case-result">
-              <b>8.07</b>
-              <span>review score</span>
-            </div>
-          </div>
-          <div class="case-links">
-            <a href="benchmarks/12-tideworks/site/">Open site</a>
-            <a href="https://github.com/byensitmagnus/sitesmith/blob/main/docs/v2/preflight/round-8/RESULT.md">Read review</a>
-          </div>
-        </article>
-      </div>
-
-      <aside class="eight-note" aria-label="Showcase status">
-        <span class="eight-count">3<span>/8</span></span>
-        <div>
-          <h3>Five more must earn the bar.</h3>
-          <p>SiteSmith does not have eight defensible showcase sites yet. It has three. We will not turn legacy builds into proof or claim a win over other tools without a controlled comparison.</p>
-        </div>
-        <a href="https://github.com/byensitmagnus/sitesmith/tree/main/benchmarks/v2">Benchmark method <span aria-hidden="true">↗</span></a>
-      </aside>
-    </section>
-
-    <section class="mechanism" aria-labelledby="mechanism-title">
-      <div class="section-intro">
-        <p class="eyebrow">Why the output changes</p>
-        <h2 id="mechanism-title">Direction before decoration. Evidence before done.</h2>
-      </div>
-      <div class="mechanism-grid">
-        <div class="mechanism-copy">
-          <p class="large-copy">Most website skills are rules. SiteSmith is a release loop.</p>
-          <p>It routes marketing, e-commerce, and product UI differently. It records a design direction before CSS. It makes variation visible through three dials. Then it verifies the built page in the browser.</p>
-          <a class="text-link" href="https://github.com/byensitmagnus/sitesmith/tree/main/skills/sitesmith">Read the skill <span aria-hidden="true">↗</span></a>
-        </div>
-        <dl class="dials" aria-label="Example design dials">
-          <div>
-            <dt>Density</dt>
-            <dd><span style="--dial: 70%"></span><b>7</b></dd>
-          </div>
-          <div>
-            <dt>Motion</dt>
-            <dd><span style="--dial: 30%"></span><b>3</b></dd>
-          </div>
-          <div>
-            <dt>Boldness</dt>
-            <dd><span style="--dial: 80%"></span><b>8</b></dd>
-          </div>
-          <div class="dial-note">
-            <dt>Not presets</dt>
-            <dd>The brief must justify each value. The values change candidate selection and review.</dd>
-          </div>
-        </dl>
-      </div>
-    </section>
-
-    <section class="evidence" id="proof" aria-labelledby="proof-title">
-      <div class="section-intro compact">
-        <p class="eyebrow">The evidence boundary</p>
-        <h2 id="proof-title">Strong claims need a narrow edge.</h2>
-      </div>
-      <div class="evidence-grid">
-        <article>
-          <span class="evidence-label yes">Proved</span>
-          <h3>Three independent builds cleared 8.</h3>
-          <p>Separate agents, unrelated briefs, the same fixed seven-criterion rubric, and two assignment-blinded reviews per build.</p>
-        </article>
-        <article>
-          <span class="evidence-label no">Not proved</span>
-          <h3>That SiteSmith beats every alternative.</h3>
-          <p>The isolated 18-run skill-versus-control experiment has not run. No head-to-head result is being implied here.</p>
-        </article>
-      </div>
-      <a class="button button-outline" href="https://github.com/byensitmagnus/sitesmith/blob/main/docs/v2/preflight/round-8/RESULT.md">Read the raw Round 8 result</a>
-    </section>
-
-    <section class="lineage" aria-labelledby="lineage-title">
-      <div>
-        <p class="eyebrow">Open-source lineage</p>
-        <h2 id="lineage-title">Four strong inputs. One rewritten pipeline.</h2>
-      </div>
-      <p>SiteSmith v2 is original work built on ideas from four openly licensed projects. Credit stays visible because the repository should be stronger than its sources without pretending it appeared from nowhere.</p>
-      <ul>
-        <li><a href="https://github.com/Leonxlnx/taste-skill">taste-skill <span>MIT</span></a></li>
-        <li><a href="https://github.com/nextlevelbuilder/ui-ux-pro-max-skill">ui-ux-pro-max <span>MIT</span></a></li>
-        <li><a href="https://github.com/anthropics/claude-plugins-official/tree/main/plugins/frontend-design">frontend-design <span>Apache 2.0</span></a></li>
-        <li><a href="https://github.com/pbakaus/impeccable">impeccable <span>Apache 2.0</span></a></li>
+      <ul class="source-list">
+        <li><a href="https://github.com/Leonxlnx/taste-skill"><strong>taste-skill</strong><span>brief inference, dials, AI tells</span><b>MIT</b></a></li>
+        <li><a href="https://github.com/nextlevelbuilder/ui-ux-pro-max-skill"><strong>ui-ux-pro-max</strong><span>datasets, search, UX rules</span><b>MIT</b></a></li>
+        <li><a href="https://github.com/anthropics/claude-plugins-official/tree/main/plugins/frontend-design"><strong>frontend-design</strong><span>aesthetic ambition</span><b>Apache 2.0</b></a></li>
+        <li><a href="https://github.com/pbakaus/impeccable"><strong>impeccable</strong><span>command vocabulary</span><b>Apache 2.0</b></a></li>
       </ul>
     </section>
 
-    <section class="install" id="install" aria-labelledby="install-title">
-      <div class="install-copy">
-        <p class="eyebrow">Install from main</p>
-        <h2 id="install-title">Put the release loop in your agent.</h2>
-        <p>Install the Claude plugin, or generate Claude, Codex, and Cursor provider packs from the same canonical pipeline.</p>
+    <section class="install-section" id="install" aria-labelledby="install-title">
+      <div class="install-heading">
+        <p>Install from main</p>
+        <h2 id="install-title">Put the browser between “done” and release.</h2>
       </div>
 
-      <div class="install-options">
+      <div class="command-stack">
         <article>
-          <div class="command-head">
-            <h3>Claude Code</h3>
-            <button class="copy-button" type="button" data-copy="claude plugin marketplace add byensitmagnus/sitesmith&#10;claude plugin install sitesmith@sitesmith" aria-describedby="copy-status">Copy</button>
+          <div class="command-label">
+            <h3>Claude Code plugin</h3>
+            <button class="copy-button" type="button" data-copy="claude plugin marketplace add byensitmagnus/sitesmith&#10;claude plugin install sitesmith@sitesmith" aria-describedby="copy-status">Copy command</button>
           </div>
           <pre tabindex="0"><code>claude plugin marketplace add byensitmagnus/sitesmith
 claude plugin install sitesmith@sitesmith</code></pre>
         </article>
-        <article>
-          <div class="command-head">
-            <h3>All provider packs</h3>
-            <button class="copy-button" type="button" data-copy="git clone https://github.com/byensitmagnus/sitesmith.git&#10;node sitesmith/bin/sitesmith.mjs install --to . --provider all" aria-describedby="copy-status">Copy</button>
-          </div>
-          <pre tabindex="0"><code>git clone https://github.com/byensitmagnus/sitesmith.git
+
+        <details>
+          <summary>Claude, Codex and Cursor provider packs</summary>
+          <div class="provider-command">
+            <button class="copy-button" type="button" data-copy="git clone https://github.com/byensitmagnus/sitesmith.git&#10;node sitesmith/bin/sitesmith.mjs install --to . --provider all" aria-describedby="copy-status">Copy command</button>
+            <pre tabindex="0"><code>git clone https://github.com/byensitmagnus/sitesmith.git
 node sitesmith/bin/sitesmith.mjs install --to . --provider all</code></pre>
-        </article>
+          </div>
+        </details>
       </div>
       <p class="copy-status" id="copy-status" role="status" aria-live="polite"></p>
     </section>
   </main>
 
   <footer class="site-footer">
-    <a class="brand" href="./">
-      <span class="brand-mark" aria-hidden="true">M</span>
-      <span>sitesmith</span>
+    <a class="wordmark" href="./" aria-label="SiteSmith home">
+      <span class="wordmark-stamp" aria-hidden="true">SS</span>
+      <span>SiteSmith</span>
     </a>
-    <p>Built in public. Measured in the browser. Honest about the boundary.</p>
+    <p>Open source. Browser tested. Claims kept narrow.</p>
     <nav aria-label="Footer navigation">
       <a href="https://github.com/byensitmagnus/sitesmith">GitHub</a>
-      <a href="https://github.com/byensitmagnus/sitesmith/blob/main/README.md">Docs</a>
+      <a href="https://github.com/byensitmagnus/sitesmith/tree/main/skills/sitesmith">Skill</a>
       <a href="https://github.com/byensitmagnus/sitesmith/blob/main/LICENSE">MIT license</a>
     </nav>
   </footer>
