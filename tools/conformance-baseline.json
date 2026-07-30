@@ -37,10 +37,6 @@
     "benchmarks/09-data-entry/index.html": {
       "em-dash": 17,
       "authored-svg": 6
-    },
-    "index.html": {
-      "em-dash": 3,
-      "authored-svg": 2
     }
   }
 }

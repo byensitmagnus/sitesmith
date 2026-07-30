@@ -1,32 +1,53 @@
-# sitesmith
+# SiteSmith
 
-**A coding-agent skill for building websites that don't look AI-generated.**
+**Build websites worth shipping, not website-shaped output.**
 
-Most design skills are a list of rules. This one is a loop: it routes by what you're actually doing,
-picks a direction before it picks colours, and then **renders the page and measures it** instead of
-stopping when the code compiles.
+SiteSmith is a website-building skill for coding agents. It chooses a visual direction, builds in
+the detected stack, and checks the result in a real browser before it calls the site done. The
+ordinary workflow is three commands: `init → build → audit`.
+
+**[Open the live showcase](https://byensitmagnus.github.io/sitesmith/)** ·
+**[Install SiteSmith](#install)** ·
+**[Read the Round 8 result](docs/v2/preflight/round-8/RESULT.md)**
 
 > **Where this is.** The canonical layer is [`skills/sitesmith/v2/`](skills/sitesmith/v2/README.md):
 > a definition of done, sixty core rules, three mode files, a design-system contract and a block
 > library. It replaced a set of four vendored skills that carried 978 rules, 735 of them
 > prohibitions.
 >
-> **Product status.** The ordinary workflow is `init → build → audit`: one command chooses a
-> direction, one builds in the detected stack, and one makes the release decision. The benchmark
-> lab is separate and never runs during a customer-site build.
+> **Product status.** V2 is pre-release on `main`. The benchmark lab is separate and never runs
+> during a customer-site build.
 >
 > **Evidence boundary.** Round 8's three independent builds scored 8.21 and all cleared the fixed
 > threshold. The isolated 18-run skill-vs-control experiment has not run, so SiteSmith does not
 > claim that it measurably improves an arbitrary agent yet. [Method.](benchmarks/v2/README.md)
 
-### [→ Open the gallery](https://byensitmagnus.github.io/sitesmith/)
+## Three reviewed builds
 
-![Nine benchmark sites and one control](benchmarks/results/contact-sheet.png)
+<table>
+  <tr>
+    <td width="33%">
+      <a href="https://byensitmagnus.github.io/sitesmith/benchmarks/10-tannery/site/"><img src="docs/v2/preflight/round-8/sheets/SHEET-K7-desktop.jpg" alt="Falkner and Vane tannery website review sheet"></a><br>
+      <strong>Falkner &amp; Vane</strong><br>Blind review: <strong>8.57</strong>
+    </td>
+    <td width="33%">
+      <a href="https://byensitmagnus.github.io/sitesmith/benchmarks/11-seed-library/site/"><img src="docs/v2/preflight/round-8/sheets/SHEET-W1-desktop.jpg" alt="Cleeve Seed Library website review sheet"></a><br>
+      <strong>Cleeve Seed Library</strong><br>Blind review: <strong>8.00</strong>
+    </td>
+    <td width="33%">
+      <a href="https://byensitmagnus.github.io/sitesmith/benchmarks/12-tideworks/site/"><img src="docs/v2/preflight/round-8/sheets/SHEET-B4-desktop.jpg" alt="Tideworks duty board review sheet"></a><br>
+      <strong>Tideworks duty board</strong><br>Blind review: <strong>8.07</strong>
+    </td>
+  </tr>
+</table>
 
-Nine sites built with v1 while a person consulted the skill, plus the control. They are **legacy**:
-they show what the checks catch and the measurements taken from them are cited throughout, but nine
-hand-built pages are not evidence that an agent produces better websites. That is what the v2
-benchmark is for. [Method and raw reports.](benchmarks/README.md)
+Three separate agents built these from unrelated briefs. Two assignment-blinded reviewers scored
+them against the same fixed seven-criterion rubric. The portfolio scored **8.21**, and all three
+cleared 8. [Method, reviews, faults, and integrity limits.](docs/v2/preflight/round-8/RESULT.md)
+
+**Showcase status: 3/8.** Five more builds must earn the same bar before this repository claims an
+eight-site portfolio. The nine v1 pages remain as technical fixtures, not visual proof. There is no
+head-to-head evidence that SiteSmith beats another skill yet.
 
 ---
 
@@ -80,9 +101,9 @@ These were found in work that looked finished in the editor, while building the 
 | +250px overflow from a `1fr` grid track | `1fr` resolves its minimum to `auto`, so the track grew instead of the grid scrolling |
 | Hidden labels escaping a scroll container | Absolutely positioned with no positioned ancestor, so each 1px label sat 615px into the document |
 
-Fifteen real defects across eight sites, listed in full in the
-[gallery](https://byensitmagnus.github.io/sitesmith/#caught). Every one ships if the process stops
-at "the code compiles".
+Fifteen real defects across eight sites are listed in the
+[legacy benchmark report](benchmarks/README.md#what-the-loop-actually-caught). Every one ships if
+the process stops at "the code compiles".
 
 ## Results
 

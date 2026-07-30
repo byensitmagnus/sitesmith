@@ -228,18 +228,14 @@ def _gallery_assets() -> None:
                 fail(f"index.html:{line}", f"{attr} points at missing {target}")
 
 
-@check("the gallery shows every benchmark, or honestly shows none")
+@check("the gallery only shows review-cleared benchmark cases")
 def _gallery_coverage() -> None:
-    """The gallery may not pick and choose.
+    """A case earns a gallery card by clearing the published review threshold.
 
-    It was 'every benchmark has a card', which caught the real fault of adding a benchmark
-    and forgetting the gallery. Then v1.0 entered visual preflight and the gallery was
-    emptied on purpose, so the check failed a page that was telling the truth.
-
-    Both states are honest and a third is not. Showing all of them is honest. Showing none
-    of them, and saying so, is honest. Showing a chosen few is the failure worth catching,
-    because a hand-picked gallery reads as the whole portfolio. So the check now asks which
-    state the page has declared and holds it to that one.
+    The previous contract allowed only every benchmark or none. That made sense while every
+    page was a v1 test fixture, but became false as soon as Round 8 produced three reviewed
+    v2 cases. The source of truth is now the opened assignment key plus the result rows marked
+    ``meets 8``. Legacy fixtures remain in the repository and may not silently become proof.
     """
     html = (ROOT / "index.html").read_text(encoding="utf-8")
     bench = ROOT / "benchmarks"
@@ -249,28 +245,35 @@ def _gallery_coverage() -> None:
     # so it is verified like a benchmark but does not claim a card in the gallery.
     pages = [p for p in pages if p != "blocks"]
 
-    # The declaration is a fixed sentence, not a mood, so it cannot be satisfied by accident.
-    PREFLIGHT = "SiteSmith v1.0 is in visual preflight."
     shown = [p for p in pages if f'href="benchmarks/{p}/"' in html]
+    round_dir = ROOT / "docs" / "v2" / "preflight" / "round-8"
+    key = json.loads((round_dir / "KEY.json").read_text(encoding="utf-8"))
+    result = (round_dir / "RESULT.md").read_text(encoding="utf-8")
+    cleared = set(re.findall(r"^\| (SHEET-[A-Z0-9]+) \|.*\| meets 8 \|$", result, re.MULTILINE))
 
-    if PREFLIGHT in html:
-        for page in shown:
-            fail(
-                "index.html",
-                f"declares visual preflight but still shows benchmarks/{page} — "
-                "a partial gallery reads as the whole portfolio",
-            )
-        return
+    expected: dict[str, str] = {}
+    for label, assignment in key["assignment"].items():
+        if label not in cleared:
+            continue
+        subject = assignment["subject"]
+        matches = [p for p in pages if p.endswith(f"-{subject}/site")]
+        if len(matches) != 1:
+            fail("docs/v2/preflight/round-8/KEY.json", f"{subject} maps to {len(matches)} benchmark pages")
+            continue
+        expected[label] = matches[0]
 
-    for page in pages:
+    for label, page in expected.items():
         if page not in shown:
-            fail("index.html", f"benchmarks/{page} has no card in the gallery")
-        thumb = ROOT / "gallery" / "thumbs" / f"{page.replace('/', '-')}.png"
-        if not thumb.exists():
-            fail(
-                thumb.relative_to(ROOT).as_posix(),
-                "missing thumbnail — run `node benchmarks/thumbs.mjs`",
-            )
+            fail("index.html", f"review-cleared {label} has no card for benchmarks/{page}")
+        for width in ("desktop", "mobile"):
+            sheet = f"docs/v2/preflight/round-8/sheets/{label}-{width}.jpg"
+            if sheet not in html:
+                fail("index.html", f"review-cleared {label} does not show its {width} review sheet")
+
+    allowed = set(expected.values())
+    for page in shown:
+        if page not in allowed:
+            fail("index.html", f"benchmarks/{page} is shown without a published score meeting 8")
 
 
 @check("search.py answers on every domain and every stack")
