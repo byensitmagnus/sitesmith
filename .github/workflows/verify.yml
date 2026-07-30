@@ -39,6 +39,12 @@ jobs:
       - name: the documented axis record is the one the gate parses
         run: node tools/test-direction-format.mjs
 
+      # A clean install has no personal history yet, so the recipe learned from the failed
+      # round-8 portfolio must still be blocked. Cross-project memory also fails only at the
+      # documented four-device threshold and ignores reruns of the same project.
+      - name: direction memory blocks the SiteSmith house style
+        run: node tools/test-direction-history.mjs
+
       # Does our own output obey our own absolute rules? Until now nothing asked.
       # A ratchet against tools/conformance-baseline.json: the recorded debt is
       # allowed, any increase fails. See docs/v2/CONFLICTS.md for why the debt exists.

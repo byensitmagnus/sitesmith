@@ -67,6 +67,9 @@ The same brief records three justified integers from 1 to 10: `visual-density`,
 candidate search. A value that cannot be explained from the audience, task or evidence is a
 hidden default written as a number.
 
+The chosen direction also states four smaller systems: `surface`, `labels`, `figures` and
+`depth`. These are where a hidden house style survives after the hero and palette have changed.
+
 *"B2B incident tooling for engineers who distrust marketing pages, in a restrained editorial
 language closer to a technical journal than a SaaS site."*
 
@@ -123,8 +126,9 @@ off.
 
 ### 7. Design-system contract
 
-A `DESIGN-SYSTEM.md` **generated from the brief**, not from a default. It carries the token
-groups in item 8 and the component contracts in items 9 to 11.
+A `DESIGN-SYSTEM.md` **generated from the brief**, not from a default. It carries the four
+visual-grammar choices from `DIRECTION.md`, the token groups in item 8 and the component
+contracts in items 9 to 11.
 
 Tokens are the vocabulary, not a cage. A composition that genuinely needs a value the ramp
 does not carry may use one, **documented in the contract with the reason**. Consistency is
@@ -218,7 +222,9 @@ Mechanical, and run before claiming anything:
 ```bash
 node scripts/verify.mjs <url> --out .sitesmith/shots       # widths, axe both schemes, links
 node scripts/verify.mjs <url> --font-stress --no-axe       # widths under a wider font
+node scripts/direction-fidelity.mjs DIRECTION.md <url>     # macro direction + visual grammar
 node scripts/token-drift.mjs "<pages>" --contract DESIGN-SYSTEM.md
+node scripts/direction-history.mjs commit DIRECTION.md <url> --project <name>
 ```
 
 Then by reading, which no script replaces:

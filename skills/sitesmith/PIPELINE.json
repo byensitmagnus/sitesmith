@@ -15,7 +15,7 @@
     "ordinary task must never pull the whole rule set or the 1.4 MB of data into context. The",
     "`alwaysLoaded` list below is the entire standing cost."
   ],
-  "version": "2.2",
+  "version": "2.3",
   "defaultJourney": [
     "init",
     "build",
@@ -60,6 +60,7 @@
         "verify",
         "fidelity",
         "production",
+        "novelty",
         "critique",
         "report"
       ],
@@ -216,7 +217,7 @@
         "DIRECTION.md (with the verbatim axis record from v2/20-direction-lab.md)"
       ],
       "gate": "scripts/direction-history.mjs check DIRECTION.md <url> --project <name>",
-      "note": "Scores, the winner, the three visible dial values, the signature-selector, and both rejections with a specific reason each. Direction v2.2 has a fixed machine-readable shape: five axes, three integer dials, signature-selector and signature-min-share. Prose headings do not parse."
+      "note": "Scores, the winner, the three visible dial values, the signature-selector, and both rejections with a specific reason each. Direction v2.3 has a fixed machine-readable shape: five macro axes, four visual-grammar fields, three integer dials, signature-selector and signature-min-share. Prose headings do not parse."
     },
     {
       "id": "contract",
@@ -228,7 +229,7 @@
         "DESIGN-SYSTEM.md"
       ],
       "gate": null,
-      "note": "Written FROM the winning comp — its ground, its type, its rhythm — not the comp adjusted to fit a contract that already existed."
+      "note": "Written FROM the winning comp — its ground, type, rhythm and four visual-grammar fields — not the comp adjusted to fit a contract that already existed."
     },
     {
       "id": "interactions",
@@ -321,6 +322,16 @@
       ],
       "produces": [],
       "gate": "scripts/asset-plan.mjs check ASSET-PLAN.md --manifest ASSET-MANIFEST.md --direction DIRECTION.md && scripts/production-gate.mjs <url> --manifest ASSET-MANIFEST.md --mode <M|E|P> --production"
+    },
+    {
+      "id": "novelty",
+      "name": "Direction novelty and shared memory",
+      "reads": [],
+      "produces": [
+        "~/.sitesmith/direction-history.jsonl"
+      ],
+      "gate": "scripts/direction-history.mjs commit DIRECTION.md <url> --project <name>",
+      "note": "Re-checks the finished render, blocks the known flat technical-editorial SiteSmith recipe and four-device clashes with earlier projects, then records only a passing fingerprint. The ledger stores no client URL."
     },
     {
       "id": "critique",

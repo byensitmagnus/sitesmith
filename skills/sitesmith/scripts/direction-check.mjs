@@ -5,7 +5,7 @@
  *   node scripts/direction-check.mjs directions/
  *   node scripts/direction-check.mjs directions/ --serve http://localhost:5173/directions
  *
- * Reads the declared axis values from each comp's NOTE.md, checks pairwise structural
+ * Reads the declared macro axes and visual grammar from each comp's NOTE.md, checks pairwise
  * difference, then measures the rendered pages and checks the measurements against what was
  * declared. Where they disagree the measurement wins: a comp whose note claims a dark ground
  * and renders #faf8f4 has not made the choice it says it made.
@@ -18,6 +18,9 @@ import { readFile, readdir, stat } from 'node:fs/promises';
 import { join } from 'node:path';
 import { createRequire } from 'node:module';
 import { pathToFileURL } from 'node:url';
+import {
+  AXES, GRAMMAR, directionRecordProblems, grammarTreatment, parseDirectionRecord,
+} from './direction-record.mjs';
 
 /** Playwright lives in the project being checked, not next to this script. Same loader as
  *  verify.mjs: the bare specifier first, then CommonJS resolution from the working
@@ -28,7 +31,6 @@ async function loadPlaywright() {
   catch { return await import(pathToFileURL(requireFromCwd.resolve('playwright')).href); }
 }
 
-const AXES = ['composition', 'type', 'colour', 'imagery', 'rhythm'];
 const args = process.argv.slice(2);
 const root = args.find((a) => !a.startsWith('--')) ?? 'directions';
 const serveAt = (() => { const i = args.indexOf('--serve'); return i >= 0 ? args[i + 1] : null; })();
@@ -39,12 +41,12 @@ const die = (m) => { console.error(m); process.exit(2); };
 
 /** A NOTE.md carries a list like `- composition: statement and artefact`. */
 function parseNote(md) {
-  const axes = {};
-  for (const line of md.split('\n')) {
-    const m = line.match(/^\s*[-*]\s*(composition|type|colour|color|imagery|rhythm)\s*:\s*(.+?)\s*$/i);
-    if (m) axes[m[1].toLowerCase().replace('color', 'colour')] = m[2].toLowerCase();
-  }
-  return axes;
+  const parsed = parseDirectionRecord(md);
+  return {
+    ...parsed,
+    axes: Object.fromEntries(Object.entries(parsed.axes).map(([key, value]) => [key, value.toLowerCase()])),
+    grammar: Object.fromEntries(Object.entries(parsed.grammar).map(([key, value]) => [key, value.toLowerCase()])),
+  };
 }
 
 const dirs = (await readdir(root, { withFileTypes: true }).catch(() => die(`no ${root}/ directory`)))
@@ -56,13 +58,25 @@ const comps = [];
 for (const name of dirs) {
   const notePath = join(root, name, 'NOTE.md');
   const note = await readFile(notePath, 'utf8').catch(() => null);
-  if (note === null) die(`${notePath} is missing — every comp states its five axis values`);
-  const axes = parseNote(note);
+  if (note === null) die(`${notePath} is missing — every comp states its direction record`);
+  const parsed = parseNote(note);
+  const { axes, grammar, version } = parsed;
   const missing = AXES.filter((a) => !axes[a]);
   if (missing.length) die(`${notePath} does not declare: ${missing.join(', ')}`);
+  if ((version ?? 0) >= 2.3) {
+    const missingGrammar = GRAMMAR.filter((field) => !grammar[field]);
+    if (missingGrammar.length) die(`${notePath} does not declare visual grammar: ${missingGrammar.join(', ')}`);
+    const malformed = directionRecordProblems(parsed).filter((problem) => /must be/.test(problem));
+    if (malformed.length) die(`${notePath}: ${malformed.join('; ')}`);
+  }
   const html = join(root, name, 'index.html');
   if (!(await stat(html).then(() => true, () => false))) die(`${html} is missing — a comp is a rendered page`);
-  comps.push({ name, axes, html });
+  comps.push({ name, version, axes, grammar, html });
+}
+
+if (comps.some((comp) => (comp.version ?? 0) >= 2.3) &&
+    comps.some((comp) => (comp.version ?? 0) < 2.3)) {
+  die('direction lab mixes legacy and 2.3 notes — all three comps must use the same current record');
 }
 
 /* ── pairwise difference ───────────────────────────────────────────────── */
@@ -73,12 +87,21 @@ for (let i = 0; i < comps.length; i++) {
   for (let j = i + 1; j < comps.length; j++) {
     const a = comps[i], b = comps[j];
     const differing = AXES.filter((ax) => a.axes[ax] !== b.axes[ax]);
-    const ok = differing.length >= 3 && differing.includes('composition');
-    pairs.push({ a: a.name, b: b.name, differing, ok });
-    if (!ok) {
+    const grammarDiffering = GRAMMAR.filter((field) =>
+      grammarTreatment(field, a.grammar[field]) !== grammarTreatment(field, b.grammar[field]));
+    const macroOk = differing.length >= 3 && differing.includes('composition');
+    const grammarRequired = (a.version ?? 0) >= 2.3 || (b.version ?? 0) >= 2.3;
+    const grammarOk = !grammarRequired || grammarDiffering.length >= 2;
+    const ok = macroOk && grammarOk;
+    pairs.push({ a: a.name, b: b.name, differing, grammarDiffering, grammarRequired, ok });
+    if (!macroOk) {
       problems.push(`${a.name} and ${b.name} differ on ${differing.length} axis/axes ` +
         `(${differing.join(', ') || 'none'})` +
         (differing.includes('composition') ? '' : ' and share a first-screen composition'));
+    }
+    if (!grammarOk) {
+      problems.push(`${a.name} and ${b.name} differ on ${grammarDiffering.length} visual-grammar field(s) ` +
+        `(${grammarDiffering.join(', ') || 'none'}); direction 2.3 needs at least 2 of surface, labels, figures and depth`);
     }
   }
 }
@@ -126,6 +149,21 @@ try {
         backgroundImages: [...document.querySelectorAll('body *')]
           .filter((el) => getComputedStyle(el).backgroundImage !== 'none').length,
         bandSignature: [...new Set(bands)].length,
+        monoCaps: [...document.querySelectorAll('body *')].filter((el) => {
+          const s = getComputedStyle(el);
+          return /mono/i.test(s.fontFamily) && s.textTransform === 'uppercase' && el.textContent.trim();
+        }).length,
+        hairlines: [...document.querySelectorAll('body *')].reduce((n, el) => {
+          const s = getComputedStyle(el);
+          return n + ['Top', 'Bottom', 'Left', 'Right'].filter((side) => {
+            const w = parseFloat(s[`border${side}Width`]);
+            return w > 0 && w <= 1.5;
+          }).length;
+        }, 0),
+        tabularNums: [...document.querySelectorAll('body *')]
+          .filter((el) => /tabular-nums/.test(getComputedStyle(el).fontVariantNumeric)).length,
+        shadowed: [...document.querySelectorAll('body *')]
+          .filter((el) => getComputedStyle(el).boxShadow !== 'none').length,
       };
     });
     measured.push({ name: c.name, ...m });
@@ -164,6 +202,20 @@ if (measured) {
         a.distinctSizes === b.distinctSizes;
       if (same) problems.push(`${a.name} and ${b.name} measure identically: same ground, same display face, ` +
         `same size count, same imagery presence`);
+
+      const ca = comps.find((comp) => comp.name === a.name);
+      const cb = comps.find((comp) => comp.name === b.name);
+      if ((ca.version ?? 0) >= 2.3 && (cb.version ?? 0) >= 2.3) {
+        const shared = [
+          ['uppercase mono labels', (m) => m.monoCaps >= 4],
+          ['hairline separators', (m) => m.hairlines >= 20],
+          ['tabular figures as a motif', (m) => m.tabularNums >= 3],
+          ['flat surfaces', (m) => m.shadowed === 0],
+        ].filter(([, test]) => test(a) && test(b)).map(([name]) => name);
+        if (shared.length >= 3) {
+          problems.push(`${a.name} and ${b.name} render the same micro-recipe: ${shared.join(', ')}`);
+        }
+      }
     }
   }
 }
@@ -172,9 +224,10 @@ if (measured) {
 
 const history = await readFile(join(root, 'HISTORY.md'), 'utf8').catch(() => '');
 for (const c of comps) {
-  const signature = AXES.map((a) => c.axes[a]).join(' · ');
+  const fields = (c.version ?? 0) >= 2.3 ? [...AXES, ...GRAMMAR] : AXES;
+  const signature = fields.map((field) => c.axes[field] ?? c.grammar[field]).join(' · ');
   if (history.toLowerCase().includes(signature)) {
-    problems.push(`${c.name} repeats a previous winner on all five axes: ${signature}`);
+    problems.push(`${c.name} repeats a previous winner on all ${fields.length} direction fields: ${signature}`);
   }
 }
 
@@ -184,17 +237,24 @@ console.log(`\n  direction lab — ${comps.length} comps in ${root}/\n`);
 for (const c of comps) {
   console.log(`  ${c.name}`);
   for (const a of AXES) console.log(`      ${a.padEnd(12)} ${c.axes[a]}`);
+  if ((c.version ?? 0) >= 2.3) {
+    for (const field of GRAMMAR) console.log(`      ${field.padEnd(12)} ${c.grammar[field]}`);
+  }
   const m = measured?.find((x) => x.name === c.name);
   if (m) {
     console.log(`      ${'measured'.padEnd(12)} ground ${m.ground} (lum ${m.groundLuminance}), ` +
       `display ${m.displayFamily ?? '—'}, ${m.distinctSizes} sizes, ${m.distinctRadii} radii, ` +
-      `${m.images + m.backgroundImages} images, ${m.bandSignature} bands`);
+      `${m.images + m.backgroundImages} images, ${m.bandSignature} bands; ` +
+      `mono ${m.monoCaps}, hair ${m.hairlines}, tabular ${m.tabularNums}, shadows ${m.shadowed}`);
   }
 }
 
 console.log('\n  pairwise structural difference (needs 3 of 5, including composition)\n');
 for (const p of pairs) {
   console.log(`  ${p.ok ? 'ok  ' : 'FAIL'}  ${p.a} vs ${p.b}: ${p.differing.length} — ${p.differing.join(', ') || 'nothing'}`);
+  if (p.grammarRequired) {
+    console.log(`        grammar: ${p.grammarDiffering.length} — ${p.grammarDiffering.join(', ') || 'nothing'} (needs 2 of 4)`);
+  }
 }
 
 if (!measured) console.log('\n  note: playwright is unavailable, so nothing was measured — declared axes only');

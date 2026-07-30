@@ -23,6 +23,9 @@ import { readFile, mkdir, writeFile } from 'node:fs/promises';
 import { createRequire } from 'node:module';
 import { pathToFileURL } from 'node:url';
 import { join } from 'node:path';
+import {
+  AXES, GRAMMAR, directionRecordProblems, grammarParts, parseDirectionRecord,
+} from './direction-record.mjs';
 
 const requireFromCwd = createRequire(join(process.cwd(), 'package.json'));
 async function loadPlaywright() {
@@ -30,7 +33,7 @@ async function loadPlaywright() {
   catch { return await import(pathToFileURL(requireFromCwd.resolve('playwright')).href); }
 }
 
-const AXES = ['composition', 'type', 'colour', 'imagery', 'rhythm'];
+export { GRAMMAR };
 
 /* ── what a declared value commits the page to ─────────────────────────── */
 
@@ -87,17 +90,45 @@ export const rhythmExpectation = (rhythm) => {
   return null;
 };
 
+/** The four micro-grammar fields are open prose, but promises with a measurable meaning are
+ * enforced. Unclassifiable values remain visible as notes instead of being guessed. */
+export const surfaceExpectation = (surface) => {
+  const s = String(grammarParts(surface)?.treatment ?? surface).toLowerCase();
+  if (/\b(hairline|thin rules?|ruled)\b/.test(s)) return { want: 'hairlines', min: 8 };
+  if (/\b(open|whitespace|borderless|rule[- ]free|no repeated rules?)\b/.test(s)) return { want: 'open', max: 12 };
+  if (/\b(framed|heavy frame|thick border|block border)\b/.test(s)) return { want: 'frames', min: 4 };
+  if (/\b(colou?r fields?|alternating grounds?|bands?)\b/.test(s)) return { want: 'bands', min: 3 };
+  return null;
+};
+
+export const labelExpectation = (labels) => {
+  const s = String(grammarParts(labels)?.treatment ?? labels).toLowerCase();
+  if (/\bmono(space)?\b/.test(s) && /\b(uppercase|caps|all-caps)\b/.test(s)) return { want: 'mono-caps', min: 4 };
+  if (/\b(sentence case|mixed case|body case|no uppercase|not uppercase)\b/.test(s)) return { want: 'not-mono-caps', max: 3 };
+  return null;
+};
+
+export const figureExpectation = (figures) => {
+  const s = String(grammarParts(figures)?.treatment ?? figures).toLowerCase();
+  if (/\btabular\b/.test(s) && /\b(motif|display|visual language)\b/.test(s)) return { want: 'tabular-motif', min: 3 };
+  if (/\b(absent|proportional|no numeric motif|not a motif)\b/.test(s)) return { want: 'not-tabular-motif', max: 2 };
+  if (/\bfunctional\b/.test(s) && /\btabular\b/.test(s)) return { want: 'functional-tabular' };
+  return null;
+};
+
+export const depthExpectation = (depth) => {
+  const s = String(grammarParts(depth)?.treatment ?? depth).toLowerCase();
+  if (/\b(flat|no elevation|no shadows?|zero elevation)\b/.test(s)) return { want: 'flat', max: 0 };
+  if (/\b(elevated|shadowed|raised|floating|inset)\b/.test(s)) return { want: 'elevated', min: 1 };
+  return null;
+};
+
 /* ── DIRECTION.md ──────────────────────────────────────────────────────── */
 
 export function parseDirection(md) {
-  const axes = {};
-  for (const line of md.split('\n')) {
-    const m = line.match(/^\s*[-*]\s*(composition|type|colour|color|imagery|rhythm)\s*:\s*(.+?)\s*$/i);
-    if (m) axes[m[1].toLowerCase().replace('color', 'colour')] = m[2].trim();
-  }
+  const { version, axes, grammar } = parseDirectionRecord(md);
   const sig = md.match(/^\s*[-*]?\s*signature-selector\s*:\s*(.+?)\s*$/im);
   const share = md.match(/^\s*[-*]?\s*signature-min-share\s*:\s*([\d.]+)\s*$/im);
-  const version = md.match(/^\s*[-*]?\s*direction-version\s*:\s*([\d.]+)\s*$/im);
   const dial = (name) => {
     const match = md.match(new RegExp(`^\\s*[-*]?\\s*${name}\\s*:\\s*(.+?)\\s*$`, 'im'));
     if (!match) return null;
@@ -105,8 +136,9 @@ export function parseDirection(md) {
     return Number.isInteger(value) ? value : match[1].trim();
   };
   return {
-    version: version ? Number(version[1]) : null,
+    version,
     axes,
+    grammar,
     dials: {
       visualDensity: dial('visual-density'),
       motionIntensity: dial('motion-intensity'),
@@ -117,14 +149,13 @@ export function parseDirection(md) {
   };
 }
 
-/** Validate only the document contract. Historical pre-2.2 directions remain readable; every
- * direction written by the current skill declares 2.2 and therefore carries all three dials. */
+/** Validate only the document contract. Historical directions remain readable. Version 2.2
+ * added the three dials; 2.3 adds the four micro-grammar decisions. */
 export function directionContractProblems(dir) {
-  const problems = [];
-  const missing = AXES.filter((axis) => !dir.axes?.[axis]);
-  if (missing.length) {
-    problems.push(`the axis record is missing or not in the documented form: no ${missing.join(', ')}`);
-  }
+  const problems = directionRecordProblems(dir).map((problem) =>
+    problem.startsWith('direction record is missing:')
+      ? `the axis record is missing or not in the documented form: no ${problem.split(': ')[1]}`
+      : problem);
   if ((dir.version ?? 0) >= 2.2) {
     const dials = [
       ['visual-density', dir.dials?.visualDensity],
@@ -206,6 +237,15 @@ async function measure(page, width, height) {
           return w > 0 && w <= 1.5;
         }).length;
       }, 0),
+      heavyBorders: [...document.querySelectorAll('body *')].reduce((n, el) => {
+        const s = getComputedStyle(el);
+        return n + ['Top', 'Bottom', 'Left', 'Right'].filter((side) =>
+          parseFloat(s[`border${side}Width`]) >= 2).length;
+      }, 0),
+      tabularNums: [...document.querySelectorAll('body *')]
+        .filter((el) => /tabular-nums/.test(getComputedStyle(el).fontVariantNumeric)).length,
+      shadowed: [...document.querySelectorAll('body *')]
+        .filter((el) => getComputedStyle(el).boxShadow !== 'none').length,
     };
   }, { W: width, H: height });
 }
@@ -224,8 +264,9 @@ export function judge(dir, m, sigShare) {
   const contractProblems = directionContractProblems(dir);
   if (contractProblems.length) {
     problems.push(`${contractProblems.join('; ')}. ` +
-      'It is five lines, each "- <axis>: <value>" — see v2/20-direction-lab.md, "The axis ' +
-      'record, verbatim". Prose headings such as "- **Type and scale.** …" do not parse, and ' +
+      'It is five macro-axis lines plus four grammar lines, each "- <field>: <value>" — see ' +
+      'v2/20-direction-lab.md, "The axis record, verbatim". Prose headings such as ' +
+      '"- **Type and scale.** …" do not parse, and ' +
       'nothing below this line is a judgement about the page.');
     return { pass: false, problems, notes, m, sigShare, unreadable: true };
   }
@@ -267,6 +308,42 @@ export function judge(dir, m, sigShare) {
     problems.push(`rhythm: declares "${dir.axes.rhythm}" and renders ${m.bands} distinct grounds`);
   } else if (r.want === 'cards' && m.cards < r.minCards) {
     problems.push(`rhythm: declares "${dir.axes.rhythm}" and renders ${m.cards} card-like blocks`);
+  }
+
+  const surface = surfaceExpectation(dir.grammar?.surface ?? '');
+  if (!surface) notes.push('the surface grammar is not mechanically classifiable');
+  else if (surface.want === 'hairlines' && m.hairlines < surface.min) {
+    problems.push(`surface: declares "${dir.grammar.surface}" and renders ${m.hairlines} hairline edge(s)`);
+  } else if (surface.want === 'open' && m.hairlines > surface.max) {
+    problems.push(`surface: declares "${dir.grammar.surface}" and renders ${m.hairlines} hairline edge(s)`);
+  } else if (surface.want === 'frames' && m.heavyBorders < surface.min) {
+    problems.push(`surface: declares "${dir.grammar.surface}" and renders ${m.heavyBorders} heavy frame edge(s)`);
+  } else if (surface.want === 'bands' && m.bands < surface.min) {
+    problems.push(`surface: declares "${dir.grammar.surface}" and renders ${m.bands} distinct ground(s)`);
+  }
+
+  const labels = labelExpectation(dir.grammar?.labels ?? '');
+  if (!labels) notes.push('the label grammar is not mechanically classifiable');
+  else if (labels.want === 'mono-caps' && m.monoCaps < labels.min) {
+    problems.push(`labels: declares "${dir.grammar.labels}" and renders ${m.monoCaps} uppercase mono label(s)`);
+  } else if (labels.want === 'not-mono-caps' && m.monoCaps > labels.max) {
+    problems.push(`labels: declares "${dir.grammar.labels}" and renders ${m.monoCaps} uppercase mono label(s)`);
+  }
+
+  const figures = figureExpectation(dir.grammar?.figures ?? '');
+  if (!figures) notes.push('the figure grammar is not mechanically classifiable');
+  else if (figures.want === 'tabular-motif' && m.tabularNums < figures.min) {
+    problems.push(`figures: declares "${dir.grammar.figures}" and renders ${m.tabularNums} tabular-number element(s)`);
+  } else if (figures.want === 'not-tabular-motif' && m.tabularNums > figures.max) {
+    problems.push(`figures: declares "${dir.grammar.figures}" and renders ${m.tabularNums} tabular-number element(s)`);
+  }
+
+  const depth = depthExpectation(dir.grammar?.depth ?? '');
+  if (!depth) notes.push('the depth grammar is not mechanically classifiable');
+  else if (depth.want === 'flat' && m.shadowed > depth.max) {
+    problems.push(`depth: declares "${dir.grammar.depth}" and renders ${m.shadowed} shadowed element(s)`);
+  } else if (depth.want === 'elevated' && m.shadowed < depth.min) {
+    problems.push(`depth: declares "${dir.grammar.depth}" and renders no elevation`);
   }
 
   if (!dir.signature) {
@@ -314,7 +391,7 @@ const dir = parseDirection(await readFile(dirPath, 'utf8'));
   if (contractProblems.length) {
     console.log('\n  direction fidelity\n');
     for (const problem of contractProblems) console.log(`  FAIL  ${problem}.`);
-    console.log('        It is five lines, each "- <axis>: <value>" — see v2/20-direction-lab.md,');
+    console.log('        It is five macro-axis lines plus four grammar lines — see v2/20-direction-lab.md,');
     console.log('        "The axis record, verbatim". Prose headings such as "- **Type and scale.** …"');
     console.log('        do not parse, and nothing here is a judgement about the page.\n');
     process.exit(1);
@@ -356,13 +433,15 @@ const v = judge(dir, m, sigShare);
 console.log(`\n  direction fidelity — ${url}`);
 console.log(`  measured in the browser's default colour scheme, which is what a reviewer sees\n`);
 for (const a of AXES) console.log(`    ${a.padEnd(12)} ${dir.axes[a] ?? '—'}`);
+for (const field of GRAMMAR) console.log(`    ${field.padEnd(12)} ${dir.grammar[field] ?? '—'}`);
 console.log(`    ${'signature'.padEnd(12)} ${dir.signature ?? '— none declared —'}` +
   (sigShare !== null ? ` (${sigShare}% of the first screen)` : ''));
 console.log(`\n    ground        ${m.ground}  luminance ${m.luminance}`);
 console.log(`    display       ${m.displayFamily}`);
 console.log(`    assets        ${m.assetShare}% of the first screen, largest ${m.largestAssetShare}%, ${m.assetCount} element(s)`);
 console.log(`    rhythm        ${m.bands} distinct ground(s), ${m.cards} card-like block(s)`);
-console.log(`    mono caps     ${m.monoCaps}   hairlines ${m.hairlines}`);
+console.log(`    devices       mono caps ${m.monoCaps}, hairlines ${m.hairlines}, ` +
+  `heavy edges ${m.heavyBorders}, tabular ${m.tabularNums}, shadowed ${m.shadowed}`);
 
 console.log('');
 for (const p of v.problems) console.log(`  FAIL  ${p}`);

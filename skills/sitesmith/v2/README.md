@@ -32,6 +32,19 @@ during a build.
 Sixty core rules plus one mode file is what an agent holds while working; the rest are read at
 their step and put down again. A rule enters the core only by displacing one.
 
+## What changed in v2.3
+
+Round 8 proved that different macro layouts are not enough. Tannery, seed library and
+tideworks cleared the five-axis direction gate and their individual reviews, but all three
+used the same smaller recipe: uppercase mono labels, hairline separators, tabular figures as
+a motif and flat surfaces. The portfolio failed as a portfolio.
+
+Direction 2.3 therefore adds four machine-readable visual-grammar fields — `surface`,
+`labels`, `figures` and `depth` — and requires two of four to differ between every pair of
+comps. The finished render is measured again: the known round-8 recipe fails even on a clean
+installation, while an append-only ledger under `~/.sitesmith/` catches repeated render
+fingerprints across later projects. Passing final renders are recorded without client URLs.
+
 ## What changed in v2.1
 
 v2 fixed the rules. It did not fix the output, and the [audit of the nine legacy
@@ -60,7 +73,7 @@ surface that drives the real page and asserts what changed. A styled state nobod
 a picture of a state.
 
 **Two gates, not one.** The technical gate asks whether it works. `50-critique.md` asks whether
-it is any good, on screenshots, blind, after the first is green. Merging them is how "PASS"
+it is any good, on screenshots, assignment-blinded, after the first is green. Merging them is how "PASS"
 came to be read as "this is good".
 
 Two smaller consequences: the mode files now state **outcomes** rather than defaults — there is
@@ -106,4 +119,4 @@ keep failing. They are not the evidence that v2 works.
 
 Not this directory, and not another hand-built page. An agent given a clean brief, generating
 complete multi-page sites reproducibly, measured against the same brief run without the
-skill, graded blind. Until that exists, v2 is a claim.
+skill, graded assignment-blinded. Until that exists, v2 is a claim.

@@ -59,7 +59,9 @@ sequence lives in [PIPELINE.json](PIPELINE.json).
 3. Write the evidence, brand and asset records. Plan what every picture carries before
    sourcing or generating it.
 4. Build three structurally different comps. Pass the dials to candidate search, choose one
-   with reasons, and write `DIRECTION.md`, `DESIGN-SYSTEM.md` and `INTERACTIONS.md` from it.
+   with reasons, and make the surface, label, figure and depth grammar explicit. Check the
+   winner against the shared direction history, then write `DIRECTION.md`, `DESIGN-SYSTEM.md`
+   and `INTERACTIONS.md` from it.
 
 The order is **evidence → direction → contract**. A contract written before the direction is
 the mechanism that made unrelated subjects converge on one house style.
@@ -68,6 +70,7 @@ the mechanism that made unrelated subjects converge on one house style.
 python scripts/search.py "<subject> <trade>" --candidates \
   --density <1-10> --motion <1-10> --boldness <1-10>
 node scripts/direction-check.mjs directions/
+node scripts/direction-history.mjs check DIRECTION.md <winner-url> --project <name>
 ```
 
 ### `build` — make it work in the detected stack
@@ -86,8 +89,9 @@ produce a release verdict.
 ### `audit` — make one release decision
 
 Run the canonical verification once, including axe, direction fidelity, token drift, journeys
-and the production gate. Open the screenshots and write one specific critique. Then walk all
-fourteen items in [v2/00-done.md](v2/00-done.md) and write `PRODUCTION-REPORT.md`, including
+and the production gate. Re-check the finished render against the shared direction history and
+record it only when it is new. Open the screenshots and write one specific critique. Then walk
+all fourteen items in [v2/00-done.md](v2/00-done.md) and write `PRODUCTION-REPORT.md`, including
 every failure.
 
 ```bash
@@ -96,6 +100,7 @@ node scripts/direction-fidelity.mjs DIRECTION.md <url>
 node scripts/token-drift.mjs "<pages>" --contract DESIGN-SYSTEM.md
 node scripts/journey.mjs journeys/ --base <url>
 node scripts/production-gate.mjs "<pages>" --manifest ASSET-MANIFEST.md --production
+node scripts/direction-history.mjs commit DIRECTION.md <url> --project <name>
 ```
 
 `harden` reruns only the functional or production checks that failed. `polish` applies one
@@ -166,6 +171,7 @@ The final question, every time: **would a designer look at this and say a machin
 | `scripts/stack-router.mjs` | Detect Next.js, React/Vite or Astro and record one adapter | Node 18+ |
 | `scripts/search.py --candidates` | Three contrasting starts shaped by visible dials, with repeat warnings | Python 3.10+ |
 | `scripts/direction-check.mjs` | Are the three comps actually three directions | Node 18+, playwright optional |
+| `scripts/direction-history.mjs` | Block known SiteSmith recipes and remember passing renders across projects | Node 18+, playwright |
 | `scripts/verify.mjs` | Screenshots at 3 widths, axe in both schemes, links, console, overflow, `--font-stress` | Node 18+, `npx playwright install chromium` |
 | `scripts/token-drift.mjs` | Values used that the contract never declared | Node 18+ |
 | `scripts/journey.mjs` | Runs the interaction journeys | Node 18+, playwright |

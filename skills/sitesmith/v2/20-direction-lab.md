@@ -18,6 +18,7 @@ decided before anyone asks what the page should be, and every later choice fits 
 - [1. What "structurally different" means](#1-what-structurally-different-means)
 - [The three visible dials](#the-three-visible-dials)
 - [2. The five axes](#2-the-five-axes)
+- [The four visual-grammar fields](#the-four-visual-grammar-fields)
 - [3. What a comp is](#3-what-a-comp-is)
 - [4. Choosing](#4-choosing)
 - [5. Recording the rejections](#5-recording-the-rejections)
@@ -56,8 +57,9 @@ change, not polish.
 Three comps that share a layout and differ in hue are one direction rendered three times.
 That is the failure this file exists to stop, so the requirement is mechanical:
 
-**Two comps are structurally different when they differ on at least three of the five axes
-in section 2, and one of those three is the first-screen composition.**
+**Two comps are structurally different when they differ on at least three of the five macro
+axes in section 2, and one of those three is the first-screen composition. They must also
+differ on at least two of the four visual-grammar fields below.**
 
 Three comps must be pairwise structurally different. A→B, B→C and A→C all have to clear the
 bar. In practice this forces one of them to be uncomfortable, which is the intended effect:
@@ -101,11 +103,35 @@ logic and the aspect ratios. Whether images sit inside containers or break out o
 Whether the page still works with every image removed — and if the answer is yes for all
 three comps, imagery was never load-bearing in any of them.
 
-### Axis 5 — rhythm and edge
+### Axis 5 — rhythm
 
 Section rhythm: alternating bands, one continuous field, a hard rule between sections, an
-asymmetric column that runs the length of the page. Edge treatment: radius, hard corners,
-hairlines, shadow, none of it. Density: how much of the page is empty and where.
+asymmetric column that runs the length of the page. Density: how much of the page is empty
+and where.
+
+## The four visual-grammar fields
+
+Macro layout was not enough. Three unrelated round-8 sites cleared the five-axis check and
+still shared the same smaller habits: uppercase mono labels, hairline separators, tabular
+figures used decoratively and no elevation anywhere. Those habits made the sites read as one
+SiteSmith house style despite different compositions.
+
+Every comp therefore states four more decisions:
+
+- **Surface** — what separates or contains things: open space, changing grounds, hairlines,
+  heavy frames, material texture, or something argued from the subject.
+- **Labels** — how secondary labels speak: sentence case, display-face captions, symbols,
+  mono capitals, handwriting, or another explicit system.
+- **Figures** — whether numbers are absent, proportional, tabular only where comparison needs
+  them, or a deliberate visual motif.
+- **Depth** — flat, elevated, inset, overlapping, or another explicit layering logic.
+
+These are decisions, not four menus. Write each as `<treatment> — <subject-specific reason>`;
+the gate compares only the treatment, so the same device does not become "new" because its
+explanation changed. ASCII `--` is accepted where an em dash is awkward. The mechanical gate
+checks promises it can measure and reports the rest for review. A direction
+may still choose the round-8 treatment where the subject earns it, but it may not choose all
+four parts together: that exact recipe is a known SiteSmith tell.
 
 ## 3. What a comp is
 
@@ -123,8 +149,9 @@ screenshot of somebody else's site.
 - 15 to 20 minutes each. A comp that takes an hour is a page, and building a page before the
   direction is chosen is what this file exists to prevent.
 
-Each comp gets a `directions/<x>/NOTE.md`: one paragraph on what it is arguing, and its five
-axis values as a list. The axis list is what section 7 checks.
+Each comp gets a `directions/<x>/NOTE.md`: one paragraph on what it is arguing, then
+`direction-version: 2.3`, its five macro-axis values and its four visual-grammar values as a
+list. The lists are what section 7 checks.
 
 ## 4. Choosing
 
@@ -154,6 +181,7 @@ become one average.
 
 - the three visible dial values shared with `BRIEF.md`,
 - its five axis values,
+- its four visual-grammar values,
 - its score on the five criteria,
 - for the two that lost: **what specifically it did well, and the specific reason it lost.**
 
@@ -166,16 +194,20 @@ whether three directions were genuinely explored or two were built to lose.
 
 ## 6. The anti-repeat rule
 
-The lab keeps a record. `directions/HISTORY.md` accumulates one line per chosen direction
-across the whole project: date, page or site, and the five axis values of the winner.
+The lab keeps one append-only ledger across projects at
+`~/.sitesmith/direction-history.jsonl`. A per-project history cannot see repetition between
+projects, which is where a house style forms.
 
-**A new direction may not match a previous winner on all five axes.** If it does, either the
-lab did not explore, or the subject genuinely wants the same treatment — in which case say so
-explicitly and note that it is a repeat.
+Before the winner is accepted, run:
 
-Across a benchmark set, a portfolio of client work, or a gallery, this is the mechanism that
-stops the sixth site looking like the first. It is the direct answer to nine legacy pages
-sharing one hero, one font stack and one palette recipe.
+```bash
+node scripts/direction-history.mjs check DIRECTION.md <winner-url> --project <name>
+```
+
+The gate compares both the declared axes and the rendered fingerprint. It fails an exact
+render match, four shared house-style devices with an earlier project, and the known flat
+technical-editorial recipe even when the ledger is empty. During `audit`, `commit` re-checks
+the finished render and adds it to the ledger only after it passes. The record stores no URL.
 
 ## 7. Checking the three are actually different
 
@@ -183,10 +215,10 @@ sharing one hero, one font stack and one palette recipe.
 node scripts/direction-check.mjs directions/
 ```
 
-Reads the axis lists from the three `NOTE.md` files, checks pairwise difference on at least
-three axes including axis 1, renders all three, and reports measured differences it can see
-in the DOM: ground luminance, display font stack, number of distinct type sizes, image count,
-section-rhythm signature.
+Reads the axis and grammar lists from the three `NOTE.md` files, checks pairwise difference on
+at least three macro axes including axis 1 and two grammar fields, renders all three, and
+reports measured differences it can see in the DOM: ground luminance, display font stack,
+type sizes, image count, section rhythm, labels, separators, figures and elevation.
 
 Where the declared axes and the measured page disagree, the measurement wins and the check
 fails. A comp whose `NOTE.md` claims a dark ground and renders `#faf8f4` has not made the
@@ -201,7 +233,7 @@ answers whether three options were actually put on the table.
 
 - Three comps exist, render, and use real copy.
 - Pairwise structural difference holds, verified by the script.
-- No winner repeats all five axes of a previous entry in `HISTORY.md`.
+- The winner passes the shared direction-history check.
 - `DIRECTION.md` names the winner, the signature, the graft if any, and the two rejections
   with specific reasons.
 
@@ -219,12 +251,17 @@ the built page against every line, so the **shape is a contract, not a suggestio
 ```markdown
 ## Axis record
 
-- direction-version: 2.2
+- direction-version: 2.3
 - composition: <how the page is arranged>
 - type: <display face> over <body face>, <what the figures are set in>
 - colour: <ground>, <the one accent and what it is reserved for>
 - imagery: <photography-led | diagram-led | object-led | deliberately imageless>, <treatment>
 - rhythm: <how sections are separated>
+
+- surface: <treatment> — <how the subject earns this separation or containment>
+- labels: <case, face and marker treatment> — <why it fits this subject>
+- figures: <absent | proportional | functional tabular | tabular motif> — <why>
+- depth: <flat | elevated | inset | overlap> — <what may use it and why>
 
 - visual-density: <1-10>
 - motion-intensity: <1-10>
@@ -234,8 +271,10 @@ the built page against every line, so the **shape is a contract, not a suggestio
 - signature-min-share: <percent of the first screen it must occupy>
 ```
 
-Five axis lines and three dial lines, each beginning `- ` and the field name, then a colon.
-New directions declare `direction-version: 2.2`; that makes all three dial lines mandatory.
+Five macro-axis lines, four visual-grammar lines and three dial lines, each beginning `- ` and
+the field name, then a colon. New directions declare `direction-version: 2.3`; that makes the
+four grammar lines and all three dial lines mandatory. Each grammar line also needs the
+`<treatment> — <reason>` split; the treatment is the machine-compared part.
 Prose headings such as
 `- **Type and scale.** …` do not parse: the gate reads the axis as `undefined` and fails the
 page for declaring nothing, which looks like a design fault and is a formatting one.

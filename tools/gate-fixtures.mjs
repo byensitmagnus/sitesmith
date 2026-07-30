@@ -77,6 +77,28 @@ const dc = (fixture) => run(join(S, 'direction-check.mjs'), [join('direction', f
 
 expect('direction', 'three genuinely different comps', dc('pass-three-directions'), 0);
 
+/* Version 2.3 closes the gap that let three macro layouts share one SiteSmith micro-style. */
+{
+  const { writeFileSync, readFileSync } = await import('node:fs');
+  const dir = join(FIX, 'direction/pass-three-directions');
+  const paths = ['a', 'b', 'c'].map((name) => join(dir, name, 'NOTE.md'));
+  const backups = paths.map((path) => [path, readFileSync(path, 'utf8')]);
+  try {
+    const shared = [
+      '- direction-version: 2.3',
+      '- surface: hairline rules — the inventory is read as a ledger',
+      '- labels: uppercase monospace labels — small codes lead every row',
+      '- figures: tabular figures as a motif — quantities drive the decision',
+      '- depth: flat — every item belongs to one continuous plane',
+    ].join('\n');
+    for (const [path, source] of backups) writeFileSync(path, `${source.trim()}\n${shared}\n`);
+    expect('direction', 'three macro directions that share one visual grammar',
+      dc('pass-three-directions'), 1, /visual-grammar field\(s\).*needs at least 2/);
+  } finally {
+    for (const [path, source] of backups) writeFileSync(path, source);
+  }
+}
+
 expect('direction', 'three palette variants of one layout', dc('fail-palette-variants'), 1,
   /differ on \d axis|measure identically/);
 

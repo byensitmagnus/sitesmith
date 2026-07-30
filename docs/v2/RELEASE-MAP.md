@@ -21,7 +21,7 @@ The normal website journey has three user commands:
 | --- | --- | --- |
 | `init` | A truthful brief and one chosen direction | inspect, evidence, brand, assets, contrasting directions, contract |
 | `build` | The site works in its detected stack | structure, stack adapter, implementation, journeys, fast render loop |
-| `audit` | The site is ready to hand over or names why it is not | technical verification, fidelity, production gate, visual critique, report |
+| `audit` | The site is ready to hand over or names why it is not | technical verification, fidelity, production gate, shared direction memory, visual critique, report |
 
 `harden`, `polish` and `doctor` remain targeted commands. They are not mandatory phases in every
 build. A product build never runs portfolio comparison, assignment-blinded review or benchmark
@@ -54,7 +54,7 @@ lab: explicit benchmark request -> isolated runs -> review -> claim
 1. A clean install provides the skill and executable gates.
 2. `init`, `build` and `audit` are the documented default journey generated from `PIPELINE.json`.
 3. Next.js, React/Vite and Astro projects select one matching stack adapter deterministically.
-4. The chosen direction records density, motion and aesthetic boldness instead of inheriting a
-   hidden house style.
+4. The chosen direction records density, motion, boldness and four visual-grammar decisions;
+   the finished render is checked against the known SiteSmith recipe and earlier projects.
 5. Repository status documents agree, all existing gates stay green, and the research corpus is
    unchanged.

@@ -1,5 +1,5 @@
 {
-  "audited": "2026-07-28",
+  "audited": "2026-07-30",
   "sitesmith": "48aa17c76540f2207df0bf22af8b85346de0bf11",
   "rule": "A capability is complete only when a workflow, an implementation or a verifiable output exists. A markdown rule on its own is 'partial'.",
   "competitors": {
@@ -53,9 +53,9 @@
       "competitorSha": "—",
       "sitesmithStatus": "complete",
       "decision": "retain",
-      "rationale": "No competitor requires or measures three structurally different comps. SiteSmith requires pairwise difference on three of five axes including composition, verified against the rendered DOM.",
+      "rationale": "No competitor requires or measures three structurally different comps. SiteSmith requires pairwise difference on three of five macro axes including composition and two of four visual-grammar fields, then verifies the rendered DOM.",
       "sitesmithFile": "skills/sitesmith/v2/20-direction-lab.md, skills/sitesmith/scripts/direction-check.mjs",
-      "evidence": "tools/gate-fixtures.mjs — 4 direction fixtures including palette-variants FAIL",
+      "evidence": "tools/gate-fixtures.mjs — macro directions sharing one visual grammar FAIL; palette variants and declared/rendered drift also FAIL",
       "licence": "original"
     },
     {
@@ -78,9 +78,9 @@
       "competitorSha": "e988add20dab0fa97d7a76781c48961c8184288e",
       "sitesmithStatus": "complete",
       "decision": "retain",
-      "rationale": "Upstream states anti-slop as guidance. SiteSmith keeps one append-only cross-project history storing the measured render fingerprint beside the declared axes, so a direction described in fresh words that renders as the last one is caught.",
-      "sitesmithFile": "skills/sitesmith/scripts/direction-history.mjs, docs/v2/direction-history.jsonl",
-      "evidence": "18 search anti-repeat fixtures in tools/gate-fixtures.mjs",
+      "rationale": "Upstream states anti-slop as guidance. SiteSmith keeps one append-only user-level history storing measured render fingerprints beside declared axes and visual grammar. It also blocks the measured round-8 SiteSmith recipe before any history exists.",
+      "sitesmithFile": "skills/sitesmith/scripts/direction-history.mjs, skills/sitesmith/v2/20-direction-lab.md",
+      "evidence": "tools/test-direction-history.mjs plus 18 search anti-repeat fixtures in tools/gate-fixtures.mjs; all three actual round-8 pages are rejected against an empty ledger",
       "licence": "principle only"
     },
     {

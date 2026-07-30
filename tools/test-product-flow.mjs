@@ -48,8 +48,10 @@ await check('init owns direction formation instead of requiring a fourth shape c
 await check('build ends in a fast preview and audit owns the release checks', () => {
   assert.ok(command('build').includes('preview'), 'build is missing preview');
   assert.ok(command('audit').includes('verify'), 'audit is missing verify');
+  assert.ok(command('audit').includes('novelty'), 'audit is missing final direction memory');
   assert.ok(command('audit').includes('report'), 'audit is missing report');
   assert.ok(!command('audit').includes('diversity'), 'portfolio diversity leaked into a site audit');
+  assert.match(step('novelty')?.gate ?? '', /direction-history\.mjs commit/);
 });
 
 await check('lab-only diversity and sealed review are outside the product journey', () => {

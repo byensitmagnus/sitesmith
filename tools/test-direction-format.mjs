@@ -24,8 +24,10 @@ import { fileURLToPath } from 'node:url';
 import { join } from 'node:path';
 import {
   parseDirection, groundExpectation, typeExpectation, imageryExpectation, rhythmExpectation,
-  directionContractProblems,
+  directionContractProblems, GRAMMAR, surfaceExpectation, labelExpectation, figureExpectation,
+  depthExpectation, judge,
 } from '../skills/sitesmith/scripts/direction-fidelity.mjs';
+import { grammarTreatment } from '../skills/sitesmith/scripts/direction-record.mjs';
 
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
 const DOC = join(ROOT, 'skills/sitesmith/v2/20-direction-lab.md');
@@ -54,6 +56,11 @@ const documented = parseDirection(fenced[1]);
 ok('the documented block parses to five axes',
   AXES.every((a) => documented.axes[a]),
   AXES.filter((a) => !documented.axes[a]).join(', ') || 'composition, type, colour, imagery, rhythm');
+ok('the documented block is direction version 2.3', documented.version === 2.3,
+  String(documented.version));
+ok('the documented block parses the four visual-grammar fields',
+  GRAMMAR.every((field) => documented.grammar[field]),
+  GRAMMAR.filter((field) => !documented.grammar[field]).join(', ') || GRAMMAR.join(', '));
 ok('the documented block carries a signature selector', Boolean(documented.signature),
   documented.signature ?? 'none');
 ok('the documented block carries a minimum share', Number.isFinite(documented.signatureMinShare),
@@ -84,6 +91,53 @@ ok('the three direction dials parse as integers',
   }), JSON.stringify(dialled.dials));
 ok('a complete dial contract has no format problem', directionContractProblems(dialled).length === 0,
   directionContractProblems(dialled).join('; '));
+
+const grammarDirection = parseDirection([
+  '- direction-version: 2.3',
+  '- composition: a dense index',
+  '- type: condensed grotesque over a system sans',
+  '- colour: a light paper ground',
+  '- imagery: deliberately imageless',
+  '- rhythm: one continuous field',
+  '- surface: open whitespace — sections change measure instead of gaining rules',
+  '- labels: sentence case in the body face — the reader needs prose, not codes',
+  '- figures: proportional — numbers are evidence but not the visual motif',
+  '- depth: elevated — only the purchase panel rises because it follows the reader',
+  '- visual-density: 8',
+  '- motion-intensity: 3',
+  '- aesthetic-boldness: 7',
+  '- signature-selector: .index',
+  '- signature-min-share: 8',
+].join('\n'));
+ok('a complete 2.3 direction has no format problem',
+  directionContractProblems(grammarDirection).length === 0,
+  directionContractProblems(grammarDirection).join('; '));
+
+const missingGrammar = parseDirection([
+  '- direction-version: 2.3',
+  '- composition: a dense index', '- type: sans over sans', '- colour: light ground',
+  '- imagery: deliberately imageless', '- rhythm: one continuous field',
+  '- visual-density: 8', '- motion-intensity: 3', '- aesthetic-boldness: 7',
+  '- signature-selector: .index',
+].join('\n'));
+ok('2.3 reports missing visual grammar as a contract fault',
+  directionContractProblems(missingGrammar).some((problem) => /surface, labels, figures, depth/.test(problem)),
+  directionContractProblems(missingGrammar).join('; '));
+
+const unsplitGrammar = parseDirection([
+  '- direction-version: 2.3',
+  '- composition: a dense index', '- type: sans over sans', '- colour: light ground',
+  '- imagery: deliberately imageless', '- rhythm: one continuous field',
+  '- surface: hairline rules because it is a ledger',
+  '- labels: sentence case because the audience reads prose',
+  '- figures: proportional because figures are secondary',
+  '- depth: flat because everything shares one plane',
+  '- visual-density: 8', '- motion-intensity: 3', '- aesthetic-boldness: 7',
+  '- signature-selector: .index',
+].join('\n'));
+ok('2.3 requires treatment and reason to be machine-separated',
+  directionContractProblems(unsplitGrammar).filter((problem) => /must be/.test(problem)).length === 4,
+  directionContractProblems(unsplitGrammar).join('; '));
 
 const missingDials = parseDirection([
   '- direction-version: 2.2',
@@ -167,6 +221,31 @@ for (const [phrase, want] of [['alternating bands of ground', 'bands'],
 }
 ok('a rhythm value outside the vocabulary is reported, not guessed',
   rhythmExpectation('sections, separated somehow') === null);
+
+ok('open surfaces classify against repeated hairlines',
+  surfaceExpectation('open whitespace, no repeated rules')?.want === 'open');
+ok('a reason cannot change the machine-compared treatment',
+  surfaceExpectation('open whitespace — chosen to avoid hairline rules')?.want === 'open');
+ok('known treatment synonyms cannot fake a grammar difference',
+  grammarTreatment('surface', 'hairline rules — reads as a ledger') ===
+  grammarTreatment('surface', 'thin ruled separators — follows the paper form'));
+ok('uppercase mono labels classify as the known label device',
+  labelExpectation('uppercase monospace labels')?.want === 'mono-caps');
+ok('tabular figures used as a motif classify as a motif',
+  figureExpectation('tabular figures as a visual motif')?.want === 'tabular-motif');
+ok('flat depth classifies as zero elevation',
+  depthExpectation('flat, no shadows')?.want === 'flat');
+
+const grammarDrift = judge(grammarDirection, {
+  ground: 'rgb(245, 245, 245)', luminance: 0.91,
+  displayStack: 'Roboto Condensed, sans-serif', displayFamily: 'Roboto Condensed',
+  assetShare: 0, largestAssetShare: 0, bands: 1, cards: 0,
+  hairlines: 30, heavyBorders: 0, monoCaps: 8, tabularNums: 6, shadowed: 0,
+}, 10);
+ok('the final fidelity judge rejects drift on all four grammar fields',
+  ['surface:', 'labels:', 'figures:', 'depth:'].every((field) =>
+    grammarDrift.problems.some((problem) => problem.startsWith(field))),
+  grammarDrift.problems.join('; '));
 
 /* ── 3. the directions in this repository still parse ──────────────────────── */
 /* Read-only. These three are a failed control group and are not to be edited; the point is

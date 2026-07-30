@@ -133,6 +133,12 @@ in this repository's own history.
 
 Prose, but specific. Each heading below is required.
 
+**Visual grammar.** Copy the four chosen lines from `DIRECTION.md` verbatim: `surface`,
+`labels`, `figures` and `depth`. Then name which components enact each choice. This prevents
+the implementation from quietly adding SiteSmith's old defaults — uppercase mono labels,
+hairline rules, tabular figures as ornament and flat surfaces — after a different direction
+was chosen. If a component needs an exception, name it here with the subject-specific reason.
+
 **Buttons.** For each variant (primary, secondary, quiet, destructive): which tokens it
 uses, and what happens at rest, hover, `:focus-visible`, active, disabled and loading. Six
 states, named. "Standard hover" is not an answer.

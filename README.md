@@ -68,6 +68,11 @@ and a kinetic campaign do not begin from the same hidden house style.
 landing for technical buyers, with a Linear-style minimalist language, leaning toward Tailwind +
 restrained motion."* Everything downstream follows from that sentence.
 
+**Makes the small style choices explicit.** Every direction also chooses its surface, label,
+figure and depth grammar. A shared local ledger measures finished renders across projects, and
+the exact flat technical-editorial recipe that made three unrelated builds look alike now fails
+even before the ledger has an entry.
+
 **Renders and measures.** A bundled Playwright script screenshots at 375/768/1440, runs axe in
 **both** colour schemes, collects console errors, checks every link and detects horizontal overflow.
 The audit is incomplete until someone opens those screenshots and writes a specific criticism.
@@ -168,6 +173,7 @@ skills/sitesmith/
   data/                     28 CSV datasets — 161 palettes, 73 font pairings, 84 styles
   scripts/
     stack-router.mjs        detect Next.js, React/Vite or Astro and bind one adapter
+    direction-history.mjs   reject known/repeated render recipes across projects
     search.py               query the datasets; dials alter candidate formation
     verify.mjs              3 widths, axe both schemes, links, console, overflow,
                             document structure, --font-stress
