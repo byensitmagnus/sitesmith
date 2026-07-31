@@ -4,7 +4,7 @@
 
 **This phase is skipped by default.** Run it only when the target directory has no working frontend
 stack. If a framework, a bundler or a styling system is already present, that decision is already
-made — adopt it and move on to `01-brief-and-dials.md`.
+made — adopt it and move on to the `init` route in `SKILL.md`.
 
 ## Contents
 
