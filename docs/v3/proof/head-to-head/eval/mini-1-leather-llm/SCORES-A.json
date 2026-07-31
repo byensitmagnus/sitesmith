@@ -1,0 +1,47 @@
+{
+  "evaluator": "A",
+  "briefId": "01-leather-goods",
+  "comparison": "mini-1-leather-llm",
+  "scores": {
+    "P": {
+      "briefFit": 5,
+      "subjectSpecificity": 5,
+      "originality": 4,
+      "composition": 5,
+      "hierarchy": 5,
+      "typography": 5,
+      "materiality": 4,
+      "assetStrategy": 5,
+      "interaction": 5,
+      "signature": 5,
+      "antiCliche": 5,
+      "implementability": 5,
+      "total": 58
+    },
+    "Q": {
+      "briefFit": 5,
+      "subjectSpecificity": 5,
+      "originality": 4,
+      "composition": 5,
+      "hierarchy": 5,
+      "typography": 5,
+      "materiality": 5,
+      "assetStrategy": 5,
+      "interaction": 5,
+      "signature": 5,
+      "antiCliche": 5,
+      "implementability": 5,
+      "total": 59
+    }
+  },
+  "qualitative": {
+    "wouldBuild": "Q",
+    "mostGeneric": "neither-clear",
+    "bestGrounded": "Q",
+    "strongestDirection": "Q"
+  },
+  "comments": {
+    "P": "Make-slot desk fully specified: plate-first fold, material stamp, Hide Grade Strip radiogroup, price band + 3-week lead, brass CTA, sticky rail desktop. Named field-tote/belt-no-2 plates and honest needed stitch-macro + missing strap plate. Colour model is descriptive (cream/ink/brass) without hex tokens — mild materiality gap vs Q. Strong build confidence; slightly less paint-by-numbers than Q.",
+    "Q": "Same desk logic with hex tokens, edge-bone/soot companions, and equally honest unknowns. Highest implementability confidence by a hair on material tokens."
+  }
+}

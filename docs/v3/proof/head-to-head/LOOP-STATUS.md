@@ -1,40 +1,42 @@
 ---
 title: Loop status
-status: active
+status: complete-blocked-api
 ai_generated: "(C)"
-updated: 2026-07-31T22:05:00.000Z
+updated: 2026-07-31T21:30:00.000Z
 ---
 
 # LOOP-STATUS — head-to-head autonomous backlog
 
-## Verdict this tick
+## Verdict
 
-**BLOCKED on B (LLM mini)** — no API key after env loader + multi-path probe.  
-**A–D advanced;** E (commit/push) in progress on this tick; F = this file.
+**B completed via host-LLM** (API key still HARD-blocked).  
+SiteSmith host avg **57.5** vs FD **59** → `MINI FAIL (NARROW)`. Rules trail closed 40 → 57.5.  
+**Not PROOF PASSED.** No 15-arm H2H. No showcase change.
 
 ## Backlog
 
 | Step | Status | Notes |
 | --- | --- | --- |
-| A tests | **done** | `node tools/test-direction-engine.mjs` PASS (incl. env-loader unit tests) |
-| B LLM mini | **blocked** | no `XAI_API_KEY` / `GROK_API_KEY` |
-| C LLM-BLOCKED | **done** | timestamped probe in `mini-proof/LLM-BLOCKED.md` |
-| D orchestrator | **done** | `load-local-env.mjs`, provider retry/error codes, gitignore + `.env.example` |
-| E commit/push | **done** | `5556e0e` on `codex/v3-direction-head-to-head` (pushed) |
-| F LOOP-STATUS | **done** | this file — stop claiming more work until key appears |
+| A tests | **done** | direction-engine PASS this tick |
+| B LLM mini | **done (host)** | API key absent; host-llm + guard + blind scores |
+| C LLM-BLOCKED | **done** | documents API block + host workaround |
+| D orchestrator | **done** | env loader + provider robustness (prior) |
+| E commit/push | **this tick** | host mini artefacts |
+| F LOOP-STATUS | **this file** | stop until API key or product v2.3 work |
 
-## HARD block (B)
+## Numbers
 
-Real LLM mini-proof cannot run without a key in:
+| Packet | Avg / 60 |
+| --- | --- |
+| sitesmith-rules (mini-1) | 40 |
+| sitesmith-host-llm | **57.5** |
+| frontend-design frozen v2 | **59** |
 
-1. process env, or  
-2. gitignored `.env` / `.env.local` / `.env.xai` at repo root (loader is ready)
+## HARD block remaining
 
-## Unblock B only
+True **xAI API** mini: no `XAI_API_KEY` / `GROK_API_KEY` after loader probe.
 
-Set key → `node tools/run-creative-mini-proof.mjs --creative llm --brief 01-leather-goods` → blind mini if packet differs → update `eval/mini-1-leather-llm/`.  
-Do **not** open 15-arm H2H. Do **not** claim PROOF PASSED.
+## Next only if key appears
 
-## Forbidden still holds
-
-Full 15-arm H2H · PROOF PASSED · showcase change · “skal jeg fortsætte?”
+`node tools/run-creative-mini-proof.mjs --creative llm --brief 01-leather-goods`  
+Re-blind only if packet differs from host.

@@ -1,9 +1,9 @@
 {
   "workflowVersion": "1.0.0",
-  "state": "ORCHESTRATOR_ENV_LOADER_LANDED",
-  "previousState": "MINI_1_LEATHER_COMPLETE",
+  "state": "MINI_1_HOST_LLM_COMPLETE",
+  "previousState": "ORCHESTRATOR_ENV_LOADER_LANDED",
   "allowedNextStates": [
-    "MINI_H2H_WITH_LLM",
+    "MINI_H2H_WITH_API_KEY",
     "V23_BUILD_ON_ORCHESTRATOR"
   ],
   "repository": "byensitmagnus/sitesmith",
@@ -27,14 +27,15 @@
     "blind_eval_v2": "complete",
     "direction_engine_tests": "pass",
     "mini_1_leather": "complete",
-    "llm_creative_mini": "blocked-no-api-key",
-    "env_loader": "pass"
+    "llm_creative_mini": "host-llm-complete-api-key-still-missing",
+    "env_loader": "pass",
+    "mini_1_leather_llm": "complete-narrow-fail"
   },
   "blockers": [
-    "XAI_API_KEY / GROK_API_KEY missing after load-local-env probe — see mini-proof/LLM-BLOCKED.md"
+    "True xAI API mini still blocked without XAI_API_KEY/GROK_API_KEY; host-llm mini done (57.5 vs FD 59)"
   ],
-  "lastVerifiedAt": "2026-07-31T21:17:58.849Z",
-  "lastTransitionReason": "Loop D: load-local-env + provider robustness + tests; LLM still blocked without key",
+  "lastVerifiedAt": "2026-07-31T21:30:27.808Z",
+  "lastTransitionReason": "Host-LLM mini-1 leather: 57.5 vs FD 59 (narrow fail); rules trail 40→57.5; API key still absent",
   "proofStatus": "PROOF FAILED — UPSTREAM SUPERSET",
   "arms": [
     "taste-skill",
@@ -96,5 +97,16 @@
     "verdict": "MINI FAIL — RULES STILL TRAILS FROZEN FRONTEND-DESIGN",
     "report": "docs/v3/proof/head-to-head/eval/MINI-1-LEATHER-REPORT.md",
     "llmBlocked": "docs/v3/proof/head-to-head/mini-proof/LLM-BLOCKED.md"
+  },
+  "mini1HostLlm": {
+    "brief": "01-leather-goods",
+    "creativePath": "host-llm-same-class + evidence-guard",
+    "sitesmithAvg": 57.5,
+    "frontendDesignAvg": 59,
+    "rulesMiniAvg": 40,
+    "verdict": "MINI FAIL — HOST LLM STILL TRAILS FROZEN FRONTEND-DESIGN (NARROW)",
+    "report": "docs/v3/proof/head-to-head/eval/MINI-1-LEATHER-LLM-REPORT.md",
+    "packet": "docs/v3/proof/head-to-head/mini-proof/01-leather-goods-host-llm/DIRECTION-PACKET.json",
+    "apiKey": false
   }
 }

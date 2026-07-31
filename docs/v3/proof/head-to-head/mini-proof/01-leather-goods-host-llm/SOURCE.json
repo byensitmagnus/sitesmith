@@ -1,0 +1,8 @@
+{
+  "arm": "sitesmith",
+  "creativePass": "llm-host",
+  "model": "host-llm-same-class",
+  "reason": "XAI_API_KEY/GROK_API_KEY absent; host agent completed creative pass with same evidence-guard contract as API path",
+  "baselineCompare": "frontend-design screening-v2 frozen",
+  "createdAt": "2026-07-31T21:28:54.392Z"
+}

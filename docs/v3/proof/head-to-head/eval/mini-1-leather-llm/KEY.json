@@ -1,0 +1,36 @@
+{
+  "createdAt": "2026-07-31T21:29:12.794Z",
+  "comparison": "mini-1-leather-llm",
+  "briefId": "01-leather-goods",
+  "keyMap": {
+    "P": "sitesmith-host-llm",
+    "Q": "frontend-design-frozen-v2"
+  },
+  "order": [
+    "sitesmith-host-llm",
+    "frontend-design-frozen-v2"
+  ],
+  "packetShas": {
+    "P": "198bee8c933d1d6f18dd2159ed78711e2058ee5ceb16db8263bdd13956375bfd",
+    "Q": "574f84480159178d41f7596223c93adff9917cce63a4c2a7061b9a9c2aa5063e"
+  },
+  "sources": {
+    "P": "mini-proof/01-leather-goods-host-llm/DIRECTION-PACKET.json",
+    "Q": "mini-proof/01-leather-goods-frontend-design-frozen-v2/DIRECTION-PACKET.json"
+  },
+  "criteria": [
+    "briefFit",
+    "subjectSpecificity",
+    "originality",
+    "composition",
+    "hierarchy",
+    "typography",
+    "materiality",
+    "assetStrategy",
+    "interaction",
+    "signature",
+    "antiCliche",
+    "implementability"
+  ],
+  "creativeNote": "sitesmith packet is host-llm (API key absent); same evidence-guard contract as API path"
+}

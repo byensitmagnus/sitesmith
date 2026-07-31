@@ -1,0 +1,47 @@
+{
+  "evaluator": "B",
+  "briefId": "01-leather-goods",
+  "comparison": "mini-1-leather-llm",
+  "scores": {
+    "P": {
+      "briefFit": 5,
+      "subjectSpecificity": 5,
+      "originality": 4,
+      "composition": 5,
+      "hierarchy": 5,
+      "typography": 5,
+      "materiality": 4,
+      "assetStrategy": 5,
+      "interaction": 5,
+      "signature": 5,
+      "antiCliche": 5,
+      "implementability": 4,
+      "total": 57
+    },
+    "Q": {
+      "briefFit": 5,
+      "subjectSpecificity": 5,
+      "originality": 4,
+      "composition": 5,
+      "hierarchy": 5,
+      "typography": 5,
+      "materiality": 5,
+      "assetStrategy": 5,
+      "interaction": 5,
+      "signature": 5,
+      "antiCliche": 5,
+      "implementability": 5,
+      "total": 59
+    }
+  },
+  "qualitative": {
+    "wouldBuild": "Q",
+    "mostGeneric": "neither-clear",
+    "bestGrounded": "P",
+    "strongestDirection": "Q"
+  },
+  "comments": {
+    "P": "Journey is control-first (radiogroup + make-slot summary), not scroll theatre. Asset honesty is excellent. Slight originality ceiling because thesis/signature family matches the other packet closely; implementability docked for missing hex/token precision.",
+    "Q": "Still the densest implementation map: six named colours, sticky rail, radiogroup, quality floor. Wins wouldBuild and strongestDirection by narrow margins."
+  }
+}
