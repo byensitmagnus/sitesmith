@@ -1,0 +1,46 @@
+{
+  "evaluator": "B",
+  "briefId": "01-leather-goods",
+  "scores": {
+    "P": {
+      "briefFit": 5,
+      "subjectSpecificity": 5,
+      "originality": 4,
+      "composition": 5,
+      "hierarchy": 5,
+      "typography": 5,
+      "materiality": 5,
+      "assetStrategy": 5,
+      "interaction": 5,
+      "signature": 5,
+      "antiCliche": 5,
+      "implementability": 5,
+      "total": 59
+    },
+    "Q": {
+      "briefFit": 3,
+      "subjectSpecificity": 3,
+      "originality": 3,
+      "composition": 2,
+      "hierarchy": 3,
+      "typography": 4,
+      "materiality": 3,
+      "assetStrategy": 2,
+      "interaction": 2,
+      "signature": 4,
+      "antiCliche": 3,
+      "implementability": 2,
+      "total": 34
+    }
+  },
+  "qualitative": {
+    "wouldBuild": "P",
+    "mostGeneric": "Q",
+    "bestGrounded": "P",
+    "strongestDirection": "P"
+  },
+  "comments": {
+    "P": "Complete make-slot desk: Field Tote plate → material stamp → Hide Grade Strip radiogroup → DKK 890–2.400 + 3-week lead → Request make-slot → secondary goods. Hex tokens, brass-only CTA, honest missing stitch-macro/strap plate, motion-2 edge response, declared unknowns — strongest ship package.",
+    "Q": "Same thesis label and Hide Grade Strip name, but composition is only a hard vertical rule, interaction is a thin sticky column, grounding truncates with duplicate anti-refs, all three plates claimed as “have” against pack honesty, and unknowns wrongly “none declared.” Thinner template dump, not a buildable desk."
+  }
+}
