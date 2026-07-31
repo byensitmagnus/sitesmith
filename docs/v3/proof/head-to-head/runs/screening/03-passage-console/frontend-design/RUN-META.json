@@ -3,19 +3,7 @@
   "briefId": "03-passage-console",
   "arm": "frontend-design",
   "status": "completed",
-  "startedAt": "2026-07-31T20:45:00.000Z",
-  "finishedAt": "2026-07-31T20:48:00.000Z",
-  "modelCalls": 1,
-  "method": "frontend-design thesis+plan+self-critique",
-  "armCommit": "b29e7cf65e5cb78a5ac33d582270551bc74a14eb",
-  "contextPackHash": "36545bf82b53595f63ed00c9135dd9170e0c320abd742747593db5a19ced1bc7",
   "phase": "screening",
-  "isolation": "fresh-process-no-peer-outputs",
-  "model": "grok-build-subagent",
-  "files": [
-    "NATIVE.md",
-    "DIRECTION-PACKET.json",
-    "RUN-META.json"
-  ],
-  "packetSha256": "d4857ab64e1ba82dae1c5f6891c74ca4b395cf0b2901ff04846057d033babe20"
-}\n
+  "modelCalls": 1,
+  "packetSha256": "923673bbb7e0c3fc4235fb7971a8711f11de80f51c1b0ed9f7e67b52db78644b"
+}

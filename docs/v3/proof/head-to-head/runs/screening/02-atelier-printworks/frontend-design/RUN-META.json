@@ -3,14 +3,7 @@
   "briefId": "02-atelier-printworks",
   "arm": "frontend-design",
   "status": "completed",
-  "startedAt": "2026-07-31T20:45:00.000Z",
-  "finishedAt": "2026-07-31T20:52:00.000Z",
-  "modelCalls": 1,
-  "method": "native-creative-thesis-plan-self-critique",
-  "armCommit": "b29e7cf65e5cb78a5ac33d582270551bc74a14eb",
-  "contextPackHash": "04b3fd24b85d8d459178d11c4eb4c08d9e1339c76326f264a9c8eba8fda1d216",
-  "packetSha256": "60cbe163420e3588ea069e1fd97a19af443e6c0fb248d89796ebe9d76b22846b",
   "phase": "screening",
-  "isolation": "fresh-subagent-no-peer-outputs",
-  "model": "host-llm-same-class"
-}\n
+  "modelCalls": 1,
+  "packetSha256": "97f72b8526774d392d78a787f4eb0b07291d1b40fd337012eabeec8b06ee5bce"
+}

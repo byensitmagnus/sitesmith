@@ -3,43 +3,7 @@
   "briefId": "02-atelier-printworks",
   "arm": "impeccable",
   "status": "completed",
-  "startedAt": "2026-07-31T20:40:00.000Z",
-  "finishedAt": "2026-07-31T20:55:00.000Z",
-  "modelCalls": 1,
-  "method": "impeccable-new-work-concept-seed-challengers-critique",
-  "armCommit": "6b342244e915d64b0d6e84d5eec448fd196ce6bb",
-  "contextPackHash": "04b3fd24b85d8d459178d11c4eb4c08d9e1339c76326f264a9c8eba8fda1d216",
   "phase": "screening",
-  "isolation": "fresh-process-no-peer-outputs",
-  "model": "frontier-class-host-equivalent",
-  "seed": {
-    "key": "h2h-atelier-2026-07-31",
-    "scope": "direction",
-    "mode": "persuade",
-    "source": "api",
-    "poolRevision": "94ff10ff20de",
-    "approvedCount": 281,
-    "catalogCount": 531,
-    "assignedIndex": 6,
-    "assignedGrounded": "ferry-departure-board",
-    "challengers": [
-      "medium-native-crt-arcade-pixel-glow",
-      "signals-instruments-split-flap-concourse",
-      "pop-culture-shelf-skate-deck-wall",
-      "vernacular-ephemera-socialist-kiosk-print",
-      "games-toys-physics-play-brick-build-instructions",
-      "dream-surreal-impossible-worlds-cloud-quarry"
-    ],
-    "buildDirection": "harbour-departures-board",
-    "absorbedChallenger": "signals-instruments-split-flap-concourse",
-    "namedAlternate": "vernacular-ephemera-socialist-kiosk-print",
-    "critique": "degraded-single-context-direction-only"
-  },
-  "outputs": [
-    "NATIVE.md",
-    "DIRECTION-PACKET.json",
-    "RUN-META.json"
-  ],
-  "notes": "Screening direction only. Concept seed via impeccable.style/api/roll; assigned index from local SHA-256 formula on seed key. No build, no visualize comps, no DESIGN.md, no choice telemetry ping.",
-  "packetSha256": "6d22dc02715ea8ea233b3891a9ed3237a972e728af800257936de34bf3366ec4"
-}\n
+  "modelCalls": 1,
+  "packetSha256": "365d0d2cb9e4d25b07c9495776c5fe9b4c35cd443e5f176646a6711042900009"
+}

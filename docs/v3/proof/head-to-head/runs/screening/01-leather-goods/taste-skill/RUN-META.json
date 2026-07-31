@@ -3,20 +3,7 @@
   "briefId": "01-leather-goods",
   "arm": "taste-skill",
   "status": "completed",
-  "startedAt": "2026-07-31T20:40:00.000Z",
-  "finishedAt": "2026-07-31T20:42:00.000Z",
-  "modelCalls": 1,
-  "method": "taste Design Read + dials",
-  "armCommit": "e988add20dab0fa97d7a76781c48961c8184288e",
-  "contextPackHash": "6099df6a1e57a7bce9d70e72df964cdd05486bb9d636be32964c6df059f48a2f",
   "phase": "screening",
-  "isolation": "fresh-process-no-peer-outputs",
-  "dials": {
-    "DESIGN_VARIANCE": 6,
-    "MOTION_INTENSITY": 2,
-    "VISUAL_DENSITY": 6,
-    "source": "brief aesthetic-boldness/motion/density mapped to taste dials"
-  },
-  "designRead": "mobile-first sensory ecommerce landing for hide-grade-conscious small-batch buyers, plain-trade premium-consumer language, native CSS + product-plate catalog aesthetic",
-  "packetSha256": "c9f9a7df2412eeb10ae6fd4e925a9b3531173d490295ecdd07ed1d907cefb0b4"
-}\n
+  "modelCalls": 1,
+  "packetSha256": "dcc3ba1525342f3420b539b8d80bc0c536d498f74e408e4cd10cb399dbbd6044"
+}

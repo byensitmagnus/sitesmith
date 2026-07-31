@@ -3,14 +3,7 @@
   "briefId": "02-atelier-printworks",
   "arm": "ui-ux-pro-max",
   "status": "completed",
-  "startedAt": "2026-07-31T19:16:52.432Z",
-  "finishedAt": "2026-07-31T19:16:52.644Z",
-  "modelCalls": 0,
-  "method": "uupm-search-py-design-system",
-  "armCommit": "4857a2c5ef989794751a0f66b8545a4a49566286",
-  "contextPackHash": "04b3fd24b85d8d459178d11c4eb4c08d9e1339c76326f264a9c8eba8fda1d216",
-  "packetSha256": "d3f4b4cf8f845fb589a94b335513082c12d4bc28cf1ec35ab79c430af999b373",
   "phase": "screening",
-  "isolation": "fresh-process-no-peer-outputs",
-  "model": "none-mechanical"
-}\n
+  "modelCalls": 0,
+  "packetSha256": "107f69a167fd469bd30a7ce4c073c1d8e124eeaf4ceac33c6fd7099e02c237a5"
+}

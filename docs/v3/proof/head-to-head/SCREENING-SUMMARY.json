@@ -3,7 +3,9 @@
   "completed": 15,
   "expected": 15,
   "failed": [],
-  "paidModelCallsMade": 8,
+  "paidModelCallsMade": 9,
+  "mechanicalRuns": 6,
+  "llmRuns": 9,
   "byArm": {
     "taste-skill": 3,
     "ui-ux-pro-max": 3,
@@ -17,6 +19,6 @@
     "03-passage-console": 5
   },
   "state": "AWAITING_EVAL_APPROVAL",
-  "proofStatus": "PROOF FAILED — DIRECTION QUALITY",
+  "proofStatus": "PROOF FAILED \u2014 DIRECTION QUALITY",
   "note": "Replication and blind evaluation NOT started"
-}\n
+}

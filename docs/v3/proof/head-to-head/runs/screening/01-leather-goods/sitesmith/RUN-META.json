@@ -3,14 +3,7 @@
   "briefId": "01-leather-goods",
   "arm": "sitesmith",
   "status": "completed",
-  "startedAt": "2026-07-31T19:16:52.304Z",
-  "finishedAt": "2026-07-31T19:16:52.315Z",
-  "modelCalls": 0,
-  "method": "direction-engine-v3-slice",
-  "armCommit": "b92cdabad98c4d23ff79b74d6881e6b7129325a4",
-  "contextPackHash": "6099df6a1e57a7bce9d70e72df964cdd05486bb9d636be32964c6df059f48a2f",
-  "packetSha256": "7493b8a47db2f1f646bc95d4486fe67bce6ebd0acdc6368238e58ff7a94d8ff6",
   "phase": "screening",
-  "isolation": "fresh-process-no-peer-outputs",
-  "model": "none-mechanical"
-}\n
+  "modelCalls": 0,
+  "packetSha256": "3b0b4583f34b3783243ce0472e81dd64007edd423aae5c481a95516a5e1cff04"
+}

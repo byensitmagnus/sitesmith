@@ -3,14 +3,7 @@
   "briefId": "01-leather-goods",
   "arm": "frontend-design",
   "status": "completed",
-  "startedAt": "2026-07-31T21:05:00.000Z",
-  "finishedAt": "2026-07-31T21:12:00.000Z",
-  "modelCalls": 1,
-  "method": "native-creative-thesis-plan-self-critique",
-  "armCommit": "b29e7cf65e5cb78a5ac33d582270551bc74a14eb",
-  "contextPackHash": "6099df6a1e57a7bce9d70e72df964cdd05486bb9d636be32964c6df059f48a2f",
-  "packetSha256": "7be728ffa5769fea37fd06f6d0d126e34749a7b1671e9ab992ccb03fae099c60",
   "phase": "screening",
-  "isolation": "fresh-subagent-no-peer-outputs",
-  "model": "host-llm-same-class"
-}\n
+  "modelCalls": 1,
+  "packetSha256": "28686ec523a2fa39c62cb91cc47b5b8d634693b7b04a0b7a331f46db2c488fb4"
+}
