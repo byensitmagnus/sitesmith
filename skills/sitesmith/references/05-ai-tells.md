@@ -1,7 +1,7 @@
 # AI tells: patterns that expose machine-generated design
 
-> Part of the **sitesmith** skill. Verbatim from [taste-skill](https://github.com/Leonxlnx/taste-skill) — MIT, © 2026 Leonxlnx. Final section verbatim from [frontend-design](https://github.com/anthropics/claude-plugins-official) — Apache 2.0, © Anthropic.
-> Reproduced without modification; only the heading above and file name are ours.
+> Part of the **sitesmith** skill. Contains a verbatim excerpt from [taste-skill](https://github.com/Leonxlnx/taste-skill) — MIT, © 2026 Leonxlnx, plus a frozen body from [frontend-design](https://github.com/anthropics/claude-plugins-official) — Apache License 2.0, © Anthropic.
+> **Modified for sitesmith:** SiteSmith assembled the two separately licensed sources, removed frontend-design's YAML frontmatter and separator blank, and added this file's title, the local frontend-design section heading, attribution, contents and navigation. Exact provenance is in `docs/v3/LICENSE-DERIVATION-AUDIT.md`.
 
 ---
 

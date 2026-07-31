@@ -1,7 +1,7 @@
 # Brief inference, dials and choosing a foundation
 
-> Part of the **sitesmith** skill. Verbatim from [taste-skill](https://github.com/Leonxlnx/taste-skill) — MIT, © 2026 Leonxlnx.
-> Reproduced without modification; only the heading above and file name are ours.
+> Part of the **sitesmith** skill. Contains verbatim excerpts from [taste-skill](https://github.com/Leonxlnx/taste-skill) — MIT, © 2026 Leonxlnx.
+> **Modified for sitesmith:** two frozen upstream excerpts are assembled with a SiteSmith title, attribution, contents and local navigation. Exact ranges and hashes are in `docs/v3/LICENSE-DERIVATION-AUDIT.md`.
 
 ---
 

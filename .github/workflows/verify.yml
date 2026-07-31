@@ -12,6 +12,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
@@ -25,6 +27,22 @@ jobs:
       # detectability, the plugin manifests, orphaned datasets, the counts quoted in
       # the docs, and a smoke test of every search domain, stack and design system.
       - run: python tools/check-repo.py
+
+      - name: installed bundles retain provenance, licences and notices
+        run: node tools/test-product-flow.mjs
+
+      # The v3 foundation is a traceability contract, not free-form prose. Keep its
+      # frontmatter/headings/anchors, frozen sources, 59-row ledger, matrix, module
+      # assignments, QC links, licensing state and review evidence machine-checked.
+      - name: v3 architecture documents remain internally complete
+        env:
+          SITESMITH_BASE_SHA: ${{ github.event.pull_request.base.sha || (github.event.before != '0000000000000000000000000000000000000000' && github.event.before) || '' }}
+        run: node tools/check-v3-docs.mjs
+
+      - name: v3 treatment dictionaries and assertion seals are current
+        run: |
+          node tools/sync-v3-treatments.mjs
+          node tools/seal-strength-assertions.mjs
 
       # The assignment-blinded review key opens only after the reviews are locked, bound to this round's
       # hashes, and unedited since. Rounds 3 to 6 committed the key while reviewers were

@@ -207,8 +207,9 @@ Two further sources were evaluated and **rejected** as non-redistributable — o
 had no traceable author. Their material was replaced with originally written equivalents. The
 reasoning is in [LICENSE-AUDIT.md](LICENSE-AUDIT.md).
 
-Original to this repo, MIT: `SKILL.md`, all of `v2/`, all of `blocks/`, `06-redesign-audit.md`,
-`10-setup.md`, `verify.mjs`, `token-drift.mjs`, `tools/`, the benchmarks and the docs.
+Original to this repo, MIT: `SKILL.md`, all of `v2/`, all of `blocks/`,
+`v2/tasks/redesign-audit.md`, `v2/tasks/setup.md`, `verify.mjs`, `token-drift.mjs`, `tools/`, the
+benchmarks and the docs.
 
 **Where the four are still ahead.** Impeccable has live browser iteration and framework hooks that
 SiteSmith deliberately has not copied. Taste-skill still has the broader image-first workflow.
@@ -223,5 +224,6 @@ rendered page doesn't belong in the skill.
 
 ## License
 
-[MIT](LICENSE) for our own work; bundled material keeps its original license. See
-[NOTICE.md](NOTICE.md).
+[MIT](LICENSE) for our own work; bundled material keeps its original licence. See
+[NOTICE.md](NOTICE.md) and the complete bundled
+[Apache-2.0 text](skills/sitesmith/LICENSES/Apache-2.0.txt).

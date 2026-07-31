@@ -7,12 +7,18 @@ Performed 2026-07-25, before making this repository public. Every file that ship
 
 | Source | Upstream | License | May we redistribute? | Action taken |
 | --- | --- | --- | --- | --- |
-| taste-skill | [Leonxlnx/taste-skill](https://github.com/Leonxlnx/taste-skill) | MIT, © 2026 Leonxlnx | **Yes** — MIT permits copying, modification and distribution with the copyright notice | Kept verbatim. Attributed in `NOTICE.md`. |
-| ui-ux-pro-max | [nextlevelbuilder/ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) | MIT, © 2024 Next Level Builder | **Yes** — same terms | Kept verbatim, including `data/` and `scripts/`. Attributed in `NOTICE.md`. |
-| frontend-design | [anthropics/claude-plugins-official](https://github.com/anthropics/claude-plugins-official) | Apache 2.0 (Anthropic) | **Yes** — Apache 2.0 permits redistribution with license text and change notice | Kept verbatim. Attributed in `NOTICE.md`. |
-| impeccable | [pbakaus/impeccable](https://github.com/pbakaus/impeccable) | Apache 2.0 (Paul Bakaus) | **Yes** — same terms | Kept verbatim. Attributed in `NOTICE.md`. Upstream's own `NOTICE.md` third-party credit to [ehmo/platform-design-skills](https://github.com/ehmo/platform-design-skills) (MIT) is carried forward. |
+| taste-skill | [Leonxlnx/taste-skill](https://github.com/Leonxlnx/taste-skill) | MIT, © 2026 Leonxlnx | **Yes** — MIT permits copying, modification and distribution with the copyright notice | Exact excerpts assembled in seven SiteSmith wrappers; not whole-file verbatim. Attributed in `NOTICE.md`. |
+| ui-ux-pro-max | [nextlevelbuilder/ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) | MIT, © 2024 Next Level Builder | **Yes** for the mapped historical root-MIT subset | 28 exact v2.11.0 CSVs, two excerpt/derivative docs, two attributed v2.9.0 Python bodies and one SiteSmith Python derivative. Sibling CLI/skill/font licences are excluded. |
+| frontend-design | [anthropics/claude-plugins-official](https://github.com/anthropics/claude-plugins-official) | Apache 2.0 (Anthropic) | **Yes** — Apache 2.0 permits redistribution with license text and change notice | Frozen body embedded without YAML frontmatter/separator blank and under a SiteSmith-added heading; attributed, modification-described and shipped with the complete Apache licence. |
+| impeccable | [pbakaus/impeccable](https://github.com/pbakaus/impeccable) | Apache 2.0 (Paul Bakaus) | **Yes** — same terms | 35 files pinned to historical provider output; attribution headers added and 32 links repointed in `_SKILL-original.md`. Complete Apache licence and upstream NOTICE credit ship with provider bundles. |
 | website-builder-setup | [tenfoldmarc/website-builder-setup](https://github.com/tenfoldmarc/website-builder-setup) | **None** | **No** — a repository with no license grants no rights; default is all rights reserved | **Removed.** Replaced by originally written setup guidance. |
 | redesign-skill | No canonical source found | **Unknown** | **No** — provenance unverifiable | **Removed.** Replaced by an originally written redesign audit. |
+
+**2026-07-30 correction.** The original “kept verbatim” labels were too broad: they mixed exact
+upstream bodies with SiteSmith wrappers, historical snapshots and real derivatives. The canonical
+file/span/hash map is now [`docs/v3/LICENSE-DERIVATION-AUDIT.md`](docs/v3/LICENSE-DERIVATION-AUDIT.md),
+and the complete Apache text ships at
+[`skills/sitesmith/LICENSES/Apache-2.0.txt`](skills/sitesmith/LICENSES/Apache-2.0.txt).
 
 ## Why the two removals
 
@@ -34,7 +40,7 @@ knowledge in the field, and none of the original phrasing.
 
 ## Our own contributions
 
-`SKILL.md`, `references/06-redesign-audit.md`, `references/10-setup.md`,
+`SKILL.md`, `v2/tasks/redesign-audit.md`, `v2/tasks/setup.md`,
 `references/12-design-system.md`, `blocks/`, `scripts/verify.mjs`, `scripts/token-drift.mjs`,
 `tools/`, this file, `NOTICE.md`, `README.md`, the benchmarks and all CI configuration are original
 work, released under **MIT** (see `LICENSE`).
@@ -42,6 +48,9 @@ work, released under **MIT** (see `LICENSE`).
 ---
 
 ## Addendum, 2026-07-27: from verbatim to derived
+
+This section records the 2026-07-27 synthesis proposal. It does not override the current per-file
+provenance map linked above; current labels describe what is actually distributed now.
 
 **What changed.** The four sources are being rewritten and merged into one ruleset rather than
 carried as four intact voices behind a router. Files that were "reproduced without modification"

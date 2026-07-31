@@ -3,8 +3,12 @@
 """
 UI/UX Pro Max Search - BM25 search engine for UI/UX style guides
 
-Part of the sitesmith skill. From ui-ux-pro-max-skill (MIT, (c) 2024 Next Level Builder):
-https://github.com/nextlevelbuilder/ui-ux-pro-max-skill
+Part of the sitesmith skill. Derived from ui-ux-pro-max-skill v2.9.0
+(MIT, (c) 2024 Next Level Builder):
+https://github.com/nextlevelbuilder/ui-ux-pro-max-skill/tree/65e23199492fa911af32d9078e627ab4de01f4c8
+
+Modified for SiteSmith: dynamic domain/stack help, direction candidate dials, output recording and
+SiteSmith state integration were added. Exact provenance is in docs/v3/LICENSE-DERIVATION-AUDIT.md.
 
 Usage: python search.py "<query>" [--domain <domain>] [--stack <stack>] [--max-results 3]
        python search.py "<query>" --design-system [-p "Project Name"]
