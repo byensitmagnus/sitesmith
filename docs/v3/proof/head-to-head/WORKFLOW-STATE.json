@@ -1,10 +1,10 @@
 {
   "workflowVersion": "1.0.0",
-  "state": "POSTMORTEM_REMEDIATION",
+  "state": "S7_SCREENING_V2_DECISION",
   "previousState": "S7_SCREENING_DECISION",
   "allowedNextStates": [
-    "STOP_PROOF_FAILED",
-    "S8_REPLICATION_OPTIONAL"
+    "STOP_NO_BUILD",
+    "ARCH_RETHINK_CREATIVE_LAYER"
   ],
   "repository": "byensitmagnus/sitesmith",
   "foundationSha": "dc00598cce2af92435a749856393e287506753bc",
@@ -22,12 +22,14 @@
     "evaluators": "complete",
     "replication": "not-started",
     "paid_model_calls": 9,
-    "blind_eval": "complete"
+    "blind_eval": "complete",
+    "screening_v2": "complete",
+    "blind_eval_v2": "complete"
   },
   "blockers": [],
-  "lastVerifiedAt": "2026-07-31T19:58:53.372Z",
-  "lastTransitionReason": "Postmortem + engine packet quality fixes; failed H2H artifacts preserved",
-  "proofStatus": "PROOF FAILED — UPSTREAM SUPERSET",
+  "lastVerifiedAt": "2026-07-31T20:13:10.796872+00:00",
+  "lastTransitionReason": "screening-v2 complete: engine improved scores but still 0/3 vs frontend-design",
+  "proofStatus": "PROOF FAILED \u2014 DIRECTION QUALITY",
   "arms": [
     "taste-skill",
     "ui-ux-pro-max",
@@ -42,11 +44,18 @@
   ],
   "screeningRunsDeclared": 15,
   "replicationRunsDeclared": 15,
-  "evalVerdict": "PROOF FAILED — UPSTREAM SUPERSET",
+  "evalVerdict": "PROOF FAILED \u2014 DIRECTION QUALITY",
   "sitesmithBriefOutcomes": {
     "01-leather-goods": "loss",
     "02-atelier-printworks": "loss",
     "03-passage-console": "loss"
   },
-  "remediation": "engine-packet-quality-v1"
+  "remediation": "engine-packet-quality-v1",
+  "evalVerdictV2": "PROOF FAILED \u2014 DIRECTION QUALITY",
+  "evalVerdictV1": "PROOF FAILED \u2014 UPSTREAM SUPERSET",
+  "sitesmithV2Avgs": {
+    "01-leather-goods": 38.5,
+    "02-atelier-printworks": 39.0,
+    "03-passage-console": 41.0
+  }
 }

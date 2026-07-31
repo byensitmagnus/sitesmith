@@ -10,8 +10,10 @@ import { fileURLToPath } from 'node:url';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const h2h = join(root, 'docs/v3/proof/head-to-head');
-const screening = join(h2h, 'runs/screening');
-const outRoot = join(h2h, 'eval/blind');
+const phaseArg = process.argv.find((a) => a.startsWith('--phase='));
+const phase = phaseArg ? phaseArg.slice('--phase='.length) : 'screening';
+const screening = join(h2h, 'runs', phase);
+const outRoot = join(h2h, 'eval', phase === 'screening' ? 'blind' : `blind-${phase}`);
 
 const briefs = ['01-leather-goods', '02-atelier-printworks', '03-passage-console'];
 const arms = ['taste-skill', 'ui-ux-pro-max', 'frontend-design', 'impeccable', 'sitesmith'];
@@ -120,8 +122,8 @@ for (const briefId of briefs) {
     candidates.push({ arm, packet: blindPacket(pkt), packetSha: createHash('sha256').update(readFileSync(p)).digest('hex') });
   }
 
-  // Seeded shuffle unique per brief
-  const seed = createHash('sha256').update(`blind-eval-v1:${briefId}`).digest();
+  // Seeded shuffle unique per brief + phase
+  const seed = createHash('sha256').update(`blind-eval-v1:${phase}:${briefId}`).digest();
   const rand = mulberry32(seed.readUInt32BE(0));
   const order = candidates.map((_, i) => i);
   for (let i = order.length - 1; i > 0; i -= 1) {

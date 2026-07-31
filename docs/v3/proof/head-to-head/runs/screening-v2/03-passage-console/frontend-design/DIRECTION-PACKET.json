@@ -1,0 +1,24 @@
+{
+  "designThesis": "Commit desk, not product dashboard: first screen is a dense full-width instrument — fixed passage commit strip (form + Log passage / Ctrl+Enter) above an append-only mono passage tape. Direction (inbound|outbound) is the only structural drama as a two-state lock; signal amber is reserved exclusively for offline and validation faults.",
+  "subjectGrounding": "Passage Log Console; harbour masters logging vessel passages; desktop web app; primary action log a passage (vessel name, inbound/outbound, timestamp, berth note); journey open form → fill required fields → save → see row; states empty log, validation error, success row, offline banner; allowed fact Ctrl+Enter; brand near-black shell, fog grey panels, signal amber warnings only, operational short labels; imageless; density 8, motion 1, aesthetic boldness 3; anti-refs consumer fintech gradients, playful illustration chrome; no throughput KPIs or customer logos.",
+  "composition": "Full-width desktop instrument: top status rail (title + offline banner slot); primary commit strip = log form (vessel, direction lock, time, berth note, Log passage + Ctrl+Enter); passage tape below = chronological mono rows. ASCII wireframe in NATIVE.md. Not hero/features/KPI dashboard.",
+  "informationHierarchy": "1) Commit strip (required fields + primary action) 2) Offline/validation signal layer (amber, fault-only) 3) Passage tape (empty invitation → success rows). No decorative metrics or logos.",
+  "typography": "Operate+Read: IBM Plex Sans for UI labels/controls; IBM Plex Mono for vessel names, timestamps, IN/OUT marks with tabular figures. Scale desktop density-8: label 12 / body 14 / row 13 mono / section 16 medium. No display/poster face. Fallbacks system-ui / ui-monospace.",
+  "colourAndMaterialModel": "shell #0B0C0E; panel #1A1D22; panel-edge #2A2F38; ink #E6E8EC; ink-muted #9AA3B2; signal-amber #E5A00D warnings only. Inset fog panels in near-black shell. Six tokens only — no purple/fintech gradients, no acid-green/vermilion decorative accent.",
+  "imageryAndAssetStrategy": "Deliberately imageless — UI chrome and type are the content; asset manifest none. No illustration, stock harbour photos, or logo lockups.",
+  "interactionConcept": "Primary journey open form → fill required fields → save via Log passage or Ctrl+Enter → success row in passage tape. Motion intensity 1: essentially static; focus/error outlines only; prefers-reduced-motion does nothing extra. Empty/validation/offline/success states as specified in pack.",
+  "signatureElement": "Direction as two-state lock (Inbound|Outbound) segmented control — the only bold control; ledger rows echo IN/OUT in mono.",
+  "primaryRisk": "Near-black shell is brand-required and overlaps a common AI default (dark + neon accent); if amber leaks into brand decoration or a third accent is added, the plan collapses into generic dark-tech UI.",
+  "implementationGuidance": "Implement from NATIVE.md compact plan exactly: six colour tokens only; Plex Sans+Mono roles; full-width commit strip + passage tape; direction-lock signature; amber only for offline banner and field errors; no KPIs/logos/illustration; density 8 / motion 1 / boldness 3; visible focus and Ctrl+Enter; quality floor focus/reduced-motion/no horizontal overflow.",
+  "unknowns": "Exact validation rules beyond requiredness; berth-note length limits; timestamp source (manual vs system clock); auth/session model; multi-user concurrency; persistence/sync when returning online; non-desktop breakpoints beyond quality floor; light theme not specified.",
+  "sourcePointers": {
+    "arm": "frontend-design",
+    "commit": "b29e7cf65e5cb78a5ac33d582270551bc74a14eb",
+    "repo": "anthropics/skills",
+    "path": "skills/frontend-design",
+    "method": "native-creative-thesis-plan-self-critique",
+    "workflow": "creative thesis, plan, self-critique",
+    "nativeFile": "NATIVE.md",
+    "phase": "screening-v2"
+  }
+}

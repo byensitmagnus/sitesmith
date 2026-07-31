@@ -5,8 +5,11 @@ import { fileURLToPath } from 'node:url';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const h2h = join(root, 'docs/v3/proof/head-to-head');
-const blind = join(h2h, 'eval/blind');
+const phaseArg = process.argv.find((a) => a.startsWith('--phase='));
+const phase = phaseArg ? phaseArg.slice('--phase='.length) : 'screening';
+const blind = join(h2h, 'eval', phase === 'screening' ? 'blind' : `blind-${phase}`);
 const key = JSON.parse(readFileSync(join(blind, 'KEY.json'), 'utf8'));
+const reportName = phase === 'screening' ? 'EVAL-REPORT' : `EVAL-REPORT-${phase}`;
 const criteria = key.criteria;
 const briefs = Object.keys(key.briefs);
 
@@ -139,7 +142,8 @@ report.summary = {
 };
 
 mkdirSync(join(h2h, 'eval'), { recursive: true });
-writeFileSync(join(h2h, 'eval/EVAL-REPORT.json'), `${JSON.stringify(report, null, 2)}\n`);
+report.phaseLabel = phase;
+writeFileSync(join(h2h, `eval/${reportName}.json`), `${JSON.stringify(report, null, 2)}\n`);
 
 const lines = [
   '---',
@@ -187,7 +191,7 @@ lines.push(
   '- Showcase (still 0/8)',
   '',
 );
-writeFileSync(join(h2h, 'eval/EVAL-REPORT.md'), `${lines.join('\n')}\n`);
+writeFileSync(join(h2h, `eval/${reportName}.md`), `${lines.join('\n')}\n`);
 
 const statePath = join(h2h, 'WORKFLOW-STATE.json');
 const state = JSON.parse(readFileSync(statePath, 'utf8'));

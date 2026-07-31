@@ -20,15 +20,18 @@ const schema = JSON.parse(readFileSync(join(h2h, 'OUTPUT-SCHEMA.json'), 'utf8'))
 const briefId = process.argv[2];
 const arm = process.argv[3];
 const force = process.argv.includes('--force');
+const phaseArg = process.argv.find((a) => a.startsWith('--phase='));
+const phase = phaseArg ? phaseArg.slice('--phase='.length) : 'screening';
 
 if (!briefId || !arm) {
-  console.error('Usage: node tools/run-h2h-screen-arm.mjs <briefId> <arm>');
+  console.error('Usage: node tools/run-h2h-screen-arm.mjs <briefId> <arm> [--force] [--phase=screening-v2]');
   process.exit(2);
 }
 
-const runId = `screen-${briefId}-${arm}`;
-const outDir = join(h2h, 'runs/screening', briefId, arm);
+const runId = `${phase === 'screening' ? 'screen' : phase}-${briefId}-${arm}`;
+const outDir = join(h2h, 'runs', phase, briefId, arm);
 const packDir = join(h2h, 'briefs', briefId);
+const ledgerPath = join(h2h, phase === 'screening' ? 'RUN-LEDGER.jsonl' : `RUN-LEDGER-${phase}.jsonl`);
 
 function writeJson(p, obj) {
   mkdirSync(dirname(p), { recursive: true });
@@ -39,7 +42,27 @@ function writeText(p, s) {
   writeFileSync(p, String(s).replace(/\r\n/g, '\n'), 'utf8');
 }
 function appendLedger(row) {
-  appendFileSync(join(h2h, 'RUN-LEDGER.jsonl'), `${JSON.stringify(row)}\n`, 'utf8');
+  appendFileSync(ledgerPath, `${JSON.stringify(row)}\n`, 'utf8');
+}
+function cleanBox(s) {
+  return String(s ?? '').replace(/[│├└┌┐┘\r]/g, '').replace(/\s+/g, ' ').trim();
+}
+function packFacts(pack) {
+  const body = [pack.brief, pack.evidence, pack.brand, pack.assetPlan, pack.assetManifest, pack.constraints].join('\n');
+  const subject = (body.match(/(?:^|\n)#\s+Subject:\s*(.+)/i) || body.match(/Subject:\s*(.+)/i))?.[1]
+    ?.replace(/["']/g, '').trim() || briefId;
+  const audience = body.match(/Audience:\s*(.+)/i)?.[1]?.trim() || 'unknown';
+  const action = body.match(/Primary action:\s*(.+)/i)?.[1]?.trim()
+    || body.match(/Primary journey:\s*(.+)/i)?.[1]?.trim() || 'unknown';
+  const products = body.match(/Products(?:\s*\(truth\))?:\s*(.+)/i)?.[1]?.trim()
+    || body.match(/Work:\s*(.+)/i)?.[1]?.trim()
+    || body.match(/Proof:\s*(.+)/i)?.[1]?.trim() || '';
+  const materials = body.match(/Materials:\s*(.+)/i)?.[1]?.trim() || '';
+  const anti = body.match(/Anti-references:\s*(.+)/i)?.[1]?.trim() || '';
+  const imageless = /deliberately imageless/i.test(body);
+  const plates = /\(have\)/i.test(body) || /product plates?/i.test(body);
+  const brandLine = pack.brand.split(/\n/).map((l) => l.trim()).find((l) => l && !/^#|---|^title:|^status:|^ai_/.test(l)) || '';
+  return { subject, audience, action, products, materials, anti, imageless, plates, brandLine };
 }
 function loadPack() {
   const read = (n) => readFileSync(join(packDir, n), 'utf8');
@@ -183,10 +206,12 @@ if (arm === 'sitesmith') {
   };
   if (native.directionMd) writeText(join(outDir, 'NATIVE.md'), native.directionMd);
 } else if (arm === 'ui-ux-pro-max') {
-  method = 'uupm-search-py-design-system';
+  // Round-2: retrieval + pack-grounded synthesis (same token budget class as other
+  // mechanical arms; grounds subject/assets from pack, structure from UUPM rows).
+  method = 'uupm-search-py-design-system+pack-grounded-synthesis';
   modelCalls = 0;
-  const subjectLine = pack.brief.split('\n').find((l) => l.startsWith('# '))?.replace(/^#\s*/, '') || briefId;
-  const query = `${pack.ctx.modeLabel} ${subjectLine} ${pack.ctx.mode}`;
+  const facts = packFacts(pack);
+  const query = `${pack.ctx.modeLabel} ${facts.subject} ${pack.ctx.mode} ${facts.products}`.trim();
   const pyScript = findSearchPy();
   if (!pyScript) {
     console.error('search.py not found');
@@ -204,45 +229,67 @@ if (arm === 'sitesmith') {
     stdout = `${e.stdout || ''}${e.stderr || e.message}`;
   }
   writeText(join(outDir, 'UUPM-RETRIEVAL.txt'), stdout);
-  native = {
-    kind: 'ui-ux-pro-max-search-design-system',
-    query,
-    searchScript: pyScript.replace(root, '').replace(/\\/g, '/'),
-    commit: armCommit,
-    note: 'Native generator output only; no extra model synthesis.',
-    rawPreview: stdout.slice(0, 8000),
-  };
-  const style = stdout.match(/STYLE[\s\S]*?Name:\s*(.+)/i)?.[1]?.trim() || 'unknown';
-  const pattern = stdout.match(/PATTERN[\s\S]*?Name:\s*(.+)/i)?.[1]?.trim() || 'unknown';
+  const style = cleanBox(stdout.match(/STYLE[\s\S]*?Name:\s*(.+)/i)?.[1]) || 'unknown';
+  const pattern = cleanBox(stdout.match(/PATTERN[\s\S]*?Name:\s*(.+)/i)?.[1]) || 'unknown';
   const primary = stdout.match(/Primary:\s*([#][0-9A-Fa-f]{3,8})/)?.[1] || 'unknown';
   const secondary = stdout.match(/Secondary:\s*([#][0-9A-Fa-f]{3,8})/)?.[1] || 'unknown';
   const accent = stdout.match(/Accent\/CTA:\s*([#][0-9A-Fa-f]{3,8})/)?.[1] || 'unknown';
-  const fonts = stdout.match(/TYPOGRAPHY[\s\S]*?\n\s*([^\n]+)/i)?.[1]?.trim() || 'unknown';
-  const effects = stdout.match(/KEY EFFECTS[\s\S]*?\n\s*([^\n]+)/i)?.[1]?.trim() || 'unknown';
-  const avoid = stdout.match(/AVOID[\s\S]*?\n\s*([^\n]+)/i)?.[1]?.trim() || 'unknown';
-  const sections = stdout.match(/Sections:[\s\S]*?(?=├───|└|$)/i)?.[0]?.trim() || pattern;
+  const fonts = cleanBox(stdout.match(/TYPOGRAPHY[\s\S]*?\n\s*([^\n]+)/i)?.[1]) || 'unknown';
+  const effects = cleanBox(stdout.match(/KEY EFFECTS[\s\S]*?\n\s*([^\n]+)/i)?.[1]) || 'unknown';
+  const avoid = cleanBox(stdout.match(/AVOID[\s\S]*?\n\s*([^\n]+)/i)?.[1]) || 'unknown';
+  // Prefer pack brand when present; keep UUPM hex as secondary system proposal
+  const colour = facts.brandLine
+    ? `${facts.brandLine} (pack). UUPM system proposal primary ${primary} / accent ${accent} — prefer pack brand if conflict.`
+    : `primary ${primary}; secondary ${secondary}; accent ${accent}`;
+  const imagery = facts.imageless
+    ? 'Deliberately imageless per pack — UI chrome/type first; no stock lifestyle.'
+    : facts.plates
+      ? `Use declared product/edition plates from pack (${facts.products || 'see ASSET-MANIFEST'}); no lifestyle models.`
+      : 'Follow pack ASSET-PLAN; do not invent photography not listed as have.';
+  native = {
+    kind: 'ui-ux-pro-max-search-plus-pack-grounding',
+    query,
+    searchScript: pyScript.replace(root, '').replace(/\\/g, '/'),
+    commit: armCommit,
+    note: 'Retrieval from UUPM search.py; subject/assets/anti-refs grounded from frozen pack (no invented facts).',
+    packFacts: facts,
+    rawPreview: stdout.slice(0, 8000),
+  };
   packet = {
-    designThesis: `UUPM design-system recommendation: ${style} with ${pattern} pattern for ${subjectLine}`,
-    subjectGrounding: `Query from frozen pack only: ${query}`,
-    composition: pattern,
-    informationHierarchy: sections,
+    designThesis: `${facts.subject}: deliver “${facts.action}” using UUPM pattern “${pattern}” and style “${style}”, without becoming a generic template. Pack anti-refs: ${facts.anti || 'none stated'}.`,
+    subjectGrounding: [
+      `Subject: ${facts.subject}`,
+      `Audience: ${facts.audience}`,
+      `Action: ${facts.action}`,
+      facts.products && `Products/work: ${facts.products}`,
+      facts.materials && `Materials: ${facts.materials}`,
+      facts.anti && `Anti-refs: ${facts.anti}`,
+    ].filter(Boolean).join(' · '),
+    composition: `${pattern} adapted to ${facts.subject} first fold`,
+    informationHierarchy: `1) ${facts.subject} recognition 2) truth facts (${facts.materials || facts.products || 'evidence'}) 3) ${facts.action} 4) secondary — no fake social proof`,
     typography: fonts,
-    colourAndMaterialModel: `primary ${primary}; secondary ${secondary}; accent ${accent}`,
-    imageryAndAssetStrategy: 'unknown — design-system search path does not emit asset plan; obey pack ASSET-PLAN/CONSTRAINTS',
+    colourAndMaterialModel: colour,
+    imageryAndAssetStrategy: imagery,
     interactionConcept: effects,
-    signatureElement: style,
-    primaryRisk: avoid,
-    implementationGuidance: 'Implement from UUPM-RETRIEVAL.txt rows and checklist; do not invent beyond retrieval.',
-    unknowns: 'Page-level composition beyond pattern; photography/asset strategy; brand-specific material finishes',
+    signatureElement: `${facts.subject.split(/\s+/).slice(0, 2).join('-').toLowerCase()}-${style.split(/\s+/)[0]?.toLowerCase() || 'system'}-mark`,
+    primaryRisk: `${avoid}. Also: UUPM palette may fight pack brand — resolve toward pack brand evidence.`,
+    implementationGuidance: [
+      `Query: ${query}`,
+      `Apply UUPM rows in UUPM-RETRIEVAL.txt for pattern/type/effects.`,
+      `Bind all copy and assets to pack only: ${facts.products || 'no product list'}; ${imagery}`,
+      `Do not invent testimonials, awards, or plates marked needed-only.`,
+    ].join(' '),
+    unknowns: 'Exact type scale metrics beyond UUPM font pair; motion timing beyond effect keywords.',
     sourcePointers: {
       arm: 'ui-ux-pro-max',
       commit: armCommit,
       query,
       retrievalFile: 'UUPM-RETRIEVAL.txt',
       method,
+      phase,
     },
   };
-  writeText(join(outDir, 'NATIVE.md'), `# UUPM native retrieval\n\nQuery: ${query}\n\n\`\`\`\n${stdout.slice(0, 12000)}\n\`\`\`\n`);
+  writeText(join(outDir, 'NATIVE.md'), `# UUPM retrieval + pack grounding\n\nQuery: ${query}\n\n## Pack facts\n${JSON.stringify(facts, null, 2)}\n\n## Retrieval\n\n\`\`\`\n${stdout.slice(0, 12000)}\n\`\`\`\n`);
 } else {
   console.error(`Arm ${arm} is LLM-only; use isolated agent writer`);
   process.exit(2);
@@ -267,7 +314,7 @@ const meta = {
   armCommit,
   contextPackHash: pack.ctx.contextPackHash,
   packetSha256: createHash('sha256').update(JSON.stringify(packet)).digest('hex'),
-  phase: 'screening',
+  phase,
   isolation: 'fresh-process-no-peer-outputs',
   model: modelCalls === 0 ? 'none-mechanical' : 'host-llm',
 };

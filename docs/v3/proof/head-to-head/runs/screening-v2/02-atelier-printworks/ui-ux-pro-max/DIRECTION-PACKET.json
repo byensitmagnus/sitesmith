@@ -1,0 +1,22 @@
+{
+  "designThesis": "Atelier Møn Printworks: deliver “enquire about a print edition.” using UUPM pattern “Portfolio Grid” and style “Neo Brutalism (Mobile)”, without becoming a generic template. Pack anti-refs: generic creative-agency blob gradients, stock loft photos.",
+  "subjectGrounding": "Subject: Atelier Møn Printworks · Audience: curators and small brands commissioning limited runs. · Action: enquire about a print edition. · Products/work: letterpress posters, map editions, shop bags for island shops · Anti-refs: generic creative-agency blob gradients, stock loft photos",
+  "composition": "Portfolio Grid adapted to Atelier Møn Printworks first fold",
+  "informationHierarchy": "1) Atelier Møn Printworks recognition 2) truth facts (letterpress posters, map editions, shop bags for island shops) 3) enquire about a print edition. 4) secondary — no fake social proof",
+  "typography": "Space Grotesk / Space Grotesk",
+  "colourAndMaterialModel": "Chalk white, harbour ink, one coral registration mark. (pack). UUPM system proposal primary #EC4899 / accent #0891B2 — prefer pack brand if conflict.",
+  "imageryAndAssetStrategy": "Use declared product/edition plates from pack (letterpress posters, map editions, shop bags for island shops); no lifestyle models.",
+  "interactionConcept": "Thick 4px black borders on all major elements, hard offset shadows (4–8px, no",
+  "signatureElement": "atelier-møn-neo-mark",
+  "primaryRisk": "Boring design + Hidden work. Also: UUPM palette may fight pack brand — resolve toward pack brand evidence.",
+  "implementationGuidance": "Query: characterful marketing/portfolio Atelier Møn Printworks marketing letterpress posters, map editions, shop bags for island shops Apply UUPM rows in UUPM-RETRIEVAL.txt for pattern/type/effects. Bind all copy and assets to pack only: letterpress posters, map editions, shop bags for island shops; Use declared product/edition plates from pack (letterpress posters, map editions, shop bags for island shops); no lifestyle models. Do not invent testimonials, awards, or plates marked needed-only.",
+  "unknowns": "Exact type scale metrics beyond UUPM font pair; motion timing beyond effect keywords.",
+  "sourcePointers": {
+    "arm": "ui-ux-pro-max",
+    "commit": "4857a2c5ef989794751a0f66b8545a4a49566286",
+    "query": "characterful marketing/portfolio Atelier Møn Printworks marketing letterpress posters, map editions, shop bags for island shops",
+    "retrievalFile": "UUPM-RETRIEVAL.txt",
+    "method": "uupm-search-py-design-system+pack-grounded-synthesis",
+    "phase": "screening-v2"
+  }
+}

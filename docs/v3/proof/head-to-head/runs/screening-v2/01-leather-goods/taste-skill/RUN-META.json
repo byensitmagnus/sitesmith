@@ -1,0 +1,11 @@
+{
+  "runId": "screening-v2-01-leather-goods-taste-skill",
+  "briefId": "01-leather-goods",
+  "arm": "taste-skill",
+  "status": "completed",
+  "phase": "screening-v2",
+  "modelCalls": 1,
+  "method": "taste Design Read + dials",
+  "armCommit": "e988add20dab0fa97d7a76781c48961c8184288e",
+  "isolation": "fresh-process-no-peer-outputs"
+}

@@ -3,3 +3,4 @@
 {"at":"2026-07-31T19:16:52.161Z","state":"S4_SCREENING_15_RUNS","reason":"User authorized start screening; sequential-first mechanical then isolated LLM arms"}
 {"at":"2026-07-31T19:24:02.396Z","state":"AWAITING_EVAL_APPROVAL","completed":15,"failed":0}\n{"at":"2026-07-31T19:44:30.609Z","state":"S7_SCREENING_DECISION","verdict":"PROOF FAILED — UPSTREAM SUPERSET"}
 {"at":"2026-07-31T19:58:53.372Z","state":"POSTMORTEM_REMEDIATION"}
+{"at":"2026-07-31T20:12:53.816Z","state":"S7_SCREENING_DECISION","verdict":"PROOF FAILED — DIRECTION QUALITY"}
