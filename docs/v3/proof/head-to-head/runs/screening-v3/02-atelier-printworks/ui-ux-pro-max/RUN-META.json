@@ -1,0 +1,17 @@
+{
+  "runId": "screening-v3-02-atelier-printworks-ui-ux-pro-max",
+  "briefId": "02-atelier-printworks",
+  "arm": "ui-ux-pro-max",
+  "status": "completed",
+  "startedAt": "2026-07-31T20:02:11.267Z",
+  "finishedAt": "2026-07-31T20:02:11.472Z",
+  "modelCalls": 0,
+  "method": "uupm-search-py-design-system+pack-grounded-synthesis",
+  "armCommit": "4857a2c5ef989794751a0f66b8545a4a49566286",
+  "contextPackHash": "04b3fd24b85d8d459178d11c4eb4c08d9e1339c76326f264a9c8eba8fda1d216",
+  "packetSha256": "7f8b58fc432ee68bfb7c36d575b5ca96a95be77f8b01fd149a0120190e9bc288",
+  "phase": "screening-v3",
+  "isolation": "fresh-process-no-peer-outputs",
+  "model": "none-mechanical",
+  "note": "copied-from-screening-v2-for-sitesmith-creative-layer-delta"
+}

@@ -2,6 +2,7 @@
 
 import { createHash } from 'node:crypto';
 import { grammarTreatment } from '../direction-record.mjs';
+import { enrichCards } from './creative-layer.mjs';
 
 /** Seed templates only — never final directions without grounding. */
 export const WORLD_LIBRARY = [
@@ -422,9 +423,12 @@ export function generateDirectionCards(input, route, policy) {
     };
   }
 
-  for (const card of selected) {
+  // Evidence-bound creative layer: director-grade prose without inventing facts.
+  const enriched = enrichCards(selected, input);
+
+  for (const card of enriched) {
     // Use internal slot ids only — never peer worldIds (would leak in blind packets).
-    const others = selected.filter((c) => c.internalId !== card.internalId).map((c) => c.internalId);
+    const others = enriched.filter((c) => c.internalId !== card.internalId).map((c) => c.internalId);
     card.differenceNote = `Differs from ${others.join(', ')} on composition/type/imagery/grammar after brief-fit filter.`;
   }
 
@@ -433,9 +437,10 @@ export function generateDirectionCards(input, route, policy) {
     entropy,
     numericSeed,
     worlds: worlds.map((w) => w.worldId),
-    cards: selected,
-    pairwise: pairwiseReport(selected, policy),
+    cards: enriched,
+    pairwise: pairwiseReport(enriched, policy),
     eligibleSeedCount: eligible.length,
+    creativeLayer: '1.0.0',
   };
 }
 

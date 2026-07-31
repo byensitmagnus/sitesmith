@@ -1,0 +1,12 @@
+{
+  "kind": "llm-impeccable",
+  "method": "new-work-concept-seed-challengers-critique",
+  "modelCalls": 1,
+  "seedKey": "h2h-passage-2026-07-31",
+  "seedSource": "api",
+  "poolRevision": "94ff10ff20de",
+  "assignedIndex": 6,
+  "assignedGroundedCandidate": "tide-movements-chalkboard",
+  "directionName": "Movements Board",
+  "mode": "operate"
+}

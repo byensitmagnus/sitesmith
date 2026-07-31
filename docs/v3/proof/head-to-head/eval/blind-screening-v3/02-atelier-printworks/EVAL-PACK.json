@@ -1,0 +1,115 @@
+{
+  "briefId": "02-atelier-printworks",
+  "instructions": {
+    "role": "blind design-direction evaluator",
+    "scoreScale": "1-5 integers only (1=poor, 5=excellent)",
+    "criteria": [
+      "briefFit",
+      "subjectSpecificity",
+      "originality",
+      "composition",
+      "hierarchy",
+      "typography",
+      "materiality",
+      "assetStrategy",
+      "interaction",
+      "signature",
+      "antiCliche",
+      "implementability"
+    ],
+    "qualitative": [
+      "wouldBuild",
+      "mostGeneric",
+      "bestGrounded",
+      "strongestDirection"
+    ],
+    "rules": [
+      "Do not guess system identity",
+      "Score only from the blinded packet + brief pack",
+      "Do not invent facts not in brief/evidence",
+      "unknown fields are a mild implementability risk, not automatic fail"
+    ]
+  },
+  "briefPack": {
+    "brief": "---\ntitle: \"Subject: Atelier Møn Printworks\"\nstatus: proof-fixture\nai_generated: \"(C)\"\n---\n\n# Subject: Atelier Møn Printworks\n\nMode intent: characterful marketing / portfolio for a coastal print studio.\n\nAudience: curators and small brands commissioning limited runs.\nPrimary action: enquire about a print edition.\nPlatform: desktop-tolerant marketing site.\n\nVisual density: 4\nMotion intensity: 3\nAesthetic boldness: 7\n",
+    "evidence": "---\ntitle: \"Evidence — Atelier Møn Printworks\"\nstatus: proof-fixture\nai_generated: \"(C)\"\n---\n\n# Evidence — Atelier Møn Printworks\n\nSubject: Atelier Møn Printworks\nWork: letterpress posters, map editions, shop bags for island shops\nProof: three named editions (Harbour Night, Chalk Path, Ferry Board)\nFacts allowed: paper stock names, edition sizes, press type (Heidelberg platen)\nFacts forbidden: invented awards, false museum placements\n\nAnti-references: generic creative-agency blob gradients, stock loft photos\nPrimary journey: view edition → read paper/edition facts → enquire\n",
+    "constraints": "---\ntitle: Constraints — Atelier Møn Printworks\nstatus: frozen-benchmark-input\nai_generated: \"(C)\"\n---\n\n# Constraints\n\nSource: existing proof brief evidence/brand/asset plan only. Unknowns stay unknown.\n\n- Do not invent awards or false museum placements.\n- Anti-references: generic creative-agency blob gradients, stock loft photos.\n- Load-bearing assets: photographs of three editions on press sheets; ferry-board.webp is needed/not declared as have.\n- Platform: desktop-tolerant marketing site (brief).\n- Facts allowed only as listed in evidence (paper stock names, edition sizes, press type).\n"
+  },
+  "candidates": [
+    {
+      "id": "P",
+      "designThesis": "Desktop-tolerant press-room marketing/portfolio for Atelier Møn Printworks: three named letterpress editions on press sheets as proof; chalk-white ground, harbour-ink type, one coral registration mark as sole accent; curators and small brands view edition → read paper/edition facts → enquire.",
+      "subjectGrounding": "Atelier Møn Printworks — coastal print studio; letterpress posters, map editions, shop bags for island shops; editions Harbour Night, Chalk Path, Ferry Board; press type Heidelberg platen when stated; audience curators and small brands commissioning limited runs; voice short, concrete, island-local; no invented awards or museum placements.",
+      "composition": "DESIGN_VARIANCE 7: anti-center split or left-aligned type with asymmetric whitespace; hero fits first viewport; calm bands after hero; three edition plate slots; mobile collapses to single column under 768px.",
+      "informationHierarchy": "1) Identity + limited-run what 2) View three named editions 3) Paper/edition/press facts when known 4) Single primary action: enquire about a print edition 5) Short island-local studio note only — no awards block.",
+      "typography": "Sans-first display grotesque (not Inter default; not Fraunces/Instrument_Serif); quiet sans body max-w-[65ch]; mono for edition/press/figure rows; same-family italic/bold emphasis only; descender clearance on italic display.",
+      "colourAndMaterialModel": "Chalk white ground; harbour ink type/structure; one coral registration-mark accent locked page-wide; paper plane + sharp/near-sharp registration geometry; tinted borders over pure-black shadows; light-first.",
+      "imageryAndAssetStrategy": "Load-bearing press-sheet photos: harbour-night.webp (have), chalk-path.webp (have), ferry-board.webp (needed — honest empty/needed slot, no stock loft or blob fills); optional registration-mark diagram.",
+      "interactionConcept": "MOTION_INTENSITY 3: hover/active only; edition hover reveals material fact line; button press feedback; enquire form with labels above, errors below, AA contrast; no scroll choreography or parallax.",
+      "signatureElement": "Coral registration mark as recurring print-production motif (register cross / crop mark) adjacent to plates and primary CTA — geometry not gradient orb.",
+      "primaryRisk": "ferry-board.webp is needed; faking the third edition with stock or silent omission breaks the three-edition proof and the view→facts→enquire journey.",
+      "implementationGuidance": "Lock dials 7/3/4; tokenize chalk white / harbour ink / coral only; asymmetric hero with one plate + enquire CTA; three edition slots with honest Ferry Board needed-state; fact rows only when real paper/edition/Heidelberg copy exists; one enquire intent site-wide; ban blob gradients, loft stock, awards/museums, second accents, Inter+mesh defaults.",
+      "unknowns": "Specific paper stock names; edition sizes; price/terms; studio address/hours/phone; Ferry Board photography until asset exists; any award or institutional placement (forbidden to invent)."
+    },
+    {
+      "id": "Q",
+      "designThesis": "Atelier Møn Printworks is a night-watch instrument: first screen is the work journey (“enquire about a print edition.”), not marketing chrome; ban generic creative-agency blob gradients, stock loft photos. Composition: single object left, large type right.",
+      "subjectGrounding": "Subject: Atelier Møn Printworks · Audience: curators and small brands commissioning limited runs. · Action: enquire about a print edition. · Products: letterpress posters, map editions, shop bags for island shops · Palette: chalk white, harbour ink, coral registration mark · Anti-refs: generic creative-agency blob gradients, stock loft photos; generic creative-agency blob gradients, stock loft photos. · Evidence: Subject: Atelier Møn Printworks · Work: letterpress posters, map editions, shop bags for island shops · Proof: three named editions (Harbour Night, Chalk Path, Ferry Board) · Facts allowed: paper stock names, edition sizes, press type (Heidelberg platen) · Facts forbidden: invent",
+      "composition": "single object left, large type right",
+      "informationHierarchy": "1) work object 2) required fields/states 3) enquire about a print edition. 4) validation/offline/success — no KPI theatre",
+      "typography": "Display: Fraunces or similar display serif for edition titles. Body: Source Serif / Source Sans pair for reading length. Utility: tabular figures for edition sizes only. Seed structure: condensed display grotesque over quiet sans.",
+      "colourAndMaterialModel": "chalk white; type/rules in harbour ink; accent only on primary CTA/hardware (coral registration mark). Seed note: chalk white, harbour ink, coral registration mark — brand evidence only; single reserved accent",
+      "imageryAndAssetStrategy": "diagram-led or edition-sheet slots until declared plates exist; no invented photography — only assets listed in plan/manifest; no invented photography.",
+      "interactionConcept": "hover reveals material fact on the object",
+      "signatureElement": "Always-on status strip + primary work canvas for Atelier Møn Printworks — amber only for faults",
+      "primaryRisk": "Must not drift into banned tropes (generic creative-agency blob gradients, stock loft photos; generic creative-agen); signature may overfit if evidence is thin.",
+      "implementationGuidance": "---\ntitle: \"DIRECTION — 02-atelier-printworks\"\nstatus: direction-engine-slice\nai_generated: \"(C)\"\n---\n\n# DIRECTION — 02-atelier-printworks\n\n## Design thesis\nAtelier Møn Printworks is a night-watch instrument: first screen is the work journey (“enquire about a print edition.”), not marketing chrome; ban generic creative-agency blob gradients, stock loft photos. Composition: single object left, large type right.\n\n## Subject grounding\nSubject: Atelier Møn Printworks\nAudience: curators and small brands commissioning limited runs.\nPrimary action: enquire about a print edition.\nProducts/work: letterpress posters, map editions, shop bags for island shops\nBrand palette cues: chalk white, harbour ink, coral registration mark\nAnti-references: generic creative-agency blob gradients, stock loft photos; generic creative-agency blob gradients, stock loft photos.\n\n## Hierarchy\n1) work object 2) required fields/states 3) enquire about a print edition. 4) validation/offline/success — no KPI theatre\n\n## Signature\nAlways-on status strip + primary work canvas for Atelier Møn Printworks — amber only for faults\n\n## Primary risk\nMust not drift into banned tropes (generic creative-agency blob gradients, stock loft photos; generic creative-agen); signature may overfit if evidence is thin.\n\n## Axis record\n\n- direction-version: 2.3\n- composition: single object left, large type right\n- type: Display: Fraunces or similar display serif for edition titles. Body: Source Serif / Source Sans pair for reading length. Utility: tabular figures for edition sizes only. Seed structure: condensed display grotesque over quiet sans.\n- colour: chalk white; type/rules in harbour ink; accent only on primary CTA/hardware (coral registration mark). Seed note: chalk white, harbour ink, coral registration mark — brand evidence only; single reserved accent\n- imagery: diagram-led or edition-sheet slots until declared plates exist; no invented photography — only assets listed in plan/manifest; no invented photography.\n- rhythm: hard vertical split then calm bands\n\n- surface: open — subject earns space around the object\n- labels: sentence case captions — retail voice stays human\n- figures: proportional — price is content not motif\n- depth: elevated — object lifts off ground slightly\n\n- visual-density: 4\n- motion-intensity: 3\n- aesthetic-boldness: 7\n\n- signature-selector: [data-signature=\"Always-on status strip + primary work canvas for Atelier Møn Printworks — amber only for faults\"]\n- signature-min-share: 12",
+      "unknowns": "none declared"
+    },
+    {
+      "id": "R",
+      "designThesis": "Atelier Møn Printworks: deliver “enquire about a print edition.” using [redacted] pattern “Portfolio Grid” and style “Neo Brutalism (Mobile)”, without becoming a generic template. Pack anti-refs: generic creative-agency blob gradients, stock loft photos.",
+      "subjectGrounding": "Subject: Atelier Møn Printworks · Audience: curators and small brands commissioning limited runs. · Action: enquire about a print edition. · Products/work: letterpress posters, map editions, shop bags for island shops · Anti-refs: generic creative-agency blob gradients, stock loft photos",
+      "composition": "Portfolio Grid adapted to Atelier Møn Printworks first fold",
+      "informationHierarchy": "1) Atelier Møn Printworks recognition 2) truth facts (letterpress posters, map editions, shop bags for island shops) 3) enquire about a print edition. 4) secondary — no fake social proof",
+      "typography": "Space Grotesk / Space Grotesk",
+      "colourAndMaterialModel": "Chalk white, harbour ink, one coral registration mark. (pack). [redacted] system proposal primary #EC4899 / accent #0891B2 — prefer pack brand if conflict.",
+      "imageryAndAssetStrategy": "Use declared product/edition plates from pack (letterpress posters, map editions, shop bags for island shops); no lifestyle models.",
+      "interactionConcept": "Thick 4px black borders on all major elements, hard offset shadows (4–8px, no",
+      "signatureElement": "atelier-møn-neo-mark",
+      "primaryRisk": "Boring design + Hidden work. Also: [redacted] palette may fight pack brand — resolve toward pack brand evidence.",
+      "implementationGuidance": "Query: characterful marketing/portfolio Atelier Møn Printworks marketing letterpress posters, map editions, shop bags for island shops Apply [redacted] rows in [redacted]-RETRIEVAL.txt for pattern/type/effects. Bind all copy and assets to pack only: letterpress posters, map editions, shop bags for island shops; Use declared product/edition plates from pack (letterpress posters, map editions, shop bags for island shops); no lifestyle models. Do not invent testimonials, awards, or plates marked needed-only.",
+      "unknowns": "Exact type scale metrics beyond [redacted] font pair; motion timing beyond effect keywords."
+    },
+    {
+      "id": "S",
+      "designThesis": "Limited Møn letterpress editions listed as a ferry-terminal departure board — not masonry portfolio, not immersive agency scroll. Harbour-ink board, chalk white page, one coral registration lamp on the active row; split-flap cascade as state language; pointer selects the active departure; enquire is the destination column.",
+      "subjectGrounding": "Atelier Møn Printworks: coastal letterpress (posters, map editions, shop bags for island shops). Audience: curators and small brands commissioning limited runs. Proof: Harbour Night, Chalk Path, Ferry Board; paper stock names, edition sizes, Heidelberg platen only. Brand: chalk white, harbour ink, coral registration mark. Voice: short, concrete, island-local. Forbidden: invented awards, false museum placements. Anti: generic creative-agency blob gradients, stock loft photos.",
+      "composition": "First viewport: thin top rail (name + Editions + Enquire); hero = dark ferry departure board ~70–80% width with three edition rows in fixed columns (name, paper, size, press, enquire); focused row shows coral registration mark; press-sheet evidence plate beside/under board for focused edition; island one-liner under board. Staging: first-viewport-pointer-protagonist (select active row). Desktop-tolerant; board remains instrument on narrow viewports with stacked columns.",
+      "informationHierarchy": "1) Board rows = named editions (view). 2) Columns + expanded caption = paper/edition/press facts (read). 3) Destination column + rail = Enquire (act). No awards, no secondary chrome beyond thin rail. Cognitive cap: ≤4 fact fields + action per row.",
+      "typography": "Board destinations: condensed grotesque caps in fixed cells (instrument language). Island captions/body: quiet humanist or neutral grotesque, sentence case, 45–75ch. Avoid cream+serif display defaults and Inter-as-display. Hierarchy by role (board vs caption), not size alone.",
+      "colourAndMaterialModel": "Restrained with one committed instrument field: chalk white page ground; harbour-ink matte board face and primary type; coral only as registration/active-row lamp (and optional focus hairline). Nordic daylight page scene, not default dark-mode product chrome.",
+      "imageryAndAssetStrategy": "Load-bearing: photographs of three editions on press sheets — harbour-night.webp (have), chalk-path.webp (have), ferry-board.webp (needed; labeled placeholder, not loft stock). Optional registration-mark diagram. No stock loft; no gradients as image substitutes.",
+      "interactionConcept": "Signature: row cascade/flip (split-flap grammar absorbed from [redacted]) reveals paper/size/press for the focused edition; coral mark seats on active row; pointer/keyboard selects row; Enquire always visible in destination column. Motion intensity 3; prefers-reduced-motion → instant state swap. No scroll-jack, no parallax.",
+      "signatureElement": "Harbour departures board: three limited-edition rows on a harbour-ink flap panel with coral registration lamp on the active row and cell cascade on focus.",
+      "primaryRisk": "If edition facts or press-sheet photos lag, the board reads as generic transit UI and product clarity dies. Mitigation: never ship a row without real edition name + at least one allowed fact; photo gaps labeled, not faked.",
+      "implementationGuidance": "Semantic table/list with column headers; CSS board panel + condensed type + [aria-selected] coral marker; short cascade animation with reduced-motion fallback; wire two have-assets and Ferry Board placeholder; copy short/island-local using only allowed facts; primary Enquire in first viewport and destination column; URL-addressable active row; no blob gradients, loft stock, or award lines; contact channel unknown until provided.",
+      "unknowns": "Exact paper stock names and edition sizes (not invented); contact channel (form/email/phone); pricing, lead times, clients; Ferry Board photograph; specific licensed typeface files beyond roles."
+    },
+    {
+      "id": "T",
+      "designThesis": "The page is a locked chase on the platen, not a portfolio gallery: one real edition sheet in a thin harbour-ink chase frame (default Harbour Night), edition name set as locked metal type, ticket rail for true press facts, primary action Enquire about this edition; coral registration cross is the sole accent and UI selection/focus grammar.",
+      "subjectGrounding": "Atelier Møn Printworks — coastal letterpress (posters, map editions, shop bags for island shops). Audience: curators and small brands commissioning limited runs. Journey: view edition → paper/edition facts → enquire. Vernacular: Heidelberg platen, press sheets, gripper edges, registration crosses, chalk white, harbour ink. Editions: Harbour Night, Chalk Path, Ferry Board. Forbidden: invented awards, false museum placements. Anti-references: agency blob gradients, stock loft photos. Dials: density 4, motion 3, boldness 7.",
+      "composition": "Desktop locked-chase: press sheet left/center inside thin ink chase frame, job-ticket rail right; three edition plates in one calm grip-edge row below; enquire form as order-slip band. Narrow: sheet then ticket stack. Open chalk space (density 4), not broadsheet packing.",
+      "informationHierarchy": "1) Active edition image+name 2) Press facts in ticket mono (stock, edition size, Heidelberg platen when present) 3) Enquire CTA 4) Other editions as selection set 5) Short studio note. No decorative 01/02/03 markers.",
+      "typography": "Display: condensed jobbing grotesque (e.g. Barlow Condensed 600–700, tight tracking) for edition titles. Body: quiet book serif (e.g. Source Serif 4 400/600), 45–75ch. Ticket: tabular mono (e.g. IBM Plex Mono) for stock, edition size, press type labels. Avoid Inter/Space Grotesk/Roboto as identity.",
+      "colourAndMaterialModel": "Chalk White #F4F2EC ground; Harbour Ink #15202B type/chase rules; Ink Wash #5C6670 secondary; Sheet Edge #D9D4C8 borders/shallow paper shadow; Registration Coral #E85A4F sole accent. Flat paper, no blob gradients, no secondary brand hue.",
+      "imageryAndAssetStrategy": "Load-bearing: three edition-on-sheet photographs (harbour-night.webp have, chalk-path.webp have, ferry-board.webp needed). Missing Ferry Board = honest chalk pending plate with ticket label, no loft stock fill. Optional registration diagram only if clarifying the mark system. Crop for paper/ink reality, not lifestyle.",
+      "interactionConcept": "Motion intensity 3: one sheet-settle-into-forme on load (~300ms); edition hover 2px lift; coral for focus/active only, no ambient loop. Reduced-motion: static. Form: Send enquiry / Enquiry sent.",
+      "signatureElement": "Coral registration cross as sole accent system — sheet overlay, focus ring language, active-edition glyph on grip-edge strip.",
+      "primaryRisk": "Registration-as-UI collapses into generic red accent if the mark is not drawn as a precise print registration cross or if a second accent creeps in.",
+      "implementationGuidance": "Tokenize five colours only; three type roles with metric fallbacks; edition state swaps sheet+ticket facts; bind ticket rows only to real evidence (omit empty); replace Ferry Board pending plate when asset exists; thin ink chase rule not heavy sticker border; no hero gradients; no awards/museum/testimonials; quality floor mobile stack/focus/reduced-motion.",
+      "unknowns": "Specific paper stock names and edition sizes not supplied in pack — leave as content slots, do not invent. Ferry Board photograph pending. Dark mode not specified."
+    }
+  ]
+}

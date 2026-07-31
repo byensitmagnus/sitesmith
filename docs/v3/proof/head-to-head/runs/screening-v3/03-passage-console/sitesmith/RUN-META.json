@@ -1,0 +1,16 @@
+{
+  "runId": "screening-v3-03-passage-console-sitesmith",
+  "briefId": "03-passage-console",
+  "arm": "sitesmith",
+  "status": "completed",
+  "startedAt": "2026-07-31T20:17:59.967Z",
+  "finishedAt": "2026-07-31T20:17:59.978Z",
+  "modelCalls": 0,
+  "method": "direction-engine-v3-slice",
+  "armCommit": "b92cdabad98c4d23ff79b74d6881e6b7129325a4",
+  "contextPackHash": "36545bf82b53595f63ed00c9135dd9170e0c320abd742747593db5a19ced1bc7",
+  "packetSha256": "c72d58748f3be94da777595e65eb00df5e682c14abb9cdbb412eec598f048c07",
+  "phase": "screening-v3",
+  "isolation": "fresh-process-no-peer-outputs",
+  "model": "none-mechanical"
+}

@@ -1,0 +1,22 @@
+{
+  "designThesis": "Northline Leather Goods: deliver “configure a bag and request a make-slot.” using UUPM pattern “Newsletter / Content First” and style “Vibrant & Block-based”, without becoming a generic template. Pack anti-refs: purple SaaS gradient, stock handshake photos, fake 4.9★ rows.",
+  "subjectGrounding": "Subject: Northline Leather Goods · Audience: people who buy small-batch bags and straps and care about hide grade. · Action: configure a bag and request a make-slot. · Products/work: Field Tote, Belt No. 2, Shoulder Strap · Materials: bridle leather, solid brass, vegetable tan · Anti-refs: purple SaaS gradient, stock handshake photos, fake 4.9★ rows",
+  "composition": "Newsletter / Content First adapted to Northline Leather Goods first fold",
+  "informationHierarchy": "1) Northline Leather Goods recognition 2) truth facts (bridle leather, solid brass, vegetable tan) 3) configure a bag and request a make-slot. 4) secondary — no fake social proof",
+  "typography": "Rubik / Nunito Sans",
+  "colourAndMaterialModel": "Ink brown, warm cream, single brass accent. (pack). UUPM system proposal primary #059669 / accent #EA580C — prefer pack brand if conflict.",
+  "imageryAndAssetStrategy": "Use declared product/edition plates from pack (Field Tote, Belt No. 2, Shoulder Strap); no lifestyle models.",
+  "interactionConcept": "Large sections (48px+ gaps), animated patterns, bold hover (color shift),",
+  "signatureElement": "northline-leather-vibrant-mark",
+  "primaryRisk": "Flat design without depth + Text-heavy pages. Also: UUPM palette may fight pack brand — resolve toward pack brand evidence.",
+  "implementationGuidance": "Query: sensory e-commerce Northline Leather Goods ecommerce Field Tote, Belt No. 2, Shoulder Strap Apply UUPM rows in UUPM-RETRIEVAL.txt for pattern/type/effects. Bind all copy and assets to pack only: Field Tote, Belt No. 2, Shoulder Strap; Use declared product/edition plates from pack (Field Tote, Belt No. 2, Shoulder Strap); no lifestyle models. Do not invent testimonials, awards, or plates marked needed-only.",
+  "unknowns": "Exact type scale metrics beyond UUPM font pair; motion timing beyond effect keywords.",
+  "sourcePointers": {
+    "arm": "ui-ux-pro-max",
+    "commit": "4857a2c5ef989794751a0f66b8545a4a49566286",
+    "query": "sensory e-commerce Northline Leather Goods ecommerce Field Tote, Belt No. 2, Shoulder Strap",
+    "retrievalFile": "UUPM-RETRIEVAL.txt",
+    "method": "uupm-search-py-design-system+pack-grounded-synthesis",
+    "phase": "screening-v2"
+  }
+}

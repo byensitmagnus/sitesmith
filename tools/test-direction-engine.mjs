@@ -308,6 +308,7 @@ const ecommerceB = {
   v.signals.products = ['Field Tote', 'Belt No. 2'];
   v.signals.materials = ['bridle leather'];
   v.signals.brandPalette = ['ink brown', 'warm cream', 'brass'];
+  v.signals.commerce = true;
   const route = routeCapabilities(v, policy, loadLedger());
   const gen = generateDirectionCards(v, route, policy);
   if (!gen.ok) fail('rich-card', gen.problems?.join(';'));
@@ -317,7 +318,11 @@ const ecommerceB = {
     if (/["']$/.test(c.thesis) || /\\+"/.test(c.thesis)) fail('rich-card', `thesis quote: ${c.thesis}`);
     if (/^[\w-]+-sig-\d+$/.test(c.signatureElement)) fail('rich-card', `opaque sig only: ${c.signatureElement}`);
     if (!/1\)/.test(c.layoutPrinciple)) fail('rich-card', 'hierarchy missing numbered levels');
-    else ok('rich cards: clean evidence, thesis, signature, hierarchy');
+    if (!/make-slot desk|Hide Grade|Make-slot/i.test(`${c.thesis} ${c.signatureElement}`)) {
+      fail('rich-card', `creative layer weak: ${c.thesis} / ${c.signatureElement}`);
+    } else if (!c.implementationNotes || c.implementationNotes.length < 80) {
+      fail('rich-card', 'missing implementationNotes');
+    } else ok('rich cards: clean evidence, thesis, signature, hierarchy + creative layer');
   }
 }
 

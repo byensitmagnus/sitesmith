@@ -1,10 +1,10 @@
 {
   "workflowVersion": "1.0.0",
-  "state": "S7_SCREENING_V2_DECISION",
+  "state": "S7_SCREENING_V3_DECISION",
   "previousState": "S7_SCREENING_DECISION",
   "allowedNextStates": [
     "STOP_NO_BUILD",
-    "ARCH_RETHINK_CREATIVE_LAYER"
+    "ARCH_LLM_CREATIVE_LAYER"
   ],
   "repository": "byensitmagnus/sitesmith",
   "foundationSha": "dc00598cce2af92435a749856393e287506753bc",
@@ -27,9 +27,9 @@
     "blind_eval_v2": "complete"
   },
   "blockers": [],
-  "lastVerifiedAt": "2026-07-31T20:13:10.796872+00:00",
-  "lastTransitionReason": "screening-v2 complete: engine improved scores but still 0/3 vs frontend-design",
-  "proofStatus": "PROOF FAILED \u2014 DIRECTION QUALITY",
+  "lastVerifiedAt": "2026-07-31T20:20:42.173393+00:00",
+  "lastTransitionReason": "v3 creative-layer: leather +4, atelier/passage regress; still 0/3",
+  "proofStatus": "PROOF FAILED \u2014 UPSTREAM SUPERSET",
   "arms": [
     "taste-skill",
     "ui-ux-pro-max",
@@ -44,7 +44,7 @@
   ],
   "screeningRunsDeclared": 15,
   "replicationRunsDeclared": 15,
-  "evalVerdict": "PROOF FAILED \u2014 DIRECTION QUALITY",
+  "evalVerdict": "PROOF FAILED \u2014 UPSTREAM SUPERSET",
   "sitesmithBriefOutcomes": {
     "01-leather-goods": "loss",
     "02-atelier-printworks": "loss",
@@ -55,7 +55,25 @@
   "evalVerdictV1": "PROOF FAILED \u2014 UPSTREAM SUPERSET",
   "sitesmithV2Avgs": {
     "01-leather-goods": 38.5,
-    "02-atelier-printworks": 39.0,
-    "03-passage-console": 41.0
+    "02-atelier-printworks": 39,
+    "03-passage-console": 41
+  },
+  "evalVerdictV3": "PROOF FAILED \u2014 UPSTREAM SUPERSET",
+  "sitesmithScoreTrail": {
+    "v1": [
+      28.5,
+      29.5,
+      34.5
+    ],
+    "v2": [
+      38.5,
+      39.0,
+      41.0
+    ],
+    "v3": [
+      42.5,
+      27.5,
+      28.5
+    ]
   }
 }
