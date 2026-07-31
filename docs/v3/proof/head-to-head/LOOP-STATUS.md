@@ -20,8 +20,8 @@ updated: 2026-07-31T22:05:00.000Z
 | B LLM mini | **blocked** | no `XAI_API_KEY` / `GROK_API_KEY` |
 | C LLM-BLOCKED | **done** | timestamped probe in `mini-proof/LLM-BLOCKED.md` |
 | D orchestrator | **done** | `load-local-env.mjs`, provider retry/error codes, gitignore + `.env.example` |
-| E commit/push | **this tick** | branch `codex/v3-direction-head-to-head` |
-| F LOOP-STATUS | **this file** | stop claiming more work until key appears |
+| E commit/push | **done** | `5556e0e` on `codex/v3-direction-head-to-head` (pushed) |
+| F LOOP-STATUS | **done** | this file — stop claiming more work until key appears |
 
 ## HARD block (B)
 
