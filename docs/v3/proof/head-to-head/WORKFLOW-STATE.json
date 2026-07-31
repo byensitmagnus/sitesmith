@@ -1,7 +1,7 @@
 {
   "workflowVersion": "1.0.0",
-  "state": "MINI_1_LEATHER_COMPLETE",
-  "previousState": "ORCHESTRATOR_V1_LANDED",
+  "state": "ORCHESTRATOR_ENV_LOADER_LANDED",
+  "previousState": "MINI_1_LEATHER_COMPLETE",
   "allowedNextStates": [
     "MINI_H2H_WITH_LLM",
     "V23_BUILD_ON_ORCHESTRATOR"
@@ -27,13 +27,14 @@
     "blind_eval_v2": "complete",
     "direction_engine_tests": "pass",
     "mini_1_leather": "complete",
-    "llm_creative_mini": "blocked-no-api-key"
+    "llm_creative_mini": "blocked-no-api-key",
+    "env_loader": "pass"
   },
   "blockers": [
-    "XAI_API_KEY / GROK_API_KEY missing — LLM mini-proof blocked (see mini-proof/LLM-BLOCKED.md)"
+    "XAI_API_KEY / GROK_API_KEY missing after load-local-env probe — see mini-proof/LLM-BLOCKED.md"
   ],
-  "lastVerifiedAt": "2026-07-31T21:15:00.000Z",
-  "lastTransitionReason": "Mini-1 leather: rules vs frozen FD blind eval; LLM blocked without key; ARCH orchestrator canonical",
+  "lastVerifiedAt": "2026-07-31T21:17:58.849Z",
+  "lastTransitionReason": "Loop D: load-local-env + provider robustness + tests; LLM still blocked without key",
   "proofStatus": "PROOF FAILED — UPSTREAM SUPERSET",
   "arms": [
     "taste-skill",
@@ -65,9 +66,21 @@
   },
   "evalVerdictV3": "PROOF FAILED — UPSTREAM SUPERSET",
   "sitesmithScoreTrail": {
-    "v1": [28.5, 29.5, 34.5],
-    "v2": [38.5, 39, 41],
-    "v3": [42.5, 27.5, 28.5]
+    "v1": [
+      28.5,
+      29.5,
+      34.5
+    ],
+    "v2": [
+      38.5,
+      39,
+      41
+    ],
+    "v3": [
+      42.5,
+      27.5,
+      28.5
+    ]
   },
   "architecture": "docs/v3/ARCH-DIRECTION-ORCHESTRATOR.md",
   "architectureCanonical": true,
@@ -85,4 +98,3 @@
     "llmBlocked": "docs/v3/proof/head-to-head/mini-proof/LLM-BLOCKED.md"
   }
 }
-

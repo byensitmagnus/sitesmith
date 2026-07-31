@@ -14,6 +14,13 @@ import { critiqueBlindedCards, resolveChoice } from '../skills/sitesmith/scripts
 import { compileDesignSpec, validateDesignSpec, buildHandoffPackage } from '../skills/sitesmith/scripts/direction-engine/designspec.mjs';
 import { runDirectionEngine, runDirectionEngineAsync } from '../skills/sitesmith/scripts/direction-engine/index.mjs';
 import { guardCreativePacket } from '../skills/sitesmith/scripts/direction-engine/evidence-guard.mjs';
+import {
+  parseEnvText,
+  loadLocalEnv,
+  creativeKeyPresence,
+} from '../skills/sitesmith/scripts/direction-engine/load-local-env.mjs';
+import { mkdtempSync, writeFileSync, rmSync } from 'node:fs';
+import { tmpdir } from 'node:os';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const policy = JSON.parse(readFileSync(
@@ -460,6 +467,42 @@ const ecommerceB = {
   if (canonicalNewlines('a\r\nb\rc') !== 'a\nb\nc') fail('canonical-newlines', 'CRLF/CR map failed');
   else if (canonicalNewlines(canonicalNewlines('a\r\nb')) !== 'a\nb') fail('canonical-newlines', 'not idempotent');
   else ok('canonicalNewlines CRLF/CR → LF is idempotent');
+}
+
+// Local .env loader: parse + fill-only + never clobber existing process.env
+{
+  const parsed = parseEnvText([
+    '# comment',
+    'export XAI_API_KEY="sk-test-quoted"',
+    'GROK_API_KEY=plain',
+    'BAD LINE',
+    'SITESMITH_CREATIVE_MODEL=grok-test',
+    '',
+  ].join('\n'));
+  if (parsed.XAI_API_KEY !== 'sk-test-quoted' || parsed.GROK_API_KEY !== 'plain') {
+    fail('parse-env', JSON.stringify(parsed));
+  } else if (parsed.SITESMITH_CREATIVE_MODEL !== 'grok-test') {
+    fail('parse-env-model', parsed.SITESMITH_CREATIVE_MODEL);
+  } else ok('parseEnvText handles export, quotes, comments');
+
+  const dir = mkdtempSync(join(tmpdir(), 'ss-env-'));
+  const marker = `SS_TEST_${Date.now()}`;
+  writeFileSync(join(dir, '.env'), `${marker}=from-file\nEXISTING_KEEP=from-file\n`, 'utf8');
+  process.env.EXISTING_KEEP = 'from-shell';
+  delete process.env[marker];
+  const r = loadLocalEnv({ startDir: dir, onlyKeys: null });
+  if (process.env[marker] !== 'from-file') fail('load-env-set', process.env[marker]);
+  else if (process.env.EXISTING_KEEP !== 'from-shell') fail('load-env-clobber', process.env.EXISTING_KEEP);
+  else if (!r.setKeys.includes(marker)) fail('load-env-report', r.setKeys.join(','));
+  else ok('loadLocalEnv fill-only does not override shell env');
+  delete process.env[marker];
+  delete process.env.EXISTING_KEEP;
+  try { rmSync(dir, { recursive: true, force: true }); } catch { /* ignore */ }
+
+  const presence = creativeKeyPresence();
+  if (typeof presence.anyKey !== 'boolean' || typeof presence.XAI_API_KEY !== 'boolean') {
+    fail('key-presence', JSON.stringify(presence));
+  } else ok('creativeKeyPresence is presence-only boolean map');
 }
 
 if (failed) {

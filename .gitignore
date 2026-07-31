@@ -4,6 +4,11 @@ __pycache__/
 .DS_Store
 Thumbs.db
 
+# Local secrets — never commit API keys (loader: load-local-env.mjs)
+.env
+.env.*
+!.env.example
+
 # verify.mjs --json duplicates report.json
 benchmarks/results/**/raw.json
 

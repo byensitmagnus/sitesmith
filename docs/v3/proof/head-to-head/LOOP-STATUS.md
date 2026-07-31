@@ -2,38 +2,39 @@
 title: Loop status
 status: active
 ai_generated: "(C)"
+updated: 2026-07-31T22:05:00.000Z
 ---
 
-# Loop status — ærlig version
+# LOOP-STATUS — head-to-head autonomous backlog
 
-## Hvad der var forkert første gang
+## Verdict this tick
 
-| Det du fik | Det du bad om |
-|---|---|
-| Ét `scheduler` fire (~2–3 min) + jeg **cancellede** det | Et **vedvarende** loop der kører videre alene |
-| Status + “sæt API-key” | Arbejde over mange ticks indtil Done/blocker |
+**BLOCKED on B (LLM mini)** — no API key after env loader + multi-path probe.  
+**A–D advanced;** E (commit/push) in progress on this tick; F = this file.
 
-Det var en **tick**, ikke et loop. Fair kritik.
+## Backlog
 
-## Hvad der kører nu
+| Step | Status | Notes |
+| --- | --- | --- |
+| A tests | **done** | `node tools/test-direction-engine.mjs` PASS (incl. env-loader unit tests) |
+| B LLM mini | **blocked** | no `XAI_API_KEY` / `GROK_API_KEY` |
+| C LLM-BLOCKED | **done** | timestamped probe in `mini-proof/LLM-BLOCKED.md` |
+| D orchestrator | **done** | `load-local-env.mjs`, provider retry/error codes, gitignore + `.env.example` |
+| E commit/push | **this tick** | branch `codex/v3-direction-head-to-head` |
+| F LOOP-STATUS | **this file** | stop claiming more work until key appears |
 
-- **Interval:** 10 minutter  
-- **durable:** true  
-- **fire_immediately:** true  
-- Hvert tick skal flytte backlog A→F eller dokumentere HARD block  
-- Prompt er state-machine baseret (lærdige steps springes over)
+## HARD block (B)
 
-## Hvad Grok “loop” faktisk er
+Real LLM mini-proof cannot run without a key in:
 
-Grok `/loop` / `scheduler_create` = **periodiske nye agent-kørsler**, ikke én chat der aldrig stopper.
+1. process env, or  
+2. gitignored `.env` / `.env.local` / `.env.xai` at repo root (loader is ready)
 
-Det er **ikke** det samme som Claude der bare bliver i tråden i 2 timer uden dig.  
-Det **er** dog den rigtige mekanisme her til “arbejd videre mens jeg er væk”.
+## Unblock B only
 
-## HARD block
+Set key → `node tools/run-creative-mini-proof.mjs --creative llm --brief 01-leather-goods` → blind mini if packet differs → update `eval/mini-1-leather-llm/`.  
+Do **not** open 15-arm H2H. Do **not** claim PROOF PASSED.
 
-Ingen `XAI_API_KEY` / `GROK_API_KEY` i env eller lokal `.env` (loader tilføjet: `tools/load-env.mjs`).
+## Forbidden still holds
 
-## Stop loop
-
-Slet scheduled task i Grok, eller bed agenten `scheduler_delete` med task-id.
+Full 15-arm H2H · PROOF PASSED · showcase change · “skal jeg fortsætte?”

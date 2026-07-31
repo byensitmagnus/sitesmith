@@ -14,6 +14,7 @@ import { critiqueBlindedCards, resolveChoice } from './critic.mjs';
 import { compileDesignSpec, buildHandoffPackage, validateDesignSpec } from './designspec.mjs';
 import { packetFromCard } from './evidence-guard.mjs';
 import { runCreativePass } from './creative-llm.mjs';
+import { ensureCreativeEnv } from './load-local-env.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const defaultPolicy = JSON.parse(readFileSync(join(here, 'policy.json'), 'utf8'));
@@ -208,6 +209,9 @@ export async function runDirectionEngineAsync(options = {}) {
   if (mode !== 'llm') {
     return runDirectionEngine({ ...options, creativePass: mode, policy: { ...policy, creativePass: mode } });
   }
+
+  // Local .env fill-only so product runs pick up keys without shell export.
+  ensureCreativeEnv({ startDir: options.envStartDir ?? root });
 
   // Base structure with rules enrichment first
   const base = runDirectionEngine({

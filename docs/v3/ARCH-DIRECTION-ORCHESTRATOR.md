@@ -56,8 +56,11 @@ BRIEF / EVIDENCE / BRAND / ASSETS / CONSTRAINTS
 | `llm` | Product direction quality path | yes (provider) |
 
 LLM mode uses a **pluggable provider**. Default provider: xAI Chat Completions when
-`XAI_API_KEY` (or `GROK_API_KEY`) is set. Without a key, `llm` **fails closed** to
-`rules` and records `creativePassFallback: true` (no silent “we used the model”).
+`XAI_API_KEY` (or `GROK_API_KEY`) is set (process env **or** gitignored `.env` /
+`.env.local` via `load-local-env.mjs` — fill-only, never logs values). Without a key,
+`llm` **fails closed** to `rules` and records `creativePassFallback: true` (no silent
+“we used the model”). Provider classifies auth/timeout/rate-limit and retries once on
+429/5xx.
 
 ## Evidence guard (non-negotiable)
 

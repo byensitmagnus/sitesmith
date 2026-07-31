@@ -4,20 +4,25 @@
  * Usage:
  *   node tools/run-creative-mini-proof.mjs [--creative rules|llm] [--brief 01-leather-goods]
  */
-import { mkdirSync, writeFileSync, readFileSync, existsSync } from 'node:fs';
+import { mkdirSync, writeFileSync, readFileSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { runDirectionEngine, runDirectionEngineAsync } from '../skills/sitesmith/scripts/direction-engine/index.mjs';
-import { loadEnvFiles, hasCreativeApiKey } from './load-env.mjs';
+import {
+  ensureCreativeEnv,
+  creativeKeyPresence,
+} from '../skills/sitesmith/scripts/direction-engine/load-local-env.mjs';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
-loadEnvFiles(root);
+// Fill process.env from repo .env / .env.local (never overwrite shell; never log values).
+const envLoad = ensureCreativeEnv({ startDir: root });
 const args = process.argv.slice(2);
 const flag = (n) => {
   const i = args.indexOf(n);
   return i >= 0 ? args[i + 1] : null;
 };
-const creative = flag('--creative') || (hasCreativeApiKey() ? 'llm' : 'rules');
+const keys = creativeKeyPresence();
+const creative = flag('--creative') || (keys.anyKey ? 'llm' : 'rules');
 const briefId = flag('--brief') || '01-leather-goods';
 const packDir = join(root, 'docs/v3/proof/head-to-head/briefs', briefId);
 const outDir = join(root, 'docs/v3/proof/head-to-head/mini-proof', `${briefId}-${creative}`);
@@ -42,6 +47,7 @@ const opts = {
   userChoiceBlindId: 'L1',
   randomSeed: input.randomSeed,
   creativePass: creative,
+  envStartDir: root,
 };
 
 const result = creative === 'llm'
@@ -66,6 +72,11 @@ const summary = {
   creativeMeta: result.creative,
   thesis: result.directionPacket?.designThesis ?? null,
   signature: result.directionPacket?.signatureElement ?? null,
+  env: {
+    loadedFileCount: envLoad.loadedFiles.length,
+    setKeyCount: envLoad.setKeys.length,
+    keyPresence: keys,
+  },
   outDir: outDir.replace(root + '\\', '').replace(root + '/', ''),
 };
 writeFileSync(join(outDir, 'SUMMARY.json'), `${JSON.stringify(summary, null, 2)}\n`);

@@ -4,28 +4,8 @@
  * Always runs through evidence-guard. Original work, MIT.
  */
 
-import { existsSync, readFileSync } from 'node:fs';
-import { join as joinPath } from 'node:path';
 import { guardCreativePacket, packetFromCard } from './evidence-guard.mjs';
-
-/** Soft-load .env from cwd without overriding existing env (no secrets logged). */
-(function loadCwdEnv() {
-  for (const name of ['.env', '.env.local', '.env.xai']) {
-    const p = joinPath(process.cwd(), name);
-    if (!existsSync(p)) continue;
-    for (const line of readFileSync(p, 'utf8').split(/\r?\n/)) {
-      const t = line.trim();
-      if (!t || t.startsWith('#')) continue;
-      const m = t.match(/^([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(.*)$/);
-      if (!m) continue;
-      let v = m[2].trim();
-      if ((v.startsWith('"') && v.endsWith('"')) || (v.startsWith("'") && v.endsWith("'"))) {
-        v = v.slice(1, -1);
-      }
-      if (!process.env[m[1]]) process.env[m[1]] = v;
-    }
-  }
-})();
+import { ensureCreativeEnv } from './load-local-env.mjs';
 
 const PACKET_KEYS = [
   'designThesis',
@@ -88,44 +68,100 @@ function extractJson(text) {
   return JSON.parse(body.slice(start, end + 1));
 }
 
-/** Default xAI chat provider */
-export async function xaiChatProvider({ prompt, model, apiKey, timeoutMs = 90000 }) {
-  const key = apiKey || process.env.XAI_API_KEY || process.env.GROK_API_KEY;
+function resolveApiKey(apiKey) {
+  ensureCreativeEnv();
+  return (apiKey || process.env.XAI_API_KEY || process.env.GROK_API_KEY || '').trim();
+}
+
+function classifyProviderError(err, status) {
+  if (err?.code === 'NO_API_KEY') return err;
+  if (err?.name === 'AbortError') {
+    const e = new Error('xAI request timed out');
+    e.code = 'TIMEOUT';
+    return e;
+  }
+  if (status === 401 || status === 403) {
+    const e = new Error(`xAI auth failed (HTTP ${status})`);
+    e.code = 'AUTH';
+    return e;
+  }
+  if (status === 429) {
+    const e = new Error('xAI rate limited (HTTP 429)');
+    e.code = 'RATE_LIMIT';
+    return e;
+  }
+  if (status && status >= 500) {
+    const e = new Error(`xAI server error (HTTP ${status})`);
+    e.code = 'SERVER';
+    return e;
+  }
+  return err;
+}
+
+/** Default xAI chat provider — one retry on 429/5xx; fail-closed codes on auth/timeout/no-key. */
+export async function xaiChatProvider({ prompt, model, apiKey, timeoutMs = 90000, maxAttempts = 2 }) {
+  const key = resolveApiKey(apiKey);
   if (!key) {
     const err = new Error('XAI_API_KEY / GROK_API_KEY not set');
     err.code = 'NO_API_KEY';
     throw err;
   }
-  const ctrl = new AbortController();
-  const t = setTimeout(() => ctrl.abort(), timeoutMs);
-  try {
-    const res = await fetch('https://api.x.ai/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${key}`,
-      },
-      body: JSON.stringify({
-        model: model || process.env.SITESMITH_CREATIVE_MODEL || 'grok-4-fast-reasoning',
-        temperature: 0.7,
-        messages: [
-          { role: 'system', content: 'You output only valid JSON direction packets. No markdown prose outside JSON.' },
-          { role: 'user', content: prompt },
-        ],
-      }),
-      signal: ctrl.signal,
-    });
-    if (!res.ok) {
-      const text = await res.text();
-      throw new Error(`xAI HTTP ${res.status}: ${text.slice(0, 400)}`);
+  const chosenModel = model || process.env.SITESMITH_CREATIVE_MODEL || 'grok-4-fast-reasoning';
+  let lastErr;
+  for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
+    const ctrl = new AbortController();
+    const t = setTimeout(() => ctrl.abort(), timeoutMs);
+    try {
+      const res = await fetch('https://api.x.ai/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${key}`,
+        },
+        body: JSON.stringify({
+          model: chosenModel,
+          temperature: 0.7,
+          messages: [
+            { role: 'system', content: 'You output only valid JSON direction packets. No markdown prose outside JSON.' },
+            { role: 'user', content: prompt },
+          ],
+        }),
+        signal: ctrl.signal,
+      });
+      if (!res.ok) {
+        const text = await res.text();
+        const err = classifyProviderError(
+          new Error(`xAI HTTP ${res.status}: ${text.slice(0, 400)}`),
+          res.status,
+        );
+        err.status = res.status;
+        // Retry only transient failures
+        if ((res.status === 429 || res.status >= 500) && attempt < maxAttempts) {
+          lastErr = err;
+          await new Promise((r) => setTimeout(r, 400 * attempt));
+          continue;
+        }
+        throw err;
+      }
+      const data = await res.json();
+      const content = data.choices?.[0]?.message?.content;
+      if (!content) {
+        const err = new Error('empty model content');
+        err.code = 'EMPTY';
+        throw err;
+      }
+      return { text: content, model: data.model || chosenModel, usage: data.usage ?? null };
+    } catch (err) {
+      if (err?.name === 'AbortError') throw classifyProviderError(err);
+      if (err?.code === 'NO_API_KEY' || err?.code === 'AUTH' || err?.code === 'EMPTY') throw err;
+      lastErr = err;
+      if (attempt >= maxAttempts) throw err;
+      await new Promise((r) => setTimeout(r, 400 * attempt));
+    } finally {
+      clearTimeout(t);
     }
-    const data = await res.json();
-    const content = data.choices?.[0]?.message?.content;
-    if (!content) throw new Error('empty model content');
-    return { text: content, model: data.model || model, usage: data.usage ?? null };
-  } finally {
-    clearTimeout(t);
   }
+  throw lastErr || new Error('xAI provider failed');
 }
 
 /**
@@ -258,8 +294,14 @@ export async function runCreativePass(opts) {
       card,
       llmSucceeded: false,
       creativePassFallback: true,
-      fallbackReason: err.code === 'NO_API_KEY' ? 'no-api-key' : 'provider-error',
+      fallbackReason:
+        err.code === 'NO_API_KEY' ? 'no-api-key'
+          : err.code === 'AUTH' ? 'auth'
+            : err.code === 'TIMEOUT' ? 'timeout'
+              : err.code === 'RATE_LIMIT' ? 'rate-limit'
+                : 'provider-error',
       error: String(err.message || err),
+      errorCode: err.code ?? null,
       guard: rulesGuard.ok ? { ok: true, problems: [] } : rulesGuard,
     };
   }
