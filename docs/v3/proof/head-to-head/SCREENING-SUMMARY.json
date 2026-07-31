@@ -1,0 +1,22 @@
+{
+  "phase": "screening",
+  "completed": 15,
+  "expected": 15,
+  "failed": [],
+  "paidModelCallsMade": 8,
+  "byArm": {
+    "taste-skill": 3,
+    "ui-ux-pro-max": 3,
+    "frontend-design": 3,
+    "impeccable": 3,
+    "sitesmith": 3
+  },
+  "byBrief": {
+    "01-leather-goods": 5,
+    "02-atelier-printworks": 5,
+    "03-passage-console": 5
+  },
+  "state": "AWAITING_EVAL_APPROVAL",
+  "proofStatus": "PROOF FAILED — DIRECTION QUALITY",
+  "note": "Replication and blind evaluation NOT started"
+}\n

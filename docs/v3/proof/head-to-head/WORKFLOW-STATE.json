@@ -1,10 +1,11 @@
 {
   "workflowVersion": "1.0.0",
-  "state": "AWAITING_CREDIT_APPROVAL",
-  "previousState": "S3_FREEZE_HEAD_TO_HEAD",
+  "state": "AWAITING_EVAL_APPROVAL",
+  "previousState": "S4_SCREENING_15_RUNS",
   "allowedNextStates": [
-    "S4_SCREENING_15_RUNS",
-    "BLOCKED_BENCHMARK_NOT_FROZEN"
+    "S5_NORMALIZE_AND_BLIND",
+    "S6_EVALUATION",
+    "BLOCKED_COMPARISON_INCOMPLETE"
   ],
   "repository": "byensitmagnus/sitesmith",
   "foundationSha": "dc00598cce2af92435a749856393e287506753bc",
@@ -25,12 +26,15 @@
     "G0_repo_truth": "pass",
     "G1_corrective_review": "pass",
     "G2_benchmark_frozen": "pass",
-    "credit_approval": "awaiting",
-    "paid_model_calls": 0
+    "credit_approval": "used-for-screening",
+    "paid_model_calls": 0,
+    "screening": "pass",
+    "evaluators": "awaiting",
+    "replication": "not-started"
   },
   "blockers": [],
-  "lastVerifiedAt": "2026-07-31T19:00:02.786Z",
-  "lastTransitionReason": "Context packs, arms, fairness, run manifest frozen; dry-run only; no model calls",
+  "lastVerifiedAt": "2026-07-31T19:24:02.396Z",
+  "lastTransitionReason": "15 screening packets written and validated; evaluators and replication not started",
   "proofStatus": "PROOF FAILED — DIRECTION QUALITY",
   "gate1Review": "docs/v3/proof/CORRECTIVE-REVIEW-GATE1.md",
   "reviewRange": "5ffc2cb..b92cdab",
@@ -48,5 +52,7 @@
   ],
   "screeningRunsDeclared": 15,
   "replicationRunsDeclared": 15,
-  "paidModelCallsMade": 0
-}
+  "paidModelCallsMade": 8,
+  "screeningCompleted": 15,
+  "screeningFailed": 0
+}\n

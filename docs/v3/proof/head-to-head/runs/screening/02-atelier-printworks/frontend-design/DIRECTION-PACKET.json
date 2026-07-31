@@ -1,0 +1,22 @@
+{
+  "designThesis": "The site is a make-ready table, not a portfolio carousel: open on one real edition press sheet (default Harbour Night) full-bleed with a single coral registration cross as UI chrome; edition name as job ticket; primary action Enquire about this edition.",
+  "subjectGrounding": "Atelier Møn Printworks — coastal letterpress (posters, map editions, shop bags). Audience: curators and small brands commissioning limited runs. Vernacular: Heidelberg platen, press sheets, gripper edges, registration crosses, chalk white, harbour ink. Editions: Harbour Night, Chalk Path, Ferry Board. Forbidden: invented awards, false museum placements. Anti-references: agency blob gradients, stock loft photos.",
+  "composition": "Desktop make-ready strip: large press sheet left/center, ticket column right; three edition plates in one calm row below; enquire form as order-slip band. Mobile: sheet then ticket stack.",
+  "informationHierarchy": "1) Active edition image+name 2) Press facts in ticket mono (stock, edition size, Heidelberg platen when present) 3) Enquire CTA 4) Other editions as selection set 5) Short studio note. No decorative 01/02/03 markers.",
+  "typography": "Display: condensed jobbing grotesque (e.g. Barlow Condensed 600–700, tight tracking) for edition titles. Body: quiet book serif (e.g. Source Serif 4 400/600), 45–75ch. Ticket: tabular mono (e.g. IBM Plex Mono) for stock, edition size, press type labels.",
+  "colourAndMaterialModel": "Chalk White #F4F2EC ground; Harbour Ink #15202B type/rules; Ink Wash #5C6670 secondary; Sheet Edge #D9D4C8 borders/shadows; Registration Coral #E85A4F sole accent. Flat paper, no blob gradients.",
+  "imageryAndAssetStrategy": "Load-bearing: three edition-on-sheet photographs (harbour-night.webp have, chalk-path.webp have, ferry-board.webp needed). Missing Ferry Board = honest chalk pending plate with ticket label, no stock loft fill. Optional registration diagram only if clarifying the mark system.",
+  "interactionConcept": "Motion intensity 3: one paper put-down settle on load (~300ms); edition hover 2px lift; coral used for focus/active only. Reduced-motion: static. Form voice: Send enquiry / Enquiry sent.",
+  "signatureElement": "Coral registration cross as sole accent system — sheet overlay, focus ring language, active-edition indicator.",
+  "primaryRisk": "Registration-as-UI can look like generic red accent if the mark is not drawn as a precise print registration cross and if secondary accents creep in.",
+  "implementationGuidance": "Tokenize five colours only; three type roles with metric fallbacks; edition state swaps sheet+ticket facts; bind ticket rows only to real evidence (omit empty); replace Ferry Board pending plate when asset exists; no hero gradients; quality floor mobile/focus/reduced-motion.",
+  "unknowns": "Specific paper stock names and edition sizes not supplied in pack — leave as content slots, do not invent. Ferry Board photograph pending. Dark mode not specified (optional later ink-on-chalk invert).",
+  "sourcePointers": {
+    "arm": "frontend-design",
+    "commit": "b29e7cf65e5cb78a5ac33d582270551bc74a14eb",
+    "repo": "anthropics/skills",
+    "path": "skills/frontend-design",
+    "method": "native-creative-thesis-plan-self-critique",
+    "workflow": "creative thesis, plan, self-critique"
+  }
+}

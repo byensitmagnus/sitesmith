@@ -1,0 +1,44 @@
+╔═════════════════════════════════════════════════════════════════════════════════════════╗
+║  TARGET: FUNCTIONAL PRODUCT UI SUBJECT: PASSAGE LOG CONSOLE PRODUCT-UI - RECOMMENDED DESIGN SYSTEM║
+╚═════════════════════════════════════════════════════════════════════════════════════════╝
+┌─────────────────────────────────────────────────────────────────────────────────────────┐
+├─── PATTERN ──────────────────────────────────────────────────────────────────────────────┤
+│  Name: Product Demo + Features                                                          │
+│     Conversion: Embedded product demo increases engagement. Use interactive mockup if possible. Auto-play video muted.│
+│     CTA: Video center + CTA right/bottom                                                │
+│     Sections:                                                                           │
+│       1. 1. Hero, 2. Product video/mockup (center), 3. Feature breakdown per section, 4. Comparison (optional), 5. CTA│
+├─── STYLE ────────────────────────────────────────────────────────────────────────────────┤
+│  Name: Minimalism & Swiss Style                                                         │
+│     Mode Support: Light ✓ Full  Dark ✓ Full                                             │
+│     Keywords: Clean, simple, spacious, functional, white space, high contrast,          │
+│     geometric, sans-serif, grid-based, essential                                        │
+│     Best For: Enterprise apps, dashboards, documentation sites, SaaS platforms,         │
+│     professional tools                                                                  │
+│     Performance: ⚡ Excellent | Accessibility: ✓ WCAG AAA                                │
+├─── COLORS ───────────────────────────────────────────────────────────────────────────────┤
+│     [38;2;37;99;235m██[0m Primary:       #2563EB    (--color-primary)                                      │
+│     [38;2;59;130;246m██[0m Secondary:     #3B82F6    (--color-secondary)                                    │
+│     [38;2;249;115;22m██[0m Accent/CTA:    #F97316    (--color-accent)                                       │
+│     [38;2;248;250;252m██[0m Background:    #F8FAFC    (--color-background)                                   │
+│     [38;2;30;41;59m██[0m Foreground:    #1E293B    (--color-foreground)                                   │
+├─── TYPOGRAPHY ───────────────────────────────────────────────────────────────────────────┤
+│  Rubik / Nunito Sans                                                                    │
+│     Mood: ecommerce, clean, shopping, product, retail, conversion                       │
+│     Best For: E-commerce, online stores, product pages, retail, shopping                │
+│     Google Fonts: https://fonts.google.com/share?selection.family=Nunito+Sans:wght@300;400;500;600;700|Rubik:wght@300;400;500;600;700│
+│     CSS Import: @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght...│
+├─── KEY EFFECTS ──────────────────────────────────────────────────────────────────────────┤
+│     Subtle hover (200-250ms), smooth transitions, sharp shadows if any, clear type      │
+│     hierarchy, fast loading                                                             │
+├─── AVOID ────────────────────────────────────────────────────────────────────────────────┤
+│     Excessive decoration + Complex shadows + 3D effects                                 │
+├─── PRE-DELIVERY CHECKLIST ───────────────────────────────────────────────────────────────┤
+│     [ ] No emojis as icons (use SVG: Heroicons/Lucide)                                  │
+│     [ ] cursor-pointer on all clickable elements                                        │
+│     [ ] Hover states with smooth transitions (150-300ms)                                │
+│     [ ] Light mode: text contrast 4.5:1 minimum                                         │
+│     [ ] Focus states visible for keyboard nav                                           │
+│     [ ] prefers-reduced-motion respected                                                │
+│     [ ] Responsive: 375px, 768px, 1024px, 1440px                                        │
+└─────────────────────────────────────────────────────────────────────────────────────────┘

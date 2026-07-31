@@ -1,0 +1,19 @@
+{
+  "designThesis": "Watch Ledger: always-on entry line commits passages to dense log; refuse KPI dashboard.",
+  "subjectGrounding": "Passage Log Console; harbour masters; vessel/direction/time/berth note; form-save-row; desktop; empty/validation/success/offline; Ctrl+Enter; near-black/fog grey/amber-warn; imageless; no fintech gradients/KPIs/logos.",
+  "composition": "Full-width: status strip; permanent entry band; dense log body.",
+  "informationHierarchy": "status > entry > rows > validation > empty.",
+  "typography": "Neutral UI sans; short labels; tabular times.",
+  "colourAndMaterialModel": "Near-black shell; fog grey panels; amber warn only.",
+  "imageryAndAssetStrategy": "Imageless; chrome+type only.",
+  "interactionConcept": "Fill > Save/Ctrl+Enter > success row; motion 1.",
+  "signatureElement": "Always-on entry ledger line + Ctrl+Enter.",
+  "primaryRisk": "Density 8 becomes generic dark CRUD without entry-line discipline.",
+  "implementationGuidance": "Watch Ledger only; pack states; no KPIs/maps/logos/gradients. Alternates C1 AIS C2 checklist. Seed index0 Bound vessel movement ledger (h2h-passage-2026-07-31). density8 motion1 boldness3.",
+  "unknowns": "Timestamp default; berth note requiredness; extra fields; multi-user; map/AIS.",
+  "sourcePointers": {
+    "arm": "impeccable",
+    "commit": "6b342244e915d64b0d6e84d5eec448fd196ce6bb",
+    "method": "impeccable seed+challengers+critique"
+  }
+}

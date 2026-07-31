@@ -1,0 +1,16 @@
+{
+  "runId": "screen-03-passage-console-impeccable",
+  "briefId": "03-passage-console",
+  "arm": "impeccable",
+  "status": "completed",
+  "startedAt": "2026-07-31T20:45:00.000Z",
+  "finishedAt": "2026-07-31T20:52:00.000Z",
+  "modelCalls": 1,
+  "method": "impeccable seed+challengers+critique",
+  "armCommit": "6b342244e915d64b0d6e84d5eec448fd196ce6bb",
+  "contextPackHash": "36545bf82b53595f63ed00c9135dd9170e0c320abd742747593db5a19ced1bc7",
+  "packetSha256": "cd736bd1381814d3c78b8c011410a6ff94a79f5bb02b516731490b6d4278060c",
+  "phase": "screening",
+  "isolation": "fresh-subagent-no-peer-outputs",
+  "model": "host-llm-same-class"
+}\n

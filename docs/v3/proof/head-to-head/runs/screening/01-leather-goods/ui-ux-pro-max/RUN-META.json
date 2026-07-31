@@ -1,0 +1,16 @@
+{
+  "runId": "screen-01-leather-goods-ui-ux-pro-max",
+  "briefId": "01-leather-goods",
+  "arm": "ui-ux-pro-max",
+  "status": "completed",
+  "startedAt": "2026-07-31T19:16:52.700Z",
+  "finishedAt": "2026-07-31T19:16:52.902Z",
+  "modelCalls": 0,
+  "method": "uupm-search-py-design-system",
+  "armCommit": "4857a2c5ef989794751a0f66b8545a4a49566286",
+  "contextPackHash": "6099df6a1e57a7bce9d70e72df964cdd05486bb9d636be32964c6df059f48a2f",
+  "packetSha256": "6d5d0bbc6d2f2919bc919745c2afbd58327960f68588223fd3c39b1d7d51abbe",
+  "phase": "screening",
+  "isolation": "fresh-process-no-peer-outputs",
+  "model": "none-mechanical"
+}\n

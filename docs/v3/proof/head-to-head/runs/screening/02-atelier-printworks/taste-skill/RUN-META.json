@@ -1,0 +1,22 @@
+{
+  "runId": "screen-02-atelier-printworks-taste-skill",
+  "briefId": "02-atelier-printworks",
+  "arm": "taste-skill",
+  "status": "completed",
+  "startedAt": "2026-07-31T20:15:00.000Z",
+  "finishedAt": "2026-07-31T20:18:00.000Z",
+  "modelCalls": 0,
+  "method": "taste Design Read + dials",
+  "armCommit": "e988add20dab0fa97d7a76781c48961c8184288e",
+  "contextPackHash": "04b3fd24b85d8d459178d11c4eb4c08d9e1339c76326f264a9c8eba8fda1d216",
+  "phase": "screening",
+  "isolation": "fresh-process-no-peer-outputs",
+  "model": "frontier-class-coding-agent-host",
+  "dials": {
+    "DESIGN_VARIANCE": 7,
+    "MOTION_INTENSITY": 3,
+    "VISUAL_DENSITY": 4
+  },
+  "designRead": "characterful marketing / portfolio for curators and small brands commissioning limited runs, with a coastal letterpress / island-local language, leaning toward native CSS aesthetic (print-studio materiality — not an official product design system)",
+  "packetSha256": "ba0dd352b94ccc2f32f0ae40e0895498508252f9d02d21171956ad94dc2152e3"
+}\n

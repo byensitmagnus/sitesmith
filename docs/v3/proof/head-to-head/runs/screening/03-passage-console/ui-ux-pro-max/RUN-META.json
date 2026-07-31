@@ -1,0 +1,16 @@
+{
+  "runId": "screen-03-passage-console-ui-ux-pro-max",
+  "briefId": "03-passage-console",
+  "arm": "ui-ux-pro-max",
+  "status": "completed",
+  "startedAt": "2026-07-31T19:16:52.959Z",
+  "finishedAt": "2026-07-31T19:16:53.174Z",
+  "modelCalls": 0,
+  "method": "uupm-search-py-design-system",
+  "armCommit": "4857a2c5ef989794751a0f66b8545a4a49566286",
+  "contextPackHash": "36545bf82b53595f63ed00c9135dd9170e0c320abd742747593db5a19ced1bc7",
+  "packetSha256": "922700419fd1d0c092fbd0b25b4870b10cf40c00407e8d66de447cb91b885da4",
+  "phase": "screening",
+  "isolation": "fresh-process-no-peer-outputs",
+  "model": "none-mechanical"
+}\n

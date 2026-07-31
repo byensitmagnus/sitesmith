@@ -1,0 +1,21 @@
+{
+  "designThesis": "UUPM design-system recommendation: Vibrant & Block-based                                                            │ with Feature-Rich Showcase                                                            │ pattern for Subject: Northline Leather Goods",
+  "subjectGrounding": "Query from frozen pack only: sensory e-commerce Subject: Northline Leather Goods ecommerce",
+  "composition": "Feature-Rich Showcase                                                            │",
+  "informationHierarchy": "Sections:                                                                           │\r\n│       1. Hero                                                                           │\r\n│       2. Features                                                                       │\r\n│       3. CTA                                                                            │",
+  "typography": "│  Rubik / Nunito Sans                                                                    │",
+  "colourAndMaterialModel": "primary #059669; secondary #10B981; accent #EA580C",
+  "imageryAndAssetStrategy": "unknown — design-system search path does not emit asset plan; obey pack ASSET-PLAN/CONSTRAINTS",
+  "interactionConcept": "│     Large sections (48px+ gaps), animated patterns, bold hover (color shift),           │",
+  "signatureElement": "Vibrant & Block-based                                                            │",
+  "primaryRisk": "│     Flat design without depth + Text-heavy pages                                        │",
+  "implementationGuidance": "Implement from UUPM-RETRIEVAL.txt rows and checklist; do not invent beyond retrieval.",
+  "unknowns": "Page-level composition beyond pattern; photography/asset strategy; brand-specific material finishes",
+  "sourcePointers": {
+    "arm": "ui-ux-pro-max",
+    "commit": "4857a2c5ef989794751a0f66b8545a4a49566286",
+    "query": "sensory e-commerce Subject: Northline Leather Goods ecommerce",
+    "retrievalFile": "UUPM-RETRIEVAL.txt",
+    "method": "uupm-search-py-design-system"
+  }
+}

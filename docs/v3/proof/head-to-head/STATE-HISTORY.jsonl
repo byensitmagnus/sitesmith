@@ -1,2 +1,4 @@
 {"at":"2026-07-31T18:29:01.722Z","state":"S3_FREEZE_HEAD_TO_HEAD","proofSha":"b92cdabad98c4d23ff79b74d6881e6b7129325a4","reason":"Gate 1 PASS; ready to freeze packs/arms before paid screening"}
 {"at":"2026-07-31T18:30:00.000Z","state":"AWAITING_CREDIT_APPROVAL","previousState":"S3_FREEZE_HEAD_TO_HEAD","proofSha":"b92cdabad98c4d23ff79b74d6881e6b7129325a4","reason":"Context packs, arms, fairness, run manifest frozen; dry-run only; no model calls","paidModelCallsMade":0}
+{"at":"2026-07-31T19:16:52.161Z","state":"S4_SCREENING_15_RUNS","reason":"User authorized start screening; sequential-first mechanical then isolated LLM arms"}
+{"at":"2026-07-31T19:24:02.396Z","state":"AWAITING_EVAL_APPROVAL","completed":15,"failed":0}\n

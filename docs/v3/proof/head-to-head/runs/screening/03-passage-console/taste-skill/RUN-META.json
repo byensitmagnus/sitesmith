@@ -1,0 +1,14 @@
+{
+  "runId": "screen-03-passage-console-taste-skill",
+  "briefId": "03-passage-console",
+  "arm": "taste-skill",
+  "status": "completed",
+  "modelCalls": 1,
+  "method": "taste Design Read + dials",
+  "phase": "screening",
+  "isolation": "fresh-subagent",
+  "contextPackHash": "36545bf82b53595f63ed00c9135dd9170e0c320abd742747593db5a19ced1bc7",
+  "armCommit": "e988add20dab0fa97d7a76781c48961c8184288e",
+  "packetSha256": "dd64834f2070ede076bfd7bb0a02b9c3ac02d83c61cee9289cc0fa9ef6a3fdb1",
+  "finishedAt": "2026-07-31T19:24:02.391Z"
+}\n

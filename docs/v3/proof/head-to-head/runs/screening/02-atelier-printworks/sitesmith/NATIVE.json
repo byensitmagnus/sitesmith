@@ -1,0 +1,436 @@
+{
+  "kind": "sitesmith-direction-engine",
+  "stage": "handoff-ready",
+  "routeSelected": [
+    "TASTE-CAP-002",
+    "TASTE-CAP-003",
+    "TASTE-CAP-004",
+    "TASTE-CAP-005",
+    "frontend.subject-vernacular",
+    "frontend.hero-thesis",
+    "frontend.type-as-identity",
+    "frontend.anti-default-calibration",
+    "frontend.compact-plan-signature",
+    "uupm.tune.design-dials",
+    "IMP-004",
+    "IMP-005",
+    "IMP-008",
+    "TASTE-CAP-007",
+    "frontend.motion-intent",
+    "IMP-006",
+    "IMP-010",
+    "frontend.interface-writing"
+  ],
+  "choice": {
+    "status": "selected",
+    "selectedBlindId": "L1",
+    "selectedInternalId": "W3",
+    "by": "user"
+  },
+  "directionMd": "---\ntitle: \"DIRECTION — 02-atelier-printworks\"\nstatus: direction-engine-slice\nai_generated: \"(C)\"\n---\n\n# DIRECTION — 02-atelier-printworks\n\nWinner: statement-object (Atelier Møn Printworks\": enquire about a print edition. via single object left, large type right — atelier, møn, printworks, curators, and, small)\n\n## Signature\natelier-sig-3\n\n## Axis record\n\n- direction-version: 2.3\n- composition: single object left, large type right\n- type: condensed display grotesque over quiet sans\n- colour: light paper ground with one reserve accent\n- imagery: diagram-led evidence slots until plates exist\n- rhythm: hard vertical split then calm bands\n\n- surface: open — subject earns space around the object\n- labels: sentence case captions — retail voice stays human\n- figures: proportional — price is content not motif\n- depth: elevated — object lifts off ground slightly\n\n- visual-density: 4\n- motion-intensity: 3\n- aesthetic-boldness: 7\n\n- signature-selector: [data-signature=\"atelier-sig-3\"]\n- signature-min-share: 12\n\n## Rejections\n- editorial-bleed: recorded alternative; not passed to build context\n- poster-type: recorded alternative; not passed to build context\n\n## Notes\nSelected by Direction Engine v3 slice. Build context must not receive losing cards or generator scores.",
+  "designSpec": {
+    "schemaVersion": 1,
+    "kind": "sitesmith.designspec.v3-slice",
+    "projectName": "02-atelier-printworks",
+    "mode": "marketing",
+    "stack": "html",
+    "designThesis": "Atelier Møn Printworks\": enquire about a print edition. via single object left, large type right — atelier, møn, printworks, curators, and, small",
+    "contentHierarchy": [
+      "subject recognition",
+      "enquire about a print edition.",
+      "supporting evidence",
+      "secondary navigation"
+    ],
+    "pageComposition": "single object left, large type right",
+    "gridAndSpacing": "open 8/16 rhythm, large voids",
+    "typographySystem": {
+      "principle": "condensed display grotesque over quiet sans",
+      "roles": [
+        "display",
+        "body",
+        "label"
+      ]
+    },
+    "colourRoles": {
+      "ground": "light paper ground with one reserve accent",
+      "accent": "single reserved accent from brand evidence only if present",
+      "text": "primary ink on ground with WCAG AA body contrast"
+    },
+    "surfaceMaterialModel": "open — subject earns space around the object",
+    "imageryStrategy": "diagram-led evidence slots until plates exist",
+    "componentPrinciples": [
+      "states must be visible without colour alone",
+      "primary action uses reserved accent only"
+    ],
+    "interactionStates": [
+      "default",
+      "hover/focus",
+      "active",
+      "disabled",
+      "error"
+    ],
+    "motionRules": {
+      "principle": "hover reveals material fact on the object",
+      "reducedMotion": "disable non-essential motion"
+    },
+    "responsiveBehavior": {
+      "firstFold": "preserve composition intent; stack only after tablet",
+      "tables": "horizontal scroll must expose affordance if used"
+    },
+    "accessibilityConstraints": [
+      "visible focus",
+      "label every control",
+      "AA contrast for body and UI text"
+    ],
+    "signatureElement": "atelier-sig-3",
+    "forbiddenFallbackDefaults": [
+      "purple SaaS gradient hero",
+      "three equal feature cards as default identity",
+      "round-8 recipe: mono uppercase labels + hairlines + tabular motif + flat depth",
+      "invented testimonials, prices, or certifications"
+    ],
+    "fidelityAssertions": [
+      {
+        "field": "composition",
+        "expected": "single object left, large type right"
+      },
+      {
+        "field": "type",
+        "expected": "condensed display grotesque over quiet sans"
+      },
+      {
+        "field": "colour",
+        "expected": "light paper ground with one reserve accent"
+      },
+      {
+        "field": "imagery",
+        "expected": "diagram-led evidence slots until plates exist"
+      },
+      {
+        "field": "rhythm",
+        "expected": "hard vertical split then calm bands"
+      },
+      {
+        "field": "surface",
+        "expected": "open — subject earns space around the object"
+      },
+      {
+        "field": "labels",
+        "expected": "sentence case captions — retail voice stays human"
+      },
+      {
+        "field": "figures",
+        "expected": "proportional — price is content not motif"
+      },
+      {
+        "field": "depth",
+        "expected": "elevated — object lifts off ground slightly"
+      },
+      {
+        "field": "signature-selector",
+        "expected": "[data-signature=\"atelier-sig-3\"]"
+      }
+    ],
+    "acceptanceCriteria": [
+      "built page matches axis record treatments",
+      "primary action findable in first fold",
+      "no fabricated brand/product facts",
+      "passes existing v2.3 verify + direction fidelity"
+    ],
+    "capabilityProvenance": [
+      {
+        "capabilityId": "TASTE-CAP-002",
+        "upstreamOrigin": "https://github.com/Leonxlnx/taste-skill.git",
+        "phase": "creative-direction",
+        "whyRelevant": "mode marketing base required · subject=Atelier Møn Printworks\" · action=enquire about a print edition.",
+        "evidencePointers": [
+          "mode:marketing"
+        ],
+        "status": "explicit"
+      },
+      {
+        "capabilityId": "TASTE-CAP-003",
+        "upstreamOrigin": "https://github.com/Leonxlnx/taste-skill.git",
+        "phase": "creative-direction",
+        "whyRelevant": "mode marketing base required · subject=Atelier Møn Printworks\" · action=enquire about a print edition.",
+        "evidencePointers": [
+          "mode:marketing"
+        ],
+        "status": "explicit"
+      },
+      {
+        "capabilityId": "TASTE-CAP-004",
+        "upstreamOrigin": "https://github.com/Leonxlnx/taste-skill.git",
+        "phase": "creative-direction",
+        "whyRelevant": "mode marketing base required · subject=Atelier Møn Printworks\" · action=enquire about a print edition.",
+        "evidencePointers": [
+          "mode:marketing"
+        ],
+        "status": "explicit"
+      },
+      {
+        "capabilityId": "TASTE-CAP-005",
+        "upstreamOrigin": "https://github.com/Leonxlnx/taste-skill.git",
+        "phase": "creative-direction",
+        "whyRelevant": "mode marketing base required · subject=Atelier Møn Printworks\" · action=enquire about a print edition.",
+        "evidencePointers": [
+          "mode:marketing"
+        ],
+        "status": "explicit"
+      },
+      {
+        "capabilityId": "frontend.subject-vernacular",
+        "upstreamOrigin": "https://github.com/anthropics/skills",
+        "phase": "creative-direction",
+        "whyRelevant": "mode marketing base required · subject=Atelier Møn Printworks\" · action=enquire about a print edition.",
+        "evidencePointers": [
+          "mode:marketing"
+        ],
+        "status": "explicit"
+      },
+      {
+        "capabilityId": "frontend.hero-thesis",
+        "upstreamOrigin": "https://github.com/anthropics/skills",
+        "phase": "creative-direction",
+        "whyRelevant": "mode marketing base required · subject=Atelier Møn Printworks\" · action=enquire about a print edition.",
+        "evidencePointers": [
+          "mode:marketing"
+        ],
+        "status": "explicit"
+      },
+      {
+        "capabilityId": "frontend.type-as-identity",
+        "upstreamOrigin": "https://github.com/anthropics/skills",
+        "phase": "creative-direction",
+        "whyRelevant": "mode marketing base required · subject=Atelier Møn Printworks\" · action=enquire about a print edition.",
+        "evidencePointers": [
+          "mode:marketing"
+        ],
+        "status": "explicit"
+      },
+      {
+        "capabilityId": "frontend.anti-default-calibration",
+        "upstreamOrigin": "https://github.com/anthropics/skills",
+        "phase": "creative-direction",
+        "whyRelevant": "mode marketing base required · subject=Atelier Møn Printworks\" · action=enquire about a print edition.",
+        "evidencePointers": [
+          "mode:marketing"
+        ],
+        "status": "explicit"
+      },
+      {
+        "capabilityId": "frontend.compact-plan-signature",
+        "upstreamOrigin": "https://github.com/anthropics/skills",
+        "phase": "creative-direction",
+        "whyRelevant": "mode marketing base required · subject=Atelier Møn Printworks\" · action=enquire about a print edition.",
+        "evidencePointers": [
+          "mode:marketing"
+        ],
+        "status": "explicit"
+      },
+      {
+        "capabilityId": "uupm.tune.design-dials",
+        "upstreamOrigin": "nextlevelbuilder/ui-ux-pro-max-skill",
+        "phase": "creative-direction",
+        "whyRelevant": "mode marketing base required · subject=Atelier Møn Printworks\" · action=enquire about a print edition.",
+        "evidencePointers": [
+          "mode:marketing"
+        ],
+        "status": "explicit"
+      },
+      {
+        "capabilityId": "IMP-004",
+        "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
+        "phase": "seed",
+        "whyRelevant": "mode marketing base required · subject=Atelier Møn Printworks\" · action=enquire about a print edition.",
+        "evidencePointers": [
+          "mode:marketing"
+        ],
+        "status": "explicit"
+      },
+      {
+        "capabilityId": "IMP-005",
+        "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
+        "phase": "seed",
+        "whyRelevant": "mode marketing base required · subject=Atelier Møn Printworks\" · action=enquire about a print edition.",
+        "evidencePointers": [
+          "mode:marketing"
+        ],
+        "status": "explicit"
+      },
+      {
+        "capabilityId": "IMP-008",
+        "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
+        "phase": "critique",
+        "whyRelevant": "mode marketing base required · subject=Atelier Møn Printworks\" · action=enquire about a print edition.",
+        "evidencePointers": [
+          "mode:marketing"
+        ],
+        "status": "explicit"
+      },
+      {
+        "capabilityId": "TASTE-CAP-007",
+        "upstreamOrigin": "https://github.com/Leonxlnx/taste-skill.git",
+        "phase": "creative-direction",
+        "whyRelevant": "mode marketing base optional · subject=Atelier Møn Printworks\" · action=enquire about a print edition.",
+        "evidencePointers": [
+          "mode:marketing"
+        ],
+        "status": "inferred"
+      },
+      {
+        "capabilityId": "frontend.motion-intent",
+        "upstreamOrigin": "https://github.com/anthropics/skills",
+        "phase": "creative-direction",
+        "whyRelevant": "mode marketing base optional · subject=Atelier Møn Printworks\" · action=enquire about a print edition.",
+        "evidencePointers": [
+          "mode:marketing"
+        ],
+        "status": "inferred"
+      },
+      {
+        "capabilityId": "IMP-006",
+        "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
+        "phase": "seed",
+        "whyRelevant": "mode marketing base optional · subject=Atelier Møn Printworks\" · action=enquire about a print edition.",
+        "evidencePointers": [
+          "mode:marketing"
+        ],
+        "status": "inferred"
+      },
+      {
+        "capabilityId": "IMP-010",
+        "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
+        "phase": "critique",
+        "whyRelevant": "mode marketing base optional · subject=Atelier Møn Printworks\" · action=enquire about a print edition.",
+        "evidencePointers": [
+          "mode:marketing"
+        ],
+        "status": "inferred"
+      },
+      {
+        "capabilityId": "frontend.interface-writing",
+        "upstreamOrigin": "https://github.com/anthropics/skills",
+        "phase": "creative-direction",
+        "whyRelevant": "operational UI needs action vocabulary · subject=Atelier Møn Printworks\" · action=enquire about a print edition.",
+        "evidencePointers": [
+          "brief:job"
+        ],
+        "status": "inferred"
+      }
+    ],
+    "seedProvenance": {
+      "source": "local-world-library-seed",
+      "version": "1.1.0",
+      "method": "sha256-project-entropy + fisher-yates over eligibility-filtered seeds",
+      "randomSeed": "h2h-atelier-2026-07-31",
+      "numericSeed": 542064296,
+      "licence": "MIT SiteSmith-original world seed templates",
+      "origin": "local",
+      "slot": 2
+    },
+    "policyVersion": "direction-engine-v3-slice-1.0.0",
+    "dials": {
+      "visualDensity": 4,
+      "motionIntensity": 3,
+      "aestheticBoldness": 7,
+      "status": {
+        "visualDensity": "explicit",
+        "motionIntensity": "explicit",
+        "aestheticBoldness": "explicit"
+      }
+    },
+    "choice": {
+      "status": "selected",
+      "selectedBlindId": "L1",
+      "selectedInternalId": "W3",
+      "by": "user"
+    }
+  },
+  "selectedCard": {
+    "internalId": "W3",
+    "worldId": "statement-object",
+    "seed": {
+      "source": "local-world-library-seed",
+      "version": "1.1.0",
+      "method": "sha256-project-entropy + fisher-yates over eligibility-filtered seeds",
+      "randomSeed": "h2h-atelier-2026-07-31",
+      "numericSeed": 542064296,
+      "licence": "MIT SiteSmith-original world seed templates",
+      "origin": "local",
+      "slot": 2
+    },
+    "thesis": "Atelier Møn Printworks\": enquire about a print edition. via single object left, large type right — atelier, møn, printworks, curators, and, small",
+    "evidence": "--- | title: \"Evidence — Atelier Møn Printworks\" | status: proof-fixture | ai_generated: \"(C)\" | --- | # Evidence — Atelier Møn Printworks | domain-knowledge: consulted (2 hits)",
+    "audience": "curators and small brands commissioning limited runs.",
+    "designIntent": "marketing · enquire about a print edition. · Atelier Møn Printworks\"",
+    "composition": "single object left, large type right",
+    "type": "condensed display grotesque over quiet sans",
+    "colour": "light paper ground with one reserve accent",
+    "imagery": "diagram-led evidence slots until plates exist",
+    "rhythm": "hard vertical split then calm bands",
+    "surface": "open — subject earns space around the object",
+    "labels": "sentence case captions — retail voice stays human",
+    "figures": "proportional — price is content not motif",
+    "depth": "elevated — object lifts off ground slightly",
+    "layoutPrinciple": "single object left, large type right",
+    "typographicPrinciple": "condensed display grotesque over quiet sans",
+    "assetStrategy": "diagram-led evidence slots until plates exist",
+    "motionInteraction": "hover reveals material fact on the object",
+    "signatureElement": "atelier-sig-3",
+    "primaryRisk": "Signature may overfit if evidence is thin.",
+    "differenceNote": "Differs from W1, W2 on composition/type/imagery/grammar after brief-fit filter.",
+    "capabilityProvenance": [
+      "TASTE-CAP-002",
+      "TASTE-CAP-003",
+      "TASTE-CAP-004",
+      "TASTE-CAP-005",
+      "frontend.subject-vernacular",
+      "frontend.hero-thesis",
+      "frontend.type-as-identity",
+      "frontend.anti-default-calibration",
+      "frontend.compact-plan-signature",
+      "uupm.tune.design-dials",
+      "IMP-004",
+      "IMP-005",
+      "IMP-008",
+      "TASTE-CAP-007",
+      "frontend.motion-intent",
+      "IMP-006",
+      "IMP-010",
+      "frontend.interface-writing"
+    ],
+    "density": "airy",
+    "groupsApplied": {
+      "taste": true,
+      "uupm": true,
+      "frontend": true,
+      "impeccable": true
+    },
+    "grounding": {
+      "subject": "Atelier Møn Printworks\"",
+      "primaryAction": "enquire about a print edition.",
+      "antiRefs": [
+        "generic creative-agency blob gradients, stock loft photos",
+        "generic creative-agency blob gradients, stock loft photos."
+      ],
+      "assets": {
+        "imageless": false,
+        "plates": false
+      }
+    },
+    "semanticGroupEffects": {
+      "withoutFrontend": false,
+      "withoutTaste": false,
+      "withoutUupm": false,
+      "withoutImpeccable": false
+    }
+  },
+  "proofMeta": {
+    "engineCommit": "b92cdabad98c4d23ff79b74d6881e6b7129325a4",
+    "inputHash": "2d4908174b9cbfe9617811037ed23125a441a81169204460dd7fba6bff045a5f",
+    "policyVersion": "direction-engine-v3-slice-1.0.0",
+    "randomSeed": "h2h-atelier-2026-07-31",
+    "numericSeed": 542064296
+  }
+}
