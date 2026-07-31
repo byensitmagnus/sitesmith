@@ -12,13 +12,24 @@ import { routeCapabilities, loadLedger } from './router.mjs';
 import { generateDirectionCards, blindCandidates, assertNoBlindLeakage } from './worlds-and-cards.mjs';
 import { critiqueBlindedCards, resolveChoice } from './critic.mjs';
 import { compileDesignSpec, buildHandoffPackage, validateDesignSpec } from './designspec.mjs';
+import { packetFromCard } from './evidence-guard.mjs';
+import { runCreativePass } from './creative-llm.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const defaultPolicy = JSON.parse(readFileSync(join(here, 'policy.json'), 'utf8'));
 const root = join(here, '..', '..', '..', '..');
 
+/**
+ * Sync engine run. creativePass: off|rules (default). For llm use runDirectionEngineAsync.
+ */
 export function runDirectionEngine(options = {}) {
   const policy = { ...defaultPolicy, ...(options.policy ?? {}) };
+  if (options.creativePass) policy.creativePass = options.creativePass;
+  // Sync path never calls network; map llm → rules with explicit note for callers who forgot async
+  if (policy.creativePass === 'llm' && options.allowSyncLlm !== true) {
+    policy.creativePass = 'rules';
+    options._llmDeferredToRules = true;
+  }
   const rawInput = options.input ?? loadInputFromDir(options.dir);
   if (options.ablation) rawInput.ablation = options.ablation;
 
@@ -147,10 +158,18 @@ export function runDirectionEngine(options = {}) {
     engineCommit = null;
   }
 
+  const creativePassMode = policy.creativePass ?? 'rules';
+  const directionPacket = selectedCard
+    ? packetFromCard(selectedCard, input, {
+      creativePass: options._llmDeferredToRules ? 'rules-deferred-from-llm' : creativePassMode,
+    })
+    : null;
+
   return {
     ok: true,
     stage,
     policyVersion: policy.policyVersion,
+    architecture: policy.architecture ?? 'orchestrator',
     inputWarnings: input.warnings,
     proofMeta: {
       engineCommit,
@@ -158,7 +177,14 @@ export function runDirectionEngine(options = {}) {
       policyVersion: policy.policyVersion,
       randomSeed: input.randomSeed,
       numericSeed: generated.numericSeed,
+      creativePass: options._llmDeferredToRules ? 'rules-deferred-from-llm' : creativePassMode,
     },
+    creative: {
+      mode: options._llmDeferredToRules ? 'rules-deferred-from-llm' : creativePassMode,
+      llmAttempted: false,
+      llmSucceeded: false,
+    },
+    directionPacket,
     route,
     direction: packDirection(generated),
     blinding: { independence, claim, key, blinded },
@@ -166,6 +192,125 @@ export function runDirectionEngine(options = {}) {
     choice,
     designSpec: spec,
     handoff,
+    selectedCard,
+    input,
+  };
+}
+
+/**
+ * Async engine: same as sync, then optional LLM creative pass + evidence guard.
+ * @param {object} options same as runDirectionEngine + { llmProvider?, creativePass?: 'off'|'rules'|'llm' }
+ */
+export async function runDirectionEngineAsync(options = {}) {
+  const policy = { ...defaultPolicy, ...(options.policy ?? {}) };
+  const mode = options.creativePass ?? policy.creativePass ?? 'rules';
+
+  if (mode !== 'llm') {
+    return runDirectionEngine({ ...options, creativePass: mode, policy: { ...policy, creativePass: mode } });
+  }
+
+  // Base structure with rules enrichment first
+  const base = runDirectionEngine({
+    ...options,
+    creativePass: 'rules',
+    policy: { ...policy, creativePass: 'rules' },
+  });
+  if (!base.ok || base.stage !== 'handoff-ready' || !base.selectedCard) {
+    return { ...base, creative: { mode: 'llm', llmAttempted: false, llmSucceeded: false, skipped: true } };
+  }
+
+  const pass = await runCreativePass({
+    input: base.input,
+    card: base.selectedCard,
+    mode: 'llm',
+    provider: options.llmProvider,
+    fallbackToRules: policy.creativePassLlmFallbackToRules !== false,
+    model: options.creativeModel,
+  });
+
+  if (!pass.llmSucceeded) {
+    return {
+      ...base,
+      directionPacket: pass.packet,
+      creative: {
+        mode: 'llm',
+        llmAttempted: pass.llmAttempted,
+        llmSucceeded: false,
+        creativePassFallback: pass.creativePassFallback ?? false,
+        fallbackReason: pass.fallbackReason ?? null,
+        error: pass.error ?? null,
+        guard: pass.guard,
+      },
+      proofMeta: {
+        ...base.proofMeta,
+        creativePass: pass.creativePassFallback ? 'rules-fallback' : 'llm-failed',
+      },
+    };
+  }
+
+  // Recompile DesignSpec + handoff from LLM-enriched card
+  const selectedCard = pass.card;
+  const compiled = compileDesignSpec({
+    input: base.input,
+    card: selectedCard,
+    route: base.route,
+    policy,
+    choice: base.choice,
+  });
+  if (!compiled.ok) {
+    return {
+      ...base,
+      creative: {
+        mode: 'llm',
+        llmAttempted: true,
+        llmSucceeded: false,
+        creativePassFallback: true,
+        fallbackReason: 'designspec-after-llm',
+        problems: compiled.problems,
+      },
+    };
+  }
+  const v = validateDesignSpec(compiled.spec);
+  if (!v.ok) {
+    return {
+      ...base,
+      creative: {
+        mode: 'llm',
+        llmAttempted: true,
+        llmSucceeded: false,
+        creativePassFallback: true,
+        fallbackReason: 'designspec-validate-after-llm',
+        problems: v.problems,
+      },
+    };
+  }
+  const rejected = (base.direction?.cards ?? []).filter((c) => c.internalId !== selectedCard.internalId);
+  const handoff = buildHandoffPackage({
+    input: base.input,
+    spec: compiled.spec,
+    selectedCard,
+    rejectedCards: rejected,
+  });
+
+  return {
+    ...base,
+    selectedCard,
+    designSpec: compiled.spec,
+    handoff,
+    directionPacket: pass.packet,
+    creative: {
+      mode: 'llm',
+      llmAttempted: true,
+      llmSucceeded: true,
+      model: pass.model ?? null,
+      usage: pass.usage ?? null,
+      guard: pass.guard,
+    },
+    proofMeta: {
+      ...base.proofMeta,
+      creativePass: 'llm',
+      creativeModel: pass.model ?? null,
+    },
   };
 }
 
@@ -208,7 +353,7 @@ function main(argv) {
   const cmd = args.shift() ?? 'help';
   if (cmd === 'help' || cmd === '--help') {
     console.log(`usage:
-  node direction-engine/index.mjs run --dir <fixture> [--choose L1] [--ablation taste|uupm|frontend|impeccable|all] [--out <dir>] [--seed S]
+  node direction-engine/index.mjs run --dir <fixture> [--choose L1] [--ablation taste|uupm|frontend|impeccable|all] [--out <dir>] [--seed S] [--creative off|rules|llm]
 `);
     process.exit(0);
   }
@@ -221,6 +366,42 @@ function main(argv) {
   const choose = flag('--choose');
   const ablation = flag('--ablation');
   const seed = flag('--seed');
+  const creative = flag('--creative') || 'rules';
+
+  const finish = (result) => {
+    if (out) {
+      mkdirSync(out, { recursive: true });
+      writeFileSync(join(out, 'engine-result.json'), JSON.stringify(result, null, 2));
+      if (result.handoff?.directionMd) writeFileSync(join(out, 'DIRECTION.md'), result.handoff.directionMd);
+      if (result.designSpec) writeFileSync(join(out, 'DESIGNSPEC.json'), JSON.stringify(result.designSpec, null, 2));
+      if (result.handoff) writeFileSync(join(out, 'HANDOFF.json'), JSON.stringify(result.handoff, null, 2));
+      if (result.directionPacket) {
+        writeFileSync(join(out, 'DIRECTION-PACKET.json'), JSON.stringify(result.directionPacket, null, 2));
+      }
+    }
+    console.log(JSON.stringify({
+      ok: result.ok,
+      stage: result.stage,
+      creative: result.creative,
+      thesis: result.directionPacket?.designThesis?.slice?.(0, 120),
+    }, null, 2));
+    process.exit(result.ok ? 0 : 1);
+  };
+
+  if (creative === 'llm') {
+    runDirectionEngineAsync({
+      dir,
+      userChoiceBlindId: choose,
+      allowAdjudicator: args.includes('--adjudicate'),
+      ablation,
+      randomSeed: seed,
+      creativePass: 'llm',
+    }).then(finish).catch((err) => {
+      console.error(err);
+      process.exit(1);
+    });
+    return;
+  }
 
   const result = runDirectionEngine({
     dir,
@@ -228,38 +409,9 @@ function main(argv) {
     allowAdjudicator: args.includes('--adjudicate'),
     ablation,
     randomSeed: seed,
+    creativePass: creative,
   });
-
-  if (out) {
-    mkdirSync(out, { recursive: true });
-    writeFileSync(join(out, 'engine-result.json'), JSON.stringify(result, null, 2));
-    if (result.handoff?.directionMd) writeFileSync(join(out, 'DIRECTION.md'), result.handoff.directionMd);
-    if (result.designSpec) writeFileSync(join(out, 'DESIGNSPEC.json'), JSON.stringify(result.designSpec, null, 2));
-    if (result.handoff) writeFileSync(join(out, 'HANDOFF.json'), JSON.stringify(result.handoff, null, 2));
-  }
-
-  if (!result.ok) {
-    console.error(JSON.stringify(result, null, 2));
-    process.exit(1);
-  }
-  console.log(JSON.stringify({
-    ok: result.ok,
-    stage: result.stage,
-    selectedCount: result.route.selectedCount,
-    decisionHash: result.route.decisionHash,
-    domainRetrieval: result.route.domainRetrieval,
-    cards: result.direction.cards.map((c) => c.worldId),
-    pairwisePass: result.direction.pairwise.every((p) => p.pass),
-    critic: {
-      role: result.critic.role,
-      independence: result.critic.independence,
-      rejectAll: result.critic.rejectAll,
-      tie: result.critic.tie,
-    },
-    choice: result.choice,
-    handoffReady: result.stage === 'handoff-ready',
-    proofMeta: result.proofMeta,
-  }, null, 2));
+  finish(result);
 }
 
 const thisFile = fileURLToPath(import.meta.url);

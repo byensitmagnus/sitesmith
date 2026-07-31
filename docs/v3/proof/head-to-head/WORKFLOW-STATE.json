@@ -1,10 +1,10 @@
 {
   "workflowVersion": "1.0.0",
-  "state": "S7_SCREENING_V3_DECISION",
-  "previousState": "S7_SCREENING_DECISION",
+  "state": "ORCHESTRATOR_V1_LANDED",
+  "previousState": "S7_SCREENING_V3_DECISION",
   "allowedNextStates": [
-    "STOP_NO_BUILD",
-    "ARCH_LLM_CREATIVE_LAYER"
+    "MINI_H2H_WITH_LLM",
+    "V23_BUILD_ON_ORCHESTRATOR"
   ],
   "repository": "byensitmagnus/sitesmith",
   "foundationSha": "dc00598cce2af92435a749856393e287506753bc",
@@ -27,9 +27,9 @@
     "blind_eval_v2": "complete"
   },
   "blockers": [],
-  "lastVerifiedAt": "2026-07-31T20:20:42.173393+00:00",
-  "lastTransitionReason": "v3 creative-layer: leather +4, atelier/passage regress; still 0/3",
-  "proofStatus": "PROOF FAILED \u2014 UPSTREAM SUPERSET",
+  "lastVerifiedAt": "2026-07-31T20:28:32.135Z",
+  "lastTransitionReason": "Orchestrator architecture + LLM creative pass + evidence guard implemented",
+  "proofStatus": "PROOF FAILED — UPSTREAM SUPERSET",
   "arms": [
     "taste-skill",
     "ui-ux-pro-max",
@@ -44,21 +44,21 @@
   ],
   "screeningRunsDeclared": 15,
   "replicationRunsDeclared": 15,
-  "evalVerdict": "PROOF FAILED \u2014 UPSTREAM SUPERSET",
+  "evalVerdict": "PROOF FAILED — UPSTREAM SUPERSET",
   "sitesmithBriefOutcomes": {
     "01-leather-goods": "loss",
     "02-atelier-printworks": "loss",
     "03-passage-console": "loss"
   },
   "remediation": "engine-packet-quality-v1",
-  "evalVerdictV2": "PROOF FAILED \u2014 DIRECTION QUALITY",
-  "evalVerdictV1": "PROOF FAILED \u2014 UPSTREAM SUPERSET",
+  "evalVerdictV2": "PROOF FAILED — DIRECTION QUALITY",
+  "evalVerdictV1": "PROOF FAILED — UPSTREAM SUPERSET",
   "sitesmithV2Avgs": {
     "01-leather-goods": 38.5,
     "02-atelier-printworks": 39,
     "03-passage-console": 41
   },
-  "evalVerdictV3": "PROOF FAILED \u2014 UPSTREAM SUPERSET",
+  "evalVerdictV3": "PROOF FAILED — UPSTREAM SUPERSET",
   "sitesmithScoreTrail": {
     "v1": [
       28.5,
@@ -67,13 +67,17 @@
     ],
     "v2": [
       38.5,
-      39.0,
-      41.0
+      39,
+      41
     ],
     "v3": [
       42.5,
       27.5,
       28.5
     ]
-  }
+  },
+  "architecture": "docs/v3/ARCH-DIRECTION-ORCHESTRATOR.md",
+  "creativePassDefault": "rules",
+  "creativePassLlm": "runDirectionEngineAsync + evidence-guard",
+  "h2hNote": "H2H closed as fail; orchestrator path is product direction going forward"
 }

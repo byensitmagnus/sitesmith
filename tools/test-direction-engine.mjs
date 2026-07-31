@@ -12,7 +12,8 @@ import {
 } from '../skills/sitesmith/scripts/direction-engine/worlds-and-cards.mjs';
 import { critiqueBlindedCards, resolveChoice } from '../skills/sitesmith/scripts/direction-engine/critic.mjs';
 import { compileDesignSpec, validateDesignSpec, buildHandoffPackage } from '../skills/sitesmith/scripts/direction-engine/designspec.mjs';
-import { runDirectionEngine } from '../skills/sitesmith/scripts/direction-engine/index.mjs';
+import { runDirectionEngine, runDirectionEngineAsync } from '../skills/sitesmith/scripts/direction-engine/index.mjs';
+import { guardCreativePacket } from '../skills/sitesmith/scripts/direction-engine/evidence-guard.mjs';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const policy = JSON.parse(readFileSync(
@@ -324,6 +325,91 @@ const ecommerceB = {
       fail('rich-card', 'missing implementationNotes');
     } else ok('rich cards: clean evidence, thesis, signature, hierarchy + creative layer');
   }
+}
+
+// Evidence guard rejects invented testimonials / undeclared assets
+{
+  const v = validateDirectionInput(ecommerceA).input;
+  const bad = {
+    designThesis: 'Customers love us: "best bags ever" said Anna',
+    subjectGrounding: 'Northline',
+    composition: 'x',
+    informationHierarchy: 'x',
+    typography: 'x',
+    colourAndMaterialModel: 'x',
+    imageryAndAssetStrategy: 'uses secret-hero.png',
+    interactionConcept: 'x',
+    signatureElement: 'x',
+    primaryRisk: 'x',
+    implementationGuidance: 'x',
+    unknowns: 'x',
+  };
+  const g = guardCreativePacket(bad, v);
+  if (g.ok) fail('evidence-guard', 'should reject inventions');
+  else if (!g.problems.some((p) => /testimonial|undeclared-asset/i.test(p))) {
+    fail('evidence-guard', g.problems.join(','));
+  } else ok('evidence guard rejects invented social proof and assets');
+}
+
+// LLM creative pass with mock provider + guard (async)
+{
+  const mockOk = async ({ prompt }) => ({
+    text: JSON.stringify({
+      designThesis: 'Northline Leather Goods make-slot desk for Field Tote and Belt No. 2',
+      subjectGrounding: 'Subject Northline Leather Goods; products tote belt; materials bridle leather',
+      composition: 'plate first then make-slot',
+      informationHierarchy: '1) Field Tote 2) hide 3) make-slot',
+      typography: 'IBM Plex Sans',
+      colourAndMaterialModel: 'ink brown cream brass',
+      imageryAndAssetStrategy: 'product plates only no lifestyle',
+      interactionConcept: 'static make-slot request',
+      signatureElement: 'Hide Grade Strip',
+      primaryRisk: 'generic artisan catalog',
+      implementationGuidance: 'Request make-slot CTA; no reviews',
+      unknowns: 'exact hide codes',
+    }),
+    model: 'mock-ok',
+  });
+  const mockBad = async () => ({
+    text: JSON.stringify({
+      designThesis: 'Award-winning brand with free worldwide shipping and 4.9★',
+      subjectGrounding: 'x',
+      composition: 'x',
+      informationHierarchy: 'x',
+      typography: 'x',
+      colourAndMaterialModel: 'x',
+      imageryAndAssetStrategy: 'celebrity-hero.webp',
+      interactionConcept: 'x',
+      signatureElement: 'x',
+      primaryRisk: 'x',
+      implementationGuidance: 'x',
+      unknowns: 'x',
+    }),
+    model: 'mock-bad',
+  });
+  const rOk = await runDirectionEngineAsync({
+    input: ecommerceA,
+    userChoiceBlindId: 'L1',
+    randomSeed: 'seed-a',
+    creativePass: 'llm',
+    llmProvider: mockOk,
+  });
+  if (!rOk.ok || !rOk.creative?.llmSucceeded) fail('llm-pass', JSON.stringify(rOk.creative));
+  else if (!/make-slot|Field Tote|Hide Grade/i.test(rOk.directionPacket?.designThesis || '')) {
+    fail('llm-pass', rOk.directionPacket?.designThesis);
+  } else ok('llm creative pass with mock succeeds under guard');
+
+  const rBad = await runDirectionEngineAsync({
+    input: ecommerceA,
+    userChoiceBlindId: 'L1',
+    randomSeed: 'seed-a',
+    creativePass: 'llm',
+    llmProvider: mockBad,
+  });
+  if (!rBad.ok) fail('llm-fallback', 'engine should still ok');
+  else if (rBad.creative?.llmSucceeded) fail('llm-fallback', 'bad packet should not succeed');
+  else if (!rBad.creative?.creativePassFallback) fail('llm-fallback', 'expected fallback to rules');
+  else ok('llm creative pass fails closed to rules on invented claims');
 }
 
 // Cross-platform inputHash + proof results: LF vs CRLF must match

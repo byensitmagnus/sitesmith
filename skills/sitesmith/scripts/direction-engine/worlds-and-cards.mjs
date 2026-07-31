@@ -423,8 +423,9 @@ export function generateDirectionCards(input, route, policy) {
     };
   }
 
-  // Evidence-bound creative layer: director-grade prose without inventing facts.
-  const enriched = enrichCards(selected, input);
+  // Evidence-bound creative layer (rules). Skip when creativePass === 'off'.
+  const passMode = policy.creativePass ?? 'rules';
+  const enriched = passMode === 'off' ? selected : enrichCards(selected, input);
 
   for (const card of enriched) {
     // Use internal slot ids only — never peer worldIds (would leak in blind packets).

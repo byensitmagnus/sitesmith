@@ -1,0 +1,14 @@
+{
+  "briefId": "01-leather-goods",
+  "creative": "rules",
+  "ok": true,
+  "stage": "handoff-ready",
+  "creativeMeta": {
+    "mode": "rules",
+    "llmAttempted": false,
+    "llmSucceeded": false
+  },
+  "thesis": "Northline Leather Goods is a make-slot desk, not a boutique shelf: open on Field Tote, Belt No. 2, Shoulder Strap with trade facts on the plate edge; primary argument is material truth + “configure a bag and request a make-slot.” — never lifestyle hero; ban purple SaaS gradient, stock handshake photos, fake 4.9★ rows.",
+  "signature": "Hide Grade Strip under Field Tote plate — chips bind plate → grade → make-slot",
+  "outDir": "docs\\v3\\proof\\head-to-head\\mini-proof\\01-leather-goods-rules"
+}
