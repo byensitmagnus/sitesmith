@@ -144,19 +144,32 @@ if (arm === 'sitesmith') {
     selectedCard: card,
     proofMeta: result.proofMeta,
   };
+  const g = card?.grounding ?? {};
   packet = {
     designThesis: card?.thesis ?? 'unknown',
-    subjectGrounding: [card?.grounding?.subject, card?.evidence, card?.audience].filter(Boolean).join(' | ') || 'unknown',
+    subjectGrounding: [
+      g.subject && `Subject: ${g.subject}`,
+      g.audience && `Audience: ${g.audience}`,
+      g.primaryAction && `Action: ${g.primaryAction}`,
+      (g.products ?? []).length && `Products: ${g.products.join(', ')}`,
+      (g.materials ?? []).length && `Materials: ${g.materials.join(', ')}`,
+      (g.brandPalette ?? []).length && `Palette: ${g.brandPalette.join(', ')}`,
+      (g.antiRefs ?? []).length && `Anti-refs: ${g.antiRefs.join('; ')}`,
+      card?.evidence && `Evidence: ${String(card.evidence).slice(0, 280)}`,
+    ].filter(Boolean).join(' · ') || 'unknown',
     composition: card?.composition ?? 'unknown',
     informationHierarchy: card?.layoutPrinciple ?? card?.designIntent ?? 'unknown',
     typography: card?.type ?? card?.typographicPrinciple ?? 'unknown',
-    colourAndMaterialModel: card?.colour ?? 'unknown',
+    colourAndMaterialModel: [
+      card?.colour,
+      (g.materials ?? []).length && `materials ${g.materials.join(', ')}`,
+    ].filter(Boolean).join(' · ') || 'unknown',
     imageryAndAssetStrategy: card?.imagery ?? card?.assetStrategy ?? 'unknown',
     interactionConcept: card?.motionInteraction ?? card?.rhythm ?? 'unknown',
     signatureElement: card?.signatureElement ?? 'unknown',
     primaryRisk: card?.primaryRisk ?? 'unknown',
     implementationGuidance: result.handoff?.directionMd
-      ? String(result.handoff.directionMd).slice(0, 2000)
+      ? String(result.handoff.directionMd).slice(0, 2500)
       : 'unknown',
     unknowns: (result.inputWarnings ?? []).join('; ') || 'none declared',
     sourcePointers: {

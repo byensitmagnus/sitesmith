@@ -1,7 +1,7 @@
 {
   "workflowVersion": "1.0.0",
-  "state": "S7_SCREENING_DECISION",
-  "previousState": "AWAITING_EVAL_APPROVAL",
+  "state": "POSTMORTEM_REMEDIATION",
+  "previousState": "S7_SCREENING_DECISION",
   "allowedNextStates": [
     "STOP_PROOF_FAILED",
     "S8_REPLICATION_OPTIONAL"
@@ -25,8 +25,8 @@
     "blind_eval": "complete"
   },
   "blockers": [],
-  "lastVerifiedAt": "2026-07-31T19:44:30.609Z",
-  "lastTransitionReason": "Blind eval complete: PROOF FAILED — UPSTREAM SUPERSET",
+  "lastVerifiedAt": "2026-07-31T19:58:53.372Z",
+  "lastTransitionReason": "Postmortem + engine packet quality fixes; failed H2H artifacts preserved",
   "proofStatus": "PROOF FAILED — UPSTREAM SUPERSET",
   "arms": [
     "taste-skill",
@@ -47,5 +47,6 @@
     "01-leather-goods": "loss",
     "02-atelier-printworks": "loss",
     "03-passage-console": "loss"
-  }
+  },
+  "remediation": "engine-packet-quality-v1"
 }

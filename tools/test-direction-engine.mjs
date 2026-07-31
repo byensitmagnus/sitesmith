@@ -3,7 +3,9 @@
 import { readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { validateDirectionInput, canonicalNewlines } from '../skills/sitesmith/scripts/direction-engine/input.mjs';
+import {
+  validateDirectionInput, canonicalNewlines, cleanExtractedField, contentLines,
+} from '../skills/sitesmith/scripts/direction-engine/input.mjs';
 import { routeCapabilities, loadLedger } from '../skills/sitesmith/scripts/direction-engine/router.mjs';
 import {
   generateDirectionCards, blindCandidates, assertNoBlindLeakage, worldEligible, WORLD_LIBRARY,
@@ -275,6 +277,48 @@ const ecommerceB = {
   else if ((gen.cards ?? []).some((c) => /material-board|editorial-bleed/i.test(c.worldId))) {
     fail('product-ui-fit', gen.cards.map((c) => c.worldId).join(','));
   } else ok('product-ui rejects material/editorial seeds without plates');
+}
+
+// Subject extraction must not keep YAML trailing quotes (H2H failure mode)
+{
+  const v = validateDirectionInput({
+    brief: '---\ntitle: "Subject: Northline Leather Goods"\nstatus: x\n---\n\n# Subject: Northline Leather Goods\nAudience: buyers\nPrimary action: configure a bag\n',
+    evidence: 'Subject: Northline Leather Goods\nProducts: Field Tote, Belt No. 2\nMaterials: bridle leather, solid brass\nAnti-references: purple SaaS gradient\n',
+    brand: 'Ink brown, warm cream, single brass accent.\n',
+    assetPlan: 'Load-bearing: product plates for Field Tote\n',
+    assetManifest: '- field-tote.webp (have)\n',
+    mode: 'ecommerce',
+    stack: 'html',
+  });
+  if (!v.ok) fail('subject-extract', v.problems?.join(';'));
+  else if (/["']/.test(v.input.signals.subject)) fail('subject-extract', `quote leak: ${v.input.signals.subject}`);
+  else if (v.input.signals.subject !== 'Northline Leather Goods') fail('subject-extract', v.input.signals.subject);
+  else if (!v.input.signals.products?.includes('Field Tote')) fail('subject-extract', 'products missing');
+  else if (!(v.input.signals.brandPalette ?? []).some((p) => /brass|cream|ink/i.test(p))) fail('subject-extract', 'palette missing');
+  else ok('subject extraction strips YAML quotes and captures products/palette');
+  if (cleanExtractedField('Goods"') !== 'Goods') fail('clean-field', cleanExtractedField('Goods"'));
+  if (contentLines('title: x\nReal line').join() !== 'Real line') fail('content-lines', 'frontmatter not filtered');
+}
+
+// Rich card packet: thesis/signature/grounding usable for H2H (not frontmatter dump)
+{
+  const v = validateDirectionInput(ecommerceA).input;
+  // inject plate evidence
+  v.signals.hasProductPlates = true;
+  v.signals.products = ['Field Tote', 'Belt No. 2'];
+  v.signals.materials = ['bridle leather'];
+  v.signals.brandPalette = ['ink brown', 'warm cream', 'brass'];
+  const route = routeCapabilities(v, policy, loadLedger());
+  const gen = generateDirectionCards(v, route, policy);
+  if (!gen.ok) fail('rich-card', gen.problems?.join(';'));
+  else {
+    const c = gen.cards[0];
+    if (/title:|ai_generated|status: proof/i.test(c.evidence)) fail('rich-card', 'frontmatter in evidence summary');
+    if (/["']$/.test(c.thesis) || /\\+"/.test(c.thesis)) fail('rich-card', `thesis quote: ${c.thesis}`);
+    if (/^[\w-]+-sig-\d+$/.test(c.signatureElement)) fail('rich-card', `opaque sig only: ${c.signatureElement}`);
+    if (!/1\)/.test(c.layoutPrinciple)) fail('rich-card', 'hierarchy missing numbered levels');
+    else ok('rich cards: clean evidence, thesis, signature, hierarchy');
+  }
 }
 
 // Cross-platform inputHash + proof results: LF vs CRLF must match
