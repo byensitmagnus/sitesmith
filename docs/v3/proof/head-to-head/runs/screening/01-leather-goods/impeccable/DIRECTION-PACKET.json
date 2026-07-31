@@ -1,0 +1,43 @@
+{
+  "designThesis": "Northline sells make-slots on a real bridle-leather bench, not infinite stock: an ink-brown workshop make-slot ledger with a deliberate empty open-slot frame, ringed by product plates and hide-grade choice, ending in Request make-slot — refuse lifestyle luxury heroes and fake social proof.",
+  "subjectGrounding": "Northline Leather Goods; audience people who buy small-batch bags and straps and care about hide grade; products Field Tote, Belt No. 2, Shoulder Strap; materials bridle leather, solid brass, vegetable tan; price band DKK 890–2.400; make-slot lead time 3 weeks; brand ink brown / warm cream / single brass accent; plain trade English; assets product plates Field Tote + Belt No. 2 (have), no lifestyle models; anti purple SaaS gradient, handshake photos, fake 4.9★.",
+  "composition": "First viewport staged as evidenced absence: empty open make-slot frame owns the center; Field Tote product plate, hide-grade chips, materials line, and price band ring the void; primary Request make-slot control sticky on mobile. Wider page is a workshop appointment ledger of open weeks, not a lifestyle lookbook.",
+  "informationHierarchy": "1) Open make-slot (next week + 3-week lead) 2) Selected product plate 3) Hide grade choice 4) Materials and price band 5) Request make-slot action 6) Secondary goods (Belt No. 2, Shoulder Strap as ledger lines).",
+  "typography": "Condensed industrial display for product names (trade catalog, not luxury italic serif); humanist sans with tabular figures for ledger rows, prices, and slot weeks; sentence-case trade English labels; avoid Inter/DM Sans/Playfair/Fraunces/cream-serif-terracotta default cluster.",
+  "colourAndMaterialModel": "Restrained: ink-brown desk ground, warm cream ledger paper panels, single solid-brass accent on active row rule and primary CTA; light surface under cool north workshop light; no purple SaaS gradient, no neon, no black-and-gold boutique foil.",
+  "imageryAndAssetStrategy": "Load-bearing product plates only (field-tote.webp, belt-no-2.webp); deliberately no lifestyle models; stitch-macro needed/not had — omit or mark placeholder, do not invent; Shoulder Strap plate unknown — text/silhouette fallback marked synthetic if required; no stock handshakes.",
+  "interactionConcept": "Hide-grade selection inks the empty open-slot frame with product thumbnail + grade stamp and brightens the brass rule on that ledger row; motion intensity 2 — one short settle ≤200ms, instant under prefers-reduced-motion; request is a real form stating 3-week lead.",
+  "signatureElement": "northline-open-slot — empty make-slot frame [data-signature=\"northline-open-slot\"] that becomes the configured ledger row",
+  "primaryRisk": "Empty-center frame can read as a broken or loading image if unlabeled; must carry persistent 'Open make-slot · week of …' caption and always-visible product plate evidence. Missing stitch-macro and Shoulder Strap plate must not be faked.",
+  "implementationGuidance": "Mobile-first HTML/CSS. Semantic request form. Use only declared have-plates. Hide as radio/segmented control. Prices and lead time only from evidence. AA contrast on ink/cream; brass UI ≥3:1. No parallax multiplane or split-flap cascade unless alternate chosen. Forbidden: purple SaaS gradient, handshake stock, fake stars, testimonials, free worldwide shipping, lifestyle models. Seed key h2h-nlg-01; assigned grounded candidate 7 Make-slot ledger; poolRevision 94ff10ff20de; composition evidenced-absence.",
+  "unknowns": "Exact hide grade nomenclature; exact stitch counts per product; Shoulder Strap plate asset; stitch-macro.webp; live make-slot inventory beyond stated 3-week lead; any reviews/celebrities/shipping claims (must not invent).",
+  "sourcePointers": {
+    "arm": "impeccable",
+    "commit": "6b342244e915d64b0d6e84d5eec448fd196ce6bb",
+    "repo": "pbakaus/impeccable",
+    "method": "new-work-concept-seed-challengers-critique",
+    "seedKey": "h2h-nlg-01",
+    "seedScope": "direction",
+    "seedMode": "persuade",
+    "seedSource": "api",
+    "poolRevision": "94ff10ff20de",
+    "assignedIndex": 7,
+    "assignedGroundedCandidate": "make-slot-ledger",
+    "firstSurfaceComposition": "first-viewport-evidenced-absence",
+    "challengerIds": [
+      "cinema-cinematography-editing-multiplane-cel-dawn",
+      "textiles-weave-drape-fashion-industrial-quote-grammar",
+      "design-canon-toyism-signed-collective-plate",
+      "posters-covers-sleeves-posada-calavera-broadside",
+      "medium-native-ebru-floated-pigment",
+      "signals-instruments-split-flap-concourse"
+    ],
+    "winningChannel": "grounded-assigned",
+    "survivingAlternates": [
+      "split-flap-make-board",
+      "quoted-stockroom-labels"
+    ],
+    "nativeFile": "NATIVE.md",
+    "contextPackHash": "6099df6a1e57a7bce9d70e72df964cdd05486bb9d636be32964c6df059f48a2f"
+  }
+}

@@ -47,22 +47,21 @@ export function compileDesignSpec({ input, card, route, policy, choice }) {
     mode: input.mode,
     stack: input.stack,
     designThesis: card.thesis,
-    contentHierarchy: [
-      'subject recognition',
-      input.signals?.primaryAction ?? input.subjectHints?.primaryAction ?? 'primary action',
-      'supporting evidence',
-      'secondary navigation',
-    ],
+    contentHierarchy: Array.isArray(card.layoutPrinciple)
+      ? card.layoutPrinciple
+      : String(card.layoutPrinciple ?? 'subject → action → evidence → secondary').split(/\s*\d\)\s*/).filter(Boolean),
     pageComposition: card.composition,
     gridAndSpacing: spacingFor(card.density),
     typographySystem: {
       principle: card.type,
-      roles: ['display', 'body', 'label'],
+      roles: ['display', 'body', 'label', 'utility-mono'],
     },
     colourRoles: {
       ground: card.colour,
-      accent: 'single reserved accent from brand evidence only if present',
+      accent: (input.signals?.brandPalette ?? []).find((c) => /brass|coral|amber|accent/i.test(c))
+        ?? 'single reserved accent from brand evidence only if present',
       text: 'primary ink on ground with WCAG AA body contrast',
+      brandPalette: input.signals?.brandPalette ?? [],
     },
     surfaceMaterialModel: card.surface,
     imageryStrategy: card.imagery,
@@ -165,6 +164,7 @@ export function buildHandoffPackage({ input, spec, selectedCard, rejectedCards }
     '- signature-min-share: 12',
   ].join('\n');
 
+  const g = selectedCard.grounding ?? {};
   const directionMd = [
     '---',
     `title: "DIRECTION — ${input.projectName}"`,
@@ -174,18 +174,45 @@ export function buildHandoffPackage({ input, spec, selectedCard, rejectedCards }
     '',
     `# DIRECTION — ${input.projectName}`,
     '',
-    `Winner: ${selectedCard.worldId} (${selectedCard.thesis})`,
+    '## Design thesis',
+    selectedCard.thesis,
+    '',
+    '## Subject grounding',
+    [
+      g.subject && `Subject: ${g.subject}`,
+      g.audience && `Audience: ${g.audience}`,
+      g.primaryAction && `Primary action: ${g.primaryAction}`,
+      (g.products ?? []).length && `Products/work: ${(g.products ?? []).join(', ')}`,
+      (g.materials ?? []).length && `Materials: ${(g.materials ?? []).join(', ')}`,
+      (g.brandPalette ?? []).length && `Brand palette cues: ${(g.brandPalette ?? []).join(', ')}`,
+      (g.antiRefs ?? []).length && `Anti-references: ${(g.antiRefs ?? []).join('; ')}`,
+    ].filter(Boolean).join('\n') || selectedCard.evidence,
+    '',
+    '## Hierarchy',
+    selectedCard.layoutPrinciple,
     '',
     '## Signature',
     selectedCard.signatureElement,
     '',
+    '## Primary risk',
+    selectedCard.primaryRisk,
+    '',
     axisRecord,
     '',
-    '## Rejections',
-    ...rejectedCards.map((c) => `- ${c.worldId}: recorded alternative; not passed to build context`),
+    '## Implementation notes',
+    selectedCard.implementationNotes
+      || [
+        `Composition: ${selectedCard.composition}`,
+        `Type: ${selectedCard.type}`,
+        `Colour/material: ${selectedCard.colour}`,
+        `Imagery/assets: ${selectedCard.imagery}`,
+        `Interaction: ${selectedCard.motionInteraction}`,
+        'Do not invent testimonials, prices, awards, or assets not in the evidence pack.',
+        'Build context must not receive losing cards or generator scores.',
+      ].join('\n'),
     '',
-    '## Notes',
-    'Selected by Direction Engine v3 slice. Build context must not receive losing cards or generator scores.',
+    '## Rejections',
+    ...rejectedCards.map((c) => `- alternative card (${c.internalId}): withheld from build`),
   ].join('\n');
 
   return {

@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "name": "direction-packet-normalized-v1",
+  "purpose": "Comparable extraction only — never invent or improve content",
+  "requiredFields": [
+    "designThesis",
+    "subjectGrounding",
+    "composition",
+    "informationHierarchy",
+    "typography",
+    "colourAndMaterialModel",
+    "imageryAndAssetStrategy",
+    "interactionConcept",
+    "signatureElement",
+    "primaryRisk",
+    "implementationGuidance",
+    "unknowns",
+    "sourcePointers"
+  ],
+  "rules": {
+    "retainNativeOutput": true,
+    "normalizeMay": [
+      "extract",
+      "structure",
+      "reformat"
+    ],
+    "normalizeMustNot": [
+      "improve weak ideas",
+      "invent missing choices",
+      "add rationale",
+      "hide contradictions",
+      "translate unknown into assumptions"
+    ],
+    "missingValue": "unknown"
+  }
+}

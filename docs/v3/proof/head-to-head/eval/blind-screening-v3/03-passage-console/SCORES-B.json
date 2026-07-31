@@ -1,0 +1,94 @@
+{
+  "evaluator": "B",
+  "briefId": "03-passage-console",
+  "scores": {
+    "P": {
+      "briefFit": 2,
+      "subjectSpecificity": 2,
+      "originality": 1,
+      "composition": 3,
+      "hierarchy": 1,
+      "typography": 3,
+      "materiality": 3,
+      "assetStrategy": 4,
+      "interaction": 3,
+      "signature": 1,
+      "antiCliche": 3,
+      "implementability": 3,
+      "total": 29
+    },
+    "Q": {
+      "briefFit": 5,
+      "subjectSpecificity": 5,
+      "originality": 4,
+      "composition": 5,
+      "hierarchy": 5,
+      "typography": 5,
+      "materiality": 5,
+      "assetStrategy": 5,
+      "interaction": 5,
+      "signature": 5,
+      "antiCliche": 5,
+      "implementability": 5,
+      "total": 59
+    },
+    "R": {
+      "briefFit": 5,
+      "subjectSpecificity": 5,
+      "originality": 4,
+      "composition": 5,
+      "hierarchy": 5,
+      "typography": 5,
+      "materiality": 5,
+      "assetStrategy": 5,
+      "interaction": 5,
+      "signature": 4,
+      "antiCliche": 5,
+      "implementability": 5,
+      "total": 58
+    },
+    "S": {
+      "briefFit": 2,
+      "subjectSpecificity": 2,
+      "originality": 1,
+      "composition": 2,
+      "hierarchy": 2,
+      "typography": 2,
+      "materiality": 3,
+      "assetStrategy": 4,
+      "interaction": 2,
+      "signature": 1,
+      "antiCliche": 2,
+      "implementability": 2,
+      "total": 25
+    },
+    "T": {
+      "briefFit": 5,
+      "subjectSpecificity": 5,
+      "originality": 5,
+      "composition": 5,
+      "hierarchy": 5,
+      "typography": 4,
+      "materiality": 5,
+      "assetStrategy": 5,
+      "interaction": 5,
+      "signature": 5,
+      "antiCliche": 5,
+      "implementability": 5,
+      "total": 59
+    }
+  },
+  "qualitative": {
+    "wouldBuild": "Q",
+    "mostGeneric": "S",
+    "bestGrounded": "Q",
+    "strongestDirection": "T"
+  },
+  "comments": {
+    "P": "Thesis/hierarchy/signature still speak make-slot desk, plate recognition, grade/size, secondary SKUs — leather ecommerce language on a harbour log console. Imageless + near-black/amber scraps are right; the direction is domain-contaminated.",
+    "Q": "Commit desk done right: full-width form strip + append-only mono passage tape, Inbound|Outbound two-state lock as signature, six tokens, amber fault-only, Ctrl+Enter, all four states, density-8/motion-1. Strongest complete ops build package.",
+    "R": "Two-column compose-left / log-right cockpit with always-on status strip is equally operational and pack-true; amber rationing and imageless discipline are excellent. Signature is slightly more standard than Q’s direction lock or T’s chalk board.",
+    "S": "Product Demo + Features and Swiss/Minimalism with Rubik/Nunito and blue/orange system palette is marketing chrome on a density-8 work app; motion cues fight motion-1. Signature is a mark name, not a control.",
+    "T": "Movements Board / chalk-entry head strip is the most harbour-specific signature while staying imageless and density-8; Ctrl+Enter stamp and amber-only faults hold. Type roles are a bit less pinned than Q’s Plex Sans+Mono lock."
+  }
+}

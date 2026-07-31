@@ -1,0 +1,16 @@
+{
+  "runId": "screening-v3-02-atelier-printworks-sitesmith",
+  "briefId": "02-atelier-printworks",
+  "arm": "sitesmith",
+  "status": "completed",
+  "startedAt": "2026-07-31T20:17:59.665Z",
+  "finishedAt": "2026-07-31T20:17:59.677Z",
+  "modelCalls": 0,
+  "method": "direction-engine-v3-slice",
+  "armCommit": "b92cdabad98c4d23ff79b74d6881e6b7129325a4",
+  "contextPackHash": "04b3fd24b85d8d459178d11c4eb4c08d9e1339c76326f264a9c8eba8fda1d216",
+  "packetSha256": "74fae306eef9e0f063c2c002f90ba851dead4b613a664ce14168a9967c0501d9",
+  "phase": "screening-v3",
+  "isolation": "fresh-process-no-peer-outputs",
+  "model": "none-mechanical"
+}

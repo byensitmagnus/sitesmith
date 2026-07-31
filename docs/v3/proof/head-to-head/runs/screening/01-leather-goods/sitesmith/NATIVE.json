@@ -1,0 +1,436 @@
+{
+  "kind": "sitesmith-direction-engine",
+  "stage": "handoff-ready",
+  "routeSelected": [
+    "TASTE-CAP-002",
+    "TASTE-CAP-003",
+    "TASTE-CAP-004",
+    "TASTE-CAP-006",
+    "frontend.subject-vernacular",
+    "frontend.hero-thesis",
+    "frontend.semantic-structure",
+    "frontend.interface-writing",
+    "frontend.anti-default-calibration",
+    "uupm.classify.product-reasoning",
+    "uupm.tune.design-dials",
+    "IMP-004",
+    "IMP-005",
+    "IMP-008",
+    "uupm.lookup.stack-guidance",
+    "frontend.motion-intent",
+    "IMP-006",
+    "IMP-010"
+  ],
+  "choice": {
+    "status": "selected",
+    "selectedBlindId": "L1",
+    "selectedInternalId": "W1",
+    "by": "user"
+  },
+  "directionMd": "---\ntitle: \"DIRECTION — 01-leather-goods\"\nstatus: direction-engine-slice\nai_generated: \"(C)\"\n---\n\n# DIRECTION — 01-leather-goods\n\nWinner: split-evidence (Northline Leather Goods\": configure a bag and request a make-slot. via hard vertical rule: proof left, action right — northline, leather, goods, people, who, buy)\n\n## Signature\nnorthline-sig-1\n\n## Axis record\n\n- direction-version: 2.3\n- composition: hard vertical rule: proof left, action right\n- type: neutral grotesque, medium weight only\n- colour: stone ground, single brand accent on CTA only\n- imagery: diagram-led evidence stack\n- rhythm: two columns for the whole first fold\n\n- surface: framed — evidence cards in heavy borders\n- labels: sentence case — operational clarity\n- figures: functional tabular — measurements only where compared\n- depth: elevated — evidence cards raise on focus\n\n- visual-density: 6\n- motion-intensity: 2\n- aesthetic-boldness: 6\n\n- signature-selector: [data-signature=\"northline-sig-1\"]\n- signature-min-share: 12\n\n## Rejections\n- statement-object: recorded alternative; not passed to build context\n- material-board: recorded alternative; not passed to build context\n\n## Notes\nSelected by Direction Engine v3 slice. Build context must not receive losing cards or generator scores.",
+  "designSpec": {
+    "schemaVersion": 1,
+    "kind": "sitesmith.designspec.v3-slice",
+    "projectName": "01-leather-goods",
+    "mode": "ecommerce",
+    "stack": "html",
+    "designThesis": "Northline Leather Goods\": configure a bag and request a make-slot. via hard vertical rule: proof left, action right — northline, leather, goods, people, who, buy",
+    "contentHierarchy": [
+      "subject recognition",
+      "configure a bag and request a make-slot.",
+      "supporting evidence",
+      "secondary navigation"
+    ],
+    "pageComposition": "hard vertical rule: proof left, action right",
+    "gridAndSpacing": "balanced 8/12 rhythm",
+    "typographySystem": {
+      "principle": "neutral grotesque, medium weight only",
+      "roles": [
+        "display",
+        "body",
+        "label"
+      ]
+    },
+    "colourRoles": {
+      "ground": "stone ground, single brand accent on CTA only",
+      "accent": "single reserved accent from brand evidence only if present",
+      "text": "primary ink on ground with WCAG AA body contrast"
+    },
+    "surfaceMaterialModel": "framed — evidence cards in heavy borders",
+    "imageryStrategy": "diagram-led evidence stack",
+    "componentPrinciples": [
+      "states must be visible without colour alone",
+      "primary action uses reserved accent only"
+    ],
+    "interactionStates": [
+      "default",
+      "hover/focus",
+      "active",
+      "disabled",
+      "error"
+    ],
+    "motionRules": {
+      "principle": "sticky action column on desktop",
+      "reducedMotion": "disable non-essential motion"
+    },
+    "responsiveBehavior": {
+      "firstFold": "preserve composition intent; stack only after tablet",
+      "tables": "horizontal scroll must expose affordance if used"
+    },
+    "accessibilityConstraints": [
+      "visible focus",
+      "label every control",
+      "AA contrast for body and UI text"
+    ],
+    "signatureElement": "northline-sig-1",
+    "forbiddenFallbackDefaults": [
+      "purple SaaS gradient hero",
+      "three equal feature cards as default identity",
+      "round-8 recipe: mono uppercase labels + hairlines + tabular motif + flat depth",
+      "invented testimonials, prices, or certifications"
+    ],
+    "fidelityAssertions": [
+      {
+        "field": "composition",
+        "expected": "hard vertical rule: proof left, action right"
+      },
+      {
+        "field": "type",
+        "expected": "neutral grotesque, medium weight only"
+      },
+      {
+        "field": "colour",
+        "expected": "stone ground, single brand accent on CTA only"
+      },
+      {
+        "field": "imagery",
+        "expected": "diagram-led evidence stack"
+      },
+      {
+        "field": "rhythm",
+        "expected": "two columns for the whole first fold"
+      },
+      {
+        "field": "surface",
+        "expected": "framed — evidence cards in heavy borders"
+      },
+      {
+        "field": "labels",
+        "expected": "sentence case — operational clarity"
+      },
+      {
+        "field": "figures",
+        "expected": "functional tabular — measurements only where compared"
+      },
+      {
+        "field": "depth",
+        "expected": "elevated — evidence cards raise on focus"
+      },
+      {
+        "field": "signature-selector",
+        "expected": "[data-signature=\"northline-sig-1\"]"
+      }
+    ],
+    "acceptanceCriteria": [
+      "built page matches axis record treatments",
+      "primary action findable in first fold",
+      "no fabricated brand/product facts",
+      "passes existing v2.3 verify + direction fidelity"
+    ],
+    "capabilityProvenance": [
+      {
+        "capabilityId": "TASTE-CAP-002",
+        "upstreamOrigin": "https://github.com/Leonxlnx/taste-skill.git",
+        "phase": "creative-direction",
+        "whyRelevant": "mode ecommerce base required · subject=Northline Leather Goods\" · action=configure a bag and request a make-slot.",
+        "evidencePointers": [
+          "mode:ecommerce"
+        ],
+        "status": "explicit"
+      },
+      {
+        "capabilityId": "TASTE-CAP-003",
+        "upstreamOrigin": "https://github.com/Leonxlnx/taste-skill.git",
+        "phase": "creative-direction",
+        "whyRelevant": "mode ecommerce base required · subject=Northline Leather Goods\" · action=configure a bag and request a make-slot.",
+        "evidencePointers": [
+          "mode:ecommerce"
+        ],
+        "status": "explicit"
+      },
+      {
+        "capabilityId": "TASTE-CAP-004",
+        "upstreamOrigin": "https://github.com/Leonxlnx/taste-skill.git",
+        "phase": "creative-direction",
+        "whyRelevant": "mode ecommerce base required · subject=Northline Leather Goods\" · action=configure a bag and request a make-slot.",
+        "evidencePointers": [
+          "mode:ecommerce"
+        ],
+        "status": "explicit"
+      },
+      {
+        "capabilityId": "TASTE-CAP-006",
+        "upstreamOrigin": "https://github.com/Leonxlnx/taste-skill.git",
+        "phase": "knowledge",
+        "whyRelevant": "mode ecommerce base required · subject=Northline Leather Goods\" · action=configure a bag and request a make-slot.",
+        "evidencePointers": [
+          "mode:ecommerce"
+        ],
+        "status": "explicit"
+      },
+      {
+        "capabilityId": "frontend.subject-vernacular",
+        "upstreamOrigin": "https://github.com/anthropics/skills",
+        "phase": "creative-direction",
+        "whyRelevant": "mode ecommerce base required · subject=Northline Leather Goods\" · action=configure a bag and request a make-slot.",
+        "evidencePointers": [
+          "mode:ecommerce"
+        ],
+        "status": "explicit"
+      },
+      {
+        "capabilityId": "frontend.hero-thesis",
+        "upstreamOrigin": "https://github.com/anthropics/skills",
+        "phase": "creative-direction",
+        "whyRelevant": "mode ecommerce base required · subject=Northline Leather Goods\" · action=configure a bag and request a make-slot.",
+        "evidencePointers": [
+          "mode:ecommerce"
+        ],
+        "status": "explicit"
+      },
+      {
+        "capabilityId": "frontend.semantic-structure",
+        "upstreamOrigin": "https://github.com/anthropics/skills",
+        "phase": "creative-direction",
+        "whyRelevant": "mode ecommerce base required · subject=Northline Leather Goods\" · action=configure a bag and request a make-slot.",
+        "evidencePointers": [
+          "mode:ecommerce"
+        ],
+        "status": "explicit"
+      },
+      {
+        "capabilityId": "frontend.interface-writing",
+        "upstreamOrigin": "https://github.com/anthropics/skills",
+        "phase": "creative-direction",
+        "whyRelevant": "mode ecommerce base required · subject=Northline Leather Goods\" · action=configure a bag and request a make-slot.",
+        "evidencePointers": [
+          "mode:ecommerce"
+        ],
+        "status": "explicit"
+      },
+      {
+        "capabilityId": "frontend.anti-default-calibration",
+        "upstreamOrigin": "https://github.com/anthropics/skills",
+        "phase": "creative-direction",
+        "whyRelevant": "mode ecommerce base required · subject=Northline Leather Goods\" · action=configure a bag and request a make-slot.",
+        "evidencePointers": [
+          "mode:ecommerce"
+        ],
+        "status": "explicit"
+      },
+      {
+        "capabilityId": "uupm.classify.product-reasoning",
+        "upstreamOrigin": "nextlevelbuilder/ui-ux-pro-max-skill",
+        "phase": "knowledge",
+        "whyRelevant": "mode ecommerce base required · subject=Northline Leather Goods\" · action=configure a bag and request a make-slot.",
+        "evidencePointers": [
+          "mode:ecommerce"
+        ],
+        "status": "explicit"
+      },
+      {
+        "capabilityId": "uupm.tune.design-dials",
+        "upstreamOrigin": "nextlevelbuilder/ui-ux-pro-max-skill",
+        "phase": "creative-direction",
+        "whyRelevant": "mode ecommerce base required · subject=Northline Leather Goods\" · action=configure a bag and request a make-slot.",
+        "evidencePointers": [
+          "mode:ecommerce"
+        ],
+        "status": "explicit"
+      },
+      {
+        "capabilityId": "IMP-004",
+        "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
+        "phase": "seed",
+        "whyRelevant": "mode ecommerce base required · subject=Northline Leather Goods\" · action=configure a bag and request a make-slot.",
+        "evidencePointers": [
+          "mode:ecommerce"
+        ],
+        "status": "explicit"
+      },
+      {
+        "capabilityId": "IMP-005",
+        "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
+        "phase": "seed",
+        "whyRelevant": "mode ecommerce base required · subject=Northline Leather Goods\" · action=configure a bag and request a make-slot.",
+        "evidencePointers": [
+          "mode:ecommerce"
+        ],
+        "status": "explicit"
+      },
+      {
+        "capabilityId": "IMP-008",
+        "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
+        "phase": "critique",
+        "whyRelevant": "mode ecommerce base required · subject=Northline Leather Goods\" · action=configure a bag and request a make-slot.",
+        "evidencePointers": [
+          "mode:ecommerce"
+        ],
+        "status": "explicit"
+      },
+      {
+        "capabilityId": "uupm.lookup.stack-guidance",
+        "upstreamOrigin": "nextlevelbuilder/ui-ux-pro-max-skill",
+        "phase": "knowledge",
+        "whyRelevant": "mode ecommerce base optional · subject=Northline Leather Goods\" · action=configure a bag and request a make-slot.",
+        "evidencePointers": [
+          "mode:ecommerce"
+        ],
+        "status": "inferred"
+      },
+      {
+        "capabilityId": "frontend.motion-intent",
+        "upstreamOrigin": "https://github.com/anthropics/skills",
+        "phase": "creative-direction",
+        "whyRelevant": "mode ecommerce base optional · subject=Northline Leather Goods\" · action=configure a bag and request a make-slot.",
+        "evidencePointers": [
+          "mode:ecommerce"
+        ],
+        "status": "inferred"
+      },
+      {
+        "capabilityId": "IMP-006",
+        "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
+        "phase": "seed",
+        "whyRelevant": "mode ecommerce base optional · subject=Northline Leather Goods\" · action=configure a bag and request a make-slot.",
+        "evidencePointers": [
+          "mode:ecommerce"
+        ],
+        "status": "inferred"
+      },
+      {
+        "capabilityId": "IMP-010",
+        "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
+        "phase": "critique",
+        "whyRelevant": "mode ecommerce base optional · subject=Northline Leather Goods\" · action=configure a bag and request a make-slot.",
+        "evidencePointers": [
+          "mode:ecommerce"
+        ],
+        "status": "inferred"
+      }
+    ],
+    "seedProvenance": {
+      "source": "local-world-library-seed",
+      "version": "1.1.0",
+      "method": "sha256-project-entropy + fisher-yates over eligibility-filtered seeds",
+      "randomSeed": "h2h-leather-2026-07-31",
+      "numericSeed": 187875342,
+      "licence": "MIT SiteSmith-original world seed templates",
+      "origin": "local",
+      "slot": 0
+    },
+    "policyVersion": "direction-engine-v3-slice-1.0.0",
+    "dials": {
+      "visualDensity": 6,
+      "motionIntensity": 2,
+      "aestheticBoldness": 6,
+      "status": {
+        "visualDensity": "explicit",
+        "motionIntensity": "explicit",
+        "aestheticBoldness": "explicit"
+      }
+    },
+    "choice": {
+      "status": "selected",
+      "selectedBlindId": "L1",
+      "selectedInternalId": "W1",
+      "by": "user"
+    }
+  },
+  "selectedCard": {
+    "internalId": "W1",
+    "worldId": "split-evidence",
+    "seed": {
+      "source": "local-world-library-seed",
+      "version": "1.1.0",
+      "method": "sha256-project-entropy + fisher-yates over eligibility-filtered seeds",
+      "randomSeed": "h2h-leather-2026-07-31",
+      "numericSeed": 187875342,
+      "licence": "MIT SiteSmith-original world seed templates",
+      "origin": "local",
+      "slot": 0
+    },
+    "thesis": "Northline Leather Goods\": configure a bag and request a make-slot. via hard vertical rule: proof left, action right — northline, leather, goods, people, who, buy",
+    "evidence": "--- | title: \"Evidence — Northline Leather Goods\" | status: proof-fixture | ai_generated: \"(C)\" | --- | # Evidence — Northline Leather Goods | domain-knowledge: consulted (5 hits)",
+    "audience": "people who buy small-batch bags and straps and care about hide grade.",
+    "designIntent": "ecommerce · configure a bag and request a make-slot. · Northline Leather Goods\"",
+    "composition": "hard vertical rule: proof left, action right",
+    "type": "neutral grotesque, medium weight only",
+    "colour": "stone ground, single brand accent on CTA only",
+    "imagery": "diagram-led evidence stack",
+    "rhythm": "two columns for the whole first fold",
+    "surface": "framed — evidence cards in heavy borders",
+    "labels": "sentence case — operational clarity",
+    "figures": "functional tabular — measurements only where compared",
+    "depth": "elevated — evidence cards raise on focus",
+    "layoutPrinciple": "hard vertical rule: proof left, action right",
+    "typographicPrinciple": "neutral grotesque, medium weight only",
+    "assetStrategy": "diagram-led evidence stack",
+    "motionInteraction": "sticky action column on desktop",
+    "signatureElement": "northline-sig-1",
+    "primaryRisk": "Signature may overfit if evidence is thin.",
+    "differenceNote": "Differs from W3, W4 on composition/type/imagery/grammar after brief-fit filter.",
+    "capabilityProvenance": [
+      "TASTE-CAP-002",
+      "TASTE-CAP-003",
+      "TASTE-CAP-004",
+      "TASTE-CAP-006",
+      "frontend.subject-vernacular",
+      "frontend.hero-thesis",
+      "frontend.semantic-structure",
+      "frontend.interface-writing",
+      "frontend.anti-default-calibration",
+      "uupm.classify.product-reasoning",
+      "uupm.tune.design-dials",
+      "IMP-004",
+      "IMP-005",
+      "IMP-008",
+      "uupm.lookup.stack-guidance",
+      "frontend.motion-intent",
+      "IMP-006",
+      "IMP-010"
+    ],
+    "density": "balanced",
+    "groupsApplied": {
+      "taste": true,
+      "uupm": true,
+      "frontend": true,
+      "impeccable": true
+    },
+    "grounding": {
+      "subject": "Northline Leather Goods\"",
+      "primaryAction": "configure a bag and request a make-slot.",
+      "antiRefs": [
+        "purple SaaS gradient, stock handshake photos, fake 4.9★ rows",
+        "purple SaaS gradient, stock handshake photos, fake 4.9★ rows."
+      ],
+      "assets": {
+        "imageless": false,
+        "plates": true
+      }
+    },
+    "semanticGroupEffects": {
+      "withoutFrontend": false,
+      "withoutTaste": false,
+      "withoutUupm": false,
+      "withoutImpeccable": false
+    }
+  },
+  "proofMeta": {
+    "engineCommit": "b92cdabad98c4d23ff79b74d6881e6b7129325a4",
+    "inputHash": "f2422508cf74f571b630d8062c37be84263aa1e371653dc7f0a6af9bce5de3dc",
+    "policyVersion": "direction-engine-v3-slice-1.0.0",
+    "randomSeed": "h2h-leather-2026-07-31",
+    "numericSeed": 187875342
+  }
+}

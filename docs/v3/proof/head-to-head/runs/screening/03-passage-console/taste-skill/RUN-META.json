@@ -1,0 +1,9 @@
+{
+  "runId": "screen-03-passage-console-taste-skill",
+  "briefId": "03-passage-console",
+  "arm": "taste-skill",
+  "status": "completed",
+  "phase": "screening",
+  "modelCalls": 1,
+  "packetSha256": "26ed9cc3f9c56aedfb4d20b0875e6316c42fd40f47dbe877c5e875a20787d384"
+}

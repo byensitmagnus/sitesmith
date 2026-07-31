@@ -1,0 +1,94 @@
+{
+  "evaluator": "B",
+  "briefId": "03-passage-console",
+  "scores": {
+    "P": {
+      "briefFit": 5,
+      "subjectSpecificity": 5,
+      "originality": 5,
+      "composition": 5,
+      "hierarchy": 5,
+      "typography": 5,
+      "materiality": 5,
+      "assetStrategy": 5,
+      "interaction": 5,
+      "signature": 5,
+      "antiCliche": 5,
+      "implementability": 5,
+      "total": 60
+    },
+    "Q": {
+      "briefFit": 2,
+      "subjectSpecificity": 2,
+      "originality": 1,
+      "composition": 2,
+      "hierarchy": 2,
+      "typography": 2,
+      "materiality": 3,
+      "assetStrategy": 4,
+      "interaction": 2,
+      "signature": 1,
+      "antiCliche": 2,
+      "implementability": 2,
+      "total": 25
+    },
+    "R": {
+      "briefFit": 4,
+      "subjectSpecificity": 4,
+      "originality": 3,
+      "composition": 4,
+      "hierarchy": 4,
+      "typography": 3,
+      "materiality": 4,
+      "assetStrategy": 5,
+      "interaction": 4,
+      "signature": 3,
+      "antiCliche": 4,
+      "implementability": 3,
+      "total": 45
+    },
+    "S": {
+      "briefFit": 5,
+      "subjectSpecificity": 5,
+      "originality": 5,
+      "composition": 5,
+      "hierarchy": 5,
+      "typography": 4,
+      "materiality": 5,
+      "assetStrategy": 5,
+      "interaction": 5,
+      "signature": 5,
+      "antiCliche": 5,
+      "implementability": 5,
+      "total": 59
+    },
+    "T": {
+      "briefFit": 5,
+      "subjectSpecificity": 5,
+      "originality": 4,
+      "composition": 5,
+      "hierarchy": 5,
+      "typography": 5,
+      "materiality": 5,
+      "assetStrategy": 5,
+      "interaction": 5,
+      "signature": 4,
+      "antiCliche": 5,
+      "implementability": 5,
+      "total": 58
+    }
+  },
+  "qualitative": {
+    "wouldBuild": "P",
+    "mostGeneric": "Q",
+    "bestGrounded": "P",
+    "strongestDirection": "S"
+  },
+  "comments": {
+    "P": "Commit strip + mono passage tape with inbound/outbound two-state lock is a true harbour desk: density-8, motion-1, imageless, amber fault-only, Ctrl+Enter, all four states, six tokens — would build first.",
+    "Q": "Product Demo + Features / Swiss Minimalism with Rubik/Nunito and blue/orange system accents is marketing-template grammar for a desktop ops console; states, Ctrl+Enter, and density-8 instrument discipline are under-specified.",
+    "R": "Correct full-width real-interface mode and keyboard-first intent, but type/signature stay abstract (“UI sans pair”, “work-canvas”), unknowns undeclared, and field/state layout lacks the strip/tape precision of stronger packs.",
+    "S": "Movements chalkboard with permanent chalk-entry head strip and Ctrl+Enter stamp is the most memorable harbour metaphor while still locking density-8, amber-only faults, and imageless ops — strongest direction, type slightly less tokenized than P.",
+    "T": "Form-left/log-right cockpit is a clean density-8 desk with mono times and amber-rationed status strip; fully anti-fintech and shippable, signature less singular than direction-lock or chalk-entry strip."
+  }
+}

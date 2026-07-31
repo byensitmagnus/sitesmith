@@ -1,0 +1,94 @@
+{
+  "evaluator": "B",
+  "briefId": "02-atelier-printworks",
+  "scores": {
+    "P": {
+      "briefFit": 5,
+      "subjectSpecificity": 5,
+      "originality": 4,
+      "composition": 4,
+      "hierarchy": 5,
+      "typography": 4,
+      "materiality": 5,
+      "assetStrategy": 5,
+      "interaction": 4,
+      "signature": 5,
+      "antiCliche": 5,
+      "implementability": 5,
+      "total": 56
+    },
+    "Q": {
+      "briefFit": 2,
+      "subjectSpecificity": 2,
+      "originality": 2,
+      "composition": 3,
+      "hierarchy": 2,
+      "typography": 3,
+      "materiality": 3,
+      "assetStrategy": 3,
+      "interaction": 2,
+      "signature": 1,
+      "antiCliche": 3,
+      "implementability": 2,
+      "total": 28
+    },
+    "R": {
+      "briefFit": 2,
+      "subjectSpecificity": 2,
+      "originality": 1,
+      "composition": 2,
+      "hierarchy": 2,
+      "typography": 2,
+      "materiality": 2,
+      "assetStrategy": 2,
+      "interaction": 2,
+      "signature": 1,
+      "antiCliche": 2,
+      "implementability": 2,
+      "total": 22
+    },
+    "S": {
+      "briefFit": 5,
+      "subjectSpecificity": 5,
+      "originality": 5,
+      "composition": 5,
+      "hierarchy": 5,
+      "typography": 5,
+      "materiality": 5,
+      "assetStrategy": 5,
+      "interaction": 5,
+      "signature": 5,
+      "antiCliche": 5,
+      "implementability": 4,
+      "total": 59
+    },
+    "T": {
+      "briefFit": 5,
+      "subjectSpecificity": 5,
+      "originality": 5,
+      "composition": 5,
+      "hierarchy": 5,
+      "typography": 5,
+      "materiality": 5,
+      "assetStrategy": 5,
+      "interaction": 4,
+      "signature": 5,
+      "antiCliche": 5,
+      "implementability": 5,
+      "total": 59
+    }
+  },
+  "qualitative": {
+    "wouldBuild": "T",
+    "mostGeneric": "R",
+    "bestGrounded": "T",
+    "strongestDirection": "S"
+  },
+  "comments": {
+    "P": "Press-room marketing with coral registration mark, three named edition slots, and honest Ferry Board needed-state. Strong brief fit and anti-cliché; composition/type less fully specified than T or S.",
+    "Q": "Night-watch instrument, always-on status strip, amber-only-for-faults, and validation/offline/success hierarchy are product-console vocabulary, not coastal print portfolio. Signature misfits the mode; composition is only object-left/type-right.",
+    "R": "Portfolio Grid + Neo Brutalism with Space Grotesk and pink/cyan system palette fights pack brand and characterful letterpress marketing — template retrieval. Signature is a mark name without mechanism.",
+    "S": "Ferry-terminal departure board is the most memorable island-true direction: three edition rows, coral registration lamp on active row, view→facts→enquire as columns. Implementability slightly softer because split-flap cascade must stay honest when paper/size facts are still unknown.",
+    "T": "Locked chase on the platen is the deepest print-production grounding: chase frame, job-ticket rail, coral registration cross as sole accent grammar, honest pending Ferry Board. Clearest desktop-tolerant ship candidate."
+  }
+}

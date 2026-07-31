@@ -1,0 +1,9 @@
+{
+  "runId": "screen-01-leather-goods-taste-skill",
+  "briefId": "01-leather-goods",
+  "arm": "taste-skill",
+  "status": "completed",
+  "phase": "screening",
+  "modelCalls": 1,
+  "packetSha256": "dcc3ba1525342f3420b539b8d80bc0c536d498f74e408e4cd10cb399dbbd6044"
+}

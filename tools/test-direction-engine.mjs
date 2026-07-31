@@ -3,14 +3,24 @@
 import { readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { validateDirectionInput, canonicalNewlines } from '../skills/sitesmith/scripts/direction-engine/input.mjs';
+import {
+  validateDirectionInput, canonicalNewlines, cleanExtractedField, contentLines,
+} from '../skills/sitesmith/scripts/direction-engine/input.mjs';
 import { routeCapabilities, loadLedger } from '../skills/sitesmith/scripts/direction-engine/router.mjs';
 import {
   generateDirectionCards, blindCandidates, assertNoBlindLeakage, worldEligible, WORLD_LIBRARY,
 } from '../skills/sitesmith/scripts/direction-engine/worlds-and-cards.mjs';
 import { critiqueBlindedCards, resolveChoice } from '../skills/sitesmith/scripts/direction-engine/critic.mjs';
 import { compileDesignSpec, validateDesignSpec, buildHandoffPackage } from '../skills/sitesmith/scripts/direction-engine/designspec.mjs';
-import { runDirectionEngine } from '../skills/sitesmith/scripts/direction-engine/index.mjs';
+import { runDirectionEngine, runDirectionEngineAsync } from '../skills/sitesmith/scripts/direction-engine/index.mjs';
+import { guardCreativePacket } from '../skills/sitesmith/scripts/direction-engine/evidence-guard.mjs';
+import {
+  parseEnvText,
+  loadLocalEnv,
+  creativeKeyPresence,
+} from '../skills/sitesmith/scripts/direction-engine/load-local-env.mjs';
+import { mkdtempSync, writeFileSync, rmSync } from 'node:fs';
+import { tmpdir } from 'node:os';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const policy = JSON.parse(readFileSync(
@@ -277,6 +287,138 @@ const ecommerceB = {
   } else ok('product-ui rejects material/editorial seeds without plates');
 }
 
+// Subject extraction must not keep YAML trailing quotes (H2H failure mode)
+{
+  const v = validateDirectionInput({
+    brief: '---\ntitle: "Subject: Northline Leather Goods"\nstatus: x\n---\n\n# Subject: Northline Leather Goods\nAudience: buyers\nPrimary action: configure a bag\n',
+    evidence: 'Subject: Northline Leather Goods\nProducts: Field Tote, Belt No. 2\nMaterials: bridle leather, solid brass\nAnti-references: purple SaaS gradient\n',
+    brand: 'Ink brown, warm cream, single brass accent.\n',
+    assetPlan: 'Load-bearing: product plates for Field Tote\n',
+    assetManifest: '- field-tote.webp (have)\n',
+    mode: 'ecommerce',
+    stack: 'html',
+  });
+  if (!v.ok) fail('subject-extract', v.problems?.join(';'));
+  else if (/["']/.test(v.input.signals.subject)) fail('subject-extract', `quote leak: ${v.input.signals.subject}`);
+  else if (v.input.signals.subject !== 'Northline Leather Goods') fail('subject-extract', v.input.signals.subject);
+  else if (!v.input.signals.products?.includes('Field Tote')) fail('subject-extract', 'products missing');
+  else if (!(v.input.signals.brandPalette ?? []).some((p) => /brass|cream|ink/i.test(p))) fail('subject-extract', 'palette missing');
+  else ok('subject extraction strips YAML quotes and captures products/palette');
+  if (cleanExtractedField('Goods"') !== 'Goods') fail('clean-field', cleanExtractedField('Goods"'));
+  if (contentLines('title: x\nReal line').join() !== 'Real line') fail('content-lines', 'frontmatter not filtered');
+}
+
+// Rich card packet: thesis/signature/grounding usable for H2H (not frontmatter dump)
+{
+  const v = validateDirectionInput(ecommerceA).input;
+  // inject plate evidence
+  v.signals.hasProductPlates = true;
+  v.signals.products = ['Field Tote', 'Belt No. 2'];
+  v.signals.materials = ['bridle leather'];
+  v.signals.brandPalette = ['ink brown', 'warm cream', 'brass'];
+  v.signals.commerce = true;
+  const route = routeCapabilities(v, policy, loadLedger());
+  const gen = generateDirectionCards(v, route, policy);
+  if (!gen.ok) fail('rich-card', gen.problems?.join(';'));
+  else {
+    const c = gen.cards[0];
+    if (/title:|ai_generated|status: proof/i.test(c.evidence)) fail('rich-card', 'frontmatter in evidence summary');
+    if (/["']$/.test(c.thesis) || /\\+"/.test(c.thesis)) fail('rich-card', `thesis quote: ${c.thesis}`);
+    if (/^[\w-]+-sig-\d+$/.test(c.signatureElement)) fail('rich-card', `opaque sig only: ${c.signatureElement}`);
+    if (!/1\)/.test(c.layoutPrinciple)) fail('rich-card', 'hierarchy missing numbered levels');
+    if (!/make-slot desk|Hide Grade|Make-slot/i.test(`${c.thesis} ${c.signatureElement}`)) {
+      fail('rich-card', `creative layer weak: ${c.thesis} / ${c.signatureElement}`);
+    } else if (!c.implementationNotes || c.implementationNotes.length < 80) {
+      fail('rich-card', 'missing implementationNotes');
+    } else ok('rich cards: clean evidence, thesis, signature, hierarchy + creative layer');
+  }
+}
+
+// Evidence guard rejects invented testimonials / undeclared assets
+{
+  const v = validateDirectionInput(ecommerceA).input;
+  const bad = {
+    designThesis: 'Customers love us: "best bags ever" said Anna',
+    subjectGrounding: 'Northline',
+    composition: 'x',
+    informationHierarchy: 'x',
+    typography: 'x',
+    colourAndMaterialModel: 'x',
+    imageryAndAssetStrategy: 'uses secret-hero.png',
+    interactionConcept: 'x',
+    signatureElement: 'x',
+    primaryRisk: 'x',
+    implementationGuidance: 'x',
+    unknowns: 'x',
+  };
+  const g = guardCreativePacket(bad, v);
+  if (g.ok) fail('evidence-guard', 'should reject inventions');
+  else if (!g.problems.some((p) => /testimonial|undeclared-asset/i.test(p))) {
+    fail('evidence-guard', g.problems.join(','));
+  } else ok('evidence guard rejects invented social proof and assets');
+}
+
+// LLM creative pass with mock provider + guard (async)
+{
+  const mockOk = async ({ prompt }) => ({
+    text: JSON.stringify({
+      designThesis: 'Northline Leather Goods make-slot desk for Field Tote and Belt No. 2',
+      subjectGrounding: 'Subject Northline Leather Goods; products tote belt; materials bridle leather',
+      composition: 'plate first then make-slot',
+      informationHierarchy: '1) Field Tote 2) hide 3) make-slot',
+      typography: 'IBM Plex Sans',
+      colourAndMaterialModel: 'ink brown cream brass',
+      imageryAndAssetStrategy: 'product plates only no lifestyle',
+      interactionConcept: 'static make-slot request',
+      signatureElement: 'Hide Grade Strip',
+      primaryRisk: 'generic artisan catalog',
+      implementationGuidance: 'Request make-slot CTA; no reviews',
+      unknowns: 'exact hide codes',
+    }),
+    model: 'mock-ok',
+  });
+  const mockBad = async () => ({
+    text: JSON.stringify({
+      designThesis: 'Award-winning brand with free worldwide shipping and 4.9★',
+      subjectGrounding: 'x',
+      composition: 'x',
+      informationHierarchy: 'x',
+      typography: 'x',
+      colourAndMaterialModel: 'x',
+      imageryAndAssetStrategy: 'celebrity-hero.webp',
+      interactionConcept: 'x',
+      signatureElement: 'x',
+      primaryRisk: 'x',
+      implementationGuidance: 'x',
+      unknowns: 'x',
+    }),
+    model: 'mock-bad',
+  });
+  const rOk = await runDirectionEngineAsync({
+    input: ecommerceA,
+    userChoiceBlindId: 'L1',
+    randomSeed: 'seed-a',
+    creativePass: 'llm',
+    llmProvider: mockOk,
+  });
+  if (!rOk.ok || !rOk.creative?.llmSucceeded) fail('llm-pass', JSON.stringify(rOk.creative));
+  else if (!/make-slot|Field Tote|Hide Grade/i.test(rOk.directionPacket?.designThesis || '')) {
+    fail('llm-pass', rOk.directionPacket?.designThesis);
+  } else ok('llm creative pass with mock succeeds under guard');
+
+  const rBad = await runDirectionEngineAsync({
+    input: ecommerceA,
+    userChoiceBlindId: 'L1',
+    randomSeed: 'seed-a',
+    creativePass: 'llm',
+    llmProvider: mockBad,
+  });
+  if (!rBad.ok) fail('llm-fallback', 'engine should still ok');
+  else if (rBad.creative?.llmSucceeded) fail('llm-fallback', 'bad packet should not succeed');
+  else if (!rBad.creative?.creativePassFallback) fail('llm-fallback', 'expected fallback to rules');
+  else ok('llm creative pass fails closed to rules on invented claims');
+}
+
 // Cross-platform inputHash + proof results: LF vs CRLF must match
 {
   const briefDir = join(root, 'docs/v3/proof/briefs/01-leather-goods');
@@ -325,6 +467,42 @@ const ecommerceB = {
   if (canonicalNewlines('a\r\nb\rc') !== 'a\nb\nc') fail('canonical-newlines', 'CRLF/CR map failed');
   else if (canonicalNewlines(canonicalNewlines('a\r\nb')) !== 'a\nb') fail('canonical-newlines', 'not idempotent');
   else ok('canonicalNewlines CRLF/CR → LF is idempotent');
+}
+
+// Local .env loader: parse + fill-only + never clobber existing process.env
+{
+  const parsed = parseEnvText([
+    '# comment',
+    'export XAI_API_KEY="sk-test-quoted"',
+    'GROK_API_KEY=plain',
+    'BAD LINE',
+    'SITESMITH_CREATIVE_MODEL=grok-test',
+    '',
+  ].join('\n'));
+  if (parsed.XAI_API_KEY !== 'sk-test-quoted' || parsed.GROK_API_KEY !== 'plain') {
+    fail('parse-env', JSON.stringify(parsed));
+  } else if (parsed.SITESMITH_CREATIVE_MODEL !== 'grok-test') {
+    fail('parse-env-model', parsed.SITESMITH_CREATIVE_MODEL);
+  } else ok('parseEnvText handles export, quotes, comments');
+
+  const dir = mkdtempSync(join(tmpdir(), 'ss-env-'));
+  const marker = `SS_TEST_${Date.now()}`;
+  writeFileSync(join(dir, '.env'), `${marker}=from-file\nEXISTING_KEEP=from-file\n`, 'utf8');
+  process.env.EXISTING_KEEP = 'from-shell';
+  delete process.env[marker];
+  const r = loadLocalEnv({ startDir: dir, onlyKeys: null });
+  if (process.env[marker] !== 'from-file') fail('load-env-set', process.env[marker]);
+  else if (process.env.EXISTING_KEEP !== 'from-shell') fail('load-env-clobber', process.env.EXISTING_KEEP);
+  else if (!r.setKeys.includes(marker)) fail('load-env-report', r.setKeys.join(','));
+  else ok('loadLocalEnv fill-only does not override shell env');
+  delete process.env[marker];
+  delete process.env.EXISTING_KEEP;
+  try { rmSync(dir, { recursive: true, force: true }); } catch { /* ignore */ }
+
+  const presence = creativeKeyPresence();
+  if (typeof presence.anyKey !== 'boolean' || typeof presence.XAI_API_KEY !== 'boolean') {
+    fail('key-presence', JSON.stringify(presence));
+  } else ok('creativeKeyPresence is presence-only boolean map');
 }
 
 if (failed) {

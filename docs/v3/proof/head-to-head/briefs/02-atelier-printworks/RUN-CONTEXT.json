@@ -1,0 +1,35 @@
+{
+  "briefId": "02-atelier-printworks",
+  "mode": "marketing",
+  "modeLabel": "characterful marketing/portfolio",
+  "primaryAudience": "see BRIEF.md / EVIDENCE.md",
+  "primaryAction": "see BRIEF.md / EVIDENCE.md",
+  "stack": "html",
+  "projectName": "02-atelier-printworks",
+  "randomSeed": "h2h-atelier-2026-07-31",
+  "sourceProofBriefDir": "docs/v3/proof/briefs/02-atelier-portfolio",
+  "allowedAssets": "see ASSET-MANIFEST.md",
+  "antiReferences": "see EVIDENCE.md and CONSTRAINTS.md",
+  "constraints": "see CONSTRAINTS.md",
+  "inputFiles": [
+    "BRIEF.md",
+    "EVIDENCE.md",
+    "BRAND.md",
+    "ASSET-PLAN.md",
+    "ASSET-MANIFEST.md",
+    "CONSTRAINTS.md"
+  ],
+  "inputHashes": {
+    "BRIEF.md": "addef356268b10ed1515455dd8de743951b33b92bcf9321839621b132f293053",
+    "EVIDENCE.md": "391438ceaeee63cadb75b8fddd326dd5da2a207a0889535fc40a02f65a047e5e",
+    "BRAND.md": "85bef2c14476d9e0410b90ebdcdc43384586916816bacb5bfbebb6963b985ac9",
+    "ASSET-PLAN.md": "c537084c9ac60f7cce5903c4f3b7eea208a495d30e977a7cb626b1ff274ade5c",
+    "ASSET-MANIFEST.md": "dea7a49874dec35ad2c3a2b1d93faa7dc1965764e8e60ba5326d1a73310fd06d",
+    "CONSTRAINTS.md": "606469dca73f9023a0c5cd7be3aa04f3897450351b3869673edcb51840cc5aa4"
+  },
+  "contextPackHash": "04b3fd24b85d8d459178d11c4eb4c08d9e1339c76326f264a9c8eba8fda1d216",
+  "frozen": true,
+  "frozenAt": "2026-07-31T18:30:00.000Z",
+  "proofSha": "b92cdabad98c4d23ff79b74d6881e6b7129325a4",
+  "note": "Identical pack for all five arms. No arm-specific extras. Unknowns remain unknown."
+}

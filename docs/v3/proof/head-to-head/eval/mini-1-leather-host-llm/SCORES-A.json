@@ -1,0 +1,47 @@
+{
+  "evaluator": "A",
+  "briefId": "01-leather-goods",
+  "comparison": "mini-1-leather-host-llm",
+  "scores": {
+    "P": {
+      "briefFit": 5,
+      "subjectSpecificity": 5,
+      "originality": 4,
+      "composition": 5,
+      "hierarchy": 5,
+      "typography": 5,
+      "materiality": 5,
+      "assetStrategy": 5,
+      "interaction": 5,
+      "signature": 5,
+      "antiCliche": 5,
+      "implementability": 5,
+      "total": 59
+    },
+    "Q": {
+      "briefFit": 5,
+      "subjectSpecificity": 4,
+      "originality": 4,
+      "composition": 5,
+      "hierarchy": 5,
+      "typography": 4,
+      "materiality": 4,
+      "assetStrategy": 5,
+      "interaction": 5,
+      "signature": 5,
+      "antiCliche": 5,
+      "implementability": 4,
+      "total": 55
+    }
+  },
+  "qualitative": {
+    "wouldBuild": "P",
+    "mostGeneric": "Q",
+    "bestGrounded": "P",
+    "strongestDirection": "P"
+  },
+  "comments": {
+    "P": "Make-slot desk fully locked to brief: Field Tote plate-first, material stamp, Hide Grade Strip radiogroup, DKK 890–2.400 + 3-week lead, brass Request make-slot. Six hex tokens, density/motion/boldness, named webp plates, honest unknowns (grade codes, stitch-macro not have, strap text row). Quality floor and font fallbacks make it the higher-build of the two nearly identical directions.",
+    "Q": "Same make-slot desk thesis and signature as P — plate → hide strip → sticky CTA rail, no lifestyle/stars/purple SaaS. Loses points only on thinner writeup: no hex tokens, no density/motion/boldness in grounding, fewer fallbacks/quality-floor notes. Direction is strong; specification is a step less production-ready."
+  }
+}

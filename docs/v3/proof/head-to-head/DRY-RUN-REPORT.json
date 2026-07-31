@@ -1,0 +1,42 @@
+{
+  "dryRun": true,
+  "at": "2026-07-31T19:00:02.857Z",
+  "paidModelCallsMade": 0,
+  "modelCallsAttempted": 0,
+  "packetsGenerated": 0,
+  "scoresGenerated": 0,
+  "problems": [],
+  "ok": true,
+  "state": "AWAITING_CREDIT_APPROVAL",
+  "screeningSlots": 15,
+  "randomizedOrderSample": [
+    {
+      "position": 0,
+      "runId": "screen-03-passage-console-frontend-design",
+      "briefId": "03-passage-console",
+      "arm": "frontend-design"
+    },
+    {
+      "position": 1,
+      "runId": "screen-03-passage-console-taste-skill",
+      "briefId": "03-passage-console",
+      "arm": "taste-skill"
+    },
+    {
+      "position": 2,
+      "runId": "screen-02-atelier-printworks-impeccable",
+      "briefId": "02-atelier-printworks",
+      "arm": "impeccable"
+    }
+  ],
+  "contextPackHashes": {
+    "01-leather-goods": "6099df6a1e57a7bce9d70e72df964cdd05486bb9d636be32964c6df059f48a2f",
+    "02-atelier-printworks": "04b3fd24b85d8d459178d11c4eb4c08d9e1339c76326f264a9c8eba8fda1d216",
+    "03-passage-console": "36545bf82b53595f63ed00c9135dd9170e0c320abd742747593db5a19ced1bc7"
+  },
+  "hashes": {
+    "canonicalSources": "3e45804cd20a6759b5599ff061a5fa7e3fad4537bf96cbefb04d27da556637cf",
+    "fairnessContract": "92c4e88fd4d0bc41d886d213a6a17120976edce8c73cc1d09232ac3d0bc1bcaf",
+    "runManifest": "61d15cbfc9a42f2e62df97eba0d02af0ef819677f81ea10b8ec287ad91a7edc7"
+  }
+}

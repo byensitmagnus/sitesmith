@@ -1,0 +1,9 @@
+{
+  "runId": "screen-02-atelier-printworks-impeccable",
+  "briefId": "02-atelier-printworks",
+  "arm": "impeccable",
+  "status": "completed",
+  "phase": "screening",
+  "modelCalls": 1,
+  "packetSha256": "365d0d2cb9e4d25b07c9495776c5fe9b4c35cd443e5f176646a6711042900009"
+}

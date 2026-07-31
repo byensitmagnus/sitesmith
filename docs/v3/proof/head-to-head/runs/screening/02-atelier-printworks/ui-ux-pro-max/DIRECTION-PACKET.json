@@ -1,0 +1,21 @@
+{
+  "designThesis": "UUPM design-system recommendation: Neo Brutalism (Mobile)                                                           │ with Portfolio Grid                                                                   │ pattern for Subject: Atelier Møn Printworks",
+  "subjectGrounding": "Query from frozen pack only: characterful marketing/portfolio Subject: Atelier Møn Printworks marketing",
+  "composition": "Portfolio Grid                                                                   │",
+  "informationHierarchy": "Sections:                                                                           │\r\n│       1. 1. Hero (Name/Role), 2. Project Grid (Masonry), 3. About/Philosophy, 4. Contact│",
+  "typography": "│  Anton / Epilogue                                                                       │",
+  "colourAndMaterialModel": "primary #EC4899; secondary #F472B6; accent #0891B2",
+  "imageryAndAssetStrategy": "unknown — design-system search path does not emit asset plan; obey pack ASSET-PLAN/CONSTRAINTS",
+  "interactionConcept": "│     Thick 4px black borders on all major elements, hard offset shadows (4–8px, no       │",
+  "signatureElement": "Neo Brutalism (Mobile)                                                           │",
+  "primaryRisk": "│     Boring design + Hidden work                                                         │",
+  "implementationGuidance": "Implement from UUPM-RETRIEVAL.txt rows and checklist; do not invent beyond retrieval.",
+  "unknowns": "Page-level composition beyond pattern; photography/asset strategy; brand-specific material finishes",
+  "sourcePointers": {
+    "arm": "ui-ux-pro-max",
+    "commit": "4857a2c5ef989794751a0f66b8545a4a49566286",
+    "query": "characterful marketing/portfolio Subject: Atelier Møn Printworks marketing",
+    "retrievalFile": "UUPM-RETRIEVAL.txt",
+    "method": "uupm-search-py-design-system"
+  }
+}

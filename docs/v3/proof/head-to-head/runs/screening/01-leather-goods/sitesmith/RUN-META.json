@@ -1,0 +1,9 @@
+{
+  "runId": "screen-01-leather-goods-sitesmith",
+  "briefId": "01-leather-goods",
+  "arm": "sitesmith",
+  "status": "completed",
+  "phase": "screening",
+  "modelCalls": 0,
+  "packetSha256": "3b0b4583f34b3783243ce0472e81dd64007edd423aae5c481a95516a5e1cff04"
+}

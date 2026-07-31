@@ -1,0 +1,94 @@
+{
+  "evaluator": "A",
+  "briefId": "02-atelier-printworks",
+  "scores": {
+    "P": {
+      "briefFit": 3,
+      "subjectSpecificity": 3,
+      "originality": 2,
+      "composition": 3,
+      "hierarchy": 4,
+      "typography": 3,
+      "materiality": 3,
+      "assetStrategy": 4,
+      "interaction": 3,
+      "signature": 2,
+      "antiCliche": 3,
+      "implementability": 3,
+      "total": 36
+    },
+    "Q": {
+      "briefFit": 2,
+      "subjectSpecificity": 2,
+      "originality": 2,
+      "composition": 2,
+      "hierarchy": 3,
+      "typography": 2,
+      "materiality": 2,
+      "assetStrategy": 3,
+      "interaction": 2,
+      "signature": 1,
+      "antiCliche": 2,
+      "implementability": 2,
+      "total": 25
+    },
+    "R": {
+      "briefFit": 5,
+      "subjectSpecificity": 5,
+      "originality": 5,
+      "composition": 5,
+      "hierarchy": 5,
+      "typography": 5,
+      "materiality": 5,
+      "assetStrategy": 5,
+      "interaction": 5,
+      "signature": 5,
+      "antiCliche": 5,
+      "implementability": 4,
+      "total": 59
+    },
+    "S": {
+      "briefFit": 5,
+      "subjectSpecificity": 5,
+      "originality": 5,
+      "composition": 5,
+      "hierarchy": 5,
+      "typography": 5,
+      "materiality": 5,
+      "assetStrategy": 5,
+      "interaction": 4,
+      "signature": 5,
+      "antiCliche": 5,
+      "implementability": 5,
+      "total": 59
+    },
+    "T": {
+      "briefFit": 5,
+      "subjectSpecificity": 4,
+      "originality": 3,
+      "composition": 4,
+      "hierarchy": 5,
+      "typography": 4,
+      "materiality": 4,
+      "assetStrategy": 5,
+      "interaction": 4,
+      "signature": 4,
+      "antiCliche": 4,
+      "implementability": 5,
+      "total": 51
+    }
+  },
+  "qualitative": {
+    "wouldBuild": "S",
+    "mostGeneric": "Q",
+    "bestGrounded": "S",
+    "strongestDirection": "R"
+  },
+  "comments": {
+    "P": "Object-left/type-right and hover-fact are fine portfolio defaults. Edition-mark signature is name-only; little island/letterpress craft beyond palette nouns. Honest diagram-led assets until plates exist.",
+    "Q": "Portfolio Grid + Neo Brutalism + Space Grotesk + system pink/cyan fights chalk/harbour/coral and curator tone. Hard black borders read agency-brutal, not coastal letterpress. Thin pack craft.",
+    "R": "Ferry departure board is the standout: editions as rows, paper/size/press as columns, coral lamp on active, enquire as destination. Split-flap grammar fits motion-3. Risk of generic transit UI if facts lag is named and mitigated.",
+    "S": "Locked chase + job-ticket rail + coral registration-cross UI is print-native end-to-end. Three type roles, five tokens, honest Ferry Board pending plate. Highest build clarity among the characterful set.",
+    "T": "Correct journey and asset honesty with registration-mark motif, but less singular than R/S—reads as a strong variance-locked portfolio plan rather than a memorable studio instrument. Safest generic-good option."
+  }
+}

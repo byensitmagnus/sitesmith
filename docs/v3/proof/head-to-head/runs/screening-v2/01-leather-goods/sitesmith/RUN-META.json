@@ -1,0 +1,16 @@
+{
+  "runId": "screening-v2-01-leather-goods-sitesmith",
+  "briefId": "01-leather-goods",
+  "arm": "sitesmith",
+  "status": "completed",
+  "startedAt": "2026-07-31T20:02:10.888Z",
+  "finishedAt": "2026-07-31T20:02:10.899Z",
+  "modelCalls": 0,
+  "method": "direction-engine-v3-slice",
+  "armCommit": "b92cdabad98c4d23ff79b74d6881e6b7129325a4",
+  "contextPackHash": "6099df6a1e57a7bce9d70e72df964cdd05486bb9d636be32964c6df059f48a2f",
+  "packetSha256": "bfc075c701b72cb60d663c1085d5f54ead47d8ff20fd42b2ef0e8b5daaf531cf",
+  "phase": "screening-v2",
+  "isolation": "fresh-process-no-peer-outputs",
+  "model": "none-mechanical"
+}

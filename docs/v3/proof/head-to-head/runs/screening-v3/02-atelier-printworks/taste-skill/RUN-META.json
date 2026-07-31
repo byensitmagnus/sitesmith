@@ -1,0 +1,27 @@
+{
+  "runId": "screening-v3-02-atelier-printworks-taste-skill",
+  "briefId": "02-atelier-printworks",
+  "arm": "taste-skill",
+  "status": "completed",
+  "startedAt": "2026-07-31T20:30:00.000Z",
+  "finishedAt": "2026-07-31T20:35:00.000Z",
+  "modelCalls": 1,
+  "method": "taste Design Read + dials",
+  "armCommit": "e988add20dab0fa97d7a76781c48961c8184288e",
+  "contextPackHash": "04b3fd24b85d8d459178d11c4eb4c08d9e1339c76326f264a9c8eba8fda1d216",
+  "phase": "screening-v3",
+  "isolation": "fresh-process-no-peer-outputs",
+  "model": "host-llm-same-class",
+  "sourcePointers": {
+    "arm": "taste-skill",
+    "commit": "e988add20dab0fa97d7a76781c48961c8184288e",
+    "method": "taste Design Read + dials",
+    "phase": "screening-v2"
+  },
+  "outputs": [
+    "NATIVE.md",
+    "DIRECTION-PACKET.json",
+    "RUN-META.json"
+  ],
+  "note": "copied-from-screening-v2-for-sitesmith-creative-layer-delta"
+}

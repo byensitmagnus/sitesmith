@@ -1,0 +1,19 @@
+{
+  "designThesis": "Mobile-first sensory ecommerce for hide-grade-conscious small-batch buyers: plain-trade product-plate catalog (DESIGN_VARIANCE 6 / MOTION 2 / DENSITY 6) with split proof-vs-configure spine and brass-only accent — no luxury fluff, no social proof.",
+  "subjectGrounding": "Northline Leather Goods; products Field Tote, Belt No. 2, Shoulder Strap; price band DKK 890–2.400; materials bridle leather, solid brass, vegetable tan; facts allowed: hide grade, stitch count, make-slot lead time 3 weeks; primary action configure bag + request make-slot; audience cares about hide grade; voice plain trade English; brand ink brown + warm cream + single brass; no testimonials; no lifestyle models; anti-references purple SaaS gradient / stock handshakes / fake 4.9★.",
+  "composition": "Desktop left product-plate + truth / right configure column (anti-center, variance 6); first fold holds plate, ≤20-word subtext, price band, Request make-slot CTA; mobile <768px single column plate → truth → config; secondary products later strip not three equal hero cards.",
+  "informationHierarchy": "1) Northline identity 2) Field Tote plate 3) truth strip (hide grade, stitch count, materials, DKK 890–2.400, 3-week make-slot) 4) journey pick product → choose hide → request make-slot 5) Belt No. 2 + Shoulder Strap 6) no reviews/testimonials/celebrity/shipping claims.",
+  "typography": "Sans display (Satoshi / Cabinet Grotesk / Geist — not Inter default); body same family or tight pair, max-w-[65ch]; no serif (trade voice, not manuscript luxury); same-family italic/bold emphasis only; sentence-case operational labels; tabular/mono optional for price and counts.",
+  "colourAndMaterialModel": "Warm cream ground, ink brown text/structure, single brass accent on primary CTA and active focus only; brand override of premium-consumer cream+brass ban; tinted shadows if any; all-sharp radius 0 shape lock; dual mode same hue family with brass sole accent.",
+  "imageryAndAssetStrategy": "Load-bearing field-tote.webp and belt-no-2.webp product plates; stitch-macro.webp only if present (needed, not have); no lifestyle models; no stock handshakes; no decorative mesh/gradient hero.",
+  "interactionConcept": "Only journey: pick product → choose hide → request make-slot; one site-wide CTA intent 'Request make-slot'; form labels above, errors below, no placeholder-as-label; skeleton/empty/error/success states without shipping invention; motion intensity 2 = hover border/colour + active press only.",
+  "signatureElement": "Product-plate spine + brass CTA lock: Field Tote plate as permanent proof column, brass only on make-slot control.",
+  "primaryRisk": "Brand cream+ink+brass matches banned warm-craft LLM default; legal only via explicit brand naming — thin plates or missing stitch-macro collapses to generic artisan cream.",
+  "implementationGuidance": "Semantic HTML + Tailwind/native tokens, mobile-first; hero fits viewport; density-6 section gaps; price/lead time/products/materials only as pack; pre-flight: focus rings, 375/768/1440, both schemes, no purple SaaS, no fake stars.",
+  "unknowns": "Exact hide-grade options and per-product stitch counts; make-slot backend/capacity; shipping policy (must not invent free worldwide); stitch-macro not have; Shoulder Strap photography; any review or endorsement content.",
+  "sourcePointers": {
+    "arm": "taste-skill",
+    "commit": "e988add20dab0fa97d7a76781c48961c8184288e",
+    "method": "taste Design Read + dials"
+  }
+}

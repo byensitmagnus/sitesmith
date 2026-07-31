@@ -1,0 +1,94 @@
+{
+  "evaluator": "A",
+  "briefId": "01-leather-goods",
+  "scores": {
+    "P": {
+      "briefFit": 3,
+      "subjectSpecificity": 4,
+      "originality": 3,
+      "composition": 3,
+      "hierarchy": 4,
+      "typography": 4,
+      "materiality": 4,
+      "assetStrategy": 4,
+      "interaction": 2,
+      "signature": 4,
+      "antiCliche": 3,
+      "implementability": 3,
+      "total": 41
+    },
+    "Q": {
+      "briefFit": 5,
+      "subjectSpecificity": 5,
+      "originality": 4,
+      "composition": 5,
+      "hierarchy": 5,
+      "typography": 5,
+      "materiality": 5,
+      "assetStrategy": 5,
+      "interaction": 5,
+      "signature": 5,
+      "antiCliche": 5,
+      "implementability": 5,
+      "total": 59
+    },
+    "R": {
+      "briefFit": 5,
+      "subjectSpecificity": 5,
+      "originality": 5,
+      "composition": 4,
+      "hierarchy": 5,
+      "typography": 4,
+      "materiality": 5,
+      "assetStrategy": 5,
+      "interaction": 5,
+      "signature": 5,
+      "antiCliche": 5,
+      "implementability": 4,
+      "total": 57
+    },
+    "S": {
+      "briefFit": 2,
+      "subjectSpecificity": 2,
+      "originality": 1,
+      "composition": 2,
+      "hierarchy": 2,
+      "typography": 2,
+      "materiality": 2,
+      "assetStrategy": 3,
+      "interaction": 1,
+      "signature": 1,
+      "antiCliche": 2,
+      "implementability": 2,
+      "total": 22
+    },
+    "T": {
+      "briefFit": 5,
+      "subjectSpecificity": 5,
+      "originality": 3,
+      "composition": 4,
+      "hierarchy": 5,
+      "typography": 4,
+      "materiality": 4,
+      "assetStrategy": 5,
+      "interaction": 4,
+      "signature": 3,
+      "antiCliche": 4,
+      "implementability": 4,
+      "total": 50
+    }
+  },
+  "qualitative": {
+    "wouldBuild": "Q",
+    "mostGeneric": "S",
+    "bestGrounded": "Q",
+    "strongestDirection": "R"
+  },
+  "comments": {
+    "P": "Hide Grade Strip + product nouns are right, and Barlow/Plex roles help, but composition is only “proof left / action right” with sticky desktop rail — under-serves mobile-first. unknowns “none declared” despite missing stitch-macro/strap plate. Reads like a half-filled desk template with correct materials pasted in.",
+    "Q": "Full make-slot desk on mobile-first stack: plate → material stamp → Hide Grade Strip radiogroup → price/lead → Request make-slot. Hex tokens, motion-2 edge response, honest have/needed assets, and explicit cream+brass default risk. Highest build confidence; signature is the brief’s care (hide grade) made operable.",
+    "R": "Saddlery bench order ticket + gatefold is the most subject-true concept: closed face holds product/price/materials/3-week lead before open centers Field Tote + hide choice; ticket fills as config. Slight mobile tax on gatefold novelty; mitigated with sticky CTA. Strongest direction, small implementability cost vs Q.",
+    "S": "Newsletter/Content-First + Vibrant & Block-based fights sensory leather trade. Rubik/Nunito and emerald/orange system palette conflict with ink/cream/brass. Animated patterns and 48px+ gaps clash with density-6 / motion-2. Retrieval-shell, not a product direction.",
+    "T": "Competent plate-first trade catalog with split proof/configure spine, pack-true facts, and honest asset gaps. Signature (plate spine + brass CTA) is structural more than memorable — weaker than Hide Grade Strip or bench ticket. Solid buildable mid-pack, not the sharpest direction."
+  }
+}

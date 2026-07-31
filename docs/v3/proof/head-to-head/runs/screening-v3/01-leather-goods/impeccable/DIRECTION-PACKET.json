@@ -1,0 +1,42 @@
+{
+  "designThesis": "Northline sells make-slots through a real saddlery bench order ticket: closed ticket face holds product, price band, materials and 3-week lead; open gatefold centers the Field Tote plate and hide-grade choice ending in Request make-slot — refuse lifestyle luxury heroes and fake social proof.",
+  "subjectGrounding": "Northline Leather Goods; audience people who buy small-batch bags and straps and care about hide grade; products Field Tote, Belt No. 2, Shoulder Strap; materials bridle leather, solid brass, vegetable tan; price band DKK 890–2.400; make-slot lead time 3 weeks; brand ink brown / warm cream / single brass accent; plain trade English; assets product plates Field Tote + Belt No. 2 (have), no lifestyle models; anti purple SaaS gradient, handshake photos, fake 4.9★.",
+  "composition": "First viewport staged as narrative gatefold liner notes: closed ticket face owns the fold; open spreads hide chips and secondary goods around the central Field Tote product plate; Request make-slot sticky on mobile.",
+  "informationHierarchy": "1) Closed ticket facts (product, price band, materials, 3-week lead) 2) Open: Field Tote plate 3) Hide grade choice 4) Request make-slot 5) Secondary goods as ticket lines (Belt No. 2, Shoulder Strap).",
+  "typography": "Condensed industrial display for product names (trade catalog, not luxury italic serif); humanist sans with tabular figures for prices, stitch counts when known, and lead time; sentence-case trade English labels; avoid Inter/DM Sans/Playfair/Fraunces/cream-serif-terracotta default cluster.",
+  "colourAndMaterialModel": "Restrained: ink-brown desk ground, warm cream ticket stock panels, single solid-brass accent on active field rules and primary CTA; light surface under cool north workshop light; no purple SaaS gradient, no neon, no black-and-gold boutique foil.",
+  "imageryAndAssetStrategy": "Load-bearing product plates only (field-tote.webp, belt-no-2.webp); deliberately no lifestyle models; stitch-macro needed/not had — omit or mark placeholder, do not invent; Shoulder Strap plate unknown — text/silhouette fallback marked synthetic if required; no stock handshakes.",
+  "interactionConcept": "Open ticket inks product + hide onto the ticket face; hide-grade selection updates grade stamp and lead line; motion intensity 2 — one short settle ≤200ms, instant under prefers-reduced-motion; request is a real form stating 3-week lead.",
+  "signatureElement": "northline-bench-ticket — order ticket [data-signature=\"northline-bench-ticket\"] that fills as configuration completes",
+  "primaryRisk": "Gatefold can read as novelty if closed face lacks trade facts; closed face must show product, price band, materials, and 3-week lead before open. Missing stitch-macro and Shoulder Strap plate must not be faked.",
+  "implementationGuidance": "Mobile-first HTML/CSS. Semantic request form. Use only declared have-plates. Hide as radio/segmented control. Prices and lead time only from evidence. AA contrast on ink/cream; brass UI ≥3:1. No ebru/oscilloscope/starship grammar unless alternate chosen. Forbidden: purple SaaS gradient, handshake stock, fake stars, testimonials, free worldwide shipping, lifestyle models. Seed key screening-v2-01-leather-goods-impeccable; assigned grounded candidate 3 Saddlery bench ticket; poolRevision 94ff10ff20de; composition gatefold-liner-notes.",
+  "unknowns": "Exact hide grade nomenclature; exact stitch counts per product; Shoulder Strap plate asset; stitch-macro.webp; live make-slot inventory beyond stated 3-week lead; any reviews/celebrities/shipping claims (must not invent).",
+  "sourcePointers": {
+    "arm": "impeccable",
+    "commit": "6b342244e915d64b0d6e84d5eec448fd196ce6bb",
+    "repo": "pbakaus/impeccable",
+    "method": "impeccable seed+challengers+critique",
+    "seedKey": "screening-v2-01-leather-goods-impeccable",
+    "seedScope": "direction",
+    "seedMode": "persuade",
+    "seedSource": "api",
+    "poolRevision": "94ff10ff20de",
+    "assignedIndex": 3,
+    "assignedGroundedCandidate": "saddlery-bench-ticket",
+    "firstSurfaceComposition": "narrative-scroll-gatefold-liner-notes",
+    "challengerIds": [
+      "medium-native-ebru-floated-pigment",
+      "scientific-notation-oscilloscope-signal-bench",
+      "pop-culture-shelf-elbow-panel-console",
+      "wayfinding-cartography-signage-night-market-sign-river",
+      "stagecraft-theater-lighting-cyclorama-dawn",
+      "textiles-weave-drape-fashion-memory-quilt-atlas"
+    ],
+    "winningChannel": "grounded-assigned",
+    "survivingAlternates": [
+      "provenance-patchwork-memory-quilt"
+    ],
+    "nativeFile": "NATIVE.md",
+    "contextPackHash": "6099df6a1e57a7bce9d70e72df964cdd05486bb9d636be32964c6df059f48a2f"
+  }
+}

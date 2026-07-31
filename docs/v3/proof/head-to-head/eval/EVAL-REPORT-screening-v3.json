@@ -1,0 +1,505 @@
+{
+  "phase": "blind-evaluation",
+  "completedAt": "2026-07-31T20:20:21.261Z",
+  "criteria": [
+    "briefFit",
+    "subjectSpecificity",
+    "originality",
+    "composition",
+    "hierarchy",
+    "typography",
+    "materiality",
+    "assetStrategy",
+    "interaction",
+    "signature",
+    "antiCliche",
+    "implementability"
+  ],
+  "briefs": {
+    "01-leather-goods": {
+      "ranking": [
+        {
+          "arm": "frontend-design",
+          "totalAvg": 59,
+          "totalA": 59,
+          "totalB": 59,
+          "label": "Q"
+        },
+        {
+          "arm": "impeccable",
+          "totalAvg": 56.5,
+          "totalA": 57,
+          "totalB": 56,
+          "label": "R"
+        },
+        {
+          "arm": "taste-skill",
+          "totalAvg": 50.5,
+          "totalA": 50,
+          "totalB": 51,
+          "label": "T"
+        },
+        {
+          "arm": "sitesmith",
+          "totalAvg": 42.5,
+          "totalA": 41,
+          "totalB": 44,
+          "label": "P"
+        },
+        {
+          "arm": "ui-ux-pro-max",
+          "totalAvg": 22.5,
+          "totalA": 22,
+          "totalB": 23,
+          "label": "S"
+        }
+      ],
+      "sitesmith": {
+        "label": "P",
+        "totalA": 41,
+        "totalB": 44,
+        "totalAvg": 42.5,
+        "criteria": {
+          "briefFit": {
+            "A": 3,
+            "B": 4,
+            "avg": 3.5
+          },
+          "subjectSpecificity": {
+            "A": 4,
+            "B": 4,
+            "avg": 4
+          },
+          "originality": {
+            "A": 3,
+            "B": 3,
+            "avg": 3
+          },
+          "composition": {
+            "A": 3,
+            "B": 3,
+            "avg": 3
+          },
+          "hierarchy": {
+            "A": 4,
+            "B": 4,
+            "avg": 4
+          },
+          "typography": {
+            "A": 4,
+            "B": 4,
+            "avg": 4
+          },
+          "materiality": {
+            "A": 4,
+            "B": 4,
+            "avg": 4
+          },
+          "assetStrategy": {
+            "A": 4,
+            "B": 4,
+            "avg": 4
+          },
+          "interaction": {
+            "A": 2,
+            "B": 3,
+            "avg": 2.5
+          },
+          "signature": {
+            "A": 4,
+            "B": 4,
+            "avg": 4
+          },
+          "antiCliche": {
+            "A": 3,
+            "B": 4,
+            "avg": 3.5
+          },
+          "implementability": {
+            "A": 3,
+            "B": 3,
+            "avg": 3
+          }
+        },
+        "comments": {
+          "A": "Hide Grade Strip + product nouns are right, and Barlow/Plex roles help, but composition is only “proof left / action right” with sticky desktop rail — under-serves mobile-first. unknowns “none declared” despite missing stitch-macro/strap plate. Reads like a half-filled desk template with correct materials pasted in.",
+          "B": "Hide Grade Strip + trade plate edge and cream/ink/brass fit the brief, but composition is only a hard vertical rule, interaction is a thin sticky column, grounding is truncated with duplicate anti-refs, and unknowns are wrongly “none declared.”"
+        }
+      },
+      "bestUpstream": {
+        "arm": "frontend-design",
+        "totalAvg": 59
+      },
+      "outcome": "loss",
+      "qualitativeA": {
+        "wouldBuild": "frontend-design",
+        "mostGeneric": "ui-ux-pro-max",
+        "bestGrounded": "frontend-design",
+        "strongestDirection": "impeccable"
+      },
+      "qualitativeB": {
+        "wouldBuild": "frontend-design",
+        "mostGeneric": "ui-ux-pro-max",
+        "bestGrounded": "frontend-design",
+        "strongestDirection": "impeccable"
+      },
+      "top1Agree": true,
+      "wouldBuildAgree": true,
+      "comments": {
+        "sitesmith": {
+          "A": "Hide Grade Strip + product nouns are right, and Barlow/Plex roles help, but composition is only “proof left / action right” with sticky desktop rail — under-serves mobile-first. unknowns “none declared” despite missing stitch-macro/strap plate. Reads like a half-filled desk template with correct materials pasted in.",
+          "B": "Hide Grade Strip + trade plate edge and cream/ink/brass fit the brief, but composition is only a hard vertical rule, interaction is a thin sticky column, grounding is truncated with duplicate anti-refs, and unknowns are wrongly “none declared.”"
+        },
+        "frontend-design": {
+          "A": "Full make-slot desk on mobile-first stack: plate → material stamp → Hide Grade Strip radiogroup → price/lead → Request make-slot. Hex tokens, motion-2 edge response, honest have/needed assets, and explicit cream+brass default risk. Highest build confidence; signature is the brief’s care (hide grade) made operable.",
+          "B": "Full mobile-first make-slot desk: Field Tote plate → material stamp → Hide Grade Strip radiogroup → price band + 3-week lead → Request make-slot → secondary goods. Hex tokens, brass-only CTA, honest missing stitch-macro/strap plate, motion-2 edge response — cleanest complete ship package."
+        },
+        "impeccable": {
+          "A": "Saddlery bench order ticket + gatefold is the most subject-true concept: closed face holds product/price/materials/3-week lead before open centers Field Tote + hide choice; ticket fills as config. Slight mobile tax on gatefold novelty; mitigated with sticky CTA. Strongest direction, small implementability cost vs Q.",
+          "B": "Saddlery bench ticket / gatefold is the most original subject-true concept; closed-face facts + open hide choice map the journey well. Gatefold novelty and thinner type specificity are real mobile-first risks if the closed face fails."
+        },
+        "ui-ux-pro-max": {
+          "A": "Newsletter/Content-First + Vibrant & Block-based fights sensory leather trade. Rubik/Nunito and emerald/orange system palette conflict with ink/cream/brass. Animated patterns and 48px+ gaps clash with density-6 / motion-2. Retrieval-shell, not a product direction.",
+          "B": "Newsletter/Content-First + Vibrant/Block-based with Rubik/Nunito and emerald/orange system palette fights pack brand, motion-2, and sensory leather ecommerce — template retrieval, not Northline. Signature is a label, not a mechanism."
+        },
+        "taste-skill": {
+          "A": "Competent plate-first trade catalog with split proof/configure spine, pack-true facts, and honest asset gaps. Signature (plate spine + brass CTA) is structural more than memorable — weaker than Hide Grade Strip or bench ticket. Solid buildable mid-pack, not the sharpest direction.",
+          "B": "Solid split proof/configure spine, honest assets, and pack-true journey; signature (plate spine + brass CTA) is weaker than a Hide Grade Strip or bench ticket, and cream+ink+brass is correctly flagged as LLM-default risk."
+        }
+      }
+    },
+    "02-atelier-printworks": {
+      "ranking": [
+        {
+          "arm": "impeccable",
+          "totalAvg": 59,
+          "totalA": 59,
+          "totalB": 59,
+          "label": "S"
+        },
+        {
+          "arm": "frontend-design",
+          "totalAvg": 59,
+          "totalA": 59,
+          "totalB": 59,
+          "label": "T"
+        },
+        {
+          "arm": "taste-skill",
+          "totalAvg": 56.5,
+          "totalA": 57,
+          "totalB": 56,
+          "label": "P"
+        },
+        {
+          "arm": "sitesmith",
+          "totalAvg": 27.5,
+          "totalA": 27,
+          "totalB": 28,
+          "label": "Q"
+        },
+        {
+          "arm": "ui-ux-pro-max",
+          "totalAvg": 22.5,
+          "totalA": 23,
+          "totalB": 22,
+          "label": "R"
+        }
+      ],
+      "sitesmith": {
+        "label": "Q",
+        "totalA": 27,
+        "totalB": 28,
+        "totalAvg": 27.5,
+        "criteria": {
+          "briefFit": {
+            "A": 2,
+            "B": 2,
+            "avg": 2
+          },
+          "subjectSpecificity": {
+            "A": 3,
+            "B": 2,
+            "avg": 2.5
+          },
+          "originality": {
+            "A": 2,
+            "B": 2,
+            "avg": 2
+          },
+          "composition": {
+            "A": 2,
+            "B": 3,
+            "avg": 2.5
+          },
+          "hierarchy": {
+            "A": 2,
+            "B": 2,
+            "avg": 2
+          },
+          "typography": {
+            "A": 2,
+            "B": 3,
+            "avg": 2.5
+          },
+          "materiality": {
+            "A": 3,
+            "B": 3,
+            "avg": 3
+          },
+          "assetStrategy": {
+            "A": 3,
+            "B": 3,
+            "avg": 3
+          },
+          "interaction": {
+            "A": 2,
+            "B": 2,
+            "avg": 2
+          },
+          "signature": {
+            "A": 1,
+            "B": 1,
+            "avg": 1
+          },
+          "antiCliche": {
+            "A": 3,
+            "B": 3,
+            "avg": 3
+          },
+          "implementability": {
+            "A": 2,
+            "B": 2,
+            "avg": 2
+          }
+        },
+        "comments": {
+          "A": "Cross-domain contamination: “night-watch instrument”, validation/offline/success hierarchy, and “always-on status strip… amber only for faults” belong to a ops console, not a coastal print portfolio. Type advice fights itself (Fraunces vs condensed grotesque). unknowns none declared. Palette nouns correct; product mode wrong.",
+          "B": "Night-watch instrument, always-on status strip, amber-only-for-faults, and validation/offline/success hierarchy are product-console vocabulary, not coastal print portfolio. Signature misfits the mode; composition is only object-left/type-right."
+        }
+      },
+      "bestUpstream": {
+        "arm": "impeccable",
+        "totalAvg": 59
+      },
+      "outcome": "loss",
+      "qualitativeA": {
+        "wouldBuild": "frontend-design",
+        "mostGeneric": "ui-ux-pro-max",
+        "bestGrounded": "frontend-design",
+        "strongestDirection": "impeccable"
+      },
+      "qualitativeB": {
+        "wouldBuild": "frontend-design",
+        "mostGeneric": "ui-ux-pro-max",
+        "bestGrounded": "frontend-design",
+        "strongestDirection": "impeccable"
+      },
+      "top1Agree": true,
+      "wouldBuildAgree": true,
+      "comments": {
+        "taste-skill": {
+          "A": "Press-room marketing with chalk white / harbour ink / coral registration mark and three named edition plate slots; honest Ferry Board needed-state. Asymmetric hero + view→facts→enquire hierarchy fit desktop-tolerant portfolio. Signature is true print-production geometry. Slightly less singular than board/chase metaphors, but fully buildable and pack-clean.",
+          "B": "Press-room marketing with coral registration mark, three named edition slots, and honest Ferry Board needed-state. Strong brief fit and anti-cliché; composition/type less fully specified than T or S."
+        },
+        "sitesmith": {
+          "A": "Cross-domain contamination: “night-watch instrument”, validation/offline/success hierarchy, and “always-on status strip… amber only for faults” belong to a ops console, not a coastal print portfolio. Type advice fights itself (Fraunces vs condensed grotesque). unknowns none declared. Palette nouns correct; product mode wrong.",
+          "B": "Night-watch instrument, always-on status strip, amber-only-for-faults, and validation/offline/success hierarchy are product-console vocabulary, not coastal print portfolio. Signature misfits the mode; composition is only object-left/type-right."
+        },
+        "ui-ux-pro-max": {
+          "A": "Portfolio Grid + Neo Brutalism retrieval shell. Space Grotesk pair and pink/cyan system palette fight chalk/harbour/coral. No three-edition proof architecture; signature is a slug. Hard offset borders are style-kit chrome, not letterpress evidence. Most generic pack fill.",
+          "B": "Portfolio Grid + Neo Brutalism with Space Grotesk and pink/cyan system palette fights pack brand and characterful letterpress marketing — template retrieval. Signature is a mark name without mechanism."
+        },
+        "impeccable": {
+          "A": "Ferry-terminal departure board maps island subject to instrument: three edition rows as departures, columns for paper/size/press, coral registration lamp on active row, enquire as destination. Split-flap cascade fits motion-3; honest photo gaps. Strongest direction; small implementability tax if facts lag (self-named risk).",
+          "B": "Ferry-terminal departure board is the most memorable island-true direction: three edition rows, coral registration lamp on active row, view→facts→enquire as columns. Implementability slightly softer because split-flap cascade must stay honest when paper/size facts are still unknown."
+        },
+        "frontend-design": {
+          "A": "Locked chase on the platen: one press sheet in thin ink chase, job-ticket rail for true press facts, grip-edge edition strip, coral registration cross as sole accent/UI grammar. Full hex tokens and type roles. Highest grounded build path without agency portfolio defaults. Would build this first.",
+          "B": "Locked chase on the platen is the deepest print-production grounding: chase frame, job-ticket rail, coral registration cross as sole accent grammar, honest pending Ferry Board. Clearest desktop-tolerant ship candidate."
+        }
+      }
+    },
+    "03-passage-console": {
+      "ranking": [
+        {
+          "arm": "frontend-design",
+          "totalAvg": 59,
+          "totalA": 59,
+          "totalB": 59,
+          "label": "Q"
+        },
+        {
+          "arm": "impeccable",
+          "totalAvg": 58,
+          "totalA": 57,
+          "totalB": 59,
+          "label": "T"
+        },
+        {
+          "arm": "taste-skill",
+          "totalAvg": 57,
+          "totalA": 56,
+          "totalB": 58,
+          "label": "R"
+        },
+        {
+          "arm": "sitesmith",
+          "totalAvg": 28.5,
+          "totalA": 28,
+          "totalB": 29,
+          "label": "P"
+        },
+        {
+          "arm": "ui-ux-pro-max",
+          "totalAvg": 23.5,
+          "totalA": 22,
+          "totalB": 25,
+          "label": "S"
+        }
+      ],
+      "sitesmith": {
+        "label": "P",
+        "totalA": 28,
+        "totalB": 29,
+        "totalAvg": 28.5,
+        "criteria": {
+          "briefFit": {
+            "A": 2,
+            "B": 2,
+            "avg": 2
+          },
+          "subjectSpecificity": {
+            "A": 2,
+            "B": 2,
+            "avg": 2
+          },
+          "originality": {
+            "A": 1,
+            "B": 1,
+            "avg": 1
+          },
+          "composition": {
+            "A": 3,
+            "B": 3,
+            "avg": 3
+          },
+          "hierarchy": {
+            "A": 1,
+            "B": 1,
+            "avg": 1
+          },
+          "typography": {
+            "A": 3,
+            "B": 3,
+            "avg": 3
+          },
+          "materiality": {
+            "A": 3,
+            "B": 3,
+            "avg": 3
+          },
+          "assetStrategy": {
+            "A": 4,
+            "B": 4,
+            "avg": 4
+          },
+          "interaction": {
+            "A": 3,
+            "B": 3,
+            "avg": 3
+          },
+          "signature": {
+            "A": 1,
+            "B": 1,
+            "avg": 1
+          },
+          "antiCliche": {
+            "A": 3,
+            "B": 3,
+            "avg": 3
+          },
+          "implementability": {
+            "A": 2,
+            "B": 3,
+            "avg": 2.5
+          }
+        },
+        "comments": {
+          "A": "Wrong-domain paste: thesis is “make-slot desk / boutique shelf”; hierarchy still talks grade/size and secondary SKUs/testimonials. Signature is “Make-slot control”. Full-width interface + imageless + keyboard-first are the only salvageable bits. Pack nouns bolted onto a leather ecommerce skeleton.",
+          "B": "Thesis/hierarchy/signature still speak make-slot desk, plate recognition, grade/size, secondary SKUs — leather ecommerce language on a harbour log console. Imageless + near-black/amber scraps are right; the direction is domain-contaminated."
+        }
+      },
+      "bestUpstream": {
+        "arm": "frontend-design",
+        "totalAvg": 59
+      },
+      "outcome": "loss",
+      "qualitativeA": {
+        "wouldBuild": "frontend-design",
+        "mostGeneric": "ui-ux-pro-max",
+        "bestGrounded": "frontend-design",
+        "strongestDirection": "impeccable"
+      },
+      "qualitativeB": {
+        "wouldBuild": "frontend-design",
+        "mostGeneric": "ui-ux-pro-max",
+        "bestGrounded": "frontend-design",
+        "strongestDirection": "impeccable"
+      },
+      "top1Agree": true,
+      "wouldBuildAgree": true,
+      "comments": {
+        "sitesmith": {
+          "A": "Wrong-domain paste: thesis is “make-slot desk / boutique shelf”; hierarchy still talks grade/size and secondary SKUs/testimonials. Signature is “Make-slot control”. Full-width interface + imageless + keyboard-first are the only salvageable bits. Pack nouns bolted onto a leather ecommerce skeleton.",
+          "B": "Thesis/hierarchy/signature still speak make-slot desk, plate recognition, grade/size, secondary SKUs — leather ecommerce language on a harbour log console. Imageless + near-black/amber scraps are right; the direction is domain-contaminated."
+        },
+        "frontend-design": {
+          "A": "Commit desk done right: fixed passage form strip + append-only mono tape; direction as two-state lock is the only structural drama; amber fault-only; Ctrl+Enter; empty/validation/success/offline. Hex tokens, density-8 type scale, honest unknowns. Best grounded and highest would-build for a harbour logging desk.",
+          "B": "Commit desk done right: full-width form strip + append-only mono passage tape, Inbound|Outbound two-state lock as signature, six tokens, amber fault-only, Ctrl+Enter, all four states, density-8/motion-1. Strongest complete ops build package."
+        },
+        "taste-skill": {
+          "A": "Two-column compose/log cockpit with always-on status strip and amber rationed to warnings. Density-8 / motion-1 / imageless all held; form→save→row hierarchy clean. Solid operational UI; originality lower because split form/log is the expected instrument pattern. Signature is system-channel strong, less subject-unique than direction lock or chalk board.",
+          "B": "Two-column compose-left / log-right cockpit with always-on status strip is equally operational and pack-true; amber rationing and imageless discipline are excellent. Signature is slightly more standard than Q’s direction lock or T’s chalk board."
+        },
+        "ui-ux-pro-max": {
+          "A": "Product Demo + Features + Swiss Minimalism is marketing chrome for a functional logging job. Rubik/Nunito and blue/orange system palette fight shell/panel/amber. Hierarchy is recognition→facts not open form→save→row. Signature slug. Most generic retrieval shell.",
+          "B": "Product Demo + Features and Swiss/Minimalism with Rubik/Nunito and blue/orange system palette is marketing chrome on a density-8 work app; motion cues fight motion-1. Signature is a mark name, not a control."
+        },
+        "impeccable": {
+          "A": "Movements Board: permanent chalk-entry head strip + dense ruled body + Ctrl+Enter stamp; IN/OUT marks as harbour vernacular. Strongest directional frame without KPI dashboard. Slightly thinner token/type metrics than Q, but signature and composition are more characterful while still density-8 / motion-1 / imageless.",
+          "B": "Movements Board / chalk-entry head strip is the most harbour-specific signature while staying imageless and density-8; Ctrl+Enter stamp and amber-only faults hold. Type roles are a bit less pinned than Q’s Plex Sans+Mono lock."
+        }
+      }
+    }
+  },
+  "sitesmithBriefOutcomes": {
+    "01-leather-goods": "loss",
+    "02-atelier-printworks": "loss",
+    "03-passage-console": "loss"
+  },
+  "agreement": {
+    "01-leather-goods": {
+      "top1Agree": true,
+      "wouldBuildAgree": true
+    },
+    "02-atelier-printworks": {
+      "top1Agree": true,
+      "wouldBuildAgree": true
+    },
+    "03-passage-console": {
+      "top1Agree": true,
+      "wouldBuildAgree": true
+    }
+  },
+  "verdict": "PROOF FAILED — UPSTREAM SUPERSET",
+  "proofStatus": "PROOF FAILED — UPSTREAM SUPERSET",
+  "summary": {
+    "sitesmithWins": 0,
+    "sitesmithTiesOrMatch": 0,
+    "sitesmithLosses": 3,
+    "matchOrWinCount": 0,
+    "top1Disagreements": 0
+  },
+  "phaseLabel": "screening-v3"
+}
