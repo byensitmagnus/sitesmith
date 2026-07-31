@@ -351,7 +351,8 @@ export function generateDirectionCards(input, route, policy) {
       typographicPrinciple: t.type,
       assetStrategy: t.imagery,
       motionInteraction: t.interaction,
-      signatureElement: `${String(subject).split(/\s+/)[0]?.toLowerCase() || 'subject'}-${world.worldId}`,
+      // Opaque to seed catalog IDs — blind packet must not reintroduce worldId.
+      signatureElement: `${String(subject).split(/\s+/)[0]?.toLowerCase() || 'subject'}-sig-${index + 1}`,
       primaryRisk: riskFor(t, input.mode, groups),
       differenceNote: '',
       capabilityProvenance: route.selected.map((s) => s.capabilityId),
@@ -408,7 +409,8 @@ export function generateDirectionCards(input, route, policy) {
   }
 
   for (const card of selected) {
-    const others = selected.filter((c) => c.internalId !== card.internalId).map((c) => c.worldId);
+    // Use internal slot ids only — never peer worldIds (would leak in blind packets).
+    const others = selected.filter((c) => c.internalId !== card.internalId).map((c) => c.internalId);
     card.differenceNote = `Differs from ${others.join(', ')} on composition/type/imagery/grammar after brief-fit filter.`;
   }
 
@@ -489,6 +491,10 @@ export function blindCandidates(cards, randomSeed) {
   const blinded = copy.map((card, i) => {
     const label = labels[i] ?? `L${i + 1}`;
     key[label] = card.internalId;
+    const subjectToken = String(card.grounding?.subject ?? 'subject')
+      .split(/\s+/)[0]
+      ?.toLowerCase()
+      .replace(/[^a-zæøå0-9-]/gi, '') || 'subject';
     return {
       blindId: label,
       thesis: card.thesis,
@@ -508,13 +514,18 @@ export function blindCandidates(cards, randomSeed) {
       typographicPrinciple: card.typographicPrinciple,
       assetStrategy: card.assetStrategy,
       motionInteraction: card.motionInteraction,
-      signatureElement: card.signatureElement,
+      // Re-key with blind labels only — never pass through worldId-bearing strings.
+      signatureElement: `${subjectToken}-sig-${label}`,
       primaryRisk: card.primaryRisk,
-      differenceNote: card.differenceNote,
+      differenceNote: '', // filled after all labels known
       density: card.density,
       grounding: card.grounding,
     };
   });
+  for (const card of blinded) {
+    const others = blinded.filter((c) => c.blindId !== card.blindId).map((c) => c.blindId);
+    card.differenceNote = `Differs from ${others.join(', ')} on composition/type/imagery/grammar after brief-fit filter.`;
+  }
   return {
     blinded,
     key,
@@ -523,10 +534,27 @@ export function blindCandidates(cards, randomSeed) {
   };
 }
 
+/**
+ * Fail if banned keys exist OR if any string field embeds seed catalog / internal ids.
+ * @returns {string[]} leak descriptors (empty = clean)
+ */
 export function assertNoBlindLeakage(blindedCard) {
-  const banned = [
+  const leaks = [];
+  const bannedKeys = [
     'worldId', 'internalId', 'groupsApplied', 'capabilityProvenance',
     'seed', 'generatorRank', 'semanticGroupEffects',
   ];
-  return banned.filter((k) => Object.prototype.hasOwnProperty.call(blindedCard, k));
+  for (const k of bannedKeys) {
+    if (Object.prototype.hasOwnProperty.call(blindedCard, k)) leaks.push(`key:${k}`);
+  }
+  const text = JSON.stringify(blindedCard);
+  for (const world of WORLD_LIBRARY) {
+    if (text.includes(world.id)) leaks.push(`content:${world.id}`);
+  }
+  if (/\bW[1-9]\d*\b/.test(text)) leaks.push('content:internalId-pattern');
+  if (/\b(TASTE-CAP-\d+|uupm\.[a-z0-9.-]+|frontend\.[a-z0-9.-]+|impeccable\.[a-z0-9.-]+)\b/i.test(text)) {
+    leaks.push('content:capability-id');
+  }
+  if (/\blocal-world-library-seed\b/i.test(text)) leaks.push('content:seed-provenance');
+  return leaks;
 }

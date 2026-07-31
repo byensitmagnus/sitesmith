@@ -1,6 +1,6 @@
 {
   "generatedAt": "2026-07-31",
-  "engineCommit": "ade84174a64cc614cca0bf437e6a658343f82837",
+  "engineCommit": "4d8037bd1984717590a761a954df0d916bcd8af3",
   "results": [
     {
       "brief": "01-leather-goods",
@@ -22,7 +22,7 @@
           "labels": "symbol-led — almost no chrome labels",
           "figures": "absent",
           "depth": "flat",
-          "signature": "northline-poster-type"
+          "signature": "northline-sig-1"
         },
         {
           "worldId": "statement-object",
@@ -32,7 +32,7 @@
           "labels": "sentence case captions — retail voice stays human",
           "figures": "proportional — price is content not motif",
           "depth": "elevated — object lifts off ground slightly",
-          "signature": "northline-statement-object"
+          "signature": "northline-sig-2"
         },
         {
           "worldId": "split-evidence",
@@ -42,7 +42,7 @@
           "labels": "sentence case — operational clarity",
           "figures": "functional tabular — measurements only where compared",
           "depth": "elevated — evidence cards raise on focus",
-          "signature": "northline-split-evidence"
+          "signature": "northline-sig-3"
         }
       ],
       "pairwise": [
@@ -76,11 +76,11 @@
         "role": "deterministic-preflight",
         "independence": "deterministic-preflight",
         "rejectAll": false,
-        "tie": true
+        "tie": false
       },
       "handoffReady": true,
       "proofMeta": {
-        "engineCommit": "ade84174a64cc614cca0bf437e6a658343f82837",
+        "engineCommit": "4d8037bd1984717590a761a954df0d916bcd8af3",
         "inputHash": "748843e0c88640b0344a667a8a923a0693d0eb7ea3f28df927bb30649914e499",
         "policyVersion": "direction-engine-v3-slice-1.0.0",
         "randomSeed": "proof-leather-2026-07-31",
@@ -106,7 +106,7 @@
           "labels": "symbol-led — almost no chrome labels",
           "figures": "absent",
           "depth": "flat",
-          "signature": "atelier-poster-type"
+          "signature": "atelier-sig-1"
         },
         {
           "worldId": "split-evidence",
@@ -116,7 +116,7 @@
           "labels": "sentence case — operational clarity",
           "figures": "functional tabular — measurements only where compared",
           "depth": "elevated — evidence cards raise on focus",
-          "signature": "atelier-split-evidence"
+          "signature": "atelier-sig-2"
         },
         {
           "worldId": "statement-object",
@@ -126,7 +126,7 @@
           "labels": "sentence case captions — retail voice stays human",
           "figures": "proportional — price is content not motif",
           "depth": "elevated — object lifts off ground slightly",
-          "signature": "atelier-statement-object"
+          "signature": "atelier-sig-3"
         }
       ],
       "pairwise": [
@@ -164,7 +164,7 @@
       },
       "handoffReady": true,
       "proofMeta": {
-        "engineCommit": "ade84174a64cc614cca0bf437e6a658343f82837",
+        "engineCommit": "4d8037bd1984717590a761a954df0d916bcd8af3",
         "inputHash": "1bd5d3d109f1591e8e6e4ddd22927a3b06daf0612734aa6114c48414aa36642c",
         "policyVersion": "direction-engine-v3-slice-1.0.0",
         "randomSeed": "proof-atelier-2026-07-31",
@@ -190,7 +190,7 @@
           "labels": "symbol-led — tools speak as icons with text fallback",
           "figures": "absent — no decorative metrics",
           "depth": "inset — panels recede into the shell",
-          "signature": "passage-workspace-canvas"
+          "signature": "passage-sig-2"
         },
         {
           "worldId": "poster-type",
@@ -200,7 +200,7 @@
           "labels": "symbol-led — almost no chrome labels",
           "figures": "absent",
           "depth": "flat",
-          "signature": "passage-poster-type"
+          "signature": "passage-sig-3"
         },
         {
           "worldId": "split-evidence",
@@ -210,7 +210,7 @@
           "labels": "sentence case — operational clarity",
           "figures": "functional tabular — measurements only where compared",
           "depth": "elevated — evidence cards raise on focus",
-          "signature": "passage-split-evidence"
+          "signature": "passage-sig-4"
         }
       ],
       "pairwise": [
@@ -244,11 +244,11 @@
         "role": "deterministic-preflight",
         "independence": "deterministic-preflight",
         "rejectAll": false,
-        "tie": true
+        "tie": false
       },
       "handoffReady": true,
       "proofMeta": {
-        "engineCommit": "ade84174a64cc614cca0bf437e6a658343f82837",
+        "engineCommit": "4d8037bd1984717590a761a954df0d916bcd8af3",
         "inputHash": "725b0007e009d827c9aa4959fd26d27bf806945a8c3e0762b6b8144ac94710df",
         "policyVersion": "direction-engine-v3-slice-1.0.0",
         "randomSeed": "proof-passage-2026-07-31",

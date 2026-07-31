@@ -62,7 +62,7 @@
       "label every control",
       "AA contrast for body and UI text"
     ],
-    "signatureElement": "passage-workspace-canvas",
+    "signatureElement": "passage-sig-2",
     "forbiddenFallbackDefaults": [
       "purple SaaS gradient hero",
       "three equal feature cards as default identity",
@@ -108,7 +108,7 @@
       },
       {
         "field": "signature-selector",
-        "expected": "[data-signature=\"passage-workspace-canvas\"]"
+        "expected": "[data-signature=\"passage-sig-2\"]"
       }
     ],
     "acceptanceCriteria": [
@@ -327,8 +327,8 @@
       "by": "user"
     }
   },
-  "directionMd": "---\ntitle: \"DIRECTION — 03-passage-console\"\nstatus: direction-engine-slice\nai_generated: \"(C)\"\n---\n\n# DIRECTION — 03-passage-console\n\nWinner: workspace-canvas (Passage Log Console\": log a passage (vessel, direction, time, notes). via real interface full width as first screen — passage, log, console, harbour, masters, logging)\n\n## Signature\npassage-workspace-canvas\n\n## Axis record\n\n- direction-version: 2.3\n- composition: real interface full width as first screen\n- type: UI sans pair, tight tracking on tools\n- colour: dark near-black ground, functional status accent\n- imagery: deliberately imageless — chrome and type carry the first screen\n- rhythm: asymmetric tool rail + main canvas\n\n- surface: framed — panels bound the work surface\n- labels: symbol-led — tools speak as icons with text fallback\n- figures: absent — no decorative metrics\n- depth: inset — panels recede into the shell\n\n- visual-density: 8\n- motion-intensity: 1\n- aesthetic-boldness: 3\n\n- signature-selector: [data-signature=\"passage-workspace-canvas\"]\n- signature-min-share: 12\n\n## Rejections\n- poster-type: recorded alternative; not passed to build context\n- split-evidence: recorded alternative; not passed to build context\n\n## Notes\nSelected by Direction Engine v3 slice. Build context must not receive losing cards or generator scores.",
-  "axisRecord": "## Axis record\n\n- direction-version: 2.3\n- composition: real interface full width as first screen\n- type: UI sans pair, tight tracking on tools\n- colour: dark near-black ground, functional status accent\n- imagery: deliberately imageless — chrome and type carry the first screen\n- rhythm: asymmetric tool rail + main canvas\n\n- surface: framed — panels bound the work surface\n- labels: symbol-led — tools speak as icons with text fallback\n- figures: absent — no decorative metrics\n- depth: inset — panels recede into the shell\n\n- visual-density: 8\n- motion-intensity: 1\n- aesthetic-boldness: 3\n\n- signature-selector: [data-signature=\"passage-workspace-canvas\"]\n- signature-min-share: 12",
+  "directionMd": "---\ntitle: \"DIRECTION — 03-passage-console\"\nstatus: direction-engine-slice\nai_generated: \"(C)\"\n---\n\n# DIRECTION — 03-passage-console\n\nWinner: workspace-canvas (Passage Log Console\": log a passage (vessel, direction, time, notes). via real interface full width as first screen — passage, log, console, harbour, masters, logging)\n\n## Signature\npassage-sig-2\n\n## Axis record\n\n- direction-version: 2.3\n- composition: real interface full width as first screen\n- type: UI sans pair, tight tracking on tools\n- colour: dark near-black ground, functional status accent\n- imagery: deliberately imageless — chrome and type carry the first screen\n- rhythm: asymmetric tool rail + main canvas\n\n- surface: framed — panels bound the work surface\n- labels: symbol-led — tools speak as icons with text fallback\n- figures: absent — no decorative metrics\n- depth: inset — panels recede into the shell\n\n- visual-density: 8\n- motion-intensity: 1\n- aesthetic-boldness: 3\n\n- signature-selector: [data-signature=\"passage-sig-2\"]\n- signature-min-share: 12\n\n## Rejections\n- poster-type: recorded alternative; not passed to build context\n- split-evidence: recorded alternative; not passed to build context\n\n## Notes\nSelected by Direction Engine v3 slice. Build context must not receive losing cards or generator scores.",
+  "axisRecord": "## Axis record\n\n- direction-version: 2.3\n- composition: real interface full width as first screen\n- type: UI sans pair, tight tracking on tools\n- colour: dark near-black ground, functional status accent\n- imagery: deliberately imageless — chrome and type carry the first screen\n- rhythm: asymmetric tool rail + main canvas\n\n- surface: framed — panels bound the work surface\n- labels: symbol-led — tools speak as icons with text fallback\n- figures: absent — no decorative metrics\n- depth: inset — panels recede into the shell\n\n- visual-density: 8\n- motion-intensity: 1\n- aesthetic-boldness: 3\n\n- signature-selector: [data-signature=\"passage-sig-2\"]\n- signature-min-share: 12",
   "withheldFromBuild": {
     "rejectedDirectionCards": true,
     "generatorScores": true,

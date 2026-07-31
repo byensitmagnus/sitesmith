@@ -4,7 +4,7 @@
   "policyVersion": "direction-engine-v3-slice-1.0.0",
   "inputWarnings": [],
   "proofMeta": {
-    "engineCommit": "ade84174a64cc614cca0bf437e6a658343f82837",
+    "engineCommit": "4d8037bd1984717590a761a954df0d916bcd8af3",
     "inputHash": "725b0007e009d827c9aa4959fd26d27bf806945a8c3e0762b6b8144ac94710df",
     "policyVersion": "direction-engine-v3-slice-1.0.0",
     "randomSeed": "proof-passage-2026-07-31",
@@ -466,9 +466,9 @@
         "typographicPrinciple": "UI sans pair, tight tracking on tools",
         "assetStrategy": "deliberately imageless — chrome and type carry the first screen",
         "motionInteraction": "keyboard-first primary journey",
-        "signatureElement": "passage-workspace-canvas",
+        "signatureElement": "passage-sig-2",
         "primaryRisk": "Signature may overfit if evidence is thin.",
-        "differenceNote": "Differs from poster-type, split-evidence on composition/type/imagery/grammar after brief-fit filter.",
+        "differenceNote": "Differs from W3, W4 on composition/type/imagery/grammar after brief-fit filter.",
         "capabilityProvenance": [
           "TASTE-CAP-002",
           "TASTE-CAP-003",
@@ -544,9 +544,9 @@
         "typographicPrinciple": "custom-feeling display, extreme scale ratio",
         "assetStrategy": "deliberately imageless — chrome and type carry the first screen",
         "motionInteraction": "single decisive scroll cue",
-        "signatureElement": "passage-poster-type",
+        "signatureElement": "passage-sig-3",
         "primaryRisk": "Expressive marketing seeds can bury the work journey.",
-        "differenceNote": "Differs from workspace-canvas, split-evidence on composition/type/imagery/grammar after brief-fit filter.",
+        "differenceNote": "Differs from W2, W4 on composition/type/imagery/grammar after brief-fit filter.",
         "capabilityProvenance": [
           "TASTE-CAP-002",
           "TASTE-CAP-003",
@@ -622,9 +622,9 @@
         "typographicPrinciple": "neutral grotesque, medium weight only",
         "assetStrategy": "deliberately imageless — chrome and type carry the first screen",
         "motionInteraction": "sticky action column on desktop",
-        "signatureElement": "passage-split-evidence",
+        "signatureElement": "passage-sig-4",
         "primaryRisk": "Signature may overfit if evidence is thin.",
-        "differenceNote": "Differs from workspace-canvas, poster-type on composition/type/imagery/grammar after brief-fit filter.",
+        "differenceNote": "Differs from W2, W3 on composition/type/imagery/grammar after brief-fit filter.",
         "capabilityProvenance": [
           "TASTE-CAP-002",
           "TASTE-CAP-003",
@@ -729,9 +729,9 @@
         "typographicPrinciple": "UI sans pair, tight tracking on tools",
         "assetStrategy": "deliberately imageless — chrome and type carry the first screen",
         "motionInteraction": "keyboard-first primary journey",
-        "signatureElement": "passage-workspace-canvas",
+        "signatureElement": "passage-sig-L1",
         "primaryRisk": "Signature may overfit if evidence is thin.",
-        "differenceNote": "Differs from poster-type, split-evidence on composition/type/imagery/grammar after brief-fit filter.",
+        "differenceNote": "Differs from L2, L3 on composition/type/imagery/grammar after brief-fit filter.",
         "density": "cockpit",
         "grounding": {
           "subject": "Passage Log Console\"",
@@ -764,9 +764,9 @@
         "typographicPrinciple": "custom-feeling display, extreme scale ratio",
         "assetStrategy": "deliberately imageless — chrome and type carry the first screen",
         "motionInteraction": "single decisive scroll cue",
-        "signatureElement": "passage-poster-type",
+        "signatureElement": "passage-sig-L2",
         "primaryRisk": "Expressive marketing seeds can bury the work journey.",
-        "differenceNote": "Differs from workspace-canvas, split-evidence on composition/type/imagery/grammar after brief-fit filter.",
+        "differenceNote": "Differs from L1, L3 on composition/type/imagery/grammar after brief-fit filter.",
         "density": "poster",
         "grounding": {
           "subject": "Passage Log Console\"",
@@ -799,9 +799,9 @@
         "typographicPrinciple": "neutral grotesque, medium weight only",
         "assetStrategy": "deliberately imageless — chrome and type carry the first screen",
         "motionInteraction": "sticky action column on desktop",
-        "signatureElement": "passage-split-evidence",
+        "signatureElement": "passage-sig-L3",
         "primaryRisk": "Signature may overfit if evidence is thin.",
-        "differenceNote": "Differs from workspace-canvas, poster-type on composition/type/imagery/grammar after brief-fit filter.",
+        "differenceNote": "Differs from L1, L2 on composition/type/imagery/grammar after brief-fit filter.",
         "density": "balanced",
         "grounding": {
           "subject": "Passage Log Console\"",
@@ -835,22 +835,22 @@
       },
       {
         "blindId": "L2",
-        "briefFit": 6,
+        "briefFit": 4,
         "originality": 0,
         "subject": 3,
         "composition": 3,
         "implementability": 2,
-        "total": 14,
+        "total": 12,
         "flags": []
       },
       {
         "blindId": "L3",
-        "briefFit": 6,
+        "briefFit": 4,
         "originality": 0,
         "subject": 3,
         "composition": 3,
         "implementability": 2,
-        "total": 14,
+        "total": 12,
         "flags": []
       }
     ],
@@ -859,10 +859,10 @@
       "L2",
       "L3"
     ],
-    "tie": true,
+    "tie": false,
     "rejectAll": false,
-    "recommendation": null,
-    "notes": "tie: user or external adjudicator required"
+    "recommendation": "L1",
+    "notes": "preflight prefers L1; not an independent critic verdict"
   },
   "choice": {
     "status": "selected",
@@ -924,7 +924,7 @@
       "label every control",
       "AA contrast for body and UI text"
     ],
-    "signatureElement": "passage-workspace-canvas",
+    "signatureElement": "passage-sig-2",
     "forbiddenFallbackDefaults": [
       "purple SaaS gradient hero",
       "three equal feature cards as default identity",
@@ -970,7 +970,7 @@
       },
       {
         "field": "signature-selector",
-        "expected": "[data-signature=\"passage-workspace-canvas\"]"
+        "expected": "[data-signature=\"passage-sig-2\"]"
       }
     ],
     "acceptanceCriteria": [
@@ -1253,7 +1253,7 @@
         "label every control",
         "AA contrast for body and UI text"
       ],
-      "signatureElement": "passage-workspace-canvas",
+      "signatureElement": "passage-sig-2",
       "forbiddenFallbackDefaults": [
         "purple SaaS gradient hero",
         "three equal feature cards as default identity",
@@ -1299,7 +1299,7 @@
         },
         {
           "field": "signature-selector",
-          "expected": "[data-signature=\"passage-workspace-canvas\"]"
+          "expected": "[data-signature=\"passage-sig-2\"]"
         }
       ],
       "acceptanceCriteria": [
@@ -1518,8 +1518,8 @@
         "by": "user"
       }
     },
-    "directionMd": "---\ntitle: \"DIRECTION — 03-passage-console\"\nstatus: direction-engine-slice\nai_generated: \"(C)\"\n---\n\n# DIRECTION — 03-passage-console\n\nWinner: workspace-canvas (Passage Log Console\": log a passage (vessel, direction, time, notes). via real interface full width as first screen — passage, log, console, harbour, masters, logging)\n\n## Signature\npassage-workspace-canvas\n\n## Axis record\n\n- direction-version: 2.3\n- composition: real interface full width as first screen\n- type: UI sans pair, tight tracking on tools\n- colour: dark near-black ground, functional status accent\n- imagery: deliberately imageless — chrome and type carry the first screen\n- rhythm: asymmetric tool rail + main canvas\n\n- surface: framed — panels bound the work surface\n- labels: symbol-led — tools speak as icons with text fallback\n- figures: absent — no decorative metrics\n- depth: inset — panels recede into the shell\n\n- visual-density: 8\n- motion-intensity: 1\n- aesthetic-boldness: 3\n\n- signature-selector: [data-signature=\"passage-workspace-canvas\"]\n- signature-min-share: 12\n\n## Rejections\n- poster-type: recorded alternative; not passed to build context\n- split-evidence: recorded alternative; not passed to build context\n\n## Notes\nSelected by Direction Engine v3 slice. Build context must not receive losing cards or generator scores.",
-    "axisRecord": "## Axis record\n\n- direction-version: 2.3\n- composition: real interface full width as first screen\n- type: UI sans pair, tight tracking on tools\n- colour: dark near-black ground, functional status accent\n- imagery: deliberately imageless — chrome and type carry the first screen\n- rhythm: asymmetric tool rail + main canvas\n\n- surface: framed — panels bound the work surface\n- labels: symbol-led — tools speak as icons with text fallback\n- figures: absent — no decorative metrics\n- depth: inset — panels recede into the shell\n\n- visual-density: 8\n- motion-intensity: 1\n- aesthetic-boldness: 3\n\n- signature-selector: [data-signature=\"passage-workspace-canvas\"]\n- signature-min-share: 12",
+    "directionMd": "---\ntitle: \"DIRECTION — 03-passage-console\"\nstatus: direction-engine-slice\nai_generated: \"(C)\"\n---\n\n# DIRECTION — 03-passage-console\n\nWinner: workspace-canvas (Passage Log Console\": log a passage (vessel, direction, time, notes). via real interface full width as first screen — passage, log, console, harbour, masters, logging)\n\n## Signature\npassage-sig-2\n\n## Axis record\n\n- direction-version: 2.3\n- composition: real interface full width as first screen\n- type: UI sans pair, tight tracking on tools\n- colour: dark near-black ground, functional status accent\n- imagery: deliberately imageless — chrome and type carry the first screen\n- rhythm: asymmetric tool rail + main canvas\n\n- surface: framed — panels bound the work surface\n- labels: symbol-led — tools speak as icons with text fallback\n- figures: absent — no decorative metrics\n- depth: inset — panels recede into the shell\n\n- visual-density: 8\n- motion-intensity: 1\n- aesthetic-boldness: 3\n\n- signature-selector: [data-signature=\"passage-sig-2\"]\n- signature-min-share: 12\n\n## Rejections\n- poster-type: recorded alternative; not passed to build context\n- split-evidence: recorded alternative; not passed to build context\n\n## Notes\nSelected by Direction Engine v3 slice. Build context must not receive losing cards or generator scores.",
+    "axisRecord": "## Axis record\n\n- direction-version: 2.3\n- composition: real interface full width as first screen\n- type: UI sans pair, tight tracking on tools\n- colour: dark near-black ground, functional status accent\n- imagery: deliberately imageless — chrome and type carry the first screen\n- rhythm: asymmetric tool rail + main canvas\n\n- surface: framed — panels bound the work surface\n- labels: symbol-led — tools speak as icons with text fallback\n- figures: absent — no decorative metrics\n- depth: inset — panels recede into the shell\n\n- visual-density: 8\n- motion-intensity: 1\n- aesthetic-boldness: 3\n\n- signature-selector: [data-signature=\"passage-sig-2\"]\n- signature-min-share: 12",
     "withheldFromBuild": {
       "rejectedDirectionCards": true,
       "generatorScores": true,

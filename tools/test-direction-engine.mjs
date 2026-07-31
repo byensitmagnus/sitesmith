@@ -138,7 +138,7 @@ const ecommerceB = {
   else ok('input-schema rejects missing essential fields');
 }
 
-// 8 blind leakage
+// 8 blind leakage (keys + content: worldIds, internal ids, capability ids)
 {
   const v = validateDirectionInput(ecommerceA).input;
   const route = routeCapabilities(v, policy, loadLedger());
@@ -148,7 +148,13 @@ const ecommerceB = {
     const { blinded } = blindCandidates(gen.cards, 'x');
     const leaks = blinded.flatMap((b) => assertNoBlindLeakage(b));
     if (leaks.length) fail('blind-leak', leaks.join(','));
-    else ok('blind packet contains no identity/provenance leakage');
+    else if (blinded.some((b) => /poster-type|statement-object|split-evidence|material-board|editorial-bleed|product-interface/i.test(JSON.stringify(b)))) {
+      fail('blind-leak', 'worldId substring in blind packet strings');
+    } else if (blinded.some((b) => !/^L\d+$/.test(b.blindId) || !String(b.signatureElement).includes(b.blindId))) {
+      fail('blind-leak', 'signature must use blindId, not seed id');
+    } else if (blinded.some((b) => !/Differs from L\d/.test(b.differenceNote) || /poster-type|statement-object/.test(b.differenceNote))) {
+      fail('blind-leak', 'differenceNote must name peer blindIds only');
+    } else ok('blind packet contains no identity/provenance leakage');
   }
 }
 

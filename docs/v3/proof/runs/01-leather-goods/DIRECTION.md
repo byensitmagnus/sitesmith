@@ -9,7 +9,7 @@ ai_generated: "(C)"
 Winner: statement-object (Northline Leather Goods": configure a bag and request a make-slot. via single object left, large type right — northline, leather, goods, people, who, buy)
 
 ## Signature
-northline-statement-object
+northline-sig-2
 
 ## Axis record
 
@@ -29,7 +29,7 @@ northline-statement-object
 - motion-intensity: 2
 - aesthetic-boldness: 6
 
-- signature-selector: [data-signature="northline-statement-object"]
+- signature-selector: [data-signature="northline-sig-2"]
 - signature-min-share: 12
 
 ## Rejections

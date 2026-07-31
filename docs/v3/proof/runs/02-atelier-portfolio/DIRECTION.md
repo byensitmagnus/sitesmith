@@ -9,7 +9,7 @@ ai_generated: "(C)"
 Winner: split-evidence (Atelier Møn Printworks": enquire about a print edition. via hard vertical rule: proof left, action right — atelier, møn, printworks, curators, and, small)
 
 ## Signature
-atelier-split-evidence
+atelier-sig-2
 
 ## Axis record
 
@@ -29,7 +29,7 @@ atelier-split-evidence
 - motion-intensity: 3
 - aesthetic-boldness: 7
 
-- signature-selector: [data-signature="atelier-split-evidence"]
+- signature-selector: [data-signature="atelier-sig-2"]
 - signature-min-share: 12
 
 ## Rejections

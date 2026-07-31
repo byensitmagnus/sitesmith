@@ -62,7 +62,7 @@
       "label every control",
       "AA contrast for body and UI text"
     ],
-    "signatureElement": "northline-statement-object",
+    "signatureElement": "northline-sig-2",
     "forbiddenFallbackDefaults": [
       "purple SaaS gradient hero",
       "three equal feature cards as default identity",
@@ -108,7 +108,7 @@
       },
       {
         "field": "signature-selector",
-        "expected": "[data-signature=\"northline-statement-object\"]"
+        "expected": "[data-signature=\"northline-sig-2\"]"
       }
     ],
     "acceptanceCriteria": [
@@ -327,8 +327,8 @@
       "by": "user"
     }
   },
-  "directionMd": "---\ntitle: \"DIRECTION — 01-leather-goods\"\nstatus: direction-engine-slice\nai_generated: \"(C)\"\n---\n\n# DIRECTION — 01-leather-goods\n\nWinner: statement-object (Northline Leather Goods\": configure a bag and request a make-slot. via single object left, large type right — northline, leather, goods, people, who, buy)\n\n## Signature\nnorthline-statement-object\n\n## Axis record\n\n- direction-version: 2.3\n- composition: single object left, large type right\n- type: condensed display grotesque over quiet sans\n- colour: light paper ground with one reserve accent\n- imagery: object-led, full-height product plate using declared product plates from asset plan\n- rhythm: hard vertical split then calm bands\n\n- surface: open — subject earns space around the object\n- labels: sentence case captions — retail voice stays human\n- figures: proportional — price is content not motif\n- depth: elevated — object lifts off ground slightly\n\n- visual-density: 6\n- motion-intensity: 2\n- aesthetic-boldness: 6\n\n- signature-selector: [data-signature=\"northline-statement-object\"]\n- signature-min-share: 12\n\n## Rejections\n- poster-type: recorded alternative; not passed to build context\n- split-evidence: recorded alternative; not passed to build context\n\n## Notes\nSelected by Direction Engine v3 slice. Build context must not receive losing cards or generator scores.",
-  "axisRecord": "## Axis record\n\n- direction-version: 2.3\n- composition: single object left, large type right\n- type: condensed display grotesque over quiet sans\n- colour: light paper ground with one reserve accent\n- imagery: object-led, full-height product plate using declared product plates from asset plan\n- rhythm: hard vertical split then calm bands\n\n- surface: open — subject earns space around the object\n- labels: sentence case captions — retail voice stays human\n- figures: proportional — price is content not motif\n- depth: elevated — object lifts off ground slightly\n\n- visual-density: 6\n- motion-intensity: 2\n- aesthetic-boldness: 6\n\n- signature-selector: [data-signature=\"northline-statement-object\"]\n- signature-min-share: 12",
+  "directionMd": "---\ntitle: \"DIRECTION — 01-leather-goods\"\nstatus: direction-engine-slice\nai_generated: \"(C)\"\n---\n\n# DIRECTION — 01-leather-goods\n\nWinner: statement-object (Northline Leather Goods\": configure a bag and request a make-slot. via single object left, large type right — northline, leather, goods, people, who, buy)\n\n## Signature\nnorthline-sig-2\n\n## Axis record\n\n- direction-version: 2.3\n- composition: single object left, large type right\n- type: condensed display grotesque over quiet sans\n- colour: light paper ground with one reserve accent\n- imagery: object-led, full-height product plate using declared product plates from asset plan\n- rhythm: hard vertical split then calm bands\n\n- surface: open — subject earns space around the object\n- labels: sentence case captions — retail voice stays human\n- figures: proportional — price is content not motif\n- depth: elevated — object lifts off ground slightly\n\n- visual-density: 6\n- motion-intensity: 2\n- aesthetic-boldness: 6\n\n- signature-selector: [data-signature=\"northline-sig-2\"]\n- signature-min-share: 12\n\n## Rejections\n- poster-type: recorded alternative; not passed to build context\n- split-evidence: recorded alternative; not passed to build context\n\n## Notes\nSelected by Direction Engine v3 slice. Build context must not receive losing cards or generator scores.",
+  "axisRecord": "## Axis record\n\n- direction-version: 2.3\n- composition: single object left, large type right\n- type: condensed display grotesque over quiet sans\n- colour: light paper ground with one reserve accent\n- imagery: object-led, full-height product plate using declared product plates from asset plan\n- rhythm: hard vertical split then calm bands\n\n- surface: open — subject earns space around the object\n- labels: sentence case captions — retail voice stays human\n- figures: proportional — price is content not motif\n- depth: elevated — object lifts off ground slightly\n\n- visual-density: 6\n- motion-intensity: 2\n- aesthetic-boldness: 6\n\n- signature-selector: [data-signature=\"northline-sig-2\"]\n- signature-min-share: 12",
   "withheldFromBuild": {
     "rejectedDirectionCards": true,
     "generatorScores": true,

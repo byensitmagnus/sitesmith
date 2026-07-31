@@ -9,7 +9,7 @@ ai_generated: "(C)"
 Winner: workspace-canvas (Passage Log Console": log a passage (vessel, direction, time, notes). via real interface full width as first screen — passage, log, console, harbour, masters, logging)
 
 ## Signature
-passage-workspace-canvas
+passage-sig-2
 
 ## Axis record
 
@@ -29,7 +29,7 @@ passage-workspace-canvas
 - motion-intensity: 1
 - aesthetic-boldness: 3
 
-- signature-selector: [data-signature="passage-workspace-canvas"]
+- signature-selector: [data-signature="passage-sig-2"]
 - signature-min-share: 12
 
 ## Rejections

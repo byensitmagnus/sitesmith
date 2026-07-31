@@ -52,7 +52,7 @@
     "label every control",
     "AA contrast for body and UI text"
   ],
-  "signatureElement": "northline-statement-object",
+  "signatureElement": "northline-sig-2",
   "forbiddenFallbackDefaults": [
     "purple SaaS gradient hero",
     "three equal feature cards as default identity",
@@ -98,7 +98,7 @@
     },
     {
       "field": "signature-selector",
-      "expected": "[data-signature=\"northline-statement-object\"]"
+      "expected": "[data-signature=\"northline-sig-2\"]"
     }
   ],
   "acceptanceCriteria": [

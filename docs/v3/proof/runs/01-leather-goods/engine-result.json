@@ -4,7 +4,7 @@
   "policyVersion": "direction-engine-v3-slice-1.0.0",
   "inputWarnings": [],
   "proofMeta": {
-    "engineCommit": "ade84174a64cc614cca0bf437e6a658343f82837",
+    "engineCommit": "4d8037bd1984717590a761a954df0d916bcd8af3",
     "inputHash": "748843e0c88640b0344a667a8a923a0693d0eb7ea3f28df927bb30649914e499",
     "policyVersion": "direction-engine-v3-slice-1.0.0",
     "randomSeed": "proof-leather-2026-07-31",
@@ -467,9 +467,9 @@
         "typographicPrinciple": "custom-feeling display, extreme scale ratio",
         "assetStrategy": "deliberately imageless on first screen",
         "motionInteraction": "single decisive scroll cue",
-        "signatureElement": "northline-poster-type",
+        "signatureElement": "northline-sig-1",
         "primaryRisk": "Signature may overfit if evidence is thin.",
-        "differenceNote": "Differs from statement-object, split-evidence on composition/type/imagery/grammar after brief-fit filter.",
+        "differenceNote": "Differs from W2, W3 on composition/type/imagery/grammar after brief-fit filter.",
         "capabilityProvenance": [
           "TASTE-CAP-002",
           "TASTE-CAP-003",
@@ -545,9 +545,9 @@
         "typographicPrinciple": "condensed display grotesque over quiet sans",
         "assetStrategy": "object-led, full-height product plate using declared product plates from asset plan",
         "motionInteraction": "hover reveals material fact on the object",
-        "signatureElement": "northline-statement-object",
+        "signatureElement": "northline-sig-2",
         "primaryRisk": "Signature may overfit if evidence is thin.",
-        "differenceNote": "Differs from poster-type, split-evidence on composition/type/imagery/grammar after brief-fit filter.",
+        "differenceNote": "Differs from W1, W3 on composition/type/imagery/grammar after brief-fit filter.",
         "capabilityProvenance": [
           "TASTE-CAP-002",
           "TASTE-CAP-003",
@@ -623,9 +623,9 @@
         "typographicPrinciple": "neutral grotesque, medium weight only",
         "assetStrategy": "diagram-led evidence stack",
         "motionInteraction": "sticky action column on desktop",
-        "signatureElement": "northline-split-evidence",
+        "signatureElement": "northline-sig-3",
         "primaryRisk": "Signature may overfit if evidence is thin.",
-        "differenceNote": "Differs from poster-type, statement-object on composition/type/imagery/grammar after brief-fit filter.",
+        "differenceNote": "Differs from W1, W2 on composition/type/imagery/grammar after brief-fit filter.",
         "capabilityProvenance": [
           "TASTE-CAP-002",
           "TASTE-CAP-003",
@@ -730,9 +730,9 @@
         "typographicPrinciple": "condensed display grotesque over quiet sans",
         "assetStrategy": "object-led, full-height product plate using declared product plates from asset plan",
         "motionInteraction": "hover reveals material fact on the object",
-        "signatureElement": "northline-statement-object",
+        "signatureElement": "northline-sig-L1",
         "primaryRisk": "Signature may overfit if evidence is thin.",
-        "differenceNote": "Differs from poster-type, split-evidence on composition/type/imagery/grammar after brief-fit filter.",
+        "differenceNote": "Differs from L2, L3 on composition/type/imagery/grammar after brief-fit filter.",
         "density": "airy",
         "grounding": {
           "subject": "Northline Leather Goods\"",
@@ -765,9 +765,9 @@
         "typographicPrinciple": "neutral grotesque, medium weight only",
         "assetStrategy": "diagram-led evidence stack",
         "motionInteraction": "sticky action column on desktop",
-        "signatureElement": "northline-split-evidence",
+        "signatureElement": "northline-sig-L2",
         "primaryRisk": "Signature may overfit if evidence is thin.",
-        "differenceNote": "Differs from poster-type, statement-object on composition/type/imagery/grammar after brief-fit filter.",
+        "differenceNote": "Differs from L1, L3 on composition/type/imagery/grammar after brief-fit filter.",
         "density": "balanced",
         "grounding": {
           "subject": "Northline Leather Goods\"",
@@ -800,9 +800,9 @@
         "typographicPrinciple": "custom-feeling display, extreme scale ratio",
         "assetStrategy": "deliberately imageless on first screen",
         "motionInteraction": "single decisive scroll cue",
-        "signatureElement": "northline-poster-type",
+        "signatureElement": "northline-sig-L3",
         "primaryRisk": "Signature may overfit if evidence is thin.",
-        "differenceNote": "Differs from statement-object, split-evidence on composition/type/imagery/grammar after brief-fit filter.",
+        "differenceNote": "Differs from L1, L2 on composition/type/imagery/grammar after brief-fit filter.",
         "density": "poster",
         "grounding": {
           "subject": "Northline Leather Goods\"",
@@ -836,22 +836,22 @@
       },
       {
         "blindId": "L2",
-        "briefFit": 6,
+        "briefFit": 4,
         "originality": 0,
         "subject": 3,
         "composition": 3,
         "implementability": 2,
-        "total": 14,
+        "total": 12,
         "flags": []
       },
       {
         "blindId": "L3",
-        "briefFit": 6,
+        "briefFit": 4,
         "originality": 0,
         "subject": 3,
         "composition": 3,
         "implementability": 2,
-        "total": 14,
+        "total": 12,
         "flags": []
       }
     ],
@@ -860,10 +860,10 @@
       "L2",
       "L3"
     ],
-    "tie": true,
+    "tie": false,
     "rejectAll": false,
-    "recommendation": null,
-    "notes": "tie: user or external adjudicator required"
+    "recommendation": "L1",
+    "notes": "preflight prefers L1; not an independent critic verdict"
   },
   "choice": {
     "status": "selected",
@@ -925,7 +925,7 @@
       "label every control",
       "AA contrast for body and UI text"
     ],
-    "signatureElement": "northline-statement-object",
+    "signatureElement": "northline-sig-2",
     "forbiddenFallbackDefaults": [
       "purple SaaS gradient hero",
       "three equal feature cards as default identity",
@@ -971,7 +971,7 @@
       },
       {
         "field": "signature-selector",
-        "expected": "[data-signature=\"northline-statement-object\"]"
+        "expected": "[data-signature=\"northline-sig-2\"]"
       }
     ],
     "acceptanceCriteria": [
@@ -1254,7 +1254,7 @@
         "label every control",
         "AA contrast for body and UI text"
       ],
-      "signatureElement": "northline-statement-object",
+      "signatureElement": "northline-sig-2",
       "forbiddenFallbackDefaults": [
         "purple SaaS gradient hero",
         "three equal feature cards as default identity",
@@ -1300,7 +1300,7 @@
         },
         {
           "field": "signature-selector",
-          "expected": "[data-signature=\"northline-statement-object\"]"
+          "expected": "[data-signature=\"northline-sig-2\"]"
         }
       ],
       "acceptanceCriteria": [
@@ -1519,8 +1519,8 @@
         "by": "user"
       }
     },
-    "directionMd": "---\ntitle: \"DIRECTION — 01-leather-goods\"\nstatus: direction-engine-slice\nai_generated: \"(C)\"\n---\n\n# DIRECTION — 01-leather-goods\n\nWinner: statement-object (Northline Leather Goods\": configure a bag and request a make-slot. via single object left, large type right — northline, leather, goods, people, who, buy)\n\n## Signature\nnorthline-statement-object\n\n## Axis record\n\n- direction-version: 2.3\n- composition: single object left, large type right\n- type: condensed display grotesque over quiet sans\n- colour: light paper ground with one reserve accent\n- imagery: object-led, full-height product plate using declared product plates from asset plan\n- rhythm: hard vertical split then calm bands\n\n- surface: open — subject earns space around the object\n- labels: sentence case captions — retail voice stays human\n- figures: proportional — price is content not motif\n- depth: elevated — object lifts off ground slightly\n\n- visual-density: 6\n- motion-intensity: 2\n- aesthetic-boldness: 6\n\n- signature-selector: [data-signature=\"northline-statement-object\"]\n- signature-min-share: 12\n\n## Rejections\n- poster-type: recorded alternative; not passed to build context\n- split-evidence: recorded alternative; not passed to build context\n\n## Notes\nSelected by Direction Engine v3 slice. Build context must not receive losing cards or generator scores.",
-    "axisRecord": "## Axis record\n\n- direction-version: 2.3\n- composition: single object left, large type right\n- type: condensed display grotesque over quiet sans\n- colour: light paper ground with one reserve accent\n- imagery: object-led, full-height product plate using declared product plates from asset plan\n- rhythm: hard vertical split then calm bands\n\n- surface: open — subject earns space around the object\n- labels: sentence case captions — retail voice stays human\n- figures: proportional — price is content not motif\n- depth: elevated — object lifts off ground slightly\n\n- visual-density: 6\n- motion-intensity: 2\n- aesthetic-boldness: 6\n\n- signature-selector: [data-signature=\"northline-statement-object\"]\n- signature-min-share: 12",
+    "directionMd": "---\ntitle: \"DIRECTION — 01-leather-goods\"\nstatus: direction-engine-slice\nai_generated: \"(C)\"\n---\n\n# DIRECTION — 01-leather-goods\n\nWinner: statement-object (Northline Leather Goods\": configure a bag and request a make-slot. via single object left, large type right — northline, leather, goods, people, who, buy)\n\n## Signature\nnorthline-sig-2\n\n## Axis record\n\n- direction-version: 2.3\n- composition: single object left, large type right\n- type: condensed display grotesque over quiet sans\n- colour: light paper ground with one reserve accent\n- imagery: object-led, full-height product plate using declared product plates from asset plan\n- rhythm: hard vertical split then calm bands\n\n- surface: open — subject earns space around the object\n- labels: sentence case captions — retail voice stays human\n- figures: proportional — price is content not motif\n- depth: elevated — object lifts off ground slightly\n\n- visual-density: 6\n- motion-intensity: 2\n- aesthetic-boldness: 6\n\n- signature-selector: [data-signature=\"northline-sig-2\"]\n- signature-min-share: 12\n\n## Rejections\n- poster-type: recorded alternative; not passed to build context\n- split-evidence: recorded alternative; not passed to build context\n\n## Notes\nSelected by Direction Engine v3 slice. Build context must not receive losing cards or generator scores.",
+    "axisRecord": "## Axis record\n\n- direction-version: 2.3\n- composition: single object left, large type right\n- type: condensed display grotesque over quiet sans\n- colour: light paper ground with one reserve accent\n- imagery: object-led, full-height product plate using declared product plates from asset plan\n- rhythm: hard vertical split then calm bands\n\n- surface: open — subject earns space around the object\n- labels: sentence case captions — retail voice stays human\n- figures: proportional — price is content not motif\n- depth: elevated — object lifts off ground slightly\n\n- visual-density: 6\n- motion-intensity: 2\n- aesthetic-boldness: 6\n\n- signature-selector: [data-signature=\"northline-sig-2\"]\n- signature-min-share: 12",
     "withheldFromBuild": {
       "rejectedDirectionCards": true,
       "generatorScores": true,

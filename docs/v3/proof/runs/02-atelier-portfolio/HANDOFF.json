@@ -62,7 +62,7 @@
       "label every control",
       "AA contrast for body and UI text"
     ],
-    "signatureElement": "atelier-split-evidence",
+    "signatureElement": "atelier-sig-2",
     "forbiddenFallbackDefaults": [
       "purple SaaS gradient hero",
       "three equal feature cards as default identity",
@@ -108,7 +108,7 @@
       },
       {
         "field": "signature-selector",
-        "expected": "[data-signature=\"atelier-split-evidence\"]"
+        "expected": "[data-signature=\"atelier-sig-2\"]"
       }
     ],
     "acceptanceCriteria": [
@@ -327,8 +327,8 @@
       "by": "user"
     }
   },
-  "directionMd": "---\ntitle: \"DIRECTION — 02-atelier-portfolio\"\nstatus: direction-engine-slice\nai_generated: \"(C)\"\n---\n\n# DIRECTION — 02-atelier-portfolio\n\nWinner: split-evidence (Atelier Møn Printworks\": enquire about a print edition. via hard vertical rule: proof left, action right — atelier, møn, printworks, curators, and, small)\n\n## Signature\natelier-split-evidence\n\n## Axis record\n\n- direction-version: 2.3\n- composition: hard vertical rule: proof left, action right\n- type: neutral grotesque, medium weight only\n- colour: stone ground, single brand accent on CTA only\n- imagery: diagram-led evidence stack\n- rhythm: two columns for the whole first fold\n\n- surface: framed — evidence cards in heavy borders\n- labels: sentence case — operational clarity\n- figures: functional tabular — measurements only where compared\n- depth: elevated — evidence cards raise on focus\n\n- visual-density: 4\n- motion-intensity: 3\n- aesthetic-boldness: 7\n\n- signature-selector: [data-signature=\"atelier-split-evidence\"]\n- signature-min-share: 12\n\n## Rejections\n- poster-type: recorded alternative; not passed to build context\n- statement-object: recorded alternative; not passed to build context\n\n## Notes\nSelected by Direction Engine v3 slice. Build context must not receive losing cards or generator scores.",
-  "axisRecord": "## Axis record\n\n- direction-version: 2.3\n- composition: hard vertical rule: proof left, action right\n- type: neutral grotesque, medium weight only\n- colour: stone ground, single brand accent on CTA only\n- imagery: diagram-led evidence stack\n- rhythm: two columns for the whole first fold\n\n- surface: framed — evidence cards in heavy borders\n- labels: sentence case — operational clarity\n- figures: functional tabular — measurements only where compared\n- depth: elevated — evidence cards raise on focus\n\n- visual-density: 4\n- motion-intensity: 3\n- aesthetic-boldness: 7\n\n- signature-selector: [data-signature=\"atelier-split-evidence\"]\n- signature-min-share: 12",
+  "directionMd": "---\ntitle: \"DIRECTION — 02-atelier-portfolio\"\nstatus: direction-engine-slice\nai_generated: \"(C)\"\n---\n\n# DIRECTION — 02-atelier-portfolio\n\nWinner: split-evidence (Atelier Møn Printworks\": enquire about a print edition. via hard vertical rule: proof left, action right — atelier, møn, printworks, curators, and, small)\n\n## Signature\natelier-sig-2\n\n## Axis record\n\n- direction-version: 2.3\n- composition: hard vertical rule: proof left, action right\n- type: neutral grotesque, medium weight only\n- colour: stone ground, single brand accent on CTA only\n- imagery: diagram-led evidence stack\n- rhythm: two columns for the whole first fold\n\n- surface: framed — evidence cards in heavy borders\n- labels: sentence case — operational clarity\n- figures: functional tabular — measurements only where compared\n- depth: elevated — evidence cards raise on focus\n\n- visual-density: 4\n- motion-intensity: 3\n- aesthetic-boldness: 7\n\n- signature-selector: [data-signature=\"atelier-sig-2\"]\n- signature-min-share: 12\n\n## Rejections\n- poster-type: recorded alternative; not passed to build context\n- statement-object: recorded alternative; not passed to build context\n\n## Notes\nSelected by Direction Engine v3 slice. Build context must not receive losing cards or generator scores.",
+  "axisRecord": "## Axis record\n\n- direction-version: 2.3\n- composition: hard vertical rule: proof left, action right\n- type: neutral grotesque, medium weight only\n- colour: stone ground, single brand accent on CTA only\n- imagery: diagram-led evidence stack\n- rhythm: two columns for the whole first fold\n\n- surface: framed — evidence cards in heavy borders\n- labels: sentence case — operational clarity\n- figures: functional tabular — measurements only where compared\n- depth: elevated — evidence cards raise on focus\n\n- visual-density: 4\n- motion-intensity: 3\n- aesthetic-boldness: 7\n\n- signature-selector: [data-signature=\"atelier-sig-2\"]\n- signature-min-share: 12",
   "withheldFromBuild": {
     "rejectedDirectionCards": true,
     "generatorScores": true,
