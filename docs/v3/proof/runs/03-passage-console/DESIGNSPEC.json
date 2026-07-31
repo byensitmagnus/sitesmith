@@ -1,0 +1,319 @@
+{
+  "schemaVersion": 1,
+  "kind": "sitesmith.designspec.v3-slice",
+  "projectName": "03-passage-console",
+  "mode": "product-ui",
+  "stack": "html",
+  "designThesis": "Passage Log Console\": log a passage (vessel, direction, time, notes). via real interface full width as first screen — passage, log, console, harbour, masters, logging",
+  "contentHierarchy": [
+    "subject recognition",
+    "log a passage (vessel, direction, time, notes).",
+    "supporting evidence",
+    "secondary navigation"
+  ],
+  "pageComposition": "real interface full width as first screen",
+  "gridAndSpacing": "tight 4/8 rhythm, dense modules",
+  "typographySystem": {
+    "principle": "UI sans pair, tight tracking on tools",
+    "roles": [
+      "display",
+      "body",
+      "label"
+    ]
+  },
+  "colourRoles": {
+    "ground": "dark near-black ground, functional status accent",
+    "accent": "single reserved accent from brand evidence only if present",
+    "text": "primary ink on ground with WCAG AA body contrast"
+  },
+  "surfaceMaterialModel": "framed — panels bound the work surface",
+  "imageryStrategy": "deliberately imageless — chrome and type carry the first screen",
+  "componentPrinciples": [
+    "states must be visible without colour alone",
+    "primary action uses reserved accent only"
+  ],
+  "interactionStates": [
+    "default",
+    "hover/focus",
+    "active",
+    "disabled",
+    "error"
+  ],
+  "motionRules": {
+    "principle": "keyboard-first primary journey",
+    "reducedMotion": "disable non-essential motion"
+  },
+  "responsiveBehavior": {
+    "firstFold": "preserve composition intent; stack only after tablet",
+    "tables": "horizontal scroll must expose affordance if used"
+  },
+  "accessibilityConstraints": [
+    "visible focus",
+    "label every control",
+    "AA contrast for body and UI text"
+  ],
+  "signatureElement": "passage-sig-2",
+  "forbiddenFallbackDefaults": [
+    "purple SaaS gradient hero",
+    "three equal feature cards as default identity",
+    "round-8 recipe: mono uppercase labels + hairlines + tabular motif + flat depth",
+    "invented testimonials, prices, or certifications"
+  ],
+  "fidelityAssertions": [
+    {
+      "field": "composition",
+      "expected": "real interface full width as first screen"
+    },
+    {
+      "field": "type",
+      "expected": "UI sans pair, tight tracking on tools"
+    },
+    {
+      "field": "colour",
+      "expected": "dark near-black ground, functional status accent"
+    },
+    {
+      "field": "imagery",
+      "expected": "deliberately imageless — chrome and type carry the first screen"
+    },
+    {
+      "field": "rhythm",
+      "expected": "asymmetric tool rail + main canvas"
+    },
+    {
+      "field": "surface",
+      "expected": "framed — panels bound the work surface"
+    },
+    {
+      "field": "labels",
+      "expected": "symbol-led — tools speak as icons with text fallback"
+    },
+    {
+      "field": "figures",
+      "expected": "absent — no decorative metrics"
+    },
+    {
+      "field": "depth",
+      "expected": "inset — panels recede into the shell"
+    },
+    {
+      "field": "signature-selector",
+      "expected": "[data-signature=\"passage-sig-2\"]"
+    }
+  ],
+  "acceptanceCriteria": [
+    "built page matches axis record treatments",
+    "primary action findable in first fold",
+    "no fabricated brand/product facts",
+    "passes existing v2.3 verify + direction fidelity"
+  ],
+  "capabilityProvenance": [
+    {
+      "capabilityId": "TASTE-CAP-002",
+      "upstreamOrigin": "https://github.com/Leonxlnx/taste-skill.git",
+      "phase": "creative-direction",
+      "whyRelevant": "mode product-ui base required · subject=Passage Log Console\" · action=log a passage (vessel, direction, time, notes).",
+      "evidencePointers": [
+        "mode:product-ui"
+      ],
+      "status": "explicit"
+    },
+    {
+      "capabilityId": "TASTE-CAP-003",
+      "upstreamOrigin": "https://github.com/Leonxlnx/taste-skill.git",
+      "phase": "creative-direction",
+      "whyRelevant": "mode product-ui base required · subject=Passage Log Console\" · action=log a passage (vessel, direction, time, notes).",
+      "evidencePointers": [
+        "mode:product-ui"
+      ],
+      "status": "explicit"
+    },
+    {
+      "capabilityId": "TASTE-CAP-004",
+      "upstreamOrigin": "https://github.com/Leonxlnx/taste-skill.git",
+      "phase": "creative-direction",
+      "whyRelevant": "mode product-ui base required · subject=Passage Log Console\" · action=log a passage (vessel, direction, time, notes).",
+      "evidencePointers": [
+        "mode:product-ui"
+      ],
+      "status": "explicit"
+    },
+    {
+      "capabilityId": "frontend.subject-vernacular",
+      "upstreamOrigin": "https://github.com/anthropics/skills",
+      "phase": "creative-direction",
+      "whyRelevant": "mode product-ui base required · subject=Passage Log Console\" · action=log a passage (vessel, direction, time, notes).",
+      "evidencePointers": [
+        "mode:product-ui"
+      ],
+      "status": "explicit"
+    },
+    {
+      "capabilityId": "frontend.semantic-structure",
+      "upstreamOrigin": "https://github.com/anthropics/skills",
+      "phase": "creative-direction",
+      "whyRelevant": "mode product-ui base required · subject=Passage Log Console\" · action=log a passage (vessel, direction, time, notes).",
+      "evidencePointers": [
+        "mode:product-ui"
+      ],
+      "status": "explicit"
+    },
+    {
+      "capabilityId": "frontend.interface-writing",
+      "upstreamOrigin": "https://github.com/anthropics/skills",
+      "phase": "creative-direction",
+      "whyRelevant": "mode product-ui base required · subject=Passage Log Console\" · action=log a passage (vessel, direction, time, notes).",
+      "evidencePointers": [
+        "mode:product-ui"
+      ],
+      "status": "explicit"
+    },
+    {
+      "capabilityId": "frontend.restraint-quality-floor",
+      "upstreamOrigin": "https://github.com/anthropics/skills",
+      "phase": "critique",
+      "whyRelevant": "mode product-ui base required · subject=Passage Log Console\" · action=log a passage (vessel, direction, time, notes).",
+      "evidencePointers": [
+        "mode:product-ui"
+      ],
+      "status": "explicit"
+    },
+    {
+      "capabilityId": "frontend.anti-default-calibration",
+      "upstreamOrigin": "https://github.com/anthropics/skills",
+      "phase": "creative-direction",
+      "whyRelevant": "mode product-ui base required · subject=Passage Log Console\" · action=log a passage (vessel, direction, time, notes).",
+      "evidencePointers": [
+        "mode:product-ui"
+      ],
+      "status": "explicit"
+    },
+    {
+      "capabilityId": "uupm.tune.design-dials",
+      "upstreamOrigin": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "phase": "creative-direction",
+      "whyRelevant": "mode product-ui base required · subject=Passage Log Console\" · action=log a passage (vessel, direction, time, notes).",
+      "evidencePointers": [
+        "mode:product-ui"
+      ],
+      "status": "explicit"
+    },
+    {
+      "capabilityId": "IMP-004",
+      "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
+      "phase": "seed",
+      "whyRelevant": "mode product-ui base required · subject=Passage Log Console\" · action=log a passage (vessel, direction, time, notes).",
+      "evidencePointers": [
+        "mode:product-ui"
+      ],
+      "status": "explicit"
+    },
+    {
+      "capabilityId": "IMP-005",
+      "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
+      "phase": "seed",
+      "whyRelevant": "mode product-ui base required · subject=Passage Log Console\" · action=log a passage (vessel, direction, time, notes).",
+      "evidencePointers": [
+        "mode:product-ui"
+      ],
+      "status": "explicit"
+    },
+    {
+      "capabilityId": "IMP-008",
+      "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
+      "phase": "critique",
+      "whyRelevant": "mode product-ui base required · subject=Passage Log Console\" · action=log a passage (vessel, direction, time, notes).",
+      "evidencePointers": [
+        "mode:product-ui"
+      ],
+      "status": "explicit"
+    },
+    {
+      "capabilityId": "IMP-010",
+      "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
+      "phase": "critique",
+      "whyRelevant": "mode product-ui base required · subject=Passage Log Console\" · action=log a passage (vessel, direction, time, notes).",
+      "evidencePointers": [
+        "mode:product-ui"
+      ],
+      "status": "explicit"
+    },
+    {
+      "capabilityId": "frontend.motion-intent",
+      "upstreamOrigin": "https://github.com/anthropics/skills",
+      "phase": "creative-direction",
+      "whyRelevant": "mode product-ui base optional · subject=Passage Log Console\" · action=log a passage (vessel, direction, time, notes).",
+      "evidencePointers": [
+        "mode:product-ui"
+      ],
+      "status": "inferred"
+    },
+    {
+      "capabilityId": "IMP-006",
+      "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
+      "phase": "seed",
+      "whyRelevant": "mode product-ui base optional · subject=Passage Log Console\" · action=log a passage (vessel, direction, time, notes).",
+      "evidencePointers": [
+        "mode:product-ui"
+      ],
+      "status": "inferred"
+    },
+    {
+      "capabilityId": "uupm.generate.design-system",
+      "upstreamOrigin": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "phase": "knowledge",
+      "whyRelevant": "mode product-ui base optional · subject=Passage Log Console\" · action=log a passage (vessel, direction, time, notes).",
+      "evidencePointers": [
+        "mode:product-ui"
+      ],
+      "status": "inferred"
+    },
+    {
+      "capabilityId": "TASTE-CAP-006",
+      "upstreamOrigin": "https://github.com/Leonxlnx/taste-skill.git",
+      "phase": "knowledge",
+      "whyRelevant": "commerce/product evidence present · subject=Passage Log Console\" · action=log a passage (vessel, direction, time, notes).",
+      "evidencePointers": [
+        "evidence:products"
+      ],
+      "status": "inferred"
+    },
+    {
+      "capabilityId": "uupm.classify.product-reasoning",
+      "upstreamOrigin": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "phase": "knowledge",
+      "whyRelevant": "product classification needed for commerce · subject=Passage Log Console\" · action=log a passage (vessel, direction, time, notes).",
+      "evidencePointers": [
+        "evidence:products"
+      ],
+      "status": "inferred"
+    }
+  ],
+  "seedProvenance": {
+    "source": "local-world-library-seed",
+    "version": "1.1.0",
+    "method": "sha256-project-entropy + fisher-yates over eligibility-filtered seeds",
+    "randomSeed": "proof-passage-2026-07-31",
+    "numericSeed": 4096199536,
+    "licence": "MIT SiteSmith-original world seed templates",
+    "origin": "local",
+    "slot": 1
+  },
+  "policyVersion": "direction-engine-v3-slice-1.0.0",
+  "dials": {
+    "visualDensity": 8,
+    "motionIntensity": 1,
+    "aestheticBoldness": 3,
+    "status": {
+      "visualDensity": "explicit",
+      "motionIntensity": "explicit",
+      "aestheticBoldness": "explicit"
+    }
+  },
+  "choice": {
+    "status": "selected",
+    "selectedBlindId": "L1",
+    "selectedInternalId": "W2",
+    "by": "user"
+  }
+}

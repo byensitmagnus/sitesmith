@@ -1,0 +1,259 @@
+{
+  "generatedAt": "2026-07-31",
+  "engineCommit": "db8977dfd35db79e4b7e15e5e8d0486f6f57f51e",
+  "results": [
+    {
+      "brief": "01-leather-goods",
+      "ok": true,
+      "stage": "handoff-ready",
+      "worlds": [
+        "poster-type",
+        "statement-object",
+        "split-evidence",
+        "material-board",
+        "index-first"
+      ],
+      "cards": [
+        {
+          "worldId": "poster-type",
+          "thesis": "Northline Leather Goods\": configure a bag and request a make-slot. via type alone at scale, artefact below the fold — northline, leather, goods, people, who, buy",
+          "composition": "type alone at scale, artefact below the fold",
+          "surface": "open — type is the material",
+          "labels": "symbol-led — almost no chrome labels",
+          "figures": "absent",
+          "depth": "flat",
+          "signature": "northline-sig-1"
+        },
+        {
+          "worldId": "statement-object",
+          "thesis": "Northline Leather Goods\": configure a bag and request a make-slot. via single object left, large type right — northline, leather, goods, people, who, buy",
+          "composition": "single object left, large type right",
+          "surface": "open — subject earns space around the object",
+          "labels": "sentence case captions — retail voice stays human",
+          "figures": "proportional — price is content not motif",
+          "depth": "elevated — object lifts off ground slightly",
+          "signature": "northline-sig-2"
+        },
+        {
+          "worldId": "split-evidence",
+          "thesis": "Northline Leather Goods\": configure a bag and request a make-slot. via hard vertical rule: proof left, action right — northline, leather, goods, people, who, buy",
+          "composition": "hard vertical rule: proof left, action right",
+          "surface": "framed — evidence cards in heavy borders",
+          "labels": "sentence case — operational clarity",
+          "figures": "functional tabular — measurements only where compared",
+          "depth": "elevated — evidence cards raise on focus",
+          "signature": "northline-sig-3"
+        }
+      ],
+      "pairwise": [
+        {
+          "a": "W1",
+          "b": "W2",
+          "macroDiff": 5,
+          "grammarDiff": 3,
+          "compositionDiff": true,
+          "pass": true
+        },
+        {
+          "a": "W1",
+          "b": "W3",
+          "macroDiff": 5,
+          "grammarDiff": 4,
+          "compositionDiff": true,
+          "pass": true
+        },
+        {
+          "a": "W2",
+          "b": "W3",
+          "macroDiff": 5,
+          "grammarDiff": 2,
+          "compositionDiff": true,
+          "pass": true
+        }
+      ],
+      "pairwisePass": true,
+      "critic": {
+        "role": "deterministic-preflight",
+        "independence": "deterministic-preflight",
+        "rejectAll": false,
+        "tie": false
+      },
+      "handoffReady": true,
+      "proofMeta": {
+        "engineCommit": "db8977dfd35db79e4b7e15e5e8d0486f6f57f51e",
+        "inputHash": "748843e0c88640b0344a667a8a923a0693d0eb7ea3f28df927bb30649914e499",
+        "policyVersion": "direction-engine-v3-slice-1.0.0",
+        "randomSeed": "proof-leather-2026-07-31",
+        "numericSeed": 4276134208
+      }
+    },
+    {
+      "brief": "02-atelier-portfolio",
+      "ok": true,
+      "stage": "handoff-ready",
+      "worlds": [
+        "poster-type",
+        "split-evidence",
+        "statement-object",
+        "editorial-bleed"
+      ],
+      "cards": [
+        {
+          "worldId": "poster-type",
+          "thesis": "Atelier Møn Printworks\": enquire about a print edition. via type alone at scale, artefact below the fold — atelier, møn, printworks, curators, and, small",
+          "composition": "type alone at scale, artefact below the fold",
+          "surface": "open — type is the material",
+          "labels": "symbol-led — almost no chrome labels",
+          "figures": "absent",
+          "depth": "flat",
+          "signature": "atelier-sig-1"
+        },
+        {
+          "worldId": "split-evidence",
+          "thesis": "Atelier Møn Printworks\": enquire about a print edition. via hard vertical rule: proof left, action right — atelier, møn, printworks, curators, and, small",
+          "composition": "hard vertical rule: proof left, action right",
+          "surface": "framed — evidence cards in heavy borders",
+          "labels": "sentence case — operational clarity",
+          "figures": "functional tabular — measurements only where compared",
+          "depth": "elevated — evidence cards raise on focus",
+          "signature": "atelier-sig-2"
+        },
+        {
+          "worldId": "statement-object",
+          "thesis": "Atelier Møn Printworks\": enquire about a print edition. via single object left, large type right — atelier, møn, printworks, curators, and, small",
+          "composition": "single object left, large type right",
+          "surface": "open — subject earns space around the object",
+          "labels": "sentence case captions — retail voice stays human",
+          "figures": "proportional — price is content not motif",
+          "depth": "elevated — object lifts off ground slightly",
+          "signature": "atelier-sig-3"
+        }
+      ],
+      "pairwise": [
+        {
+          "a": "W1",
+          "b": "W2",
+          "macroDiff": 5,
+          "grammarDiff": 4,
+          "compositionDiff": true,
+          "pass": true
+        },
+        {
+          "a": "W1",
+          "b": "W3",
+          "macroDiff": 5,
+          "grammarDiff": 3,
+          "compositionDiff": true,
+          "pass": true
+        },
+        {
+          "a": "W2",
+          "b": "W3",
+          "macroDiff": 5,
+          "grammarDiff": 2,
+          "compositionDiff": true,
+          "pass": true
+        }
+      ],
+      "pairwisePass": true,
+      "critic": {
+        "role": "deterministic-preflight",
+        "independence": "deterministic-preflight",
+        "rejectAll": false,
+        "tie": true
+      },
+      "handoffReady": true,
+      "proofMeta": {
+        "engineCommit": "db8977dfd35db79e4b7e15e5e8d0486f6f57f51e",
+        "inputHash": "1bd5d3d109f1591e8e6e4ddd22927a3b06daf0612734aa6114c48414aa36642c",
+        "policyVersion": "direction-engine-v3-slice-1.0.0",
+        "randomSeed": "proof-atelier-2026-07-31",
+        "numericSeed": 2914086421
+      }
+    },
+    {
+      "brief": "03-passage-console",
+      "ok": true,
+      "stage": "handoff-ready",
+      "worlds": [
+        "index-first",
+        "workspace-canvas",
+        "poster-type",
+        "split-evidence"
+      ],
+      "cards": [
+        {
+          "worldId": "workspace-canvas",
+          "thesis": "Passage Log Console\": log a passage (vessel, direction, time, notes). via real interface full width as first screen — passage, log, console, harbour, masters, logging",
+          "composition": "real interface full width as first screen",
+          "surface": "framed — panels bound the work surface",
+          "labels": "symbol-led — tools speak as icons with text fallback",
+          "figures": "absent — no decorative metrics",
+          "depth": "inset — panels recede into the shell",
+          "signature": "passage-sig-2"
+        },
+        {
+          "worldId": "poster-type",
+          "thesis": "Passage Log Console\": log a passage (vessel, direction, time, notes). via type alone at scale, artefact below the fold — passage, log, console, harbour, masters, logging",
+          "composition": "type alone at scale, artefact below the fold",
+          "surface": "open — type is the material",
+          "labels": "symbol-led — almost no chrome labels",
+          "figures": "absent",
+          "depth": "flat",
+          "signature": "passage-sig-3"
+        },
+        {
+          "worldId": "split-evidence",
+          "thesis": "Passage Log Console\": log a passage (vessel, direction, time, notes). via hard vertical rule: proof left, action right — passage, log, console, harbour, masters, logging",
+          "composition": "hard vertical rule: proof left, action right",
+          "surface": "framed — evidence cards in heavy borders",
+          "labels": "sentence case — operational clarity",
+          "figures": "functional tabular — measurements only where compared",
+          "depth": "elevated — evidence cards raise on focus",
+          "signature": "passage-sig-4"
+        }
+      ],
+      "pairwise": [
+        {
+          "a": "W2",
+          "b": "W3",
+          "macroDiff": 4,
+          "grammarDiff": 2,
+          "compositionDiff": true,
+          "pass": true
+        },
+        {
+          "a": "W2",
+          "b": "W4",
+          "macroDiff": 4,
+          "grammarDiff": 3,
+          "compositionDiff": true,
+          "pass": true
+        },
+        {
+          "a": "W3",
+          "b": "W4",
+          "macroDiff": 4,
+          "grammarDiff": 4,
+          "compositionDiff": true,
+          "pass": true
+        }
+      ],
+      "pairwisePass": true,
+      "critic": {
+        "role": "deterministic-preflight",
+        "independence": "deterministic-preflight",
+        "rejectAll": false,
+        "tie": false
+      },
+      "handoffReady": true,
+      "proofMeta": {
+        "engineCommit": "db8977dfd35db79e4b7e15e5e8d0486f6f57f51e",
+        "inputHash": "725b0007e009d827c9aa4959fd26d27bf806945a8c3e0762b6b8144ac94710df",
+        "policyVersion": "direction-engine-v3-slice-1.0.0",
+        "randomSeed": "proof-passage-2026-07-31",
+        "numericSeed": 4096199536
+      }
+    }
+  ]
+}

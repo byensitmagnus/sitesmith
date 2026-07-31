@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "kind": "sitesmith.direction-engine.input",
+  "essential": ["brief", "evidence", "mode", "stack"],
+  "optional": ["brand", "assetPlan", "assetManifest", "userConstraints", "projectName", "randomSeed"],
+  "modes": ["marketing", "portfolio", "editorial", "ecommerce", "product-ui", "redesign", "component", "audit"],
+  "v23ModeAliases": {
+    "marketing": "marketing",
+    "ecommerce": "ecommerce",
+    "product-ui": "product-ui",
+    "product": "product-ui",
+    "redesign": "redesign",
+    "portfolio": "portfolio",
+    "editorial": "editorial",
+    "component": "component",
+    "audit": "audit"
+  },
+  "failClosed": {
+    "missingEssential": "stop",
+    "unknownMode": "stop",
+    "brandTestimonialsWithoutEvidence": "stop"
+  },
+  "forbiddenInventions": [
+    "brand facts not in brief/evidence/brand",
+    "product facts not in evidence",
+    "testimonials",
+    "prices not in evidence",
+    "audiences not in brief/evidence",
+    "assets not in asset plan/manifest"
+  ],
+  "implementation": "skills/sitesmith/scripts/direction-engine/input.mjs"
+}

@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "policyVersion": "direction-engine-v3-slice-1.0.0",
+  "worldCount": 5,
+  "cardCount": 3,
+  "minMacroAxisDiff": 3,
+  "requireCompositionDiff": true,
+  "minGrammarDiff": 2,
+  "maxCapabilitiesLoaded": 18,
+  "contextBudgetTokens": 12000,
+  "seedCatalog": "local",
+  "telemetry": false,
+  "remoteCatalog": false,
+  "rejectAllEnabled": true,
+  "userChoiceRequired": true,
+  "adjudicatorFallbackOnly": true
+}

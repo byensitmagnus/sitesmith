@@ -7,8 +7,8 @@ below. Every claim here comes from the repository trees and files, not from the 
 | --- | --- | --- | --- |
 | [Leonxlnx/taste-skill](https://github.com/Leonxlnx/taste-skill) | `e988add20dab0fa97d7a76781c48961c8184288e` | 2026-07-23 | MIT (`LICENSE`, 1,065 B) |
 | [nextlevelbuilder/ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) | `4857a2c5ef989794751a0f66b8545a4a49566286` | 2026-07-28 | MIT (`LICENSE`, 1,075 B) + OFL for bundled fonts |
-| [anthropics/skills → skills/frontend-design](https://github.com/anthropics/skills/tree/main/skills/frontend-design) | `2235be7c60b551f5de82ade908fd3816455afcda` | 2026-06-09 | Apache 2.0 (`LICENSE.txt`, 10,174 B) |
-| [pbakaus/impeccable](https://github.com/pbakaus/impeccable) | `1cf7d7ab0f1ac0bb3319fd20be389a3009f4037d` | 2026-07-28 | Apache 2.0 (`LICENSE`, 10,766 B) + `NOTICE.md` |
+| [anthropics/skills → skills/frontend-design](https://github.com/anthropics/skills/tree/main/skills/frontend-design) | `b29e7cf65e5cb78a5ac33d582270551bc74a14eb` | (canonical v3 ledger pin) | Apache 2.0 (`LICENSE.txt`) |
+| [pbakaus/impeccable](https://github.com/pbakaus/impeccable) | `6b342244e915d64b0d6e84d5eec448fd196ce6bb` | (canonical v3 ledger pin) | Apache 2.0 (`LICENSE`) + `NOTICE.md` |
 
 SiteSmith is audited at `48aa17c76540f2207df0bf22af8b85346de0bf11`.
 

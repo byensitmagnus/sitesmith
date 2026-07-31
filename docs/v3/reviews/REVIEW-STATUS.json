@@ -1,0 +1,223 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-07-31",
+  "sourceCommit": "dc00598cce2af92435a749856393e287506753bc",
+  "ai_generated": "(C)",
+  "architectureReadiness": {
+    "status": "not-ready-for-architecture-approval",
+    "derivedFrom": "live review frontmatter status + open blockerCount, not file names",
+    "requiredForReady": {
+      "traceabilityReview": "status=pass AND blockerCount=0",
+      "adversarialReview": "status=pass AND blockerCount=0",
+      "sameHashRevision": "both reviews hash-lock the same 11-artifact set"
+    },
+    "currentTraceability": "TRACEABILITY-REVIEW-C.md is the only PASS; it is not paired with any adversarial PASS on the same hash set",
+    "currentAdversarial": "no adversarial review file has status=pass"
+  },
+  "integrityDefects": [
+    {
+      "id": "INT-FOUNDATION-FALSE-PASS",
+      "severity": "blocker",
+      "disposition": "open-at-dc00598",
+      "summary": "FOUNDATION-DECISION.md on dc00598 claimed ADVERSARIAL-REVIEW-C was PASS with 0 blockers while the review file itself is status=fail blockerCount=3."
+    }
+  ],
+  "reviews": [
+    {
+      "file": "docs/v3/reviews/TRACEABILITY-REVIEW-C.md",
+      "id": "TRACEABILITY-C",
+      "reviewer": "OpenAI Codex",
+      "modelIdentifier": "not-exposed",
+      "providerFamily": "OpenAI Codex",
+      "contextIsolation": "fork_turns=none",
+      "isolationClaimAllowed": "context-isolated",
+      "isolationClaimForbidden": "model-independent",
+      "date": "2026-07-30",
+      "status": "pass",
+      "blockerCount": 0,
+      "blockerIds": [],
+      "findingIds": [],
+      "inputArtifacts": [
+        "docs/v3/UPSTREAM-FORENSICS.md",
+        "docs/v3/UPSTREAM-CAPABILITY-LEDGER.json",
+        "docs/v3/UPSTREAM-CAPABILITY-LEDGER.md",
+        "docs/v3/CAPABILITY-SUPREMACY-MATRIX.md",
+        "docs/v3/DERIVATION-ARCHITECTURE.md",
+        "docs/v3/QUALITY-CONTRACT.md",
+        "docs/v3/STRENGTH-ASSERTIONS.json",
+        "docs/v3/ADOPTION-ARCHITECTURE.md",
+        "docs/v3/LICENSE-DERIVATION-AUDIT.md",
+        "skills/sitesmith/THIRD-PARTY-PROVENANCE.json",
+        "tools/check-v3-docs.mjs"
+      ],
+      "superseded": false,
+      "closesFindings": [],
+      "notes": "Only process-isolated PASS on the commit. Hash set differs from later E-series hashes for several artifacts."
+    },
+    {
+      "file": "docs/v3/reviews/ADVERSARIAL-REVIEW-C.md",
+      "id": "ADVERSARIAL-C",
+      "reviewer": "OpenAI Codex",
+      "modelIdentifier": "not-exposed",
+      "providerFamily": "OpenAI Codex",
+      "contextIsolation": "fork_turns=none",
+      "isolationClaimAllowed": "context-isolated",
+      "isolationClaimForbidden": "model-independent",
+      "date": "2026-07-30",
+      "status": "fail",
+      "blockerCount": 3,
+      "blockerIds": [
+        "ADV-C-001-provenance-digests-not-recomputed",
+        "ADV-C-002-uupm-missing-sourceRevision",
+        "ADV-C-003-pass-with-contradictory-prose"
+      ],
+      "findingIds": [
+        "ADV-C-001-provenance-digests-not-recomputed",
+        "ADV-C-002-uupm-missing-sourceRevision",
+        "ADV-C-003-pass-with-contradictory-prose"
+      ],
+      "inputArtifacts": [
+        "docs/v3/UPSTREAM-FORENSICS.md",
+        "docs/v3/UPSTREAM-CAPABILITY-LEDGER.json",
+        "docs/v3/UPSTREAM-CAPABILITY-LEDGER.md",
+        "docs/v3/CAPABILITY-SUPREMACY-MATRIX.md",
+        "docs/v3/DERIVATION-ARCHITECTURE.md",
+        "docs/v3/QUALITY-CONTRACT.md",
+        "docs/v3/STRENGTH-ASSERTIONS.json",
+        "docs/v3/ADOPTION-ARCHITECTURE.md",
+        "docs/v3/LICENSE-DERIVATION-AUDIT.md",
+        "skills/sitesmith/THIRD-PARTY-PROVENANCE.json",
+        "tools/check-v3-docs.mjs"
+      ],
+      "superseded": false,
+      "closesFindings": [],
+      "notes": "FOUNDATION falsely cited this file as PASS. Structured review-findings fence absent; blockers listed as numbered prose."
+    },
+    {
+      "file": "docs/v3/reviews/ADVERSARIAL-REVIEW-D.md",
+      "id": "ADVERSARIAL-D",
+      "reviewer": "OpenAI Codex",
+      "modelIdentifier": "not-exposed",
+      "providerFamily": "OpenAI Codex",
+      "contextIsolation": "fork_turns=none",
+      "isolationClaimAllowed": "context-isolated",
+      "isolationClaimForbidden": "model-independent",
+      "date": "2026-07-30",
+      "status": "fail",
+      "blockerCount": 2,
+      "blockerIds": ["D-001", "D-002"],
+      "findingIds": ["D-001", "D-002", "D-003", "D-004"],
+      "inputArtifacts": [
+        "docs/v3/UPSTREAM-FORENSICS.md",
+        "docs/v3/UPSTREAM-CAPABILITY-LEDGER.json",
+        "docs/v3/UPSTREAM-CAPABILITY-LEDGER.md",
+        "docs/v3/CAPABILITY-SUPREMACY-MATRIX.md",
+        "docs/v3/DERIVATION-ARCHITECTURE.md",
+        "docs/v3/QUALITY-CONTRACT.md",
+        "docs/v3/STRENGTH-ASSERTIONS.json",
+        "docs/v3/ADOPTION-ARCHITECTURE.md",
+        "docs/v3/LICENSE-DERIVATION-AUDIT.md",
+        "skills/sitesmith/THIRD-PARTY-PROVENANCE.json",
+        "tools/check-v3-docs.mjs"
+      ],
+      "superseded": false,
+      "closesFindings": [],
+      "notes": "D-001/D-002 are open critical; D-003/D-004 open major. Does not close ADV-C findings by explicit mapping."
+    },
+    {
+      "file": "docs/v3/reviews/ADVERSARIAL-REVIEW-E.md",
+      "id": "ADVERSARIAL-E",
+      "reviewer": "OpenAI Codex",
+      "modelIdentifier": "not-exposed",
+      "providerFamily": "OpenAI Codex",
+      "contextIsolation": "fork_turns=none",
+      "isolationClaimAllowed": "context-isolated",
+      "isolationClaimForbidden": "model-independent",
+      "date": "2026-07-30",
+      "status": "fail",
+      "blockerCount": 1,
+      "blockerIds": ["E-001"],
+      "findingIds": ["E-001", "E-002"],
+      "inputArtifacts": [
+        "docs/v3/UPSTREAM-FORENSICS.md",
+        "docs/v3/UPSTREAM-CAPABILITY-LEDGER.json",
+        "docs/v3/UPSTREAM-CAPABILITY-LEDGER.md",
+        "docs/v3/CAPABILITY-SUPREMACY-MATRIX.md",
+        "docs/v3/DERIVATION-ARCHITECTURE.md",
+        "docs/v3/QUALITY-CONTRACT.md",
+        "docs/v3/STRENGTH-ASSERTIONS.json",
+        "docs/v3/ADOPTION-ARCHITECTURE.md",
+        "docs/v3/LICENSE-DERIVATION-AUDIT.md",
+        "skills/sitesmith/THIRD-PARTY-PROVENANCE.json",
+        "tools/check-v3-docs.mjs"
+      ],
+      "superseded": false,
+      "closesFindings": [
+        {
+          "findingId": "E-002",
+          "disposition": "resolved-in-report-only",
+          "note": "Source-path false green closed in later checker bytes during the review window; mid-review input drift prevents treating this as an immutable PASS."
+        }
+      ],
+      "notes": "Open blocker is input drift (E-001). Not a readiness pass."
+    },
+    {
+      "file": "docs/v3/reviews/TRACEABILITY-REVIEW-E.md",
+      "id": "TRACEABILITY-E",
+      "reviewer": "OpenAI Codex",
+      "modelIdentifier": "not-exposed",
+      "providerFamily": "OpenAI Codex",
+      "contextIsolation": "fork_turns=none",
+      "isolationClaimAllowed": "context-isolated",
+      "isolationClaimForbidden": "model-independent",
+      "date": "2026-07-30",
+      "status": "fail",
+      "blockerCount": 1,
+      "blockerIds": ["INPUT-DRIFT-001"],
+      "findingIds": ["INPUT-DRIFT-001"],
+      "inputArtifacts": [
+        "docs/v3/UPSTREAM-FORENSICS.md",
+        "docs/v3/UPSTREAM-CAPABILITY-LEDGER.json",
+        "docs/v3/UPSTREAM-CAPABILITY-LEDGER.md",
+        "docs/v3/CAPABILITY-SUPREMACY-MATRIX.md",
+        "docs/v3/DERIVATION-ARCHITECTURE.md",
+        "docs/v3/QUALITY-CONTRACT.md",
+        "docs/v3/STRENGTH-ASSERTIONS.json",
+        "docs/v3/ADOPTION-ARCHITECTURE.md",
+        "docs/v3/LICENSE-DERIVATION-AUDIT.md",
+        "skills/sitesmith/THIRD-PARTY-PROVENANCE.json",
+        "tools/check-v3-docs.mjs"
+      ],
+      "superseded": false,
+      "closesFindings": [],
+      "notes": "No substantive 59-chain verdict; stopped on snapshot integrity failure."
+    }
+  ],
+  "claimAudit": [
+    {
+      "claim": "TRACEABILITY-REVIEW-C = PASS",
+      "actual": "pass / blockerCount=0",
+      "match": true
+    },
+    {
+      "claim": "ADVERSARIAL-REVIEW-C = PASS",
+      "actual": "fail / blockerCount=3",
+      "match": false
+    },
+    {
+      "claim": "ADVERSARIAL-REVIEW-D = PASS",
+      "actual": "fail / blockerCount=2",
+      "match": false
+    },
+    {
+      "claim": "ADVERSARIAL-REVIEW-E = PASS",
+      "actual": "fail / blockerCount=1",
+      "match": false
+    },
+    {
+      "claim": "TRACEABILITY-REVIEW-E = PASS",
+      "actual": "fail / blockerCount=1",
+      "match": false
+    }
+  ]
+}

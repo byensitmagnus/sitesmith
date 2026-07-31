@@ -39,6 +39,15 @@ jobs:
           SITESMITH_BASE_SHA: ${{ github.event.pull_request.base.sha || (github.event.before != '0000000000000000000000000000000000000000' && github.event.before) || '' }}
         run: node tools/check-v3-docs.mjs
 
+      - name: review integrity matches live review verdicts
+        run: node tools/test-review-integrity.mjs
+
+      - name: direction engine vertical slice
+        run: node tools/test-direction-engine.mjs
+
+      - name: proof summaries match committed runs and pins
+        run: node tools/test-proof-integrity.mjs
+
       - name: v3 treatment dictionaries and assertion seals are current
         run: |
           node tools/sync-v3-treatments.mjs

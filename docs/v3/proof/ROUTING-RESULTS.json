@@ -1,0 +1,123 @@
+{
+  "generatedAt": "2026-07-31",
+  "engineCommit": "db8977dfd35db79e4b7e15e5e8d0486f6f57f51e",
+  "results": [
+    {
+      "brief": "01-leather-goods",
+      "mode": "ecommerce",
+      "selectedCount": 18,
+      "totalAvailable": 59,
+      "decisionHash": "1998c50b6a65956ef4e55fabf7939b6bda08381f42c7b10fef8fc46f8fccc980",
+      "loadedAll59": false,
+      "selected": [
+        "TASTE-CAP-002",
+        "TASTE-CAP-003",
+        "TASTE-CAP-004",
+        "TASTE-CAP-006",
+        "frontend.subject-vernacular",
+        "frontend.hero-thesis",
+        "frontend.semantic-structure",
+        "frontend.interface-writing",
+        "frontend.anti-default-calibration",
+        "uupm.classify.product-reasoning",
+        "uupm.tune.design-dials",
+        "IMP-004",
+        "IMP-005",
+        "IMP-008",
+        "uupm.lookup.stack-guidance",
+        "frontend.motion-intent",
+        "IMP-006",
+        "IMP-010"
+      ],
+      "notLoadedCount": 41,
+      "contextCost": 5700,
+      "domainRetrieval": {
+        "consulted": true,
+        "reason": "BM25-lite keyword scan of \\skills\\sitesmith\\data\\products.csv",
+        "hitCount": 5,
+        "claimAllowed": true
+      },
+      "inputHash": "748843e0c88640b0344a667a8a923a0693d0eb7ea3f28df927bb30649914e499",
+      "policyVersion": "direction-engine-v3-slice-1.0.0",
+      "randomSeed": "proof-leather-2026-07-31"
+    },
+    {
+      "brief": "02-atelier-portfolio",
+      "mode": "marketing",
+      "selectedCount": 18,
+      "totalAvailable": 59,
+      "decisionHash": "daf4bd874f119bbf0636819e3521f9a2b52b9b4a8152bb56b92da6cbff955f4d",
+      "loadedAll59": false,
+      "selected": [
+        "TASTE-CAP-002",
+        "TASTE-CAP-003",
+        "TASTE-CAP-004",
+        "TASTE-CAP-005",
+        "frontend.subject-vernacular",
+        "frontend.hero-thesis",
+        "frontend.type-as-identity",
+        "frontend.anti-default-calibration",
+        "frontend.compact-plan-signature",
+        "uupm.tune.design-dials",
+        "IMP-004",
+        "IMP-005",
+        "IMP-008",
+        "TASTE-CAP-007",
+        "frontend.motion-intent",
+        "IMP-006",
+        "IMP-010",
+        "frontend.interface-writing"
+      ],
+      "notLoadedCount": 41,
+      "contextCost": 5100,
+      "domainRetrieval": {
+        "consulted": true,
+        "reason": "BM25-lite keyword scan of \\skills\\sitesmith\\data\\products.csv",
+        "hitCount": 2,
+        "claimAllowed": true
+      },
+      "inputHash": "1bd5d3d109f1591e8e6e4ddd22927a3b06daf0612734aa6114c48414aa36642c",
+      "policyVersion": "direction-engine-v3-slice-1.0.0",
+      "randomSeed": "proof-atelier-2026-07-31"
+    },
+    {
+      "brief": "03-passage-console",
+      "mode": "product-ui",
+      "selectedCount": 18,
+      "totalAvailable": 59,
+      "decisionHash": "e64c6d9fdbb6b909686fa3e4254b322caadb27293eec732a1fa5c6a254f4ffdc",
+      "loadedAll59": false,
+      "selected": [
+        "TASTE-CAP-002",
+        "TASTE-CAP-003",
+        "TASTE-CAP-004",
+        "frontend.subject-vernacular",
+        "frontend.semantic-structure",
+        "frontend.interface-writing",
+        "frontend.restraint-quality-floor",
+        "frontend.anti-default-calibration",
+        "uupm.tune.design-dials",
+        "IMP-004",
+        "IMP-005",
+        "IMP-008",
+        "IMP-010",
+        "frontend.motion-intent",
+        "IMP-006",
+        "uupm.generate.design-system",
+        "TASTE-CAP-006",
+        "uupm.classify.product-reasoning"
+      ],
+      "notLoadedCount": 41,
+      "contextCost": 5700,
+      "domainRetrieval": {
+        "consulted": true,
+        "reason": "BM25-lite keyword scan of \\skills\\sitesmith\\data\\products.csv",
+        "hitCount": 5,
+        "claimAllowed": true
+      },
+      "inputHash": "725b0007e009d827c9aa4959fd26d27bf806945a8c3e0762b6b8144ac94710df",
+      "policyVersion": "direction-engine-v3-slice-1.0.0",
+      "randomSeed": "proof-passage-2026-07-31"
+    }
+  ]
+}
