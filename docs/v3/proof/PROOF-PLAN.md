@@ -48,4 +48,26 @@ Until step 1–2 complete, **PROOF PASSED is forbidden**.
 
 ## Isolation language
 
-Critic and generator separation in this slice is **context-isolated** (separate function + blinded IDs). It is **not** model-independent.
+Local critic is **deterministic preflight** unless a separate external run is
+recorded. It is **not** model-independent and must not be labelled
+context-isolated without execution evidence.
+
+## Obligatory next phase (not optional)
+
+Fair blind head-to-head vs the four locked upstreams is the **primary quality
+gate**. Protocol: [HEAD-TO-HEAD-PROTOCOL.md](./HEAD-TO-HEAD-PROTOCOL.md).
+
+```text
+corrective pass review
+→ lock five systems
+→ blind head-to-head
+→ builds only if SiteSmith matches or wins
+```
+
+Until that comparison runs, status stays:
+
+```text
+PROOF FAILED — DIRECTION QUALITY
+```
+
+Do not replace head-to-head with more internal fixtures or docs.

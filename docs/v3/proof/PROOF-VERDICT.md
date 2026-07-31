@@ -30,14 +30,32 @@ Addressed on this branch:
 
 | Gate | Result |
 | --- | --- |
-| Blind visual comparison vs four frozen upstreams | **not executed** |
+| Blind head-to-head vs four frozen upstreams | **not executed** — **primary quality gate** |
 | SiteSmith matches or beats best upstream directionally | **unknown** |
 | Three v2.3 builds + portfolio diversity | **not executed** |
 | Showcase | still **0/8** |
-| Renderable HTML comps (not only grounded JSON) | **not shipped** |
+
+The external comparison is **obligatory** and is not a side task. Protocol:
+[HEAD-TO-HEAD-PROTOCOL.md](./HEAD-TO-HEAD-PROTOCOL.md).
+
+Internal tests only prove mechanical function. They do **not** prove better
+direction quality than taste-skill, ui-ux-pro-max, frontend-design, or impeccable.
+
+## Advancement
+
+```text
+corrective pass reviewed
+→ lock pins + five arms
+→ blind head-to-head on 3 briefs
+→ only then: three v2.3 builds if SiteSmith matches/wins ≥2/3
+```
+
+Outcome labels after head-to-head (not yet run):
+
+- clear loss → `PROOF FAILED — UPSTREAM SUPERSET`
+- mixed / disagreement → `PROOF FAILED — DIRECTION QUALITY`
+- match/win ≥2/3 → `DIRECTION COMPARISON PASSED — BUILD PROOF REQUIRED` (still not full PROOF PASSED)
 
 ## Status
-
-Head-to-head must not start until an external review accepts this corrective pass.
 
 **PROOF FAILED — DIRECTION QUALITY**

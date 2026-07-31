@@ -17,15 +17,23 @@ ai_generated: "(C)"
 
 ## Execution status
 
-**NOT EXECUTED.**
+**NOT EXECUTED — but obligatory as the primary quality gate.**
 
-This proof branch did **not** clone the four upstreams, did **not** run provider agents on the three briefs, and did **not** collect blinded visual scores.
+Full protocol: [HEAD-TO-HEAD-PROTOCOL.md](./HEAD-TO-HEAD-PROTOCOL.md).
 
-Reasons (gatekeeper):
+This proof branch has **not** yet:
 
-1. Head-to-head requires paid/provider agent runs outside the mechanical slice.
-2. Inventing scores would falsify the release gate.
-3. Stop rule: do not claim PROOF PASSED without actual blinded comparison.
+- cloned the four upstreams at the pins above
+- run provider agents on the three briefs under equal budgets
+- collected blinded evaluator scores
+
+Reasons it has not run yet:
+
+1. Corrective pass on the thin slice must be reviewed first (avoid comparing a broken prototype).
+2. Head-to-head requires paid/provider agent runs and locked equal budgets.
+3. Inventing scores would falsify the release gate.
+
+Until it runs, product status stays `PROOF FAILED — DIRECTION QUALITY`.
 
 ## Required protocol (when executed)
 
