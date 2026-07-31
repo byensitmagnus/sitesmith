@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "frozen": true,
+  "frozenAt": "2026-07-31T18:30:00.000Z",
+  "proofSha": "b92cdabad98c4d23ff79b74d6881e6b7129325a4",
+  "sitesmithBranch": "codex/v3-direction-engine-proof",
+  "headToHeadBranch": "codex/v3-direction-head-to-head",
+  "readOnlyUpstreams": true,
+  "noCodeChangesAfterFreeze": true,
+  "arms": {
+    "taste-skill": {
+      "armId": "A",
+      "repo": "Leonxlnx/taste-skill",
+      "commit": "e988add20dab0fa97d7a76781c48961c8184288e",
+      "role": "upstream",
+      "workflow": "native Design Read + dials",
+      "readOnly": true
+    },
+    "ui-ux-pro-max": {
+      "armId": "B",
+      "repo": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "commit": "4857a2c5ef989794751a0f66b8545a4a49566286",
+      "role": "upstream",
+      "workflow": "native retrieval + design-system generator",
+      "readOnly": true
+    },
+    "frontend-design": {
+      "armId": "C",
+      "repo": "anthropics/skills",
+      "path": "skills/frontend-design",
+      "commit": "b29e7cf65e5cb78a5ac33d582270551bc74a14eb",
+      "role": "upstream",
+      "workflow": "native creative thesis, plan, self-critique",
+      "readOnly": true
+    },
+    "impeccable": {
+      "armId": "D",
+      "repo": "pbakaus/impeccable",
+      "commit": "6b342244e915d64b0d6e84d5eec448fd196ce6bb",
+      "role": "upstream",
+      "workflow": "native concept seed, challengers, reroll, decision process",
+      "readOnly": true
+    },
+    "sitesmith": {
+      "armId": "E",
+      "repo": "byensitmagnus/sitesmith",
+      "commit": "b92cdabad98c4d23ff79b74d6881e6b7129325a4",
+      "branch": "codex/v3-direction-engine-proof",
+      "role": "candidate",
+      "workflow": "frozen Direction Engine + v2.3 handoff",
+      "readOnlyAfterFreeze": true
+    }
+  },
+  "pinSource": "docs/v3/CANONICAL-UPSTREAM-PINS.json + proof HEAD b92cdab"
+}

@@ -1,0 +1,35 @@
+{
+  "briefId": "03-passage-console",
+  "mode": "product-ui",
+  "modeLabel": "functional product UI",
+  "primaryAudience": "see BRIEF.md / EVIDENCE.md",
+  "primaryAction": "see BRIEF.md / EVIDENCE.md",
+  "stack": "html",
+  "projectName": "03-passage-console",
+  "randomSeed": "h2h-passage-2026-07-31",
+  "sourceProofBriefDir": "docs/v3/proof/briefs/03-passage-console",
+  "allowedAssets": "see ASSET-MANIFEST.md",
+  "antiReferences": "see EVIDENCE.md and CONSTRAINTS.md",
+  "constraints": "see CONSTRAINTS.md",
+  "inputFiles": [
+    "BRIEF.md",
+    "EVIDENCE.md",
+    "BRAND.md",
+    "ASSET-PLAN.md",
+    "ASSET-MANIFEST.md",
+    "CONSTRAINTS.md"
+  ],
+  "inputHashes": {
+    "BRIEF.md": "18a89c445f17b6977b5b9e65cbb38e3f33dbc7304eb35ca1f9a95948f69907ea",
+    "EVIDENCE.md": "b96143921fc32f8897f309f6a4ddec53a0b79952f93639bdc0ecaedd325d40ae",
+    "BRAND.md": "87649bab82ff8702827c80f946c5e83298976fb0bbac7d669104b9f560f8153f",
+    "ASSET-PLAN.md": "885441184c58a44adb15e434beb782f0f04f0ec257edeeaa1fa9087c9c5c576a",
+    "ASSET-MANIFEST.md": "73d048384d7d4976fafaaa2dcdd24b0f623b8b7a2a02fdf27fbd3120f4d92e92",
+    "CONSTRAINTS.md": "43d6c587efc614bccc873d9716620f59be292d5ab8e02979a661050f3c1ff520"
+  },
+  "contextPackHash": "36545bf82b53595f63ed00c9135dd9170e0c320abd742747593db5a19ced1bc7",
+  "frozen": true,
+  "frozenAt": "2026-07-31T18:30:00.000Z",
+  "proofSha": "b92cdabad98c4d23ff79b74d6881e6b7129325a4",
+  "note": "Identical pack for all five arms. No arm-specific extras. Unknowns remain unknown."
+}

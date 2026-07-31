@@ -1,28 +1,36 @@
 {
   "workflowVersion": "1.0.0",
-  "state": "S3_FREEZE_HEAD_TO_HEAD",
-  "previousState": "S1_CORRECTIVE_REVIEW",
+  "state": "AWAITING_CREDIT_APPROVAL",
+  "previousState": "S3_FREEZE_HEAD_TO_HEAD",
   "allowedNextStates": [
     "S4_SCREENING_15_RUNS",
-    "BLOCKED_BENCHMARK_NOT_FROZEN",
-    "AWAITING_CREDIT_APPROVAL"
+    "BLOCKED_BENCHMARK_NOT_FROZEN"
   ],
   "repository": "byensitmagnus/sitesmith",
   "foundationSha": "dc00598cce2af92435a749856393e287506753bc",
   "proofSha": "b92cdabad98c4d23ff79b74d6881e6b7129325a4",
-  "headToHeadSha": null,
-  "canonicalPinsHash": "273034eaeec820181c1883cd852f3728d57d6ea134d74724268457527a2dddae",
-  "contextPackHash": null,
-  "runManifestHash": null,
+  "headToHeadBranch": "codex/v3-direction-head-to-head",
+  "headToHeadSha": "f08abd31e713bd5584e4e441aac54080ec84cab5",
+  "canonicalPinsHash": "3e45804cd20a6759b5599ff061a5fa7e3fad4537bf96cbefb04d27da556637cf",
+  "contextPackHashes": {
+    "01-leather-goods": "6099df6a1e57a7bce9d70e72df964cdd05486bb9d636be32964c6df059f48a2f",
+    "02-atelier-printworks": "04b3fd24b85d8d459178d11c4eb4c08d9e1339c76326f264a9c8eba8fda1d216",
+    "03-passage-console": "36545bf82b53595f63ed00c9135dd9170e0c320abd742747593db5a19ced1bc7"
+  },
+  "fairnessContractHash": "92c4e88fd4d0bc41d886d213a6a17120976edce8c73cc1d09232ac3d0bc1bcaf",
+  "runManifestHash": "61d15cbfc9a42f2e62df97eba0d02af0ef819677f81ea10b8ec287ad91a7edc7",
+  "outputSchemaHash": "938246d71e27ff8e3de80d0342217d2ab3f63323e1382e043ca81a8b2486794b",
+  "budgetsHash": "0625554fd0073fbca1d54e8230c316c6fbbb5233f4d587d478df6fa3cee92b27",
   "gates": {
     "G0_repo_truth": "pass",
     "G1_corrective_review": "pass",
-    "G2_benchmark_frozen": "pending",
-    "CI": "pass"
+    "G2_benchmark_frozen": "pass",
+    "credit_approval": "awaiting",
+    "paid_model_calls": 0
   },
   "blockers": [],
-  "lastVerifiedAt": "2026-07-31T18:29:01.722Z",
-  "lastTransitionReason": "Gate 1 PASS; ready to freeze packs/arms before paid screening",
+  "lastVerifiedAt": "2026-07-31T19:00:02.786Z",
+  "lastTransitionReason": "Context packs, arms, fairness, run manifest frozen; dry-run only; no model calls",
   "proofStatus": "PROOF FAILED — DIRECTION QUALITY",
   "gate1Review": "docs/v3/proof/CORRECTIVE-REVIEW-GATE1.md",
   "reviewRange": "5ffc2cb..b92cdab",
@@ -31,11 +39,14 @@
     "ui-ux-pro-max",
     "frontend-design",
     "impeccable",
-    "sitesmith-direction-engine"
+    "sitesmith"
   ],
   "briefs": [
-    "01-sensory-ecommerce",
-    "02-characterful-marketing-portfolio",
-    "03-functional-product-ui"
-  ]
+    "01-leather-goods",
+    "02-atelier-printworks",
+    "03-passage-console"
+  ],
+  "screeningRunsDeclared": 15,
+  "replicationRunsDeclared": 15,
+  "paidModelCallsMade": 0
 }

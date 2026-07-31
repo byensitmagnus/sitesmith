@@ -1,0 +1,35 @@
+{
+  "briefId": "01-leather-goods",
+  "mode": "ecommerce",
+  "modeLabel": "sensory e-commerce",
+  "primaryAudience": "see BRIEF.md / EVIDENCE.md",
+  "primaryAction": "see BRIEF.md / EVIDENCE.md",
+  "stack": "html",
+  "projectName": "01-leather-goods",
+  "randomSeed": "h2h-leather-2026-07-31",
+  "sourceProofBriefDir": "docs/v3/proof/briefs/01-leather-goods",
+  "allowedAssets": "see ASSET-MANIFEST.md",
+  "antiReferences": "see EVIDENCE.md and CONSTRAINTS.md",
+  "constraints": "see CONSTRAINTS.md",
+  "inputFiles": [
+    "BRIEF.md",
+    "EVIDENCE.md",
+    "BRAND.md",
+    "ASSET-PLAN.md",
+    "ASSET-MANIFEST.md",
+    "CONSTRAINTS.md"
+  ],
+  "inputHashes": {
+    "BRIEF.md": "2ebc1ff864f711aba8f086f9bffc00325bd8d4630ea337737a21f1844d0aa623",
+    "EVIDENCE.md": "b41209b00241554ac4f5c9e3ba1c565eced712b2e2cc4a971cb9067f82fb0fbf",
+    "BRAND.md": "d55356a9eaa31d4f3a4b458a8b6a11eeb3c3830298dfd84890adf4dd9b5e257c",
+    "ASSET-PLAN.md": "b608ffa052e3a4dd4cf6434f2e0bf1cd1f9b4b8612f66e3c3d0c651b5413fedd",
+    "ASSET-MANIFEST.md": "931cf7b4fa31cac139337a1cf40277ca00cd77114e9d8825707983085bcc4dd5",
+    "CONSTRAINTS.md": "e3f680b6ce21477002652aa0d5647213d22e905ad3dec1793dcd4a82d42888b4"
+  },
+  "contextPackHash": "6099df6a1e57a7bce9d70e72df964cdd05486bb9d636be32964c6df059f48a2f",
+  "frozen": true,
+  "frozenAt": "2026-07-31T18:30:00.000Z",
+  "proofSha": "b92cdabad98c4d23ff79b74d6881e6b7129325a4",
+  "note": "Identical pack for all five arms. No arm-specific extras. Unknowns remain unknown."
+}
