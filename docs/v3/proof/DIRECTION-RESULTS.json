@@ -1,47 +1,48 @@
 {
   "generatedAt": "2026-07-31",
+  "engineCommit": "5ffc2cb2bcb99c7bc31c495639aab01cca3c0643",
   "results": [
     {
       "brief": "01-leather-goods",
       "ok": true,
       "stage": "handoff-ready",
       "worlds": [
-        "material-board",
+        "poster-type",
         "statement-object",
-        "index-first",
-        "workspace-canvas",
-        "poster-type"
+        "split-evidence",
+        "material-board",
+        "index-first"
       ],
       "cards": [
         {
-          "worldId": "material-board",
-          "thesis": "Northline Leather Goods as ecommerce — hero thesis: tactile first screen where grid of many small material samples — anti-default dials applied before chrome — domain knowledge consulted — seeded world before polish — subject recognised before chrome",
-          "composition": "grid of many small material samples",
-          "surface": "colour-field — each cell is a material ground",
-          "labels": "sentence case — trade names, not UI chrome",
-          "figures": "proportional — dimensions only when needed",
-          "depth": "overlap — samples slightly shuffle depth",
-          "signature": "northline-material-board-sig"
-        },
-        {
-          "worldId": "statement-object",
-          "thesis": "Northline Leather Goods as ecommerce — hero thesis: airy first screen where single object left, large type right — anti-default dials applied before chrome — domain knowledge consulted — seeded world before polish — subject recognised before chrome",
-          "composition": "single object left, large type right",
-          "surface": "open — subject earns space around the object",
-          "labels": "sentence case captions — retail voice stays human",
-          "figures": "proportional — price is content not motif",
-          "depth": "elevated — object lifts off ground slightly",
-          "signature": "northline-statement-object-sig"
-        },
-        {
           "worldId": "poster-type",
-          "thesis": "Northline Leather Goods as ecommerce — hero thesis: poster first screen where type alone at scale, artefact below the fold — anti-default dials applied before chrome — domain knowledge consulted — seeded world before polish — subject recognised before chrome",
+          "thesis": "Northline Leather Goods\": configure a bag and request a make-slot. via type alone at scale, artefact below the fold — northline, leather, goods, people, who, buy",
           "composition": "type alone at scale, artefact below the fold",
           "surface": "open — type is the material",
           "labels": "symbol-led — almost no chrome labels",
           "figures": "absent",
           "depth": "flat",
-          "signature": "northline-poster-type-sig"
+          "signature": "northline-poster-type"
+        },
+        {
+          "worldId": "statement-object",
+          "thesis": "Northline Leather Goods\": configure a bag and request a make-slot. via single object left, large type right — northline, leather, goods, people, who, buy",
+          "composition": "single object left, large type right",
+          "surface": "open — subject earns space around the object",
+          "labels": "sentence case captions — retail voice stays human",
+          "figures": "proportional — price is content not motif",
+          "depth": "elevated — object lifts off ground slightly",
+          "signature": "northline-statement-object"
+        },
+        {
+          "worldId": "split-evidence",
+          "thesis": "Northline Leather Goods\": configure a bag and request a make-slot. via hard vertical rule: proof left, action right — northline, leather, goods, people, who, buy",
+          "composition": "hard vertical rule: proof left, action right",
+          "surface": "framed — evidence cards in heavy borders",
+          "labels": "sentence case — operational clarity",
+          "figures": "functional tabular — measurements only where compared",
+          "depth": "elevated — evidence cards raise on focus",
+          "signature": "northline-split-evidence"
         }
       ],
       "pairwise": [
@@ -49,13 +50,13 @@
           "a": "W1",
           "b": "W2",
           "macroDiff": 5,
-          "grammarDiff": 2,
+          "grammarDiff": 3,
           "compositionDiff": true,
           "pass": true
         },
         {
           "a": "W1",
-          "b": "W4",
+          "b": "W3",
           "macroDiff": 5,
           "grammarDiff": 4,
           "compositionDiff": true,
@@ -63,139 +64,69 @@
         },
         {
           "a": "W2",
-          "b": "W4",
+          "b": "W3",
           "macroDiff": 5,
-          "grammarDiff": 3,
+          "grammarDiff": 2,
           "compositionDiff": true,
           "pass": true
         }
       ],
       "pairwisePass": true,
       "critic": {
+        "role": "deterministic-preflight",
+        "independence": "deterministic-preflight",
         "rejectAll": false,
-        "tie": true,
-        "independence": "context-isolated"
+        "tie": true
       },
-      "handoffReady": true
+      "handoffReady": true,
+      "proofMeta": {
+        "engineCommit": "5ffc2cb2bcb99c7bc31c495639aab01cca3c0643",
+        "inputHash": "a14295a1745802faf58007e21f177787678ca4778d478f2ac2a59f25744250c9",
+        "policyVersion": "direction-engine-v3-slice-1.0.0",
+        "randomSeed": "proof-leather-2026-07-31",
+        "numericSeed": 4276134208
+      }
     },
     {
       "brief": "02-atelier-portfolio",
       "ok": true,
       "stage": "handoff-ready",
       "worlds": [
-        "editorial-bleed",
-        "index-first",
-        "material-board",
-        "workspace-canvas",
-        "statement-object"
-      ],
-      "cards": [
-        {
-          "worldId": "editorial-bleed",
-          "thesis": "Atelier Møn Printworks as marketing — hero thesis: cinematic first screen where full-bleed image with type over it — anti-default dials applied before chrome — domain knowledge consulted — seeded world before polish — subject recognised before chrome",
-          "composition": "full-bleed image with type over it",
-          "surface": "colour-field — photo is the ground",
-          "labels": "display-face captions — editorial voice",
-          "figures": "proportional — rare and quiet",
-          "depth": "overlap — type sits on image layers",
-          "signature": "atelier-editorial-bleed-sig"
-        },
-        {
-          "worldId": "statement-object",
-          "thesis": "Atelier Møn Printworks as marketing — hero thesis: airy first screen where single object left, large type right — anti-default dials applied before chrome — domain knowledge consulted — seeded world before polish — subject recognised before chrome",
-          "composition": "single object left, large type right",
-          "surface": "open — subject earns space around the object",
-          "labels": "sentence case captions — retail voice stays human",
-          "figures": "proportional — price is content not motif",
-          "depth": "elevated — object lifts off ground slightly",
-          "signature": "atelier-statement-object-sig"
-        },
-        {
-          "worldId": "workspace-canvas",
-          "thesis": "Atelier Møn Printworks as marketing — hero thesis: cockpit first screen where real interface full width as first screen — anti-default dials applied before chrome — domain knowledge consulted — seeded world before polish — subject recognised before chrome",
-          "composition": "real interface full width as first screen",
-          "surface": "framed — panels bound the work surface",
-          "labels": "symbol-led — tools speak as icons with text fallback",
-          "figures": "absent — no decorative metrics",
-          "depth": "inset — panels recede into the shell",
-          "signature": "atelier-workspace-canvas-sig"
-        }
-      ],
-      "pairwise": [
-        {
-          "a": "W1",
-          "b": "W4",
-          "macroDiff": 5,
-          "grammarDiff": 3,
-          "compositionDiff": true,
-          "pass": true
-        },
-        {
-          "a": "W1",
-          "b": "W5",
-          "macroDiff": 5,
-          "grammarDiff": 4,
-          "compositionDiff": true,
-          "pass": true
-        },
-        {
-          "a": "W4",
-          "b": "W5",
-          "macroDiff": 5,
-          "grammarDiff": 4,
-          "compositionDiff": true,
-          "pass": true
-        }
-      ],
-      "pairwisePass": true,
-      "critic": {
-        "rejectAll": false,
-        "tie": true,
-        "independence": "context-isolated"
-      },
-      "handoffReady": true
-    },
-    {
-      "brief": "03-passage-console",
-      "ok": true,
-      "stage": "handoff-ready",
-      "worlds": [
         "poster-type",
         "split-evidence",
-        "index-first",
-        "editorial-bleed",
-        "material-board"
+        "statement-object",
+        "editorial-bleed"
       ],
       "cards": [
         {
           "worldId": "poster-type",
-          "thesis": "Passage Log Console as product-ui — hero thesis: poster first screen where type alone at scale, artefact below the fold — anti-default dials applied before chrome — domain knowledge consulted — seeded world before polish — subject recognised before chrome",
+          "thesis": "Atelier Møn Printworks\": enquire about a print edition. via type alone at scale, artefact below the fold — atelier, møn, printworks, curators, and, small",
           "composition": "type alone at scale, artefact below the fold",
           "surface": "open — type is the material",
           "labels": "symbol-led — almost no chrome labels",
           "figures": "absent",
           "depth": "flat",
-          "signature": "passage-poster-type-sig"
+          "signature": "atelier-poster-type"
         },
         {
           "worldId": "split-evidence",
-          "thesis": "Passage Log Console as product-ui — hero thesis: balanced first screen where hard vertical rule: proof left, action right — anti-default dials applied before chrome — domain knowledge consulted — seeded world before polish — subject recognised before chrome",
+          "thesis": "Atelier Møn Printworks\": enquire about a print edition. via hard vertical rule: proof left, action right — atelier, møn, printworks, curators, and, small",
           "composition": "hard vertical rule: proof left, action right",
           "surface": "framed — evidence cards in heavy borders",
           "labels": "sentence case — operational clarity",
           "figures": "functional tabular — measurements only where compared",
           "depth": "elevated — evidence cards raise on focus",
-          "signature": "passage-split-evidence-sig"
+          "signature": "atelier-split-evidence"
         },
         {
-          "worldId": "editorial-bleed",
-          "thesis": "Passage Log Console as product-ui — hero thesis: cinematic first screen where full-bleed image with type over it — anti-default dials applied before chrome — domain knowledge consulted — seeded world before polish — subject recognised before chrome",
-          "composition": "full-bleed image with type over it",
-          "surface": "colour-field — photo is the ground",
-          "labels": "display-face captions — editorial voice",
-          "figures": "proportional — rare and quiet",
-          "depth": "overlap — type sits on image layers",
-          "signature": "passage-editorial-bleed-sig"
+          "worldId": "statement-object",
+          "thesis": "Atelier Møn Printworks\": enquire about a print edition. via single object left, large type right — atelier, møn, printworks, curators, and, small",
+          "composition": "single object left, large type right",
+          "surface": "open — subject earns space around the object",
+          "labels": "sentence case captions — retail voice stays human",
+          "figures": "proportional — price is content not motif",
+          "depth": "elevated — object lifts off ground slightly",
+          "signature": "atelier-statement-object"
         }
       ],
       "pairwise": [
@@ -209,16 +140,100 @@
         },
         {
           "a": "W1",
-          "b": "W4",
+          "b": "W3",
           "macroDiff": 5,
-          "grammarDiff": 4,
+          "grammarDiff": 3,
+          "compositionDiff": true,
+          "pass": true
+        },
+        {
+          "a": "W2",
+          "b": "W3",
+          "macroDiff": 5,
+          "grammarDiff": 2,
+          "compositionDiff": true,
+          "pass": true
+        }
+      ],
+      "pairwisePass": true,
+      "critic": {
+        "role": "deterministic-preflight",
+        "independence": "deterministic-preflight",
+        "rejectAll": false,
+        "tie": true
+      },
+      "handoffReady": true,
+      "proofMeta": {
+        "engineCommit": "5ffc2cb2bcb99c7bc31c495639aab01cca3c0643",
+        "inputHash": "2dff5674767127c2a4ccf106fd81f3c88095d264a150a994d367c69577568fe2",
+        "policyVersion": "direction-engine-v3-slice-1.0.0",
+        "randomSeed": "proof-atelier-2026-07-31",
+        "numericSeed": 2914086421
+      }
+    },
+    {
+      "brief": "03-passage-console",
+      "ok": true,
+      "stage": "handoff-ready",
+      "worlds": [
+        "index-first",
+        "workspace-canvas",
+        "poster-type",
+        "split-evidence"
+      ],
+      "cards": [
+        {
+          "worldId": "workspace-canvas",
+          "thesis": "Passage Log Console\": log a passage (vessel, direction, time, notes). via real interface full width as first screen — passage, log, console, harbour, masters, logging",
+          "composition": "real interface full width as first screen",
+          "surface": "framed — panels bound the work surface",
+          "labels": "symbol-led — tools speak as icons with text fallback",
+          "figures": "absent — no decorative metrics",
+          "depth": "inset — panels recede into the shell",
+          "signature": "passage-workspace-canvas"
+        },
+        {
+          "worldId": "poster-type",
+          "thesis": "Passage Log Console\": log a passage (vessel, direction, time, notes). via type alone at scale, artefact below the fold — passage, log, console, harbour, masters, logging",
+          "composition": "type alone at scale, artefact below the fold",
+          "surface": "open — type is the material",
+          "labels": "symbol-led — almost no chrome labels",
+          "figures": "absent",
+          "depth": "flat",
+          "signature": "passage-poster-type"
+        },
+        {
+          "worldId": "split-evidence",
+          "thesis": "Passage Log Console\": log a passage (vessel, direction, time, notes). via hard vertical rule: proof left, action right — passage, log, console, harbour, masters, logging",
+          "composition": "hard vertical rule: proof left, action right",
+          "surface": "framed — evidence cards in heavy borders",
+          "labels": "sentence case — operational clarity",
+          "figures": "functional tabular — measurements only where compared",
+          "depth": "elevated — evidence cards raise on focus",
+          "signature": "passage-split-evidence"
+        }
+      ],
+      "pairwise": [
+        {
+          "a": "W2",
+          "b": "W3",
+          "macroDiff": 4,
+          "grammarDiff": 2,
           "compositionDiff": true,
           "pass": true
         },
         {
           "a": "W2",
           "b": "W4",
-          "macroDiff": 5,
+          "macroDiff": 4,
+          "grammarDiff": 3,
+          "compositionDiff": true,
+          "pass": true
+        },
+        {
+          "a": "W3",
+          "b": "W4",
+          "macroDiff": 4,
           "grammarDiff": 4,
           "compositionDiff": true,
           "pass": true
@@ -226,11 +241,19 @@
       ],
       "pairwisePass": true,
       "critic": {
+        "role": "deterministic-preflight",
+        "independence": "deterministic-preflight",
         "rejectAll": false,
-        "tie": false,
-        "independence": "context-isolated"
+        "tie": true
       },
-      "handoffReady": true
+      "handoffReady": true,
+      "proofMeta": {
+        "engineCommit": "5ffc2cb2bcb99c7bc31c495639aab01cca3c0643",
+        "inputHash": "07a79448195e215bd64d1d9b6cc6aee9db0bff36bb60cce0ee7216de10af876e",
+        "policyVersion": "direction-engine-v3-slice-1.0.0",
+        "randomSeed": "proof-passage-2026-07-31",
+        "numericSeed": 4096199536
+      }
     }
   ]
 }

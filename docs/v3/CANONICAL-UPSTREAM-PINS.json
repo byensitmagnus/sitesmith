@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "canonicalSource": "docs/v3/UPSTREAM-CAPABILITY-LEDGER.json frozenSources + capability sourceCommit fields",
+  "rationale": "v3 forensics and ledger were audited against these commits. v2 CAPABILITY-MANIFEST competitor SHAs for frontend-design/impeccable were older and must align.",
+  "pins": {
+    "taste-skill": "e988add20dab0fa97d7a76781c48961c8184288e",
+    "ui-ux-pro-max": "4857a2c5ef989794751a0f66b8545a4a49566286",
+    "frontend-design": "b29e7cf65e5cb78a5ac33d582270551bc74a14eb",
+    "impeccable": "6b342244e915d64b0d6e84d5eec448fd196ce6bb"
+  }
+}

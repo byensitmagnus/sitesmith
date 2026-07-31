@@ -1,19 +1,21 @@
 #!/usr/bin/env node
 /**
  * Direction Engine v3 vertical slice — CLI.
- * Does not replace v2.3 install/build/audit. Produces route → cards → critic → DesignSpec → handoff.
+ * Produces route → grounded cards → preflight critic → DesignSpec → handoff.
  */
+import { createHash } from 'node:crypto';
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { validateDirectionInput } from './input.mjs';
 import { routeCapabilities, loadLedger } from './router.mjs';
-import { generateDirectionCards, blindCandidates } from './worlds-and-cards.mjs';
+import { generateDirectionCards, blindCandidates, assertNoBlindLeakage } from './worlds-and-cards.mjs';
 import { critiqueBlindedCards, resolveChoice } from './critic.mjs';
-import { compileDesignSpec, buildHandoffPackage } from './designspec.mjs';
+import { compileDesignSpec, buildHandoffPackage, validateDesignSpec } from './designspec.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const defaultPolicy = JSON.parse(readFileSync(join(here, 'policy.json'), 'utf8'));
+const root = join(here, '..', '..', '..', '..');
 
 export function runDirectionEngine(options = {}) {
   const policy = { ...defaultPolicy, ...(options.policy ?? {}) };
@@ -40,8 +42,20 @@ export function runDirectionEngine(options = {}) {
     return { ok: false, stage: 'direction', problems: generated.problems, route };
   }
 
-  const { blinded, key, independence } = blindCandidates(generated.cards, input.randomSeed ?? input.projectName);
-  const critic = critiqueBlindedCards(blinded, input);
+  const { blinded, key, independence, claim } = blindCandidates(
+    generated.cards,
+    input.randomSeed ?? input.projectName,
+  );
+  for (const b of blinded) {
+    const leaks = assertNoBlindLeakage(b);
+    if (leaks.length) {
+      return { ok: false, stage: 'blinding', problems: [`blind leakage: ${leaks.join(',')}`] };
+    }
+  }
+
+  const critic = critiqueBlindedCards(blinded, input, {
+    externalRunEvidence: options.externalRunEvidence === true,
+  });
   const choice = resolveChoice({
     critic,
     userChoiceBlindId: options.userChoiceBlindId ?? null,
@@ -49,37 +63,119 @@ export function runDirectionEngine(options = {}) {
     key,
   });
 
+  if (choice.status === 'error') {
+    return {
+      ok: false,
+      stage: 'choice',
+      status: 'error',
+      problems: choice.problems,
+      route,
+      direction: packDirection(generated),
+      blinding: { independence, claim, key, blinded },
+      critic,
+      choice,
+    };
+  }
+
   let spec = null;
   let handoff = null;
   let selectedCard = null;
+  let stage = choice.status;
 
-  if (choice.status === 'selected' && choice.selectedInternalId) {
+  if (choice.status === 'selected') {
+    if (!choice.selectedInternalId) {
+      return {
+        ok: false,
+        stage: 'choice',
+        problems: ['selected without selectedInternalId'],
+        choice,
+      };
+    }
     selectedCard = generated.cards.find((c) => c.internalId === choice.selectedInternalId);
+    if (!selectedCard) {
+      return {
+        ok: false,
+        stage: 'choice',
+        problems: [`selectedInternalId ${choice.selectedInternalId} not found`],
+        choice,
+      };
+    }
     const compiled = compileDesignSpec({ input, card: selectedCard, route, policy, choice });
     if (!compiled.ok) return { ok: false, stage: 'designspec', problems: compiled.problems };
+    const v = validateDesignSpec(compiled.spec);
+    if (!v.ok) return { ok: false, stage: 'designspec', problems: v.problems };
     spec = compiled.spec;
     const rejected = generated.cards.filter((c) => c.internalId !== selectedCard.internalId);
     handoff = buildHandoffPackage({ input, spec, selectedCard, rejectedCards: rejected });
+    if (!handoff) {
+      return { ok: false, stage: 'handoff', problems: ['handoff missing'] };
+    }
+    stage = 'handoff-ready';
+  }
+
+  // Fail closed: never claim handoff-ready without all three
+  if (stage === 'handoff-ready') {
+    if (!selectedCard || !spec || !handoff || !choice.selectedInternalId) {
+      return {
+        ok: false,
+        stage: 'handoff',
+        problems: ['handoff-ready requires selectedCard + DesignSpec + handoff + selectedInternalId'],
+      };
+    }
+  }
+
+  const inputHash = createHash('sha256')
+    .update(JSON.stringify({
+      brief: input.brief,
+      evidence: input.evidence,
+      brand: input.brand,
+      assetPlan: input.assetPlan,
+      assetManifest: input.assetManifest,
+      mode: input.mode,
+      stack: input.stack,
+      userConstraints: input.userConstraints,
+      randomSeed: input.randomSeed,
+    }))
+    .digest('hex');
+
+  let engineCommit = null;
+  try {
+    // optional — not required for local runs
+    engineCommit = options.engineCommit ?? null;
+  } catch {
+    engineCommit = null;
   }
 
   return {
     ok: true,
-    stage: choice.status === 'selected' ? 'handoff-ready' : choice.status,
+    stage,
     policyVersion: policy.policyVersion,
     inputWarnings: input.warnings,
-    route,
-    direction: {
-      worlds: generated.worlds,
-      cards: generated.cards,
-      pairwise: generated.pairwise,
-      entropy: generated.entropy,
+    proofMeta: {
+      engineCommit,
+      inputHash,
+      policyVersion: policy.policyVersion,
+      randomSeed: input.randomSeed,
       numericSeed: generated.numericSeed,
     },
-    blinding: { independence, key, blinded },
+    route,
+    direction: packDirection(generated),
+    blinding: { independence, claim, key, blinded },
     critic,
     choice,
     designSpec: spec,
     handoff,
+  };
+}
+
+function packDirection(generated) {
+  return {
+    worlds: generated.worlds,
+    cards: generated.cards,
+    pairwise: generated.pairwise,
+    entropy: generated.entropy,
+    numericSeed: generated.numericSeed,
+    eligibleSeedCount: generated.eligibleSeedCount,
   };
 }
 
@@ -111,17 +207,14 @@ function main(argv) {
   const cmd = args.shift() ?? 'help';
   if (cmd === 'help' || cmd === '--help') {
     console.log(`usage:
-  node direction-engine/index.mjs run --dir <fixture> [--choose L1] [--ablation taste|uupm|frontend|impeccable|all] [--out <dir>]
-  node direction-engine/index.mjs route --dir <fixture>
+  node direction-engine/index.mjs run --dir <fixture> [--choose L1] [--ablation taste|uupm|frontend|impeccable|all] [--out <dir>] [--seed S]
 `);
     process.exit(0);
   }
-
   const flag = (name) => {
     const i = args.indexOf(name);
     return i >= 0 ? args[i + 1] : null;
   };
-
   const dir = flag('--dir');
   const out = flag('--out');
   const choose = flag('--choose');
@@ -139,15 +232,9 @@ function main(argv) {
   if (out) {
     mkdirSync(out, { recursive: true });
     writeFileSync(join(out, 'engine-result.json'), JSON.stringify(result, null, 2));
-    if (result.handoff?.directionMd) {
-      writeFileSync(join(out, 'DIRECTION.md'), result.handoff.directionMd);
-    }
-    if (result.designSpec) {
-      writeFileSync(join(out, 'DESIGNSPEC.json'), JSON.stringify(result.designSpec, null, 2));
-    }
-    if (result.handoff) {
-      writeFileSync(join(out, 'HANDOFF.json'), JSON.stringify(result.handoff, null, 2));
-    }
+    if (result.handoff?.directionMd) writeFileSync(join(out, 'DIRECTION.md'), result.handoff.directionMd);
+    if (result.designSpec) writeFileSync(join(out, 'DESIGNSPEC.json'), JSON.stringify(result.designSpec, null, 2));
+    if (result.handoff) writeFileSync(join(out, 'HANDOFF.json'), JSON.stringify(result.handoff, null, 2));
   }
 
   if (!result.ok) {
@@ -159,22 +246,22 @@ function main(argv) {
     stage: result.stage,
     selectedCount: result.route.selectedCount,
     decisionHash: result.route.decisionHash,
+    domainRetrieval: result.route.domainRetrieval,
     cards: result.direction.cards.map((c) => c.worldId),
     pairwisePass: result.direction.pairwise.every((p) => p.pass),
     critic: {
+      role: result.critic.role,
+      independence: result.critic.independence,
       rejectAll: result.critic.rejectAll,
       tie: result.critic.tie,
-      recommendation: result.critic.recommendation,
     },
     choice: result.choice,
-    handoffReady: Boolean(result.handoff),
+    handoffReady: result.stage === 'handoff-ready',
+    proofMeta: result.proofMeta,
   }, null, 2));
 }
 
 const thisFile = fileURLToPath(import.meta.url);
 const invokedAsCli = Boolean(process.argv[1])
   && pathToFileURL(resolve(process.argv[1])).href === pathToFileURL(thisFile).href;
-
-if (invokedAsCli) {
-  main(process.argv.slice(2));
-}
+if (invokedAsCli) main(process.argv.slice(2));

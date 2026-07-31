@@ -45,6 +45,9 @@ jobs:
       - name: direction engine vertical slice
         run: node tools/test-direction-engine.mjs
 
+      - name: proof summaries match committed runs and pins
+        run: node tools/test-proof-integrity.mjs
+
       - name: v3 treatment dictionaries and assertion seals are current
         run: |
           node tools/sync-v3-treatments.mjs

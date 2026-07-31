@@ -4,17 +4,17 @@
   "projectName": "01-leather-goods",
   "mode": "ecommerce",
   "stack": "html",
-  "designThesis": "Northline Leather Goods\" as ecommerce — hero thesis: tactile first screen where grid of many small material samples — anti-default dials applied before chrome — domain knowledge consulted — seeded world before polish — subject recognised before chrome",
+  "designThesis": "Northline Leather Goods\": configure a bag and request a make-slot. via single object left, large type right — northline, leather, goods, people, who, buy",
   "contentHierarchy": [
     "subject recognition",
     "configure a bag and request a make-slot.",
     "supporting evidence",
     "secondary navigation"
   ],
-  "pageComposition": "grid of many small material samples",
-  "gridAndSpacing": "balanced 8/12 rhythm",
+  "pageComposition": "single object left, large type right",
+  "gridAndSpacing": "open 8/16 rhythm, large voids",
   "typographySystem": {
-    "principle": "small caps labels over soft serif",
+    "principle": "condensed display grotesque over quiet sans",
     "roles": [
       "display",
       "body",
@@ -22,12 +22,12 @@
     ]
   },
   "colourRoles": {
-    "ground": "warm light ground from material palette",
+    "ground": "light paper ground with one reserve accent",
     "accent": "single reserved accent from brand evidence only if present",
     "text": "primary ink on ground with WCAG AA body contrast"
   },
-  "surfaceMaterialModel": "colour-field — each cell is a material ground",
-  "imageryStrategy": "object-led sample plates",
+  "surfaceMaterialModel": "open — subject earns space around the object",
+  "imageryStrategy": "object-led, full-height product plate using declared product plates from asset plan",
   "componentPrinciples": [
     "states must be visible without colour alone",
     "primary action uses reserved accent only"
@@ -40,7 +40,7 @@
     "error"
   ],
   "motionRules": {
-    "principle": "sample select builds a slip/cart",
+    "principle": "hover reveals material fact on the object",
     "reducedMotion": "disable non-essential motion"
   },
   "responsiveBehavior": {
@@ -52,7 +52,7 @@
     "label every control",
     "AA contrast for body and UI text"
   ],
-  "signatureElement": "northline-material-board-sig",
+  "signatureElement": "northline-statement-object",
   "forbiddenFallbackDefaults": [
     "purple SaaS gradient hero",
     "three equal feature cards as default identity",
@@ -62,43 +62,43 @@
   "fidelityAssertions": [
     {
       "field": "composition",
-      "expected": "grid of many small material samples"
+      "expected": "single object left, large type right"
     },
     {
       "field": "type",
-      "expected": "small caps labels over soft serif"
+      "expected": "condensed display grotesque over quiet sans"
     },
     {
       "field": "colour",
-      "expected": "warm light ground from material palette"
+      "expected": "light paper ground with one reserve accent"
     },
     {
       "field": "imagery",
-      "expected": "object-led sample plates"
+      "expected": "object-led, full-height product plate using declared product plates from asset plan"
     },
     {
       "field": "rhythm",
-      "expected": "tight mosaic then wide breathing band"
+      "expected": "hard vertical split then calm bands"
     },
     {
       "field": "surface",
-      "expected": "colour-field — each cell is a material ground"
+      "expected": "open — subject earns space around the object"
     },
     {
       "field": "labels",
-      "expected": "sentence case — trade names, not UI chrome"
+      "expected": "sentence case captions — retail voice stays human"
     },
     {
       "field": "figures",
-      "expected": "proportional — dimensions only when needed"
+      "expected": "proportional — price is content not motif"
     },
     {
       "field": "depth",
-      "expected": "overlap — samples slightly shuffle depth"
+      "expected": "elevated — object lifts off ground slightly"
     },
     {
       "field": "signature-selector",
-      "expected": "[data-signature=\"northline-material-board-sig\"]"
+      "expected": "[data-signature=\"northline-statement-object\"]"
     }
   ],
   "acceptanceCriteria": [
@@ -111,105 +111,205 @@
     {
       "capabilityId": "TASTE-CAP-002",
       "upstreamOrigin": "https://github.com/Leonxlnx/taste-skill.git",
-      "phase": "creative-direction"
+      "phase": "creative-direction",
+      "whyRelevant": "mode ecommerce base required · subject=Northline Leather Goods\" · action=configure a bag and request a make-slot.",
+      "evidencePointers": [
+        "mode:ecommerce"
+      ],
+      "status": "explicit"
     },
     {
       "capabilityId": "TASTE-CAP-003",
       "upstreamOrigin": "https://github.com/Leonxlnx/taste-skill.git",
-      "phase": "creative-direction"
+      "phase": "creative-direction",
+      "whyRelevant": "mode ecommerce base required · subject=Northline Leather Goods\" · action=configure a bag and request a make-slot.",
+      "evidencePointers": [
+        "mode:ecommerce"
+      ],
+      "status": "explicit"
     },
     {
       "capabilityId": "TASTE-CAP-004",
       "upstreamOrigin": "https://github.com/Leonxlnx/taste-skill.git",
-      "phase": "creative-direction"
+      "phase": "creative-direction",
+      "whyRelevant": "mode ecommerce base required · subject=Northline Leather Goods\" · action=configure a bag and request a make-slot.",
+      "evidencePointers": [
+        "mode:ecommerce"
+      ],
+      "status": "explicit"
     },
     {
       "capabilityId": "TASTE-CAP-006",
       "upstreamOrigin": "https://github.com/Leonxlnx/taste-skill.git",
-      "phase": "knowledge"
+      "phase": "knowledge",
+      "whyRelevant": "mode ecommerce base required · subject=Northline Leather Goods\" · action=configure a bag and request a make-slot.",
+      "evidencePointers": [
+        "mode:ecommerce"
+      ],
+      "status": "explicit"
     },
     {
       "capabilityId": "frontend.subject-vernacular",
       "upstreamOrigin": "https://github.com/anthropics/skills",
-      "phase": "creative-direction"
+      "phase": "creative-direction",
+      "whyRelevant": "mode ecommerce base required · subject=Northline Leather Goods\" · action=configure a bag and request a make-slot.",
+      "evidencePointers": [
+        "mode:ecommerce"
+      ],
+      "status": "explicit"
     },
     {
       "capabilityId": "frontend.hero-thesis",
       "upstreamOrigin": "https://github.com/anthropics/skills",
-      "phase": "creative-direction"
+      "phase": "creative-direction",
+      "whyRelevant": "mode ecommerce base required · subject=Northline Leather Goods\" · action=configure a bag and request a make-slot.",
+      "evidencePointers": [
+        "mode:ecommerce"
+      ],
+      "status": "explicit"
     },
     {
       "capabilityId": "frontend.semantic-structure",
       "upstreamOrigin": "https://github.com/anthropics/skills",
-      "phase": "creative-direction"
+      "phase": "creative-direction",
+      "whyRelevant": "mode ecommerce base required · subject=Northline Leather Goods\" · action=configure a bag and request a make-slot.",
+      "evidencePointers": [
+        "mode:ecommerce"
+      ],
+      "status": "explicit"
     },
     {
       "capabilityId": "frontend.interface-writing",
       "upstreamOrigin": "https://github.com/anthropics/skills",
-      "phase": "creative-direction"
+      "phase": "creative-direction",
+      "whyRelevant": "mode ecommerce base required · subject=Northline Leather Goods\" · action=configure a bag and request a make-slot.",
+      "evidencePointers": [
+        "mode:ecommerce"
+      ],
+      "status": "explicit"
     },
     {
       "capabilityId": "frontend.anti-default-calibration",
       "upstreamOrigin": "https://github.com/anthropics/skills",
-      "phase": "creative-direction"
+      "phase": "creative-direction",
+      "whyRelevant": "mode ecommerce base required · subject=Northline Leather Goods\" · action=configure a bag and request a make-slot.",
+      "evidencePointers": [
+        "mode:ecommerce"
+      ],
+      "status": "explicit"
     },
     {
       "capabilityId": "uupm.classify.product-reasoning",
       "upstreamOrigin": "nextlevelbuilder/ui-ux-pro-max-skill",
-      "phase": "knowledge"
-    },
-    {
-      "capabilityId": "uupm.lookup.domain-knowledge",
-      "upstreamOrigin": "nextlevelbuilder/ui-ux-pro-max-skill",
-      "phase": "knowledge"
+      "phase": "knowledge",
+      "whyRelevant": "mode ecommerce base required · subject=Northline Leather Goods\" · action=configure a bag and request a make-slot.",
+      "evidencePointers": [
+        "mode:ecommerce"
+      ],
+      "status": "explicit"
     },
     {
       "capabilityId": "uupm.tune.design-dials",
       "upstreamOrigin": "nextlevelbuilder/ui-ux-pro-max-skill",
-      "phase": "creative-direction"
+      "phase": "creative-direction",
+      "whyRelevant": "mode ecommerce base required · subject=Northline Leather Goods\" · action=configure a bag and request a make-slot.",
+      "evidencePointers": [
+        "mode:ecommerce"
+      ],
+      "status": "explicit"
     },
     {
       "capabilityId": "IMP-004",
       "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
-      "phase": "seed"
+      "phase": "seed",
+      "whyRelevant": "mode ecommerce base required · subject=Northline Leather Goods\" · action=configure a bag and request a make-slot.",
+      "evidencePointers": [
+        "mode:ecommerce"
+      ],
+      "status": "explicit"
     },
     {
       "capabilityId": "IMP-005",
       "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
-      "phase": "seed"
-    },
-    {
-      "capabilityId": "IMP-006",
-      "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
-      "phase": "seed"
+      "phase": "seed",
+      "whyRelevant": "mode ecommerce base required · subject=Northline Leather Goods\" · action=configure a bag and request a make-slot.",
+      "evidencePointers": [
+        "mode:ecommerce"
+      ],
+      "status": "explicit"
     },
     {
       "capabilityId": "IMP-008",
       "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
-      "phase": "critique"
+      "phase": "critique",
+      "whyRelevant": "mode ecommerce base required · subject=Northline Leather Goods\" · action=configure a bag and request a make-slot.",
+      "evidencePointers": [
+        "mode:ecommerce"
+      ],
+      "status": "explicit"
     },
     {
       "capabilityId": "uupm.lookup.stack-guidance",
       "upstreamOrigin": "nextlevelbuilder/ui-ux-pro-max-skill",
-      "phase": "knowledge"
+      "phase": "knowledge",
+      "whyRelevant": "mode ecommerce base optional · subject=Northline Leather Goods\" · action=configure a bag and request a make-slot.",
+      "evidencePointers": [
+        "mode:ecommerce"
+      ],
+      "status": "inferred"
     },
     {
       "capabilityId": "frontend.motion-intent",
       "upstreamOrigin": "https://github.com/anthropics/skills",
-      "phase": "creative-direction"
+      "phase": "creative-direction",
+      "whyRelevant": "mode ecommerce base optional · subject=Northline Leather Goods\" · action=configure a bag and request a make-slot.",
+      "evidencePointers": [
+        "mode:ecommerce"
+      ],
+      "status": "inferred"
+    },
+    {
+      "capabilityId": "IMP-006",
+      "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
+      "phase": "seed",
+      "whyRelevant": "mode ecommerce base optional · subject=Northline Leather Goods\" · action=configure a bag and request a make-slot.",
+      "evidencePointers": [
+        "mode:ecommerce"
+      ],
+      "status": "inferred"
+    },
+    {
+      "capabilityId": "IMP-010",
+      "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
+      "phase": "critique",
+      "whyRelevant": "mode ecommerce base optional · subject=Northline Leather Goods\" · action=configure a bag and request a make-slot.",
+      "evidencePointers": [
+        "mode:ecommerce"
+      ],
+      "status": "inferred"
     }
   ],
   "seedProvenance": {
-    "source": "local-world-library",
-    "version": "1.0.0",
-    "method": "sha256-project-entropy + fisher-yates",
-    "randomSeed": "proof-leather-2026-07-31|85461c33bb222ec1fd0f5ef0|g:taste+uupm+frontend+impeccable",
-    "numericSeed": 2099185318,
-    "licence": "MIT SiteSmith-original world templates",
+    "source": "local-world-library-seed",
+    "version": "1.1.0",
+    "method": "sha256-project-entropy + fisher-yates over eligibility-filtered seeds",
+    "randomSeed": "proof-leather-2026-07-31",
+    "numericSeed": 4276134208,
+    "licence": "MIT SiteSmith-original world seed templates",
     "origin": "local",
-    "slot": 4
+    "slot": 1
   },
   "policyVersion": "direction-engine-v3-slice-1.0.0",
+  "dials": {
+    "visualDensity": 6,
+    "motionIntensity": 2,
+    "aestheticBoldness": 6,
+    "status": {
+      "visualDensity": "explicit",
+      "motionIntensity": "explicit",
+      "aestheticBoldness": "explicit"
+    }
+  },
   "choice": {
     "status": "selected",
     "selectedBlindId": "L1",

@@ -1,12 +1,13 @@
 {
   "generatedAt": "2026-07-31",
+  "engineCommit": "5ffc2cb2bcb99c7bc31c495639aab01cca3c0643",
   "results": [
     {
       "brief": "01-leather-goods",
       "mode": "ecommerce",
       "selectedCount": 18,
       "totalAvailable": 59,
-      "decisionHash": "85461c33bb222ec1fd0f5ef02d2a2fdb7cbbb2d6e77b667c21f4b49055c86093",
+      "decisionHash": "1998c50b6a65956ef4e55fabf7939b6bda08381f42c7b10fef8fc46f8fccc980",
       "loadedAll59": false,
       "selected": [
         "TASTE-CAP-002",
@@ -19,24 +20,33 @@
         "frontend.interface-writing",
         "frontend.anti-default-calibration",
         "uupm.classify.product-reasoning",
-        "uupm.lookup.domain-knowledge",
         "uupm.tune.design-dials",
         "IMP-004",
         "IMP-005",
-        "IMP-006",
         "IMP-008",
         "uupm.lookup.stack-guidance",
-        "frontend.motion-intent"
+        "frontend.motion-intent",
+        "IMP-006",
+        "IMP-010"
       ],
       "notLoadedCount": 41,
-      "contextCost": 5900
+      "contextCost": 5700,
+      "domainRetrieval": {
+        "consulted": true,
+        "reason": "BM25-lite keyword scan of \\skills\\sitesmith\\data\\products.csv",
+        "hitCount": 5,
+        "claimAllowed": true
+      },
+      "inputHash": "a14295a1745802faf58007e21f177787678ca4778d478f2ac2a59f25744250c9",
+      "policyVersion": "direction-engine-v3-slice-1.0.0",
+      "randomSeed": "proof-leather-2026-07-31"
     },
     {
       "brief": "02-atelier-portfolio",
       "mode": "marketing",
       "selectedCount": 18,
       "totalAvailable": 59,
-      "decisionHash": "2c63399c01fac42216a67b619893100876b3153f0ba6768df3c6926d2424fce8",
+      "decisionHash": "daf4bd874f119bbf0636819e3521f9a2b52b9b4a8152bb56b92da6cbff955f4d",
       "loadedAll59": false,
       "selected": [
         "TASTE-CAP-002",
@@ -48,25 +58,34 @@
         "frontend.type-as-identity",
         "frontend.anti-default-calibration",
         "frontend.compact-plan-signature",
-        "uupm.lookup.domain-knowledge",
         "uupm.tune.design-dials",
         "IMP-004",
         "IMP-005",
-        "IMP-006",
         "IMP-008",
         "TASTE-CAP-007",
         "frontend.motion-intent",
-        "uupm.generate.design-system"
+        "IMP-006",
+        "IMP-010",
+        "frontend.interface-writing"
       ],
       "notLoadedCount": 41,
-      "contextCost": 5500
+      "contextCost": 5100,
+      "domainRetrieval": {
+        "consulted": true,
+        "reason": "BM25-lite keyword scan of \\skills\\sitesmith\\data\\products.csv",
+        "hitCount": 2,
+        "claimAllowed": true
+      },
+      "inputHash": "2dff5674767127c2a4ccf106fd81f3c88095d264a150a994d367c69577568fe2",
+      "policyVersion": "direction-engine-v3-slice-1.0.0",
+      "randomSeed": "proof-atelier-2026-07-31"
     },
     {
       "brief": "03-passage-console",
       "mode": "product-ui",
       "selectedCount": 18,
       "totalAvailable": 59,
-      "decisionHash": "2866bbfc673841b748caa224793a698b6feabd344bfca87e3ee6e804cecc67d2",
+      "decisionHash": "e64c6d9fdbb6b909686fa3e4254b322caadb27293eec732a1fa5c6a254f4ffdc",
       "loadedAll59": false,
       "selected": [
         "TASTE-CAP-002",
@@ -77,19 +96,28 @@
         "frontend.interface-writing",
         "frontend.restraint-quality-floor",
         "frontend.anti-default-calibration",
-        "uupm.lookup.stack-guidance",
         "uupm.tune.design-dials",
-        "uupm.lookup.domain-knowledge",
         "IMP-004",
         "IMP-005",
         "IMP-008",
         "IMP-010",
         "frontend.motion-intent",
         "IMP-006",
-        "uupm.generate.design-system"
+        "uupm.generate.design-system",
+        "TASTE-CAP-006",
+        "uupm.classify.product-reasoning"
       ],
       "notLoadedCount": 41,
-      "contextCost": 5700
+      "contextCost": 5700,
+      "domainRetrieval": {
+        "consulted": true,
+        "reason": "BM25-lite keyword scan of \\skills\\sitesmith\\data\\products.csv",
+        "hitCount": 5,
+        "claimAllowed": true
+      },
+      "inputHash": "07a79448195e215bd64d1d9b6cc6aee9db0bff36bb60cce0ee7216de10af876e",
+      "policyVersion": "direction-engine-v3-slice-1.0.0",
+      "randomSeed": "proof-passage-2026-07-31"
     }
   ]
 }

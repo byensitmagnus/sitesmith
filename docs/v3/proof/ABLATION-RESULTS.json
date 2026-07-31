@@ -1,173 +1,318 @@
 {
   "generatedAt": "2026-07-31",
+  "engineCommit": "5ffc2cb2bcb99c7bc31c495639aab01cca3c0643",
   "brief": "01-leather-goods",
   "arms": [
     {
       "ablation": "full",
       "ok": true,
       "selectedCount": 18,
-      "decisionHash": "85461c33bb222ec1fd0f5ef02d2a2fdb7cbbb2d6e77b667c21f4b49055c86093",
+      "decisionHash": "1998c50b6a65956ef4e55fabf7939b6bda08381f42c7b10fef8fc46f8fccc980",
       "cards": [
         {
-          "id": "statement-object",
-          "labels": "sentence case captions — retail voice stays human",
-          "depth": "elevated — object lifts off ground slightly",
-          "thesis": "Northline Leather Goods as ecommerce — hero thesis: airy first screen where sing"
+          "id": "material-board",
+          "labels": "sentence case — trade names, not UI chrome",
+          "depth": "overlap — samples slightly shuffle depth",
+          "thesis": "Northline Leather Goods\": configure a bag and request a make-slot. via grid of m",
+          "semantic": {
+            "withoutFrontend": false,
+            "withoutTaste": false,
+            "withoutUupm": false,
+            "withoutImpeccable": false
+          }
         },
         {
-          "id": "editorial-bleed",
-          "labels": "display-face captions — editorial voice",
-          "depth": "overlap — type sits on image layers",
-          "thesis": "Northline Leather Goods as ecommerce — hero thesis: cinematic first screen where"
+          "id": "poster-type",
+          "labels": "symbol-led — almost no chrome labels",
+          "depth": "flat",
+          "thesis": "Northline Leather Goods\": configure a bag and request a make-slot. via type alon",
+          "semantic": {
+            "withoutFrontend": false,
+            "withoutTaste": false,
+            "withoutUupm": false,
+            "withoutImpeccable": false
+          }
         },
         {
           "id": "split-evidence",
           "labels": "sentence case — operational clarity",
           "depth": "elevated — evidence cards raise on focus",
-          "thesis": "Northline Leather Goods as ecommerce — hero thesis: balanced first screen where "
+          "thesis": "Northline Leather Goods\": configure a bag and request a make-slot. via hard vert",
+          "semantic": {
+            "withoutFrontend": false,
+            "withoutTaste": false,
+            "withoutUupm": false,
+            "withoutImpeccable": false
+          }
         }
       ],
       "pairwisePass": true,
+      "domainRetrieval": {
+        "consulted": true,
+        "reason": "BM25-lite keyword scan of \\skills\\sitesmith\\data\\products.csv",
+        "hitCount": 5,
+        "claimAllowed": true
+      },
       "problems": null
     },
     {
       "ablation": "taste",
       "ok": true,
       "selectedCount": 14,
-      "decisionHash": "2953617103f540f40f4189e38075cd40694ce19aa571c9fdc5bcbf4c44c1f780",
+      "decisionHash": "5512f1e1dc04c46dcf01c5045341ab36209242cd90a229281f54e2439c2c4895",
       "cards": [
         {
           "id": "material-board",
           "labels": "sentence case — trade names, not UI chrome",
           "depth": "overlap — samples slightly shuffle depth",
-          "thesis": "Northline Leather Goods as ecommerce — hero thesis: tactile first screen where g"
-        },
-        {
-          "id": "split-evidence",
-          "labels": "sentence case — operational clarity",
-          "depth": "elevated — evidence cards raise on focus",
-          "thesis": "Northline Leather Goods as ecommerce — hero thesis: balanced first screen where "
+          "thesis": "Northline Leather Goods\": configure a bag and request a make-slot. via grid of m",
+          "semantic": {
+            "withoutFrontend": false,
+            "withoutTaste": true,
+            "withoutUupm": false,
+            "withoutImpeccable": false
+          }
         },
         {
           "id": "poster-type",
           "labels": "symbol-led — almost no chrome labels",
           "depth": "flat",
-          "thesis": "Northline Leather Goods as ecommerce — hero thesis: balanced first screen where "
+          "thesis": "Northline Leather Goods\": configure a bag and request a make-slot. via type alon",
+          "semantic": {
+            "withoutFrontend": false,
+            "withoutTaste": true,
+            "withoutUupm": false,
+            "withoutImpeccable": false
+          }
+        },
+        {
+          "id": "split-evidence",
+          "labels": "sentence case — operational clarity",
+          "depth": "elevated — evidence cards raise on focus",
+          "thesis": "Northline Leather Goods\": configure a bag and request a make-slot. via hard vert",
+          "semantic": {
+            "withoutFrontend": false,
+            "withoutTaste": true,
+            "withoutUupm": false,
+            "withoutImpeccable": false
+          }
         }
       ],
       "pairwisePass": true,
+      "domainRetrieval": {
+        "consulted": true,
+        "reason": "BM25-lite keyword scan of \\skills\\sitesmith\\data\\products.csv",
+        "hitCount": 5,
+        "claimAllowed": true
+      },
       "problems": null
     },
     {
       "ablation": "uupm",
       "ok": true,
-      "selectedCount": 14,
-      "decisionHash": "a565a4eae6b7df61f479884ebc8b8653154c1e4da1205b1d519575b6e6a4d0d9",
+      "selectedCount": 15,
+      "decisionHash": "6addebe35a464b6d9ddf0c2fa671be87ad7620f732bb91a4e8b706390979dc4c",
       "cards": [
-        {
-          "id": "statement-object",
-          "labels": "sentence case captions — retail voice stays human",
-          "depth": "elevated — object lifts off ground slightly",
-          "thesis": "Northline Leather Goods as ecommerce — hero thesis: airy first screen where sing"
-        },
-        {
-          "id": "index-first",
-          "labels": "mono uppercase — inventory codes are the voice",
-          "depth": "flat — paper catalogue logic",
-          "thesis": "Northline Leather Goods as ecommerce — hero thesis: packed first screen where de"
-        },
         {
           "id": "material-board",
           "labels": "sentence case — trade names, not UI chrome",
           "depth": "overlap — samples slightly shuffle depth",
-          "thesis": "Northline Leather Goods as ecommerce — hero thesis: tactile first screen where g"
+          "thesis": "Northline Leather Goods\": configure a bag and request a make-slot. via grid of m",
+          "semantic": {
+            "withoutFrontend": false,
+            "withoutTaste": false,
+            "withoutUupm": true,
+            "withoutImpeccable": false
+          }
+        },
+        {
+          "id": "statement-object",
+          "labels": "sentence case captions — retail voice stays human",
+          "depth": "elevated — object lifts off ground slightly",
+          "thesis": "Northline Leather Goods\": configure a bag and request a make-slot. via single ob",
+          "semantic": {
+            "withoutFrontend": false,
+            "withoutTaste": false,
+            "withoutUupm": true,
+            "withoutImpeccable": false
+          }
+        },
+        {
+          "id": "poster-type",
+          "labels": "symbol-led — almost no chrome labels",
+          "depth": "flat",
+          "thesis": "Northline Leather Goods\": configure a bag and request a make-slot. via type alon",
+          "semantic": {
+            "withoutFrontend": false,
+            "withoutTaste": false,
+            "withoutUupm": true,
+            "withoutImpeccable": false
+          }
         }
       ],
       "pairwisePass": true,
+      "domainRetrieval": {
+        "consulted": true,
+        "reason": "BM25-lite keyword scan of \\skills\\sitesmith\\data\\products.csv",
+        "hitCount": 5,
+        "claimAllowed": true
+      },
       "problems": null
     },
     {
       "ablation": "frontend",
       "ok": true,
       "selectedCount": 12,
-      "decisionHash": "fd50193382c7a5c98bac9e2adc11e69468bcc8a185e4152417fbd102a7286086",
+      "decisionHash": "d5c07b0f7b21d82fae6a3a8d662a8341d93630657d08bcc4ba5ebd202903d19f",
       "cards": [
         {
-          "id": "index-first",
+          "id": "material-board",
           "labels": "sentence case — generic UI labels without subject vernacular",
-          "depth": "flat — paper catalogue logic",
-          "thesis": "Northline Leather Goods as ecommerce — layout sketch: dense index grid starts im"
+          "depth": "overlap — samples slightly shuffle depth",
+          "thesis": "Northline Leather Goods\" layout sketch: grid of many small material samples",
+          "semantic": {
+            "withoutFrontend": true,
+            "withoutTaste": false,
+            "withoutUupm": false,
+            "withoutImpeccable": false
+          }
         },
         {
-          "id": "statement-object",
+          "id": "poster-type",
           "labels": "sentence case — generic UI labels without subject vernacular",
-          "depth": "elevated — object lifts off ground slightly",
-          "thesis": "Northline Leather Goods as ecommerce — layout sketch: single object left, large "
+          "depth": "flat",
+          "thesis": "Northline Leather Goods\" layout sketch: type alone at scale, artefact below the ",
+          "semantic": {
+            "withoutFrontend": true,
+            "withoutTaste": false,
+            "withoutUupm": false,
+            "withoutImpeccable": false
+          }
         },
         {
           "id": "split-evidence",
           "labels": "sentence case — generic UI labels without subject vernacular",
           "depth": "elevated — evidence cards raise on focus",
-          "thesis": "Northline Leather Goods as ecommerce — layout sketch: hard vertical rule: proof "
+          "thesis": "Northline Leather Goods\" layout sketch: hard vertical rule: proof left, action r",
+          "semantic": {
+            "withoutFrontend": true,
+            "withoutTaste": false,
+            "withoutUupm": false,
+            "withoutImpeccable": false
+          }
         }
       ],
       "pairwisePass": true,
+      "domainRetrieval": {
+        "consulted": true,
+        "reason": "BM25-lite keyword scan of \\skills\\sitesmith\\data\\products.csv",
+        "hitCount": 5,
+        "claimAllowed": true
+      },
       "problems": null
     },
     {
       "ablation": "impeccable",
       "ok": true,
-      "selectedCount": 14,
-      "decisionHash": "17bf8218de10103b3906408c335be75b81e924b1a721694a670a7ea8284262bf",
+      "selectedCount": 13,
+      "decisionHash": "1f7fd4878ad2ed683852f2095f3e67e70b4f2beff9d59594b72ac06b46a14302",
       "cards": [
+        {
+          "id": "material-board",
+          "labels": "sentence case — trade names, not UI chrome",
+          "depth": "flat — fewer layered craft decisions without seed/critique loop",
+          "thesis": "Northline Leather Goods\": configure a bag and request a make-slot. via grid of m",
+          "semantic": {
+            "withoutFrontend": false,
+            "withoutTaste": false,
+            "withoutUupm": false,
+            "withoutImpeccable": true
+          }
+        },
         {
           "id": "poster-type",
           "labels": "symbol-led — almost no chrome labels",
-          "depth": "flat — fewer layered craft decisions without critique loop",
-          "thesis": "Northline Leather Goods as ecommerce — hero thesis: poster first screen where ty"
-        },
-        {
-          "id": "editorial-bleed",
-          "labels": "display-face captions — editorial voice",
-          "depth": "flat — fewer layered craft decisions without critique loop",
-          "thesis": "Northline Leather Goods as ecommerce — hero thesis: cinematic first screen where"
+          "depth": "flat — fewer layered craft decisions without seed/critique loop",
+          "thesis": "Northline Leather Goods\": configure a bag and request a make-slot. via type alon",
+          "semantic": {
+            "withoutFrontend": false,
+            "withoutTaste": false,
+            "withoutUupm": false,
+            "withoutImpeccable": true
+          }
         },
         {
           "id": "split-evidence",
           "labels": "sentence case — operational clarity",
-          "depth": "flat — fewer layered craft decisions without critique loop",
-          "thesis": "Northline Leather Goods as ecommerce — hero thesis: balanced first screen where "
+          "depth": "flat — fewer layered craft decisions without seed/critique loop",
+          "thesis": "Northline Leather Goods\": configure a bag and request a make-slot. via hard vert",
+          "semantic": {
+            "withoutFrontend": false,
+            "withoutTaste": false,
+            "withoutUupm": false,
+            "withoutImpeccable": true
+          }
         }
       ],
       "pairwisePass": true,
+      "domainRetrieval": {
+        "consulted": true,
+        "reason": "BM25-lite keyword scan of \\skills\\sitesmith\\data\\products.csv",
+        "hitCount": 5,
+        "claimAllowed": true
+      },
       "problems": null
     },
     {
       "ablation": "all",
       "ok": true,
       "selectedCount": 55,
-      "decisionHash": "9c6fceee3fc2f914fe09c3e1a6dfaedb4fed20a4971a270e480369087f7191ef",
+      "decisionHash": "7097b4eabee318c0dee2508b1f1cfe7a794deda2f01e3ab263414aaa1b250126",
       "cards": [
         {
-          "id": "statement-object",
-          "labels": "sentence case captions — retail voice stays human",
-          "depth": "elevated — object lifts off ground slightly",
-          "thesis": "Northline Leather Goods as ecommerce — hero thesis: airy first screen where sing"
+          "id": "material-board",
+          "labels": "sentence case — trade names, not UI chrome",
+          "depth": "overlap — samples slightly shuffle depth",
+          "thesis": "Northline Leather Goods\": configure a bag and request a make-slot. via grid of m",
+          "semantic": {
+            "withoutFrontend": false,
+            "withoutTaste": false,
+            "withoutUupm": false,
+            "withoutImpeccable": false
+          }
         },
         {
           "id": "poster-type",
           "labels": "symbol-led — almost no chrome labels",
           "depth": "flat",
-          "thesis": "Northline Leather Goods as ecommerce — hero thesis: poster first screen where ty"
+          "thesis": "Northline Leather Goods\": configure a bag and request a make-slot. via type alon",
+          "semantic": {
+            "withoutFrontend": false,
+            "withoutTaste": false,
+            "withoutUupm": false,
+            "withoutImpeccable": false
+          }
         },
         {
-          "id": "editorial-bleed",
-          "labels": "display-face captions — editorial voice",
-          "depth": "overlap — type sits on image layers",
-          "thesis": "Northline Leather Goods as ecommerce — hero thesis: cinematic first screen where"
+          "id": "split-evidence",
+          "labels": "sentence case — operational clarity",
+          "depth": "elevated — evidence cards raise on focus",
+          "thesis": "Northline Leather Goods\": configure a bag and request a make-slot. via hard vert",
+          "semantic": {
+            "withoutFrontend": false,
+            "withoutTaste": false,
+            "withoutUupm": false,
+            "withoutImpeccable": false
+          }
         }
       ],
       "pairwisePass": true,
+      "domainRetrieval": {
+        "consulted": true,
+        "reason": "BM25-lite keyword scan of \\skills\\sitesmith\\data\\products.csv",
+        "hitCount": 5,
+        "claimAllowed": true
+      },
       "problems": null
     }
   ]

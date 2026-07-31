@@ -3,20 +3,31 @@
   "stage": "handoff-ready",
   "policyVersion": "direction-engine-v3-slice-1.0.0",
   "inputWarnings": [],
+  "proofMeta": {
+    "engineCommit": "5ffc2cb2bcb99c7bc31c495639aab01cca3c0643",
+    "inputHash": "2dff5674767127c2a4ccf106fd81f3c88095d264a150a994d367c69577568fe2",
+    "policyVersion": "direction-engine-v3-slice-1.0.0",
+    "randomSeed": "proof-atelier-2026-07-31",
+    "numericSeed": 2914086421
+  },
   "route": {
     "ok": true,
     "mode": "marketing",
     "ablation": "none",
     "selectedCount": 18,
     "totalAvailable": 59,
-    "totalContextCostTokens": 5500,
-    "decisionHash": "2c63399c01fac42216a67b619893100876b3153f0ba6768df3c6926d2424fce8",
+    "totalContextCostTokens": 5100,
+    "decisionHash": "daf4bd874f119bbf0636819e3521f9a2b52b9b4a8152bb56b92da6cbff955f4d",
     "selected": [
       {
         "capabilityId": "TASTE-CAP-002",
         "upstreamOrigin": "https://github.com/Leonxlnx/taste-skill.git",
         "upstreamCommit": "e988add20dab0fa97d7a76781c48961c8184288e",
-        "whyRelevant": "brief/dials/anti-default discipline for marketing",
+        "whyRelevant": "mode marketing base required · subject=Atelier Møn Printworks\" · action=enquire about a print edition.",
+        "evidencePointers": [
+          "mode:marketing"
+        ],
+        "status": "explicit",
         "phase": "creative-direction",
         "contextCostTokens": 300,
         "providerFallback": "use local deterministic sketch if provider lacks this capability packet"
@@ -25,7 +36,11 @@
         "capabilityId": "TASTE-CAP-003",
         "upstreamOrigin": "https://github.com/Leonxlnx/taste-skill.git",
         "upstreamCommit": "e988add20dab0fa97d7a76781c48961c8184288e",
-        "whyRelevant": "brief/dials/anti-default discipline for marketing",
+        "whyRelevant": "mode marketing base required · subject=Atelier Møn Printworks\" · action=enquire about a print edition.",
+        "evidencePointers": [
+          "mode:marketing"
+        ],
+        "status": "explicit",
         "phase": "creative-direction",
         "contextCostTokens": 300,
         "providerFallback": "use local deterministic sketch if provider lacks this capability packet"
@@ -34,7 +49,11 @@
         "capabilityId": "TASTE-CAP-004",
         "upstreamOrigin": "https://github.com/Leonxlnx/taste-skill.git",
         "upstreamCommit": "e988add20dab0fa97d7a76781c48961c8184288e",
-        "whyRelevant": "brief/dials/anti-default discipline for marketing",
+        "whyRelevant": "mode marketing base required · subject=Atelier Møn Printworks\" · action=enquire about a print edition.",
+        "evidencePointers": [
+          "mode:marketing"
+        ],
+        "status": "explicit",
         "phase": "creative-direction",
         "contextCostTokens": 300,
         "providerFallback": "use local deterministic sketch if provider lacks this capability packet"
@@ -43,7 +62,11 @@
         "capabilityId": "TASTE-CAP-005",
         "upstreamOrigin": "https://github.com/Leonxlnx/taste-skill.git",
         "upstreamCommit": "e988add20dab0fa97d7a76781c48961c8184288e",
-        "whyRelevant": "brief/dials/anti-default discipline for marketing",
+        "whyRelevant": "mode marketing base required · subject=Atelier Møn Printworks\" · action=enquire about a print edition.",
+        "evidencePointers": [
+          "mode:marketing"
+        ],
+        "status": "explicit",
         "phase": "creative-direction",
         "contextCostTokens": 300,
         "providerFallback": "use local deterministic sketch if provider lacks this capability packet"
@@ -52,7 +75,11 @@
         "capabilityId": "frontend.subject-vernacular",
         "upstreamOrigin": "https://github.com/anthropics/skills",
         "upstreamCommit": "b29e7cf65e5cb78a5ac33d582270551bc74a14eb",
-        "whyRelevant": "subject-grounded creative pressure for marketing",
+        "whyRelevant": "mode marketing base required · subject=Atelier Møn Printworks\" · action=enquire about a print edition.",
+        "evidencePointers": [
+          "mode:marketing"
+        ],
+        "status": "explicit",
         "phase": "creative-direction",
         "contextCostTokens": 300,
         "providerFallback": "use local deterministic sketch if provider lacks this capability packet"
@@ -61,7 +88,11 @@
         "capabilityId": "frontend.hero-thesis",
         "upstreamOrigin": "https://github.com/anthropics/skills",
         "upstreamCommit": "b29e7cf65e5cb78a5ac33d582270551bc74a14eb",
-        "whyRelevant": "subject-grounded creative pressure for marketing",
+        "whyRelevant": "mode marketing base required · subject=Atelier Møn Printworks\" · action=enquire about a print edition.",
+        "evidencePointers": [
+          "mode:marketing"
+        ],
+        "status": "explicit",
         "phase": "creative-direction",
         "contextCostTokens": 300,
         "providerFallback": "use local deterministic sketch if provider lacks this capability packet"
@@ -70,7 +101,11 @@
         "capabilityId": "frontend.type-as-identity",
         "upstreamOrigin": "https://github.com/anthropics/skills",
         "upstreamCommit": "b29e7cf65e5cb78a5ac33d582270551bc74a14eb",
-        "whyRelevant": "subject-grounded creative pressure for marketing",
+        "whyRelevant": "mode marketing base required · subject=Atelier Møn Printworks\" · action=enquire about a print edition.",
+        "evidencePointers": [
+          "mode:marketing"
+        ],
+        "status": "explicit",
         "phase": "creative-direction",
         "contextCostTokens": 300,
         "providerFallback": "use local deterministic sketch if provider lacks this capability packet"
@@ -79,7 +114,11 @@
         "capabilityId": "frontend.anti-default-calibration",
         "upstreamOrigin": "https://github.com/anthropics/skills",
         "upstreamCommit": "b29e7cf65e5cb78a5ac33d582270551bc74a14eb",
-        "whyRelevant": "subject-grounded creative pressure for marketing",
+        "whyRelevant": "mode marketing base required · subject=Atelier Møn Printworks\" · action=enquire about a print edition.",
+        "evidencePointers": [
+          "mode:marketing"
+        ],
+        "status": "explicit",
         "phase": "creative-direction",
         "contextCostTokens": 300,
         "providerFallback": "use local deterministic sketch if provider lacks this capability packet"
@@ -88,25 +127,24 @@
         "capabilityId": "frontend.compact-plan-signature",
         "upstreamOrigin": "https://github.com/anthropics/skills",
         "upstreamCommit": "b29e7cf65e5cb78a5ac33d582270551bc74a14eb",
-        "whyRelevant": "subject-grounded creative pressure for marketing",
+        "whyRelevant": "mode marketing base required · subject=Atelier Møn Printworks\" · action=enquire about a print edition.",
+        "evidencePointers": [
+          "mode:marketing"
+        ],
+        "status": "explicit",
         "phase": "creative-direction",
         "contextCostTokens": 300,
-        "providerFallback": "use local deterministic sketch if provider lacks this capability packet"
-      },
-      {
-        "capabilityId": "uupm.lookup.domain-knowledge",
-        "upstreamOrigin": "nextlevelbuilder/ui-ux-pro-max-skill",
-        "upstreamCommit": "4857a2c5ef989794751a0f66b8545a4a49566286",
-        "whyRelevant": "searchable design knowledge for marketing",
-        "phase": "knowledge",
-        "contextCostTokens": 500,
         "providerFallback": "use local deterministic sketch if provider lacks this capability packet"
       },
       {
         "capabilityId": "uupm.tune.design-dials",
         "upstreamOrigin": "nextlevelbuilder/ui-ux-pro-max-skill",
         "upstreamCommit": "4857a2c5ef989794751a0f66b8545a4a49566286",
-        "whyRelevant": "searchable design knowledge for marketing",
+        "whyRelevant": "mode marketing base required · subject=Atelier Møn Printworks\" · action=enquire about a print edition.",
+        "evidencePointers": [
+          "mode:marketing"
+        ],
+        "status": "explicit",
         "phase": "creative-direction",
         "contextCostTokens": 300,
         "providerFallback": "use local deterministic sketch if provider lacks this capability packet"
@@ -115,7 +153,11 @@
         "capabilityId": "IMP-004",
         "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
         "upstreamCommit": "6b342244e915d64b0d6e84d5eec448fd196ce6bb",
-        "whyRelevant": "seed/shape/critique mechanics for marketing",
+        "whyRelevant": "mode marketing base required · subject=Atelier Møn Printworks\" · action=enquire about a print edition.",
+        "evidencePointers": [
+          "mode:marketing"
+        ],
+        "status": "explicit",
         "phase": "seed",
         "contextCostTokens": 200,
         "providerFallback": "use local deterministic sketch if provider lacks this capability packet"
@@ -124,16 +166,11 @@
         "capabilityId": "IMP-005",
         "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
         "upstreamCommit": "6b342244e915d64b0d6e84d5eec448fd196ce6bb",
-        "whyRelevant": "seed/shape/critique mechanics for marketing",
-        "phase": "seed",
-        "contextCostTokens": 200,
-        "providerFallback": "use local deterministic sketch if provider lacks this capability packet"
-      },
-      {
-        "capabilityId": "IMP-006",
-        "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
-        "upstreamCommit": "6b342244e915d64b0d6e84d5eec448fd196ce6bb",
-        "whyRelevant": "seed/shape/critique mechanics for marketing",
+        "whyRelevant": "mode marketing base required · subject=Atelier Møn Printworks\" · action=enquire about a print edition.",
+        "evidencePointers": [
+          "mode:marketing"
+        ],
+        "status": "explicit",
         "phase": "seed",
         "contextCostTokens": 200,
         "providerFallback": "use local deterministic sketch if provider lacks this capability packet"
@@ -142,7 +179,11 @@
         "capabilityId": "IMP-008",
         "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
         "upstreamCommit": "6b342244e915d64b0d6e84d5eec448fd196ce6bb",
-        "whyRelevant": "seed/shape/critique mechanics for marketing",
+        "whyRelevant": "mode marketing base required · subject=Atelier Møn Printworks\" · action=enquire about a print edition.",
+        "evidencePointers": [
+          "mode:marketing"
+        ],
+        "status": "explicit",
         "phase": "critique",
         "contextCostTokens": 300,
         "providerFallback": "use local deterministic sketch if provider lacks this capability packet"
@@ -151,7 +192,11 @@
         "capabilityId": "TASTE-CAP-007",
         "upstreamOrigin": "https://github.com/Leonxlnx/taste-skill.git",
         "upstreamCommit": "e988add20dab0fa97d7a76781c48961c8184288e",
-        "whyRelevant": "brief/dials/anti-default discipline for marketing",
+        "whyRelevant": "mode marketing base optional · subject=Atelier Møn Printworks\" · action=enquire about a print edition.",
+        "evidencePointers": [
+          "mode:marketing"
+        ],
+        "status": "inferred",
         "phase": "creative-direction",
         "contextCostTokens": 300,
         "providerFallback": "use local deterministic sketch if provider lacks this capability packet"
@@ -160,49 +205,83 @@
         "capabilityId": "frontend.motion-intent",
         "upstreamOrigin": "https://github.com/anthropics/skills",
         "upstreamCommit": "b29e7cf65e5cb78a5ac33d582270551bc74a14eb",
-        "whyRelevant": "subject-grounded creative pressure for marketing",
+        "whyRelevant": "mode marketing base optional · subject=Atelier Møn Printworks\" · action=enquire about a print edition.",
+        "evidencePointers": [
+          "mode:marketing"
+        ],
+        "status": "inferred",
         "phase": "creative-direction",
         "contextCostTokens": 300,
         "providerFallback": "use local deterministic sketch if provider lacks this capability packet"
       },
       {
-        "capabilityId": "uupm.generate.design-system",
-        "upstreamOrigin": "nextlevelbuilder/ui-ux-pro-max-skill",
-        "upstreamCommit": "4857a2c5ef989794751a0f66b8545a4a49566286",
-        "whyRelevant": "searchable design knowledge for marketing",
-        "phase": "knowledge",
-        "contextCostTokens": 500,
+        "capabilityId": "IMP-006",
+        "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
+        "upstreamCommit": "6b342244e915d64b0d6e84d5eec448fd196ce6bb",
+        "whyRelevant": "mode marketing base optional · subject=Atelier Møn Printworks\" · action=enquire about a print edition.",
+        "evidencePointers": [
+          "mode:marketing"
+        ],
+        "status": "inferred",
+        "phase": "seed",
+        "contextCostTokens": 200,
+        "providerFallback": "use local deterministic sketch if provider lacks this capability packet"
+      },
+      {
+        "capabilityId": "IMP-010",
+        "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
+        "upstreamCommit": "6b342244e915d64b0d6e84d5eec448fd196ce6bb",
+        "whyRelevant": "mode marketing base optional · subject=Atelier Møn Printworks\" · action=enquire about a print edition.",
+        "evidencePointers": [
+          "mode:marketing"
+        ],
+        "status": "inferred",
+        "phase": "critique",
+        "contextCostTokens": 300,
+        "providerFallback": "use local deterministic sketch if provider lacks this capability packet"
+      },
+      {
+        "capabilityId": "frontend.interface-writing",
+        "upstreamOrigin": "https://github.com/anthropics/skills",
+        "upstreamCommit": "b29e7cf65e5cb78a5ac33d582270551bc74a14eb",
+        "whyRelevant": "operational UI needs action vocabulary · subject=Atelier Møn Printworks\" · action=enquire about a print edition.",
+        "evidencePointers": [
+          "brief:job"
+        ],
+        "status": "inferred",
+        "phase": "creative-direction",
+        "contextCostTokens": 300,
         "providerFallback": "use local deterministic sketch if provider lacks this capability packet"
       }
     ],
     "notLoaded": [
       {
         "capabilityId": "TASTE-CAP-001",
-        "reason": "not selected by mode route / budget"
+        "reason": "not selected by mode+signals/budget"
       },
       {
         "capabilityId": "TASTE-CAP-006",
-        "reason": "not selected by mode route / budget"
+        "reason": "not selected by mode+signals/budget"
       },
       {
         "capabilityId": "TASTE-CAP-008",
-        "reason": "not selected by mode route / budget"
+        "reason": "not selected by mode+signals/budget"
       },
       {
         "capabilityId": "TASTE-CAP-009",
-        "reason": "not selected by mode route / budget"
+        "reason": "not selected by mode+signals/budget"
       },
       {
         "capabilityId": "TASTE-CAP-010",
-        "reason": "not selected by mode route / budget"
+        "reason": "not selected by mode+signals/budget"
       },
       {
         "capabilityId": "TASTE-CAP-011",
-        "reason": "not selected by mode route / budget"
+        "reason": "not selected by mode+signals/budget"
       },
       {
         "capabilityId": "TASTE-CAP-012",
-        "reason": "not selected by mode route / budget"
+        "reason": "not selected by mode+signals/budget"
       },
       {
         "capabilityId": "TASTE-CAP-013",
@@ -210,23 +289,23 @@
       },
       {
         "capabilityId": "TASTE-CAP-014",
-        "reason": "not selected by mode route / budget"
+        "reason": "not selected by mode+signals/budget"
       },
       {
         "capabilityId": "TASTE-CAP-015",
-        "reason": "not selected by mode route / budget"
+        "reason": "not selected by mode+signals/budget"
       },
       {
         "capabilityId": "TASTE-CAP-016",
-        "reason": "not selected by mode route / budget"
+        "reason": "not selected by mode+signals/budget"
       },
       {
         "capabilityId": "TASTE-CAP-017",
-        "reason": "not selected by mode route / budget"
+        "reason": "not selected by mode+signals/budget"
       },
       {
         "capabilityId": "TASTE-CAP-018",
-        "reason": "not selected by mode route / budget"
+        "reason": "not selected by mode+signals/budget"
       },
       {
         "capabilityId": "TASTE-CAP-019",
@@ -234,39 +313,47 @@
       },
       {
         "capabilityId": "uupm.skill.activation",
-        "reason": "not selected by mode route / budget"
+        "reason": "not selected by mode+signals/budget"
       },
       {
         "capabilityId": "uupm.requirements.stack-detect",
-        "reason": "not selected by mode route / budget"
+        "reason": "not selected by mode+signals/budget"
       },
       {
         "capabilityId": "uupm.search.bm25",
-        "reason": "not selected by mode route / budget"
+        "reason": "not selected by mode+signals/budget"
       },
       {
         "capabilityId": "uupm.classify.product-reasoning",
-        "reason": "not selected by mode route / budget"
+        "reason": "not selected by mode+signals/budget"
+      },
+      {
+        "capabilityId": "uupm.generate.design-system",
+        "reason": "not selected by mode+signals/budget"
+      },
+      {
+        "capabilityId": "uupm.lookup.domain-knowledge",
+        "reason": "not selected by mode+signals/budget"
       },
       {
         "capabilityId": "uupm.lookup.stack-guidance",
-        "reason": "not selected by mode route / budget"
+        "reason": "not selected by mode+signals/budget"
       },
       {
         "capabilityId": "uupm.persist.master-overrides",
-        "reason": "not selected by mode route / budget"
+        "reason": "not selected by mode+signals/budget"
       },
       {
         "capabilityId": "uupm.provider.template-build",
-        "reason": "not selected by mode route / budget"
+        "reason": "not selected by mode+signals/budget"
       },
       {
         "capabilityId": "uupm.cli.install-uninstall",
-        "reason": "not selected by mode route / budget"
+        "reason": "not selected by mode+signals/budget"
       },
       {
         "capabilityId": "uupm.cli.update-versions",
-        "reason": "not selected by mode route / budget"
+        "reason": "not selected by mode+signals/budget"
       },
       {
         "capabilityId": "uupm.bundle.sibling-skills",
@@ -274,117 +361,114 @@
       },
       {
         "capabilityId": "uupm.optional.browser-stack",
-        "reason": "not selected by mode route / budget"
+        "reason": "not selected by mode+signals/budget"
       },
       {
         "capabilityId": "uupm.quality.tests-release",
-        "reason": "not selected by mode route / budget"
+        "reason": "not selected by mode+signals/budget"
       },
       {
         "capabilityId": "frontend.semantic-structure",
-        "reason": "not selected by mode route / budget"
+        "reason": "not selected by mode+signals/budget"
       },
       {
         "capabilityId": "frontend.plan-critique-build",
-        "reason": "not selected by mode route / budget"
+        "reason": "not selected by mode+signals/budget"
       },
       {
         "capabilityId": "frontend.restraint-quality-floor",
-        "reason": "not selected by mode route / budget"
-      },
-      {
-        "capabilityId": "frontend.interface-writing",
-        "reason": "not selected by mode route / budget"
+        "reason": "not selected by mode+signals/budget"
       },
       {
         "capabilityId": "IMP-001",
-        "reason": "not selected by mode route / budget"
+        "reason": "not selected by mode+signals/budget"
       },
       {
         "capabilityId": "IMP-002",
-        "reason": "not selected by mode route / budget"
+        "reason": "not selected by mode+signals/budget"
       },
       {
         "capabilityId": "IMP-003",
-        "reason": "not selected by mode route / budget"
+        "reason": "not selected by mode+signals/budget"
       },
       {
         "capabilityId": "IMP-007",
-        "reason": "not selected by mode route / budget"
+        "reason": "not selected by mode+signals/budget"
       },
       {
         "capabilityId": "IMP-009",
-        "reason": "not selected by mode route / budget"
-      },
-      {
-        "capabilityId": "IMP-010",
-        "reason": "not selected by mode route / budget"
+        "reason": "not selected by mode+signals/budget"
       },
       {
         "capabilityId": "IMP-011",
-        "reason": "not selected by mode route / budget"
+        "reason": "not selected by mode+signals/budget"
       },
       {
         "capabilityId": "IMP-012",
-        "reason": "not selected by mode route / budget"
+        "reason": "not selected by mode+signals/budget"
       },
       {
         "capabilityId": "IMP-013",
-        "reason": "not selected by mode route / budget"
+        "reason": "not selected by mode+signals/budget"
       },
       {
         "capabilityId": "IMP-014",
-        "reason": "not selected by mode route / budget"
+        "reason": "not selected by mode+signals/budget"
       },
       {
         "capabilityId": "IMP-015",
         "reason": "deliberate ledger reject / exclusion-only"
       }
     ],
-    "loadedAll59": false
+    "loadedAll59": false,
+    "domainRetrieval": {
+      "consulted": true,
+      "reason": "BM25-lite keyword scan of \\skills\\sitesmith\\data\\products.csv",
+      "hitCount": 2,
+      "claimAllowed": true
+    }
   },
   "direction": {
     "worlds": [
-      "workspace-canvas",
-      "index-first",
-      "statement-object",
+      "poster-type",
       "split-evidence",
-      "material-board"
+      "statement-object",
+      "editorial-bleed"
     ],
     "cards": [
       {
-        "internalId": "W2",
-        "worldId": "statement-object",
+        "internalId": "W1",
+        "worldId": "poster-type",
         "seed": {
-          "source": "local-world-library",
-          "version": "1.0.0",
-          "method": "sha256-project-entropy + fisher-yates",
-          "randomSeed": "proof-atelier-2026-07-31|2c63399c01fac42216a67b61|g:taste+uupm+frontend+impeccable",
-          "numericSeed": 3673036283,
-          "licence": "MIT SiteSmith-original world templates",
+          "source": "local-world-library-seed",
+          "version": "1.1.0",
+          "method": "sha256-project-entropy + fisher-yates over eligibility-filtered seeds",
+          "randomSeed": "proof-atelier-2026-07-31",
+          "numericSeed": 2914086421,
+          "licence": "MIT SiteSmith-original world seed templates",
           "origin": "local",
-          "slot": 2
+          "slot": 0
         },
-        "thesis": "Atelier Møn Printworks\" as marketing — hero thesis: airy first screen where single object left, large type right — anti-default dials applied before chrome — domain knowledge consulted — seeded world before polish — subject recognised before chrome",
-        "evidence": "--- | title: \"Evidence — Atelier Møn Printworks\" | status: proof-fixture | ai_generated: \"(C)\" | --- | # Evidence — Atelier Møn Printworks | domain-knowledge: on",
+        "thesis": "Atelier Møn Printworks\": enquire about a print edition. via type alone at scale, artefact below the fold — atelier, møn, printworks, curators, and, small",
+        "evidence": "--- | title: \"Evidence — Atelier Møn Printworks\" | status: proof-fixture | ai_generated: \"(C)\" | --- | # Evidence — Atelier Møn Printworks | domain-knowledge: consulted (2 hits)",
         "audience": "curators and small brands commissioning limited runs.",
-        "designIntent": "marketing for Atelier Møn Printworks\"",
-        "composition": "single object left, large type right",
-        "type": "condensed display grotesque over quiet sans",
-        "colour": "light paper ground with one reserve accent",
-        "imagery": "object-led, full-height product plate",
-        "rhythm": "hard vertical split then calm bands",
-        "surface": "open — subject earns space around the object",
-        "labels": "sentence case captions — retail voice stays human",
-        "figures": "proportional — price is content not motif",
-        "depth": "elevated — object lifts off ground slightly",
-        "layoutPrinciple": "single object left, large type right",
-        "typographicPrinciple": "condensed display grotesque over quiet sans",
-        "assetStrategy": "object-led, full-height product plate",
-        "motionInteraction": "hover reveals material fact on the object",
-        "signatureElement": "atelier-statement-object-sig",
+        "designIntent": "marketing · enquire about a print edition. · Atelier Møn Printworks\"",
+        "composition": "type alone at scale, artefact below the fold",
+        "type": "custom-feeling display, extreme scale ratio",
+        "colour": "saturated ground from subject material, not purple gradient",
+        "imagery": "deliberately imageless on first screen",
+        "rhythm": "one continuous field then a single break",
+        "surface": "open — type is the material",
+        "labels": "symbol-led — almost no chrome labels",
+        "figures": "absent",
+        "depth": "flat",
+        "layoutPrinciple": "type alone at scale, artefact below the fold",
+        "typographicPrinciple": "custom-feeling display, extreme scale ratio",
+        "assetStrategy": "deliberately imageless on first screen",
+        "motionInteraction": "single decisive scroll cue",
+        "signatureElement": "atelier-poster-type",
         "primaryRisk": "Signature may overfit if evidence is thin.",
-        "differenceNote": "Differs from split-evidence, material-board on composition/type/imagery/grammar treatments, not hue alone.",
+        "differenceNote": "Differs from split-evidence, statement-object on composition/type/imagery/grammar after brief-fit filter.",
         "capabilityProvenance": [
           "TASTE-CAP-002",
           "TASTE-CAP-003",
@@ -395,41 +479,58 @@
           "frontend.type-as-identity",
           "frontend.anti-default-calibration",
           "frontend.compact-plan-signature",
-          "uupm.lookup.domain-knowledge",
           "uupm.tune.design-dials",
           "IMP-004",
           "IMP-005",
-          "IMP-006",
           "IMP-008",
           "TASTE-CAP-007",
           "frontend.motion-intent",
-          "uupm.generate.design-system"
+          "IMP-006",
+          "IMP-010",
+          "frontend.interface-writing"
         ],
-        "density": "airy",
+        "density": "poster",
         "groupsApplied": {
           "taste": true,
           "uupm": true,
           "frontend": true,
           "impeccable": true
+        },
+        "grounding": {
+          "subject": "Atelier Møn Printworks\"",
+          "primaryAction": "enquire about a print edition.",
+          "antiRefs": [
+            "generic creative-agency blob gradients, stock loft photos"
+          ],
+          "assets": {
+            "imageless": false,
+            "plates": false
+          }
+        },
+        "semanticGroupEffects": {
+          "withoutFrontend": false,
+          "withoutTaste": false,
+          "withoutUupm": false,
+          "withoutImpeccable": false
         }
       },
       {
-        "internalId": "W3",
+        "internalId": "W2",
         "worldId": "split-evidence",
         "seed": {
-          "source": "local-world-library",
-          "version": "1.0.0",
-          "method": "sha256-project-entropy + fisher-yates",
-          "randomSeed": "proof-atelier-2026-07-31|2c63399c01fac42216a67b61|g:taste+uupm+frontend+impeccable",
-          "numericSeed": 3673036283,
-          "licence": "MIT SiteSmith-original world templates",
+          "source": "local-world-library-seed",
+          "version": "1.1.0",
+          "method": "sha256-project-entropy + fisher-yates over eligibility-filtered seeds",
+          "randomSeed": "proof-atelier-2026-07-31",
+          "numericSeed": 2914086421,
+          "licence": "MIT SiteSmith-original world seed templates",
           "origin": "local",
-          "slot": 3
+          "slot": 1
         },
-        "thesis": "Atelier Møn Printworks\" as marketing — hero thesis: balanced first screen where hard vertical rule: proof left, action right — anti-default dials applied before chrome — domain knowledge consulted — seeded world before polish — subject recognised before chrome",
-        "evidence": "--- | title: \"Evidence — Atelier Møn Printworks\" | status: proof-fixture | ai_generated: \"(C)\" | --- | # Evidence — Atelier Møn Printworks | domain-knowledge: on",
+        "thesis": "Atelier Møn Printworks\": enquire about a print edition. via hard vertical rule: proof left, action right — atelier, møn, printworks, curators, and, small",
+        "evidence": "--- | title: \"Evidence — Atelier Møn Printworks\" | status: proof-fixture | ai_generated: \"(C)\" | --- | # Evidence — Atelier Møn Printworks | domain-knowledge: consulted (2 hits)",
         "audience": "curators and small brands commissioning limited runs.",
-        "designIntent": "marketing for Atelier Møn Printworks\"",
+        "designIntent": "marketing · enquire about a print edition. · Atelier Møn Printworks\"",
         "composition": "hard vertical rule: proof left, action right",
         "type": "neutral grotesque, medium weight only",
         "colour": "stone ground, single brand accent on CTA only",
@@ -443,9 +544,9 @@
         "typographicPrinciple": "neutral grotesque, medium weight only",
         "assetStrategy": "diagram-led evidence stack",
         "motionInteraction": "sticky action column on desktop",
-        "signatureElement": "atelier-split-evidence-sig",
+        "signatureElement": "atelier-split-evidence",
         "primaryRisk": "Signature may overfit if evidence is thin.",
-        "differenceNote": "Differs from statement-object, material-board on composition/type/imagery/grammar treatments, not hue alone.",
+        "differenceNote": "Differs from poster-type, statement-object on composition/type/imagery/grammar after brief-fit filter.",
         "capabilityProvenance": [
           "TASTE-CAP-002",
           "TASTE-CAP-003",
@@ -456,15 +557,15 @@
           "frontend.type-as-identity",
           "frontend.anti-default-calibration",
           "frontend.compact-plan-signature",
-          "uupm.lookup.domain-knowledge",
           "uupm.tune.design-dials",
           "IMP-004",
           "IMP-005",
-          "IMP-006",
           "IMP-008",
           "TASTE-CAP-007",
           "frontend.motion-intent",
-          "uupm.generate.design-system"
+          "IMP-006",
+          "IMP-010",
+          "frontend.interface-writing"
         ],
         "density": "balanced",
         "groupsApplied": {
@@ -472,41 +573,58 @@
           "uupm": true,
           "frontend": true,
           "impeccable": true
+        },
+        "grounding": {
+          "subject": "Atelier Møn Printworks\"",
+          "primaryAction": "enquire about a print edition.",
+          "antiRefs": [
+            "generic creative-agency blob gradients, stock loft photos"
+          ],
+          "assets": {
+            "imageless": false,
+            "plates": false
+          }
+        },
+        "semanticGroupEffects": {
+          "withoutFrontend": false,
+          "withoutTaste": false,
+          "withoutUupm": false,
+          "withoutImpeccable": false
         }
       },
       {
-        "internalId": "W4",
-        "worldId": "material-board",
+        "internalId": "W3",
+        "worldId": "statement-object",
         "seed": {
-          "source": "local-world-library",
-          "version": "1.0.0",
-          "method": "sha256-project-entropy + fisher-yates",
-          "randomSeed": "proof-atelier-2026-07-31|2c63399c01fac42216a67b61|g:taste+uupm+frontend+impeccable",
-          "numericSeed": 3673036283,
-          "licence": "MIT SiteSmith-original world templates",
+          "source": "local-world-library-seed",
+          "version": "1.1.0",
+          "method": "sha256-project-entropy + fisher-yates over eligibility-filtered seeds",
+          "randomSeed": "proof-atelier-2026-07-31",
+          "numericSeed": 2914086421,
+          "licence": "MIT SiteSmith-original world seed templates",
           "origin": "local",
-          "slot": 4
+          "slot": 2
         },
-        "thesis": "Atelier Møn Printworks\" as marketing — hero thesis: tactile first screen where grid of many small material samples — anti-default dials applied before chrome — domain knowledge consulted — seeded world before polish — subject recognised before chrome",
-        "evidence": "--- | title: \"Evidence — Atelier Møn Printworks\" | status: proof-fixture | ai_generated: \"(C)\" | --- | # Evidence — Atelier Møn Printworks | domain-knowledge: on",
+        "thesis": "Atelier Møn Printworks\": enquire about a print edition. via single object left, large type right — atelier, møn, printworks, curators, and, small",
+        "evidence": "--- | title: \"Evidence — Atelier Møn Printworks\" | status: proof-fixture | ai_generated: \"(C)\" | --- | # Evidence — Atelier Møn Printworks | domain-knowledge: consulted (2 hits)",
         "audience": "curators and small brands commissioning limited runs.",
-        "designIntent": "marketing for Atelier Møn Printworks\"",
-        "composition": "grid of many small material samples",
-        "type": "small caps labels over soft serif",
-        "colour": "warm light ground from material palette",
-        "imagery": "object-led sample plates",
-        "rhythm": "tight mosaic then wide breathing band",
-        "surface": "colour-field — each cell is a material ground",
-        "labels": "sentence case — trade names, not UI chrome",
-        "figures": "proportional — dimensions only when needed",
-        "depth": "overlap — samples slightly shuffle depth",
-        "layoutPrinciple": "grid of many small material samples",
-        "typographicPrinciple": "small caps labels over soft serif",
-        "assetStrategy": "object-led sample plates",
-        "motionInteraction": "sample select builds a slip/cart",
-        "signatureElement": "atelier-material-board-sig",
+        "designIntent": "marketing · enquire about a print edition. · Atelier Møn Printworks\"",
+        "composition": "single object left, large type right",
+        "type": "condensed display grotesque over quiet sans",
+        "colour": "light paper ground with one reserve accent",
+        "imagery": "diagram-led evidence slots until plates exist",
+        "rhythm": "hard vertical split then calm bands",
+        "surface": "open — subject earns space around the object",
+        "labels": "sentence case captions — retail voice stays human",
+        "figures": "proportional — price is content not motif",
+        "depth": "elevated — object lifts off ground slightly",
+        "layoutPrinciple": "single object left, large type right",
+        "typographicPrinciple": "condensed display grotesque over quiet sans",
+        "assetStrategy": "diagram-led evidence slots until plates exist",
+        "motionInteraction": "hover reveals material fact on the object",
+        "signatureElement": "atelier-statement-object",
         "primaryRisk": "Signature may overfit if evidence is thin.",
-        "differenceNote": "Differs from statement-object, split-evidence on composition/type/imagery/grammar treatments, not hue alone.",
+        "differenceNote": "Differs from poster-type, split-evidence on composition/type/imagery/grammar after brief-fit filter.",
         "capabilityProvenance": [
           "TASTE-CAP-002",
           "TASTE-CAP-003",
@@ -517,26 +635,59 @@
           "frontend.type-as-identity",
           "frontend.anti-default-calibration",
           "frontend.compact-plan-signature",
-          "uupm.lookup.domain-knowledge",
           "uupm.tune.design-dials",
           "IMP-004",
           "IMP-005",
-          "IMP-006",
           "IMP-008",
           "TASTE-CAP-007",
           "frontend.motion-intent",
-          "uupm.generate.design-system"
+          "IMP-006",
+          "IMP-010",
+          "frontend.interface-writing"
         ],
-        "density": "tactile",
+        "density": "airy",
         "groupsApplied": {
           "taste": true,
           "uupm": true,
           "frontend": true,
           "impeccable": true
+        },
+        "grounding": {
+          "subject": "Atelier Møn Printworks\"",
+          "primaryAction": "enquire about a print edition.",
+          "antiRefs": [
+            "generic creative-agency blob gradients, stock loft photos"
+          ],
+          "assets": {
+            "imageless": false,
+            "plates": false
+          }
+        },
+        "semanticGroupEffects": {
+          "withoutFrontend": false,
+          "withoutTaste": false,
+          "withoutUupm": false,
+          "withoutImpeccable": false
         }
       }
     ],
     "pairwise": [
+      {
+        "a": "W1",
+        "b": "W2",
+        "macroDiff": 5,
+        "grammarDiff": 4,
+        "compositionDiff": true,
+        "pass": true
+      },
+      {
+        "a": "W1",
+        "b": "W3",
+        "macroDiff": 5,
+        "grammarDiff": 3,
+        "compositionDiff": true,
+        "pass": true
+      },
       {
         "a": "W2",
         "b": "W3",
@@ -544,42 +695,27 @@
         "grammarDiff": 2,
         "compositionDiff": true,
         "pass": true
-      },
-      {
-        "a": "W2",
-        "b": "W4",
-        "macroDiff": 5,
-        "grammarDiff": 2,
-        "compositionDiff": true,
-        "pass": true
-      },
-      {
-        "a": "W3",
-        "b": "W4",
-        "macroDiff": 5,
-        "grammarDiff": 3,
-        "compositionDiff": true,
-        "pass": true
       }
     ],
-    "entropy": "proof-atelier-2026-07-31|2c63399c01fac42216a67b61|g:taste+uupm+frontend+impeccable",
-    "numericSeed": 3673036283
+    "entropy": "proof-atelier-2026-07-31",
+    "numericSeed": 2914086421,
+    "eligibleSeedCount": 4
   },
   "blinding": {
-    "independence": "context-isolated",
+    "independence": "deterministic-preflight",
+    "claim": "local keyword preflight only — not context-isolated external critic",
     "key": {
-      "L1": "W3",
-      "L2": "W4",
-      "L3": "W2"
+      "L1": "W2",
+      "L2": "W3",
+      "L3": "W1"
     },
     "blinded": [
       {
         "blindId": "L1",
-        "worldId": "split-evidence",
-        "thesis": "Atelier Møn Printworks\" as marketing — hero thesis: balanced first screen where hard vertical rule: proof left, action right — anti-default dials applied before chrome — domain knowledge consulted — seeded world before polish — subject recognised before chrome",
-        "evidence": "--- | title: \"Evidence — Atelier Møn Printworks\" | status: proof-fixture | ai_generated: \"(C)\" | --- | # Evidence — Atelier Møn Printworks | domain-knowledge: on",
+        "thesis": "Atelier Møn Printworks\": enquire about a print edition. via hard vertical rule: proof left, action right — atelier, møn, printworks, curators, and, small",
+        "evidence": "--- | title: \"Evidence — Atelier Møn Printworks\" | status: proof-fixture | ai_generated: \"(C)\" | --- | # Evidence — Atelier Møn Printworks | domain-knowledge: consulted (2 hits)",
         "audience": "curators and small brands commissioning limited runs.",
-        "designIntent": "marketing for Atelier Møn Printworks\"",
+        "designIntent": "marketing · enquire about a print edition. · Atelier Møn Printworks\"",
         "composition": "hard vertical rule: proof left, action right",
         "type": "neutral grotesque, medium weight only",
         "colour": "stone ground, single brand accent on CTA only",
@@ -593,59 +729,32 @@
         "typographicPrinciple": "neutral grotesque, medium weight only",
         "assetStrategy": "diagram-led evidence stack",
         "motionInteraction": "sticky action column on desktop",
-        "signatureElement": "atelier-split-evidence-sig",
+        "signatureElement": "atelier-split-evidence",
         "primaryRisk": "Signature may overfit if evidence is thin.",
-        "differenceNote": "Differs from statement-object, material-board on composition/type/imagery/grammar treatments, not hue alone.",
+        "differenceNote": "Differs from poster-type, statement-object on composition/type/imagery/grammar after brief-fit filter.",
         "density": "balanced",
-        "groupsApplied": {
-          "taste": true,
-          "uupm": true,
-          "frontend": true,
-          "impeccable": true
+        "grounding": {
+          "subject": "Atelier Møn Printworks\"",
+          "primaryAction": "enquire about a print edition.",
+          "antiRefs": [
+            "generic creative-agency blob gradients, stock loft photos"
+          ],
+          "assets": {
+            "imageless": false,
+            "plates": false
+          }
         }
       },
       {
         "blindId": "L2",
-        "worldId": "material-board",
-        "thesis": "Atelier Møn Printworks\" as marketing — hero thesis: tactile first screen where grid of many small material samples — anti-default dials applied before chrome — domain knowledge consulted — seeded world before polish — subject recognised before chrome",
-        "evidence": "--- | title: \"Evidence — Atelier Møn Printworks\" | status: proof-fixture | ai_generated: \"(C)\" | --- | # Evidence — Atelier Møn Printworks | domain-knowledge: on",
+        "thesis": "Atelier Møn Printworks\": enquire about a print edition. via single object left, large type right — atelier, møn, printworks, curators, and, small",
+        "evidence": "--- | title: \"Evidence — Atelier Møn Printworks\" | status: proof-fixture | ai_generated: \"(C)\" | --- | # Evidence — Atelier Møn Printworks | domain-knowledge: consulted (2 hits)",
         "audience": "curators and small brands commissioning limited runs.",
-        "designIntent": "marketing for Atelier Møn Printworks\"",
-        "composition": "grid of many small material samples",
-        "type": "small caps labels over soft serif",
-        "colour": "warm light ground from material palette",
-        "imagery": "object-led sample plates",
-        "rhythm": "tight mosaic then wide breathing band",
-        "surface": "colour-field — each cell is a material ground",
-        "labels": "sentence case — trade names, not UI chrome",
-        "figures": "proportional — dimensions only when needed",
-        "depth": "overlap — samples slightly shuffle depth",
-        "layoutPrinciple": "grid of many small material samples",
-        "typographicPrinciple": "small caps labels over soft serif",
-        "assetStrategy": "object-led sample plates",
-        "motionInteraction": "sample select builds a slip/cart",
-        "signatureElement": "atelier-material-board-sig",
-        "primaryRisk": "Signature may overfit if evidence is thin.",
-        "differenceNote": "Differs from statement-object, split-evidence on composition/type/imagery/grammar treatments, not hue alone.",
-        "density": "tactile",
-        "groupsApplied": {
-          "taste": true,
-          "uupm": true,
-          "frontend": true,
-          "impeccable": true
-        }
-      },
-      {
-        "blindId": "L3",
-        "worldId": "statement-object",
-        "thesis": "Atelier Møn Printworks\" as marketing — hero thesis: airy first screen where single object left, large type right — anti-default dials applied before chrome — domain knowledge consulted — seeded world before polish — subject recognised before chrome",
-        "evidence": "--- | title: \"Evidence — Atelier Møn Printworks\" | status: proof-fixture | ai_generated: \"(C)\" | --- | # Evidence — Atelier Møn Printworks | domain-knowledge: on",
-        "audience": "curators and small brands commissioning limited runs.",
-        "designIntent": "marketing for Atelier Møn Printworks\"",
+        "designIntent": "marketing · enquire about a print edition. · Atelier Møn Printworks\"",
         "composition": "single object left, large type right",
         "type": "condensed display grotesque over quiet sans",
         "colour": "light paper ground with one reserve accent",
-        "imagery": "object-led, full-height product plate",
+        "imagery": "diagram-led evidence slots until plates exist",
         "rhythm": "hard vertical split then calm bands",
         "surface": "open — subject earns space around the object",
         "labels": "sentence case captions — retail voice stays human",
@@ -653,60 +762,102 @@
         "depth": "elevated — object lifts off ground slightly",
         "layoutPrinciple": "single object left, large type right",
         "typographicPrinciple": "condensed display grotesque over quiet sans",
-        "assetStrategy": "object-led, full-height product plate",
+        "assetStrategy": "diagram-led evidence slots until plates exist",
         "motionInteraction": "hover reveals material fact on the object",
-        "signatureElement": "atelier-statement-object-sig",
+        "signatureElement": "atelier-statement-object",
         "primaryRisk": "Signature may overfit if evidence is thin.",
-        "differenceNote": "Differs from split-evidence, material-board on composition/type/imagery/grammar treatments, not hue alone.",
+        "differenceNote": "Differs from poster-type, split-evidence on composition/type/imagery/grammar after brief-fit filter.",
         "density": "airy",
-        "groupsApplied": {
-          "taste": true,
-          "uupm": true,
-          "frontend": true,
-          "impeccable": true
+        "grounding": {
+          "subject": "Atelier Møn Printworks\"",
+          "primaryAction": "enquire about a print edition.",
+          "antiRefs": [
+            "generic creative-agency blob gradients, stock loft photos"
+          ],
+          "assets": {
+            "imageless": false,
+            "plates": false
+          }
+        }
+      },
+      {
+        "blindId": "L3",
+        "thesis": "Atelier Møn Printworks\": enquire about a print edition. via type alone at scale, artefact below the fold — atelier, møn, printworks, curators, and, small",
+        "evidence": "--- | title: \"Evidence — Atelier Møn Printworks\" | status: proof-fixture | ai_generated: \"(C)\" | --- | # Evidence — Atelier Møn Printworks | domain-knowledge: consulted (2 hits)",
+        "audience": "curators and small brands commissioning limited runs.",
+        "designIntent": "marketing · enquire about a print edition. · Atelier Møn Printworks\"",
+        "composition": "type alone at scale, artefact below the fold",
+        "type": "custom-feeling display, extreme scale ratio",
+        "colour": "saturated ground from subject material, not purple gradient",
+        "imagery": "deliberately imageless on first screen",
+        "rhythm": "one continuous field then a single break",
+        "surface": "open — type is the material",
+        "labels": "symbol-led — almost no chrome labels",
+        "figures": "absent",
+        "depth": "flat",
+        "layoutPrinciple": "type alone at scale, artefact below the fold",
+        "typographicPrinciple": "custom-feeling display, extreme scale ratio",
+        "assetStrategy": "deliberately imageless on first screen",
+        "motionInteraction": "single decisive scroll cue",
+        "signatureElement": "atelier-poster-type",
+        "primaryRisk": "Signature may overfit if evidence is thin.",
+        "differenceNote": "Differs from split-evidence, statement-object on composition/type/imagery/grammar after brief-fit filter.",
+        "density": "poster",
+        "grounding": {
+          "subject": "Atelier Møn Printworks\"",
+          "primaryAction": "enquire about a print edition.",
+          "antiRefs": [
+            "generic creative-agency blob gradients, stock loft photos"
+          ],
+          "assets": {
+            "imageless": false,
+            "plates": false
+          }
         }
       }
     ]
   },
   "critic": {
-    "independence": "context-isolated",
+    "role": "deterministic-preflight",
+    "independence": "deterministic-preflight",
     "notModelIndependent": true,
+    "externalRunEvidence": false,
     "scores": [
       {
         "blindId": "L1",
         "briefFit": 5,
-        "originality": 3,
+        "originality": 0,
         "subject": 3,
         "composition": 3,
         "implementability": 2,
-        "total": 16,
+        "total": 13,
         "flags": []
       },
       {
         "blindId": "L2",
         "briefFit": 5,
-        "originality": 3,
+        "originality": 0,
         "subject": 3,
         "composition": 3,
-        "implementability": 3,
-        "total": 17,
+        "implementability": 2,
+        "total": 13,
         "flags": []
       },
       {
         "blindId": "L3",
         "briefFit": 5,
-        "originality": 3,
+        "originality": 0,
         "subject": 3,
         "composition": 3,
-        "implementability": 3,
-        "total": 17,
+        "implementability": 2,
+        "total": 13,
         "flags": []
       }
     ],
     "rankedIds": [
+      "L1",
       "L2",
-      "L3",
-      "L1"
+      "L3"
     ],
     "tie": true,
     "rejectAll": false,
@@ -715,8 +866,8 @@
   },
   "choice": {
     "status": "selected",
-    "selectedBlindId": "L2",
-    "selectedInternalId": "W4",
+    "selectedBlindId": "L1",
+    "selectedInternalId": "W2",
     "by": "user"
   },
   "designSpec": {
@@ -725,17 +876,17 @@
     "projectName": "02-atelier-portfolio",
     "mode": "marketing",
     "stack": "html",
-    "designThesis": "Atelier Møn Printworks\" as marketing — hero thesis: tactile first screen where grid of many small material samples — anti-default dials applied before chrome — domain knowledge consulted — seeded world before polish — subject recognised before chrome",
+    "designThesis": "Atelier Møn Printworks\": enquire about a print edition. via hard vertical rule: proof left, action right — atelier, møn, printworks, curators, and, small",
     "contentHierarchy": [
       "subject recognition",
       "enquire about a print edition.",
       "supporting evidence",
       "secondary navigation"
     ],
-    "pageComposition": "grid of many small material samples",
+    "pageComposition": "hard vertical rule: proof left, action right",
     "gridAndSpacing": "balanced 8/12 rhythm",
     "typographySystem": {
-      "principle": "small caps labels over soft serif",
+      "principle": "neutral grotesque, medium weight only",
       "roles": [
         "display",
         "body",
@@ -743,12 +894,12 @@
       ]
     },
     "colourRoles": {
-      "ground": "warm light ground from material palette",
+      "ground": "stone ground, single brand accent on CTA only",
       "accent": "single reserved accent from brand evidence only if present",
       "text": "primary ink on ground with WCAG AA body contrast"
     },
-    "surfaceMaterialModel": "colour-field — each cell is a material ground",
-    "imageryStrategy": "object-led sample plates",
+    "surfaceMaterialModel": "framed — evidence cards in heavy borders",
+    "imageryStrategy": "diagram-led evidence stack",
     "componentPrinciples": [
       "states must be visible without colour alone",
       "primary action uses reserved accent only"
@@ -761,7 +912,7 @@
       "error"
     ],
     "motionRules": {
-      "principle": "sample select builds a slip/cart",
+      "principle": "sticky action column on desktop",
       "reducedMotion": "disable non-essential motion"
     },
     "responsiveBehavior": {
@@ -773,7 +924,7 @@
       "label every control",
       "AA contrast for body and UI text"
     ],
-    "signatureElement": "atelier-material-board-sig",
+    "signatureElement": "atelier-split-evidence",
     "forbiddenFallbackDefaults": [
       "purple SaaS gradient hero",
       "three equal feature cards as default identity",
@@ -783,43 +934,43 @@
     "fidelityAssertions": [
       {
         "field": "composition",
-        "expected": "grid of many small material samples"
+        "expected": "hard vertical rule: proof left, action right"
       },
       {
         "field": "type",
-        "expected": "small caps labels over soft serif"
+        "expected": "neutral grotesque, medium weight only"
       },
       {
         "field": "colour",
-        "expected": "warm light ground from material palette"
+        "expected": "stone ground, single brand accent on CTA only"
       },
       {
         "field": "imagery",
-        "expected": "object-led sample plates"
+        "expected": "diagram-led evidence stack"
       },
       {
         "field": "rhythm",
-        "expected": "tight mosaic then wide breathing band"
+        "expected": "two columns for the whole first fold"
       },
       {
         "field": "surface",
-        "expected": "colour-field — each cell is a material ground"
+        "expected": "framed — evidence cards in heavy borders"
       },
       {
         "field": "labels",
-        "expected": "sentence case — trade names, not UI chrome"
+        "expected": "sentence case — operational clarity"
       },
       {
         "field": "figures",
-        "expected": "proportional — dimensions only when needed"
+        "expected": "functional tabular — measurements only where compared"
       },
       {
         "field": "depth",
-        "expected": "overlap — samples slightly shuffle depth"
+        "expected": "elevated — evidence cards raise on focus"
       },
       {
         "field": "signature-selector",
-        "expected": "[data-signature=\"atelier-material-board-sig\"]"
+        "expected": "[data-signature=\"atelier-split-evidence\"]"
       }
     ],
     "acceptanceCriteria": [
@@ -832,109 +983,209 @@
       {
         "capabilityId": "TASTE-CAP-002",
         "upstreamOrigin": "https://github.com/Leonxlnx/taste-skill.git",
-        "phase": "creative-direction"
+        "phase": "creative-direction",
+        "whyRelevant": "mode marketing base required · subject=Atelier Møn Printworks\" · action=enquire about a print edition.",
+        "evidencePointers": [
+          "mode:marketing"
+        ],
+        "status": "explicit"
       },
       {
         "capabilityId": "TASTE-CAP-003",
         "upstreamOrigin": "https://github.com/Leonxlnx/taste-skill.git",
-        "phase": "creative-direction"
+        "phase": "creative-direction",
+        "whyRelevant": "mode marketing base required · subject=Atelier Møn Printworks\" · action=enquire about a print edition.",
+        "evidencePointers": [
+          "mode:marketing"
+        ],
+        "status": "explicit"
       },
       {
         "capabilityId": "TASTE-CAP-004",
         "upstreamOrigin": "https://github.com/Leonxlnx/taste-skill.git",
-        "phase": "creative-direction"
+        "phase": "creative-direction",
+        "whyRelevant": "mode marketing base required · subject=Atelier Møn Printworks\" · action=enquire about a print edition.",
+        "evidencePointers": [
+          "mode:marketing"
+        ],
+        "status": "explicit"
       },
       {
         "capabilityId": "TASTE-CAP-005",
         "upstreamOrigin": "https://github.com/Leonxlnx/taste-skill.git",
-        "phase": "creative-direction"
+        "phase": "creative-direction",
+        "whyRelevant": "mode marketing base required · subject=Atelier Møn Printworks\" · action=enquire about a print edition.",
+        "evidencePointers": [
+          "mode:marketing"
+        ],
+        "status": "explicit"
       },
       {
         "capabilityId": "frontend.subject-vernacular",
         "upstreamOrigin": "https://github.com/anthropics/skills",
-        "phase": "creative-direction"
+        "phase": "creative-direction",
+        "whyRelevant": "mode marketing base required · subject=Atelier Møn Printworks\" · action=enquire about a print edition.",
+        "evidencePointers": [
+          "mode:marketing"
+        ],
+        "status": "explicit"
       },
       {
         "capabilityId": "frontend.hero-thesis",
         "upstreamOrigin": "https://github.com/anthropics/skills",
-        "phase": "creative-direction"
+        "phase": "creative-direction",
+        "whyRelevant": "mode marketing base required · subject=Atelier Møn Printworks\" · action=enquire about a print edition.",
+        "evidencePointers": [
+          "mode:marketing"
+        ],
+        "status": "explicit"
       },
       {
         "capabilityId": "frontend.type-as-identity",
         "upstreamOrigin": "https://github.com/anthropics/skills",
-        "phase": "creative-direction"
+        "phase": "creative-direction",
+        "whyRelevant": "mode marketing base required · subject=Atelier Møn Printworks\" · action=enquire about a print edition.",
+        "evidencePointers": [
+          "mode:marketing"
+        ],
+        "status": "explicit"
       },
       {
         "capabilityId": "frontend.anti-default-calibration",
         "upstreamOrigin": "https://github.com/anthropics/skills",
-        "phase": "creative-direction"
+        "phase": "creative-direction",
+        "whyRelevant": "mode marketing base required · subject=Atelier Møn Printworks\" · action=enquire about a print edition.",
+        "evidencePointers": [
+          "mode:marketing"
+        ],
+        "status": "explicit"
       },
       {
         "capabilityId": "frontend.compact-plan-signature",
         "upstreamOrigin": "https://github.com/anthropics/skills",
-        "phase": "creative-direction"
-      },
-      {
-        "capabilityId": "uupm.lookup.domain-knowledge",
-        "upstreamOrigin": "nextlevelbuilder/ui-ux-pro-max-skill",
-        "phase": "knowledge"
+        "phase": "creative-direction",
+        "whyRelevant": "mode marketing base required · subject=Atelier Møn Printworks\" · action=enquire about a print edition.",
+        "evidencePointers": [
+          "mode:marketing"
+        ],
+        "status": "explicit"
       },
       {
         "capabilityId": "uupm.tune.design-dials",
         "upstreamOrigin": "nextlevelbuilder/ui-ux-pro-max-skill",
-        "phase": "creative-direction"
+        "phase": "creative-direction",
+        "whyRelevant": "mode marketing base required · subject=Atelier Møn Printworks\" · action=enquire about a print edition.",
+        "evidencePointers": [
+          "mode:marketing"
+        ],
+        "status": "explicit"
       },
       {
         "capabilityId": "IMP-004",
         "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
-        "phase": "seed"
+        "phase": "seed",
+        "whyRelevant": "mode marketing base required · subject=Atelier Møn Printworks\" · action=enquire about a print edition.",
+        "evidencePointers": [
+          "mode:marketing"
+        ],
+        "status": "explicit"
       },
       {
         "capabilityId": "IMP-005",
         "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
-        "phase": "seed"
-      },
-      {
-        "capabilityId": "IMP-006",
-        "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
-        "phase": "seed"
+        "phase": "seed",
+        "whyRelevant": "mode marketing base required · subject=Atelier Møn Printworks\" · action=enquire about a print edition.",
+        "evidencePointers": [
+          "mode:marketing"
+        ],
+        "status": "explicit"
       },
       {
         "capabilityId": "IMP-008",
         "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
-        "phase": "critique"
+        "phase": "critique",
+        "whyRelevant": "mode marketing base required · subject=Atelier Møn Printworks\" · action=enquire about a print edition.",
+        "evidencePointers": [
+          "mode:marketing"
+        ],
+        "status": "explicit"
       },
       {
         "capabilityId": "TASTE-CAP-007",
         "upstreamOrigin": "https://github.com/Leonxlnx/taste-skill.git",
-        "phase": "creative-direction"
+        "phase": "creative-direction",
+        "whyRelevant": "mode marketing base optional · subject=Atelier Møn Printworks\" · action=enquire about a print edition.",
+        "evidencePointers": [
+          "mode:marketing"
+        ],
+        "status": "inferred"
       },
       {
         "capabilityId": "frontend.motion-intent",
         "upstreamOrigin": "https://github.com/anthropics/skills",
-        "phase": "creative-direction"
+        "phase": "creative-direction",
+        "whyRelevant": "mode marketing base optional · subject=Atelier Møn Printworks\" · action=enquire about a print edition.",
+        "evidencePointers": [
+          "mode:marketing"
+        ],
+        "status": "inferred"
       },
       {
-        "capabilityId": "uupm.generate.design-system",
-        "upstreamOrigin": "nextlevelbuilder/ui-ux-pro-max-skill",
-        "phase": "knowledge"
+        "capabilityId": "IMP-006",
+        "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
+        "phase": "seed",
+        "whyRelevant": "mode marketing base optional · subject=Atelier Møn Printworks\" · action=enquire about a print edition.",
+        "evidencePointers": [
+          "mode:marketing"
+        ],
+        "status": "inferred"
+      },
+      {
+        "capabilityId": "IMP-010",
+        "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
+        "phase": "critique",
+        "whyRelevant": "mode marketing base optional · subject=Atelier Møn Printworks\" · action=enquire about a print edition.",
+        "evidencePointers": [
+          "mode:marketing"
+        ],
+        "status": "inferred"
+      },
+      {
+        "capabilityId": "frontend.interface-writing",
+        "upstreamOrigin": "https://github.com/anthropics/skills",
+        "phase": "creative-direction",
+        "whyRelevant": "operational UI needs action vocabulary · subject=Atelier Møn Printworks\" · action=enquire about a print edition.",
+        "evidencePointers": [
+          "brief:job"
+        ],
+        "status": "inferred"
       }
     ],
     "seedProvenance": {
-      "source": "local-world-library",
-      "version": "1.0.0",
-      "method": "sha256-project-entropy + fisher-yates",
-      "randomSeed": "proof-atelier-2026-07-31|2c63399c01fac42216a67b61|g:taste+uupm+frontend+impeccable",
-      "numericSeed": 3673036283,
-      "licence": "MIT SiteSmith-original world templates",
+      "source": "local-world-library-seed",
+      "version": "1.1.0",
+      "method": "sha256-project-entropy + fisher-yates over eligibility-filtered seeds",
+      "randomSeed": "proof-atelier-2026-07-31",
+      "numericSeed": 2914086421,
+      "licence": "MIT SiteSmith-original world seed templates",
       "origin": "local",
-      "slot": 4
+      "slot": 1
     },
     "policyVersion": "direction-engine-v3-slice-1.0.0",
+    "dials": {
+      "visualDensity": 4,
+      "motionIntensity": 3,
+      "aestheticBoldness": 7,
+      "status": {
+        "visualDensity": "explicit",
+        "motionIntensity": "explicit",
+        "aestheticBoldness": "explicit"
+      }
+    },
     "choice": {
       "status": "selected",
-      "selectedBlindId": "L2",
-      "selectedInternalId": "W4",
+      "selectedBlindId": "L1",
+      "selectedInternalId": "W2",
       "by": "user"
     }
   },
@@ -954,17 +1205,17 @@
       "projectName": "02-atelier-portfolio",
       "mode": "marketing",
       "stack": "html",
-      "designThesis": "Atelier Møn Printworks\" as marketing — hero thesis: tactile first screen where grid of many small material samples — anti-default dials applied before chrome — domain knowledge consulted — seeded world before polish — subject recognised before chrome",
+      "designThesis": "Atelier Møn Printworks\": enquire about a print edition. via hard vertical rule: proof left, action right — atelier, møn, printworks, curators, and, small",
       "contentHierarchy": [
         "subject recognition",
         "enquire about a print edition.",
         "supporting evidence",
         "secondary navigation"
       ],
-      "pageComposition": "grid of many small material samples",
+      "pageComposition": "hard vertical rule: proof left, action right",
       "gridAndSpacing": "balanced 8/12 rhythm",
       "typographySystem": {
-        "principle": "small caps labels over soft serif",
+        "principle": "neutral grotesque, medium weight only",
         "roles": [
           "display",
           "body",
@@ -972,12 +1223,12 @@
         ]
       },
       "colourRoles": {
-        "ground": "warm light ground from material palette",
+        "ground": "stone ground, single brand accent on CTA only",
         "accent": "single reserved accent from brand evidence only if present",
         "text": "primary ink on ground with WCAG AA body contrast"
       },
-      "surfaceMaterialModel": "colour-field — each cell is a material ground",
-      "imageryStrategy": "object-led sample plates",
+      "surfaceMaterialModel": "framed — evidence cards in heavy borders",
+      "imageryStrategy": "diagram-led evidence stack",
       "componentPrinciples": [
         "states must be visible without colour alone",
         "primary action uses reserved accent only"
@@ -990,7 +1241,7 @@
         "error"
       ],
       "motionRules": {
-        "principle": "sample select builds a slip/cart",
+        "principle": "sticky action column on desktop",
         "reducedMotion": "disable non-essential motion"
       },
       "responsiveBehavior": {
@@ -1002,7 +1253,7 @@
         "label every control",
         "AA contrast for body and UI text"
       ],
-      "signatureElement": "atelier-material-board-sig",
+      "signatureElement": "atelier-split-evidence",
       "forbiddenFallbackDefaults": [
         "purple SaaS gradient hero",
         "three equal feature cards as default identity",
@@ -1012,43 +1263,43 @@
       "fidelityAssertions": [
         {
           "field": "composition",
-          "expected": "grid of many small material samples"
+          "expected": "hard vertical rule: proof left, action right"
         },
         {
           "field": "type",
-          "expected": "small caps labels over soft serif"
+          "expected": "neutral grotesque, medium weight only"
         },
         {
           "field": "colour",
-          "expected": "warm light ground from material palette"
+          "expected": "stone ground, single brand accent on CTA only"
         },
         {
           "field": "imagery",
-          "expected": "object-led sample plates"
+          "expected": "diagram-led evidence stack"
         },
         {
           "field": "rhythm",
-          "expected": "tight mosaic then wide breathing band"
+          "expected": "two columns for the whole first fold"
         },
         {
           "field": "surface",
-          "expected": "colour-field — each cell is a material ground"
+          "expected": "framed — evidence cards in heavy borders"
         },
         {
           "field": "labels",
-          "expected": "sentence case — trade names, not UI chrome"
+          "expected": "sentence case — operational clarity"
         },
         {
           "field": "figures",
-          "expected": "proportional — dimensions only when needed"
+          "expected": "functional tabular — measurements only where compared"
         },
         {
           "field": "depth",
-          "expected": "overlap — samples slightly shuffle depth"
+          "expected": "elevated — evidence cards raise on focus"
         },
         {
           "field": "signature-selector",
-          "expected": "[data-signature=\"atelier-material-board-sig\"]"
+          "expected": "[data-signature=\"atelier-split-evidence\"]"
         }
       ],
       "acceptanceCriteria": [
@@ -1061,114 +1312,214 @@
         {
           "capabilityId": "TASTE-CAP-002",
           "upstreamOrigin": "https://github.com/Leonxlnx/taste-skill.git",
-          "phase": "creative-direction"
+          "phase": "creative-direction",
+          "whyRelevant": "mode marketing base required · subject=Atelier Møn Printworks\" · action=enquire about a print edition.",
+          "evidencePointers": [
+            "mode:marketing"
+          ],
+          "status": "explicit"
         },
         {
           "capabilityId": "TASTE-CAP-003",
           "upstreamOrigin": "https://github.com/Leonxlnx/taste-skill.git",
-          "phase": "creative-direction"
+          "phase": "creative-direction",
+          "whyRelevant": "mode marketing base required · subject=Atelier Møn Printworks\" · action=enquire about a print edition.",
+          "evidencePointers": [
+            "mode:marketing"
+          ],
+          "status": "explicit"
         },
         {
           "capabilityId": "TASTE-CAP-004",
           "upstreamOrigin": "https://github.com/Leonxlnx/taste-skill.git",
-          "phase": "creative-direction"
+          "phase": "creative-direction",
+          "whyRelevant": "mode marketing base required · subject=Atelier Møn Printworks\" · action=enquire about a print edition.",
+          "evidencePointers": [
+            "mode:marketing"
+          ],
+          "status": "explicit"
         },
         {
           "capabilityId": "TASTE-CAP-005",
           "upstreamOrigin": "https://github.com/Leonxlnx/taste-skill.git",
-          "phase": "creative-direction"
+          "phase": "creative-direction",
+          "whyRelevant": "mode marketing base required · subject=Atelier Møn Printworks\" · action=enquire about a print edition.",
+          "evidencePointers": [
+            "mode:marketing"
+          ],
+          "status": "explicit"
         },
         {
           "capabilityId": "frontend.subject-vernacular",
           "upstreamOrigin": "https://github.com/anthropics/skills",
-          "phase": "creative-direction"
+          "phase": "creative-direction",
+          "whyRelevant": "mode marketing base required · subject=Atelier Møn Printworks\" · action=enquire about a print edition.",
+          "evidencePointers": [
+            "mode:marketing"
+          ],
+          "status": "explicit"
         },
         {
           "capabilityId": "frontend.hero-thesis",
           "upstreamOrigin": "https://github.com/anthropics/skills",
-          "phase": "creative-direction"
+          "phase": "creative-direction",
+          "whyRelevant": "mode marketing base required · subject=Atelier Møn Printworks\" · action=enquire about a print edition.",
+          "evidencePointers": [
+            "mode:marketing"
+          ],
+          "status": "explicit"
         },
         {
           "capabilityId": "frontend.type-as-identity",
           "upstreamOrigin": "https://github.com/anthropics/skills",
-          "phase": "creative-direction"
+          "phase": "creative-direction",
+          "whyRelevant": "mode marketing base required · subject=Atelier Møn Printworks\" · action=enquire about a print edition.",
+          "evidencePointers": [
+            "mode:marketing"
+          ],
+          "status": "explicit"
         },
         {
           "capabilityId": "frontend.anti-default-calibration",
           "upstreamOrigin": "https://github.com/anthropics/skills",
-          "phase": "creative-direction"
+          "phase": "creative-direction",
+          "whyRelevant": "mode marketing base required · subject=Atelier Møn Printworks\" · action=enquire about a print edition.",
+          "evidencePointers": [
+            "mode:marketing"
+          ],
+          "status": "explicit"
         },
         {
           "capabilityId": "frontend.compact-plan-signature",
           "upstreamOrigin": "https://github.com/anthropics/skills",
-          "phase": "creative-direction"
-        },
-        {
-          "capabilityId": "uupm.lookup.domain-knowledge",
-          "upstreamOrigin": "nextlevelbuilder/ui-ux-pro-max-skill",
-          "phase": "knowledge"
+          "phase": "creative-direction",
+          "whyRelevant": "mode marketing base required · subject=Atelier Møn Printworks\" · action=enquire about a print edition.",
+          "evidencePointers": [
+            "mode:marketing"
+          ],
+          "status": "explicit"
         },
         {
           "capabilityId": "uupm.tune.design-dials",
           "upstreamOrigin": "nextlevelbuilder/ui-ux-pro-max-skill",
-          "phase": "creative-direction"
+          "phase": "creative-direction",
+          "whyRelevant": "mode marketing base required · subject=Atelier Møn Printworks\" · action=enquire about a print edition.",
+          "evidencePointers": [
+            "mode:marketing"
+          ],
+          "status": "explicit"
         },
         {
           "capabilityId": "IMP-004",
           "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
-          "phase": "seed"
+          "phase": "seed",
+          "whyRelevant": "mode marketing base required · subject=Atelier Møn Printworks\" · action=enquire about a print edition.",
+          "evidencePointers": [
+            "mode:marketing"
+          ],
+          "status": "explicit"
         },
         {
           "capabilityId": "IMP-005",
           "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
-          "phase": "seed"
-        },
-        {
-          "capabilityId": "IMP-006",
-          "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
-          "phase": "seed"
+          "phase": "seed",
+          "whyRelevant": "mode marketing base required · subject=Atelier Møn Printworks\" · action=enquire about a print edition.",
+          "evidencePointers": [
+            "mode:marketing"
+          ],
+          "status": "explicit"
         },
         {
           "capabilityId": "IMP-008",
           "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
-          "phase": "critique"
+          "phase": "critique",
+          "whyRelevant": "mode marketing base required · subject=Atelier Møn Printworks\" · action=enquire about a print edition.",
+          "evidencePointers": [
+            "mode:marketing"
+          ],
+          "status": "explicit"
         },
         {
           "capabilityId": "TASTE-CAP-007",
           "upstreamOrigin": "https://github.com/Leonxlnx/taste-skill.git",
-          "phase": "creative-direction"
+          "phase": "creative-direction",
+          "whyRelevant": "mode marketing base optional · subject=Atelier Møn Printworks\" · action=enquire about a print edition.",
+          "evidencePointers": [
+            "mode:marketing"
+          ],
+          "status": "inferred"
         },
         {
           "capabilityId": "frontend.motion-intent",
           "upstreamOrigin": "https://github.com/anthropics/skills",
-          "phase": "creative-direction"
+          "phase": "creative-direction",
+          "whyRelevant": "mode marketing base optional · subject=Atelier Møn Printworks\" · action=enquire about a print edition.",
+          "evidencePointers": [
+            "mode:marketing"
+          ],
+          "status": "inferred"
         },
         {
-          "capabilityId": "uupm.generate.design-system",
-          "upstreamOrigin": "nextlevelbuilder/ui-ux-pro-max-skill",
-          "phase": "knowledge"
+          "capabilityId": "IMP-006",
+          "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
+          "phase": "seed",
+          "whyRelevant": "mode marketing base optional · subject=Atelier Møn Printworks\" · action=enquire about a print edition.",
+          "evidencePointers": [
+            "mode:marketing"
+          ],
+          "status": "inferred"
+        },
+        {
+          "capabilityId": "IMP-010",
+          "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
+          "phase": "critique",
+          "whyRelevant": "mode marketing base optional · subject=Atelier Møn Printworks\" · action=enquire about a print edition.",
+          "evidencePointers": [
+            "mode:marketing"
+          ],
+          "status": "inferred"
+        },
+        {
+          "capabilityId": "frontend.interface-writing",
+          "upstreamOrigin": "https://github.com/anthropics/skills",
+          "phase": "creative-direction",
+          "whyRelevant": "operational UI needs action vocabulary · subject=Atelier Møn Printworks\" · action=enquire about a print edition.",
+          "evidencePointers": [
+            "brief:job"
+          ],
+          "status": "inferred"
         }
       ],
       "seedProvenance": {
-        "source": "local-world-library",
-        "version": "1.0.0",
-        "method": "sha256-project-entropy + fisher-yates",
-        "randomSeed": "proof-atelier-2026-07-31|2c63399c01fac42216a67b61|g:taste+uupm+frontend+impeccable",
-        "numericSeed": 3673036283,
-        "licence": "MIT SiteSmith-original world templates",
+        "source": "local-world-library-seed",
+        "version": "1.1.0",
+        "method": "sha256-project-entropy + fisher-yates over eligibility-filtered seeds",
+        "randomSeed": "proof-atelier-2026-07-31",
+        "numericSeed": 2914086421,
+        "licence": "MIT SiteSmith-original world seed templates",
         "origin": "local",
-        "slot": 4
+        "slot": 1
       },
       "policyVersion": "direction-engine-v3-slice-1.0.0",
+      "dials": {
+        "visualDensity": 4,
+        "motionIntensity": 3,
+        "aestheticBoldness": 7,
+        "status": {
+          "visualDensity": "explicit",
+          "motionIntensity": "explicit",
+          "aestheticBoldness": "explicit"
+        }
+      },
       "choice": {
         "status": "selected",
-        "selectedBlindId": "L2",
-        "selectedInternalId": "W4",
+        "selectedBlindId": "L1",
+        "selectedInternalId": "W2",
         "by": "user"
       }
     },
-    "directionMd": "---\ntitle: \"DIRECTION — 02-atelier-portfolio\"\nstatus: direction-engine-slice\nai_generated: \"(C)\"\n---\n\n# DIRECTION — 02-atelier-portfolio\n\nWinner: material-board (Atelier Møn Printworks\" as marketing — hero thesis: tactile first screen where grid of many small material samples — anti-default dials applied before chrome — domain knowledge consulted — seeded world before polish — subject recognised before chrome)\n\n## Signature\natelier-material-board-sig\n\n## Axis record\n\n- direction-version: 2.3\n- composition: grid of many small material samples\n- type: small caps labels over soft serif\n- colour: warm light ground from material palette\n- imagery: object-led sample plates\n- rhythm: tight mosaic then wide breathing band\n\n- surface: colour-field — each cell is a material ground\n- labels: sentence case — trade names, not UI chrome\n- figures: proportional — dimensions only when needed\n- depth: overlap — samples slightly shuffle depth\n\n- visual-density: 5\n- motion-intensity: 3\n- aesthetic-boldness: 6\n\n- signature-selector: [data-signature=\"atelier-material-board-sig\"]\n- signature-min-share: 12\n\n## Rejections\n- statement-object: recorded alternative; not passed to build context\n- split-evidence: recorded alternative; not passed to build context\n\n## Notes\nSelected by Direction Engine v3 slice. Build context must not receive losing cards or generator scores.",
-    "axisRecord": "## Axis record\n\n- direction-version: 2.3\n- composition: grid of many small material samples\n- type: small caps labels over soft serif\n- colour: warm light ground from material palette\n- imagery: object-led sample plates\n- rhythm: tight mosaic then wide breathing band\n\n- surface: colour-field — each cell is a material ground\n- labels: sentence case — trade names, not UI chrome\n- figures: proportional — dimensions only when needed\n- depth: overlap — samples slightly shuffle depth\n\n- visual-density: 5\n- motion-intensity: 3\n- aesthetic-boldness: 6\n\n- signature-selector: [data-signature=\"atelier-material-board-sig\"]\n- signature-min-share: 12",
+    "directionMd": "---\ntitle: \"DIRECTION — 02-atelier-portfolio\"\nstatus: direction-engine-slice\nai_generated: \"(C)\"\n---\n\n# DIRECTION — 02-atelier-portfolio\n\nWinner: split-evidence (Atelier Møn Printworks\": enquire about a print edition. via hard vertical rule: proof left, action right — atelier, møn, printworks, curators, and, small)\n\n## Signature\natelier-split-evidence\n\n## Axis record\n\n- direction-version: 2.3\n- composition: hard vertical rule: proof left, action right\n- type: neutral grotesque, medium weight only\n- colour: stone ground, single brand accent on CTA only\n- imagery: diagram-led evidence stack\n- rhythm: two columns for the whole first fold\n\n- surface: framed — evidence cards in heavy borders\n- labels: sentence case — operational clarity\n- figures: functional tabular — measurements only where compared\n- depth: elevated — evidence cards raise on focus\n\n- visual-density: 4\n- motion-intensity: 3\n- aesthetic-boldness: 7\n\n- signature-selector: [data-signature=\"atelier-split-evidence\"]\n- signature-min-share: 12\n\n## Rejections\n- poster-type: recorded alternative; not passed to build context\n- statement-object: recorded alternative; not passed to build context\n\n## Notes\nSelected by Direction Engine v3 slice. Build context must not receive losing cards or generator scores.",
+    "axisRecord": "## Axis record\n\n- direction-version: 2.3\n- composition: hard vertical rule: proof left, action right\n- type: neutral grotesque, medium weight only\n- colour: stone ground, single brand accent on CTA only\n- imagery: diagram-led evidence stack\n- rhythm: two columns for the whole first fold\n\n- surface: framed — evidence cards in heavy borders\n- labels: sentence case — operational clarity\n- figures: functional tabular — measurements only where compared\n- depth: elevated — evidence cards raise on focus\n\n- visual-density: 4\n- motion-intensity: 3\n- aesthetic-boldness: 7\n\n- signature-selector: [data-signature=\"atelier-split-evidence\"]\n- signature-min-share: 12",
     "withheldFromBuild": {
       "rejectedDirectionCards": true,
       "generatorScores": true,

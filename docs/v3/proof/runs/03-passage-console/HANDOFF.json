@@ -14,7 +14,7 @@
     "projectName": "03-passage-console",
     "mode": "product-ui",
     "stack": "html",
-    "designThesis": "Passage Log Console\" as product-ui — hero thesis: cockpit first screen where real interface full width as first screen — anti-default dials applied before chrome — domain knowledge consulted — seeded world before polish — subject recognised before chrome",
+    "designThesis": "Passage Log Console\": log a passage (vessel, direction, time, notes). via real interface full width as first screen — passage, log, console, harbour, masters, logging",
     "contentHierarchy": [
       "subject recognition",
       "log a passage (vessel, direction, time, notes).",
@@ -37,7 +37,7 @@
       "text": "primary ink on ground with WCAG AA body contrast"
     },
     "surfaceMaterialModel": "framed — panels bound the work surface",
-    "imageryStrategy": "deliberately imageless — chrome is the content",
+    "imageryStrategy": "deliberately imageless — chrome and type carry the first screen",
     "componentPrinciples": [
       "states must be visible without colour alone",
       "primary action uses reserved accent only"
@@ -62,7 +62,7 @@
       "label every control",
       "AA contrast for body and UI text"
     ],
-    "signatureElement": "passage-workspace-canvas-sig",
+    "signatureElement": "passage-workspace-canvas",
     "forbiddenFallbackDefaults": [
       "purple SaaS gradient hero",
       "three equal feature cards as default identity",
@@ -84,7 +84,7 @@
       },
       {
         "field": "imagery",
-        "expected": "deliberately imageless — chrome is the content"
+        "expected": "deliberately imageless — chrome and type carry the first screen"
       },
       {
         "field": "rhythm",
@@ -108,7 +108,7 @@
       },
       {
         "field": "signature-selector",
-        "expected": "[data-signature=\"passage-workspace-canvas-sig\"]"
+        "expected": "[data-signature=\"passage-workspace-canvas\"]"
       }
     ],
     "acceptanceCriteria": [
@@ -121,114 +121,214 @@
       {
         "capabilityId": "TASTE-CAP-002",
         "upstreamOrigin": "https://github.com/Leonxlnx/taste-skill.git",
-        "phase": "creative-direction"
+        "phase": "creative-direction",
+        "whyRelevant": "mode product-ui base required · subject=Passage Log Console\" · action=log a passage (vessel, direction, time, notes).",
+        "evidencePointers": [
+          "mode:product-ui"
+        ],
+        "status": "explicit"
       },
       {
         "capabilityId": "TASTE-CAP-003",
         "upstreamOrigin": "https://github.com/Leonxlnx/taste-skill.git",
-        "phase": "creative-direction"
+        "phase": "creative-direction",
+        "whyRelevant": "mode product-ui base required · subject=Passage Log Console\" · action=log a passage (vessel, direction, time, notes).",
+        "evidencePointers": [
+          "mode:product-ui"
+        ],
+        "status": "explicit"
       },
       {
         "capabilityId": "TASTE-CAP-004",
         "upstreamOrigin": "https://github.com/Leonxlnx/taste-skill.git",
-        "phase": "creative-direction"
+        "phase": "creative-direction",
+        "whyRelevant": "mode product-ui base required · subject=Passage Log Console\" · action=log a passage (vessel, direction, time, notes).",
+        "evidencePointers": [
+          "mode:product-ui"
+        ],
+        "status": "explicit"
       },
       {
         "capabilityId": "frontend.subject-vernacular",
         "upstreamOrigin": "https://github.com/anthropics/skills",
-        "phase": "creative-direction"
+        "phase": "creative-direction",
+        "whyRelevant": "mode product-ui base required · subject=Passage Log Console\" · action=log a passage (vessel, direction, time, notes).",
+        "evidencePointers": [
+          "mode:product-ui"
+        ],
+        "status": "explicit"
       },
       {
         "capabilityId": "frontend.semantic-structure",
         "upstreamOrigin": "https://github.com/anthropics/skills",
-        "phase": "creative-direction"
+        "phase": "creative-direction",
+        "whyRelevant": "mode product-ui base required · subject=Passage Log Console\" · action=log a passage (vessel, direction, time, notes).",
+        "evidencePointers": [
+          "mode:product-ui"
+        ],
+        "status": "explicit"
       },
       {
         "capabilityId": "frontend.interface-writing",
         "upstreamOrigin": "https://github.com/anthropics/skills",
-        "phase": "creative-direction"
+        "phase": "creative-direction",
+        "whyRelevant": "mode product-ui base required · subject=Passage Log Console\" · action=log a passage (vessel, direction, time, notes).",
+        "evidencePointers": [
+          "mode:product-ui"
+        ],
+        "status": "explicit"
       },
       {
         "capabilityId": "frontend.restraint-quality-floor",
         "upstreamOrigin": "https://github.com/anthropics/skills",
-        "phase": "critique"
+        "phase": "critique",
+        "whyRelevant": "mode product-ui base required · subject=Passage Log Console\" · action=log a passage (vessel, direction, time, notes).",
+        "evidencePointers": [
+          "mode:product-ui"
+        ],
+        "status": "explicit"
       },
       {
         "capabilityId": "frontend.anti-default-calibration",
         "upstreamOrigin": "https://github.com/anthropics/skills",
-        "phase": "creative-direction"
-      },
-      {
-        "capabilityId": "uupm.lookup.stack-guidance",
-        "upstreamOrigin": "nextlevelbuilder/ui-ux-pro-max-skill",
-        "phase": "knowledge"
+        "phase": "creative-direction",
+        "whyRelevant": "mode product-ui base required · subject=Passage Log Console\" · action=log a passage (vessel, direction, time, notes).",
+        "evidencePointers": [
+          "mode:product-ui"
+        ],
+        "status": "explicit"
       },
       {
         "capabilityId": "uupm.tune.design-dials",
         "upstreamOrigin": "nextlevelbuilder/ui-ux-pro-max-skill",
-        "phase": "creative-direction"
-      },
-      {
-        "capabilityId": "uupm.lookup.domain-knowledge",
-        "upstreamOrigin": "nextlevelbuilder/ui-ux-pro-max-skill",
-        "phase": "knowledge"
+        "phase": "creative-direction",
+        "whyRelevant": "mode product-ui base required · subject=Passage Log Console\" · action=log a passage (vessel, direction, time, notes).",
+        "evidencePointers": [
+          "mode:product-ui"
+        ],
+        "status": "explicit"
       },
       {
         "capabilityId": "IMP-004",
         "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
-        "phase": "seed"
+        "phase": "seed",
+        "whyRelevant": "mode product-ui base required · subject=Passage Log Console\" · action=log a passage (vessel, direction, time, notes).",
+        "evidencePointers": [
+          "mode:product-ui"
+        ],
+        "status": "explicit"
       },
       {
         "capabilityId": "IMP-005",
         "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
-        "phase": "seed"
+        "phase": "seed",
+        "whyRelevant": "mode product-ui base required · subject=Passage Log Console\" · action=log a passage (vessel, direction, time, notes).",
+        "evidencePointers": [
+          "mode:product-ui"
+        ],
+        "status": "explicit"
       },
       {
         "capabilityId": "IMP-008",
         "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
-        "phase": "critique"
+        "phase": "critique",
+        "whyRelevant": "mode product-ui base required · subject=Passage Log Console\" · action=log a passage (vessel, direction, time, notes).",
+        "evidencePointers": [
+          "mode:product-ui"
+        ],
+        "status": "explicit"
       },
       {
         "capabilityId": "IMP-010",
         "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
-        "phase": "critique"
+        "phase": "critique",
+        "whyRelevant": "mode product-ui base required · subject=Passage Log Console\" · action=log a passage (vessel, direction, time, notes).",
+        "evidencePointers": [
+          "mode:product-ui"
+        ],
+        "status": "explicit"
       },
       {
         "capabilityId": "frontend.motion-intent",
         "upstreamOrigin": "https://github.com/anthropics/skills",
-        "phase": "creative-direction"
+        "phase": "creative-direction",
+        "whyRelevant": "mode product-ui base optional · subject=Passage Log Console\" · action=log a passage (vessel, direction, time, notes).",
+        "evidencePointers": [
+          "mode:product-ui"
+        ],
+        "status": "inferred"
       },
       {
         "capabilityId": "IMP-006",
         "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
-        "phase": "seed"
+        "phase": "seed",
+        "whyRelevant": "mode product-ui base optional · subject=Passage Log Console\" · action=log a passage (vessel, direction, time, notes).",
+        "evidencePointers": [
+          "mode:product-ui"
+        ],
+        "status": "inferred"
       },
       {
         "capabilityId": "uupm.generate.design-system",
         "upstreamOrigin": "nextlevelbuilder/ui-ux-pro-max-skill",
-        "phase": "knowledge"
+        "phase": "knowledge",
+        "whyRelevant": "mode product-ui base optional · subject=Passage Log Console\" · action=log a passage (vessel, direction, time, notes).",
+        "evidencePointers": [
+          "mode:product-ui"
+        ],
+        "status": "inferred"
+      },
+      {
+        "capabilityId": "TASTE-CAP-006",
+        "upstreamOrigin": "https://github.com/Leonxlnx/taste-skill.git",
+        "phase": "knowledge",
+        "whyRelevant": "commerce/product evidence present · subject=Passage Log Console\" · action=log a passage (vessel, direction, time, notes).",
+        "evidencePointers": [
+          "evidence:products"
+        ],
+        "status": "inferred"
+      },
+      {
+        "capabilityId": "uupm.classify.product-reasoning",
+        "upstreamOrigin": "nextlevelbuilder/ui-ux-pro-max-skill",
+        "phase": "knowledge",
+        "whyRelevant": "product classification needed for commerce · subject=Passage Log Console\" · action=log a passage (vessel, direction, time, notes).",
+        "evidencePointers": [
+          "evidence:products"
+        ],
+        "status": "inferred"
       }
     ],
     "seedProvenance": {
-      "source": "local-world-library",
-      "version": "1.0.0",
-      "method": "sha256-project-entropy + fisher-yates",
-      "randomSeed": "proof-passage-2026-07-31|2866bbfc673841b748caa224|g:taste+uupm+frontend+impeccable",
-      "numericSeed": 3401002012,
-      "licence": "MIT SiteSmith-original world templates",
+      "source": "local-world-library-seed",
+      "version": "1.1.0",
+      "method": "sha256-project-entropy + fisher-yates over eligibility-filtered seeds",
+      "randomSeed": "proof-passage-2026-07-31",
+      "numericSeed": 4096199536,
+      "licence": "MIT SiteSmith-original world seed templates",
       "origin": "local",
-      "slot": 3
+      "slot": 1
     },
     "policyVersion": "direction-engine-v3-slice-1.0.0",
+    "dials": {
+      "visualDensity": 8,
+      "motionIntensity": 1,
+      "aestheticBoldness": 3,
+      "status": {
+        "visualDensity": "explicit",
+        "motionIntensity": "explicit",
+        "aestheticBoldness": "explicit"
+      }
+    },
     "choice": {
       "status": "selected",
       "selectedBlindId": "L1",
-      "selectedInternalId": "W1",
+      "selectedInternalId": "W2",
       "by": "user"
     }
   },
-  "directionMd": "---\ntitle: \"DIRECTION — 03-passage-console\"\nstatus: direction-engine-slice\nai_generated: \"(C)\"\n---\n\n# DIRECTION — 03-passage-console\n\nWinner: workspace-canvas (Passage Log Console\" as product-ui — hero thesis: cockpit first screen where real interface full width as first screen — anti-default dials applied before chrome — domain knowledge consulted — seeded world before polish — subject recognised before chrome)\n\n## Signature\npassage-workspace-canvas-sig\n\n## Axis record\n\n- direction-version: 2.3\n- composition: real interface full width as first screen\n- type: UI sans pair, tight tracking on tools\n- colour: dark near-black ground, functional status accent\n- imagery: deliberately imageless — chrome is the content\n- rhythm: asymmetric tool rail + main canvas\n\n- surface: framed — panels bound the work surface\n- labels: symbol-led — tools speak as icons with text fallback\n- figures: absent — no decorative metrics\n- depth: inset — panels recede into the shell\n\n- visual-density: 5\n- motion-intensity: 3\n- aesthetic-boldness: 6\n\n- signature-selector: [data-signature=\"passage-workspace-canvas-sig\"]\n- signature-min-share: 12\n\n## Rejections\n- statement-object: recorded alternative; not passed to build context\n- material-board: recorded alternative; not passed to build context\n\n## Notes\nSelected by Direction Engine v3 slice. Build context must not receive losing cards or generator scores.",
-  "axisRecord": "## Axis record\n\n- direction-version: 2.3\n- composition: real interface full width as first screen\n- type: UI sans pair, tight tracking on tools\n- colour: dark near-black ground, functional status accent\n- imagery: deliberately imageless — chrome is the content\n- rhythm: asymmetric tool rail + main canvas\n\n- surface: framed — panels bound the work surface\n- labels: symbol-led — tools speak as icons with text fallback\n- figures: absent — no decorative metrics\n- depth: inset — panels recede into the shell\n\n- visual-density: 5\n- motion-intensity: 3\n- aesthetic-boldness: 6\n\n- signature-selector: [data-signature=\"passage-workspace-canvas-sig\"]\n- signature-min-share: 12",
+  "directionMd": "---\ntitle: \"DIRECTION — 03-passage-console\"\nstatus: direction-engine-slice\nai_generated: \"(C)\"\n---\n\n# DIRECTION — 03-passage-console\n\nWinner: workspace-canvas (Passage Log Console\": log a passage (vessel, direction, time, notes). via real interface full width as first screen — passage, log, console, harbour, masters, logging)\n\n## Signature\npassage-workspace-canvas\n\n## Axis record\n\n- direction-version: 2.3\n- composition: real interface full width as first screen\n- type: UI sans pair, tight tracking on tools\n- colour: dark near-black ground, functional status accent\n- imagery: deliberately imageless — chrome and type carry the first screen\n- rhythm: asymmetric tool rail + main canvas\n\n- surface: framed — panels bound the work surface\n- labels: symbol-led — tools speak as icons with text fallback\n- figures: absent — no decorative metrics\n- depth: inset — panels recede into the shell\n\n- visual-density: 8\n- motion-intensity: 1\n- aesthetic-boldness: 3\n\n- signature-selector: [data-signature=\"passage-workspace-canvas\"]\n- signature-min-share: 12\n\n## Rejections\n- poster-type: recorded alternative; not passed to build context\n- split-evidence: recorded alternative; not passed to build context\n\n## Notes\nSelected by Direction Engine v3 slice. Build context must not receive losing cards or generator scores.",
+  "axisRecord": "## Axis record\n\n- direction-version: 2.3\n- composition: real interface full width as first screen\n- type: UI sans pair, tight tracking on tools\n- colour: dark near-black ground, functional status accent\n- imagery: deliberately imageless — chrome and type carry the first screen\n- rhythm: asymmetric tool rail + main canvas\n\n- surface: framed — panels bound the work surface\n- labels: symbol-led — tools speak as icons with text fallback\n- figures: absent — no decorative metrics\n- depth: inset — panels recede into the shell\n\n- visual-density: 8\n- motion-intensity: 1\n- aesthetic-boldness: 3\n\n- signature-selector: [data-signature=\"passage-workspace-canvas\"]\n- signature-min-share: 12",
   "withheldFromBuild": {
     "rejectedDirectionCards": true,
     "generatorScores": true,

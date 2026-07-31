@@ -1,9 +1,44 @@
-/** Compile selected direction → machine-readable DesignSpec + v2.3 handoff. Original work, MIT. */
+/** DesignSpec compile + validation + v2.3 handoff. Original work, MIT. */
+
+export const DESIGNSPEC_REQUIRED = [
+  'schemaVersion', 'kind', 'projectName', 'mode', 'stack', 'designThesis',
+  'contentHierarchy', 'pageComposition', 'gridAndSpacing', 'typographySystem',
+  'colourRoles', 'surfaceMaterialModel', 'imageryStrategy', 'componentPrinciples',
+  'interactionStates', 'motionRules', 'responsiveBehavior', 'accessibilityConstraints',
+  'signatureElement', 'forbiddenFallbackDefaults', 'fidelityAssertions',
+  'acceptanceCriteria', 'capabilityProvenance', 'dials',
+];
+
+export function validateDesignSpec(spec) {
+  const problems = [];
+  if (!spec || typeof spec !== 'object') return { ok: false, problems: ['spec missing'] };
+  for (const key of DESIGNSPEC_REQUIRED) {
+    if (spec[key] == null) problems.push(`missing field: ${key}`);
+  }
+  if (spec.schemaVersion !== 1) problems.push('schemaVersion must be 1');
+  if (spec.kind !== 'sitesmith.designspec.v3-slice') problems.push('unexpected kind');
+  if (!Array.isArray(spec.fidelityAssertions) || spec.fidelityAssertions.length < 5) {
+    problems.push('fidelityAssertions incomplete');
+  }
+  if (!spec.dials || typeof spec.dials !== 'object') problems.push('dials missing');
+  return { ok: problems.length === 0, problems };
+}
 
 export function compileDesignSpec({ input, card, route, policy, choice }) {
   if (!card) {
     return { ok: false, problems: ['no selected card to compile'] };
   }
+
+  const dials = input.dials ?? {
+    visualDensity: null,
+    motionIntensity: null,
+    aestheticBoldness: null,
+    status: {
+      visualDensity: 'unknown',
+      motionIntensity: 'unknown',
+      aestheticBoldness: 'unknown',
+    },
+  };
 
   const spec = {
     schemaVersion: 1,
@@ -14,7 +49,7 @@ export function compileDesignSpec({ input, card, route, policy, choice }) {
     designThesis: card.thesis,
     contentHierarchy: [
       'subject recognition',
-      input.subjectHints.primaryAction,
+      input.signals?.primaryAction ?? input.subjectHints?.primaryAction ?? 'primary action',
       'supporting evidence',
       'secondary navigation',
     ],
@@ -78,12 +113,18 @@ export function compileDesignSpec({ input, card, route, policy, choice }) {
       capabilityId: s.capabilityId,
       upstreamOrigin: s.upstreamOrigin,
       phase: s.phase,
+      whyRelevant: s.whyRelevant,
+      evidencePointers: s.evidencePointers,
+      status: s.status,
     })),
     seedProvenance: card.seed,
     policyVersion: policy.policyVersion,
+    dials,
     choice,
   };
 
+  const validated = validateDesignSpec(spec);
+  if (!validated.ok) return { ok: false, problems: validated.problems };
   return { ok: true, spec };
 }
 
@@ -93,8 +134,14 @@ function spacingFor(density) {
   return 'balanced 8/12 rhythm';
 }
 
+function dialLine(name, value) {
+  if (value == null) return `- ${name}: unknown`;
+  return `- ${name}: ${value}`;
+}
+
 /** Handoff package for a fresh build context (v2.3 shell). */
 export function buildHandoffPackage({ input, spec, selectedCard, rejectedCards }) {
+  const dials = input.dials ?? {};
   const axisRecord = [
     '## Axis record',
     '',
@@ -110,9 +157,9 @@ export function buildHandoffPackage({ input, spec, selectedCard, rejectedCards }
     `- figures: ${selectedCard.figures}`,
     `- depth: ${selectedCard.depth}`,
     '',
-    '- visual-density: 5',
-    '- motion-intensity: 3',
-    '- aesthetic-boldness: 6',
+    dialLine('visual-density', dials.visualDensity),
+    dialLine('motion-intensity', dials.motionIntensity),
+    dialLine('aesthetic-boldness', dials.aestheticBoldness),
     '',
     `- signature-selector: [data-signature="${selectedCard.signatureElement}"]`,
     '- signature-min-share: 12',
@@ -154,7 +201,6 @@ export function buildHandoffPackage({ input, spec, selectedCard, rejectedCards }
     designSpec: spec,
     directionMd,
     axisRecord,
-    /** Explicit denylist for build context */
     withheldFromBuild: {
       rejectedDirectionCards: true,
       generatorScores: true,

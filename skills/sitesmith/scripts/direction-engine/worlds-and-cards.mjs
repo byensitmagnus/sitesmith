@@ -1,9 +1,9 @@
-/** Visual worlds + direction cards for v3 slice. Original work, MIT. */
+/** Seed worlds + grounded cards for Direction Engine v3 slice. Original work, MIT. */
 
 import { createHash } from 'node:crypto';
 import { grammarTreatment } from '../direction-record.mjs';
 
-/** Structurally distinct world templates (treatments only). Counts are policy-driven. */
+/** Seed templates only — never final directions without grounding. */
 export const WORLD_LIBRARY = [
   {
     id: 'statement-object',
@@ -18,6 +18,8 @@ export const WORLD_LIBRARY = [
     depth: 'elevated — object lifts off ground slightly',
     interaction: 'hover reveals material fact on the object',
     density: 'airy',
+    modes: ['ecommerce', 'marketing', 'portfolio'],
+    needs: { plates: true },
   },
   {
     id: 'index-first',
@@ -32,6 +34,8 @@ export const WORLD_LIBRARY = [
     depth: 'flat — paper catalogue logic',
     interaction: 'row focus expands one fact line',
     density: 'packed',
+    modes: ['ecommerce', 'editorial', 'audit', 'product-ui', 'component'],
+    needs: {},
   },
   {
     id: 'workspace-canvas',
@@ -46,6 +50,8 @@ export const WORLD_LIBRARY = [
     depth: 'inset — panels recede into the shell',
     interaction: 'keyboard-first primary journey',
     density: 'cockpit',
+    modes: ['product-ui', 'component', 'audit'],
+    needs: { operational: true },
   },
   {
     id: 'editorial-bleed',
@@ -60,6 +66,8 @@ export const WORLD_LIBRARY = [
     depth: 'overlap — type sits on image layers',
     interaction: 'scroll chapters, not tabs',
     density: 'cinematic',
+    modes: ['marketing', 'portfolio', 'editorial'],
+    needs: { photography: true },
   },
   {
     id: 'split-evidence',
@@ -74,6 +82,8 @@ export const WORLD_LIBRARY = [
     depth: 'elevated — evidence cards raise on focus',
     interaction: 'sticky action column on desktop',
     density: 'balanced',
+    modes: ['marketing', 'ecommerce', 'product-ui', 'redesign', 'component'],
+    needs: {},
   },
   {
     id: 'poster-type',
@@ -88,6 +98,8 @@ export const WORLD_LIBRARY = [
     depth: 'flat',
     interaction: 'single decisive scroll cue',
     density: 'poster',
+    modes: ['marketing', 'portfolio', 'editorial', 'product-ui', 'ecommerce'],
+    needs: {},
   },
   {
     id: 'material-board',
@@ -102,6 +114,8 @@ export const WORLD_LIBRARY = [
     depth: 'overlap — samples slightly shuffle depth',
     interaction: 'sample select builds a slip/cart',
     density: 'tactile',
+    modes: ['ecommerce', 'portfolio'],
+    needs: { plates: true, material: true },
   },
 ];
 
@@ -124,28 +138,26 @@ export function seedFromString(str) {
   return Number.parseInt(hex, 16);
 }
 
-/**
- * External seed assignment — not chosen by a scorer that already prefers a winner.
- */
-export function assignSeeds({ projectName, randomSeed, worldCount, catalog = 'local' }) {
-  const entropy = randomSeed ?? `${projectName}:${Date.now()}`;
+export function assignSeeds({ projectName, randomSeed, worldCount, catalog = 'local', eligibleWorlds }) {
+  const entropy = randomSeed ?? `${projectName}:seed`;
   const numeric = seedFromString(String(entropy));
   const rand = mulberry32(numeric);
-  const order = WORLD_LIBRARY.map((_, i) => i);
+  const pool = eligibleWorlds?.length ? eligibleWorlds : WORLD_LIBRARY;
+  const order = pool.map((_, i) => i);
   for (let i = order.length - 1; i > 0; i -= 1) {
     const j = Math.floor(rand() * (i + 1));
     [order[i], order[j]] = [order[j], order[i]];
   }
   const worlds = order.slice(0, worldCount).map((idx, n) => ({
-    worldId: WORLD_LIBRARY[idx].id,
-    template: WORLD_LIBRARY[idx],
+    worldId: pool[idx].id,
+    template: pool[idx],
     seed: {
-      source: catalog === 'local' ? 'local-world-library' : catalog,
-      version: '1.0.0',
-      method: 'sha256-project-entropy + fisher-yates',
+      source: catalog === 'local' ? 'local-world-library-seed' : catalog,
+      version: '1.1.0',
+      method: 'sha256-project-entropy + fisher-yates over eligibility-filtered seeds',
       randomSeed: String(entropy),
       numericSeed: numeric,
-      licence: 'MIT SiteSmith-original world templates',
+      licence: 'MIT SiteSmith-original world seed templates',
       origin: 'local',
       slot: n,
     },
@@ -194,40 +206,138 @@ export function isRound8Recipe(card) {
     && depth === 'flat';
 }
 
+/** Mode-fit + evidence gates — seed is only eligible if brief can support it. */
+export function worldEligible(template, input) {
+  const s = input.signals ?? input.subjectHints ?? {};
+  const mode = input.mode;
+  if (template.modes && !template.modes.includes(mode)) {
+    return { ok: false, reason: `seed ${template.id} not allowed for mode ${mode}` };
+  }
+  if (template.needs?.operational && !s.operational && mode !== 'product-ui' && mode !== 'component') {
+    return { ok: false, reason: `seed ${template.id} needs operational UI evidence` };
+  }
+  if (template.needs?.plates && !s.hasProductPlates && !s.hasManifest) {
+    return { ok: false, reason: `seed ${template.id} needs product/asset plates in plan/manifest` };
+  }
+  if (template.needs?.photography && (s.imageless || (!s.hasProductPlates && !s.hasAssetPlan))) {
+    return { ok: false, reason: `seed ${template.id} needs photography evidence; imageless/no assets` };
+  }
+  if (template.needs?.material && !/material|hide|leather|sample|paper|stock/i.test(`${input.brief}\n${input.evidence}`)) {
+    return { ok: false, reason: `seed ${template.id} needs material vocabulary in evidence` };
+  }
+  // Anti-references: ban seeds whose *affirmative* treatments match banned tropes.
+  // Do not treat the phrase "not purple gradient" as a purple default.
+  const anti = (s.antiRefs ?? []).join(' ').toLowerCase();
+  if (anti && /purple|saas gradient|handshake|fintech/i.test(anti)) {
+    const colour = String(template.colour ?? '');
+    if (/\bpurple\b/i.test(colour) && !/not purple|no purple/i.test(colour)) {
+      return { ok: false, reason: 'seed colour conflicts with anti-references' };
+    }
+  }
+  if (s.imageless && /photography-led|product plate|sample plates/i.test(template.imagery)) {
+    return { ok: false, reason: 'brief declares imageless; photo/plate seeds out' };
+  }
+  if (mode === 'product-ui' && /material-board|editorial-bleed/i.test(template.id)) {
+    if (!s.hasProductPlates) {
+      return { ok: false, reason: 'product-ui without product plates cannot take material/editorial photo seeds' };
+    }
+  }
+  if (mode === 'product-ui' && template.id === 'poster-type' && !s.imageless) {
+    // poster-type is only a safe product-ui seed when chrome/type must carry the UI (imageless)
+    return { ok: false, reason: 'poster-type for product-ui only when imageless' };
+  }
+  return { ok: true };
+}
+
+export function capabilityGroups(route) {
+  const ids = (route.selected ?? []).map((s) => s.capabilityId);
+  return {
+    taste: ids.some((id) => id.startsWith('TASTE-')),
+    uupm: ids.some((id) => id.startsWith('uupm.')),
+    frontend: ids.some((id) => id.startsWith('frontend.')),
+    impeccable: ids.some((id) => id.startsWith('IMP-')),
+  };
+}
+
 /**
- * Build policy-sized world set and pick structurally different cards.
+ * Semantic effects of capability groups on treatments (documented, not salt).
  */
+export function applyGroupSemantics(template, groups, input) {
+  const t = { ...template };
+  const s = input.signals ?? {};
+  if (!groups.frontend) {
+    t.type = 'system sans pair, conservative scale';
+    t.labels = 'sentence case — generic UI labels without subject vernacular';
+  }
+  if (!groups.taste) {
+    t.surface = String(t.surface).replace(/^open/, 'framed');
+  }
+  if (!groups.uupm && input.mode === 'ecommerce') {
+    t.figures = 'proportional — no comparison tables without domain knowledge retrieval';
+  }
+  if (!groups.impeccable) {
+    t.depth = 'flat — fewer layered craft decisions without seed/critique loop';
+  }
+  // Asset availability reshapes imagery
+  if (s.imageless) {
+    t.imagery = 'deliberately imageless — chrome and type carry the first screen';
+  } else if (s.hasProductPlates && /object-led|product plate/i.test(t.imagery)) {
+    t.imagery = `${t.imagery} using declared product plates from asset plan`;
+  } else if (!s.hasProductPlates && /object-led|product plate|sample plates/i.test(t.imagery)) {
+    t.imagery = 'diagram-led evidence slots until plates exist';
+  }
+  // Constraints
+  for (const c of s.constraints ?? []) {
+    if (/no motion|static/i.test(c)) t.interaction = 'static state feedback only';
+    if (/light mode only|no dark/i.test(c)) t.colour = 'light ground only — constraint';
+  }
+  return t;
+}
+
 export function generateDirectionCards(input, route, policy) {
   const groups = capabilityGroups(route);
-  // Impeccable seed mechanics expand the world pool; without them, fewer candidates.
   const baseWorldCount = policy.worldCount ?? 5;
+  // Semantic: without impeccable seed caps, fewer concurrent seeds
   const worldCount = groups.impeccable ? baseWorldCount : Math.max(3, baseWorldCount - 2);
   const cardCount = policy.cardCount ?? 3;
-  // Mix project entropy with route hash so capability ablation changes seed order.
-  const routeSalt = (route.decisionHash ?? route.selected?.map((s) => s.capabilityId).join(',') ?? '')
-    .slice(0, 24);
+
+  const eligible = WORLD_LIBRARY.filter((w) => worldEligible(w, input).ok);
+  if (eligible.length < cardCount) {
+    return {
+      ok: false,
+      problems: [`only ${eligible.length} evidence-eligible seed worlds for mode ${input.mode}; need ${cardCount}`],
+      eligible: eligible.map((w) => w.id),
+      rejectedSeeds: WORLD_LIBRARY.filter((w) => !worldEligible(w, input).ok).map((w) => ({
+        id: w.id,
+        reason: worldEligible(w, input).reason,
+      })),
+    };
+  }
+
+  // Seed entropy from project only — NOT route hash (no artificial ablation diversity)
   const { worlds, entropy, numericSeed } = assignSeeds({
     projectName: input.projectName,
-    randomSeed: `${input.randomSeed ?? 'seed'}|${routeSalt}|g:${Object.entries(groups).filter(([, v]) => v).map(([k]) => k).join('+')}`,
-    worldCount,
+    randomSeed: input.randomSeed,
+    worldCount: Math.min(worldCount, eligible.length),
     catalog: policy.seedCatalog ?? 'local',
+    eligibleWorlds: eligible,
   });
 
-  // Prefer worlds compatible with loaded creative pressures.
-  const rankedWorlds = [...worlds].sort((a, b) => worldScore(b.template, input, groups) - worldScore(a.template, input, groups));
-
-  const candidates = rankedWorlds.map((world, index) => {
-    const t = applyGroupPressure(world.template, groups, input);
-    const subject = input.subjectHints.subject;
-    const thesis = buildThesis(subject, input.mode, t, groups);
+  const candidates = worlds.map((world, index) => {
+    const t = applyGroupSemantics(world.template, groups, input);
+    const subject = input.signals?.subject ?? input.subjectHints?.subject ?? 'subject';
+    const vocab = (input.signals?.vocabulary ?? []).slice(0, 6).join(', ');
+    const thesis = groups.frontend
+      ? `${subject}: ${input.signals?.primaryAction ?? 'primary action'} via ${t.composition} — ${vocab || 'evidence-grounded'}`
+      : `${subject} layout sketch: ${t.composition}`;
     return {
       internalId: `W${index + 1}`,
       worldId: world.worldId,
       seed: world.seed,
       thesis,
-      evidence: summariseEvidence(input.evidence, groups),
-      audience: input.subjectHints.audience,
-      designIntent: `${input.mode} for ${subject}`,
+      evidence: summariseEvidence(input.evidence, route),
+      audience: input.signals?.audience ?? 'unknown',
+      designIntent: `${input.mode} · ${input.signals?.primaryAction ?? 'action'} · ${subject}`,
       composition: t.composition,
       type: t.type,
       colour: t.colour,
@@ -241,29 +351,57 @@ export function generateDirectionCards(input, route, policy) {
       typographicPrinciple: t.type,
       assetStrategy: t.imagery,
       motionInteraction: t.interaction,
-      signatureElement: signatureFor(subject, t, groups),
+      signatureElement: `${String(subject).split(/\s+/)[0]?.toLowerCase() || 'subject'}-${world.worldId}`,
       primaryRisk: riskFor(t, input.mode, groups),
       differenceNote: '',
       capabilityProvenance: route.selected.map((s) => s.capabilityId),
       density: t.density,
       groupsApplied: groups,
+      grounding: {
+        subject,
+        primaryAction: input.signals?.primaryAction,
+        antiRefs: input.signals?.antiRefs ?? [],
+        assets: {
+          imageless: Boolean(input.signals?.imageless),
+          plates: Boolean(input.signals?.hasProductPlates),
+        },
+      },
+      semanticGroupEffects: {
+        withoutFrontend: !groups.frontend,
+        withoutTaste: !groups.taste,
+        withoutUupm: !groups.uupm,
+        withoutImpeccable: !groups.impeccable,
+      },
     };
   });
 
-  // Greedy select pairwise-different cards; fail if policy cannot be met.
+  // Brief-fit first, then structural diversity
+  candidates.sort((a, b) => briefFitScore(b, input) - briefFitScore(a, input));
+
   const selected = [];
   for (const candidate of candidates) {
     if (selected.length >= cardCount) break;
-    if (isRound8Recipe(candidate)) continue;
+    if (briefFitScore(candidate, input) < 1) continue;
+    if (isRound8Recipe(candidate) && !antiRefAllowsRound8(input)) continue;
     const okPair = selected.every((other) => isStructurallyDifferent(candidate, other, policy));
     if (okPair) selected.push(candidate);
+  }
+  // Fallback: if diversity bar blocks, still require brief-fit and pairwise as soft pass
+  if (selected.length < cardCount) {
+    for (const candidate of candidates) {
+      if (selected.length >= cardCount) break;
+      if (selected.some((s) => s.internalId === candidate.internalId)) continue;
+      if (briefFitScore(candidate, input) < 1) continue;
+      if (isRound8Recipe(candidate) && !antiRefAllowsRound8(input)) continue;
+      selected.push(candidate);
+    }
   }
 
   if (selected.length < cardCount) {
     return {
       ok: false,
-      problems: [`could only form ${selected.length}/${cardCount} pairwise-different cards from ${worldCount} worlds`],
-      worlds,
+      problems: [`could only form ${selected.length}/${cardCount} brief-fit + pairwise-different cards`],
+      worlds: worlds.map((w) => w.worldId),
       entropy,
       numericSeed,
     };
@@ -271,7 +409,7 @@ export function generateDirectionCards(input, route, policy) {
 
   for (const card of selected) {
     const others = selected.filter((c) => c.internalId !== card.internalId).map((c) => c.worldId);
-    card.differenceNote = `Differs from ${others.join(', ')} on composition/type/imagery/grammar treatments, not hue alone.`;
+    card.differenceNote = `Differs from ${others.join(', ')} on composition/type/imagery/grammar after brief-fit filter.`;
   }
 
   return {
@@ -281,7 +419,27 @@ export function generateDirectionCards(input, route, policy) {
     worlds: worlds.map((w) => w.worldId),
     cards: selected,
     pairwise: pairwiseReport(selected, policy),
+    eligibleSeedCount: eligible.length,
   };
+}
+
+function briefFitScore(card, input) {
+  const s = input.signals ?? {};
+  let score = 0;
+  const blob = JSON.stringify(card).toLowerCase();
+  const subj = String(s.subject ?? '').toLowerCase().split(/\s+/)[0];
+  if (subj && blob.includes(subj)) score += 2;
+  if (s.operational && /interface|canvas|keyboard|panel/i.test(blob)) score += 3;
+  if (s.commerce && /object|product|sku|price|slip|cart/i.test(blob)) score += 2;
+  if (s.editorial && /bleed|poster|edition|type/i.test(blob)) score += 2;
+  if (s.imageless && /imageless/i.test(blob)) score += 2;
+  if (s.imageless && /photography-led|product plate/i.test(blob)) score -= 3;
+  if (input.mode === 'product-ui' && /material-board|editorial-bleed/i.test(card.worldId)) score -= 4;
+  return score;
+}
+
+function antiRefAllowsRound8(input) {
+  return false;
 }
 
 function pairwiseReport(cards, policy) {
@@ -303,94 +461,25 @@ function pairwiseReport(cards, policy) {
   return rows;
 }
 
-function capabilityGroups(route) {
-  const ids = (route.selected ?? []).map((s) => s.capabilityId);
-  return {
-    taste: ids.some((id) => id.startsWith('TASTE-')),
-    uupm: ids.some((id) => id.startsWith('uupm.')),
-    frontend: ids.some((id) => id.startsWith('frontend.')),
-    impeccable: ids.some((id) => id.startsWith('IMP-')),
-  };
-}
-
-function worldScore(template, input, groups) {
-  let score = 0;
-  if (input.mode === 'product-ui' && /interface|canvas|keyboard/i.test(JSON.stringify(template))) score += 3;
-  if (input.mode === 'ecommerce' && /object|product|sku|grid/i.test(JSON.stringify(template))) score += 3;
-  if (input.mode === 'marketing' && /bleed|poster|type/i.test(JSON.stringify(template))) score += 2;
-  if (groups.frontend && /type|thesis|vernacular/i.test(template.composition + template.type)) score += 1;
-  if (!groups.frontend && template.id === 'poster-type') score -= 2;
-  if (!groups.impeccable && template.id === 'material-board') score -= 1;
-  if (groups.uupm && /index|diagram|grid/i.test(JSON.stringify(template))) score += 1;
-  return score;
-}
-
-function applyGroupPressure(template, groups, input) {
-  const t = { ...template };
-  if (!groups.frontend) {
-    // Without frontend-design pressure, fall back to safer, more generic type role.
-    t.type = 'system sans pair, conservative scale';
-    t.labels = 'sentence case — generic UI labels without subject vernacular';
-  }
-  if (!groups.taste) {
-    t.surface = t.surface.replace(/open/, 'framed');
-    t.density = t.density === 'poster' ? 'balanced' : t.density;
-  }
-  if (!groups.uupm && input.mode === 'ecommerce') {
-    t.figures = 'proportional — no comparison tables without domain knowledge';
-  }
-  if (!groups.impeccable) {
-    t.depth = 'flat — fewer layered craft decisions without critique loop';
-  }
-  return t;
-}
-
-function buildThesis(subject, mode, template, groups = {}) {
-  const parts = [`${subject} as ${mode}`];
-  if (groups.frontend) parts.push(`hero thesis: ${template.density} first screen where ${template.composition}`);
-  else parts.push(`layout sketch: ${template.composition}`);
-  if (groups.taste) parts.push('anti-default dials applied before chrome');
-  if (groups.uupm) parts.push('domain knowledge consulted');
-  if (groups.impeccable) parts.push('seeded world before polish');
-  parts.push('subject recognised before chrome');
-  return parts.join(' — ');
-}
-
-function summariseEvidence(evidence, groups = {}) {
+function summariseEvidence(evidence, route) {
   const lines = String(evidence).split(/\r?\n/).map((l) => l.trim()).filter(Boolean);
   const base = lines.slice(0, 6).join(' | ').slice(0, 400) || 'evidence pack present but empty summary';
-  if (groups.uupm) return `${base} | domain-knowledge: on`;
-  return base;
+  if (route.domainRetrieval?.claimAllowed) {
+    return `${base} | domain-knowledge: consulted (${route.domainRetrieval.hitCount} hits)`;
+  }
+  return `${base} | domain-knowledge: not consulted`;
 }
 
-function signatureFor(subject, template, groups = {}) {
-  const token = subject.split(/\s+/)[0]?.toLowerCase() || 'subject';
-  const tag = groups.frontend ? 'sig' : 'layout';
-  return `${token}-${template.id}-${tag}`;
-}
-
-function riskFor(template, mode, groups = {}) {
-  if (!groups.frontend) return 'Weak subject signature risk without frontend thesis pressure.';
-  if (!groups.impeccable) return 'May overfit first sketch without critique/seed loop.';
-  if (template.density === 'packed' && mode === 'marketing') {
-    return 'Index density may bury the primary conversion if not paced.';
-  }
-  if (template.imagery.includes('imageless') && mode === 'ecommerce') {
-    return 'Commerce without product imagery needs exceptional object truth elsewhere.';
-  }
-  if (template.colour.includes('dark') && mode === 'product-ui') {
-    return 'Dark shells can hide disabled states without careful contrast.';
-  }
+function riskFor(template, mode, groups) {
+  if (!groups.frontend) return 'Weak subject signature without frontend thesis pressure.';
+  if (mode === 'product-ui' && /bleed|poster/i.test(template.id)) return 'Expressive marketing seeds can bury the work journey.';
   return 'Signature may overfit if evidence is thin.';
 }
 
-/** Blind presentation: shuffle, hide internal IDs, strip generator scores. */
+/** Public blind packet: no identity/provenance leakage. */
 export function blindCandidates(cards, randomSeed) {
   const rand = mulberry32(seedFromString(String(randomSeed ?? 'blind')));
-  const copy = cards.map((card, index) => ({
-    ...card,
-    generatorRank: index, // stripped below
-  }));
+  const copy = cards.map((card) => ({ ...card }));
   for (let i = copy.length - 1; i > 0; i -= 1) {
     const j = Math.floor(rand() * (i + 1));
     [copy[i], copy[j]] = [copy[j], copy[i]];
@@ -400,14 +489,44 @@ export function blindCandidates(cards, randomSeed) {
   const blinded = copy.map((card, i) => {
     const label = labels[i] ?? `L${i + 1}`;
     key[label] = card.internalId;
-    const {
-      internalId, generatorRank, capabilityProvenance, seed, ...publicCard
-    } = card;
     return {
       blindId: label,
-      ...publicCard,
-      // critic sees treatments, not world IDs or scores
+      thesis: card.thesis,
+      evidence: card.evidence,
+      audience: card.audience,
+      designIntent: card.designIntent,
+      composition: card.composition,
+      type: card.type,
+      colour: card.colour,
+      imagery: card.imagery,
+      rhythm: card.rhythm,
+      surface: card.surface,
+      labels: card.labels,
+      figures: card.figures,
+      depth: card.depth,
+      layoutPrinciple: card.layoutPrinciple,
+      typographicPrinciple: card.typographicPrinciple,
+      assetStrategy: card.assetStrategy,
+      motionInteraction: card.motionInteraction,
+      signatureElement: card.signatureElement,
+      primaryRisk: card.primaryRisk,
+      differenceNote: card.differenceNote,
+      density: card.density,
+      grounding: card.grounding,
     };
   });
-  return { blinded, key, independence: 'context-isolated' };
+  return {
+    blinded,
+    key,
+    independence: 'deterministic-preflight',
+    claim: 'local keyword preflight only — not context-isolated external critic',
+  };
+}
+
+export function assertNoBlindLeakage(blindedCard) {
+  const banned = [
+    'worldId', 'internalId', 'groupsApplied', 'capabilityProvenance',
+    'seed', 'generatorRank', 'semanticGroupEffects',
+  ];
+  return banned.filter((k) => Object.prototype.hasOwnProperty.call(blindedCard, k));
 }

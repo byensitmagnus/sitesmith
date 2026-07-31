@@ -6,35 +6,35 @@ ai_generated: "(C)"
 
 # DIRECTION — 01-leather-goods
 
-Winner: material-board (Northline Leather Goods" as ecommerce — hero thesis: tactile first screen where grid of many small material samples — anti-default dials applied before chrome — domain knowledge consulted — seeded world before polish — subject recognised before chrome)
+Winner: statement-object (Northline Leather Goods": configure a bag and request a make-slot. via single object left, large type right — northline, leather, goods, people, who, buy)
 
 ## Signature
-northline-material-board-sig
+northline-statement-object
 
 ## Axis record
 
 - direction-version: 2.3
-- composition: grid of many small material samples
-- type: small caps labels over soft serif
-- colour: warm light ground from material palette
-- imagery: object-led sample plates
-- rhythm: tight mosaic then wide breathing band
+- composition: single object left, large type right
+- type: condensed display grotesque over quiet sans
+- colour: light paper ground with one reserve accent
+- imagery: object-led, full-height product plate using declared product plates from asset plan
+- rhythm: hard vertical split then calm bands
 
-- surface: colour-field — each cell is a material ground
-- labels: sentence case — trade names, not UI chrome
-- figures: proportional — dimensions only when needed
-- depth: overlap — samples slightly shuffle depth
+- surface: open — subject earns space around the object
+- labels: sentence case captions — retail voice stays human
+- figures: proportional — price is content not motif
+- depth: elevated — object lifts off ground slightly
 
-- visual-density: 5
-- motion-intensity: 3
+- visual-density: 6
+- motion-intensity: 2
 - aesthetic-boldness: 6
 
-- signature-selector: [data-signature="northline-material-board-sig"]
+- signature-selector: [data-signature="northline-statement-object"]
 - signature-min-share: 12
 
 ## Rejections
-- statement-object: recorded alternative; not passed to build context
 - poster-type: recorded alternative; not passed to build context
+- split-evidence: recorded alternative; not passed to build context
 
 ## Notes
 Selected by Direction Engine v3 slice. Build context must not receive losing cards or generator scores.

@@ -5,7 +5,7 @@ verdict: PROOF FAILED — DIRECTION QUALITY
 ai_generated: "(C)"
 ---
 
-# Proof verdict
+# Proof verdict (corrective pass)
 
 ## Single status line
 
@@ -13,56 +13,31 @@ ai_generated: "(C)"
 PROOF FAILED — DIRECTION QUALITY
 ```
 
-## What is green (mechanical)
+## Corrective pass (post PR #2 review)
 
-| Gate | Result |
-| --- | --- |
-| Repo truth documented | pass — `CURRENT-REPO-TRUTH.md` |
-| Review integrity mechanical | pass — foundation no longer false-PASS; `test-review-integrity.mjs` green |
-| Full M0–M10 approval | correctly **not ready** |
-| Router loads subset | pass — 12–18 of 59; never default-all |
-| Routing reproducible | pass — stable `decisionHash` |
-| Direction pairwise diversity | pass — three briefs |
-| Round-8 recipe avoided in cards | pass |
-| Blinding / user choice / reject-all path | pass in unit tests |
-| DesignSpec + handoff withhold losers/scores | pass |
-| Ablation changes card sets | pass — 6 unique sets |
-| Existing v2.3 shell rewritten | no — slice only |
+Addressed on this branch:
 
-## What is red / missing (blocks PROOF PASSED)
+1. Canonical upstream pins locked in `docs/v3/CANONICAL-UPSTREAM-PINS.json` (= v3 ledger).
+2. Proof summaries regenerated mechanically from runs; CI validates match.
+3. Router uses brief/evidence/audience/action/anti-refs/assets/constraints/stack.
+4. Artificial route-hash ablation salt removed; group effects are semantic.
+5. Worlds are seeds with mode-fit / evidence gates; brief-fit before diversity.
+6. Critic is deterministic preflight (not `context-isolated` without external run).
+7. Blind packet strips identity/provenance; invalid choice fails closed.
+8. handoff-ready requires DesignSpec + handoff + selectedInternalId; dials from input.
+
+## Still not proven (blocks PROOF PASSED)
 
 | Gate | Result |
 | --- | --- |
 | Blind visual comparison vs four frozen upstreams | **not executed** |
-| SiteSmith matches or beats best upstream directionally | **unknown — not measured** |
-| Two separate human/agent review contexts on rendered comps | **not executed** |
-| Ablation proves aesthetic fusion value (not only card-id churn) | **partial — mechanical only** |
-| Three v2.3 builds + fidelity + portfolio diversity | **not executed** |
+| SiteSmith matches or beats best upstream directionally | **unknown** |
+| Three v2.3 builds + portfolio diversity | **not executed** |
 | Showcase | still **0/8** |
+| Renderable HTML comps (not only grounded JSON) | **not shipped** |
 
-## Why this verdict (not PROOF PASSED)
+## Status
 
-Success criteria require that **actual visual direction output** match or beat the best upstream under blinded comparison, then survive v2.3 build proof. Completeness of documentation and green unit tests are explicitly **not enough**.
+Head-to-head must not start until an external review accepts this corrective pass.
 
-Without upstream runs, claiming PROOF PASSED would recreate the same integrity failure we just fixed on the foundation document.
-
-## Why not other stop labels
-
-| Label | Why not |
-| --- | --- |
-| BLOCKED — REPO TRUTH MISMATCH | `dc00598` matched the v3 package |
-| BLOCKED — REVIEW INTEGRITY FAILURE | defect found **and corrected**; gate is green |
-| PROOF FAILED — ROUTING | routing gates pass |
-| PROOF FAILED — UPSTREAM SUPERSET | we did not measure a loss; we did not measure at all |
-| PROOF FAILED — DESIGNSPEC HANDOFF | handoff schema tests pass |
-| PROOF FAILED — COMPLEXITY EXCEEDS VALUE | slice stayed small; not the failure mode |
-| PROOF PASSED | forbidden without upstream blind win + builds |
-
-## Next minimal step (if continuing)
-
-1. Clone four locked upstream commits.
-2. Run same three briefs through each + SiteSmith engine with comparable budgets.
-3. Blind-score with two contexts.
-4. Only on directional win/match: run three v2.3 builds.
-
-Do **not** expand to M0–M10 to “fix” a missing comparison.
+**PROOF FAILED — DIRECTION QUALITY**

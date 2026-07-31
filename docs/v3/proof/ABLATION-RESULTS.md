@@ -1,6 +1,6 @@
 ---
 title: Ablation results
-status: mechanical-pass
+status: mechanical-pass-semantic-limited
 ai_generated: "(C)"
 ---
 
@@ -10,20 +10,16 @@ Machine data: [`ABLATION-RESULTS.json`](./ABLATION-RESULTS.json).
 
 Brief: `01-leather-goods` · seed: `ablation-leather`.
 
-## Arms
+## Policy
 
-| Arm | Capabilities loaded | Card set (world ids) | Pairwise diversity |
-| --- | --- | --- | --- |
-| full | 18 | statement-object, editorial-bleed, split-evidence | pass |
-| without taste | 14 | material-board, split-evidence, poster-type | pass |
-| without uupm | 14 | statement-object, index-first, material-board | pass |
-| without frontend | 12 | index-first, statement-object, split-evidence | pass |
-| without impeccable | 14 | poster-type, editorial-bleed, split-evidence | pass |
-| all non-rejected | 55 | statement-object, poster-type, editorial-bleed | pass |
+Route-hash salting that forced different card IDs without semantic change is **removed**.
+
+Ablation differences are only meaningful when `semanticGroupEffects` or grounded treatments change for a documented reason (e.g. without frontend → conservative type; without UUPM retrieval → no domain-knowledge claim).
 
 ## Interpretation
 
-1. **Router has value:** six distinct card sets under the same brief seed when capability groups change.
-2. **Loading all 55 is not free quality:** different set, higher context cost, no automatic superiority claim.
-3. **This is mechanical ablation only.** It does not prove aesthetic win over upstreams.
-4. Early prototype with route-independent templates produced identical cards for every arm — that false green was fixed by salting seeds with the route hash and applying group pressure to treatments/thesis.
+1. **Router has value:** decision hashes change with capability sets and project signals.
+2. **Card-ID churn alone is not a win.** Prefer treatment-level diffs in JSON arms.
+3. **This is mechanical ablation only** — not aesthetic superiority.
+
+See also `PROOF-VERDICT.md`.
