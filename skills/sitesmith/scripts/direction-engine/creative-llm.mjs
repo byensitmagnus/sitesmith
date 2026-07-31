@@ -4,7 +4,28 @@
  * Always runs through evidence-guard. Original work, MIT.
  */
 
+import { existsSync, readFileSync } from 'node:fs';
+import { join as joinPath } from 'node:path';
 import { guardCreativePacket, packetFromCard } from './evidence-guard.mjs';
+
+/** Soft-load .env from cwd without overriding existing env (no secrets logged). */
+(function loadCwdEnv() {
+  for (const name of ['.env', '.env.local', '.env.xai']) {
+    const p = joinPath(process.cwd(), name);
+    if (!existsSync(p)) continue;
+    for (const line of readFileSync(p, 'utf8').split(/\r?\n/)) {
+      const t = line.trim();
+      if (!t || t.startsWith('#')) continue;
+      const m = t.match(/^([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(.*)$/);
+      if (!m) continue;
+      let v = m[2].trim();
+      if ((v.startsWith('"') && v.endsWith('"')) || (v.startsWith("'") && v.endsWith("'"))) {
+        v = v.slice(1, -1);
+      }
+      if (!process.env[m[1]]) process.env[m[1]] = v;
+    }
+  }
+})();
 
 const PACKET_KEYS = [
   'designThesis',

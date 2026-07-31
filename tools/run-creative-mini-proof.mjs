@@ -8,14 +8,16 @@ import { mkdirSync, writeFileSync, readFileSync, existsSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { runDirectionEngine, runDirectionEngineAsync } from '../skills/sitesmith/scripts/direction-engine/index.mjs';
+import { loadEnvFiles, hasCreativeApiKey } from './load-env.mjs';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
+loadEnvFiles(root);
 const args = process.argv.slice(2);
 const flag = (n) => {
   const i = args.indexOf(n);
   return i >= 0 ? args[i + 1] : null;
 };
-const creative = flag('--creative') || (process.env.XAI_API_KEY || process.env.GROK_API_KEY ? 'llm' : 'rules');
+const creative = flag('--creative') || (hasCreativeApiKey() ? 'llm' : 'rules');
 const briefId = flag('--brief') || '01-leather-goods';
 const packDir = join(root, 'docs/v3/proof/head-to-head/briefs', briefId);
 const outDir = join(root, 'docs/v3/proof/head-to-head/mini-proof', `${briefId}-${creative}`);
