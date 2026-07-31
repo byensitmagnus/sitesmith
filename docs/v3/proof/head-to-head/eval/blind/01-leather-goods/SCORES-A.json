@@ -1,0 +1,94 @@
+{
+  "evaluator": "A",
+  "briefId": "01-leather-goods",
+  "scores": {
+    "P": {
+      "briefFit": 5,
+      "subjectSpecificity": 5,
+      "originality": 5,
+      "composition": 5,
+      "hierarchy": 5,
+      "typography": 4,
+      "materiality": 5,
+      "assetStrategy": 5,
+      "interaction": 4,
+      "signature": 5,
+      "antiCliche": 5,
+      "implementability": 4,
+      "total": 57
+    },
+    "Q": {
+      "briefFit": 5,
+      "subjectSpecificity": 5,
+      "originality": 4,
+      "composition": 5,
+      "hierarchy": 5,
+      "typography": 5,
+      "materiality": 5,
+      "assetStrategy": 5,
+      "interaction": 5,
+      "signature": 5,
+      "antiCliche": 5,
+      "implementability": 5,
+      "total": 59
+    },
+    "R": {
+      "briefFit": 5,
+      "subjectSpecificity": 5,
+      "originality": 3,
+      "composition": 4,
+      "hierarchy": 4,
+      "typography": 3,
+      "materiality": 4,
+      "assetStrategy": 4,
+      "interaction": 4,
+      "signature": 3,
+      "antiCliche": 3,
+      "implementability": 4,
+      "total": 46
+    },
+    "S": {
+      "briefFit": 1,
+      "subjectSpecificity": 1,
+      "originality": 1,
+      "composition": 1,
+      "hierarchy": 1,
+      "typography": 1,
+      "materiality": 1,
+      "assetStrategy": 1,
+      "interaction": 2,
+      "signature": 1,
+      "antiCliche": 1,
+      "implementability": 2,
+      "total": 14
+    },
+    "T": {
+      "briefFit": 3,
+      "subjectSpecificity": 2,
+      "originality": 2,
+      "composition": 3,
+      "hierarchy": 2,
+      "typography": 2,
+      "materiality": 2,
+      "assetStrategy": 2,
+      "interaction": 3,
+      "signature": 2,
+      "antiCliche": 3,
+      "implementability": 2,
+      "total": 28
+    }
+  },
+  "qualitative": {
+    "wouldBuild": "Q",
+    "mostGeneric": "S",
+    "bestGrounded": "Q",
+    "strongestDirection": "P"
+  },
+  "comments": {
+    "P": "Make-slot ledger with empty open-slot frame is the most distinctive subject-true composition; empty-center risk needs ruthless labeling.",
+    "Q": "Plate-first hide-grade bench with full tokens, type roles, and honest asset gaps — densest implementable grounded plan.",
+    "R": "Solid split proof/configure spine and pack-true facts, but cream+brass spine signature reads closer to default artisan ecommerce.",
+    "S": "Retrieval template (emerald palette, Hero/Features/CTA, unknown assets) ignores hide, make-slot, and product plates entirely.",
+    "T": "Proof-left/action-right sketch is thin; diagram-led imagery fights declared product-plate load-bearing assets."
+  }
+}

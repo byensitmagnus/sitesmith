@@ -1,0 +1,94 @@
+{
+  "evaluator": "A",
+  "briefId": "02-atelier-printworks",
+  "scores": {
+    "P": {
+      "briefFit": 5,
+      "subjectSpecificity": 4,
+      "originality": 3,
+      "composition": 3,
+      "hierarchy": 4,
+      "typography": 3,
+      "materiality": 4,
+      "assetStrategy": 5,
+      "interaction": 4,
+      "signature": 4,
+      "antiCliche": 4,
+      "implementability": 4,
+      "total": 47
+    },
+    "Q": {
+      "briefFit": 5,
+      "subjectSpecificity": 5,
+      "originality": 5,
+      "composition": 5,
+      "hierarchy": 5,
+      "typography": 5,
+      "materiality": 5,
+      "assetStrategy": 5,
+      "interaction": 5,
+      "signature": 5,
+      "antiCliche": 5,
+      "implementability": 4,
+      "total": 59
+    },
+    "R": {
+      "briefFit": 3,
+      "subjectSpecificity": 2,
+      "originality": 2,
+      "composition": 3,
+      "hierarchy": 2,
+      "typography": 3,
+      "materiality": 2,
+      "assetStrategy": 2,
+      "interaction": 3,
+      "signature": 2,
+      "antiCliche": 3,
+      "implementability": 2,
+      "total": 29
+    },
+    "S": {
+      "briefFit": 1,
+      "subjectSpecificity": 1,
+      "originality": 1,
+      "composition": 1,
+      "hierarchy": 1,
+      "typography": 1,
+      "materiality": 1,
+      "assetStrategy": 1,
+      "interaction": 2,
+      "signature": 1,
+      "antiCliche": 1,
+      "implementability": 2,
+      "total": 14
+    },
+    "T": {
+      "briefFit": 5,
+      "subjectSpecificity": 5,
+      "originality": 5,
+      "composition": 5,
+      "hierarchy": 5,
+      "typography": 4,
+      "materiality": 5,
+      "assetStrategy": 5,
+      "interaction": 4,
+      "signature": 5,
+      "antiCliche": 5,
+      "implementability": 3,
+      "total": 56
+    }
+  },
+  "qualitative": {
+    "wouldBuild": "Q",
+    "mostGeneric": "S",
+    "bestGrounded": "Q",
+    "strongestDirection": "T"
+  },
+  "comments": {
+    "P": "Correct chalk/ink/coral and honest Ferry Board gap, but composition stays generic anti-center portfolio rather than press-room instrument.",
+    "Q": "Make-ready table + job ticket mono + coral registration as UI system is fully subject-native and buildable with declared sheets.",
+    "R": "Single-object axis card is under-specified and diagram-led despite two real press-sheet assets already on file.",
+    "S": "Neo-brutal pink/cyan portfolio grid is pure retrieval cliché with zero letterpress or island material.",
+    "T": "Ferry departure board for three editions is the boldest island-grounded concept; implementability dips if facts/photos lag."
+  }
+}

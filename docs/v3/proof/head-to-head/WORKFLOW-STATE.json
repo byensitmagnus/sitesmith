@@ -1,11 +1,10 @@
 {
   "workflowVersion": "1.0.0",
-  "state": "AWAITING_EVAL_APPROVAL",
-  "previousState": "S4_SCREENING_15_RUNS",
+  "state": "S7_SCREENING_DECISION",
+  "previousState": "AWAITING_EVAL_APPROVAL",
   "allowedNextStates": [
-    "S5_NORMALIZE_AND_BLIND",
-    "S6_EVALUATION",
-    "BLOCKED_COMPARISON_INCOMPLETE"
+    "STOP_PROOF_FAILED",
+    "S8_REPLICATION_OPTIONAL"
   ],
   "repository": "byensitmagnus/sitesmith",
   "foundationSha": "dc00598cce2af92435a749856393e287506753bc",
@@ -20,14 +19,15 @@
     "G2_benchmark_frozen": "pass",
     "credit_approval": "used-for-screening",
     "screening": "pass",
-    "evaluators": "awaiting",
+    "evaluators": "complete",
     "replication": "not-started",
-    "paid_model_calls": 9
+    "paid_model_calls": 9,
+    "blind_eval": "complete"
   },
   "blockers": [],
-  "lastVerifiedAt": "2026-07-31T19:24:54.844118Z",
-  "lastTransitionReason": "15/15 screening packets complete; blind eval and replication not started",
-  "proofStatus": "PROOF FAILED \u2014 DIRECTION QUALITY",
+  "lastVerifiedAt": "2026-07-31T19:44:30.609Z",
+  "lastTransitionReason": "Blind eval complete: PROOF FAILED — UPSTREAM SUPERSET",
+  "proofStatus": "PROOF FAILED — UPSTREAM SUPERSET",
   "arms": [
     "taste-skill",
     "ui-ux-pro-max",
@@ -41,5 +41,11 @@
     "03-passage-console"
   ],
   "screeningRunsDeclared": 15,
-  "replicationRunsDeclared": 15
+  "replicationRunsDeclared": 15,
+  "evalVerdict": "PROOF FAILED — UPSTREAM SUPERSET",
+  "sitesmithBriefOutcomes": {
+    "01-leather-goods": "loss",
+    "02-atelier-printworks": "loss",
+    "03-passage-console": "loss"
+  }
 }
