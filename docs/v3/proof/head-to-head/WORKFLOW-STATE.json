@@ -1,0 +1,41 @@
+{
+  "workflowVersion": "1.0.0",
+  "state": "S3_FREEZE_HEAD_TO_HEAD",
+  "previousState": "S1_CORRECTIVE_REVIEW",
+  "allowedNextStates": [
+    "S4_SCREENING_15_RUNS",
+    "BLOCKED_BENCHMARK_NOT_FROZEN",
+    "AWAITING_CREDIT_APPROVAL"
+  ],
+  "repository": "byensitmagnus/sitesmith",
+  "foundationSha": "dc00598cce2af92435a749856393e287506753bc",
+  "proofSha": "b92cdabad98c4d23ff79b74d6881e6b7129325a4",
+  "headToHeadSha": null,
+  "canonicalPinsHash": "273034eaeec820181c1883cd852f3728d57d6ea134d74724268457527a2dddae",
+  "contextPackHash": null,
+  "runManifestHash": null,
+  "gates": {
+    "G0_repo_truth": "pass",
+    "G1_corrective_review": "pass",
+    "G2_benchmark_frozen": "pending",
+    "CI": "pass"
+  },
+  "blockers": [],
+  "lastVerifiedAt": "2026-07-31T18:29:01.722Z",
+  "lastTransitionReason": "Gate 1 PASS; ready to freeze packs/arms before paid screening",
+  "proofStatus": "PROOF FAILED — DIRECTION QUALITY",
+  "gate1Review": "docs/v3/proof/CORRECTIVE-REVIEW-GATE1.md",
+  "reviewRange": "5ffc2cb..b92cdab",
+  "arms": [
+    "taste-skill",
+    "ui-ux-pro-max",
+    "frontend-design",
+    "impeccable",
+    "sitesmith-direction-engine"
+  ],
+  "briefs": [
+    "01-sensory-ecommerce",
+    "02-characterful-marketing-portfolio",
+    "03-functional-product-ui"
+  ]
+}
