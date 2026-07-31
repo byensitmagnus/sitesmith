@@ -1,7 +1,7 @@
 {
   "workflowVersion": "1.0.0",
-  "state": "ORCHESTRATOR_V1_LANDED",
-  "previousState": "S7_SCREENING_V3_DECISION",
+  "state": "MINI_1_LEATHER_COMPLETE",
+  "previousState": "ORCHESTRATOR_V1_LANDED",
   "allowedNextStates": [
     "MINI_H2H_WITH_LLM",
     "V23_BUILD_ON_ORCHESTRATOR"
@@ -24,11 +24,16 @@
     "paid_model_calls": 9,
     "blind_eval": "complete",
     "screening_v2": "complete",
-    "blind_eval_v2": "complete"
+    "blind_eval_v2": "complete",
+    "direction_engine_tests": "pass",
+    "mini_1_leather": "complete",
+    "llm_creative_mini": "blocked-no-api-key"
   },
-  "blockers": [],
-  "lastVerifiedAt": "2026-07-31T20:28:32.135Z",
-  "lastTransitionReason": "Orchestrator architecture + LLM creative pass + evidence guard implemented",
+  "blockers": [
+    "XAI_API_KEY / GROK_API_KEY missing — LLM mini-proof blocked (see mini-proof/LLM-BLOCKED.md)"
+  ],
+  "lastVerifiedAt": "2026-07-31T21:15:00.000Z",
+  "lastTransitionReason": "Mini-1 leather: rules vs frozen FD blind eval; LLM blocked without key; ARCH orchestrator canonical",
   "proofStatus": "PROOF FAILED — UPSTREAM SUPERSET",
   "arms": [
     "taste-skill",
@@ -60,24 +65,24 @@
   },
   "evalVerdictV3": "PROOF FAILED — UPSTREAM SUPERSET",
   "sitesmithScoreTrail": {
-    "v1": [
-      28.5,
-      29.5,
-      34.5
-    ],
-    "v2": [
-      38.5,
-      39,
-      41
-    ],
-    "v3": [
-      42.5,
-      27.5,
-      28.5
-    ]
+    "v1": [28.5, 29.5, 34.5],
+    "v2": [38.5, 39, 41],
+    "v3": [42.5, 27.5, 28.5]
   },
   "architecture": "docs/v3/ARCH-DIRECTION-ORCHESTRATOR.md",
+  "architectureCanonical": true,
   "creativePassDefault": "rules",
   "creativePassLlm": "runDirectionEngineAsync + evidence-guard",
-  "h2hNote": "H2H closed as fail; orchestrator path is product direction going forward"
+  "h2hNote": "H2H closed as fail; orchestrator path is product direction going forward",
+  "mini1": {
+    "brief": "01-leather-goods",
+    "sitesmithPacket": "rules (llm blocked)",
+    "baseline": "frontend-design screening-v2 frozen",
+    "sitesmithAvg": 40,
+    "frontendDesignAvg": 59,
+    "verdict": "MINI FAIL — RULES STILL TRAILS FROZEN FRONTEND-DESIGN",
+    "report": "docs/v3/proof/head-to-head/eval/MINI-1-LEATHER-REPORT.md",
+    "llmBlocked": "docs/v3/proof/head-to-head/mini-proof/LLM-BLOCKED.md"
+  }
 }
+

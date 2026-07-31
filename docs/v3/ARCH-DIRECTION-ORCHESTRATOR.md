@@ -73,12 +73,15 @@ Any creative output is scanned against the pack:
 - That rules creative layer equals frontend-design
 - Showcase eligibility (still 0/8 until real builds pass gates)
 
-## Next proof (when ready)
+## Mini proof status (2026-07-31)
 
-One brief mini-comparison:
+One brief mini-comparison **completed offline**:
 
 ```text
-SiteSmith (structure + llm creative + guard)  vs  frontend-design
+SiteSmith (structure + rules creative + guard)  vs  frozen frontend-design (screening-v2)
+Brief: 01-leather-goods
+Result: MINI FAIL — rules avg 40 vs FD 59 (see eval/MINI-1-LEATHER-REPORT.md)
+LLM path: blocked without XAI_API_KEY / GROK_API_KEY (mini-proof/LLM-BLOCKED.md)
 ```
 
-Not a 15-run circus until this path is green on one brief.
+When a key exists, re-run **one** llm mini on the same brief — still not a 15-run circus.

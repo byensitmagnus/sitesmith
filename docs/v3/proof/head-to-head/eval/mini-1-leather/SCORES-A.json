@@ -1,8 +1,24 @@
 {
   "evaluator": "A",
   "briefId": "01-leather-goods",
+  "comparison": "mini-1-leather",
   "scores": {
-    "P": {
+    "M": {
+      "briefFit": 4,
+      "subjectSpecificity": 4,
+      "originality": 3,
+      "composition": 2,
+      "hierarchy": 3,
+      "typography": 4,
+      "materiality": 3,
+      "assetStrategy": 3,
+      "interaction": 2,
+      "signature": 4,
+      "antiCliche": 4,
+      "implementability": 3,
+      "total": 39
+    },
+    "N": {
       "briefFit": 5,
       "subjectSpecificity": 5,
       "originality": 4,
@@ -16,31 +32,16 @@
       "antiCliche": 5,
       "implementability": 5,
       "total": 59
-    },
-    "Q": {
-      "briefFit": 3,
-      "subjectSpecificity": 3,
-      "originality": 3,
-      "composition": 2,
-      "hierarchy": 3,
-      "typography": 4,
-      "materiality": 3,
-      "assetStrategy": 2,
-      "interaction": 2,
-      "signature": 3,
-      "antiCliche": 4,
-      "implementability": 2,
-      "total": 34
     }
   },
   "qualitative": {
-    "wouldBuild": "P",
-    "mostGeneric": "Q",
-    "bestGrounded": "P",
-    "strongestDirection": "P"
+    "wouldBuild": "N",
+    "mostGeneric": "M",
+    "bestGrounded": "N",
+    "strongestDirection": "N"
   },
   "comments": {
-    "P": "Make-slot desk is fully operational: Field Tote plate-first mobile stack, material stamp, Hide Grade Strip radiogroup, DKK 890–2.400 + 3-week lead, brass-only CTA. Hex tokens, Plex Mono for grades/prices, strap as text until plate exists, stitch-macro as needed-not-have. Motion dial 2 honoured. Only soft spot is cream+brown artisan risk — mitigated with mono facts and no lifestyle/stars.",
-    "Q": "Same thesis words and Hide Grade Strip name, but thin: composition is one desktop split line, interaction is sticky column only, no price/lead/dials in grounding. Overclaims all three SKUs as have plates (evidence only load-bears Field Tote + Belt No. 2). Unknowns falsely none; implementationGuidance is a restated blob with duplicated anti-refs. Direction right, build package not."
+    "M": "Thesis and Hide Grade Strip signature lock the brief nouns well, but composition is a poster seed (“type alone at scale, artefact below the fold”) that fights mobile-first product commerce, and interaction collapses to “single decisive scroll cue” instead of pick product → choose hide → make-slot. Claims all three SKUs as plate-have and declares no unknowns — weaker honesty than the pack requires.",
+    "N": "Make-slot desk is fully specified: plate-first fold, material stamp, Hide Grade Strip radiogroup, price band + 3-week lead, brass CTA, sticky rail desktop. Hex tokens, named webp assets, honest missing strap/stitch/unknown grade codes. Highest build confidence of the two."
   }
 }

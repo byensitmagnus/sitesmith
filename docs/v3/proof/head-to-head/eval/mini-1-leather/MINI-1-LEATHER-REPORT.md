@@ -1,33 +1,17 @@
 ---
-title: Mini-1 leather blind comparison
+title: Mini-1 leather blind comparison (local folder)
 status: complete
 ai_generated: "(C)"
 ---
 
-# Mini-1: leather only
+# Mini-1 (folder mirror)
 
-SiteSmith **rules** creative pass vs frozen **frontend-design** (screening-v2).
-
-Not a 15-run H2H.
-
-## Scores (avg A+B)
+Canonical report: [`../MINI-1-LEATHER-REPORT.md`](../MINI-1-LEATHER-REPORT.md)
 
 | Arm | A | B | Avg / 60 |
 | --- | --- | --- | --- |
-| frontend-design | 59 | 59 | **59** |
-| sitesmith (rules) | 34 | 34 | **34** |
+| frontend-design-frozen-v2 | 59 | 59 | **59** |
+| sitesmith-rules | 39 | 41 | **40** |
 
-- wouldBuild: frontend-design (both evaluators)
-- mostGeneric: sitesmith (both)
-
-## Result
-
-Rules-only orchestrator **still loses** on direction quality for this brief.
-
-## LLM path
-
-Blocked: no `XAI_API_KEY` / `GROK_API_KEY` in env (see `mini-proof/LLM-BLOCKED.md`).
-
-## Next
-
-Set API key → `node tools/run-creative-mini-proof.mjs --creative llm --brief 01-leather-goods` → re-run mini blind with LLM packet.
+Result: `MINI FAIL — RULES STILL TRAILS FROZEN FRONTEND-DESIGN`  
+LLM blocked: no `XAI_API_KEY` / `GROK_API_KEY`.
