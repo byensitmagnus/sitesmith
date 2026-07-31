@@ -1,0 +1,219 @@
+{
+  "schemaVersion": 1,
+  "kind": "sitesmith.designspec.v3-slice",
+  "projectName": "01-leather-goods",
+  "mode": "ecommerce",
+  "stack": "html",
+  "designThesis": "Northline Leather Goods\" as ecommerce — hero thesis: tactile first screen where grid of many small material samples — anti-default dials applied before chrome — domain knowledge consulted — seeded world before polish — subject recognised before chrome",
+  "contentHierarchy": [
+    "subject recognition",
+    "configure a bag and request a make-slot.",
+    "supporting evidence",
+    "secondary navigation"
+  ],
+  "pageComposition": "grid of many small material samples",
+  "gridAndSpacing": "balanced 8/12 rhythm",
+  "typographySystem": {
+    "principle": "small caps labels over soft serif",
+    "roles": [
+      "display",
+      "body",
+      "label"
+    ]
+  },
+  "colourRoles": {
+    "ground": "warm light ground from material palette",
+    "accent": "single reserved accent from brand evidence only if present",
+    "text": "primary ink on ground with WCAG AA body contrast"
+  },
+  "surfaceMaterialModel": "colour-field — each cell is a material ground",
+  "imageryStrategy": "object-led sample plates",
+  "componentPrinciples": [
+    "states must be visible without colour alone",
+    "primary action uses reserved accent only"
+  ],
+  "interactionStates": [
+    "default",
+    "hover/focus",
+    "active",
+    "disabled",
+    "error"
+  ],
+  "motionRules": {
+    "principle": "sample select builds a slip/cart",
+    "reducedMotion": "disable non-essential motion"
+  },
+  "responsiveBehavior": {
+    "firstFold": "preserve composition intent; stack only after tablet",
+    "tables": "horizontal scroll must expose affordance if used"
+  },
+  "accessibilityConstraints": [
+    "visible focus",
+    "label every control",
+    "AA contrast for body and UI text"
+  ],
+  "signatureElement": "northline-material-board-sig",
+  "forbiddenFallbackDefaults": [
+    "purple SaaS gradient hero",
+    "three equal feature cards as default identity",
+    "round-8 recipe: mono uppercase labels + hairlines + tabular motif + flat depth",
+    "invented testimonials, prices, or certifications"
+  ],
+  "fidelityAssertions": [
+    {
+      "field": "composition",
+      "expected": "grid of many small material samples"
+    },
+    {
+      "field": "type",
+      "expected": "small caps labels over soft serif"
+    },
+    {
+      "field": "colour",
+      "expected": "warm light ground from material palette"
+    },
+    {
+      "field": "imagery",
+      "expected": "object-led sample plates"
+    },
+    {
+      "field": "rhythm",
+      "expected": "tight mosaic then wide breathing band"
+    },
+    {
+      "field": "surface",
+      "expected": "colour-field — each cell is a material ground"
+    },
+    {
+      "field": "labels",
+      "expected": "sentence case — trade names, not UI chrome"
+    },
+    {
+      "field": "figures",
+      "expected": "proportional — dimensions only when needed"
+    },
+    {
+      "field": "depth",
+      "expected": "overlap — samples slightly shuffle depth"
+    },
+    {
+      "field": "signature-selector",
+      "expected": "[data-signature=\"northline-material-board-sig\"]"
+    }
+  ],
+  "acceptanceCriteria": [
+    "built page matches axis record treatments",
+    "primary action findable in first fold",
+    "no fabricated brand/product facts",
+    "passes existing v2.3 verify + direction fidelity"
+  ],
+  "capabilityProvenance": [
+    {
+      "capabilityId": "TASTE-CAP-002",
+      "upstreamOrigin": "https://github.com/Leonxlnx/taste-skill.git",
+      "phase": "creative-direction"
+    },
+    {
+      "capabilityId": "TASTE-CAP-003",
+      "upstreamOrigin": "https://github.com/Leonxlnx/taste-skill.git",
+      "phase": "creative-direction"
+    },
+    {
+      "capabilityId": "TASTE-CAP-004",
+      "upstreamOrigin": "https://github.com/Leonxlnx/taste-skill.git",
+      "phase": "creative-direction"
+    },
+    {
+      "capabilityId": "TASTE-CAP-006",
+      "upstreamOrigin": "https://github.com/Leonxlnx/taste-skill.git",
+      "phase": "knowledge"
+    },
+    {
+      "capabilityId": "frontend.subject-vernacular",
+      "upstreamOrigin": "https://github.com/anthropics/skills",
+      "phase": "creative-direction"
+    },
+    {
+      "capabilityId": "frontend.hero-thesis",
+      "upstreamOrigin": "https://github.com/anthropics/skills",
+      "phase": "creative-direction"
+    },
+    {
+      "capabilityId": "frontend.semantic-structure",
+      "upstreamOrigin": "https://github.com/anthropics/skills",
+      "phase": "creative-direction"
+    },
+    {
+      "capabilityId": "frontend.interface-writing",
+      "upstreamOrigin": "https://github.com/anthropics/skills",
+      "phase": "creative-direction"
+    },
+    {
+      "capabilityId": "frontend.anti-default-calibration",
+      "upstreamOrigin": "https://github.com/anthropics/skills",
+      "phase": "creative-direction"
+    },
+    {
+      "capabilityId": "uupm.classify.product-reasoning",
+      "upstreamOrigin": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "phase": "knowledge"
+    },
+    {
+      "capabilityId": "uupm.lookup.domain-knowledge",
+      "upstreamOrigin": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "phase": "knowledge"
+    },
+    {
+      "capabilityId": "uupm.tune.design-dials",
+      "upstreamOrigin": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "phase": "creative-direction"
+    },
+    {
+      "capabilityId": "IMP-004",
+      "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
+      "phase": "seed"
+    },
+    {
+      "capabilityId": "IMP-005",
+      "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
+      "phase": "seed"
+    },
+    {
+      "capabilityId": "IMP-006",
+      "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
+      "phase": "seed"
+    },
+    {
+      "capabilityId": "IMP-008",
+      "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
+      "phase": "critique"
+    },
+    {
+      "capabilityId": "uupm.lookup.stack-guidance",
+      "upstreamOrigin": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "phase": "knowledge"
+    },
+    {
+      "capabilityId": "frontend.motion-intent",
+      "upstreamOrigin": "https://github.com/anthropics/skills",
+      "phase": "creative-direction"
+    }
+  ],
+  "seedProvenance": {
+    "source": "local-world-library",
+    "version": "1.0.0",
+    "method": "sha256-project-entropy + fisher-yates",
+    "randomSeed": "proof-leather-2026-07-31|85461c33bb222ec1fd0f5ef0|g:taste+uupm+frontend+impeccable",
+    "numericSeed": 2099185318,
+    "licence": "MIT SiteSmith-original world templates",
+    "origin": "local",
+    "slot": 4
+  },
+  "policyVersion": "direction-engine-v3-slice-1.0.0",
+  "choice": {
+    "status": "selected",
+    "selectedBlindId": "L1",
+    "selectedInternalId": "W2",
+    "by": "user"
+  }
+}

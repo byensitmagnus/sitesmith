@@ -1,0 +1,1187 @@
+{
+  "ok": true,
+  "stage": "handoff-ready",
+  "policyVersion": "direction-engine-v3-slice-1.0.0",
+  "inputWarnings": [],
+  "route": {
+    "ok": true,
+    "mode": "product-ui",
+    "ablation": "none",
+    "selectedCount": 18,
+    "totalAvailable": 59,
+    "totalContextCostTokens": 5700,
+    "decisionHash": "2866bbfc673841b748caa224793a698b6feabd344bfca87e3ee6e804cecc67d2",
+    "selected": [
+      {
+        "capabilityId": "TASTE-CAP-002",
+        "upstreamOrigin": "https://github.com/Leonxlnx/taste-skill.git",
+        "upstreamCommit": "e988add20dab0fa97d7a76781c48961c8184288e",
+        "whyRelevant": "brief/dials/anti-default discipline for product-ui",
+        "phase": "creative-direction",
+        "contextCostTokens": 300,
+        "providerFallback": "use local deterministic sketch if provider lacks this capability packet"
+      },
+      {
+        "capabilityId": "TASTE-CAP-003",
+        "upstreamOrigin": "https://github.com/Leonxlnx/taste-skill.git",
+        "upstreamCommit": "e988add20dab0fa97d7a76781c48961c8184288e",
+        "whyRelevant": "brief/dials/anti-default discipline for product-ui",
+        "phase": "creative-direction",
+        "contextCostTokens": 300,
+        "providerFallback": "use local deterministic sketch if provider lacks this capability packet"
+      },
+      {
+        "capabilityId": "TASTE-CAP-004",
+        "upstreamOrigin": "https://github.com/Leonxlnx/taste-skill.git",
+        "upstreamCommit": "e988add20dab0fa97d7a76781c48961c8184288e",
+        "whyRelevant": "brief/dials/anti-default discipline for product-ui",
+        "phase": "creative-direction",
+        "contextCostTokens": 300,
+        "providerFallback": "use local deterministic sketch if provider lacks this capability packet"
+      },
+      {
+        "capabilityId": "frontend.subject-vernacular",
+        "upstreamOrigin": "https://github.com/anthropics/skills",
+        "upstreamCommit": "b29e7cf65e5cb78a5ac33d582270551bc74a14eb",
+        "whyRelevant": "subject-grounded creative pressure for product-ui",
+        "phase": "creative-direction",
+        "contextCostTokens": 300,
+        "providerFallback": "use local deterministic sketch if provider lacks this capability packet"
+      },
+      {
+        "capabilityId": "frontend.semantic-structure",
+        "upstreamOrigin": "https://github.com/anthropics/skills",
+        "upstreamCommit": "b29e7cf65e5cb78a5ac33d582270551bc74a14eb",
+        "whyRelevant": "subject-grounded creative pressure for product-ui",
+        "phase": "creative-direction",
+        "contextCostTokens": 300,
+        "providerFallback": "use local deterministic sketch if provider lacks this capability packet"
+      },
+      {
+        "capabilityId": "frontend.interface-writing",
+        "upstreamOrigin": "https://github.com/anthropics/skills",
+        "upstreamCommit": "b29e7cf65e5cb78a5ac33d582270551bc74a14eb",
+        "whyRelevant": "subject-grounded creative pressure for product-ui",
+        "phase": "creative-direction",
+        "contextCostTokens": 300,
+        "providerFallback": "use local deterministic sketch if provider lacks this capability packet"
+      },
+      {
+        "capabilityId": "frontend.restraint-quality-floor",
+        "upstreamOrigin": "https://github.com/anthropics/skills",
+        "upstreamCommit": "b29e7cf65e5cb78a5ac33d582270551bc74a14eb",
+        "whyRelevant": "subject-grounded creative pressure for product-ui",
+        "phase": "critique",
+        "contextCostTokens": 300,
+        "providerFallback": "use local deterministic sketch if provider lacks this capability packet"
+      },
+      {
+        "capabilityId": "frontend.anti-default-calibration",
+        "upstreamOrigin": "https://github.com/anthropics/skills",
+        "upstreamCommit": "b29e7cf65e5cb78a5ac33d582270551bc74a14eb",
+        "whyRelevant": "subject-grounded creative pressure for product-ui",
+        "phase": "creative-direction",
+        "contextCostTokens": 300,
+        "providerFallback": "use local deterministic sketch if provider lacks this capability packet"
+      },
+      {
+        "capabilityId": "uupm.lookup.stack-guidance",
+        "upstreamOrigin": "nextlevelbuilder/ui-ux-pro-max-skill",
+        "upstreamCommit": "4857a2c5ef989794751a0f66b8545a4a49566286",
+        "whyRelevant": "searchable design knowledge for product-ui",
+        "phase": "knowledge",
+        "contextCostTokens": 500,
+        "providerFallback": "use local deterministic sketch if provider lacks this capability packet"
+      },
+      {
+        "capabilityId": "uupm.tune.design-dials",
+        "upstreamOrigin": "nextlevelbuilder/ui-ux-pro-max-skill",
+        "upstreamCommit": "4857a2c5ef989794751a0f66b8545a4a49566286",
+        "whyRelevant": "searchable design knowledge for product-ui",
+        "phase": "creative-direction",
+        "contextCostTokens": 300,
+        "providerFallback": "use local deterministic sketch if provider lacks this capability packet"
+      },
+      {
+        "capabilityId": "uupm.lookup.domain-knowledge",
+        "upstreamOrigin": "nextlevelbuilder/ui-ux-pro-max-skill",
+        "upstreamCommit": "4857a2c5ef989794751a0f66b8545a4a49566286",
+        "whyRelevant": "searchable design knowledge for product-ui",
+        "phase": "knowledge",
+        "contextCostTokens": 500,
+        "providerFallback": "use local deterministic sketch if provider lacks this capability packet"
+      },
+      {
+        "capabilityId": "IMP-004",
+        "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
+        "upstreamCommit": "6b342244e915d64b0d6e84d5eec448fd196ce6bb",
+        "whyRelevant": "seed/shape/critique mechanics for product-ui",
+        "phase": "seed",
+        "contextCostTokens": 200,
+        "providerFallback": "use local deterministic sketch if provider lacks this capability packet"
+      },
+      {
+        "capabilityId": "IMP-005",
+        "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
+        "upstreamCommit": "6b342244e915d64b0d6e84d5eec448fd196ce6bb",
+        "whyRelevant": "seed/shape/critique mechanics for product-ui",
+        "phase": "seed",
+        "contextCostTokens": 200,
+        "providerFallback": "use local deterministic sketch if provider lacks this capability packet"
+      },
+      {
+        "capabilityId": "IMP-008",
+        "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
+        "upstreamCommit": "6b342244e915d64b0d6e84d5eec448fd196ce6bb",
+        "whyRelevant": "seed/shape/critique mechanics for product-ui",
+        "phase": "critique",
+        "contextCostTokens": 300,
+        "providerFallback": "use local deterministic sketch if provider lacks this capability packet"
+      },
+      {
+        "capabilityId": "IMP-010",
+        "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
+        "upstreamCommit": "6b342244e915d64b0d6e84d5eec448fd196ce6bb",
+        "whyRelevant": "seed/shape/critique mechanics for product-ui",
+        "phase": "critique",
+        "contextCostTokens": 300,
+        "providerFallback": "use local deterministic sketch if provider lacks this capability packet"
+      },
+      {
+        "capabilityId": "frontend.motion-intent",
+        "upstreamOrigin": "https://github.com/anthropics/skills",
+        "upstreamCommit": "b29e7cf65e5cb78a5ac33d582270551bc74a14eb",
+        "whyRelevant": "subject-grounded creative pressure for product-ui",
+        "phase": "creative-direction",
+        "contextCostTokens": 300,
+        "providerFallback": "use local deterministic sketch if provider lacks this capability packet"
+      },
+      {
+        "capabilityId": "IMP-006",
+        "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
+        "upstreamCommit": "6b342244e915d64b0d6e84d5eec448fd196ce6bb",
+        "whyRelevant": "seed/shape/critique mechanics for product-ui",
+        "phase": "seed",
+        "contextCostTokens": 200,
+        "providerFallback": "use local deterministic sketch if provider lacks this capability packet"
+      },
+      {
+        "capabilityId": "uupm.generate.design-system",
+        "upstreamOrigin": "nextlevelbuilder/ui-ux-pro-max-skill",
+        "upstreamCommit": "4857a2c5ef989794751a0f66b8545a4a49566286",
+        "whyRelevant": "searchable design knowledge for product-ui",
+        "phase": "knowledge",
+        "contextCostTokens": 500,
+        "providerFallback": "use local deterministic sketch if provider lacks this capability packet"
+      }
+    ],
+    "notLoaded": [
+      {
+        "capabilityId": "TASTE-CAP-001",
+        "reason": "not selected by mode route / budget"
+      },
+      {
+        "capabilityId": "TASTE-CAP-005",
+        "reason": "not selected by mode route / budget"
+      },
+      {
+        "capabilityId": "TASTE-CAP-006",
+        "reason": "not selected by mode route / budget"
+      },
+      {
+        "capabilityId": "TASTE-CAP-007",
+        "reason": "not selected by mode route / budget"
+      },
+      {
+        "capabilityId": "TASTE-CAP-008",
+        "reason": "not selected by mode route / budget"
+      },
+      {
+        "capabilityId": "TASTE-CAP-009",
+        "reason": "not selected by mode route / budget"
+      },
+      {
+        "capabilityId": "TASTE-CAP-010",
+        "reason": "not selected by mode route / budget"
+      },
+      {
+        "capabilityId": "TASTE-CAP-011",
+        "reason": "not selected by mode route / budget"
+      },
+      {
+        "capabilityId": "TASTE-CAP-012",
+        "reason": "not selected by mode route / budget"
+      },
+      {
+        "capabilityId": "TASTE-CAP-013",
+        "reason": "deliberate ledger reject / exclusion-only"
+      },
+      {
+        "capabilityId": "TASTE-CAP-014",
+        "reason": "not selected by mode route / budget"
+      },
+      {
+        "capabilityId": "TASTE-CAP-015",
+        "reason": "not selected by mode route / budget"
+      },
+      {
+        "capabilityId": "TASTE-CAP-016",
+        "reason": "not selected by mode route / budget"
+      },
+      {
+        "capabilityId": "TASTE-CAP-017",
+        "reason": "not selected by mode route / budget"
+      },
+      {
+        "capabilityId": "TASTE-CAP-018",
+        "reason": "not selected by mode route / budget"
+      },
+      {
+        "capabilityId": "TASTE-CAP-019",
+        "reason": "deliberate ledger reject / exclusion-only"
+      },
+      {
+        "capabilityId": "uupm.skill.activation",
+        "reason": "not selected by mode route / budget"
+      },
+      {
+        "capabilityId": "uupm.requirements.stack-detect",
+        "reason": "not selected by mode route / budget"
+      },
+      {
+        "capabilityId": "uupm.search.bm25",
+        "reason": "not selected by mode route / budget"
+      },
+      {
+        "capabilityId": "uupm.classify.product-reasoning",
+        "reason": "not selected by mode route / budget"
+      },
+      {
+        "capabilityId": "uupm.persist.master-overrides",
+        "reason": "not selected by mode route / budget"
+      },
+      {
+        "capabilityId": "uupm.provider.template-build",
+        "reason": "not selected by mode route / budget"
+      },
+      {
+        "capabilityId": "uupm.cli.install-uninstall",
+        "reason": "not selected by mode route / budget"
+      },
+      {
+        "capabilityId": "uupm.cli.update-versions",
+        "reason": "not selected by mode route / budget"
+      },
+      {
+        "capabilityId": "uupm.bundle.sibling-skills",
+        "reason": "deliberate ledger reject / exclusion-only"
+      },
+      {
+        "capabilityId": "uupm.optional.browser-stack",
+        "reason": "not selected by mode route / budget"
+      },
+      {
+        "capabilityId": "uupm.quality.tests-release",
+        "reason": "not selected by mode route / budget"
+      },
+      {
+        "capabilityId": "frontend.hero-thesis",
+        "reason": "not selected by mode route / budget"
+      },
+      {
+        "capabilityId": "frontend.type-as-identity",
+        "reason": "not selected by mode route / budget"
+      },
+      {
+        "capabilityId": "frontend.compact-plan-signature",
+        "reason": "not selected by mode route / budget"
+      },
+      {
+        "capabilityId": "frontend.plan-critique-build",
+        "reason": "not selected by mode route / budget"
+      },
+      {
+        "capabilityId": "IMP-001",
+        "reason": "not selected by mode route / budget"
+      },
+      {
+        "capabilityId": "IMP-002",
+        "reason": "not selected by mode route / budget"
+      },
+      {
+        "capabilityId": "IMP-003",
+        "reason": "not selected by mode route / budget"
+      },
+      {
+        "capabilityId": "IMP-007",
+        "reason": "not selected by mode route / budget"
+      },
+      {
+        "capabilityId": "IMP-009",
+        "reason": "not selected by mode route / budget"
+      },
+      {
+        "capabilityId": "IMP-011",
+        "reason": "not selected by mode route / budget"
+      },
+      {
+        "capabilityId": "IMP-012",
+        "reason": "not selected by mode route / budget"
+      },
+      {
+        "capabilityId": "IMP-013",
+        "reason": "not selected by mode route / budget"
+      },
+      {
+        "capabilityId": "IMP-014",
+        "reason": "not selected by mode route / budget"
+      },
+      {
+        "capabilityId": "IMP-015",
+        "reason": "deliberate ledger reject / exclusion-only"
+      }
+    ],
+    "loadedAll59": false
+  },
+  "direction": {
+    "worlds": [
+      "index-first",
+      "statement-object",
+      "material-board",
+      "workspace-canvas",
+      "split-evidence"
+    ],
+    "cards": [
+      {
+        "internalId": "W1",
+        "worldId": "workspace-canvas",
+        "seed": {
+          "source": "local-world-library",
+          "version": "1.0.0",
+          "method": "sha256-project-entropy + fisher-yates",
+          "randomSeed": "proof-passage-2026-07-31|2866bbfc673841b748caa224|g:taste+uupm+frontend+impeccable",
+          "numericSeed": 3401002012,
+          "licence": "MIT SiteSmith-original world templates",
+          "origin": "local",
+          "slot": 3
+        },
+        "thesis": "Passage Log Console\" as product-ui — hero thesis: cockpit first screen where real interface full width as first screen — anti-default dials applied before chrome — domain knowledge consulted — seeded world before polish — subject recognised before chrome",
+        "evidence": "--- | title: \"Evidence — Passage Log Console\" | status: proof-fixture | ai_generated: \"(C)\" | --- | # Evidence — Passage Log Console | domain-knowledge: on",
+        "audience": "harbour masters logging vessel passages.",
+        "designIntent": "product-ui for Passage Log Console\"",
+        "composition": "real interface full width as first screen",
+        "type": "UI sans pair, tight tracking on tools",
+        "colour": "dark near-black ground, functional status accent",
+        "imagery": "deliberately imageless — chrome is the content",
+        "rhythm": "asymmetric tool rail + main canvas",
+        "surface": "framed — panels bound the work surface",
+        "labels": "symbol-led — tools speak as icons with text fallback",
+        "figures": "absent — no decorative metrics",
+        "depth": "inset — panels recede into the shell",
+        "layoutPrinciple": "real interface full width as first screen",
+        "typographicPrinciple": "UI sans pair, tight tracking on tools",
+        "assetStrategy": "deliberately imageless — chrome is the content",
+        "motionInteraction": "keyboard-first primary journey",
+        "signatureElement": "passage-workspace-canvas-sig",
+        "primaryRisk": "Dark shells can hide disabled states without careful contrast.",
+        "differenceNote": "Differs from statement-object, material-board on composition/type/imagery/grammar treatments, not hue alone.",
+        "capabilityProvenance": [
+          "TASTE-CAP-002",
+          "TASTE-CAP-003",
+          "TASTE-CAP-004",
+          "frontend.subject-vernacular",
+          "frontend.semantic-structure",
+          "frontend.interface-writing",
+          "frontend.restraint-quality-floor",
+          "frontend.anti-default-calibration",
+          "uupm.lookup.stack-guidance",
+          "uupm.tune.design-dials",
+          "uupm.lookup.domain-knowledge",
+          "IMP-004",
+          "IMP-005",
+          "IMP-008",
+          "IMP-010",
+          "frontend.motion-intent",
+          "IMP-006",
+          "uupm.generate.design-system"
+        ],
+        "density": "cockpit",
+        "groupsApplied": {
+          "taste": true,
+          "uupm": true,
+          "frontend": true,
+          "impeccable": true
+        }
+      },
+      {
+        "internalId": "W3",
+        "worldId": "statement-object",
+        "seed": {
+          "source": "local-world-library",
+          "version": "1.0.0",
+          "method": "sha256-project-entropy + fisher-yates",
+          "randomSeed": "proof-passage-2026-07-31|2866bbfc673841b748caa224|g:taste+uupm+frontend+impeccable",
+          "numericSeed": 3401002012,
+          "licence": "MIT SiteSmith-original world templates",
+          "origin": "local",
+          "slot": 1
+        },
+        "thesis": "Passage Log Console\" as product-ui — hero thesis: airy first screen where single object left, large type right — anti-default dials applied before chrome — domain knowledge consulted — seeded world before polish — subject recognised before chrome",
+        "evidence": "--- | title: \"Evidence — Passage Log Console\" | status: proof-fixture | ai_generated: \"(C)\" | --- | # Evidence — Passage Log Console | domain-knowledge: on",
+        "audience": "harbour masters logging vessel passages.",
+        "designIntent": "product-ui for Passage Log Console\"",
+        "composition": "single object left, large type right",
+        "type": "condensed display grotesque over quiet sans",
+        "colour": "light paper ground with one reserve accent",
+        "imagery": "object-led, full-height product plate",
+        "rhythm": "hard vertical split then calm bands",
+        "surface": "open — subject earns space around the object",
+        "labels": "sentence case captions — retail voice stays human",
+        "figures": "proportional — price is content not motif",
+        "depth": "elevated — object lifts off ground slightly",
+        "layoutPrinciple": "single object left, large type right",
+        "typographicPrinciple": "condensed display grotesque over quiet sans",
+        "assetStrategy": "object-led, full-height product plate",
+        "motionInteraction": "hover reveals material fact on the object",
+        "signatureElement": "passage-statement-object-sig",
+        "primaryRisk": "Signature may overfit if evidence is thin.",
+        "differenceNote": "Differs from workspace-canvas, material-board on composition/type/imagery/grammar treatments, not hue alone.",
+        "capabilityProvenance": [
+          "TASTE-CAP-002",
+          "TASTE-CAP-003",
+          "TASTE-CAP-004",
+          "frontend.subject-vernacular",
+          "frontend.semantic-structure",
+          "frontend.interface-writing",
+          "frontend.restraint-quality-floor",
+          "frontend.anti-default-calibration",
+          "uupm.lookup.stack-guidance",
+          "uupm.tune.design-dials",
+          "uupm.lookup.domain-knowledge",
+          "IMP-004",
+          "IMP-005",
+          "IMP-008",
+          "IMP-010",
+          "frontend.motion-intent",
+          "IMP-006",
+          "uupm.generate.design-system"
+        ],
+        "density": "airy",
+        "groupsApplied": {
+          "taste": true,
+          "uupm": true,
+          "frontend": true,
+          "impeccable": true
+        }
+      },
+      {
+        "internalId": "W4",
+        "worldId": "material-board",
+        "seed": {
+          "source": "local-world-library",
+          "version": "1.0.0",
+          "method": "sha256-project-entropy + fisher-yates",
+          "randomSeed": "proof-passage-2026-07-31|2866bbfc673841b748caa224|g:taste+uupm+frontend+impeccable",
+          "numericSeed": 3401002012,
+          "licence": "MIT SiteSmith-original world templates",
+          "origin": "local",
+          "slot": 2
+        },
+        "thesis": "Passage Log Console\" as product-ui — hero thesis: tactile first screen where grid of many small material samples — anti-default dials applied before chrome — domain knowledge consulted — seeded world before polish — subject recognised before chrome",
+        "evidence": "--- | title: \"Evidence — Passage Log Console\" | status: proof-fixture | ai_generated: \"(C)\" | --- | # Evidence — Passage Log Console | domain-knowledge: on",
+        "audience": "harbour masters logging vessel passages.",
+        "designIntent": "product-ui for Passage Log Console\"",
+        "composition": "grid of many small material samples",
+        "type": "small caps labels over soft serif",
+        "colour": "warm light ground from material palette",
+        "imagery": "object-led sample plates",
+        "rhythm": "tight mosaic then wide breathing band",
+        "surface": "colour-field — each cell is a material ground",
+        "labels": "sentence case — trade names, not UI chrome",
+        "figures": "proportional — dimensions only when needed",
+        "depth": "overlap — samples slightly shuffle depth",
+        "layoutPrinciple": "grid of many small material samples",
+        "typographicPrinciple": "small caps labels over soft serif",
+        "assetStrategy": "object-led sample plates",
+        "motionInteraction": "sample select builds a slip/cart",
+        "signatureElement": "passage-material-board-sig",
+        "primaryRisk": "Signature may overfit if evidence is thin.",
+        "differenceNote": "Differs from workspace-canvas, statement-object on composition/type/imagery/grammar treatments, not hue alone.",
+        "capabilityProvenance": [
+          "TASTE-CAP-002",
+          "TASTE-CAP-003",
+          "TASTE-CAP-004",
+          "frontend.subject-vernacular",
+          "frontend.semantic-structure",
+          "frontend.interface-writing",
+          "frontend.restraint-quality-floor",
+          "frontend.anti-default-calibration",
+          "uupm.lookup.stack-guidance",
+          "uupm.tune.design-dials",
+          "uupm.lookup.domain-knowledge",
+          "IMP-004",
+          "IMP-005",
+          "IMP-008",
+          "IMP-010",
+          "frontend.motion-intent",
+          "IMP-006",
+          "uupm.generate.design-system"
+        ],
+        "density": "tactile",
+        "groupsApplied": {
+          "taste": true,
+          "uupm": true,
+          "frontend": true,
+          "impeccable": true
+        }
+      }
+    ],
+    "pairwise": [
+      {
+        "a": "W1",
+        "b": "W3",
+        "macroDiff": 5,
+        "grammarDiff": 4,
+        "compositionDiff": true,
+        "pass": true
+      },
+      {
+        "a": "W1",
+        "b": "W4",
+        "macroDiff": 5,
+        "grammarDiff": 4,
+        "compositionDiff": true,
+        "pass": true
+      },
+      {
+        "a": "W3",
+        "b": "W4",
+        "macroDiff": 5,
+        "grammarDiff": 2,
+        "compositionDiff": true,
+        "pass": true
+      }
+    ],
+    "entropy": "proof-passage-2026-07-31|2866bbfc673841b748caa224|g:taste+uupm+frontend+impeccable",
+    "numericSeed": 3401002012
+  },
+  "blinding": {
+    "independence": "context-isolated",
+    "key": {
+      "L1": "W1",
+      "L2": "W3",
+      "L3": "W4"
+    },
+    "blinded": [
+      {
+        "blindId": "L1",
+        "worldId": "workspace-canvas",
+        "thesis": "Passage Log Console\" as product-ui — hero thesis: cockpit first screen where real interface full width as first screen — anti-default dials applied before chrome — domain knowledge consulted — seeded world before polish — subject recognised before chrome",
+        "evidence": "--- | title: \"Evidence — Passage Log Console\" | status: proof-fixture | ai_generated: \"(C)\" | --- | # Evidence — Passage Log Console | domain-knowledge: on",
+        "audience": "harbour masters logging vessel passages.",
+        "designIntent": "product-ui for Passage Log Console\"",
+        "composition": "real interface full width as first screen",
+        "type": "UI sans pair, tight tracking on tools",
+        "colour": "dark near-black ground, functional status accent",
+        "imagery": "deliberately imageless — chrome is the content",
+        "rhythm": "asymmetric tool rail + main canvas",
+        "surface": "framed — panels bound the work surface",
+        "labels": "symbol-led — tools speak as icons with text fallback",
+        "figures": "absent — no decorative metrics",
+        "depth": "inset — panels recede into the shell",
+        "layoutPrinciple": "real interface full width as first screen",
+        "typographicPrinciple": "UI sans pair, tight tracking on tools",
+        "assetStrategy": "deliberately imageless — chrome is the content",
+        "motionInteraction": "keyboard-first primary journey",
+        "signatureElement": "passage-workspace-canvas-sig",
+        "primaryRisk": "Dark shells can hide disabled states without careful contrast.",
+        "differenceNote": "Differs from statement-object, material-board on composition/type/imagery/grammar treatments, not hue alone.",
+        "density": "cockpit",
+        "groupsApplied": {
+          "taste": true,
+          "uupm": true,
+          "frontend": true,
+          "impeccable": true
+        }
+      },
+      {
+        "blindId": "L2",
+        "worldId": "statement-object",
+        "thesis": "Passage Log Console\" as product-ui — hero thesis: airy first screen where single object left, large type right — anti-default dials applied before chrome — domain knowledge consulted — seeded world before polish — subject recognised before chrome",
+        "evidence": "--- | title: \"Evidence — Passage Log Console\" | status: proof-fixture | ai_generated: \"(C)\" | --- | # Evidence — Passage Log Console | domain-knowledge: on",
+        "audience": "harbour masters logging vessel passages.",
+        "designIntent": "product-ui for Passage Log Console\"",
+        "composition": "single object left, large type right",
+        "type": "condensed display grotesque over quiet sans",
+        "colour": "light paper ground with one reserve accent",
+        "imagery": "object-led, full-height product plate",
+        "rhythm": "hard vertical split then calm bands",
+        "surface": "open — subject earns space around the object",
+        "labels": "sentence case captions — retail voice stays human",
+        "figures": "proportional — price is content not motif",
+        "depth": "elevated — object lifts off ground slightly",
+        "layoutPrinciple": "single object left, large type right",
+        "typographicPrinciple": "condensed display grotesque over quiet sans",
+        "assetStrategy": "object-led, full-height product plate",
+        "motionInteraction": "hover reveals material fact on the object",
+        "signatureElement": "passage-statement-object-sig",
+        "primaryRisk": "Signature may overfit if evidence is thin.",
+        "differenceNote": "Differs from workspace-canvas, material-board on composition/type/imagery/grammar treatments, not hue alone.",
+        "density": "airy",
+        "groupsApplied": {
+          "taste": true,
+          "uupm": true,
+          "frontend": true,
+          "impeccable": true
+        }
+      },
+      {
+        "blindId": "L3",
+        "worldId": "material-board",
+        "thesis": "Passage Log Console\" as product-ui — hero thesis: tactile first screen where grid of many small material samples — anti-default dials applied before chrome — domain knowledge consulted — seeded world before polish — subject recognised before chrome",
+        "evidence": "--- | title: \"Evidence — Passage Log Console\" | status: proof-fixture | ai_generated: \"(C)\" | --- | # Evidence — Passage Log Console | domain-knowledge: on",
+        "audience": "harbour masters logging vessel passages.",
+        "designIntent": "product-ui for Passage Log Console\"",
+        "composition": "grid of many small material samples",
+        "type": "small caps labels over soft serif",
+        "colour": "warm light ground from material palette",
+        "imagery": "object-led sample plates",
+        "rhythm": "tight mosaic then wide breathing band",
+        "surface": "colour-field — each cell is a material ground",
+        "labels": "sentence case — trade names, not UI chrome",
+        "figures": "proportional — dimensions only when needed",
+        "depth": "overlap — samples slightly shuffle depth",
+        "layoutPrinciple": "grid of many small material samples",
+        "typographicPrinciple": "small caps labels over soft serif",
+        "assetStrategy": "object-led sample plates",
+        "motionInteraction": "sample select builds a slip/cart",
+        "signatureElement": "passage-material-board-sig",
+        "primaryRisk": "Signature may overfit if evidence is thin.",
+        "differenceNote": "Differs from workspace-canvas, statement-object on composition/type/imagery/grammar treatments, not hue alone.",
+        "density": "tactile",
+        "groupsApplied": {
+          "taste": true,
+          "uupm": true,
+          "frontend": true,
+          "impeccable": true
+        }
+      }
+    ]
+  },
+  "critic": {
+    "independence": "context-isolated",
+    "notModelIndependent": true,
+    "scores": [
+      {
+        "blindId": "L1",
+        "briefFit": 6,
+        "originality": 3,
+        "subject": 3,
+        "composition": 3,
+        "implementability": 2,
+        "total": 17,
+        "flags": []
+      },
+      {
+        "blindId": "L2",
+        "briefFit": 6,
+        "originality": 3,
+        "subject": 3,
+        "composition": 3,
+        "implementability": 3,
+        "total": 18,
+        "flags": []
+      },
+      {
+        "blindId": "L3",
+        "briefFit": 6,
+        "originality": 3,
+        "subject": 3,
+        "composition": 3,
+        "implementability": 3,
+        "total": 18,
+        "flags": []
+      }
+    ],
+    "rankedIds": [
+      "L2",
+      "L3",
+      "L1"
+    ],
+    "tie": true,
+    "rejectAll": false,
+    "recommendation": null,
+    "notes": "tie: user or external adjudicator required"
+  },
+  "choice": {
+    "status": "selected",
+    "selectedBlindId": "L1",
+    "selectedInternalId": "W1",
+    "by": "user"
+  },
+  "designSpec": {
+    "schemaVersion": 1,
+    "kind": "sitesmith.designspec.v3-slice",
+    "projectName": "03-passage-console",
+    "mode": "product-ui",
+    "stack": "html",
+    "designThesis": "Passage Log Console\" as product-ui — hero thesis: cockpit first screen where real interface full width as first screen — anti-default dials applied before chrome — domain knowledge consulted — seeded world before polish — subject recognised before chrome",
+    "contentHierarchy": [
+      "subject recognition",
+      "log a passage (vessel, direction, time, notes).",
+      "supporting evidence",
+      "secondary navigation"
+    ],
+    "pageComposition": "real interface full width as first screen",
+    "gridAndSpacing": "tight 4/8 rhythm, dense modules",
+    "typographySystem": {
+      "principle": "UI sans pair, tight tracking on tools",
+      "roles": [
+        "display",
+        "body",
+        "label"
+      ]
+    },
+    "colourRoles": {
+      "ground": "dark near-black ground, functional status accent",
+      "accent": "single reserved accent from brand evidence only if present",
+      "text": "primary ink on ground with WCAG AA body contrast"
+    },
+    "surfaceMaterialModel": "framed — panels bound the work surface",
+    "imageryStrategy": "deliberately imageless — chrome is the content",
+    "componentPrinciples": [
+      "states must be visible without colour alone",
+      "primary action uses reserved accent only"
+    ],
+    "interactionStates": [
+      "default",
+      "hover/focus",
+      "active",
+      "disabled",
+      "error"
+    ],
+    "motionRules": {
+      "principle": "keyboard-first primary journey",
+      "reducedMotion": "disable non-essential motion"
+    },
+    "responsiveBehavior": {
+      "firstFold": "preserve composition intent; stack only after tablet",
+      "tables": "horizontal scroll must expose affordance if used"
+    },
+    "accessibilityConstraints": [
+      "visible focus",
+      "label every control",
+      "AA contrast for body and UI text"
+    ],
+    "signatureElement": "passage-workspace-canvas-sig",
+    "forbiddenFallbackDefaults": [
+      "purple SaaS gradient hero",
+      "three equal feature cards as default identity",
+      "round-8 recipe: mono uppercase labels + hairlines + tabular motif + flat depth",
+      "invented testimonials, prices, or certifications"
+    ],
+    "fidelityAssertions": [
+      {
+        "field": "composition",
+        "expected": "real interface full width as first screen"
+      },
+      {
+        "field": "type",
+        "expected": "UI sans pair, tight tracking on tools"
+      },
+      {
+        "field": "colour",
+        "expected": "dark near-black ground, functional status accent"
+      },
+      {
+        "field": "imagery",
+        "expected": "deliberately imageless — chrome is the content"
+      },
+      {
+        "field": "rhythm",
+        "expected": "asymmetric tool rail + main canvas"
+      },
+      {
+        "field": "surface",
+        "expected": "framed — panels bound the work surface"
+      },
+      {
+        "field": "labels",
+        "expected": "symbol-led — tools speak as icons with text fallback"
+      },
+      {
+        "field": "figures",
+        "expected": "absent — no decorative metrics"
+      },
+      {
+        "field": "depth",
+        "expected": "inset — panels recede into the shell"
+      },
+      {
+        "field": "signature-selector",
+        "expected": "[data-signature=\"passage-workspace-canvas-sig\"]"
+      }
+    ],
+    "acceptanceCriteria": [
+      "built page matches axis record treatments",
+      "primary action findable in first fold",
+      "no fabricated brand/product facts",
+      "passes existing v2.3 verify + direction fidelity"
+    ],
+    "capabilityProvenance": [
+      {
+        "capabilityId": "TASTE-CAP-002",
+        "upstreamOrigin": "https://github.com/Leonxlnx/taste-skill.git",
+        "phase": "creative-direction"
+      },
+      {
+        "capabilityId": "TASTE-CAP-003",
+        "upstreamOrigin": "https://github.com/Leonxlnx/taste-skill.git",
+        "phase": "creative-direction"
+      },
+      {
+        "capabilityId": "TASTE-CAP-004",
+        "upstreamOrigin": "https://github.com/Leonxlnx/taste-skill.git",
+        "phase": "creative-direction"
+      },
+      {
+        "capabilityId": "frontend.subject-vernacular",
+        "upstreamOrigin": "https://github.com/anthropics/skills",
+        "phase": "creative-direction"
+      },
+      {
+        "capabilityId": "frontend.semantic-structure",
+        "upstreamOrigin": "https://github.com/anthropics/skills",
+        "phase": "creative-direction"
+      },
+      {
+        "capabilityId": "frontend.interface-writing",
+        "upstreamOrigin": "https://github.com/anthropics/skills",
+        "phase": "creative-direction"
+      },
+      {
+        "capabilityId": "frontend.restraint-quality-floor",
+        "upstreamOrigin": "https://github.com/anthropics/skills",
+        "phase": "critique"
+      },
+      {
+        "capabilityId": "frontend.anti-default-calibration",
+        "upstreamOrigin": "https://github.com/anthropics/skills",
+        "phase": "creative-direction"
+      },
+      {
+        "capabilityId": "uupm.lookup.stack-guidance",
+        "upstreamOrigin": "nextlevelbuilder/ui-ux-pro-max-skill",
+        "phase": "knowledge"
+      },
+      {
+        "capabilityId": "uupm.tune.design-dials",
+        "upstreamOrigin": "nextlevelbuilder/ui-ux-pro-max-skill",
+        "phase": "creative-direction"
+      },
+      {
+        "capabilityId": "uupm.lookup.domain-knowledge",
+        "upstreamOrigin": "nextlevelbuilder/ui-ux-pro-max-skill",
+        "phase": "knowledge"
+      },
+      {
+        "capabilityId": "IMP-004",
+        "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
+        "phase": "seed"
+      },
+      {
+        "capabilityId": "IMP-005",
+        "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
+        "phase": "seed"
+      },
+      {
+        "capabilityId": "IMP-008",
+        "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
+        "phase": "critique"
+      },
+      {
+        "capabilityId": "IMP-010",
+        "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
+        "phase": "critique"
+      },
+      {
+        "capabilityId": "frontend.motion-intent",
+        "upstreamOrigin": "https://github.com/anthropics/skills",
+        "phase": "creative-direction"
+      },
+      {
+        "capabilityId": "IMP-006",
+        "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
+        "phase": "seed"
+      },
+      {
+        "capabilityId": "uupm.generate.design-system",
+        "upstreamOrigin": "nextlevelbuilder/ui-ux-pro-max-skill",
+        "phase": "knowledge"
+      }
+    ],
+    "seedProvenance": {
+      "source": "local-world-library",
+      "version": "1.0.0",
+      "method": "sha256-project-entropy + fisher-yates",
+      "randomSeed": "proof-passage-2026-07-31|2866bbfc673841b748caa224|g:taste+uupm+frontend+impeccable",
+      "numericSeed": 3401002012,
+      "licence": "MIT SiteSmith-original world templates",
+      "origin": "local",
+      "slot": 3
+    },
+    "policyVersion": "direction-engine-v3-slice-1.0.0",
+    "choice": {
+      "status": "selected",
+      "selectedBlindId": "L1",
+      "selectedInternalId": "W1",
+      "by": "user"
+    }
+  },
+  "handoff": {
+    "mode": "product-ui",
+    "stack": "html",
+    "evidenceArtifacts": {
+      "brief": true,
+      "evidence": true,
+      "brand": true,
+      "assetPlan": true,
+      "assetManifest": true
+    },
+    "designSpec": {
+      "schemaVersion": 1,
+      "kind": "sitesmith.designspec.v3-slice",
+      "projectName": "03-passage-console",
+      "mode": "product-ui",
+      "stack": "html",
+      "designThesis": "Passage Log Console\" as product-ui — hero thesis: cockpit first screen where real interface full width as first screen — anti-default dials applied before chrome — domain knowledge consulted — seeded world before polish — subject recognised before chrome",
+      "contentHierarchy": [
+        "subject recognition",
+        "log a passage (vessel, direction, time, notes).",
+        "supporting evidence",
+        "secondary navigation"
+      ],
+      "pageComposition": "real interface full width as first screen",
+      "gridAndSpacing": "tight 4/8 rhythm, dense modules",
+      "typographySystem": {
+        "principle": "UI sans pair, tight tracking on tools",
+        "roles": [
+          "display",
+          "body",
+          "label"
+        ]
+      },
+      "colourRoles": {
+        "ground": "dark near-black ground, functional status accent",
+        "accent": "single reserved accent from brand evidence only if present",
+        "text": "primary ink on ground with WCAG AA body contrast"
+      },
+      "surfaceMaterialModel": "framed — panels bound the work surface",
+      "imageryStrategy": "deliberately imageless — chrome is the content",
+      "componentPrinciples": [
+        "states must be visible without colour alone",
+        "primary action uses reserved accent only"
+      ],
+      "interactionStates": [
+        "default",
+        "hover/focus",
+        "active",
+        "disabled",
+        "error"
+      ],
+      "motionRules": {
+        "principle": "keyboard-first primary journey",
+        "reducedMotion": "disable non-essential motion"
+      },
+      "responsiveBehavior": {
+        "firstFold": "preserve composition intent; stack only after tablet",
+        "tables": "horizontal scroll must expose affordance if used"
+      },
+      "accessibilityConstraints": [
+        "visible focus",
+        "label every control",
+        "AA contrast for body and UI text"
+      ],
+      "signatureElement": "passage-workspace-canvas-sig",
+      "forbiddenFallbackDefaults": [
+        "purple SaaS gradient hero",
+        "three equal feature cards as default identity",
+        "round-8 recipe: mono uppercase labels + hairlines + tabular motif + flat depth",
+        "invented testimonials, prices, or certifications"
+      ],
+      "fidelityAssertions": [
+        {
+          "field": "composition",
+          "expected": "real interface full width as first screen"
+        },
+        {
+          "field": "type",
+          "expected": "UI sans pair, tight tracking on tools"
+        },
+        {
+          "field": "colour",
+          "expected": "dark near-black ground, functional status accent"
+        },
+        {
+          "field": "imagery",
+          "expected": "deliberately imageless — chrome is the content"
+        },
+        {
+          "field": "rhythm",
+          "expected": "asymmetric tool rail + main canvas"
+        },
+        {
+          "field": "surface",
+          "expected": "framed — panels bound the work surface"
+        },
+        {
+          "field": "labels",
+          "expected": "symbol-led — tools speak as icons with text fallback"
+        },
+        {
+          "field": "figures",
+          "expected": "absent — no decorative metrics"
+        },
+        {
+          "field": "depth",
+          "expected": "inset — panels recede into the shell"
+        },
+        {
+          "field": "signature-selector",
+          "expected": "[data-signature=\"passage-workspace-canvas-sig\"]"
+        }
+      ],
+      "acceptanceCriteria": [
+        "built page matches axis record treatments",
+        "primary action findable in first fold",
+        "no fabricated brand/product facts",
+        "passes existing v2.3 verify + direction fidelity"
+      ],
+      "capabilityProvenance": [
+        {
+          "capabilityId": "TASTE-CAP-002",
+          "upstreamOrigin": "https://github.com/Leonxlnx/taste-skill.git",
+          "phase": "creative-direction"
+        },
+        {
+          "capabilityId": "TASTE-CAP-003",
+          "upstreamOrigin": "https://github.com/Leonxlnx/taste-skill.git",
+          "phase": "creative-direction"
+        },
+        {
+          "capabilityId": "TASTE-CAP-004",
+          "upstreamOrigin": "https://github.com/Leonxlnx/taste-skill.git",
+          "phase": "creative-direction"
+        },
+        {
+          "capabilityId": "frontend.subject-vernacular",
+          "upstreamOrigin": "https://github.com/anthropics/skills",
+          "phase": "creative-direction"
+        },
+        {
+          "capabilityId": "frontend.semantic-structure",
+          "upstreamOrigin": "https://github.com/anthropics/skills",
+          "phase": "creative-direction"
+        },
+        {
+          "capabilityId": "frontend.interface-writing",
+          "upstreamOrigin": "https://github.com/anthropics/skills",
+          "phase": "creative-direction"
+        },
+        {
+          "capabilityId": "frontend.restraint-quality-floor",
+          "upstreamOrigin": "https://github.com/anthropics/skills",
+          "phase": "critique"
+        },
+        {
+          "capabilityId": "frontend.anti-default-calibration",
+          "upstreamOrigin": "https://github.com/anthropics/skills",
+          "phase": "creative-direction"
+        },
+        {
+          "capabilityId": "uupm.lookup.stack-guidance",
+          "upstreamOrigin": "nextlevelbuilder/ui-ux-pro-max-skill",
+          "phase": "knowledge"
+        },
+        {
+          "capabilityId": "uupm.tune.design-dials",
+          "upstreamOrigin": "nextlevelbuilder/ui-ux-pro-max-skill",
+          "phase": "creative-direction"
+        },
+        {
+          "capabilityId": "uupm.lookup.domain-knowledge",
+          "upstreamOrigin": "nextlevelbuilder/ui-ux-pro-max-skill",
+          "phase": "knowledge"
+        },
+        {
+          "capabilityId": "IMP-004",
+          "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
+          "phase": "seed"
+        },
+        {
+          "capabilityId": "IMP-005",
+          "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
+          "phase": "seed"
+        },
+        {
+          "capabilityId": "IMP-008",
+          "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
+          "phase": "critique"
+        },
+        {
+          "capabilityId": "IMP-010",
+          "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
+          "phase": "critique"
+        },
+        {
+          "capabilityId": "frontend.motion-intent",
+          "upstreamOrigin": "https://github.com/anthropics/skills",
+          "phase": "creative-direction"
+        },
+        {
+          "capabilityId": "IMP-006",
+          "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
+          "phase": "seed"
+        },
+        {
+          "capabilityId": "uupm.generate.design-system",
+          "upstreamOrigin": "nextlevelbuilder/ui-ux-pro-max-skill",
+          "phase": "knowledge"
+        }
+      ],
+      "seedProvenance": {
+        "source": "local-world-library",
+        "version": "1.0.0",
+        "method": "sha256-project-entropy + fisher-yates",
+        "randomSeed": "proof-passage-2026-07-31|2866bbfc673841b748caa224|g:taste+uupm+frontend+impeccable",
+        "numericSeed": 3401002012,
+        "licence": "MIT SiteSmith-original world templates",
+        "origin": "local",
+        "slot": 3
+      },
+      "policyVersion": "direction-engine-v3-slice-1.0.0",
+      "choice": {
+        "status": "selected",
+        "selectedBlindId": "L1",
+        "selectedInternalId": "W1",
+        "by": "user"
+      }
+    },
+    "directionMd": "---\ntitle: \"DIRECTION — 03-passage-console\"\nstatus: direction-engine-slice\nai_generated: \"(C)\"\n---\n\n# DIRECTION — 03-passage-console\n\nWinner: workspace-canvas (Passage Log Console\" as product-ui — hero thesis: cockpit first screen where real interface full width as first screen — anti-default dials applied before chrome — domain knowledge consulted — seeded world before polish — subject recognised before chrome)\n\n## Signature\npassage-workspace-canvas-sig\n\n## Axis record\n\n- direction-version: 2.3\n- composition: real interface full width as first screen\n- type: UI sans pair, tight tracking on tools\n- colour: dark near-black ground, functional status accent\n- imagery: deliberately imageless — chrome is the content\n- rhythm: asymmetric tool rail + main canvas\n\n- surface: framed — panels bound the work surface\n- labels: symbol-led — tools speak as icons with text fallback\n- figures: absent — no decorative metrics\n- depth: inset — panels recede into the shell\n\n- visual-density: 5\n- motion-intensity: 3\n- aesthetic-boldness: 6\n\n- signature-selector: [data-signature=\"passage-workspace-canvas-sig\"]\n- signature-min-share: 12\n\n## Rejections\n- statement-object: recorded alternative; not passed to build context\n- material-board: recorded alternative; not passed to build context\n\n## Notes\nSelected by Direction Engine v3 slice. Build context must not receive losing cards or generator scores.",
+    "axisRecord": "## Axis record\n\n- direction-version: 2.3\n- composition: real interface full width as first screen\n- type: UI sans pair, tight tracking on tools\n- colour: dark near-black ground, functional status accent\n- imagery: deliberately imageless — chrome is the content\n- rhythm: asymmetric tool rail + main canvas\n\n- surface: framed — panels bound the work surface\n- labels: symbol-led — tools speak as icons with text fallback\n- figures: absent — no decorative metrics\n- depth: inset — panels recede into the shell\n\n- visual-density: 5\n- motion-intensity: 3\n- aesthetic-boldness: 6\n\n- signature-selector: [data-signature=\"passage-workspace-canvas-sig\"]\n- signature-min-share: 12",
+    "withheldFromBuild": {
+      "rejectedDirectionCards": true,
+      "generatorScores": true,
+      "generatorFavorite": true,
+      "blindKey": true
+    },
+    "next": {
+      "shell": "sitesmith-v2.3",
+      "commands": [
+        "build",
+        "audit"
+      ],
+      "adapters": "html"
+    }
+  }
+}

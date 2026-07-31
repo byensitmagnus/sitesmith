@@ -1,0 +1,1187 @@
+{
+  "ok": true,
+  "stage": "handoff-ready",
+  "policyVersion": "direction-engine-v3-slice-1.0.0",
+  "inputWarnings": [],
+  "route": {
+    "ok": true,
+    "mode": "ecommerce",
+    "ablation": "none",
+    "selectedCount": 18,
+    "totalAvailable": 59,
+    "totalContextCostTokens": 5900,
+    "decisionHash": "85461c33bb222ec1fd0f5ef02d2a2fdb7cbbb2d6e77b667c21f4b49055c86093",
+    "selected": [
+      {
+        "capabilityId": "TASTE-CAP-002",
+        "upstreamOrigin": "https://github.com/Leonxlnx/taste-skill.git",
+        "upstreamCommit": "e988add20dab0fa97d7a76781c48961c8184288e",
+        "whyRelevant": "brief/dials/anti-default discipline for ecommerce",
+        "phase": "creative-direction",
+        "contextCostTokens": 300,
+        "providerFallback": "use local deterministic sketch if provider lacks this capability packet"
+      },
+      {
+        "capabilityId": "TASTE-CAP-003",
+        "upstreamOrigin": "https://github.com/Leonxlnx/taste-skill.git",
+        "upstreamCommit": "e988add20dab0fa97d7a76781c48961c8184288e",
+        "whyRelevant": "brief/dials/anti-default discipline for ecommerce",
+        "phase": "creative-direction",
+        "contextCostTokens": 300,
+        "providerFallback": "use local deterministic sketch if provider lacks this capability packet"
+      },
+      {
+        "capabilityId": "TASTE-CAP-004",
+        "upstreamOrigin": "https://github.com/Leonxlnx/taste-skill.git",
+        "upstreamCommit": "e988add20dab0fa97d7a76781c48961c8184288e",
+        "whyRelevant": "brief/dials/anti-default discipline for ecommerce",
+        "phase": "creative-direction",
+        "contextCostTokens": 300,
+        "providerFallback": "use local deterministic sketch if provider lacks this capability packet"
+      },
+      {
+        "capabilityId": "TASTE-CAP-006",
+        "upstreamOrigin": "https://github.com/Leonxlnx/taste-skill.git",
+        "upstreamCommit": "e988add20dab0fa97d7a76781c48961c8184288e",
+        "whyRelevant": "brief/dials/anti-default discipline for ecommerce",
+        "phase": "knowledge",
+        "contextCostTokens": 500,
+        "providerFallback": "use local deterministic sketch if provider lacks this capability packet"
+      },
+      {
+        "capabilityId": "frontend.subject-vernacular",
+        "upstreamOrigin": "https://github.com/anthropics/skills",
+        "upstreamCommit": "b29e7cf65e5cb78a5ac33d582270551bc74a14eb",
+        "whyRelevant": "subject-grounded creative pressure for ecommerce",
+        "phase": "creative-direction",
+        "contextCostTokens": 300,
+        "providerFallback": "use local deterministic sketch if provider lacks this capability packet"
+      },
+      {
+        "capabilityId": "frontend.hero-thesis",
+        "upstreamOrigin": "https://github.com/anthropics/skills",
+        "upstreamCommit": "b29e7cf65e5cb78a5ac33d582270551bc74a14eb",
+        "whyRelevant": "subject-grounded creative pressure for ecommerce",
+        "phase": "creative-direction",
+        "contextCostTokens": 300,
+        "providerFallback": "use local deterministic sketch if provider lacks this capability packet"
+      },
+      {
+        "capabilityId": "frontend.semantic-structure",
+        "upstreamOrigin": "https://github.com/anthropics/skills",
+        "upstreamCommit": "b29e7cf65e5cb78a5ac33d582270551bc74a14eb",
+        "whyRelevant": "subject-grounded creative pressure for ecommerce",
+        "phase": "creative-direction",
+        "contextCostTokens": 300,
+        "providerFallback": "use local deterministic sketch if provider lacks this capability packet"
+      },
+      {
+        "capabilityId": "frontend.interface-writing",
+        "upstreamOrigin": "https://github.com/anthropics/skills",
+        "upstreamCommit": "b29e7cf65e5cb78a5ac33d582270551bc74a14eb",
+        "whyRelevant": "subject-grounded creative pressure for ecommerce",
+        "phase": "creative-direction",
+        "contextCostTokens": 300,
+        "providerFallback": "use local deterministic sketch if provider lacks this capability packet"
+      },
+      {
+        "capabilityId": "frontend.anti-default-calibration",
+        "upstreamOrigin": "https://github.com/anthropics/skills",
+        "upstreamCommit": "b29e7cf65e5cb78a5ac33d582270551bc74a14eb",
+        "whyRelevant": "subject-grounded creative pressure for ecommerce",
+        "phase": "creative-direction",
+        "contextCostTokens": 300,
+        "providerFallback": "use local deterministic sketch if provider lacks this capability packet"
+      },
+      {
+        "capabilityId": "uupm.classify.product-reasoning",
+        "upstreamOrigin": "nextlevelbuilder/ui-ux-pro-max-skill",
+        "upstreamCommit": "4857a2c5ef989794751a0f66b8545a4a49566286",
+        "whyRelevant": "searchable design knowledge for ecommerce",
+        "phase": "knowledge",
+        "contextCostTokens": 500,
+        "providerFallback": "use local deterministic sketch if provider lacks this capability packet"
+      },
+      {
+        "capabilityId": "uupm.lookup.domain-knowledge",
+        "upstreamOrigin": "nextlevelbuilder/ui-ux-pro-max-skill",
+        "upstreamCommit": "4857a2c5ef989794751a0f66b8545a4a49566286",
+        "whyRelevant": "searchable design knowledge for ecommerce",
+        "phase": "knowledge",
+        "contextCostTokens": 500,
+        "providerFallback": "use local deterministic sketch if provider lacks this capability packet"
+      },
+      {
+        "capabilityId": "uupm.tune.design-dials",
+        "upstreamOrigin": "nextlevelbuilder/ui-ux-pro-max-skill",
+        "upstreamCommit": "4857a2c5ef989794751a0f66b8545a4a49566286",
+        "whyRelevant": "searchable design knowledge for ecommerce",
+        "phase": "creative-direction",
+        "contextCostTokens": 300,
+        "providerFallback": "use local deterministic sketch if provider lacks this capability packet"
+      },
+      {
+        "capabilityId": "IMP-004",
+        "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
+        "upstreamCommit": "6b342244e915d64b0d6e84d5eec448fd196ce6bb",
+        "whyRelevant": "seed/shape/critique mechanics for ecommerce",
+        "phase": "seed",
+        "contextCostTokens": 200,
+        "providerFallback": "use local deterministic sketch if provider lacks this capability packet"
+      },
+      {
+        "capabilityId": "IMP-005",
+        "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
+        "upstreamCommit": "6b342244e915d64b0d6e84d5eec448fd196ce6bb",
+        "whyRelevant": "seed/shape/critique mechanics for ecommerce",
+        "phase": "seed",
+        "contextCostTokens": 200,
+        "providerFallback": "use local deterministic sketch if provider lacks this capability packet"
+      },
+      {
+        "capabilityId": "IMP-006",
+        "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
+        "upstreamCommit": "6b342244e915d64b0d6e84d5eec448fd196ce6bb",
+        "whyRelevant": "seed/shape/critique mechanics for ecommerce",
+        "phase": "seed",
+        "contextCostTokens": 200,
+        "providerFallback": "use local deterministic sketch if provider lacks this capability packet"
+      },
+      {
+        "capabilityId": "IMP-008",
+        "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
+        "upstreamCommit": "6b342244e915d64b0d6e84d5eec448fd196ce6bb",
+        "whyRelevant": "seed/shape/critique mechanics for ecommerce",
+        "phase": "critique",
+        "contextCostTokens": 300,
+        "providerFallback": "use local deterministic sketch if provider lacks this capability packet"
+      },
+      {
+        "capabilityId": "uupm.lookup.stack-guidance",
+        "upstreamOrigin": "nextlevelbuilder/ui-ux-pro-max-skill",
+        "upstreamCommit": "4857a2c5ef989794751a0f66b8545a4a49566286",
+        "whyRelevant": "searchable design knowledge for ecommerce",
+        "phase": "knowledge",
+        "contextCostTokens": 500,
+        "providerFallback": "use local deterministic sketch if provider lacks this capability packet"
+      },
+      {
+        "capabilityId": "frontend.motion-intent",
+        "upstreamOrigin": "https://github.com/anthropics/skills",
+        "upstreamCommit": "b29e7cf65e5cb78a5ac33d582270551bc74a14eb",
+        "whyRelevant": "subject-grounded creative pressure for ecommerce",
+        "phase": "creative-direction",
+        "contextCostTokens": 300,
+        "providerFallback": "use local deterministic sketch if provider lacks this capability packet"
+      }
+    ],
+    "notLoaded": [
+      {
+        "capabilityId": "TASTE-CAP-001",
+        "reason": "not selected by mode route / budget"
+      },
+      {
+        "capabilityId": "TASTE-CAP-005",
+        "reason": "not selected by mode route / budget"
+      },
+      {
+        "capabilityId": "TASTE-CAP-007",
+        "reason": "not selected by mode route / budget"
+      },
+      {
+        "capabilityId": "TASTE-CAP-008",
+        "reason": "not selected by mode route / budget"
+      },
+      {
+        "capabilityId": "TASTE-CAP-009",
+        "reason": "not selected by mode route / budget"
+      },
+      {
+        "capabilityId": "TASTE-CAP-010",
+        "reason": "not selected by mode route / budget"
+      },
+      {
+        "capabilityId": "TASTE-CAP-011",
+        "reason": "not selected by mode route / budget"
+      },
+      {
+        "capabilityId": "TASTE-CAP-012",
+        "reason": "not selected by mode route / budget"
+      },
+      {
+        "capabilityId": "TASTE-CAP-013",
+        "reason": "deliberate ledger reject / exclusion-only"
+      },
+      {
+        "capabilityId": "TASTE-CAP-014",
+        "reason": "not selected by mode route / budget"
+      },
+      {
+        "capabilityId": "TASTE-CAP-015",
+        "reason": "not selected by mode route / budget"
+      },
+      {
+        "capabilityId": "TASTE-CAP-016",
+        "reason": "not selected by mode route / budget"
+      },
+      {
+        "capabilityId": "TASTE-CAP-017",
+        "reason": "not selected by mode route / budget"
+      },
+      {
+        "capabilityId": "TASTE-CAP-018",
+        "reason": "not selected by mode route / budget"
+      },
+      {
+        "capabilityId": "TASTE-CAP-019",
+        "reason": "deliberate ledger reject / exclusion-only"
+      },
+      {
+        "capabilityId": "uupm.skill.activation",
+        "reason": "not selected by mode route / budget"
+      },
+      {
+        "capabilityId": "uupm.requirements.stack-detect",
+        "reason": "not selected by mode route / budget"
+      },
+      {
+        "capabilityId": "uupm.search.bm25",
+        "reason": "not selected by mode route / budget"
+      },
+      {
+        "capabilityId": "uupm.generate.design-system",
+        "reason": "not selected by mode route / budget"
+      },
+      {
+        "capabilityId": "uupm.persist.master-overrides",
+        "reason": "not selected by mode route / budget"
+      },
+      {
+        "capabilityId": "uupm.provider.template-build",
+        "reason": "not selected by mode route / budget"
+      },
+      {
+        "capabilityId": "uupm.cli.install-uninstall",
+        "reason": "not selected by mode route / budget"
+      },
+      {
+        "capabilityId": "uupm.cli.update-versions",
+        "reason": "not selected by mode route / budget"
+      },
+      {
+        "capabilityId": "uupm.bundle.sibling-skills",
+        "reason": "deliberate ledger reject / exclusion-only"
+      },
+      {
+        "capabilityId": "uupm.optional.browser-stack",
+        "reason": "not selected by mode route / budget"
+      },
+      {
+        "capabilityId": "uupm.quality.tests-release",
+        "reason": "not selected by mode route / budget"
+      },
+      {
+        "capabilityId": "frontend.type-as-identity",
+        "reason": "not selected by mode route / budget"
+      },
+      {
+        "capabilityId": "frontend.compact-plan-signature",
+        "reason": "not selected by mode route / budget"
+      },
+      {
+        "capabilityId": "frontend.plan-critique-build",
+        "reason": "not selected by mode route / budget"
+      },
+      {
+        "capabilityId": "frontend.restraint-quality-floor",
+        "reason": "not selected by mode route / budget"
+      },
+      {
+        "capabilityId": "IMP-001",
+        "reason": "not selected by mode route / budget"
+      },
+      {
+        "capabilityId": "IMP-002",
+        "reason": "not selected by mode route / budget"
+      },
+      {
+        "capabilityId": "IMP-003",
+        "reason": "not selected by mode route / budget"
+      },
+      {
+        "capabilityId": "IMP-007",
+        "reason": "not selected by mode route / budget"
+      },
+      {
+        "capabilityId": "IMP-009",
+        "reason": "not selected by mode route / budget"
+      },
+      {
+        "capabilityId": "IMP-010",
+        "reason": "not selected by mode route / budget"
+      },
+      {
+        "capabilityId": "IMP-011",
+        "reason": "not selected by mode route / budget"
+      },
+      {
+        "capabilityId": "IMP-012",
+        "reason": "not selected by mode route / budget"
+      },
+      {
+        "capabilityId": "IMP-013",
+        "reason": "not selected by mode route / budget"
+      },
+      {
+        "capabilityId": "IMP-014",
+        "reason": "not selected by mode route / budget"
+      },
+      {
+        "capabilityId": "IMP-015",
+        "reason": "deliberate ledger reject / exclusion-only"
+      }
+    ],
+    "loadedAll59": false
+  },
+  "direction": {
+    "worlds": [
+      "statement-object",
+      "editorial-bleed",
+      "workspace-canvas",
+      "poster-type",
+      "material-board"
+    ],
+    "cards": [
+      {
+        "internalId": "W1",
+        "worldId": "statement-object",
+        "seed": {
+          "source": "local-world-library",
+          "version": "1.0.0",
+          "method": "sha256-project-entropy + fisher-yates",
+          "randomSeed": "proof-leather-2026-07-31|85461c33bb222ec1fd0f5ef0|g:taste+uupm+frontend+impeccable",
+          "numericSeed": 2099185318,
+          "licence": "MIT SiteSmith-original world templates",
+          "origin": "local",
+          "slot": 0
+        },
+        "thesis": "Northline Leather Goods\" as ecommerce — hero thesis: airy first screen where single object left, large type right — anti-default dials applied before chrome — domain knowledge consulted — seeded world before polish — subject recognised before chrome",
+        "evidence": "--- | title: \"Evidence — Northline Leather Goods\" | status: proof-fixture | ai_generated: \"(C)\" | --- | # Evidence — Northline Leather Goods | domain-knowledge: on",
+        "audience": "people who buy small-batch bags and straps and care about hide grade.",
+        "designIntent": "ecommerce for Northline Leather Goods\"",
+        "composition": "single object left, large type right",
+        "type": "condensed display grotesque over quiet sans",
+        "colour": "light paper ground with one reserve accent",
+        "imagery": "object-led, full-height product plate",
+        "rhythm": "hard vertical split then calm bands",
+        "surface": "open — subject earns space around the object",
+        "labels": "sentence case captions — retail voice stays human",
+        "figures": "proportional — price is content not motif",
+        "depth": "elevated — object lifts off ground slightly",
+        "layoutPrinciple": "single object left, large type right",
+        "typographicPrinciple": "condensed display grotesque over quiet sans",
+        "assetStrategy": "object-led, full-height product plate",
+        "motionInteraction": "hover reveals material fact on the object",
+        "signatureElement": "northline-statement-object-sig",
+        "primaryRisk": "Signature may overfit if evidence is thin.",
+        "differenceNote": "Differs from material-board, poster-type on composition/type/imagery/grammar treatments, not hue alone.",
+        "capabilityProvenance": [
+          "TASTE-CAP-002",
+          "TASTE-CAP-003",
+          "TASTE-CAP-004",
+          "TASTE-CAP-006",
+          "frontend.subject-vernacular",
+          "frontend.hero-thesis",
+          "frontend.semantic-structure",
+          "frontend.interface-writing",
+          "frontend.anti-default-calibration",
+          "uupm.classify.product-reasoning",
+          "uupm.lookup.domain-knowledge",
+          "uupm.tune.design-dials",
+          "IMP-004",
+          "IMP-005",
+          "IMP-006",
+          "IMP-008",
+          "uupm.lookup.stack-guidance",
+          "frontend.motion-intent"
+        ],
+        "density": "airy",
+        "groupsApplied": {
+          "taste": true,
+          "uupm": true,
+          "frontend": true,
+          "impeccable": true
+        }
+      },
+      {
+        "internalId": "W2",
+        "worldId": "material-board",
+        "seed": {
+          "source": "local-world-library",
+          "version": "1.0.0",
+          "method": "sha256-project-entropy + fisher-yates",
+          "randomSeed": "proof-leather-2026-07-31|85461c33bb222ec1fd0f5ef0|g:taste+uupm+frontend+impeccable",
+          "numericSeed": 2099185318,
+          "licence": "MIT SiteSmith-original world templates",
+          "origin": "local",
+          "slot": 4
+        },
+        "thesis": "Northline Leather Goods\" as ecommerce — hero thesis: tactile first screen where grid of many small material samples — anti-default dials applied before chrome — domain knowledge consulted — seeded world before polish — subject recognised before chrome",
+        "evidence": "--- | title: \"Evidence — Northline Leather Goods\" | status: proof-fixture | ai_generated: \"(C)\" | --- | # Evidence — Northline Leather Goods | domain-knowledge: on",
+        "audience": "people who buy small-batch bags and straps and care about hide grade.",
+        "designIntent": "ecommerce for Northline Leather Goods\"",
+        "composition": "grid of many small material samples",
+        "type": "small caps labels over soft serif",
+        "colour": "warm light ground from material palette",
+        "imagery": "object-led sample plates",
+        "rhythm": "tight mosaic then wide breathing band",
+        "surface": "colour-field — each cell is a material ground",
+        "labels": "sentence case — trade names, not UI chrome",
+        "figures": "proportional — dimensions only when needed",
+        "depth": "overlap — samples slightly shuffle depth",
+        "layoutPrinciple": "grid of many small material samples",
+        "typographicPrinciple": "small caps labels over soft serif",
+        "assetStrategy": "object-led sample plates",
+        "motionInteraction": "sample select builds a slip/cart",
+        "signatureElement": "northline-material-board-sig",
+        "primaryRisk": "Signature may overfit if evidence is thin.",
+        "differenceNote": "Differs from statement-object, poster-type on composition/type/imagery/grammar treatments, not hue alone.",
+        "capabilityProvenance": [
+          "TASTE-CAP-002",
+          "TASTE-CAP-003",
+          "TASTE-CAP-004",
+          "TASTE-CAP-006",
+          "frontend.subject-vernacular",
+          "frontend.hero-thesis",
+          "frontend.semantic-structure",
+          "frontend.interface-writing",
+          "frontend.anti-default-calibration",
+          "uupm.classify.product-reasoning",
+          "uupm.lookup.domain-knowledge",
+          "uupm.tune.design-dials",
+          "IMP-004",
+          "IMP-005",
+          "IMP-006",
+          "IMP-008",
+          "uupm.lookup.stack-guidance",
+          "frontend.motion-intent"
+        ],
+        "density": "tactile",
+        "groupsApplied": {
+          "taste": true,
+          "uupm": true,
+          "frontend": true,
+          "impeccable": true
+        }
+      },
+      {
+        "internalId": "W4",
+        "worldId": "poster-type",
+        "seed": {
+          "source": "local-world-library",
+          "version": "1.0.0",
+          "method": "sha256-project-entropy + fisher-yates",
+          "randomSeed": "proof-leather-2026-07-31|85461c33bb222ec1fd0f5ef0|g:taste+uupm+frontend+impeccable",
+          "numericSeed": 2099185318,
+          "licence": "MIT SiteSmith-original world templates",
+          "origin": "local",
+          "slot": 3
+        },
+        "thesis": "Northline Leather Goods\" as ecommerce — hero thesis: poster first screen where type alone at scale, artefact below the fold — anti-default dials applied before chrome — domain knowledge consulted — seeded world before polish — subject recognised before chrome",
+        "evidence": "--- | title: \"Evidence — Northline Leather Goods\" | status: proof-fixture | ai_generated: \"(C)\" | --- | # Evidence — Northline Leather Goods | domain-knowledge: on",
+        "audience": "people who buy small-batch bags and straps and care about hide grade.",
+        "designIntent": "ecommerce for Northline Leather Goods\"",
+        "composition": "type alone at scale, artefact below the fold",
+        "type": "custom-feeling display, extreme scale ratio",
+        "colour": "saturated ground from subject material, not purple gradient",
+        "imagery": "deliberately imageless on first screen",
+        "rhythm": "one continuous field then a single break",
+        "surface": "open — type is the material",
+        "labels": "symbol-led — almost no chrome labels",
+        "figures": "absent",
+        "depth": "flat",
+        "layoutPrinciple": "type alone at scale, artefact below the fold",
+        "typographicPrinciple": "custom-feeling display, extreme scale ratio",
+        "assetStrategy": "deliberately imageless on first screen",
+        "motionInteraction": "single decisive scroll cue",
+        "signatureElement": "northline-poster-type-sig",
+        "primaryRisk": "Commerce without product imagery needs exceptional object truth elsewhere.",
+        "differenceNote": "Differs from statement-object, material-board on composition/type/imagery/grammar treatments, not hue alone.",
+        "capabilityProvenance": [
+          "TASTE-CAP-002",
+          "TASTE-CAP-003",
+          "TASTE-CAP-004",
+          "TASTE-CAP-006",
+          "frontend.subject-vernacular",
+          "frontend.hero-thesis",
+          "frontend.semantic-structure",
+          "frontend.interface-writing",
+          "frontend.anti-default-calibration",
+          "uupm.classify.product-reasoning",
+          "uupm.lookup.domain-knowledge",
+          "uupm.tune.design-dials",
+          "IMP-004",
+          "IMP-005",
+          "IMP-006",
+          "IMP-008",
+          "uupm.lookup.stack-guidance",
+          "frontend.motion-intent"
+        ],
+        "density": "poster",
+        "groupsApplied": {
+          "taste": true,
+          "uupm": true,
+          "frontend": true,
+          "impeccable": true
+        }
+      }
+    ],
+    "pairwise": [
+      {
+        "a": "W1",
+        "b": "W2",
+        "macroDiff": 5,
+        "grammarDiff": 2,
+        "compositionDiff": true,
+        "pass": true
+      },
+      {
+        "a": "W1",
+        "b": "W4",
+        "macroDiff": 5,
+        "grammarDiff": 3,
+        "compositionDiff": true,
+        "pass": true
+      },
+      {
+        "a": "W2",
+        "b": "W4",
+        "macroDiff": 5,
+        "grammarDiff": 4,
+        "compositionDiff": true,
+        "pass": true
+      }
+    ],
+    "entropy": "proof-leather-2026-07-31|85461c33bb222ec1fd0f5ef0|g:taste+uupm+frontend+impeccable",
+    "numericSeed": 2099185318
+  },
+  "blinding": {
+    "independence": "context-isolated",
+    "key": {
+      "L1": "W2",
+      "L2": "W4",
+      "L3": "W1"
+    },
+    "blinded": [
+      {
+        "blindId": "L1",
+        "worldId": "material-board",
+        "thesis": "Northline Leather Goods\" as ecommerce — hero thesis: tactile first screen where grid of many small material samples — anti-default dials applied before chrome — domain knowledge consulted — seeded world before polish — subject recognised before chrome",
+        "evidence": "--- | title: \"Evidence — Northline Leather Goods\" | status: proof-fixture | ai_generated: \"(C)\" | --- | # Evidence — Northline Leather Goods | domain-knowledge: on",
+        "audience": "people who buy small-batch bags and straps and care about hide grade.",
+        "designIntent": "ecommerce for Northline Leather Goods\"",
+        "composition": "grid of many small material samples",
+        "type": "small caps labels over soft serif",
+        "colour": "warm light ground from material palette",
+        "imagery": "object-led sample plates",
+        "rhythm": "tight mosaic then wide breathing band",
+        "surface": "colour-field — each cell is a material ground",
+        "labels": "sentence case — trade names, not UI chrome",
+        "figures": "proportional — dimensions only when needed",
+        "depth": "overlap — samples slightly shuffle depth",
+        "layoutPrinciple": "grid of many small material samples",
+        "typographicPrinciple": "small caps labels over soft serif",
+        "assetStrategy": "object-led sample plates",
+        "motionInteraction": "sample select builds a slip/cart",
+        "signatureElement": "northline-material-board-sig",
+        "primaryRisk": "Signature may overfit if evidence is thin.",
+        "differenceNote": "Differs from statement-object, poster-type on composition/type/imagery/grammar treatments, not hue alone.",
+        "density": "tactile",
+        "groupsApplied": {
+          "taste": true,
+          "uupm": true,
+          "frontend": true,
+          "impeccable": true
+        }
+      },
+      {
+        "blindId": "L2",
+        "worldId": "poster-type",
+        "thesis": "Northline Leather Goods\" as ecommerce — hero thesis: poster first screen where type alone at scale, artefact below the fold — anti-default dials applied before chrome — domain knowledge consulted — seeded world before polish — subject recognised before chrome",
+        "evidence": "--- | title: \"Evidence — Northline Leather Goods\" | status: proof-fixture | ai_generated: \"(C)\" | --- | # Evidence — Northline Leather Goods | domain-knowledge: on",
+        "audience": "people who buy small-batch bags and straps and care about hide grade.",
+        "designIntent": "ecommerce for Northline Leather Goods\"",
+        "composition": "type alone at scale, artefact below the fold",
+        "type": "custom-feeling display, extreme scale ratio",
+        "colour": "saturated ground from subject material, not purple gradient",
+        "imagery": "deliberately imageless on first screen",
+        "rhythm": "one continuous field then a single break",
+        "surface": "open — type is the material",
+        "labels": "symbol-led — almost no chrome labels",
+        "figures": "absent",
+        "depth": "flat",
+        "layoutPrinciple": "type alone at scale, artefact below the fold",
+        "typographicPrinciple": "custom-feeling display, extreme scale ratio",
+        "assetStrategy": "deliberately imageless on first screen",
+        "motionInteraction": "single decisive scroll cue",
+        "signatureElement": "northline-poster-type-sig",
+        "primaryRisk": "Commerce without product imagery needs exceptional object truth elsewhere.",
+        "differenceNote": "Differs from statement-object, material-board on composition/type/imagery/grammar treatments, not hue alone.",
+        "density": "poster",
+        "groupsApplied": {
+          "taste": true,
+          "uupm": true,
+          "frontend": true,
+          "impeccable": true
+        }
+      },
+      {
+        "blindId": "L3",
+        "worldId": "statement-object",
+        "thesis": "Northline Leather Goods\" as ecommerce — hero thesis: airy first screen where single object left, large type right — anti-default dials applied before chrome — domain knowledge consulted — seeded world before polish — subject recognised before chrome",
+        "evidence": "--- | title: \"Evidence — Northline Leather Goods\" | status: proof-fixture | ai_generated: \"(C)\" | --- | # Evidence — Northline Leather Goods | domain-knowledge: on",
+        "audience": "people who buy small-batch bags and straps and care about hide grade.",
+        "designIntent": "ecommerce for Northline Leather Goods\"",
+        "composition": "single object left, large type right",
+        "type": "condensed display grotesque over quiet sans",
+        "colour": "light paper ground with one reserve accent",
+        "imagery": "object-led, full-height product plate",
+        "rhythm": "hard vertical split then calm bands",
+        "surface": "open — subject earns space around the object",
+        "labels": "sentence case captions — retail voice stays human",
+        "figures": "proportional — price is content not motif",
+        "depth": "elevated — object lifts off ground slightly",
+        "layoutPrinciple": "single object left, large type right",
+        "typographicPrinciple": "condensed display grotesque over quiet sans",
+        "assetStrategy": "object-led, full-height product plate",
+        "motionInteraction": "hover reveals material fact on the object",
+        "signatureElement": "northline-statement-object-sig",
+        "primaryRisk": "Signature may overfit if evidence is thin.",
+        "differenceNote": "Differs from material-board, poster-type on composition/type/imagery/grammar treatments, not hue alone.",
+        "density": "airy",
+        "groupsApplied": {
+          "taste": true,
+          "uupm": true,
+          "frontend": true,
+          "impeccable": true
+        }
+      }
+    ]
+  },
+  "critic": {
+    "independence": "context-isolated",
+    "notModelIndependent": true,
+    "scores": [
+      {
+        "blindId": "L1",
+        "briefFit": 6,
+        "originality": 3,
+        "subject": 3,
+        "composition": 3,
+        "implementability": 3,
+        "total": 18,
+        "flags": []
+      },
+      {
+        "blindId": "L2",
+        "briefFit": 6,
+        "originality": 3,
+        "subject": 3,
+        "composition": 3,
+        "implementability": 2,
+        "total": 17,
+        "flags": []
+      },
+      {
+        "blindId": "L3",
+        "briefFit": 6,
+        "originality": 3,
+        "subject": 3,
+        "composition": 3,
+        "implementability": 3,
+        "total": 18,
+        "flags": []
+      }
+    ],
+    "rankedIds": [
+      "L1",
+      "L3",
+      "L2"
+    ],
+    "tie": true,
+    "rejectAll": false,
+    "recommendation": null,
+    "notes": "tie: user or external adjudicator required"
+  },
+  "choice": {
+    "status": "selected",
+    "selectedBlindId": "L1",
+    "selectedInternalId": "W2",
+    "by": "user"
+  },
+  "designSpec": {
+    "schemaVersion": 1,
+    "kind": "sitesmith.designspec.v3-slice",
+    "projectName": "01-leather-goods",
+    "mode": "ecommerce",
+    "stack": "html",
+    "designThesis": "Northline Leather Goods\" as ecommerce — hero thesis: tactile first screen where grid of many small material samples — anti-default dials applied before chrome — domain knowledge consulted — seeded world before polish — subject recognised before chrome",
+    "contentHierarchy": [
+      "subject recognition",
+      "configure a bag and request a make-slot.",
+      "supporting evidence",
+      "secondary navigation"
+    ],
+    "pageComposition": "grid of many small material samples",
+    "gridAndSpacing": "balanced 8/12 rhythm",
+    "typographySystem": {
+      "principle": "small caps labels over soft serif",
+      "roles": [
+        "display",
+        "body",
+        "label"
+      ]
+    },
+    "colourRoles": {
+      "ground": "warm light ground from material palette",
+      "accent": "single reserved accent from brand evidence only if present",
+      "text": "primary ink on ground with WCAG AA body contrast"
+    },
+    "surfaceMaterialModel": "colour-field — each cell is a material ground",
+    "imageryStrategy": "object-led sample plates",
+    "componentPrinciples": [
+      "states must be visible without colour alone",
+      "primary action uses reserved accent only"
+    ],
+    "interactionStates": [
+      "default",
+      "hover/focus",
+      "active",
+      "disabled",
+      "error"
+    ],
+    "motionRules": {
+      "principle": "sample select builds a slip/cart",
+      "reducedMotion": "disable non-essential motion"
+    },
+    "responsiveBehavior": {
+      "firstFold": "preserve composition intent; stack only after tablet",
+      "tables": "horizontal scroll must expose affordance if used"
+    },
+    "accessibilityConstraints": [
+      "visible focus",
+      "label every control",
+      "AA contrast for body and UI text"
+    ],
+    "signatureElement": "northline-material-board-sig",
+    "forbiddenFallbackDefaults": [
+      "purple SaaS gradient hero",
+      "three equal feature cards as default identity",
+      "round-8 recipe: mono uppercase labels + hairlines + tabular motif + flat depth",
+      "invented testimonials, prices, or certifications"
+    ],
+    "fidelityAssertions": [
+      {
+        "field": "composition",
+        "expected": "grid of many small material samples"
+      },
+      {
+        "field": "type",
+        "expected": "small caps labels over soft serif"
+      },
+      {
+        "field": "colour",
+        "expected": "warm light ground from material palette"
+      },
+      {
+        "field": "imagery",
+        "expected": "object-led sample plates"
+      },
+      {
+        "field": "rhythm",
+        "expected": "tight mosaic then wide breathing band"
+      },
+      {
+        "field": "surface",
+        "expected": "colour-field — each cell is a material ground"
+      },
+      {
+        "field": "labels",
+        "expected": "sentence case — trade names, not UI chrome"
+      },
+      {
+        "field": "figures",
+        "expected": "proportional — dimensions only when needed"
+      },
+      {
+        "field": "depth",
+        "expected": "overlap — samples slightly shuffle depth"
+      },
+      {
+        "field": "signature-selector",
+        "expected": "[data-signature=\"northline-material-board-sig\"]"
+      }
+    ],
+    "acceptanceCriteria": [
+      "built page matches axis record treatments",
+      "primary action findable in first fold",
+      "no fabricated brand/product facts",
+      "passes existing v2.3 verify + direction fidelity"
+    ],
+    "capabilityProvenance": [
+      {
+        "capabilityId": "TASTE-CAP-002",
+        "upstreamOrigin": "https://github.com/Leonxlnx/taste-skill.git",
+        "phase": "creative-direction"
+      },
+      {
+        "capabilityId": "TASTE-CAP-003",
+        "upstreamOrigin": "https://github.com/Leonxlnx/taste-skill.git",
+        "phase": "creative-direction"
+      },
+      {
+        "capabilityId": "TASTE-CAP-004",
+        "upstreamOrigin": "https://github.com/Leonxlnx/taste-skill.git",
+        "phase": "creative-direction"
+      },
+      {
+        "capabilityId": "TASTE-CAP-006",
+        "upstreamOrigin": "https://github.com/Leonxlnx/taste-skill.git",
+        "phase": "knowledge"
+      },
+      {
+        "capabilityId": "frontend.subject-vernacular",
+        "upstreamOrigin": "https://github.com/anthropics/skills",
+        "phase": "creative-direction"
+      },
+      {
+        "capabilityId": "frontend.hero-thesis",
+        "upstreamOrigin": "https://github.com/anthropics/skills",
+        "phase": "creative-direction"
+      },
+      {
+        "capabilityId": "frontend.semantic-structure",
+        "upstreamOrigin": "https://github.com/anthropics/skills",
+        "phase": "creative-direction"
+      },
+      {
+        "capabilityId": "frontend.interface-writing",
+        "upstreamOrigin": "https://github.com/anthropics/skills",
+        "phase": "creative-direction"
+      },
+      {
+        "capabilityId": "frontend.anti-default-calibration",
+        "upstreamOrigin": "https://github.com/anthropics/skills",
+        "phase": "creative-direction"
+      },
+      {
+        "capabilityId": "uupm.classify.product-reasoning",
+        "upstreamOrigin": "nextlevelbuilder/ui-ux-pro-max-skill",
+        "phase": "knowledge"
+      },
+      {
+        "capabilityId": "uupm.lookup.domain-knowledge",
+        "upstreamOrigin": "nextlevelbuilder/ui-ux-pro-max-skill",
+        "phase": "knowledge"
+      },
+      {
+        "capabilityId": "uupm.tune.design-dials",
+        "upstreamOrigin": "nextlevelbuilder/ui-ux-pro-max-skill",
+        "phase": "creative-direction"
+      },
+      {
+        "capabilityId": "IMP-004",
+        "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
+        "phase": "seed"
+      },
+      {
+        "capabilityId": "IMP-005",
+        "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
+        "phase": "seed"
+      },
+      {
+        "capabilityId": "IMP-006",
+        "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
+        "phase": "seed"
+      },
+      {
+        "capabilityId": "IMP-008",
+        "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
+        "phase": "critique"
+      },
+      {
+        "capabilityId": "uupm.lookup.stack-guidance",
+        "upstreamOrigin": "nextlevelbuilder/ui-ux-pro-max-skill",
+        "phase": "knowledge"
+      },
+      {
+        "capabilityId": "frontend.motion-intent",
+        "upstreamOrigin": "https://github.com/anthropics/skills",
+        "phase": "creative-direction"
+      }
+    ],
+    "seedProvenance": {
+      "source": "local-world-library",
+      "version": "1.0.0",
+      "method": "sha256-project-entropy + fisher-yates",
+      "randomSeed": "proof-leather-2026-07-31|85461c33bb222ec1fd0f5ef0|g:taste+uupm+frontend+impeccable",
+      "numericSeed": 2099185318,
+      "licence": "MIT SiteSmith-original world templates",
+      "origin": "local",
+      "slot": 4
+    },
+    "policyVersion": "direction-engine-v3-slice-1.0.0",
+    "choice": {
+      "status": "selected",
+      "selectedBlindId": "L1",
+      "selectedInternalId": "W2",
+      "by": "user"
+    }
+  },
+  "handoff": {
+    "mode": "ecommerce",
+    "stack": "html",
+    "evidenceArtifacts": {
+      "brief": true,
+      "evidence": true,
+      "brand": true,
+      "assetPlan": true,
+      "assetManifest": true
+    },
+    "designSpec": {
+      "schemaVersion": 1,
+      "kind": "sitesmith.designspec.v3-slice",
+      "projectName": "01-leather-goods",
+      "mode": "ecommerce",
+      "stack": "html",
+      "designThesis": "Northline Leather Goods\" as ecommerce — hero thesis: tactile first screen where grid of many small material samples — anti-default dials applied before chrome — domain knowledge consulted — seeded world before polish — subject recognised before chrome",
+      "contentHierarchy": [
+        "subject recognition",
+        "configure a bag and request a make-slot.",
+        "supporting evidence",
+        "secondary navigation"
+      ],
+      "pageComposition": "grid of many small material samples",
+      "gridAndSpacing": "balanced 8/12 rhythm",
+      "typographySystem": {
+        "principle": "small caps labels over soft serif",
+        "roles": [
+          "display",
+          "body",
+          "label"
+        ]
+      },
+      "colourRoles": {
+        "ground": "warm light ground from material palette",
+        "accent": "single reserved accent from brand evidence only if present",
+        "text": "primary ink on ground with WCAG AA body contrast"
+      },
+      "surfaceMaterialModel": "colour-field — each cell is a material ground",
+      "imageryStrategy": "object-led sample plates",
+      "componentPrinciples": [
+        "states must be visible without colour alone",
+        "primary action uses reserved accent only"
+      ],
+      "interactionStates": [
+        "default",
+        "hover/focus",
+        "active",
+        "disabled",
+        "error"
+      ],
+      "motionRules": {
+        "principle": "sample select builds a slip/cart",
+        "reducedMotion": "disable non-essential motion"
+      },
+      "responsiveBehavior": {
+        "firstFold": "preserve composition intent; stack only after tablet",
+        "tables": "horizontal scroll must expose affordance if used"
+      },
+      "accessibilityConstraints": [
+        "visible focus",
+        "label every control",
+        "AA contrast for body and UI text"
+      ],
+      "signatureElement": "northline-material-board-sig",
+      "forbiddenFallbackDefaults": [
+        "purple SaaS gradient hero",
+        "three equal feature cards as default identity",
+        "round-8 recipe: mono uppercase labels + hairlines + tabular motif + flat depth",
+        "invented testimonials, prices, or certifications"
+      ],
+      "fidelityAssertions": [
+        {
+          "field": "composition",
+          "expected": "grid of many small material samples"
+        },
+        {
+          "field": "type",
+          "expected": "small caps labels over soft serif"
+        },
+        {
+          "field": "colour",
+          "expected": "warm light ground from material palette"
+        },
+        {
+          "field": "imagery",
+          "expected": "object-led sample plates"
+        },
+        {
+          "field": "rhythm",
+          "expected": "tight mosaic then wide breathing band"
+        },
+        {
+          "field": "surface",
+          "expected": "colour-field — each cell is a material ground"
+        },
+        {
+          "field": "labels",
+          "expected": "sentence case — trade names, not UI chrome"
+        },
+        {
+          "field": "figures",
+          "expected": "proportional — dimensions only when needed"
+        },
+        {
+          "field": "depth",
+          "expected": "overlap — samples slightly shuffle depth"
+        },
+        {
+          "field": "signature-selector",
+          "expected": "[data-signature=\"northline-material-board-sig\"]"
+        }
+      ],
+      "acceptanceCriteria": [
+        "built page matches axis record treatments",
+        "primary action findable in first fold",
+        "no fabricated brand/product facts",
+        "passes existing v2.3 verify + direction fidelity"
+      ],
+      "capabilityProvenance": [
+        {
+          "capabilityId": "TASTE-CAP-002",
+          "upstreamOrigin": "https://github.com/Leonxlnx/taste-skill.git",
+          "phase": "creative-direction"
+        },
+        {
+          "capabilityId": "TASTE-CAP-003",
+          "upstreamOrigin": "https://github.com/Leonxlnx/taste-skill.git",
+          "phase": "creative-direction"
+        },
+        {
+          "capabilityId": "TASTE-CAP-004",
+          "upstreamOrigin": "https://github.com/Leonxlnx/taste-skill.git",
+          "phase": "creative-direction"
+        },
+        {
+          "capabilityId": "TASTE-CAP-006",
+          "upstreamOrigin": "https://github.com/Leonxlnx/taste-skill.git",
+          "phase": "knowledge"
+        },
+        {
+          "capabilityId": "frontend.subject-vernacular",
+          "upstreamOrigin": "https://github.com/anthropics/skills",
+          "phase": "creative-direction"
+        },
+        {
+          "capabilityId": "frontend.hero-thesis",
+          "upstreamOrigin": "https://github.com/anthropics/skills",
+          "phase": "creative-direction"
+        },
+        {
+          "capabilityId": "frontend.semantic-structure",
+          "upstreamOrigin": "https://github.com/anthropics/skills",
+          "phase": "creative-direction"
+        },
+        {
+          "capabilityId": "frontend.interface-writing",
+          "upstreamOrigin": "https://github.com/anthropics/skills",
+          "phase": "creative-direction"
+        },
+        {
+          "capabilityId": "frontend.anti-default-calibration",
+          "upstreamOrigin": "https://github.com/anthropics/skills",
+          "phase": "creative-direction"
+        },
+        {
+          "capabilityId": "uupm.classify.product-reasoning",
+          "upstreamOrigin": "nextlevelbuilder/ui-ux-pro-max-skill",
+          "phase": "knowledge"
+        },
+        {
+          "capabilityId": "uupm.lookup.domain-knowledge",
+          "upstreamOrigin": "nextlevelbuilder/ui-ux-pro-max-skill",
+          "phase": "knowledge"
+        },
+        {
+          "capabilityId": "uupm.tune.design-dials",
+          "upstreamOrigin": "nextlevelbuilder/ui-ux-pro-max-skill",
+          "phase": "creative-direction"
+        },
+        {
+          "capabilityId": "IMP-004",
+          "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
+          "phase": "seed"
+        },
+        {
+          "capabilityId": "IMP-005",
+          "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
+          "phase": "seed"
+        },
+        {
+          "capabilityId": "IMP-006",
+          "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
+          "phase": "seed"
+        },
+        {
+          "capabilityId": "IMP-008",
+          "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
+          "phase": "critique"
+        },
+        {
+          "capabilityId": "uupm.lookup.stack-guidance",
+          "upstreamOrigin": "nextlevelbuilder/ui-ux-pro-max-skill",
+          "phase": "knowledge"
+        },
+        {
+          "capabilityId": "frontend.motion-intent",
+          "upstreamOrigin": "https://github.com/anthropics/skills",
+          "phase": "creative-direction"
+        }
+      ],
+      "seedProvenance": {
+        "source": "local-world-library",
+        "version": "1.0.0",
+        "method": "sha256-project-entropy + fisher-yates",
+        "randomSeed": "proof-leather-2026-07-31|85461c33bb222ec1fd0f5ef0|g:taste+uupm+frontend+impeccable",
+        "numericSeed": 2099185318,
+        "licence": "MIT SiteSmith-original world templates",
+        "origin": "local",
+        "slot": 4
+      },
+      "policyVersion": "direction-engine-v3-slice-1.0.0",
+      "choice": {
+        "status": "selected",
+        "selectedBlindId": "L1",
+        "selectedInternalId": "W2",
+        "by": "user"
+      }
+    },
+    "directionMd": "---\ntitle: \"DIRECTION — 01-leather-goods\"\nstatus: direction-engine-slice\nai_generated: \"(C)\"\n---\n\n# DIRECTION — 01-leather-goods\n\nWinner: material-board (Northline Leather Goods\" as ecommerce — hero thesis: tactile first screen where grid of many small material samples — anti-default dials applied before chrome — domain knowledge consulted — seeded world before polish — subject recognised before chrome)\n\n## Signature\nnorthline-material-board-sig\n\n## Axis record\n\n- direction-version: 2.3\n- composition: grid of many small material samples\n- type: small caps labels over soft serif\n- colour: warm light ground from material palette\n- imagery: object-led sample plates\n- rhythm: tight mosaic then wide breathing band\n\n- surface: colour-field — each cell is a material ground\n- labels: sentence case — trade names, not UI chrome\n- figures: proportional — dimensions only when needed\n- depth: overlap — samples slightly shuffle depth\n\n- visual-density: 5\n- motion-intensity: 3\n- aesthetic-boldness: 6\n\n- signature-selector: [data-signature=\"northline-material-board-sig\"]\n- signature-min-share: 12\n\n## Rejections\n- statement-object: recorded alternative; not passed to build context\n- poster-type: recorded alternative; not passed to build context\n\n## Notes\nSelected by Direction Engine v3 slice. Build context must not receive losing cards or generator scores.",
+    "axisRecord": "## Axis record\n\n- direction-version: 2.3\n- composition: grid of many small material samples\n- type: small caps labels over soft serif\n- colour: warm light ground from material palette\n- imagery: object-led sample plates\n- rhythm: tight mosaic then wide breathing band\n\n- surface: colour-field — each cell is a material ground\n- labels: sentence case — trade names, not UI chrome\n- figures: proportional — dimensions only when needed\n- depth: overlap — samples slightly shuffle depth\n\n- visual-density: 5\n- motion-intensity: 3\n- aesthetic-boldness: 6\n\n- signature-selector: [data-signature=\"northline-material-board-sig\"]\n- signature-min-share: 12",
+    "withheldFromBuild": {
+      "rejectedDirectionCards": true,
+      "generatorScores": true,
+      "generatorFavorite": true,
+      "blindKey": true
+    },
+    "next": {
+      "shell": "sitesmith-v2.3",
+      "commands": [
+        "build",
+        "audit"
+      ],
+      "adapters": "html"
+    }
+  }
+}
