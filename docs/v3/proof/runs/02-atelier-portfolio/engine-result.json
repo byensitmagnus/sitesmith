@@ -4,8 +4,8 @@
   "policyVersion": "direction-engine-v3-slice-1.0.0",
   "inputWarnings": [],
   "proofMeta": {
-    "engineCommit": "5ffc2cb2bcb99c7bc31c495639aab01cca3c0643",
-    "inputHash": "2dff5674767127c2a4ccf106fd81f3c88095d264a150a994d367c69577568fe2",
+    "engineCommit": "ade84174a64cc614cca0bf437e6a658343f82837",
+    "inputHash": "1bd5d3d109f1591e8e6e4ddd22927a3b06daf0612734aa6114c48414aa36642c",
     "policyVersion": "direction-engine-v3-slice-1.0.0",
     "randomSeed": "proof-atelier-2026-07-31",
     "numericSeed": 2914086421

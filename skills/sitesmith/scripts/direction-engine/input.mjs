@@ -18,20 +18,31 @@ export const V23_MODE_ALIASES = {
 };
 
 /**
+ * Canonical text for hashing and signal extraction.
+ * CRLF/CR → LF so Windows checkouts and Linux CI produce the same inputHash
+ * and the same proof results. Idempotent.
+ * @param {unknown} text
+ * @returns {string}
+ */
+export function canonicalNewlines(text) {
+  return String(text ?? '').replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+}
+
+/**
  * @param {object} raw
  * @returns {{ ok: true, input: object } | { ok: false, status: 'stop'|'draft', problems: string[] }}
  */
 export function validateDirectionInput(raw) {
   const problems = [];
   const input = {
-    brief: String(raw?.brief ?? '').trim(),
-    evidence: String(raw?.evidence ?? '').trim(),
-    brand: String(raw?.brand ?? '').trim(),
-    assetPlan: String(raw?.assetPlan ?? '').trim(),
-    assetManifest: String(raw?.assetManifest ?? '').trim(),
+    brief: canonicalNewlines(raw?.brief ?? '').trim(),
+    evidence: canonicalNewlines(raw?.evidence ?? '').trim(),
+    brand: canonicalNewlines(raw?.brand ?? '').trim(),
+    assetPlan: canonicalNewlines(raw?.assetPlan ?? '').trim(),
+    assetManifest: canonicalNewlines(raw?.assetManifest ?? '').trim(),
     mode: String(raw?.mode ?? '').trim().toLowerCase(),
     stack: String(raw?.stack ?? '').trim().toLowerCase(),
-    userConstraints: String(raw?.userConstraints ?? '').trim(),
+    userConstraints: canonicalNewlines(raw?.userConstraints ?? '').trim(),
     projectName: String(raw?.projectName ?? 'untitled').trim(),
     randomSeed: raw?.randomSeed == null ? null : String(raw.randomSeed),
   };

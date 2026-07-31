@@ -7,7 +7,7 @@ import { createHash } from 'node:crypto';
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
-import { validateDirectionInput } from './input.mjs';
+import { validateDirectionInput, canonicalNewlines } from './input.mjs';
 import { routeCapabilities, loadLedger } from './router.mjs';
 import { generateDirectionCards, blindCandidates, assertNoBlindLeakage } from './worlds-and-cards.mjs';
 import { critiqueBlindedCards, resolveChoice } from './critic.mjs';
@@ -124,16 +124,17 @@ export function runDirectionEngine(options = {}) {
     }
   }
 
+  // Hash only after newline canonicalization (also applied in validateDirectionInput).
   const inputHash = createHash('sha256')
     .update(JSON.stringify({
-      brief: input.brief,
-      evidence: input.evidence,
-      brand: input.brand,
-      assetPlan: input.assetPlan,
-      assetManifest: input.assetManifest,
+      brief: canonicalNewlines(input.brief),
+      evidence: canonicalNewlines(input.evidence),
+      brand: canonicalNewlines(input.brand),
+      assetPlan: canonicalNewlines(input.assetPlan),
+      assetManifest: canonicalNewlines(input.assetManifest),
       mode: input.mode,
       stack: input.stack,
-      userConstraints: input.userConstraints,
+      userConstraints: canonicalNewlines(input.userConstraints),
       randomSeed: input.randomSeed,
     }))
     .digest('hex');

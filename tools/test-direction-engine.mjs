@@ -3,7 +3,7 @@
 import { readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { validateDirectionInput } from '../skills/sitesmith/scripts/direction-engine/input.mjs';
+import { validateDirectionInput, canonicalNewlines } from '../skills/sitesmith/scripts/direction-engine/input.mjs';
 import { routeCapabilities, loadLedger } from '../skills/sitesmith/scripts/direction-engine/router.mjs';
 import {
   generateDirectionCards, blindCandidates, assertNoBlindLeakage, worldEligible, WORLD_LIBRARY,
@@ -269,6 +269,56 @@ const ecommerceB = {
   else if ((gen.cards ?? []).some((c) => /material-board|editorial-bleed/i.test(c.worldId))) {
     fail('product-ui-fit', gen.cards.map((c) => c.worldId).join(','));
   } else ok('product-ui rejects material/editorial seeds without plates');
+}
+
+// Cross-platform inputHash + proof results: LF vs CRLF must match
+{
+  const briefDir = join(root, 'docs/v3/proof/briefs/01-leather-goods');
+  const meta = JSON.parse(readFileSync(join(briefDir, 'engine-input.json'), 'utf8'));
+  const readMd = (n) => readFileSync(join(briefDir, n), 'utf8');
+  const base = {
+    brief: readMd('BRIEF.md'),
+    evidence: readMd('EVIDENCE.md'),
+    brand: readMd('BRAND.md'),
+    assetPlan: readMd('ASSET-PLAN.md'),
+    assetManifest: readMd('ASSET-MANIFEST.md'),
+    mode: meta.mode,
+    stack: meta.stack,
+    projectName: meta.projectName,
+    randomSeed: meta.randomSeed,
+  };
+  const toCrlf = (s) => String(s).replace(/\r\n/g, '\n').replace(/\n/g, '\r\n');
+  const toLf = (s) => canonicalNewlines(s);
+  const lfInput = Object.fromEntries(
+    Object.entries(base).map(([k, v]) => [k, typeof v === 'string' && !['mode', 'stack', 'projectName', 'randomSeed'].includes(k) ? toLf(v) : v]),
+  );
+  const crlfInput = Object.fromEntries(
+    Object.entries(base).map(([k, v]) => [k, typeof v === 'string' && !['mode', 'stack', 'projectName', 'randomSeed'].includes(k) ? toCrlf(v) : v]),
+  );
+  // Sanity: variants actually differ before engine
+  if (lfInput.brief === crlfInput.brief || !crlfInput.brief.includes('\r\n')) {
+    fail('crlf-variant', 'test setup did not produce distinct CRLF brief');
+  } else {
+    const rLf = runDirectionEngine({ input: lfInput, userChoiceBlindId: 'L1', randomSeed: meta.randomSeed });
+    const rCrlf = runDirectionEngine({ input: crlfInput, userChoiceBlindId: 'L1', randomSeed: meta.randomSeed });
+    if (!rLf.ok || !rCrlf.ok) {
+      fail('line-ending-run', `lf=${rLf.ok} crlf=${rCrlf.ok}`);
+    } else if (rLf.proofMeta?.inputHash !== rCrlf.proofMeta?.inputHash) {
+      fail('line-ending-inputHash', `${rLf.proofMeta.inputHash} != ${rCrlf.proofMeta.inputHash}`);
+    } else if (rLf.route?.decisionHash !== rCrlf.route?.decisionHash) {
+      fail('line-ending-decisionHash', 'route decisionHash diverged');
+    } else {
+      const idsLf = (rLf.direction?.cards ?? []).map((c) => c.worldId).join(',');
+      const idsCrlf = (rCrlf.direction?.cards ?? []).map((c) => c.worldId).join(',');
+      if (idsLf !== idsCrlf) fail('line-ending-cards', `${idsLf} != ${idsCrlf}`);
+      else if (rLf.stage !== rCrlf.stage) fail('line-ending-stage', `${rLf.stage} != ${rCrlf.stage}`);
+      else ok('identical LF and CRLF produce same inputHash and proof results');
+    }
+  }
+  // canonicalNewlines is idempotent and maps CR alone
+  if (canonicalNewlines('a\r\nb\rc') !== 'a\nb\nc') fail('canonical-newlines', 'CRLF/CR map failed');
+  else if (canonicalNewlines(canonicalNewlines('a\r\nb')) !== 'a\nb') fail('canonical-newlines', 'not idempotent');
+  else ok('canonicalNewlines CRLF/CR → LF is idempotent');
 }
 
 if (failed) {

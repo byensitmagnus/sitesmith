@@ -1,6 +1,6 @@
 {
   "generatedAt": "2026-07-31",
-  "engineCommit": "5ffc2cb2bcb99c7bc31c495639aab01cca3c0643",
+  "engineCommit": "ade84174a64cc614cca0bf437e6a658343f82837",
   "results": [
     {
       "brief": "01-leather-goods",
@@ -37,7 +37,7 @@
         "hitCount": 5,
         "claimAllowed": true
       },
-      "inputHash": "a14295a1745802faf58007e21f177787678ca4778d478f2ac2a59f25744250c9",
+      "inputHash": "748843e0c88640b0344a667a8a923a0693d0eb7ea3f28df927bb30649914e499",
       "policyVersion": "direction-engine-v3-slice-1.0.0",
       "randomSeed": "proof-leather-2026-07-31"
     },
@@ -76,7 +76,7 @@
         "hitCount": 2,
         "claimAllowed": true
       },
-      "inputHash": "2dff5674767127c2a4ccf106fd81f3c88095d264a150a994d367c69577568fe2",
+      "inputHash": "1bd5d3d109f1591e8e6e4ddd22927a3b06daf0612734aa6114c48414aa36642c",
       "policyVersion": "direction-engine-v3-slice-1.0.0",
       "randomSeed": "proof-atelier-2026-07-31"
     },
@@ -115,7 +115,7 @@
         "hitCount": 5,
         "claimAllowed": true
       },
-      "inputHash": "07a79448195e215bd64d1d9b6cc6aee9db0bff36bb60cce0ee7216de10af876e",
+      "inputHash": "725b0007e009d827c9aa4959fd26d27bf806945a8c3e0762b6b8144ac94710df",
       "policyVersion": "direction-engine-v3-slice-1.0.0",
       "randomSeed": "proof-passage-2026-07-31"
     }
