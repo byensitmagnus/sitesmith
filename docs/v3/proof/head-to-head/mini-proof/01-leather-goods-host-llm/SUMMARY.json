@@ -1,0 +1,13 @@
+{
+  "method": "host-session-as-llm-provider",
+  "note": "Same creative prompt as creative-llm.mjs; filled by interactive host agent, not separate API key.",
+  "ok": true,
+  "llmSucceeded": true,
+  "creativePassFallback": false,
+  "guard": {
+    "ok": true,
+    "problems": []
+  },
+  "thesis": "Northline is a make-slot desk, not a boutique shelf: open on the Field Tote product plate with trade facts stamped on the plate edge; the argument is graded hide + a three-week make-slot request — never lifestyle hero, purple SaaS gradient, or star ratings.",
+  "signature": "Hide Grade Strip — horizontal hide-grade chips (material swatch wells + ink-brown labels) under the Field Tote plate; the single memorable control that ties plate → grade → make-slot."
+}

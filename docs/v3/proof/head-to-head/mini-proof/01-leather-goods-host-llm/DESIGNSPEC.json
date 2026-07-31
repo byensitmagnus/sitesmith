@@ -1,0 +1,327 @@
+{
+  "schemaVersion": 1,
+  "kind": "sitesmith.designspec.v3-slice",
+  "projectName": "01-leather-goods",
+  "mode": "ecommerce",
+  "stack": "html",
+  "designThesis": "Northline is a make-slot desk, not a boutique shelf: open on the Field Tote product plate with trade facts stamped on the plate edge; the argument is graded hide + a three-week make-slot request — never lifestyle hero, purple SaaS gradient, or star ratings.",
+  "contentHierarchy": [
+    "Field Tote product plate",
+    "material stamp facts (bridle / veg tan / solid brass)",
+    "hide grade choice",
+    "price band DKK 890–2.400 + 3-week lead",
+    "primary CTA Request make-slot",
+    "Belt No. 2 plate + Shoulder Strap text until plate exists — no testimonials, no fake star rows."
+  ],
+  "pageComposition": "single object left, large type right",
+  "gridAndSpacing": "open 8/16 rhythm, large voids",
+  "typographySystem": {
+    "principle": "Display: Barlow Condensed 600–700 for product names (workshop signage, tight tracking). Body: IBM Plex Sans 400–500 plain trade English 45–75ch. Utility: IBM Plex Mono for hide grade codes, stitch count when known, lead time, prices. No luxury serif display.",
+    "roles": [
+      "display",
+      "body",
+      "label",
+      "utility-mono"
+    ]
+  },
+  "colourRoles": {
+    "ground": "Warm cream ground; ink-brown type and rules; hide-mid secondary; brass only on CTA and hardware callouts; edge-bone plate rails; deep soot borders. Materials: bridle leather, solid brass, vegetable tan. No purple multi-stop SaaS gradients.",
+    "accent": "brass accent",
+    "text": "primary ink on ground with WCAG AA body contrast",
+    "brandPalette": [
+      "ink brown",
+      "cream",
+      "brass accent"
+    ]
+  },
+  "surfaceMaterialModel": "open — subject earns space around the object",
+  "imageryStrategy": "Load-bearing product plates field-tote.webp and belt-no-2.webp on cream grounds, no model crops. stitch-macro.webp as single proof inset only when available (needed). Shoulder Strap as text+price until a plate exists. Deliberately no lifestyle models or stock handshakes.",
+  "componentPrinciples": [
+    "states must be visible without colour alone",
+    "primary action uses reserved accent only"
+  ],
+  "interactionStates": [
+    "default",
+    "hover/focus",
+    "active",
+    "disabled",
+    "error"
+  ],
+  "motionRules": {
+    "principle": "Hide Grade Strip as accessible radiogroup under the primary plate; selection darkens plate edge rail and updates make-slot summary. Motion intensity 2: only ~120–180ms edge response on hide change; prefers-reduced-motion = instant swap. Primary CTA: Request make-slot. No scroll-jacking.",
+    "reducedMotion": "disable non-essential motion"
+  },
+  "responsiveBehavior": {
+    "firstFold": "preserve composition intent; stack only after tablet",
+    "tables": "horizontal scroll must expose affordance if used"
+  },
+  "accessibilityConstraints": [
+    "visible focus",
+    "label every control",
+    "AA contrast for body and UI text"
+  ],
+  "signatureElement": "Hide Grade Strip — horizontal hide-grade chips (material swatch wells + ink-brown labels) under the Field Tote plate; the single memorable control that ties plate → grade → make-slot.",
+  "forbiddenFallbackDefaults": [
+    "purple SaaS gradient hero",
+    "three equal feature cards as default identity",
+    "round-8 recipe: mono uppercase labels + hairlines + tabular motif + flat depth",
+    "invented testimonials, prices, or certifications"
+  ],
+  "fidelityAssertions": [
+    {
+      "field": "composition",
+      "expected": "single object left, large type right"
+    },
+    {
+      "field": "type",
+      "expected": "Display: Barlow Condensed 600–700 for product names (workshop signage, tight tracking). Body: IBM Plex Sans 400–500 plain trade English 45–75ch. Utility: IBM Plex Mono for hide grade codes, stitch count when known, lead time, prices. No luxury serif display."
+    },
+    {
+      "field": "colour",
+      "expected": "Warm cream ground; ink-brown type and rules; hide-mid secondary; brass only on CTA and hardware callouts; edge-bone plate rails; deep soot borders. Materials: bridle leather, solid brass, vegetable tan. No purple multi-stop SaaS gradients."
+    },
+    {
+      "field": "imagery",
+      "expected": "Load-bearing product plates field-tote.webp and belt-no-2.webp on cream grounds, no model crops. stitch-macro.webp as single proof inset only when available (needed). Shoulder Strap as text+price until a plate exists. Deliberately no lifestyle models or stock handshakes."
+    },
+    {
+      "field": "rhythm",
+      "expected": "hard vertical split then calm bands"
+    },
+    {
+      "field": "surface",
+      "expected": "open — subject earns space around the object"
+    },
+    {
+      "field": "labels",
+      "expected": "sentence case captions — retail voice stays human"
+    },
+    {
+      "field": "figures",
+      "expected": "proportional — price is content not motif"
+    },
+    {
+      "field": "depth",
+      "expected": "elevated — object lifts off ground slightly"
+    },
+    {
+      "field": "signature-selector",
+      "expected": "[data-signature=\"Hide Grade Strip — horizontal hide-grade chips (material swatch wells + ink-brown labels) under the Field Tote plate; the single memorable control that ties plate → grade → make-slot.\"]"
+    }
+  ],
+  "acceptanceCriteria": [
+    "built page matches axis record treatments",
+    "primary action findable in first fold",
+    "no fabricated brand/product facts",
+    "passes existing v2.3 verify + direction fidelity"
+  ],
+  "capabilityProvenance": [
+    {
+      "capabilityId": "TASTE-CAP-002",
+      "upstreamOrigin": "https://github.com/Leonxlnx/taste-skill.git",
+      "phase": "creative-direction",
+      "whyRelevant": "mode ecommerce base required · subject=Northline Leather Goods · action=configure a bag and request a make-slot.",
+      "evidencePointers": [
+        "mode:ecommerce"
+      ],
+      "status": "explicit"
+    },
+    {
+      "capabilityId": "TASTE-CAP-003",
+      "upstreamOrigin": "https://github.com/Leonxlnx/taste-skill.git",
+      "phase": "creative-direction",
+      "whyRelevant": "mode ecommerce base required · subject=Northline Leather Goods · action=configure a bag and request a make-slot.",
+      "evidencePointers": [
+        "mode:ecommerce"
+      ],
+      "status": "explicit"
+    },
+    {
+      "capabilityId": "TASTE-CAP-004",
+      "upstreamOrigin": "https://github.com/Leonxlnx/taste-skill.git",
+      "phase": "creative-direction",
+      "whyRelevant": "mode ecommerce base required · subject=Northline Leather Goods · action=configure a bag and request a make-slot.",
+      "evidencePointers": [
+        "mode:ecommerce"
+      ],
+      "status": "explicit"
+    },
+    {
+      "capabilityId": "TASTE-CAP-006",
+      "upstreamOrigin": "https://github.com/Leonxlnx/taste-skill.git",
+      "phase": "knowledge",
+      "whyRelevant": "mode ecommerce base required · subject=Northline Leather Goods · action=configure a bag and request a make-slot.",
+      "evidencePointers": [
+        "mode:ecommerce"
+      ],
+      "status": "explicit"
+    },
+    {
+      "capabilityId": "frontend.subject-vernacular",
+      "upstreamOrigin": "https://github.com/anthropics/skills",
+      "phase": "creative-direction",
+      "whyRelevant": "mode ecommerce base required · subject=Northline Leather Goods · action=configure a bag and request a make-slot.",
+      "evidencePointers": [
+        "mode:ecommerce"
+      ],
+      "status": "explicit"
+    },
+    {
+      "capabilityId": "frontend.hero-thesis",
+      "upstreamOrigin": "https://github.com/anthropics/skills",
+      "phase": "creative-direction",
+      "whyRelevant": "mode ecommerce base required · subject=Northline Leather Goods · action=configure a bag and request a make-slot.",
+      "evidencePointers": [
+        "mode:ecommerce"
+      ],
+      "status": "explicit"
+    },
+    {
+      "capabilityId": "frontend.semantic-structure",
+      "upstreamOrigin": "https://github.com/anthropics/skills",
+      "phase": "creative-direction",
+      "whyRelevant": "mode ecommerce base required · subject=Northline Leather Goods · action=configure a bag and request a make-slot.",
+      "evidencePointers": [
+        "mode:ecommerce"
+      ],
+      "status": "explicit"
+    },
+    {
+      "capabilityId": "frontend.interface-writing",
+      "upstreamOrigin": "https://github.com/anthropics/skills",
+      "phase": "creative-direction",
+      "whyRelevant": "mode ecommerce base required · subject=Northline Leather Goods · action=configure a bag and request a make-slot.",
+      "evidencePointers": [
+        "mode:ecommerce"
+      ],
+      "status": "explicit"
+    },
+    {
+      "capabilityId": "frontend.anti-default-calibration",
+      "upstreamOrigin": "https://github.com/anthropics/skills",
+      "phase": "creative-direction",
+      "whyRelevant": "mode ecommerce base required · subject=Northline Leather Goods · action=configure a bag and request a make-slot.",
+      "evidencePointers": [
+        "mode:ecommerce"
+      ],
+      "status": "explicit"
+    },
+    {
+      "capabilityId": "uupm.classify.product-reasoning",
+      "upstreamOrigin": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "phase": "knowledge",
+      "whyRelevant": "mode ecommerce base required · subject=Northline Leather Goods · action=configure a bag and request a make-slot.",
+      "evidencePointers": [
+        "mode:ecommerce"
+      ],
+      "status": "explicit"
+    },
+    {
+      "capabilityId": "uupm.tune.design-dials",
+      "upstreamOrigin": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "phase": "creative-direction",
+      "whyRelevant": "mode ecommerce base required · subject=Northline Leather Goods · action=configure a bag and request a make-slot.",
+      "evidencePointers": [
+        "mode:ecommerce"
+      ],
+      "status": "explicit"
+    },
+    {
+      "capabilityId": "IMP-004",
+      "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
+      "phase": "seed",
+      "whyRelevant": "mode ecommerce base required · subject=Northline Leather Goods · action=configure a bag and request a make-slot.",
+      "evidencePointers": [
+        "mode:ecommerce"
+      ],
+      "status": "explicit"
+    },
+    {
+      "capabilityId": "IMP-005",
+      "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
+      "phase": "seed",
+      "whyRelevant": "mode ecommerce base required · subject=Northline Leather Goods · action=configure a bag and request a make-slot.",
+      "evidencePointers": [
+        "mode:ecommerce"
+      ],
+      "status": "explicit"
+    },
+    {
+      "capabilityId": "IMP-008",
+      "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
+      "phase": "critique",
+      "whyRelevant": "mode ecommerce base required · subject=Northline Leather Goods · action=configure a bag and request a make-slot.",
+      "evidencePointers": [
+        "mode:ecommerce"
+      ],
+      "status": "explicit"
+    },
+    {
+      "capabilityId": "uupm.lookup.stack-guidance",
+      "upstreamOrigin": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "phase": "knowledge",
+      "whyRelevant": "mode ecommerce base optional · subject=Northline Leather Goods · action=configure a bag and request a make-slot.",
+      "evidencePointers": [
+        "mode:ecommerce"
+      ],
+      "status": "inferred"
+    },
+    {
+      "capabilityId": "frontend.motion-intent",
+      "upstreamOrigin": "https://github.com/anthropics/skills",
+      "phase": "creative-direction",
+      "whyRelevant": "mode ecommerce base optional · subject=Northline Leather Goods · action=configure a bag and request a make-slot.",
+      "evidencePointers": [
+        "mode:ecommerce"
+      ],
+      "status": "inferred"
+    },
+    {
+      "capabilityId": "IMP-006",
+      "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
+      "phase": "seed",
+      "whyRelevant": "mode ecommerce base optional · subject=Northline Leather Goods · action=configure a bag and request a make-slot.",
+      "evidencePointers": [
+        "mode:ecommerce"
+      ],
+      "status": "inferred"
+    },
+    {
+      "capabilityId": "IMP-010",
+      "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
+      "phase": "critique",
+      "whyRelevant": "mode ecommerce base optional · subject=Northline Leather Goods · action=configure a bag and request a make-slot.",
+      "evidencePointers": [
+        "mode:ecommerce"
+      ],
+      "status": "inferred"
+    }
+  ],
+  "seedProvenance": {
+    "source": "local-world-library-seed",
+    "version": "1.1.0",
+    "method": "sha256-project-entropy + fisher-yates over eligibility-filtered seeds",
+    "randomSeed": "host-llm-inline-1785533193671",
+    "numericSeed": 2297068108,
+    "licence": "MIT SiteSmith-original world seed templates",
+    "origin": "local",
+    "slot": 0
+  },
+  "policyVersion": "direction-engine-v3-orchestrator-1.1.0",
+  "dials": {
+    "visualDensity": 6,
+    "motionIntensity": 2,
+    "aestheticBoldness": 6,
+    "status": {
+      "visualDensity": "explicit",
+      "motionIntensity": "explicit",
+      "aestheticBoldness": "explicit"
+    }
+  },
+  "choice": {
+    "status": "selected",
+    "selectedBlindId": "L1",
+    "selectedInternalId": "W1",
+    "by": "user"
+  }
+}

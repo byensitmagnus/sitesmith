@@ -1,0 +1,19 @@
+{
+  "designThesis": "Northline is a make-slot desk, not a boutique shelf: open on the Field Tote product plate with trade facts stamped on the plate edge; the argument is graded hide + a three-week make-slot request — never lifestyle hero, purple SaaS gradient, or star ratings.",
+  "subjectGrounding": "Northline Leather Goods — small-batch bags/straps; bridle leather, solid brass, vegetable tan; products Field Tote, Belt No. 2, Shoulder Strap; price band DKK 890–2.400; 3-week make-slot; audience cares about hide grade; journey pick product → choose hide → request make-slot; mobile-first; brand ink brown + warm cream + single brass accent; plain trade English; no reviews/testimonials/celebrity clients/free worldwide shipping/lifestyle models.",
+  "composition": "Mobile-first bench stack: full-bleed Field Tote plate first, material stamp line, Hide Grade Strip, price band + 3-week lead, brass Request make-slot CTA, then Belt No. 2 plate and Shoulder Strap as secondary row; desktop widens plate and keeps hide chips + CTA as sticky rail — one bench, not magazine spread.",
+  "informationHierarchy": "1) Field Tote product plate 2) material stamp facts (bridle / veg tan / solid brass) 3) hide grade choice 4) price band DKK 890–2.400 + 3-week lead 5) primary CTA Request make-slot 6) Belt No. 2 plate + Shoulder Strap text until plate exists — no testimonials, no fake star rows.",
+  "typography": "Display: Barlow Condensed 600–700 for product names (workshop signage, tight tracking). Body: IBM Plex Sans 400–500 plain trade English 45–75ch. Utility: IBM Plex Mono for hide grade codes, stitch count when known, lead time, prices. No luxury serif display.",
+  "colourAndMaterialModel": "Warm cream ground; ink-brown type and rules; hide-mid secondary; brass only on CTA and hardware callouts; edge-bone plate rails; deep soot borders. Materials: bridle leather, solid brass, vegetable tan. No purple multi-stop SaaS gradients.",
+  "imageryAndAssetStrategy": "Load-bearing product plates field-tote.webp and belt-no-2.webp on cream grounds, no model crops. stitch-macro.webp as single proof inset only when available (needed). Shoulder Strap as text+price until a plate exists. Deliberately no lifestyle models or stock handshakes.",
+  "interactionConcept": "Hide Grade Strip as accessible radiogroup under the primary plate; selection darkens plate edge rail and updates make-slot summary. Motion intensity 2: only ~120–180ms edge response on hide change; prefers-reduced-motion = instant swap. Primary CTA: Request make-slot. No scroll-jacking.",
+  "signatureElement": "Hide Grade Strip — horizontal hide-grade chips (material swatch wells + ink-brown labels) under the Field Tote plate; the single memorable control that ties plate → grade → make-slot.",
+  "primaryRisk": "Cream + brown leather ecommerce can still read as generic artisan catalog if plates shrink and copy softens into luxury fluff; mitigate with plate-first fold, stamp facts, mono measurements, make-slot language, and brass only on the CTA.",
+  "implementationGuidance": "Tokenize cream/ink/brass/edge-bone; brass only on primary CTA and small hardware icons. Load only used weights of Barlow Condensed, IBM Plex Sans, IBM Plex Mono. First paint: Field Tote plate under slim site bar at 375px. Radiogroup for hide grades with visible focus. Fixed CTA copy Request make-slot. Specs limited to hide grade, materials, lead time 3 weeks, price band DKK 890–2.400, stitch count only if known. Absent strap plate → text row. No invented social proof blocks.",
+  "unknowns": "Exact hide grade label set/codes not listed in evidence; stitch-macro.webp is needed not have; Shoulder Strap plate not declared have; make-slot is lead-time fact only — discrete calendar UI not specified.",
+  "sourcePointers": {
+    "arm": "sitesmith",
+    "creativePass": "llm",
+    "model": "host-session-llm-inline"
+  }
+}
