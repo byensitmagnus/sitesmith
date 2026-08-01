@@ -42,3 +42,12 @@
 {"kind":"edge","type":"REQUIRES","from":"source:frontend-design","to":"licence:Apache-2.0"}
 {"kind":"edge","type":"REQUIRES","from":"source:impeccable","to":"licence:Apache-2.0"}
 {"kind":"edge","type":"TESTED_BY","from":"test:verify-mjs","to":"test:control-group","why":"the control group is the test of the test"}
+{"kind":"node","type":"Asset","id":"asset:palette-corpus","label":"Eight three-colour palettes from Magnus's screenshots, measured for contrast and role","evidence":"docs/rebuild/PALETTE-CORPUS.json, docs/rebuild/PALETTE-ANALYSIS.md"}
+{"kind":"node","type":"Risk","id":"risk:palette-monoculture","label":"Five of eight palettes are dark ground plus warm accent; ungated retrieval would push every build toward amber-on-near-black","confidence":0.85,"evidence":"tools/palette-analyse.mjs output — P01,P04,P05,P07,P08"}
+{"kind":"node","type":"Mechanism","id":"mech:palette-as-relationship-not-values","label":"Surface a palette as a role relationship (dark ground, single warm accent, near-neutral surface) plus its measured contrast constraints, and let the model derive its own hexes from the subject","confidence":0.7,"notes":"Untested. The alternative — emitting the hexes directly — is what produces one look across eight briefs."}
+{"kind":"node","type":"Test","id":"test:palette-analyse","label":"tools/palette-analyse.mjs — WCAG luminance and contrast for every ordered pair, role assignment, accent usability","status":"working","evidence":"tools/palette-analyse.mjs"}
+{"kind":"edge","type":"INSPIRES","from":"asset:palette-corpus","to":"mech:palette-as-relationship-not-values"}
+{"kind":"edge","type":"VALIDATED_BY","from":"asset:palette-corpus","to":"test:palette-analyse","why":"the role and contrast claims are computed, not eyeballed"}
+{"kind":"edge","type":"SOLVES","from":"mech:palette-as-relationship-not-values","to":"problem:house-style"}
+{"kind":"edge","type":"REJECTED_DUE_TO","from":"asset:palette-corpus","to":"risk:palette-monoculture","why":"rejected as a default palette set; allowed only as brief-gated retrieval"}
+{"kind":"edge","type":"DEPENDS_ON","from":"mech:palette-as-relationship-not-values","to":"asset:palette-corpus"}
