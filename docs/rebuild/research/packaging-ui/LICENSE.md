@@ -26,7 +26,7 @@ ai_generated: "(C)"
   reproduced from any of the three, no closely-paraphrased structure was
   copied, and no file layout, prose sequence, or heading structure was
   mirrored. Where a file's exact content mattered as evidence (e.g. the "load
-  [Remotion Maps](./remotion-maps/REFERENCE.md)" link syntax, or the shell
+  Remotion Maps (`./remotion-maps/REFERENCE.md`)" link syntax, or the shell
   commands `npm install -g uipro-cli`), only the minimal literal fragment
   needed to identify the mechanism precisely was cited, with a path/line
   reference so the fragment can be checked against the source directly rather

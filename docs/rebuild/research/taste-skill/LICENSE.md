@@ -9,7 +9,7 @@ ai_generated: "(C)"
 
 # SPDX ID
 
-`MIT` — also independently confirmed in `.claude-plugin/plugin.json:11` (`"license": "MIT"`) and referenced in `README.md:52,227-229` (`[MIT License](LICENSE)`).
+`MIT` — also independently confirmed in `.claude-plugin/plugin.json:11` (`"license": "MIT"`) and referenced in `README.md:52,227-229` (`MIT License (`LICENSE`)`).
 
 # Notice requirements
 

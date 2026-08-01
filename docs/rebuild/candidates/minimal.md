@@ -363,13 +363,13 @@ Open one of these when the page has that surface, and put it down afterwards:
 
 | The visitor is | Open |
 | --- | --- |
-| Buying, or looking at a price | [floor/commerce.md](floor/commerce.md) |
-| Operating a tool: dashboards, admin, tables, consoles | [floor/app.md](floor/app.md) |
+| Buying, or looking at a price | `floor/commerce.md` |
+| Operating a tool: dashboards, admin, tables, consoles | `floor/app.md` |
 | Reading or deciding only | nothing. Section 7 is the whole floor. |
 
 ## 9. Existing code
 
-If code already exists, read [redesign.md](redesign.md) before changing one line. In short:
+If code already exists, read `redesign.md` before changing one line. In short:
 audit first; list what has to survive (brand marks, legal text, working journeys, URLs,
 anything that ranks); and treat everything you extract as a description of the problem, never
 as the target. The one exception is an explicit "clone this" in the client's own words. It is
@@ -377,7 +377,7 @@ never inferred.
 
 ## 10. Build
 
-Read [stacks.md](stacks.md) once, before the first file, to establish what you are in and
+Read `stacks.md` once, before the first file, to establish what you are in and
 what it wants. Never infer a stack from the brief.
 
 While building, render what you changed:
@@ -396,7 +396,7 @@ no journey has been drawn, not built.
 
 ## 11. Look at it
 
-When it works, read [verify.md](verify.md), run the release checks, then open the screenshots
+When it works, read `verify.md`, run the release checks, then open the screenshots
 and write a specific criticism of each breakpoint before writing anything else. Not "the
 spacing could be tighter". "At 375 the hero pushes the price below the fold and the eyebrow
 is the same weight as the h1."
@@ -447,7 +447,7 @@ Never edit a check so that it passes.
 
 Method re-expressed, not copied, from `frontend-design` and `impeccable` (Apache-2.0) and
 `taste-skill` and `ui-ux-pro-max` (MIT). Notices and full licences travel with the bundle in
-[THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md).
+`THIRD-PARTY-NOTICES.md`.
 
 A line enters this file only by displacing one.
 ````

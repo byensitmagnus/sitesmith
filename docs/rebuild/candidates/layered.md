@@ -318,9 +318,9 @@ console is `operate`. One design system across all of them.
 
 | The visitor is | Floor | Open |
 | --- | --- | --- |
-| deciding whether to care | `decide` | [floors/decide.md](floors/decide.md) |
-| deciding whether to buy, and from whom | `buy` | [floors/buy.md](floors/buy.md) |
-| already committed, and now working | `operate` | [floors/operate.md](floors/operate.md) |
+| deciding whether to care | `decide` | `floors/decide.md` |
+| deciding whether to buy, and from whom | `buy` | `floors/buy.md` |
+| already committed, and now working | `operate` | `floors/operate.md` |
 
 Originality is spent on surfaces where the visitor is *deciding*: hero, section
 transitions, imagery, typography, texture, copy voice. Convention is kept on
@@ -328,7 +328,7 @@ surfaces where the visitor is *operating*: checkout, forms, navigation, tables,
 errors. Novelty there costs money and trust, and it is not where anyone remembers
 you from.
 
-Existing code in the repository? Read [floors/redesign.md](floors/redesign.md)
+Existing code in the repository? Read `floors/redesign.md`
 first, before you touch anything. What is extracted from the old site describes what
 is being replaced and lists what must survive. It never decides what to build. The
 one exception is a request that uses the words clone, match or replicate, which is
@@ -434,8 +434,8 @@ Mechanisms in this file descend from [frontend-design](https://github.com/anthro
 (Apache-2.0) and [impeccable](https://github.com/pbakaus/impeccable) (Apache-2.0),
 [taste-skill](https://github.com/Leonxlnx/taste-skill) (MIT) and
 [ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) (MIT).
-Notices and licence copies in [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md),
-verbatim upstream text in [references/](references/README.md), which is provenance and
+Notices and licence copies in `THIRD-PARTY-NOTICES.md`,
+verbatim upstream text in references/ (`references/README.md`), which is provenance and
 is not read during a build.
 ````
 
