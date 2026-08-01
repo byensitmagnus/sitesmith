@@ -457,3 +457,17 @@
 {"kind":"edge","type":"DEPENDS_ON","from":"cap:generic-judge","to":"mech:ponytail/self-validating-llm-judge"}
 {"kind":"edge","type":"VALIDATED_BY","from":"decision:always-loaded-budget","to":"result:instruction-budget-vs-quality"}
 {"kind":"edge","type":"REQUIRES","from":"decision:always-loaded-budget","to":"decision:taste-loaded-answers-fetched"}
+{"kind":"node","type":"WorkflowState","id":"state:S7","label":"S7_ARCHITECTURE_SELECTION","status":"complete","evidence":"docs/rebuild/ARCHITECTURE-DECISION.md"}
+{"kind":"node","type":"Decision","id":"decision:architecture-minimal","label":"Build MINIMAL — one always-loaded prose file of taste and standard, six fetched step files, five scripts that can only refuse — with fifteen landed attacks answered","confidence":0.8,"evidence":"docs/rebuild/ARCHITECTURE-DECISION.md; only candidate surviving both its red team and its feasibility review"}
+{"kind":"node","type":"Risk","id":"risk:blocks-deletion","label":"Dropping the block library means a model authors an accessible combobox or focus-trapped menu from memory; the journey gate catches absence of testing, not absence of correctness","confidence":0.6,"evidence":"ARCHITECTURE-DECISION.md section 7 risk 3"}
+{"kind":"node","type":"Risk","id":"risk:anti-argmax-audited-not-forced","label":"The model can write three theses and justify the one it already wanted; ledger.mjs can prove the list exists but not that it preceded the choice","confidence":0.6,"evidence":"ARCHITECTURE-DECISION.md section 7 risk 2"}
+{"kind":"node","type":"Risk","id":"risk:ci-coupling","label":"check-repo.py imports core.py from skills/sitesmith/scripts and four checks glob references/*.md, so deleting data/ or references/ breaks CI at import time","confidence":0.95,"evidence":"tools/check-repo.py line 645 'from core import CSV_CONFIG'; verified directly"}
+{"kind":"node","type":"Test","id":"test:s10-1-reexpression-smoke","label":"Smoke test S10-1: arm A frontend-design/SKILL.md verbatim, arm B our re-expressed sections 1-8 with the control plane stripped, same brief, same host model, blind-scored","status":"planned","evidence":"ARCHITECTURE-DECISION.md step 1"}
+{"kind":"edge","type":"SUPERSEDES","from":"decision:architecture-minimal","to":"source:sitesmith-current"}
+{"kind":"edge","type":"TESTED_BY","from":"decision:architecture-minimal","to":"test:s10-1-reexpression-smoke"}
+{"kind":"edge","type":"DEPENDS_ON","from":"decision:architecture-minimal","to":"risk:blocks-deletion"}
+{"kind":"edge","type":"DEPENDS_ON","from":"decision:architecture-minimal","to":"risk:anti-argmax-audited-not-forced"}
+{"kind":"edge","type":"DEPENDS_ON","from":"decision:architecture-minimal","to":"risk:ci-coupling"}
+{"kind":"edge","type":"IMPLEMENTS","from":"decision:architecture-minimal","to":"decision:resolve-central-conflict-by-reexpression"}
+{"kind":"edge","type":"IMPLEMENTS","from":"decision:architecture-minimal","to":"decision:always-loaded-budget"}
+{"kind":"edge","type":"IMPLEMENTS","from":"decision:architecture-minimal","to":"decision:prose-generates-structure-enforces"}
