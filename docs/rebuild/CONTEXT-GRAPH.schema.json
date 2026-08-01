@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "format": "JSONL — one JSON object per line in CONTEXT-GRAPH.jsonl",
+  "rationale": "A graph database buys nothing here. The graph is small (hundreds of nodes), append-only, must survive in git, must be diffable in review, and must be queryable from a 200-line script. JSONL gives all four. This choice is itself recorded as DECISION:graph-format.",
+  "recordKinds": ["node", "edge"],
+  "node": {
+    "required": ["kind", "type", "id", "label"],
+    "optional": ["source", "commit", "path", "status", "confidence", "evidence", "notes", "state"],
+    "types": [
+      "Source",
+      "Repository",
+      "Commit",
+      "License",
+      "Mechanism",
+      "Capability",
+      "Problem",
+      "FailureMode",
+      "Constraint",
+      "Risk",
+      "Decision",
+      "Module",
+      "Artifact",
+      "Test",
+      "Result",
+      "Brief",
+      "Asset",
+      "Reference",
+      "AgentRole",
+      "WorkflowState"
+    ]
+  },
+  "edge": {
+    "required": ["kind", "type", "from", "to"],
+    "optional": ["why", "evidence", "confidence", "state"],
+    "types": [
+      "SOLVES",
+      "IMPLEMENTS",
+      "INSPIRES",
+      "ADAPTED_FROM",
+      "REQUIRES",
+      "CONFLICTS_WITH",
+      "OVERLAPS",
+      "REJECTED_DUE_TO",
+      "VALIDATED_BY",
+      "INVALIDATED_BY",
+      "DEPENDS_ON",
+      "PRODUCES",
+      "ROUTES_TO",
+      "TESTED_BY",
+      "SUPERSEDES"
+    ]
+  },
+  "queries": {
+    "solves": "which mechanism solves this problem",
+    "overlap": "which mechanisms overlap and therefore compete",
+    "conflicts": "which rules conflict",
+    "unevidenced": "which decisions have no VALIDATED_BY edge",
+    "validates": "which tests validate a capability",
+    "weak": "which modules depend on a low-confidence assumption",
+    "removable": "which nodes nothing depends on",
+    "attribution": "which upstream sources must be credited"
+  }
+}

@@ -1,0 +1,44 @@
+{"kind":"node","type":"WorkflowState","id":"state:S0","label":"S0_REPO_TRUTH","status":"complete","evidence":"docs/rebuild/REPO-TRUTH.md"}
+{"kind":"node","type":"WorkflowState","id":"state:S1","label":"S1_SOURCE_RESOLUTION","status":"active","evidence":"docs/rebuild/SOURCE-REGISTRY.json"}
+{"kind":"node","type":"Problem","id":"problem:mechanical-creativity-loses","label":"A deterministic direction generator produces worse creative direction than a host LLM reasoning from evidence","confidence":0.95,"evidence":"docs/v3/proof/head-to-head/eval/MINI-1-LEATHER-LLM-REPORT.md — rules 40, host-LLM 57.5, frontend-design 59, same brief"}
+{"kind":"node","type":"Problem","id":"problem:house-style","label":"Anti-slop rules applied hard enough become their own recognisable house style","confidence":0.9,"evidence":"gallery/showcase.json — round-8 individualReview pass, portfolioDiversity fail, showcase 0/8"}
+{"kind":"node","type":"Problem","id":"problem:skill-chain-ux","label":"Requiring the user to run five skills in order is a workflow, not a product","confidence":1.0,"evidence":"docs/v3/PRODUCT-PIPELINE.md commit bb4be56"}
+{"kind":"node","type":"Problem","id":"problem:context-overload","label":"Loading the full rule set and 1.4MB data corpus for a routine task destroys the model's attention budget","confidence":0.8,"evidence":"skills/sitesmith/SKILL.md line 18-21 states this as a rule; not yet measured"}
+{"kind":"node","type":"Problem","id":"problem:unproven-claims","label":"Documents asserted their own pass status while their evidence files said fail","confidence":1.0,"evidence":"docs/v3/CURRENT-REPO-TRUTH.md integrity note — 4 of 5 review files status:fail under a decision doc claiming readiness"}
+{"kind":"node","type":"Constraint","id":"constraint:no-mechanical-creativity","label":"Scripts verify, retrieve and gate. Scripts never decide the design.","evidence":"problem:mechanical-creativity-loses"}
+{"kind":"node","type":"Constraint","id":"constraint:no-skill-chain","label":"The user activates SiteSmith and nothing else","evidence":"master prompt section 15"}
+{"kind":"node","type":"Constraint","id":"constraint:no-house-style","label":"Diversity is measured across builds, not asserted inside one","evidence":"problem:house-style"}
+{"kind":"node","type":"Constraint","id":"constraint:licence-four-sources","label":"Only taste-skill and ui-ux-pro-max (MIT) and frontend-design and impeccable (Apache-2.0) may be redistributed verbatim","evidence":"LICENSE-AUDIT.md"}
+{"kind":"node","type":"Constraint","id":"constraint:no-unlicensed-text","label":"website-builder-setup (no licence) and redesign-skill (no traceable author) must never be copied or closely paraphrased","evidence":"LICENSE-AUDIT.md"}
+{"kind":"node","type":"Constraint","id":"constraint:control-group-must-fail","label":"benchmarks/06-redesign/before/ must keep failing verify.mjs","evidence":"CLAUDE.md project rules"}
+{"kind":"node","type":"Constraint","id":"constraint:evidence-over-frontmatter","label":"A document's own status field is not evidence","evidence":"problem:unproven-claims"}
+{"kind":"node","type":"Decision","id":"decision:graph-format","label":"Context graph is JSONL plus a small query script, not a graph database","confidence":0.9,"notes":"Small graph, must be git-diffable in review, must be queryable without a service. Revisit only if node count passes ~2000."}
+{"kind":"node","type":"Decision","id":"decision:branch-off-main","label":"Rebuild branches from main dc00598, not from the failed research branches","confidence":0.95,"notes":"Keeps the three draft PRs intact as historical evidence while starting clean."}
+{"kind":"node","type":"Decision","id":"decision:supersede-product-pipeline","label":"The unified-skill architecture supersedes docs/v3/PRODUCT-PIPELINE.md as architecture, but inherits its evidence as a constraint","confidence":0.85,"notes":"PRODUCT-PIPELINE said chain five skills. Master prompt forbids chaining. The measurement underneath it survives as constraint:no-mechanical-creativity."}
+{"kind":"node","type":"Source","id":"source:taste-skill","label":"taste-skill","source":"Leonxlnx/taste-skill","commit":"e988add20dab0fa97d7a76781c48961c8184288e","status":"pinned","evidence":"docs/v3/CANONICAL-UPSTREAM-PINS.json"}
+{"kind":"node","type":"Source","id":"source:ui-ux-pro-max","label":"ui-ux-pro-max","source":"nextlevelbuilder/ui-ux-pro-max-skill","commit":"4857a2c5ef989794751a0f66b8545a4a49566286","status":"pinned","evidence":"docs/v3/CANONICAL-UPSTREAM-PINS.json"}
+{"kind":"node","type":"Source","id":"source:frontend-design","label":"frontend-design","source":"anthropics/skills","path":"skills/frontend-design","commit":"b29e7cf65e5cb78a5ac33d582270551bc74a14eb","status":"pinned","evidence":"docs/v3/CANONICAL-UPSTREAM-PINS.json"}
+{"kind":"node","type":"Source","id":"source:impeccable","label":"impeccable","source":"pbakaus/impeccable","commit":"6b342244e915d64b0d6e84d5eec448fd196ce6bb","status":"pinned","evidence":"docs/v3/CANONICAL-UPSTREAM-PINS.json"}
+{"kind":"node","type":"Source","id":"source:sitesmith-current","label":"existing SiteSmith v2.3","source":"byensitmagnus/sitesmith","commit":"dc00598cce2af92435a749856393e287506753bc","status":"pinned","evidence":"docs/rebuild/REPO-TRUTH.md"}
+{"kind":"node","type":"License","id":"licence:MIT","label":"MIT — redistribution allowed with notice"}
+{"kind":"node","type":"License","id":"licence:Apache-2.0","label":"Apache-2.0 — redistribution allowed with notice and NOTICE preservation"}
+{"kind":"node","type":"License","id":"licence:none","label":"No licence — all rights reserved, no redistribution, no close paraphrase"}
+{"kind":"node","type":"Result","id":"result:mini1-leather","label":"Mini-1 leather blind scores: rules SiteSmith 40, host-LLM SiteSmith 57.5, frontend-design 59","evidence":"docs/v3/proof/head-to-head/eval/MINI-1-LEATHER-LLM-REPORT.md"}
+{"kind":"node","type":"Result","id":"result:nordrig-ab","label":"Nordrig end-to-end A/B: frontend-design build wins creatively, SiteSmith build loses, neither production-ready","evidence":"docs/v3/proof/product-e2e/nordrig/ACCEPTED-VERDICT.md"}
+{"kind":"node","type":"Result","id":"result:showcase-0-8","label":"Showcase 0/8 — three round-8 sites passed individually and failed portfolio diversity","evidence":"gallery/showcase.json"}
+{"kind":"node","type":"Test","id":"test:verify-mjs","label":"scripts/verify.mjs — screenshots at 375/768/1440, axe in both colour schemes, console errors, dead links, horizontal overflow","status":"working","evidence":"skills/sitesmith/scripts/verify.mjs"}
+{"kind":"node","type":"Test","id":"test:control-group","label":"benchmarks/06-redesign/before/ must fail verify.mjs — a green control group means the gate is broken","status":"working","evidence":"CLAUDE.md project rules"}
+{"kind":"edge","type":"VALIDATED_BY","from":"problem:mechanical-creativity-loses","to":"result:mini1-leather","why":"same brief, same evidence pack, blind scoring, 19-point gap between rules and the LLM baseline"}
+{"kind":"edge","type":"VALIDATED_BY","from":"problem:mechanical-creativity-loses","to":"result:nordrig-ab","why":"end-to-end build comparison reached the same verdict as the direction-packet comparison"}
+{"kind":"edge","type":"VALIDATED_BY","from":"problem:house-style","to":"result:showcase-0-8","why":"individual pass plus portfolio fail is exactly the signature of a house style"}
+{"kind":"edge","type":"SOLVES","from":"constraint:no-mechanical-creativity","to":"problem:mechanical-creativity-loses"}
+{"kind":"edge","type":"SOLVES","from":"constraint:no-skill-chain","to":"problem:skill-chain-ux"}
+{"kind":"edge","type":"SOLVES","from":"constraint:no-house-style","to":"problem:house-style"}
+{"kind":"edge","type":"SOLVES","from":"constraint:evidence-over-frontmatter","to":"problem:unproven-claims"}
+{"kind":"edge","type":"SUPERSEDES","from":"decision:supersede-product-pipeline","to":"source:sitesmith-current","why":"replaces the five-skill chain architecture; the measurement underneath it is kept as a constraint"}
+{"kind":"edge","type":"CONFLICTS_WITH","from":"constraint:no-skill-chain","to":"constraint:no-mechanical-creativity","why":"UNRESOLVED: if scripts may not decide the design and the user may not invoke frontend-design, then the unified skill must carry frontend-design's creative method as instructions in its own prompt surface. That is the central architectural question of this rebuild."}
+{"kind":"edge","type":"REQUIRES","from":"source:taste-skill","to":"licence:MIT"}
+{"kind":"edge","type":"REQUIRES","from":"source:ui-ux-pro-max","to":"licence:MIT"}
+{"kind":"edge","type":"REQUIRES","from":"source:frontend-design","to":"licence:Apache-2.0"}
+{"kind":"edge","type":"REQUIRES","from":"source:impeccable","to":"licence:Apache-2.0"}
+{"kind":"edge","type":"TESTED_BY","from":"test:verify-mjs","to":"test:control-group","why":"the control group is the test of the test"}

@@ -1,0 +1,51 @@
+{
+  "workflowVersion": "1.0.0",
+  "workflow": "sitesmith-unified-rebuild",
+  "branch": "rebuild/sitesmith-unified",
+  "base": "dc00598cce2af92435a749856393e287506753bc",
+  "state": "S1_SOURCE_RESOLUTION",
+  "previousState": "S0_REPO_TRUTH",
+  "allowedNextStates": ["S2_REPO_AUTOPSIES"],
+  "states": [
+    "S0_REPO_TRUTH",
+    "S1_SOURCE_RESOLUTION",
+    "S2_REPO_AUTOPSIES",
+    "S3_MECHANISM_GRAPH",
+    "S4_CAPABILITY_SYNTHESIS",
+    "S5_ARCHITECTURE_CANDIDATES",
+    "S6_RED_TEAM",
+    "S7_ARCHITECTURE_SELECTION",
+    "S8_SKILL_SCAFFOLD",
+    "S9_MINIMAL_IMPLEMENTATION",
+    "S10_MECHANISM_TESTS",
+    "S11_PROTOTYPE_BUILD",
+    "S12_CRITIQUE_AND_REVISION",
+    "S13_HOLDOUT_BUILD",
+    "S14_FINAL_REVIEW",
+    "S15_PACKAGE_AND_DOCUMENT"
+  ],
+  "gates": {
+    "G0_repo_truth": "pass",
+    "G1_source_resolution": "running",
+    "G2_autopsies": "not-started",
+    "G3_architecture_selected": "not-started",
+    "G4_red_team": "not-started",
+    "G5_mechanism_tests": "not-started",
+    "G6_holdout": "not-started"
+  },
+  "budget": {
+    "concurrentResearchAgentsLimit": 6,
+    "revisionLoopsPerPhaseLimit": 2,
+    "architectureCandidatesLimit": 3,
+    "prototypeSitesLimit": 2,
+    "paidThirdPartyApiSpend": 0,
+    "newHeadToHeadArms": 0,
+    "agentRunsSoFar": 11
+  },
+  "openRisks": [
+    "The central conflict constraint:no-skill-chain >< constraint:no-mechanical-creativity is unresolved. If neither a script nor a second skill may produce the creative direction, the unified skill must carry frontend-design's method as instructions. Whether that transfers without the frontend-design skill being active is the rebuild's core hypothesis and is not yet tested.",
+    "Several named sources may not resolve to a canonical repo. An unresolved source is recorded as unresolved, not guessed.",
+    "The existing repo carries a verbatim upstream copy (references/impeccable) inside a link-checked docs tree; CI has been red on this for 12 of the last 15 runs."
+  ],
+  "pushPolicy": "no push, no merge, no force-push until Magnus approves once for this branch"
+}
