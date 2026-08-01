@@ -136,6 +136,14 @@ async function measure(page) {
                         Math.max(0, Math.min(r.right, W) - Math.max(r.left, 0));
 
     const body = getComputedStyle(document.body);
+    /* A9 measured a fiction here: a site painting its ground on <html> and leaving
+       <body> transparent scored rgba(0,0,0,0), luminance 0, and was filed as a dark
+       site when its real ground was light. The ground is whatever is actually behind
+       the page, so fall through when body is unpainted. */
+    const TRANSPARENT = /^(transparent|rgba\(0, 0, 0, 0\))$/;
+    const paintedGround = TRANSPARENT.test(body.backgroundColor)
+      ? getComputedStyle(document.documentElement).backgroundColor
+      : body.backgroundColor;
     const all = [...document.querySelectorAll('body *')];
     const h1 = document.querySelector('h1');
     const assets = [...document.querySelectorAll('img, picture, svg:not([aria-hidden="true"]), video')];
@@ -163,9 +171,9 @@ async function measure(page) {
       .map((r) => Math.round(r.left / 40) * 40));
 
     return {
-      groundRgb: rgb(body.backgroundColor),
-      ground: body.backgroundColor,
-      luminance: Number(lum(body.backgroundColor).toFixed(3)),
+      groundRgb: rgb(paintedGround),
+      ground: paintedGround,
+      luminance: Number(lum(paintedGround).toFixed(3)),
       displayFamily: (h1 ? getComputedStyle(h1).fontFamily : body.fontFamily)
         .split(',')[0].replace(/["']/g, '').trim(),
       assetShare: Number((assetArea / (W * H) * 100).toFixed(2)),

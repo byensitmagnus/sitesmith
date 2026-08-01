@@ -621,6 +621,15 @@ if (reportRaw === null) {
            also opened is not part of the disclosure budget and is not this check's business. */
         if (!existsSync(join(SKILL_DIR, path))) continue;
         if (allowed.has(path)) continue;
+        /* A9 found this refusing a build for opening verify.md, ledger.mjs and gate.mjs,
+           all three of which run.md instructs the run to use. Scripts are executed, not
+           read into context, so they are outside the disclosure budget entirely, and the
+           inspect scenario is reachable from every run because release is a step every
+           run takes. Nothing wider than that: the first version of this fix exempted any
+           file named in any scenario, which let a read-surface run open floor/operate.md,
+           and that drift is precisely what the check exists to catch. */
+        if (path.startsWith('scripts/')) continue;
+        if ((manifestOfReads.scenarios.inspect ?? []).includes(path)) continue;
         refuse('reads/outside-manifest', REPORT_PATH, base + 1 + i,
           `read ${path} is not declared for scenario ${name} ${EM} either the run opened more than its scenario allows or the manifest is wrong. Fix one of them; never delete the line to pass.`);
       }
