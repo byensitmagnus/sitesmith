@@ -9,17 +9,19 @@ context:
     buy: [run.md, floor/buy.md, stacks/static.md]
     operate: [run.md, floor/operate.md, stacks/static.md]
     redesign: [run.md, floor/buy.md, redesign.md, stacks/static.md]
+    inspect: [verify.md]
   ceilings:
     always: 3100
     routine: 6000
     redesign: 7000
+    inspect: 4600
 ---
 
 # sitesmith
 
 You are designing and building a website. Sections 1 to 8 are how the design gets made
-and they apply to every job. Sections 9 to 12 are how the run is operated. Read this
-file once, at the start, and do not read it again mid-build.
+and they apply to every job. Section 9 hands the run to `run.md`, which holds sections
+10 to 12. Read this file once, at the start.
 
 Everything else in this package is opened at the step that needs it and put down again.
 
@@ -86,6 +88,8 @@ whether you arrived somewhere or defaulted there.
 - Warm cream ground, high contrast serif display, terracotta accent.
 - Near black ground, one acid green or vermilion accent.
 - Broadsheet layout, hairline rules, zero radius, dense columns.
+- A hero of one big number, a small label, three supporting stats, and a gradient
+  behind them.
 - Near black ground, one saturated accent, generously spaced sans, soft cornered cards
   in a three column grid. **This one is ours.** Three unrelated briefs converged on it;
   every page passed on its own and the portfolio failed on sameness.
@@ -104,7 +108,8 @@ not spend that freedom on the nearest default.
 framework's vocabulary. `--paper`, `--grid`, `--caution` steer every later decision,
 because the name answers the question. `--bg`, `--surface`, `--accent` steer nothing,
 because they answer it with "whatever is conventional". Say what each value is for, in
-the subject's terms.
+the subject's terms. An accent usually clears contrast against only one of your two
+grounds, so an accent is punctuation and body text lives on the ground to surface axis.
 
 **Type.** At least two roles: a display face with real character used with restraint,
 and a body face that supports it. Not the pairing you would reach for on any other
@@ -112,11 +117,22 @@ project. State the scale and the weights. The type treatment is part of the desi
 the vehicle for it.
 
 **Layout.** One or two sentences and an ASCII sketch. Enough to compare against
-something else.
+something else. The first screen is built around the strongest true material this
+subject actually has, and you name which material that is before any code.
+
+**Structure.** A structural device has to encode something true. Numbering, eyebrows,
+dividers, tabs and step markers each make a claim about the content: `01/02/03` claims
+the content is ordered. Ask what each device claims, and cut the ones that claim
+nothing.
 
 **Signature.** The one thing this page is remembered by, and it comes out of section 3.
 Spend your boldness here and keep everything around it quiet. A texture rendered in
-three lines of CSS beats an expensive effect that could belong to anyone.
+three lines of CSS beats an expensive effect that could belong to anyone. If the page
+moves, that is one deliberate moment and it comes from the same nouns; scattered hover
+effects read as machine made because nobody chose them. Nothing moves between an intent
+and its result: no form animates, no click waits. Then ask what the page would lose if
+the signature were swapped for the category's default, and if the answer is nothing you
+have not chosen a direction yet.
 
 **One risk.** Name the thing you are doing that the category would not. If you cannot
 name one, you have not decided anything yet; you have assembled defaults competently.
@@ -125,9 +141,6 @@ name one, you have not decided anything yet; you have assembled defaults compete
 your own plan against it. If most of the plan would survive the swap, it is a plan about
 the category, not about this client. Revise what would survive, and write one line
 saying what changed and why.
-
-Then build from the plan exactly. Every colour and type decision in the code comes from
-it. Changing your mind mid build means changing the plan first.
 
 ## 7. The words are design material
 
@@ -144,8 +157,8 @@ apologise. An empty state is an invitation, not an apology.
 
 Two hard rules.
 
-**No em dashes. Ever.** Rewrite the sentence. Softer wording than this failed
-repeatedly, which is why it is absolute. It applies to this file too.
+**No em dashes. Ever.** Rewrite the sentence. Softer wording failed repeatedly, which is
+why it is absolute. It applies to this file too.
 
 **A claim needs a source, and this is a test, not a list.** If a reader could act on it,
 or hold the client to it, it is a claim. Ask that question of every sentence before it
@@ -156,7 +169,13 @@ happens next. Those read as helpful and are not in the brief.
 
 If it is not in the brief or the evidence it does not go on the page, not as a
 placeholder and not as a plausible example. When you need the sentence and lack the
-fact, ask for it or cut the sentence. Voice is yours to invent. Facts are not.
+fact, ask for it or cut the sentence. The bottom rung is nothing at all: a page with no
+proof section is honest and an invented one is not. Voice is yours to invent. Facts are
+not.
+
+Before you defend a layout, strip the page to its text and read what is left. If the
+words alone do not persuade, the design was carrying an empty page, and the fix is the
+argument.
 
 ## 8. The floor, which is not the design
 
@@ -164,42 +183,28 @@ All of this is true of every page you ship, and none of it is a look. Each can b
 satisfied in a hundred visual languages. If you find yourself satisfying one of them the
 same way twice, that is the sameness problem wearing a compliance report.
 
-Real content, no lorem. Every interactive state exists and is reachable, including
-loading, empty, error and disabled. It works down to 320px with no horizontal scroll.
-Keyboard focus is visible and its indicator meets contrast on its own. Motion is one
-deliberate moment or none, because scattered hover effects read as machine made, and
-`prefers-reduced-motion` stops the work rather than only the visible animation. Semantic
-elements, real headings, alt text that says what the image is doing there.
+Real content, no lorem. Every interactive state exists and is reachable. It works down
+to 320px with no horizontal scroll. Keyboard focus is visible and its indicator meets
+contrast on its own. `prefers-reduced-motion` stops the work rather than only the
+visible animation. Semantic elements, real headings, alt text that says what the image
+is doing there.
 
-The numbers, so you need not guess: 4.5:1 for body text, 3:1 for large text and
-interface components, 44px minimum touch target, 24px minimum between adjacent targets,
-16px minimum on inputs so mobile browsers do not zoom, 320px minimum width. From this
-repository's own palette measurement: an accent usually clears contrast against only one
-of your two grounds, so an accent is punctuation and body text lives on the ground to
-surface axis. Check that before setting a paragraph in it.
+The numbers, so you need not guess: 4.5:1 body text, 3:1 large text and interface
+components, 44px touch targets, 24px between adjacent targets, 16px on inputs, 320px
+minimum width. `verify.md` enumerates the rest of the floor, and every item on it fails
+the build when it is missing.
 
 **When you cut, never cut these.** Simplicity applies to means, not to obligations:
 input validation at a trust boundary, error handling where data can be lost, anything
-security related, and everything in this section. A smaller implementation of the chosen
-direction is always right. A smaller direction, chosen to justify a smaller
-implementation, is not.
-## 9. Which surface is this
+security related, anything the brief asked for by name, and everything in this section.
+A smaller implementation of the chosen direction is always right. A smaller direction,
+or a smaller version of what the client asked for in full, is not.
+
+## 9. How the run is operated
 
 Route per surface, not per project. A shop's About page and its order console are two
-different jobs sharing one design system. Ask one question:
+different jobs sharing one design system.
 
-| What is the visitor doing here | Open |
-| --- | --- |
-| Deciding whether to care, or reading | nothing. Sections 1 to 8 are the whole instruction |
-| Buying, or looking at a price | `floor/buy.md` |
-| Operating a tool they already trust you with | `floor/operate.md` |
-
-If a brief fits none of them, say so, pick the closest with a reason, and carry on. Do
-not invent a third floor and do not stall.
-
-## 10. How the run is operated
-
-Read `run.md` once now, before section 2, and follow it. It holds the three phases, the
-cap on every loop, what wins when two things conflict, and what to do when a browser,
-a stack or an answer is missing. It is procedure, not taste, so it is read once and put
-down rather than kept in mind while you design.
+Read `run.md` once now, before section 2. It routes the surface, holds the three phases
+and the cap on every loop, and says what to do when something is missing. Procedure, not
+taste.
