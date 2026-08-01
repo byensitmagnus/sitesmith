@@ -89,9 +89,9 @@ const CASES = [
     why: 'an unreadable manifest withholds its verdict; the index.html sitting next to it must not answer in its place',
   },
   {
-    name: 'nextjs-with-react against the shipped adapters',
+    name: 'nextjs-with-react against the shipped adapters (stacks/nextjs.md now exists, so detection resolves to a real file; this case was pinned at 2 until it landed and is the reason anyone came back to this table)',
     args: ['detect', join(FIX, 'nextjs-with-react')],
-    expect: 2,
+    expect: 0,
     why: 'stacks/nextjs.md does not exist yet, and naming a file that is not there is not a pass',
   },
   {

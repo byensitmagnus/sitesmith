@@ -5,15 +5,15 @@ license: MIT
 context:
   always: [SKILL.md]
   scenarios:
-    read: [run.md, stacks/static.md]
-    buy: [run.md, floor/buy.md, stacks/static.md]
-    operate: [run.md, floor/operate.md, stacks/static.md]
-    redesign: [run.md, floor/buy.md, redesign.md, stacks/static.md]
+    read: [run.md, stacks/*]
+    buy: [run.md, floor/buy.md, stacks/*]
+    operate: [run.md, floor/operate.md, stacks/*]
+    redesign: [run.md, floor/buy.md, redesign.md, stacks/*]
     inspect: [verify.md]
   ceilings:
     always: 3100
-    routine: 6000
-    redesign: 7000
+    routine: 6200
+    redesign: 7200
     inspect: 4600
 ---
 

@@ -610,7 +610,9 @@ if (reportRaw === null) {
       refuse('report/unknown-scenario', REPORT_PATH, lineOf(reportRaw, scenarioLine.index),
         `scenario "${name}" is not declared in ${show(skillMdPath)}. Declared: ${Object.keys(manifestOfReads.scenarios).join(', ') || 'none'}`);
     } else {
-      const allowed = new Set([...manifestOfReads.always, ...manifestOfReads.scenarios[name]]);
+      const declared = [...manifestOfReads.always, ...manifestOfReads.scenarios[name]];
+      const allowed = new Set(declared.filter((p) => !p.endsWith('/*')));
+      const allowedGlobs = declared.filter((p) => p.endsWith('/*')).map((p) => p.slice(0, -2));
       const base = lineOf(reportRaw, opened.index);
       const rows = opened.body.split('\n');
       for (let i = 0; i < rows.length; i++) {
@@ -630,6 +632,10 @@ if (reportRaw === null) {
            and that drift is precisely what the check exists to catch. */
         if (path.startsWith('scripts/')) continue;
         if ((manifestOfReads.scenarios.inspect ?? []).includes(path)) continue;
+        /* A manifest entry ending in slash-star means one file out of that directory,
+           because a run opens exactly one stack adapter. Matching it literally would
+           refuse every build that opened the adapter the router actually named. */
+        if (allowedGlobs.some((dir) => path.startsWith(dir + '/'))) continue;
         refuse('reads/outside-manifest', REPORT_PATH, base + 1 + i,
           `read ${path} is not declared for scenario ${name} ${EM} either the run opened more than its scenario allows or the manifest is wrong. Fix one of them; never delete the line to pass.`);
       }

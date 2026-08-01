@@ -435,3 +435,23 @@ is the shape of the thing that lost by 19 points.
    3,100, and roughly 1,200 est tokens have to come out of the two files together. That
    is the finding that would invalidate this triage most completely, and nothing in the
    repo currently tests for it.
+
+## Addendum, 2026-08-02: the ceilings moved once, and why
+
+`routine` went from 6000 to 6200 and `redesign` from 7000 to 7200 when the manifest
+changed from naming `stacks/static.md` to naming `stacks/*`.
+
+That is not the overage being waved through. The old ceilings reserved the **smallest**
+adapter while the manifest claimed to cover any stack, so they measured a fiction: a
+WordPress shop was never inside 6000 and never could have been. The reservation is now
+the largest adapter, which is the worst case a real run reaches. Two adapter authors
+found this independently and neither could fix it from inside their own file.
+
+`tools/context-budget.mjs` gained the shape to express it: an entry ending in `/*` means
+one file out of that directory, and the budget reserves the largest. An empty directory
+is still fatal, for the same reason a missing file is.
+
+One thing learned at cost: the justification for this change was first written as a
+comment inside the frontmatter, and that comment breached the ALWAYS ceiling by 72
+tokens. **Frontmatter is part of the always-loaded file.** A four-line explanation there
+is paid on every single invocation, forever. It belongs here instead.

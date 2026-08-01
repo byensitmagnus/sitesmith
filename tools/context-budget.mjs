@@ -141,9 +141,29 @@ const usingLegacy = !manifest
 if (usingLegacy) manifest = legacyManifest(files)
 
 const problems = []
+/* A run opens exactly ONE stack adapter, never all of them. Two adapter authors found
+   this independently: declaring all five in a scenario would budget for four files the
+   run never reads together and push three scenarios past their ceilings for a cost
+   nobody pays. An entry ending in slash-star means one file out of that directory, and
+   the reservation is the largest of them, because that is the worst case a real run can
+   reach. An empty directory is still fatal, for the same reason a missing file is. */
+function resolveOneOf(pattern, where) {
+  const dir = pattern.slice(0, pattern.lastIndexOf('/'))
+  const candidates = files.filter((f) => f.rel.startsWith(dir + '/') && f.rel.endsWith('.md'))
+  if (!candidates.length) {
+    problems.push(`${where}: nothing matches ${pattern}`)
+    return 0
+  }
+  return candidates.reduce((a, b) => (a.bytes > b.bytes ? a : b)).bytes
+}
+
 function resolve(list, where) {
   let bytes = 0
   for (const rel of list) {
+    if (rel.endsWith('/*')) {
+      bytes += resolveOneOf(rel, where)
+      continue
+    }
     const b = bytesOf(rel)
     if (b === undefined) {
       // A declared file that does not exist is the failure mode that turns a budget
