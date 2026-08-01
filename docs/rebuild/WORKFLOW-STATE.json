@@ -3,10 +3,10 @@
   "workflow": "sitesmith-unified-rebuild",
   "branch": "rebuild/sitesmith-unified",
   "base": "dc00598cce2af92435a749856393e287506753bc",
-  "state": "S9_MINIMAL_IMPLEMENTATION",
-  "previousState": "S10_MECHANISM_TESTS",
+  "state": "S3_MECHANISM_GRAPH",
+  "previousState": "S9_MINIMAL_IMPLEMENTATION",
   "allowedNextStates": [
-    "S11_PROTOTYPE_BUILD"
+    "S9_MINIMAL_IMPLEMENTATION"
   ],
   "states": [
     "S0_REPO_TRUTH",
@@ -33,7 +33,8 @@
     "G3_architecture_selected": "pass",
     "G4_red_team": "pass",
     "G5_mechanism_tests": "pass",
-    "G6_holdout": "not-started"
+    "G6_holdout": "not-started",
+    "G7_placement_coverage": "running"
   },
   "budget": {
     "concurrentResearchAgentsLimit": 6,
@@ -42,7 +43,7 @@
     "prototypeSitesLimit": 2,
     "paidThirdPartyApiSpend": 0,
     "newHeadToHeadArms": 0,
-    "agentRunsSoFar": 66,
+    "agentRunsSoFar": 78,
     "subagentTokensTotal": 6665404
   },
   "openRisks": [
@@ -58,5 +59,6 @@
     "step2_teach_repo_new_shape": "not started — provenance-build.mjs, configurable check-repo roots, must-fail fixtures for the four reference globs. 20-30h",
     "step3_budget_gate": "done — tools/context-budget.mjs rewritten with declared manifest, three failure modes, 5-case test suite",
     "remaining": "floor/buy.md, floor/operate.md, redesign.md, verify.md, stacks/*.md, gate.mjs, ledger.mjs, stack.mjs, then two prototypes and the holdout"
-  }
+  },
+  "courseCorrection": "2026-08-01: build paused. Extraction was broad (17 repos, 140 mechanisms) but the artifact used ~15 of them. Every adopted mechanism must now be traced to a named file, a quote, or a written drop before any more skill files are written. This project is a learning and community artefact, not a rush; depth is the point."
 }
