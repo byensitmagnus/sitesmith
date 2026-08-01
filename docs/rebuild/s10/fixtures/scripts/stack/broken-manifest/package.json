@@ -1,0 +1,5 @@
+{
+  "name": "fixture-broken-manifest",
+  "dependencies": {
+    "next": "15.4.2",
+}

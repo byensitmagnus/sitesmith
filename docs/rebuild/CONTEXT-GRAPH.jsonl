@@ -731,3 +731,11 @@
 {"kind":"edge","type":"SOLVES","from":"decision:budget-triage","to":"risk:skill-md-budget-breach"}
 {"kind":"edge","type":"VALIDATED_BY","from":"decision:budget-triage","to":"result:always-budget-measured"}
 {"kind":"edge","type":"IMPLEMENTS","from":"decision:budget-triage","to":"decision:breach-forces-triage-not-ceiling-raise"}
+{"kind":"node","type":"FailureMode","id":"failure:gate-scoped-to-html-only","label":"Eight honesty checks in gate.mjs iterated .html files only, so a Next, Astro or Vite source tree carrying nine declared defects in a .tsx file printed 'every check ran and none refused' at exit 0","confidence":1.0,"evidence":"reproduced: the same input now exits 2 with each defect named"}
+{"kind":"node","type":"FailureMode","id":"failure:gate-url-misattribution","label":"gate.mjs --url rendered any page in the world while the report named the build directory, so a must-refuse fixture passed by being pointed at a different page","confidence":1.0,"evidence":"reproduced: the verdict line now states the external target and the fixture refuses again"}
+{"kind":"node","type":"Test","id":"test:break-the-gates","label":"An adversarial pass whose job is to make each gate pass something it must refuse; it found both false-pass paths in gate.mjs and confirmed the control group still fails","status":"working","evidence":"workflow wf_12a2375b-5ea"}
+{"kind":"node","type":"Result","id":"result:v3-scripts-green","label":"Four shipped scripts with 61 pinned fixtures across four runners; all green, control group still fails verify.mjs at exit 2","confidence":0.9,"evidence":"test-stack 12, test-ledger 29, test-gate 14, test-verify 6"}
+{"kind":"edge","type":"INVALIDATED_BY","from":"result:v3-scripts-green","to":"failure:gate-scoped-to-html-only"}
+{"kind":"edge","type":"INVALIDATED_BY","from":"result:v3-scripts-green","to":"failure:gate-url-misattribution"}
+{"kind":"edge","type":"VALIDATED_BY","from":"result:v3-scripts-green","to":"test:break-the-gates"}
+{"kind":"edge","type":"SOLVES","from":"test:break-the-gates","to":"failure:prose-only-guardrails","why":"a gate nobody attacks is a prose guardrail with an exit code"}

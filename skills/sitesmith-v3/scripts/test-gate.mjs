@@ -1,0 +1,159 @@
+#!/usr/bin/env node
+// The test of the release gate.
+//
+//   node skills/sitesmith-v3/scripts/test-gate.mjs
+//
+// A gate that cannot fail is decoration, and a gate that cannot pass is noise. Every case
+// below fixes its exit code before the gate runs, and most of them also fix the defect
+// classes that must appear by name, because an exit code alone would let one check's
+// refusal stand in for another's silence. Two cases exist only to pin the shape of the
+// thing rather than a defect: `pass` must reach 0, and `pass` with no browser must reach 1
+// and say a verdict is missing rather than reporting a pass it did not earn.
+//
+// Exit codes under test:
+//   0  every check ran and none refused
+//   2  refused
+//   1  nothing refused and at least one verdict is missing
+
+import { spawnSync } from 'node:child_process';
+import { existsSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
+import { dirname, join } from 'node:path';
+
+const SCRIPTS = dirname(fileURLToPath(import.meta.url));
+const ROOT = join(SCRIPTS, '../../..');
+const SKILL = join(SCRIPTS, '..');
+const FIX = join(ROOT, 'docs/rebuild/s10/fixtures/scripts/gate');
+const GATE = join(SCRIPTS, 'gate.mjs');
+
+/* The render check needs a browser, and the browser has to be resolvable from the working
+   directory the gate runs in, which is where `sitesmith install` puts it on a real project.
+   If no installed copy can be found the render cases cannot run, and this suite says so and
+   fails rather than reporting green on the cases it skipped. */
+const WITH_BROWSER = ['benchmarks', 'tests/gates', 'skills/sitesmith/scripts', '.']
+  .map((d) => join(ROOT, d))
+  .find((d) => existsSync(join(d, 'node_modules/playwright')));
+
+const CASES = [
+  {
+    name: 'pass',
+    fixture: 'pass', browser: true, expect: 0,
+    must: ['WAIVED', 'antipattern/gradient-text', 'every check ran and none refused'],
+    why: 'a build that keeps its word, with its one antipattern claimed on purpose in the direction record',
+  },
+  {
+    name: 'pass, no browser',
+    fixture: 'pass', browser: false, expect: 1,
+    must: ['VERDICT MISSING', 'direction fidelity', 'This is not a pass'],
+    mustNot: ['every check ran'],
+    why: 'with nothing to render the direction verdict is missing, and a missing verdict is not a pass',
+  },
+  {
+    name: 'dishonest page',
+    fixture: 'refuse-dishonest', browser: true, expect: 2,
+    must: ['honesty/placeholder-language', 'honesty/dummy-identifier', 'honesty/empty-brand-mark', 'honesty/unmanifested-asset'],
+    mustNot: ['tokens/undeclared-literal'],
+    why: 'honesty runs first and stops the gate, so the undeclared literal in the same stylesheet is named as a missing verdict rather than measured',
+  },
+  {
+    name: 'em dash, elision, an uninstalled design system',
+    fixture: 'refuse-source', browser: true, expect: 2,
+    must: ['copy/em-dash', 'output/elision-placeholder', 'honesty/design-system-not-installed'],
+    why: 'three source refusals that no flag and no allowlist can turn off',
+  },
+  {
+    name: 'report accounting',
+    fixture: 'refuse-report', browser: true, expect: 2,
+    must: ['reads/outside-manifest', 'run-notes/no-reason-on-a-step-that-did-not-run', 'reconciliation/unreconciled-finding'],
+    why: 'a read outside the declared scenario, a step that did not run and never said why, and a mechanical finding nobody dispositioned',
+  },
+  {
+    name: 'token drift in emitted CSS',
+    fixture: 'refuse-drift', browser: true, expect: 2,
+    must: ['tokens/undeclared-literal'],
+    why: 'literals at call sites in a stylesheet the build emitted, which is the blindness the v2.3 scanner had',
+  },
+  {
+    name: 'the named tells',
+    fixture: 'refuse-tells', browser: true, expect: 2,
+    must: ['antipattern/gradient-text', 'antipattern/three-card-grid', 'antipattern/framework-default-scale', 'antipattern/icon-tile-row'],
+    why: 'four tells, none of them claimed in the direction record',
+  },
+  {
+    name: 'the round-8 recipe',
+    fixture: 'refuse-round8', browser: true, expect: 2,
+    must: ['antipattern/round-8-recipe'],
+    why: 'this studio shipped this exact combination three times and the portfolio failed on sameness',
+  },
+  {
+    name: 'the render is not the direction',
+    fixture: 'refuse-render', browser: true, expect: 2,
+    must: ['direction/ground-outside-declared-band', 'direction/display-face-not-the-declared-one', 'direction/signature-does-not-render'],
+    why: 'measured at 1440 in the default colour scheme, which is the view anyone was actually shown',
+  },
+  {
+    name: 'a palette this gate cannot convert',
+    fixture: 'withhold-oklch', browser: true, expect: 1,
+    must: ['VERDICT MISSING', 'colour space this gate cannot convert'],
+    mustNot: ['every check ran'],
+    why: 'the ground verdict is withheld and named, and nothing is guessed from a colour space the gate has no conversion for',
+  },
+  {
+    name: 'draft downgrades the manifest refusal',
+    fixture: 'draft-build', args: ['--draft'], browser: true, expect: 0,
+    must: ['WARNED', 'honesty/unmanifested-asset'],
+    why: 'the same defect is a warning in a draft, and the report carries the flag',
+  },
+  {
+    name: 'the same build without the flag',
+    fixture: 'draft-build', browser: true, expect: 2,
+    must: ['honesty/unmanifested-asset'],
+    why: 'the downgrade is the flag, not the build',
+  },
+  {
+    name: 'a record and a report that do not answer',
+    fixture: 'refuse-record', browser: true, expect: 2,
+    must: ['report/no-files-opened-list', 'run-notes/missing-field', 'reconciliation/false-positive-without-reason',
+      'direction/one-off-without-a-reason', 'direction/palette-not-declared', 'direction/signature-not-declared'],
+    why: 'the record declares no palette, type or signature, the one-off carries no reason, a run note is absent rather than answered, and a finding is dismissed as a false positive without saying why',
+  },
+  {
+    name: 'a draft claiming release',
+    fixture: 'refuse-draft-release', args: ['--draft'], browser: true, expect: 2,
+    must: ['honesty/release-claimed-on-a-draft-build'],
+    why: 'no build claiming release may have used --draft',
+  },
+];
+
+let failed = 0;
+const fail = (name, why) => { failed++; console.log(`  FAIL  ${name}\n          ${why}`); };
+
+if (!WITH_BROWSER) {
+  fail('browser discovery',
+    'no installed playwright under benchmarks/, tests/gates/ or skills/sitesmith/scripts/. The render cases cannot run, so this suite has no verdict on them.');
+}
+
+for (const c of CASES) {
+  if (c.browser && !WITH_BROWSER) continue;
+  const cwd = c.browser ? WITH_BROWSER : ROOT;
+  const r = spawnSync(process.execPath,
+    [GATE, join(FIX, c.fixture), '--skill', SKILL, ...(c.args ?? [])],
+    { cwd, encoding: 'utf8' });
+  const out = `${r.stdout ?? ''}${r.stderr ?? ''}`;
+
+  const problems = [];
+  if (r.status !== c.expect) problems.push(`exit ${r.status}, expected ${c.expect}`);
+  for (const m of c.must ?? []) if (!out.includes(m)) problems.push(`stdout never names "${m}"`);
+  for (const m of c.mustNot ?? []) if (out.includes(m)) problems.push(`stdout names "${m}" and should not`);
+
+  /* The one number the gate prints and is not allowed to gate on. Every run must show it,
+     and no run may ever turn it into a refusal. */
+  if (!out.includes('world-derived token vocabulary')) problems.push('the world-derived token vocabulary measurement was not printed');
+  if (/REFUSED[\s\S]*world-derived token vocabulary share/.test(out)) problems.push('the vocabulary measurement was reported as a refusal');
+
+  if (problems.length) fail(`${c.name} (${c.fixture})`, `${problems.join('; ')}\n          expected because: ${c.why}`);
+  else console.log(`  ok    ${c.name} -> exit ${r.status}  (${c.why})`);
+}
+
+console.log(failed ? `\n${failed} case(s) failed` : `\nall clear, ${CASES.length} case(s)`);
+process.exit(failed ? 1 : 0);

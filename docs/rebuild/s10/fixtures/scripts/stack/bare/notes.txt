@@ -1,0 +1,2 @@
+A directory with no manifest, no framework config and no HTML.
+Keeps the "nothing detectable" refusal exercised.

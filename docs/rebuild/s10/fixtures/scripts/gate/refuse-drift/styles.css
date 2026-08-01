@@ -1,0 +1,16 @@
+:root {
+  --paper: #f2ece1;
+  --liquor: #3b2a17;
+  --face-ledger: Georgia, serif;
+}
+
+html { background: var(--paper); }
+body { background: var(--paper); color: var(--liquor); font-family: var(--face-ledger); }
+
+h1 {
+  font-family: "Courier New", monospace;
+  font-size: 2.75rem;
+  color: #3b2a17;
+}
+
+.wetline { height: 0.5px; border: 0; border-radius: 3px; background: sienna; }

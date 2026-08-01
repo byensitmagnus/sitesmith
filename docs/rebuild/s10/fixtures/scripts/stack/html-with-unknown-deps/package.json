@@ -1,0 +1,8 @@
+{
+  "name": "fixture-html-with-unknown-deps",
+  "private": true,
+  "devDependencies": {
+    "some-in-house-page-builder": "2.0.0",
+    "postcss": "8.5.6"
+  }
+}
