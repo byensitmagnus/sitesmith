@@ -1,0 +1,376 @@
+<!doctype html>
+<html lang="da">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Orgelværkstedet Hvidbjerg. Aase og Thorbjørn restaurerer og intonerer kirkeorgler</title>
+<meta name="description" content="Aase og Thorbjørn restaurerer og intonerer kirkeorgler fra Hvidbjerg i Thy. Første besøg tager en halv dag og koster ingenting, og I får en skriftlig tilstandsrapport bagefter.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&amp;family=Vollkorn:wght@400;600&amp;display=swap">
+<style>
+:root {
+  /* Farver navngivet efter det, de er i et orgelværksted. Se .sitesmith/direction.md */
+  --blyhvid: #d9dad4;
+  --hvidtekalk: #edeee9;
+  --kancelle: #23262b;
+  --bælgskind: #7a3b1f;
+  --stemmejern: #5f635d;
+
+  --vævning: repeating-linear-gradient(90deg, rgba(35, 38, 43, 0) 0 38px, rgba(35, 38, 43, 0.055) 38px 40px);
+
+  --titelskrift: "Vollkorn", Georgia, "Times New Roman", serif;
+  --brødskrift: "Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+
+  --marginal: 0.9375rem;
+  --korpus: 1.0625rem;
+  --mellemtitel: 1.3125rem;
+  --titel: clamp(1.75rem, 1.05rem + 2.3vw, 2.6rem);
+
+  --margenspalte: 11rem;
+  --luft: 2.75rem;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  color-scheme: light;
+  background: var(--blyhvid);
+  background-image: var(--vævning);
+}
+
+body {
+  margin: 0;
+  padding: 0 0.75rem;
+  font-family: var(--brødskrift);
+  font-size: var(--korpus);
+  line-height: 1.65;
+  color: var(--kancelle);
+  -webkit-text-size-adjust: 100%;
+}
+
+::selection { background: var(--bælgskind); color: var(--hvidtekalk); }
+
+p { margin: 0 0 1rem; }
+p:last-child { margin-bottom: 0; }
+
+a { color: var(--bælgskind); }
+a:hover { color: var(--kancelle); }
+:focus-visible {
+  outline: 3px solid var(--kancelle);
+  outline-offset: 3px;
+}
+
+.spring {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  background: var(--kancelle);
+  color: var(--hvidtekalk);
+  padding: 0.75rem 1rem;
+  text-decoration: none;
+}
+.spring:focus { left: 0.75rem; top: 0.5rem; z-index: 2; }
+
+/* Arket: alt indhold står på et papir, man kan lægge på et mødebord. */
+.ark {
+  max-width: 68rem;
+  margin: 0 auto;
+  background: var(--hvidtekalk);
+  border: 1px solid var(--stemmejern);
+  padding: 1.5rem 1.25rem 2.5rem;
+}
+
+/* Margenspalten: overskrifter og marginaltekst står ude i venstre margen. */
+.blok {
+  display: grid;
+  gap: 0.5rem 2.5rem;
+  padding: var(--luft) 0 0;
+}
+.blok + .blok { border-top: 1px solid var(--stemmejern); }
+
+.marginal, .sidetitel {
+  font-size: var(--marginal);
+  color: var(--stemmejern);
+  line-height: 1.45;
+  margin: 0 0 0.35rem;
+}
+.sidetitel {
+  font-family: var(--titelskrift);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--kancelle);
+  align-self: start;
+}
+.tekst { max-width: 34em; }
+
+/* Brevhoved */
+.brevhoved {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.5rem 2rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 3px solid var(--kancelle);
+}
+.værksted {
+  font-family: var(--titelskrift);
+  font-size: var(--mellemtitel);
+  font-weight: 600;
+  margin: 0;
+}
+.folk { margin: 0; font-size: var(--marginal); color: var(--stemmejern); }
+.brevhoved address {
+  font-style: normal;
+  font-size: var(--marginal);
+  text-align: left;
+  line-height: 1.5;
+}
+
+h1 {
+  font-family: var(--titelskrift);
+  font-weight: 400;
+  font-size: var(--titel);
+  line-height: 1.12;
+  letter-spacing: -0.005em;
+  margin: 0 0 1rem;
+  text-wrap: balance;
+}
+h3 {
+  font-family: var(--titelskrift);
+  font-size: var(--mellemtitel);
+  font-weight: 600;
+  margin: 0 0 0.15rem;
+}
+.manchet { font-size: var(--mellemtitel); line-height: 1.45; }
+
+/* Den ene knap på siden */
+.handling { margin: 1.5rem 0 0; }
+.ring {
+  display: inline-flex;
+  align-items: center;
+  min-height: 3rem;
+  padding: 0 1.4rem;
+  background: var(--bælgskind);
+  color: var(--hvidtekalk);
+  font-weight: 700;
+  text-decoration: none;
+  border: 2px solid var(--bælgskind);
+  border-radius: 2px;
+}
+.ring:hover { background: var(--kancelle); border-color: var(--kancelle); color: var(--hvidtekalk); }
+.ring:active { background: var(--kancelle); border-color: var(--kancelle); }
+
+/* Signaturen: månedsbåndet. Otte til atten måneder, begge tal skrevet. */
+.varighed { margin: 2.25rem 0 0; }
+.varighed-skala { padding-top: 0.5rem; }
+.varighed-spor {
+  position: relative;
+  height: 3rem;
+  border-bottom: 2px solid var(--kancelle);
+}
+.varighed-takker {
+  position: absolute;
+  inset: auto 0 0 0;
+  display: grid;
+  grid-template-columns: repeat(18, 1fr);
+  height: 0.55rem;
+}
+.varighed-takker span { border-left: 1px solid var(--stemmejern); }
+.varighed-takker span:last-child { border-right: 1px solid var(--stemmejern); }
+.varighed-bånd {
+  position: absolute;
+  bottom: 0;
+  left: 44.44%;
+  right: 0;
+  height: 1.5rem;
+  background: var(--bælgskind);
+  transform-origin: left center;
+}
+.varighed-tal {
+  position: relative;
+  height: 1.4rem;
+  margin-top: 0.4rem;
+  font-size: var(--marginal);
+  color: var(--stemmejern);
+}
+.varighed-tal span { position: absolute; top: 0; white-space: nowrap; }
+.tal-0 { left: 0; }
+.tal-8 { left: 44.44%; transform: translateX(-50%); color: var(--kancelle); }
+.tal-18 { right: 0; color: var(--kancelle); }
+.varighed figcaption { margin-top: 1rem; max-width: 30em; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .varighed-bånd { animation: træk 900ms cubic-bezier(0.2, 0.75, 0.25, 1) both; }
+}
+@keyframes træk {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+/* Arbejdslisten i vindens rækkefølge */
+.arbejdsliste { list-style: none; margin: 1.75rem 0 0; padding: 0; }
+.post { padding: 0.9rem 0; border-top: 1px solid var(--stemmejern); }
+.post .marginal { font-style: italic; }
+.post p:last-child { margin-bottom: 0; }
+.afvisning {
+  margin-top: 1.75rem;
+  padding-top: 1.1rem;
+  border-top: 3px solid var(--kancelle);
+}
+
+/* Trinnene ved et første besøg */
+.trin { margin: 0; padding: 0 0 0 1.4rem; }
+.trin li { margin-bottom: 0.6rem; padding-left: 0.4rem; }
+.trin li::marker { font-family: var(--titelskrift); color: var(--bælgskind); }
+
+.fod { padding-top: var(--luft); }
+.fod address { font-style: normal; }
+.tlf {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  font-family: var(--titelskrift);
+  font-size: var(--mellemtitel);
+  font-weight: 600;
+}
+
+@media (min-width: 62rem) {
+  body { padding: 0 1.5rem; }
+  .ark { padding: 2.5rem 3rem 4rem; margin: 2.5rem auto 3.5rem; }
+  .blok { grid-template-columns: var(--margenspalte) minmax(0, 1fr); }
+  .varighed { grid-column: 1 / -1; margin-top: 2.75rem; }
+  .brevhoved address { text-align: right; }
+  .post { display: grid; grid-template-columns: 7rem minmax(0, 1fr); gap: 0 1.5rem; }
+  .post .marginal { margin: 0; }
+}
+</style>
+</head>
+<body>
+<a class="spring" href="#hoved">Spring til indholdet</a>
+
+<div class="ark">
+
+  <header class="brevhoved">
+    <div>
+      <p class="værksted">Orgelværkstedet Hvidbjerg</p>
+      <p class="folk">Aase og Thorbjørn. Sammen siden 1998.</p>
+    </div>
+    <address>
+      Kirkevej 4, 7790 Hvidbjerg<br>
+      Telefon 97 87 12 06
+    </address>
+  </header>
+
+  <main id="hoved">
+
+    <section class="blok" aria-labelledby="anslag-titel">
+      <p class="marginal">Til menighedsrådet</p>
+      <div class="tekst">
+        <h1 id="anslag-titel">Første besøg tager en halv dag og koster ingenting.</h1>
+        <p class="manchet">Bagefter skriver vi en tilstandsrapport på orglet. I får den, uanset om vi får arbejdet.</p>
+        <p>Vi er to. Aase og Thorbjørn. Vi restaurerer og intonerer kirkeorgler, og det har vi gjort sammen siden 1998.</p>
+        <p class="handling"><a class="ring" href="tel:+4597871206">Ring 97 87 12 06</a></p>
+      </div>
+
+      <figure class="varighed" data-asset="varighed-skala">
+          <div class="varighed-skala" aria-hidden="true">
+            <div class="varighed-spor">
+              <div class="varighed-takker">
+                <span></span><span></span><span></span><span></span><span></span><span></span>
+                <span></span><span></span><span></span><span></span><span></span><span></span>
+                <span></span><span></span><span></span><span></span><span></span><span></span>
+              </div>
+              <div class="varighed-bånd"></div>
+            </div>
+            <div class="varighed-tal">
+              <span class="tal-0">0</span>
+              <span class="tal-8">8</span>
+              <span class="tal-18">18 måneder</span>
+            </div>
+          </div>
+          <figcaption>En fuld restaurering tager otte til atten måneder. Vi skriver begge tal.</figcaption>
+      </figure>
+    </section>
+
+    <section class="blok" aria-labelledby="t-arbejdet">
+      <h2 class="sidetitel" id="t-arbejdet">Arbejdet</h2>
+      <div class="tekst">
+        <p class="manchet">Vinden begynder i bælgen, går gennem vindladen og op i piberækken. Vi arbejder alle tre steder, og på trakturen, som er den mekaniske forbindelse fra tangent til ventil.</p>
+
+        <ol class="arbejdsliste">
+          <li class="post">
+            <p class="marginal">her begynder vinden</p>
+            <div>
+              <h3>Bælge og pneumatik</h3>
+              <p>Vi lædrer dem om.</p>
+            </div>
+          </li>
+          <li class="post">
+            <p class="marginal">her fordeles den</p>
+            <div>
+              <h3>Vindlader</h3>
+              <p>Vi reparerer dem.</p>
+            </div>
+          </li>
+          <li class="post">
+            <p class="marginal">her bliver den til tone</p>
+            <div>
+              <h3>Piberækker</h3>
+              <p>Vi skifter dem ud.</p>
+            </div>
+          </li>
+          <li class="post">
+            <p class="marginal">her rettes tonen til</p>
+            <div>
+              <h3>Intonation og stemning</h3>
+              <p>Vi intonerer og stemmer.</p>
+            </div>
+          </li>
+          <li class="post">
+            <p class="marginal">den del, vinden ikke rører</p>
+            <div>
+              <h3>Traktur</h3>
+              <p>Vi bygger mekaniske trakturer om.</p>
+            </div>
+          </li>
+        </ol>
+
+        <p class="afvisning">Elektroniske orgler installerer vi ikke. Det siger vi hellere med det samme.</p>
+      </div>
+    </section>
+
+    <section class="blok" aria-labelledby="t-besøg">
+      <h2 class="sidetitel" id="t-besøg">Første besøg</h2>
+      <div class="tekst">
+        <ol class="trin">
+          <li>I ringer på 97 87 12 06.</li>
+          <li>Vi kommer og bruger en halv dag på orglet. Det koster ingenting.</li>
+          <li>Vi skriver en tilstandsrapport bagefter. I får den, uanset om arbejdet bliver til noget.</li>
+        </ol>
+        <p>Derefter er det jeres beslutning.</p>
+      </div>
+    </section>
+
+    <section class="blok" aria-labelledby="t-hvem">
+      <h2 class="sidetitel" id="t-hvem">Hvem og hvor</h2>
+      <div class="tekst">
+        <p>Aase og Thorbjørn. Fire eller fem instrumenter om året.</p>
+        <p>Værkstedet ligger i Hvidbjerg i Thy. Vi kører i hele Danmark.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="blok fod">
+    <p class="marginal">Kontakt</p>
+    <div class="tekst">
+      <p><a class="tlf" href="tel:+4597871206">97 87 12 06</a></p>
+      <address>Orgelværkstedet Hvidbjerg, Kirkevej 4, 7790 Hvidbjerg</address>
+    </div>
+  </footer>
+
+</div>
+</body>
+</html>
