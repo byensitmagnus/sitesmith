@@ -3,11 +3,10 @@
   "workflow": "sitesmith-unified-rebuild",
   "branch": "rebuild/sitesmith-unified",
   "base": "dc00598cce2af92435a749856393e287506753bc",
-  "state": "S10_MECHANISM_TESTS",
-  "previousState": "S2_REPO_AUTOPSIES",
+  "state": "S9_MINIMAL_IMPLEMENTATION",
+  "previousState": "S10_MECHANISM_TESTS",
   "allowedNextStates": [
-    "S11_PROTOTYPE_BUILD",
-    "S9_MINIMAL_IMPLEMENTATION"
+    "S11_PROTOTYPE_BUILD"
   ],
   "states": [
     "S0_REPO_TRUTH",
@@ -33,7 +32,7 @@
     "G2_autopsies": "pass",
     "G3_architecture_selected": "pass",
     "G4_red_team": "pass",
-    "G5_mechanism_tests": "running",
+    "G5_mechanism_tests": "pass",
     "G6_holdout": "not-started"
   },
   "budget": {
@@ -43,7 +42,8 @@
     "prototypeSitesLimit": 2,
     "paidThirdPartyApiSpend": 0,
     "newHeadToHeadArms": 0,
-    "agentRunsSoFar": 61
+    "agentRunsSoFar": 66,
+    "subagentTokensTotal": 6665404
   },
   "openRisks": [
     "risk:reexpression-may-not-transfer is now under test (S10-1). Our creative surface is 2161 est tokens against a section budget of 1726; if it wins, the overage is paid for by moving the control plane out of SKILL.md into a fetched run.md, which the architecture decision pre-registers.",
@@ -52,5 +52,11 @@
     "risk:anti-argmax-audited-not-forced — the model can write three theses and justify the one it already wanted.",
     "A9 is unproven until three builds exist."
   ],
-  "pushPolicy": "no push, no merge, no force-push until Magnus approves once for this branch"
+  "pushPolicy": "no push, no merge, no force-push until Magnus approves once for this branch",
+  "implementation": {
+    "step1_creative_surface": "done — drafted, smoke-tested, claims rule fixed after the test found the leak",
+    "step2_teach_repo_new_shape": "not started — provenance-build.mjs, configurable check-repo roots, must-fail fixtures for the four reference globs. 20-30h",
+    "step3_budget_gate": "done — tools/context-budget.mjs rewritten with declared manifest, three failure modes, 5-case test suite",
+    "remaining": "floor/buy.md, floor/operate.md, redesign.md, verify.md, stacks/*.md, gate.mjs, ledger.mjs, stack.mjs, then two prototypes and the holdout"
+  }
 }
