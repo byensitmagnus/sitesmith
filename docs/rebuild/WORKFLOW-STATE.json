@@ -3,10 +3,10 @@
   "workflow": "sitesmith-unified-rebuild",
   "branch": "rebuild/sitesmith-unified",
   "base": "dc00598cce2af92435a749856393e287506753bc",
-  "state": "S3_MECHANISM_GRAPH",
-  "previousState": "S9_MINIMAL_IMPLEMENTATION",
+  "state": "S15_PACKAGE_AND_DOCUMENT",
+  "previousState": "S3_MECHANISM_GRAPH",
   "allowedNextStates": [
-    "S9_MINIMAL_IMPLEMENTATION"
+    "S13_HOLDOUT_BUILD"
   ],
   "states": [
     "S0_REPO_TRUTH",
@@ -33,7 +33,7 @@
     "G3_architecture_selected": "pass",
     "G4_red_team": "pass",
     "G5_mechanism_tests": "pass",
-    "G6_holdout": "not-started",
+    "G6_holdout": "fail-three-rounds-defences-now-structural",
     "G7_placement_coverage": "running"
   },
   "budget": {
@@ -43,15 +43,16 @@
     "prototypeSitesLimit": 2,
     "paidThirdPartyApiSpend": 0,
     "newHeadToHeadArms": 0,
-    "agentRunsSoFar": 78,
-    "subagentTokensTotal": 6665404
+    "agentRunsSoFar": 140,
+    "subagentTokensTotal": 6665404,
+    "workflows": 16
   },
   "openRisks": [
-    "risk:reexpression-may-not-transfer is now under test (S10-1). Our creative surface is 2161 est tokens against a section budget of 1726; if it wins, the overage is paid for by moving the control plane out of SKILL.md into a fetched run.md, which the architecture decision pre-registers.",
-    "risk:ci-coupling — check-repo.py imports core.py from skills/sitesmith/scripts and four checks glob references/*.md, so nothing may be deleted before the repo is taught the new shape. Verified directly at tools/check-repo.py:645.",
-    "risk:blocks-deletion — dropping the block library means accessible combobox and focus-trap implementations come from memory; the journey gate catches absence of testing, not absence of correctness.",
-    "risk:anti-argmax-audited-not-forced — the model can write three theses and justify the one it already wanted.",
-    "A9 is unproven until three builds exist."
+    "A9 has not passed. Three rounds, three fails, each fix relocating the convergence. The colour and signature vetoes are live and were not when any round ran; a fourth round is the next real evidence.",
+    "144 of 243 mechanisms are unchallenged; waves three and four had no red team.",
+    "The judge validation gate ponytail's measurement calls for is designed and not built, so every judge verdict here carries that discount.",
+    "The old skills/sitesmith tree is untouched. Migration and CI rewiring is 20 to 30 hours and is needed to publish, not to use.",
+    "No site built with this has shipped to a customer."
   ],
   "pushPolicy": "no push, no merge, no force-push until Magnus approves once for this branch",
   "implementation": {
