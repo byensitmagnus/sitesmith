@@ -1,0 +1,216 @@
+[
+  {
+    "id": "bm25-csv-retrieval",
+    "source": "ui-ux-pro-max",
+    "sourcePath": ".claude/skills/ui-ux-pro-max/scripts/core.py:161-289",
+    "problemSolved": "Fetching relevant reference rows (UX rules, stack guidelines, font pairings) from a flat CSV corpus by free-text query without an embeddings service or network call.",
+    "mechanism": "Stdlib-only BM25 (k1=1.5, b=0.75) over per-domain CSV files, tokenized with a small stopword list and a synonym dictionary (e-commerce/ecommerce, dark-mode/dark, a11y/accessibility, etc.), with mtime-based CSV+index caching so repeated searches in one process don't re-read/re-fit (core.py:229-263).",
+    "whyItWorks": "It is a pure retrieval mechanism: it returns candidate rows for the model to read and reason over, it does not itself decide anything. Cheap (no deps, <200ms), deterministic, and testable in isolation.",
+    "requiredContext": ["query string", "target CSV file + its declared search_cols/output_cols"],
+    "contextCost": "low",
+    "outputImpact": "Only as good as the CSV corpus; retrieval quality is bounded by how well the corpus covers the domain (see FAILURE-MODES.md for the google-fonts.csv case, which is a raw export, not curated).",
+    "failureModes": [
+      "BM25 on ~100-row CSVs is overkill machinery for what is effectively keyword grep; adds a dependency on IDF statistics behaving sensibly with tiny N",
+      "Domain misrouting silently returns the wrong CSV's rows if --domain is omitted and keywords overlap (mitigated by an explicit runner-up hint, see ROUTING.md)"
+    ],
+    "conflicts": [],
+    "testMethod": "unittest in scripts/tests/test_core.py: tokenizer edge cases (stopwords, synonyms, short domain tokens) and known-query-to-expected-domain sanity checks. Structural, not accuracy-graded.",
+    "decision": "adapt",
+    "sitesmithForm": "Reuse the retrieval idea (cheap keyword search over a small reference corpus) only for pulling in stimulus material the model reasons over — WCAG/UX rules, stack idioms, font metadata — never for auto-selecting a creative decision (see reject verdicts below).",
+    "confidence": 0.85
+  },
+  {
+    "id": "domain-auto-detect",
+    "source": "ui-ux-pro-max",
+    "sourcePath": ".claude/skills/ui-ux-pro-max/scripts/core.py:344-408",
+    "problemSolved": "Routing a free-text query to the right CSV (style vs color vs typography vs ux etc.) when the caller doesn't pass --domain explicitly.",
+    "mechanism": "A hand-authored keyword-list-per-domain dict, scored by regex word-boundary match with multi-word phrases weighted higher than single words; ties broken by a fixed priority order (ux > product > style > color > ...); falls back to 'style' if nothing scores > 0. Product-domain keywords are loaded live from products.csv's own Keywords column at import time instead of being hand-duplicated (core.py:323-341).",
+    "whyItWorks": "Deterministic and debuggable — you can read the exact keyword list that produced a routing decision. The self-updating product keyword list is a small but real anti-drift trick: it can't go stale relative to the data it routes into.",
+    "requiredContext": ["query string", "static domain_keywords dict (~150 tokens)"],
+    "contextCost": "low",
+    "outputImpact": "Wrong domain silently returns off-topic-but-real rows (a 'Result 1/2/3' block that looks legitimate but answers the wrong question) rather than an empty result — see FAILURE-MODES.md.",
+    "failureModes": [
+      "Overlapping vocabulary (e.g. 'font' hits both typography and google-fonts) documented as a known miss in SKILL.md:137 itself",
+      "Silent 'style' fallback when no domain scores >0 can misroute a query about, say, charts, into the style CSV with a plausible-looking but wrong answer"
+    ],
+    "conflicts": [],
+    "testMethod": "unittest sanity checks (known query -> expected top domain) in test_core.py; no adversarial/ambiguous-query test suite.",
+    "decision": "adapt",
+    "sitesmithForm": "Worth the ~30 lines if we keep any multi-file reference corpus; expose the runner-up domain in the result (already done here) so the model can self-correct instead of trusting a single routing guess.",
+    "confidence": 0.7
+  },
+  {
+    "id": "design-system-generator",
+    "source": "ui-ux-pro-max",
+    "sourcePath": ".claude/skills/ui-ux-pro-max/scripts/design_system.py:81-329",
+    "problemSolved": "Producing one coherent design-system recommendation (pattern, style, colors, typography, effects, anti-patterns) from a single query in one command, instead of the model manually stitching together several searches.",
+    "mechanism": "generate(): (1) search 'product' domain for 1 best-matching category row, (2) look up that literal category string in ui-reasoning.csv for a pre-written Style_Priority/Color_Mood/Typography_Mood/Key_Effects/Anti_Patterns tuple, (3) run BM25 again on style/color/typography/landing CSVs biased toward the reasoning row's style keywords, (4) score-and-pick the single best row per domain, (5) assemble a fixed dict and render it as an ASCII box / Markdown / JSON. No LLM call anywhere in this path -- it is pure Python string/dict manipulation from CSV lookups to output.",
+    "whyItWorks": "It is fast and produces a complete, plausible-looking artifact in one shot, which is exactly why it is dangerous: the brief's own benchmark found a deterministic rules/template generator scoring 40 against an LLM reasoning from evidence scoring 59 on the same task. This is that generator, formalized as a design-system tool.",
+    "requiredContext": ["query", "ui-reasoning.csv (30 category rows)", "4 supporting CSVs"],
+    "contextCost": "medium (one subprocess call, but the CSVs read into memory total >1MB, dominated by google-fonts.csv)",
+    "outputImpact": "This is the single biggest lever on final output, and it moves the creative decision (which style, which palette, which type mood) out of the model and into a lookup table keyed by ~30 fixed product categories.",
+    "failureModes": [
+      "Every project that BM25-matches the same product category (e.g. 'SaaS (General)') gets the identical Style_Priority + Color_Mood + Typography_Mood tuple -- this is a textbook C-no-house-style generator: three independently briefed SaaS products would converge on 'Glassmorphism + Flat Design / Trust blue + Accent contrast / Professional + Hierarchy'",
+      "The project's own stack/docs/WORKFLOW.md (lines 78-82) explicitly instructs users to run a *separate* taste skill afterward specifically to 'reject the cream+serif and acid-on-black defaults' this generator produces -- i.e. the authors themselves documented that unmediated use of this mechanism produces generic/default output",
+      "'Best match' selection (_select_best_match) short-circuits on the first priority-keyword substring hit, so minor query rewording can flip between two style rows with no visible reasoning trail for the model to critique"
+    ],
+    "conflicts": ["C-no-mechanical-creativity: moves the creative decision into a script, does not make the model think", "C-no-house-style: fixed category->tuple table is a convergence machine by construction"],
+    "testMethod": "unittest checks that generate() returns non-empty keys and that persistence writes files; no test asserts anything about output *diversity* or *quality*.",
+    "decision": "reject",
+    "sitesmithForm": "Do not port the auto-selecting generator. If we keep any CSV-style reference data, surface the top-3 candidate rows per dimension (style/color/type) as *options with rationale* for the model to choose between and justify, never auto-pick one and hand it back as 'the' design system.",
+    "confidence": 0.9
+  },
+  {
+    "id": "ui-reasoning-category-table",
+    "source": "ui-ux-pro-max",
+    "sourcePath": ".claude/skills/ui-ux-pro-max/data/ui-reasoning.csv:1-2",
+    "problemSolved": "Giving each of ~30 product categories (SaaS, fintech, portfolio, healthcare, ...) a starting style/color/typography/effects/anti-pattern bundle.",
+    "mechanism": "A 30-row CSV: UI_Category -> Recommended_Pattern, Style_Priority (2 styles joined by '+'), Color_Mood, Typography_Mood, Key_Effects, a small Decision_Rules JSON blob (e.g. {\"if_ux_focused\": \"prioritize-minimalism\"}), Anti_Patterns, Severity. Looked up by near-exact then substring then keyword match (design_system.py:108-130).",
+    "whyItWorks": "As a checklist of *questions to ask* ('is this data-heavy? then consider glassmorphism') it would be useful. As implemented, it is a lookup table that returns one fixed answer per category with no branching actually exercised (the Decision_Rules JSON is parsed but only 2 of its keys are ever read: it is mostly decorative -- see FAILURE-MODES.md).",
+    "requiredContext": ["category string resolved by product search"],
+    "contextCost": "low (30 rows, ~8KB)",
+    "outputImpact": "Directly sets 'the' style pairing and color/typography mood for the entire generated design system -- the single highest-leverage house-style risk in the whole skill.",
+    "failureModes": [
+      "One category = one style pairing = structural sameness for every project the product-search maps to that category",
+      "Decision_Rules JSON (if_ux_focused, if_data_heavy, if_pre_launch, if_video_ready, ...) is loaded and parsed but design_system.py never reads decision_rules to branch the output -- it is round-tripped into the return dict and otherwise unused, i.e. the appearance of conditional reasoning without the substance"
+    ],
+    "conflicts": ["C-no-house-style"],
+    "testMethod": "Covered only by validate_data.py's schema check (columns present, Decision_Rules parses as JSON) -- never checked for whether the branching it implies is actually applied.",
+    "decision": "reject",
+    "sitesmithForm": "Re-express as prose heuristics in a reference doc the model reads ('SaaS dashboards often lean structured/trustworthy; question that default before applying it'), not as a keyed table a script resolves to one answer.",
+    "confidence": 0.85
+  },
+  {
+    "id": "design-dials",
+    "source": "ui-ux-pro-max",
+    "sourcePath": ".claude/skills/ui-ux-pro-max/scripts/design_system.py:46-77,230-262",
+    "problemSolved": "Letting a caller nudge the deterministic generator's output toward more/less bold, more/less motion, more/less dense, without hand-editing the query.",
+    "mechanism": "Three optional 1-10 integer flags (--variance/--motion/--density), each bucketed into low/mid/high (1-3/4-7/8-10) tiers. variance prepends style keywords (Minimalism vs Brutalism/Bento) to the style search query; motion pulls one matching row from motion.csv filtered by Intensity Tier; density swaps the whole spacing-scale dict wholesale.",
+    "whyItWorks": "A cheap, explainable knob for the *caller* (a human or an orchestrating skill) to express intent, and it degrades gracefully -- an unset dial changes nothing (explicitly documented, SKILL.md:109).",
+    "requiredContext": ["1-3 integers", "DIAL_TIERS static dict"],
+    "contextCost": "low",
+    "outputImpact": "Biases which style/motion row wins the same underlying deterministic selection -- it widens the same narrow funnel, it does not remove it. 3 dials x 3 tiers = 27 combinations feeding into a generator that still resolves to one row per dimension.",
+    "failureModes": [
+      "Still terminates in a single auto-picked row -- the dial changes *which* default you get, not whether a default gets auto-picked instead of reasoned about",
+      "variance's 'style_keywords' bias list is only 3-5 words per tier; with a small style CSV (84 rows) many variance settings likely resolve to the same handful of styles anyway"
+    ],
+    "conflicts": ["C-no-mechanical-creativity (still a script making the pick)"],
+    "testMethod": "None found beyond generate() smoke tests; no test asserts that varying --variance actually changes the selected style across a spread of queries.",
+    "decision": "adapt",
+    "sitesmithForm": "Repurpose the *shape* (named 1-10 sliders that map to prose tiers) as a way to hand the model tuned vocabulary to reason with ('the brief calls for high variance: consider asymmetric/bold direction'), not as inputs to an auto-selector.",
+    "confidence": 0.6
+  },
+  {
+    "id": "master-overrides-persistence",
+    "source": "ui-ux-pro-max",
+    "sourcePath": ".claude/skills/ui-ux-pro-max/scripts/design_system.py:709-789",
+    "problemSolved": "Keeping one canonical design-system doc per project plus optional per-page deviations, without a new run silently clobbering decisions a person (or an earlier session) already made.",
+    "mechanism": "persist_design_system() writes design-system/<slugified-project-name>/MASTER.md, and design-system/<slug>/pages/<page>.md if --page is given. Before writing, it checks whether MASTER.md already exists; if so it returns a structured {status: 'skipped_exists', message: ...} and writes nothing unless --force is also passed. Project/page names are slugified through a whitelist regex ([a-z0-9_-] only) specifically to prevent path traversal via a crafted project name (design_system.py:710-718).",
+    "whyItWorks": "This is a defensive-engineering pattern independent of the creativity debate: idempotent-by-default writes, an explicit opt-in to overwrite, and a path-traversal-safe slug function. Directly reusable regardless of what generates the content.",
+    "requiredContext": ["output_dir", "project/page name strings"],
+    "contextCost": "low",
+    "outputImpact": "No effect on visual output; effect is entirely on whether prior human decisions survive a re-run.",
+    "failureModes": [
+      "The override 'logic' at the top of MASTER.md is a plain-English instruction to the model ('check pages/[name].md first') -- nothing enforces it programmatically, so a model that skips reading pages/ will silently use stale/wrong rules"
+    ],
+    "conflicts": [],
+    "testMethod": "unittest covers skip-vs-force-vs-fresh-write branches directly.",
+    "decision": "adopt",
+    "sitesmithForm": "Reuse verbatim as a pattern for any persisted SiteSmith artifact (e.g. a design brief or token file): safe-slug the identifiers, skip-unless-force on existing files, return a structured status the calling skill can branch on.",
+    "confidence": 0.85
+  },
+  {
+    "id": "zero-result-honesty",
+    "source": "ui-ux-pro-max",
+    "sourcePath": ".claude/skills/ui-ux-pro-max/scripts/search.py:64-74; core.py:292-316; SKILL.md:149-154",
+    "problemSolved": "Preventing the model from presenting 'no database match' as if it were a real recommendation, and giving it something better than nothing to retry with.",
+    "mechanism": "format_output() emits an explicit sentence when count==0: 'No matches. This is not a match with an empty value -- the query did not hit the database. Retry ... before falling back to general defaults, and say explicitly that no database match was found if you do fall back.' It's paired with _suggest_terms(), which finds indexed vocabulary terms sharing a 3-character prefix/suffix with the query tokens, so the retry has real candidates instead of guessing blind. SKILL.md then spells out the same 3-step protocol (retry once, then say plainly it's a default, never silently fabricate).",
+    "whyItWorks": "This is exactly the kind of mechanism that makes the model behave more honestly rather than mechanically -- it doesn't decide anything, it stops the model from bluffing and gives it a concrete next action.",
+    "requiredContext": ["the failed query", "the fitted BM25 vocabulary (already in memory)"],
+    "contextCost": "low",
+    "outputImpact": "Prevents a specific class of hallucination (presenting a fallback default as a database-backed recommendation) that would otherwise be invisible to the user.",
+    "failureModes": [
+      "Prefix/suffix matching (term.startswith(qt[:3])) can suggest near-miss terms that are lexically close but semantically unrelated on short words"
+    ],
+    "conflicts": [],
+    "testMethod": "Not unit-tested directly; behavior is exercised implicitly by any test that searches an empty-result query.",
+    "decision": "adopt",
+    "sitesmithForm": "Adopt the instruction pattern verbatim for any retrieval step SiteSmith keeps: an explicit 'say it's a default, don't present it as a match' rule costs nothing and closes a real hallucination path.",
+    "confidence": 0.8
+  },
+  {
+    "id": "stack-never-assume",
+    "source": "ui-ux-pro-max",
+    "sourcePath": ".claude/skills/ui-ux-pro-max/SKILL.md:55",
+    "problemSolved": "Preventing every recommendation downstream from silently targeting the wrong framework when the project's stack wasn't actually checked.",
+    "mechanism": "A one-line instruction: detect from package.json/pubspec.yaml/*.xcodeproj/composer.json/RN markers; if nothing detected, ask the user or default to html-tailwind -- 'Never assume a stack -- a hardcoded default silently misroutes every recommendation.'",
+    "whyItWorks": "Cheap, and it names the actual failure mode it prevents (silent misrouting) rather than just asserting a rule, which makes it more likely a model actually follows it instead of pattern-matching past it.",
+    "requiredContext": ["project file listing"],
+    "contextCost": "low",
+    "outputImpact": "Prevents wrong-stack code examples/guidance being applied to a project that isn't that stack.",
+    "failureModes": ["Purely instructional -- nothing enforces that the model actually performed the detection step before proceeding"],
+    "conflicts": [],
+    "testMethod": "None -- prose instruction only.",
+    "decision": "adopt",
+    "sitesmithForm": "Keep the phrasing style (name the failure mode, not just the rule) for our own stack-detection instruction.",
+    "confidence": 0.75
+  },
+  {
+    "id": "static-ux-knowledge-tables",
+    "source": "ui-ux-pro-max",
+    "sourcePath": ".claude/skills/ui-ux-pro-max/references/quick-reference.md (240 lines); references/pro-rules.md (109 lines)",
+    "problemSolved": "Giving the model concrete, checkable UX/accessibility/performance/interaction facts (contrast ratios, touch-target sizes, animation timing windows, safe-area rules) to reason against, on demand rather than every turn.",
+    "mechanism": "Two static markdown reference files, loaded only when needed (quick-reference.md for a review/audit pass or a category beyond the SKILL.md priority table; pro-rules.md before delivering native/mobile UI or when something 'doesn't look professional'). Content is terse rule-id + one-line standard + rationale, organized by the same 10 priority categories as SKILL.md's table, explicitly cross-referenced as also present verbatim in the queryable CSVs (quick-reference.md:3) so a model can either scan the file or search it.",
+    "whyItWorks": "This is knowledge injection, not decision automation -- it gives the model facts (WCAG 4.5:1, 44x44px targets, 150-300ms transitions, prefers-reduced-motion) to apply its own judgement against a specific layout, rather than picking the layout's style for it. This is squarely on the 'makes the model think better' side of the brief's axis.",
+    "requiredContext": ["none pre-loaded -- read on demand"],
+    "contextCost": "medium if loaded (quick-reference.md ~5,469 tokens, pro-rules.md ~2,423 tokens at 4 chars/token), zero if not (neither is in SKILL.md's always-loaded body)",
+    "outputImpact": "Improves consistency of accessibility/interaction correctness; has no bearing on visual sameness since it doesn't prescribe a look.",
+    "failureModes": [
+      "Some rules cite dated platform guidance without version numbers (e.g. generic 'Apple HIG' / 'Material Design' citations) -- fine as heuristics, risky if treated as current spec text",
+      "Rules are UI-correctness rules, not taste rules; on their own they cannot fix genericness, only accessibility/usability defects"
+    ],
+    "conflicts": [],
+    "testMethod": "None -- these are reference prose, not executable.",
+    "decision": "adopt",
+    "sitesmithForm": "Re-express (not copy verbatim, MIT allows copying but we choose to re-express per repo convention) as SiteSmith's own accessibility/interaction rule reference, loaded on demand exactly the way this repo does it -- gate behind 'load when doing a review pass', not always-on.",
+    "confidence": 0.85
+  },
+  {
+    "id": "design-review-subagent-and-heuristic-audit",
+    "source": "ui-ux-pro-max",
+    "sourcePath": "stack/.claude/agents/design-review.md (97 lines); stack/scripts/design-audit.mjs (233 lines)",
+    "problemSolved": "Actually verifying a built UI instead of asserting it's done -- catching layout/contrast/focus/responsive defects that only show up when the page is rendered and interacted with.",
+    "mechanism": "Two complementary layers, documented as a loop in stack/docs/WORKFLOW.md: (1) design-audit.mjs -- a standalone Playwright script with zero MCP dependency that loads a URL/file at 6 viewport tiers (360/390/768/1024/1440/1920), auto-scrolls to trigger lazy content, screenshots each, and runs in-page heuristic checks (horizontal overflow, unsized <img>/missing alt, mobile tap-target <44px, sampled focus-visibility by focusing 25 elements and reading computed outline/box-shadow, accessible-name presence on buttons/links, heading structure, viewport/lang meta, an approximate WCAG contrast ratio over up to 120 sampled text nodes), aggregates findings across viewports, and exits non-zero on any 'high' finding (CI-gateable). (2) design-review subagent -- a 7-phase *model-driven* review (setup, interaction/flows, responsiveness, visual polish, WCAG AA via accessibility snapshot, edge cases/robustness, console/network health) that drives a real Playwright browser itself, explicitly forbidden from inventing findings ('If you could not open the page, say so plainly... never invent findings') and required to report Blockers/High/Medium/Nitpicks plus a 'What's working' section.",
+    "whyItWorks": "This is the one mechanism in the whole repo that is genuinely evidence-based rather than asserted or templated: the heuristic script measures real DOM/CSSOM state (getBoundingClientRect, getComputedStyle, actual focus behavior), and the subagent's entire operating principle is 'observe first, read code only to explain what you saw.' It is squarely the 'makes the model think better' side of the axis -- it doesn't generate the design, it critiques the built result against something it actually looked at.",
+    "requiredContext": ["a live URL or file to open", "Playwright (browser binary)"],
+    "contextCost": "medium (subagent definition ~700 tokens; the audit script executes rather than loading into context, only its markdown report re-enters context)",
+    "outputImpact": "Directly catches regressions no static rule table could (badge overlapping a card border at 375px, a toggle with no focus ring, a price number animating in before scroll) -- see the worked example in stack/docs/WORKFLOW.md:38-40.",
+    "failureModes": [
+      "Single-pass, single-reviewer: the design-review subagent is one persona ('senior product design reviewer'), not a panel, so it can share blind spots with the model doing the building (same base model, same training-data biases) -- it catches objective defects (contrast math, overflow, focus rings) reliably but is not proven to catch *sameness*/genericness, which is a matter of comparative taste, not a single-page checklist",
+      "Contrast check in design-audit.mjs is explicitly approximate ('nearest opaque background... treat as a lead, not a verdict') -- real occlusion, gradients, and transparency stacking can produce false negatives/positives",
+      "No loop-until-pass is enforced anywhere: WORKFLOW.md documents fixing and re-screenshotting as a manual habit ('Re-screenshot after every fix'), not as code that re-runs the audit and blocks completion until clean"
+    ],
+    "conflicts": [],
+    "testMethod": "This mechanism *is* the test method for everything else in the repo; it has no meta-test of its own beyond the worked example in stack/examples/juniper-audit/ (a real run's report.md + screenshots against a live site, included as documentation of what the heuristic layer catches).",
+    "decision": "adopt",
+    "sitesmithForm": "This is the strongest candidate to fold into SiteSmith's own scripts/verify.mjs: add the tap-target, focus-visibility-by-actually-focusing, and accessible-name checks (SiteSmith's current gate already does screenshots/axe/console/dead-links/overflow per CLAUDE.md, but not focus-visibility or tap-target size) and consider a model-driven 7-phase review pass as a documented final step, not just an automated script.",
+    "confidence": 0.85
+  },
+  {
+    "id": "multi-copy-sync-architecture",
+    "source": "ui-ux-pro-max",
+    "sourcePath": "CLAUDE.md:41-101; cli/scripts/sync-assets.mjs; .github/workflows/check-asset-sync.yml",
+    "problemSolved": "Shipping the same data/scripts to three consumption paths (Claude Code plugin, npm CLI installer, other-IDE templates) from one source of truth.",
+    "mechanism": "src/ui-ux-pro-max/ is canonical; a Node sync script physically copies (not symlinks -- symlinks are explicitly called out as broken on git-for-Windows, CLAUDE.md:77-80) data/scripts into cli/assets/ and .claude/skills/ui-ux-pro-max/{data,scripts}; a CI job (check-asset-sync.yml) fails the PR if the copies drift from source.",
+    "whyItWorks": "Solves a real distribution problem this project has (multi-IDE templates + npm installer + Claude plugin) that most single-target skills don't.",
+    "requiredContext": ["none at runtime -- build-time only"],
+    "contextCost": "low (zero at runtime; this is repo-maintenance tooling)",
+    "outputImpact": "None on generated design output; purely a packaging/maintenance concern.",
+    "failureModes": ["Adds real maintenance surface (three copies + a sync script + a CI gate) for a distribution problem SiteSmith does not have -- SiteSmith is one unified skill, not simultaneously a plugin + npm CLI + 17-IDE template generator"],
+    "conflicts": ["Adds complexity without value for our stated form factor"],
+    "testMethod": "CI diff-check between src/ and each mirror.",
+    "decision": "reject",
+    "sitesmithForm": "Not applicable -- SiteSmith ships as a single skill, not parallel packages. Note only as an anti-pattern to avoid: don't build multi-target sync machinery until we actually have multiple targets.",
+    "confidence": 0.8
+  }
+]
