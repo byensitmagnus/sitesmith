@@ -722,6 +722,61 @@ if (reportRaw !== null) {
   }
 }
 
+/* ── 8. the palette taste-skill named, checked by distance ─────────────── */
+
+/* taste-skill's SKILL.md section 4.2 calls this the second-most-recurring AI tell and
+   bans it by hex. This rebuild marked that mechanism "adapt", resolved conflict C1 as
+   "naming beats banning", and never carried the list. Round two of the portfolio test
+   then produced, from three unrelated Danish trades:
+       ink     #1b1a17 #191713 #191512   against banned #1a1714 #1a1814 #1b1814
+       accent  #8f5a14 #b3243b           against banned #7d5621 #9a2436
+       ground  #e9e3d5 #E3D9C4           against banned #e8dfcb #ece6db
+   C1 was right about abstract looks and wrong at hex level, and this is the correction.
+
+   Distance, not equality. #1b1a17 is not in the banned list and is three units from a
+   member of it. An exact-match check would have passed every value above. */
+
+const BANNED_PALETTE = [
+  { hex: '#f5f1ea', role: 'ground' }, { hex: '#f7f5f1', role: 'ground' }, { hex: '#fbf8f1', role: 'ground' },
+  { hex: '#efeae0', role: 'ground' }, { hex: '#ece6db', role: 'ground' }, { hex: '#faf7f1', role: 'ground' },
+  { hex: '#e8dfcb', role: 'ground' },
+  { hex: '#b08947', role: 'accent' }, { hex: '#b6553a', role: 'accent' }, { hex: '#9a2436', role: 'accent' },
+  { hex: '#9c6e2a', role: 'accent' }, { hex: '#bc7c3a', role: 'accent' }, { hex: '#7d5621', role: 'accent' },
+  { hex: '#1a1714', role: 'text' }, { hex: '#1a1814', role: 'text' }, { hex: '#1b1814', role: 'text' },
+];
+/* Twelve units in RGB. Wide enough that the round-two values trip, narrow enough that a
+   genuinely different warm neutral does not. Round two's closest pair was three units. */
+const PALETTE_ARC = 12;
+
+const rgbOf = (hex) => [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16));
+const rgbDistance = (a, b) => Math.round(Math.hypot(a[0] - b[0], a[1] - b[1], a[2] - b[2]));
+
+/* The override path is taste-skill's own and it is the reason a hex ban is usable at all:
+   the palette is permitted when the brief names it, and the direction record has to say so
+   in the client's words. Without this the check would overrule rung 1 of the precedence
+   ladder, and the brief outranks everything in this package. */
+const paletteWaiver = direction && /banned-palette-pinned-by-brief:/i.test(direction.raw ?? '');
+
+if (!paletteWaiver) {
+  const seen = new Set();
+  for (const file of [...cssFiles, ...markupFiles]) {
+    const src = textOf(file);
+    for (const m of src.matchAll(/#[0-9a-fA-F]{6}\b/g)) {
+      const hex = m[0].toLowerCase();
+      if (seen.has(hex)) continue;
+      seen.add(hex);
+      const mine = rgbOf(hex);
+      for (const banned of BANNED_PALETTE) {
+        const d = rgbDistance(mine, rgbOf(banned.hex));
+        if (d > PALETTE_ARC) continue;
+        refuse('palette/premium-consumer-default', file, lineOf(src, m.index),
+          `${hex} is ${d} units from ${banned.hex}, a ${banned.role} in the palette taste-skill names as the second-most-recurring AI tell. Choose from the subject's own materials, or write "banned-palette-pinned-by-brief: <the client's words>" in the direction record.`);
+        break;
+      }
+    }
+  }
+}
+
 /* ── 8. token drift ────────────────────────────────────────────────────── */
 
 /* Values a page may use without declaring: they carry no design decision. Taken from
