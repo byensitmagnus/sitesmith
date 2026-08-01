@@ -20,18 +20,22 @@ const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 // Wave 1 autopsied one source per agent, so the source id lives on the group. Wave 2
 // grouped several sources per agent, so the source id lives on each mechanism. Both
 // waves are read here; nothing else in the file needs to know which wave a row is from.
+// Wave 3 is the correction: the first autopsy of this repository cited not one line of
+// v2/modes/ or v2/tasks/, so 919 lines holding the entire craft floor were re-extracted
+// separately. Its records carry isAppearance and threeRenditions and omit some fields.
 const WAVES = [
   'docs/rebuild/research/_mechanisms/RAW-AUTOPSIES.json',
   'docs/rebuild/research/_mechanisms/RAW-AUTOPSIES-WAVE2.json',
+  'docs/rebuild/research/_mechanisms/RAW-MODE-FLOOR.json',
 ]
 const raw = { result: WAVES.flatMap((p) => JSON.parse(readFileSync(join(root, p), 'utf8')).result) }
 
 const rows = []
 for (const r of raw.result) {
   const challenges = new Map((r.challenge?.challenges ?? []).map((c) => [c.mechanismId, c]))
-  for (const m of r.autopsy?.mechanisms ?? []) {
+  for (const m of r.autopsy?.mechanisms ?? r.mechanisms ?? []) {
     const ch = challenges.get(m.id)
-    const source = r.sourceId ?? m.source ?? r.groupKey
+    const source = r.sourceId ?? (r.key ? 'sitesmith-modes' : null) ?? m.source ?? r.groupKey
     rows.push({
       key: `${source}/${m.id}`,
       id: m.id,
@@ -41,11 +45,11 @@ for (const r of raw.result) {
       mechanism: m.mechanism,
       whyItWorks: m.whyItWorks,
       requiredContext: m.requiredContext ?? [],
-      contextCost: m.contextCost,
-      outputImpact: m.outputImpact,
+      contextCost: m.contextCost ?? 'low',
+      outputImpact: m.outputImpact ?? '',
       failureModes: m.failureModes ?? [],
       conflicts: m.conflicts ?? [],
-      testMethod: m.testMethod,
+      testMethod: m.testMethod ?? 'not stated',
       decision: m.decision,
       sitesmithForm: m.sitesmithForm,
       confidence: m.confidence,
