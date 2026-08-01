@@ -2,10 +2,27 @@
   "schemaVersion": 1,
   "format": "JSONL — one JSON object per line in CONTEXT-GRAPH.jsonl",
   "rationale": "A graph database buys nothing here. The graph is small (hundreds of nodes), append-only, must survive in git, must be diffable in review, and must be queryable from a 200-line script. JSONL gives all four. This choice is itself recorded as DECISION:graph-format.",
-  "recordKinds": ["node", "edge"],
+  "recordKinds": [
+    "node",
+    "edge"
+  ],
   "node": {
-    "required": ["kind", "type", "id", "label"],
-    "optional": ["source", "commit", "path", "status", "confidence", "evidence", "notes", "state"],
+    "required": [
+      "kind",
+      "type",
+      "id",
+      "label"
+    ],
+    "optional": [
+      "source",
+      "commit",
+      "path",
+      "status",
+      "confidence",
+      "evidence",
+      "notes",
+      "state"
+    ],
     "types": [
       "Source",
       "Repository",
@@ -30,8 +47,18 @@
     ]
   },
   "edge": {
-    "required": ["kind", "type", "from", "to"],
-    "optional": ["why", "evidence", "confidence", "state"],
+    "required": [
+      "kind",
+      "type",
+      "from",
+      "to"
+    ],
+    "optional": [
+      "why",
+      "evidence",
+      "confidence",
+      "state"
+    ],
     "types": [
       "SOLVES",
       "IMPLEMENTS",
