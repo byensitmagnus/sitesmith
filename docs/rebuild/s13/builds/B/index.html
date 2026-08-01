@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Driftskonsol, Nordbo Fjernvarme</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@400;500;600;700&amp;family=Zilla+Slab:wght@500;600&amp;display=swap">
+<style>
+/* Alle vaerdier staar som custom properties. Navnene kommer fra vaerkstedet og
+   kontoret, ikke fra en rollemodel: ark, beton, rulering, blyant, skrift,
+   markering, stempel. To maettede farver, og hver af dem betyder én ting. */
+:root {
+  --ark: #F2EDE3;
+  --beton: #DCD6C9;
+  --rulering: #C3BCAB;
+  --blyant: #5C5A52;
+  --skrift: #1A2338;
+  --markering: #E0A400;
+  --stempel: #5B3A8E;
+
+  --formular: "Zilla Slab", Georgia, serif;
+  --kolonne: "Archivo Narrow", "Arial Narrow", Arial, sans-serif;
+
+  --titel: 1.375rem;
+  --blokhoved: 1.0625rem;
+  --brud: 1.5rem;
+  --tal: 1rem;
+  --tekst: 0.9375rem;
+  --etiket: 0.8125rem;
+
+  --rum1: 4px;
+  --rum2: 8px;
+  --rum3: 16px;
+  --rum4: 24px;
+
+  --linjeafstand: 28px;
+  --papirlinjer: repeating-linear-gradient(to bottom, transparent 0, transparent 27px, var(--rulering) 27px, var(--rulering) 28px);
+  --valgtring: inset 0 0 0 3px var(--skrift);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--ark);
+  color: var(--skrift);
+  font-family: var(--kolonne);
+  font-size: var(--tekst);
+  line-height: 1.45;
+}
+
+h1, h2, h3 { font-family: var(--formular); font-weight: 600; margin: 0; }
+h1 { font-size: var(--titel); }
+h2 { font-size: var(--blokhoved); }
+h3 { font-size: var(--blokhoved); }
+p, ul, ol, dl, dd { margin: 0; }
+ul, ol { list-style: none; padding: 0; }
+
+:focus-visible { outline: 3px solid var(--skrift); outline-offset: 2px; }
+
+.spring {
+  position: absolute;
+  left: -1000px;
+  top: 0;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  background: var(--ark);
+  color: var(--skrift);
+  border: 2px solid var(--skrift);
+  padding: 0 var(--rum3);
+}
+.spring:focus { left: var(--rum3); top: var(--rum2); z-index: 2; }
+
+.side { max-width: 1560px; margin: 0 auto; padding: 0 var(--rum4) var(--rum4); }
+
+/* Hovedet. Vagten og klokken staar foerst, saa intet nedenunder laeses som
+   aktuelt ved et uheld. */
+.hoved {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--rum2) var(--rum4);
+  padding: var(--rum3) 0 var(--rum2);
+  border-bottom: 2px solid var(--skrift);
+}
+.hoved .vagt, .hoved .klokke { font-size: var(--tal); font-variant-numeric: tabular-nums; }
+.hoved .demo {
+  margin-left: auto;
+  font-size: var(--etiket);
+  color: var(--blyant);
+  border: 1px solid var(--blyant);
+  padding: 0 var(--rum2);
+}
+.status {
+  padding: var(--rum2) 0;
+  border-bottom: 1px solid var(--rulering);
+  font-size: var(--tekst);
+  color: var(--skrift);
+}
+
+.raekke { display: grid; gap: var(--rum4); align-items: start; }
+.blok { padding: var(--rum3) 0; }
+.blokhoved {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--rum2) var(--rum3);
+  padding-bottom: var(--rum2);
+  border-bottom: 1px solid var(--skrift);
+  margin-bottom: var(--rum3);
+}
+.blokhoved .antal {
+  font-size: var(--tal);
+  font-variant-numeric: tabular-nums;
+  background: var(--beton);
+  padding: 0 var(--rum2);
+}
+.hjaelp { font-size: var(--etiket); color: var(--blyant); }
+
+/* Arket. 61 ens felter, og et felt uden for graense faar markeringen,
+   en tungere ramme og en tungere ciffervaegt. */
+.arket {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(44px, 1fr));
+  gap: 2px;
+}
+.felt {
+  width: 100%;
+  min-height: 44px;
+  border: 1px solid var(--rulering);
+  border-radius: 0;
+  background: var(--ark);
+  color: var(--blyant);
+  font-family: var(--kolonne);
+  font-size: var(--tal);
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+}
+.felt:hover { border-color: var(--skrift); color: var(--skrift); }
+.felt--mark {
+  background: var(--markering);
+  border: 2px solid var(--skrift);
+  color: var(--skrift);
+  font-weight: 700;
+}
+.felt--valgt { box-shadow: var(--valgtring); color: var(--skrift); font-weight: 700; }
+.arkfod {
+  margin-top: var(--rum3);
+  padding-top: var(--rum2);
+  border-top: 1px solid var(--rulering);
+  font-size: var(--tekst);
+  font-variant-numeric: tabular-nums;
+}
+
+.montorer li {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--rum3);
+  padding: var(--rum2) 0;
+  border-bottom: 1px solid var(--rulering);
+}
+.montorer .navn { font-family: var(--formular); font-weight: 500; }
+.montorer .tilstand { color: var(--blyant); }
+.telegram { padding-top: var(--rum3); font-variant-numeric: tabular-nums; }
+
+.filtre { border: 0; margin: 0 0 var(--rum3); padding: 0; }
+.filtre legend { padding: 0; font-size: var(--etiket); color: var(--blyant); }
+.filtre .valg { display: flex; flex-wrap: wrap; gap: var(--rum1) var(--rum4); }
+.filtre label {
+  display: flex;
+  align-items: center;
+  gap: var(--rum2);
+  min-height: 44px;
+  cursor: pointer;
+}
+.filtre input { width: 24px; height: 24px; margin: 0; accent-color: var(--skrift); }
+
+/* En linje. Bygget om retur, som er den maaling graensen navngiver. */
+.linje { padding: var(--rum3) 0; border-top: 1px solid var(--rulering); }
+.linje:first-child { border-top: 2px solid var(--skrift); }
+.linje-hoved { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--rum2) var(--rum3); }
+.linje-hoved .kilde { font-size: var(--etiket); color: var(--blyant); }
+.grunde li { font-size: var(--tekst); padding-top: var(--rum1); }
+.maalinger { display: flex; flex-wrap: wrap; gap: var(--rum3) var(--rum4); margin: var(--rum3) 0; }
+.maaling dt { font-size: var(--etiket); color: var(--blyant); }
+.maaling dd {
+  font-size: var(--tal);
+  font-variant-numeric: tabular-nums;
+  min-width: 5ch;
+}
+.maaling--retur dd { font-size: var(--brud); line-height: 1.1; font-weight: 600; }
+.mark-felt { background: var(--markering); padding: 0 var(--rum1); }
+
+.udkald { display: grid; gap: var(--rum3); }
+.felter { display: flex; flex-wrap: wrap; gap: var(--rum3); align-items: flex-end; }
+.feltgruppe { flex: 1 1 240px; min-width: 0; }
+.feltgruppe--knap { flex: 0 0 auto; }
+.feltgruppe label { display: block; font-size: var(--etiket); color: var(--blyant); padding-bottom: var(--rum1); }
+select, input[type="text"] {
+  width: 100%;
+  min-height: 44px;
+  padding: 0 var(--rum2);
+  border: 1px solid var(--skrift);
+  border-radius: 0;
+  background: var(--ark);
+  color: var(--skrift);
+  font-family: var(--kolonne);
+  font-size: var(--tal);
+}
+.knap {
+  min-height: 44px;
+  padding: 0 var(--rum3);
+  border: 2px solid var(--skrift);
+  border-radius: 0;
+  background: var(--ark);
+  color: var(--skrift);
+  font-family: var(--formular);
+  font-size: var(--tal);
+  font-weight: 500;
+  cursor: pointer;
+}
+.knap:hover { background: var(--beton); }
+.knap:active { background: var(--rulering); }
+.knap[aria-busy="true"] { color: var(--blyant); cursor: default; }
+.knap--adskilt { margin-top: var(--rum2); }
+
+.fejlsum {
+  border: 2px solid var(--skrift);
+  background: var(--beton);
+  padding: var(--rum2) var(--rum3);
+}
+.fejlsum h4 { font-family: var(--formular); font-size: var(--tal); margin: 0 0 var(--rum1); }
+.fejlsum a { color: var(--skrift); }
+.feltfejl { display: block; padding-top: var(--rum1); font-size: var(--etiket); font-weight: 700; }
+.feltgruppe--fejl input, .feltgruppe--fejl select { border: 2px solid var(--skrift); }
+.varsel { font-size: var(--etiket); color: var(--blyant); }
+.varsel--staaende { padding-bottom: var(--rum3); }
+
+/* Stempelfarven bruges kun her: et udkald der er taget imod. */
+.sendt { border: 2px solid var(--stempel); padding: var(--rum2) var(--rum3); display: grid; gap: var(--rum2); }
+.sendt .stempel { font-family: var(--formular); font-weight: 600; color: var(--stempel); font-variant-numeric: tabular-nums; }
+.sendt .adskil { border-top: 1px solid var(--rulering); padding-top: var(--rum2); }
+.omfordel { border: 2px solid var(--skrift); padding: var(--rum2) var(--rum3); display: grid; gap: var(--rum2); }
+
+.tom { padding: var(--rum4) 0; border-top: 2px solid var(--skrift); }
+.tom p { padding-bottom: var(--rum2); }
+
+/* Journalen ligger paa linjeret papir. Tre linjer CSS, ingen billedfil. */
+.journal { background-image: var(--papirlinjer); }
+.journal li {
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr);
+  gap: var(--rum2);
+  line-height: var(--linjeafstand);
+}
+.journal .tid { font-variant-numeric: tabular-nums; color: var(--blyant); }
+
+.fod {
+  margin-top: var(--rum4);
+  padding-top: var(--rum2);
+  border-top: 2px solid var(--skrift);
+  font-size: var(--etiket);
+  color: var(--blyant);
+}
+
+@media (min-width: 1000px) {
+  .raekke--net { grid-template-columns: minmax(0, 1fr) 300px; }
+  .raekke--arbejde { grid-template-columns: minmax(0, 1fr) 380px; }
+  /* Journalen bliver staaende, mens operatoeren arbejder sig ned gennem linjerne.
+     Den bevaeger sig ikke af sig selv; den bliver bare siddende. */
+  .raekke--arbejde .journalblok { position: sticky; top: 0; }
+}
+@media (max-width: 560px) {
+  .side { padding: 0 var(--rum2) var(--rum4); }
+  .maalinger { gap: var(--rum2) var(--rum3); }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+</style>
+</head>
+<body>
+<a class="spring" href="#afvigelser">Spring til linjer uden for grænse</a>
+
+<div class="side">
+
+  <header class="hoved">
+    <h1>Nordbo Fjernvarme, driftskonsol</h1>
+    <p class="vagt">Vagt 06:00 til 14:00</p>
+    <p class="klokke">Klokken <span id="klokke">07:14</span></p>
+    <p class="demo">Demodata</p>
+  </header>
+
+  <p class="status" id="status" role="status">Sidste handling: 07:12, telegram modtaget.</p>
+
+  <main>
+    <div class="raekke raekke--net">
+
+      <section class="blok" aria-labelledby="h-nettet">
+        <div class="blokhoved">
+          <h2 id="h-nettet">Nettet</h2>
+          <p class="hjaelp" id="ark-hjaelp">61 stationer. Piletaster flytter i arket. Enter åbner stationens linje.</p>
+        </div>
+        <ul class="arket" id="arket" aria-describedby="ark-hjaelp"></ul>
+        <p class="arkfod" id="arkfod"></p>
+      </section>
+
+      <section class="blok" aria-labelledby="h-montorer">
+        <div class="blokhoved">
+          <h2 id="h-montorer">Montører</h2>
+        </div>
+        <ul class="montorer" id="montorer"></ul>
+        <p class="telegram">Telegram 07:12. 59 af 61 stationer svarede. 2 mangler.</p>
+      </section>
+
+    </div>
+
+    <div class="raekke raekke--arbejde">
+
+      <section class="blok" id="afvigelser" aria-labelledby="h-linjer">
+        <div class="blokhoved">
+          <h2 id="h-linjer">Uden for grænse</h2>
+          <p class="antal" id="antal-linjer"></p>
+        </div>
+
+        <fieldset class="filtre">
+          <legend>Vis linjer med</legend>
+          <div class="valg">
+            <label><input type="checkbox" data-filter="retur" checked> Retur over 45 °C</label>
+            <label><input type="checkbox" data-filter="dp" checked> Differenstryk uden for 0,3 til 0,9 bar</label>
+            <label><input type="checkbox" data-filter="alder" checked> Aflæsning ældre end 20 minutter</label>
+          </div>
+        </fieldset>
+
+        <p class="varsel varsel--staaende">Grunden kommer med i vagtjournalen. Et sendt udkald kan ikke trækkes tilbage. Det kan kun meldes fuldført eller omfordeles.</p>
+
+        <div id="linjer"></div>
+      </section>
+
+      <section class="blok journalblok" aria-labelledby="h-journal">
+        <div class="blokhoved">
+          <h2 id="h-journal">Vagtjournal</h2>
+          <p class="hjaelp">Vagt 06:00 til 14:00</p>
+        </div>
+        <ol class="journal" id="journal"></ol>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="fod">
+    61 stationer. Aflæsning hvert 5. minut. Vagtskifte 06:00, 14:00 og 22:00.
+    Konsollen styrer ikke noget. Den observerer og sender montør.
+  </footer>
+
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ---- demodata ------------------------------------------------------- */
+  /* 61 stationer, nummereret og aldrig navngivet. De 56 normale faar
+     vaerdier udregnet af deres eget nummer, saa de er stabile og forskellige
+     og ligger inden for alle tre graenser. De fem der ligger uden for staar
+     skrevet ud. */
+
+  var AFVIGENDE = {
+    7:  { frem: 70.4, retur: 47.8, dp: 0.58, alder: 2 },
+    22: { frem: 66.1, retur: 46.4, dp: 0.21, alder: 2,
+          udkald: { montor: 'Vagn', tid: '06:41', grund: 'Differenstryk 0,21 bar.' } },
+    38: { frem: 72.9, retur: 41.2, dp: 0.55, alder: 34 },
+    45: { frem: 74.6, retur: 43.7, dp: 0.96, alder: 2,
+          udkald: { montor: 'Sanne', tid: '06:22', grund: 'Differenstryk 0,96 bar.' } },
+    53: { frem: 69.8, retur: 42.5, dp: 0.47, alder: 24 }
+  };
+
+  var stationer = [];
+  for (var n = 1; n <= 61; n++) {
+    var s = AFVIGENDE[n];
+    stationer.push(s
+      ? { n: n, frem: s.frem, retur: s.retur, dp: s.dp, alder: s.alder, udkald: s.udkald || null }
+      : {
+          n: n,
+          frem: 66 + ((n * 7) % 13) + ((n * 3) % 10) / 10,
+          retur: 36 + ((n * 5) % 8) + ((n * 7) % 10) / 10,
+          dp: 0.34 + ((n * 11) % 50) / 100,
+          alder: 2,
+          udkald: null
+        });
+  }
+
+  var montorer = [
+    { navn: 'Palle', tilstand: 'fri', station: null },
+    { navn: 'Sanne', tilstand: 'på stedet', station: 45 },
+    { navn: 'Vagn', tilstand: 'kører', station: 22 }
+  ];
+
+  var journal = [
+    { tid: '06:00', tekst: 'Vagtskifte. Vagt 06:00 til 14:00 overtaget.' },
+    { tid: '06:22', tekst: 'Station 45. Sanne sendt. Grund: Differenstryk 0,96 bar.' },
+    { tid: '06:41', tekst: 'Station 22. Vagn sendt. Grund: Differenstryk 0,21 bar.' },
+    { tid: '07:05', tekst: 'Station 45. Sanne er på stedet.' },
+    { tid: '07:12', tekst: 'Telegram modtaget. 59 af 61 stationer svarede.' }
+  ];
+
+  var klokke = 7 * 60 + 14;
+  var filtre = { retur: true, dp: true, alder: true };
+  var valgt = null;
+  var arkIndex = 0;
+  var kladde = {};
+  var fejl = {};
+  var omfordeler = {};
+
+  /* ---- smaa hjaelpere -------------------------------------------------- */
+
+  function esc(v) {
+    return String(v).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+  function komma(v, cifre) { return v.toFixed(cifre).replace('.', ','); }
+  function nr(v) { return v < 10 ? '0' + v : String(v); }
+  function tid(min) {
+    var t = Math.floor(min / 60) % 24, m = min % 60;
+    return nr(t) + ':' + nr(m);
+  }
+  function naesteTid() { klokke += 1; return tid(klokke); }
+  function station(n) {
+    for (var i = 0; i < stationer.length; i++) if (stationer[i].n === n) return stationer[i];
+    return null;
+  }
+  function montor(navn) {
+    for (var i = 0; i < montorer.length; i++) if (montorer[i].navn === navn) return montorer[i];
+    return null;
+  }
+  function tilstandTekst(m) {
+    if (m.tilstand === 'fri') return 'fri';
+    if (m.tilstand === 'kører') return 'kører til station ' + nr(m.station);
+    return 'på stedet ved station ' + nr(m.station);
+  }
+
+  /* En station er uden for graense naar retur er over 45 grader, eller
+     differenstryk ligger uden for 0,3 til 0,9 bar, eller aflaesningen er
+     mere end 20 minutter gammel. Ingen andre graenser findes. */
+  function grunde(s) {
+    var g = [];
+    if (s.retur > 45) g.push({ felt: 'retur', tekst: 'Retur ' + komma(s.retur, 1) + ' °C er over 45 °C.' });
+    if (s.dp < 0.3 || s.dp > 0.9) g.push({ felt: 'dp', tekst: 'Differenstryk ' + komma(s.dp, 2) + ' bar er uden for 0,3 til 0,9 bar.' });
+    if (s.alder > 20) g.push({ felt: 'alder', tekst: 'Aflæsningen er ' + s.alder + ' minutter gammel.' });
+    return g;
+  }
+  function udenfor(s) { return grunde(s).length > 0; }
+  function vist(s) {
+    var g = grunde(s);
+    for (var i = 0; i < g.length; i++) if (filtre[g[i].felt]) return true;
+    return false;
+  }
+
+  /* ---- arket ----------------------------------------------------------- */
+
+  var arketEl = document.getElementById('arket');
+  var arkfodEl = document.getElementById('arkfod');
+  var statusEl = document.getElementById('status');
+  var linjerEl = document.getElementById('linjer');
+  var journalEl = document.getElementById('journal');
+  var montorerEl = document.getElementById('montorer');
+  var antalEl = document.getElementById('antal-linjer');
+  var klokkeEl = document.getElementById('klokke');
+  var roligt = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  function tegnArket() {
+    var ude = 0, html = '';
+    for (var i = 0; i < stationer.length; i++) {
+      var s = stationer[i];
+      var mark = udenfor(s);
+      if (mark) ude++;
+      var klasser = 'felt' + (mark ? ' felt--mark' : '') + (valgt === s.n ? ' felt--valgt' : '');
+      html += '<li><button type="button" class="' + klasser + '" data-n="' + s.n + '"'
+        + ' tabindex="' + (i === arkIndex ? '0' : '-1') + '"'
+        + (valgt === s.n ? ' aria-current="true"' : '')
+        + ' aria-label="Station ' + nr(s.n) + ', ' + (mark ? 'uden for grænse' : 'inden for grænserne') + '">'
+        + nr(s.n) + '</button></li>';
+    }
+    arketEl.innerHTML = html;
+    arkfodEl.textContent = ude + ' uden for grænse. ' + (61 - ude) + ' inden for. I alt 61.';
+    antalEl.textContent = ude + ' linjer';
+  }
+
+  arketEl.addEventListener('click', function (e) {
+    var knap = e.target.closest('.felt');
+    if (!knap) return;
+    arkIndex = Number(knap.dataset.n) - 1;
+    aabnStation(Number(knap.dataset.n));
+  });
+
+  arketEl.addEventListener('keydown', function (e) {
+    var felter = Array.prototype.slice.call(arketEl.querySelectorAll('.felt'));
+    var i = felter.indexOf(document.activeElement);
+    if (i < 0) return;
+    var kol = kolonner(felter);
+    var j = -1;
+    if (e.key === 'ArrowRight') j = i + 1;
+    else if (e.key === 'ArrowLeft') j = i - 1;
+    else if (e.key === 'ArrowDown') j = i + kol;
+    else if (e.key === 'ArrowUp') j = i - kol;
+    else if (e.key === 'Home') j = 0;
+    else if (e.key === 'End') j = felter.length - 1;
+    else return;
+    e.preventDefault();
+    if (j < 0 || j >= felter.length) return;
+    felter[i].tabIndex = -1;
+    felter[j].tabIndex = 0;
+    arkIndex = j;
+    felter[j].focus();
+  });
+
+  function kolonner(felter) {
+    if (!felter.length) return 1;
+    var top = felter[0].offsetTop, c = 0;
+    while (c < felter.length && felter[c].offsetTop === top) c++;
+    return Math.max(1, c);
+  }
+
+  function aabnStation(n) {
+    valgt = n;
+    tegnArket();
+    tegnLinjer('[data-linje="' + n + '"]');
+    var linje = linjerEl.querySelector('[data-linje="' + n + '"]');
+    if (linje) linje.scrollIntoView({ behavior: roligt.matches ? 'auto' : 'smooth', block: 'nearest' });
+    meld('Station ' + nr(n) + ' er åbnet i listen.');
+  }
+
+  /* ---- montoerer og journal -------------------------------------------- */
+
+  function tegnMontorer() {
+    var html = '';
+    for (var i = 0; i < montorer.length; i++) {
+      html += '<li><span class="navn">' + esc(montorer[i].navn) + '</span>'
+        + '<span class="tilstand">' + esc(tilstandTekst(montorer[i])) + '</span></li>';
+    }
+    montorerEl.innerHTML = html;
+  }
+
+  function tegnJournal() {
+    var html = '';
+    for (var i = 0; i < journal.length; i++) {
+      html += '<li><span class="tid">' + esc(journal[i].tid) + '</span>'
+        + '<span class="hvad">' + esc(journal[i].tekst) + '</span></li>';
+    }
+    journalEl.innerHTML = html;
+  }
+
+  function skriv(tekst) {
+    var t = naesteTid();
+    journal.push({ tid: t, tekst: tekst });
+    klokkeEl.textContent = t;
+    tegnJournal();
+    return t;
+  }
+
+  function meld(tekst) { statusEl.textContent = 'Sidste handling: ' + tekst; }
+
+  /* ---- linjerne -------------------------------------------------------- */
+
+  function tegnLinjer(fokus) {
+    var raekke = [];
+    for (var i = 0; i < stationer.length; i++) {
+      var s = stationer[i];
+      if (udenfor(s) && vist(s)) raekke.push(s);
+      else if (valgt === s.n) raekke.push(s);
+    }
+    raekke.sort(function (a, b) {
+      if (a.n === valgt) return -1;
+      if (b.n === valgt) return 1;
+      return a.n - b.n;
+    });
+
+    if (!raekke.length) {
+      linjerEl.innerHTML = tomView();
+    } else {
+      var html = '';
+      for (var k = 0; k < raekke.length; k++) html += linjeView(raekke[k]);
+      linjerEl.innerHTML = html;
+    }
+    if (fokus) {
+      var mal = linjerEl.querySelector(fokus);
+      if (mal) mal.focus();
+    }
+  }
+
+  function tomView() {
+    var slaaet = filtre.retur || filtre.dp || filtre.alder;
+    if (!slaaet) {
+      return '<div class="tom"><p>Ingen af de tre grunde er slået til.</p>'
+        + '<p class="varsel">Slå mindst én til foroven for at se linjer. Arket ovenfor viser stadig hele nettet.</p></div>';
+    }
+    return '<div class="tom"><p>Ingen stationer er uden for grænse med de valgte grunde.</p>'
+      + '<p class="varsel">Vælg en station i arket for at se dens aflæsning og sende en montør til den.</p></div>';
+  }
+
+  function maalingView(navn, vaerdi, brudt, ekstra) {
+    return '<div class="maaling' + (ekstra || '') + '">'
+      + '<dt>' + navn + '</dt>'
+      + '<dd>' + (brudt ? '<span class="mark-felt">' + vaerdi + '</span>' : vaerdi) + '</dd>'
+      + '</div>';
+  }
+
+  function linjeView(s) {
+    var g = grunde(s);
+    var brudt = {};
+    for (var i = 0; i < g.length; i++) brudt[g[i].felt] = true;
+
+    var html = '<article class="linje" data-linje="' + s.n + '" tabindex="-1" aria-labelledby="lt-' + s.n + '">';
+    html += '<div class="linje-hoved"><h3 id="lt-' + s.n + '">Station ' + nr(s.n) + '</h3>'
+      + (g.length ? '' : '<p class="kilde">Inden for grænserne. Valgt i arket.</p>') + '</div>';
+
+    if (g.length) {
+      html += '<ul class="grunde">';
+      for (var j = 0; j < g.length; j++) html += '<li>' + esc(g[j].tekst) + '</li>';
+      html += '</ul>';
+    }
+
+    html += '<dl class="maalinger">'
+      + maalingView('Retur', komma(s.retur, 1) + ' °C', brudt.retur, ' maaling--retur')
+      + maalingView('Fremløb', komma(s.frem, 1) + ' °C', false, '')
+      + maalingView('Differenstryk', komma(s.dp, 2) + ' bar', brudt.dp, '')
+      + maalingView('Aflæst', s.alder + ' min siden', brudt.alder, '')
+      + '</dl>';
+
+    if (omfordeler[s.n] && s.udkald) {
+      html += omfordelView(s);
+    } else if (s.udkald) {
+      html += sendtView(s);
+    } else {
+      html += formView(s);
+    }
+    html += '</article>';
+    return html;
+  }
+
+  function sendtView(s) {
+    var m = montor(s.udkald.montor);
+    return '<div class="sendt" data-sendt="' + s.n + '" tabindex="-1">'
+      + '<p class="stempel">Sendt ' + esc(s.udkald.tid) + '</p>'
+      + '<p>' + esc(s.udkald.montor) + ', ' + esc(m ? tilstandTekst(m) : 'kører') + '. Grund: ' + esc(s.udkald.grund) + '</p>'
+      + '<p class="varsel">Et sendt udkald kan ikke trækkes tilbage. Det kan meldes fuldført eller omfordeles.</p>'
+      + '<p><button type="button" class="knap" data-handling="fuldfor" data-n="' + s.n + '"'
+      + ' aria-label="Meld fuldført på station ' + nr(s.n) + '">Meld fuldført</button></p>'
+      + '<p class="adskil"><button type="button" class="knap knap--adskilt" data-handling="omfordel" data-n="' + s.n + '"'
+      + ' aria-label="Omfordel udkaldet på station ' + nr(s.n) + '">Omfordel udkaldet</button></p>'
+      + '</div>';
+  }
+
+  function omfordelView(s) {
+    return '<div class="omfordel" data-omfordel="' + s.n + '" tabindex="-1">'
+      + '<p>Omfordel station ' + nr(s.n) + '. ' + esc(s.udkald.montor) + ' tages af opgaven og bliver fri.</p>'
+      + '<p class="varsel">Udkaldet fra ' + esc(s.udkald.tid) + ' bliver stående i journalen og kan ikke fjernes.</p>'
+      + '<p><button type="button" class="knap" data-handling="behold" data-n="' + s.n + '"'
+      + ' aria-label="Behold ' + esc(s.udkald.montor) + ' på station ' + nr(s.n) + '">Behold ' + esc(s.udkald.montor) + '</button></p>'
+      + '<p class="adskil"><button type="button" class="knap knap--adskilt" data-handling="omfordel-ja" data-n="' + s.n + '"'
+      + ' aria-label="Ja, tag ' + esc(s.udkald.montor) + ' af station ' + nr(s.n) + '">Ja, tag ' + esc(s.udkald.montor) + ' af</button></p>'
+      + '</div>';
+  }
+
+  function formView(s) {
+    var f = fejl[s.n] || {};
+    var k = kladde[s.n] || { montor: '', grund: '' };
+    var html = '<form class="udkald" data-n="' + s.n + '" novalidate>';
+
+    if (f.montor || f.grund) {
+      html += '<div class="fejlsum" role="alert" tabindex="-1" data-fejlsum="' + s.n + '">'
+        + '<h4>Udkaldet blev ikke sendt.</h4><ul>';
+      if (f.montor) html += '<li><a href="#m-' + s.n + '">' + esc(f.montor) + '</a></li>';
+      if (f.grund) html += '<li><a href="#g-' + s.n + '">' + esc(f.grund) + '</a></li>';
+      html += '</ul></div>';
+    }
+
+    html += '<div class="felter">'
+      + '<p class="feltgruppe' + (f.montor ? ' feltgruppe--fejl' : '') + '">'
+      + '<label for="m-' + s.n + '">Montør til station ' + nr(s.n) + '</label>'
+      + '<select id="m-' + s.n + '" name="montor"'
+      + (f.montor ? ' aria-invalid="true" aria-describedby="mf-' + s.n + '"' : '') + '>'
+      + '<option value="">Vælg montør</option>';
+    for (var i = 0; i < montorer.length; i++) {
+      var m = montorer[i];
+      html += '<option value="' + esc(m.navn) + '"' + (k.montor === m.navn ? ' selected' : '') + '>'
+        + esc(m.navn) + ', ' + esc(tilstandTekst(m)) + '</option>';
+    }
+    html += '</select>';
+    if (f.montor) html += '<span class="feltfejl" id="mf-' + s.n + '">' + esc(f.montor) + '</span>';
+    html += '</p>';
+
+    html += '<p class="feltgruppe' + (f.grund ? ' feltgruppe--fejl' : '') + '">'
+      + '<label for="g-' + s.n + '">Grund for station ' + nr(s.n) + ', én linje</label>'
+      + '<input type="text" id="g-' + s.n + '" name="grund" maxlength="90" value="' + esc(k.grund) + '"'
+      + (f.grund ? ' aria-invalid="true" aria-describedby="gf-' + s.n + '"' : '') + '>';
+    if (f.grund) html += '<span class="feltfejl" id="gf-' + s.n + '">' + esc(f.grund) + '</span>';
+    html += '</p>';
+
+    html += '<p class="feltgruppe feltgruppe--knap">'
+      + '<button type="submit" class="knap" aria-label="Send montør til station ' + nr(s.n) + '">Send montør</button></p>';
+    html += '</div>';
+    html += '</form>';
+    return html;
+  }
+
+  /* ---- handlinger ------------------------------------------------------ */
+
+  linjerEl.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var form = e.target;
+    var n = Number(form.dataset.n);
+    var s = station(n);
+    if (!s) return;
+
+    var valgtMontor = form.elements.montor.value;
+    var grund = form.elements.grund.value.trim();
+    kladde[n] = { montor: valgtMontor, grund: grund };
+
+    var f = {};
+    if (!valgtMontor) f.montor = 'Vælg en montør. Udkaldet skal navngive den, der kører.';
+    if (!grund) f.grund = 'Skriv en grund på én linje. Den kommer med i journalen og kan ikke rettes bagefter.';
+
+    if (f.montor || f.grund) {
+      fejl[n] = f;
+      tegnLinjer('[data-fejlsum="' + n + '"]');
+      return;
+    }
+
+    delete fejl[n];
+    delete kladde[n];
+
+    var m = montor(valgtMontor);
+    var flyttetFra = null;
+    if (m.station !== null) {
+      var gammel = station(m.station);
+      if (gammel && gammel.udkald && gammel.udkald.montor === m.navn) {
+        flyttetFra = gammel.n;
+        gammel.udkald = null;
+      }
+    }
+
+    var t = naesteTid();
+    s.udkald = { montor: m.navn, tid: t, grund: grund };
+    m.tilstand = 'kører';
+    m.station = n;
+
+    journal.push({ tid: t, tekst: 'Station ' + nr(n) + '. ' + m.navn + ' sendt. Grund: ' + grund });
+    if (flyttetFra !== null) {
+      journal.push({ tid: t, tekst: 'Station ' + nr(flyttetFra) + '. ' + m.navn + ' taget af opgaven og sendt til station ' + nr(n) + '.' });
+    }
+    klokkeEl.textContent = t;
+
+    tegnAlt('[data-sendt="' + n + '"]');
+    meld(t + ', ' + m.navn + ' sendt til station ' + nr(n) + '.');
+  });
+
+  linjerEl.addEventListener('click', function (e) {
+    var knap = e.target.closest('[data-handling]');
+    if (!knap) return;
+    var n = Number(knap.dataset.n);
+    var s = station(n);
+    if (!s) return;
+    var handling = knap.dataset.handling;
+
+    if (handling === 'omfordel') {
+      omfordeler[n] = true;
+      tegnLinjer('[data-omfordel="' + n + '"]');
+      return;
+    }
+    if (handling === 'behold') {
+      delete omfordeler[n];
+      tegnLinjer('[data-sendt="' + n + '"]');
+      return;
+    }
+    if (handling === 'omfordel-ja') {
+      var navn = s.udkald.montor;
+      var tidligere = s.udkald.tid;
+      var m1 = montor(navn);
+      if (m1) { m1.tilstand = 'fri'; m1.station = null; }
+      s.udkald = null;
+      delete omfordeler[n];
+      var t1 = skriv('Station ' + nr(n) + '. ' + navn + ' taget af opgaven. Udkaldet fra ' + tidligere + ' står stadig i journalen.');
+      tegnAlt('[data-linje="' + n + '"]');
+      meld(t1 + ', ' + navn + ' taget af station ' + nr(n) + '. Vælg en ny montør på linjen.');
+      return;
+    }
+    if (handling === 'fuldfor') {
+      var navn2 = s.udkald.montor;
+      var m2 = montor(navn2);
+      if (m2) { m2.tilstand = 'fri'; m2.station = null; }
+      s.udkald = null;
+      var t2 = skriv('Station ' + nr(n) + '. ' + navn2 + ' har meldt udkaldet fuldført.');
+      tegnAlt('[data-linje="' + n + '"]');
+      meld(t2 + ', ' + navn2 + ' har meldt station ' + nr(n) + ' fuldført.');
+    }
+  });
+
+  document.querySelector('.filtre').addEventListener('change', function (e) {
+    var boks = e.target.closest('[data-filter]');
+    if (!boks) return;
+    filtre[boks.dataset.filter] = boks.checked;
+    tegnLinjer(null);
+    tegnArket();
+  });
+
+  /* ---- start ----------------------------------------------------------- */
+
+  function tegnAlt(fokus) {
+    tegnArket();
+    tegnMontorer();
+    tegnJournal();
+    tegnLinjer(fokus);
+  }
+
+  tegnAlt(null);
+})();
+</script>
+</body>
+</html>

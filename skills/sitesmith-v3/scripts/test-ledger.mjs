@@ -178,7 +178,13 @@ const at = (h, band = 'light', display = 'sans') => ({ ground: band, groundHue: 
 const prior = (h, band = 'light') => [{ id: 'prior', when: '2026-08-01', fingerprint: at(h, band, 'serif') }]
 for (const [name, got, want] of [
   ['two grounds one degree apart are vetoed', judge({ fingerprint: at(41), ledger: prior(42), selfId: 'me' }).some((v) => /ground is 1 degrees/.test(v)), true],
-  ['the same hue in a different luminance band is not a repeat', judge({ fingerprint: at(41, 'dark'), ledger: prior(42), selfId: 'me' }).length === 0, true],
+  /* This case asserted the opposite until round three. A and B landed 0.8 degrees apart
+     on the ground, sat in different luminance bands, and were therefore never compared.
+     A hue that close is one decision whether the value is light or dark; the band now
+     only halves the arc that counts as near. */
+  ['a near hue in a different luminance band is still a repeat', judge({ fingerprint: at(41, 'dark'), ledger: prior(42), selfId: 'me' }).some((v) => /ground is 1 degrees/.test(v)), true],
+  ['a hue far enough apart across bands is allowed', judge({ fingerprint: at(60, 'dark'), ledger: prior(42), selfId: 'me' }).length === 0, true],
+  ['two signature materials inside the arc are refused', judge({ fingerprint: { ...at(200), signatureHue: 39 }, ledger: [{ id: 'p', when: 'd', fingerprint: { ...at(300, 'dark', 'serif'), signatureHue: 40 } }], selfId: 'me' }).some((v) => /signature material/.test(v)), true],
   ['a ground far from the record is allowed', judge({ fingerprint: at(210), ledger: prior(42), selfId: 'me' }).length === 0, true],
   ['grey has no hue, so two greys are not a shared one', hueOf('rgb(128, 128, 128)') === null && hueGap(null, 40) === null, true],
 ]) {

@@ -288,6 +288,10 @@ export function fingerprintOf(raw = {}) {
     ground: groundBand(Number(raw.luminance)),
     groundHue: raw.groundHue ?? null,
     accentHue: raw.accentHue ?? null,
+    /* Round three's tell. Manila card, reading sheet and tawed sheepskin, three noun
+       lists with nothing in common, all resolved to one hue inside 0.8 degrees. In two of
+       the three the material was not the ground, so nothing looked at it. */
+    signatureHue: raw.signatureHue ?? null,
     display: displayClass(raw.displayFamily),
     imagery: imageryBand(Number(raw.assetShare)),
     devices: devicesOf(raw),
@@ -358,6 +362,10 @@ async function surfaceId(dir, ledgerPath) {
    loose enough that a brief-pinned colour survives, because the brief outranks this file. */
 const GROUND_ARC = 25
 const ACCENT_ARC = 20
+/* Tighter than the other two. Round three's three signature materials sat inside 0.8
+   degrees, and unlike a ground there is no reason two unrelated trades should cut their
+   defining object from the same colour. */
+const SIGNATURE_ARC = 30
 
 export function judge({ fingerprint, ledger, selfId }) {
   const vetoes = []
@@ -379,10 +387,15 @@ export function judge({ fingerprint, ledger, selfId }) {
   /* Hue proximity. Same band and a near hue is the same ground wearing a different name,
      and it is what two rounds of rewriting the instruction could not stop. */
   for (const entry of others) {
-    for (const [field, arc, what] of [['groundHue', GROUND_ARC, 'ground'], ['accentHue', ACCENT_ARC, 'emphatic accent']]) {
+    for (const [field, arc, what] of [['groundHue', GROUND_ARC, 'ground'], ['accentHue', ACCENT_ARC, 'emphatic accent'], ['signatureHue', SIGNATURE_ARC, 'signature material']]) {
       const gap = hueGap(fingerprint[field], entry.fingerprint?.[field])
       if (gap === null || gap > arc) continue
-      if (field === 'groundHue' && fingerprint.ground !== entry.fingerprint?.ground) continue
+      /* Round three: A and B landed 0.8 degrees apart on the ground and were never
+         compared, because they sat in different luminance bands and this line skipped
+         them. A hue that close is the same decision whether the value is light or dark,
+         so the band no longer excuses it; it only widens the arc that counts as near. */
+      const sameBand = field !== 'groundHue' || fingerprint.ground === entry.fingerprint?.ground
+      if (field === 'groundHue' && !sameBand && gap > Math.round(arc / 2)) continue
       vetoes.push(
         `the ${what} is ${gap} degrees from a record from ${entry.when} (${fingerprint[field]} against ${entry.fingerprint[field]}); ${arc} degrees is the arc this ledger refuses`,
       )
