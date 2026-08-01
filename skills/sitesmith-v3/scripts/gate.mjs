@@ -777,6 +777,92 @@ if (!paletteWaiver) {
   }
 }
 
+/* ── 8b. the rest of taste-skill's named tells ────────────────────────── */
+
+/* Three more from the same section that carried the palette. Each is code-checkable from
+   static output, each keeps taste-skill's override path, and each is here rather than in
+   the prose for the reason round two proved: an instruction every build reads becomes the
+   next thing they all agree on. A check does not. */
+
+const tellWaiver = (name) => direction && new RegExp(`${name}-pinned-by-brief:`, 'i').test(direction.raw ?? '');
+
+/* taste-skill: "Specifically BANNED as defaults: Fraunces and Instrument_Serif (the two
+   LLM-favorite display serifs)", and Inter is "discouraged as default". */
+const BANNED_FACES = [
+  { re: /\bFraunces\b/i, why: 'one of the two display serifs taste-skill names as the LLM favourites' },
+  { re: /\bInstrument[_ ]?Serif\b/i, why: 'the other of the two' },
+  { re: /\bInter\b(?!\s*Tight)/i, why: 'discouraged as a default sans; acceptable when the brief asks for a neutral or accessibility-first feel' },
+];
+if (!tellWaiver('typeface')) {
+  for (const file of [...cssFiles, ...markupFiles]) {
+    const src = textOf(file);
+    for (const line of [...src.matchAll(/^.*font-family[^;\n]*/gim)]) {
+      for (const face of BANNED_FACES) {
+        if (!face.re.test(line[0])) continue;
+        refuse('typeface/named-default', file, lineOf(src, line.index),
+          `${line[0].trim().slice(0, 90)} — ${face.why}. Choose another, or write "typeface-pinned-by-brief: <the client's words>" in the direction record.`);
+      }
+    }
+  }
+}
+
+/* taste-skill's LILA RULE: the AI purple and blue-glow aesthetic, discouraged as a
+   default. Checked by hue rather than by name, because the tell is the region. */
+if (!tellWaiver('purple')) {
+  const seen = new Set();
+  for (const file of [...cssFiles, ...markupFiles]) {
+    const src = textOf(file);
+    for (const m of src.matchAll(/#[0-9a-fA-F]{6}\b/g)) {
+      const hex = m[0].toLowerCase();
+      if (seen.has(hex)) continue;
+      seen.add(hex);
+      const [r, g, b] = rgbOf(hex).map((v) => v / 255);
+      const mx = Math.max(r, g, b), mn = Math.min(r, g, b), d = mx - mn;
+      if (d < 0.25) continue;
+      const l = (mx + mn) / 2;
+      const s = l > 0.5 ? d / (2 - mx - mn) : d / (mx + mn);
+      if (s < 0.45) continue;
+      let h;
+      if (mx === r) h = ((g - b) / d + (g < b ? 6 : 0)) / 6;
+      else if (mx === g) h = ((b - r) / d + 2) / 6;
+      else h = ((r - g) / d + 4) / 6;
+      h *= 360;
+      if (h < 255 || h > 295) continue;
+      refuse('colour/ai-purple', file, lineOf(src, m.index),
+        `${hex} sits at hue ${Math.round(h)}, inside the AI purple region taste-skill names. Embrace it only if the brief asks: write "purple-pinned-by-brief: <the client's words>" in the direction record.`);
+    }
+  }
+}
+
+/* taste-skill: "Two CTAs with the same intent on one page is a Pre-Flight Fail." One
+   label per intent, everywhere on the page. */
+const CTA_INTENTS = [
+  { intent: 'contact', re: /\b(get in touch|contact us|contact|let'?s talk|start a project|start something|reach out|book a call|tal med os|kontakt os|ring til os|skriv til os)\b/i },
+  { intent: 'signup', re: /\b(try free|get started|sign up free|sign up|start free|opret|kom i gang|prøv gratis)\b/i },
+  { intent: 'portfolio', re: /\b(view work|see selected work|browse projects|our work|se arbejde|se projekter|se cases)\b/i },
+];
+if (!tellWaiver('cta')) {
+  for (const file of markupFiles) {
+    const src = textOf(file);
+    const byIntent = new Map();
+    for (const m of src.matchAll(/<(?:a|button)\b[^>]*>([\s\S]{1,80}?)<\/(?:a|button)>/gi)) {
+      const label = m[1].replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+      if (!label || label.length > 40) continue;
+      for (const { intent, re } of CTA_INTENTS) {
+        if (!re.test(label)) continue;
+        if (!byIntent.has(intent)) byIntent.set(intent, new Map());
+        if (!byIntent.get(intent).has(label.toLowerCase())) byIntent.get(intent).set(label.toLowerCase(), lineOf(src, m.index));
+      }
+    }
+    for (const [intent, labels] of byIntent) {
+      if (labels.size < 2) continue;
+      const shown = [...labels.keys()].map((l) => `"${l}"`).join(', ');
+      refuse('cta/duplicate-intent', file, [...labels.values()][1],
+        `${labels.size} labels for one ${intent} intent on this page: ${shown}. Pick one label and use it in the nav, the hero and the footer.`);
+    }
+  }
+}
+
 /* ── 8. token drift ────────────────────────────────────────────────────── */
 
 /* Values a page may use without declaring: they carry no design decision. Taken from
