@@ -214,6 +214,44 @@ export function groundBand(lum) {
   return 'light'
 }
 
+/* A9 measured the convergence that survives every wording fix. Round one: three unrelated
+   trades landed their grounds inside an 18 degree arc. Round two, after four fixes to the
+   instruction, the arc closed to 4.1 degrees and the emphatic accent's saturation band got
+   four times tighter. Two rounds established that instruction is shared, so the response to
+   it converges, and that a third rewrite would relocate the tell again rather than remove
+   it. So hue enters the fingerprint and the veto, on the same terms as everything else
+   here: this file never proposes a colour. It says not there, and the model chooses again
+   from its own nouns. */
+
+export function hueOf(rgb) {
+  const m = String(rgb).match(/(\d+(?:\.\d+)?)/g)
+  if (!m || m.length < 3) return null
+  const [r, g, b] = m.slice(0, 3).map((v) => Number(v) / 255)
+  const max = Math.max(r, g, b)
+  const min = Math.min(r, g, b)
+  const d = max - min
+  // Achromatic. A grey has no hue to be near another hue, and pretending otherwise would
+  // veto two unrelated builds for both using grey.
+  if (d < 0.04) return null
+  let h
+  if (max === r) h = ((g - b) / d + (g < b ? 6 : 0)) / 6
+  else if (max === g) h = ((b - r) / d + 2) / 6
+  else h = ((r - g) / d + 4) / 6
+  return Math.round(h * 360)
+}
+
+export const hueGap = (a, b) => {
+  if (a == null || b == null) return null
+  const raw = Math.abs(a - b) % 360
+  return raw > 180 ? 360 - raw : raw
+}
+
+// Twelve buckets. Wide enough that a considered choice inside one is still a choice, narrow
+// enough that the 4.1 degree arc round two produced lands three builds in the same bucket.
+export function hueRegion(h) {
+  return h == null ? 'achromatic' : `h${Math.floor(h / 30) * 30}`
+}
+
 export function imageryBand(sharePercent) {
   if (sharePercent < 2) return 'imageless'
   if (sharePercent < 8) return 'incidental'
@@ -248,6 +286,8 @@ export function devicesOf(raw = {}) {
 export function fingerprintOf(raw = {}) {
   return {
     ground: groundBand(Number(raw.luminance)),
+    groundHue: raw.groundHue ?? null,
+    accentHue: raw.accentHue ?? null,
     display: displayClass(raw.displayFamily),
     imagery: imageryBand(Number(raw.assetShare)),
     devices: devicesOf(raw),
@@ -312,6 +352,13 @@ async function surfaceId(dir, ledgerPath) {
 
 /* ── the veto ──────────────────────────────────────────────────────────── */
 
+/* Round two's ground arc was 4.1 degrees and its accent arc 31.7. Twenty-five and twenty
+   are set above the first and below the second: a ground that close is the same decision,
+   and an accent arc that wide is a family rather than a repeat. Both are deliberately
+   loose enough that a brief-pinned colour survives, because the brief outranks this file. */
+const GROUND_ARC = 25
+const ACCENT_ARC = 20
+
 export function judge({ fingerprint, ledger, selfId }) {
   const vetoes = []
   const key = fingerprintKey(fingerprint)
@@ -326,6 +373,19 @@ export function judge({ fingerprint, ledger, selfId }) {
   for (const entry of others) {
     if (fingerprintKey({ devices: [], ...entry.fingerprint }) === key) {
       vetoes.push(`a record from ${entry.when} has the same fingerprint: ${key}`)
+    }
+  }
+
+  /* Hue proximity. Same band and a near hue is the same ground wearing a different name,
+     and it is what two rounds of rewriting the instruction could not stop. */
+  for (const entry of others) {
+    for (const [field, arc, what] of [['groundHue', GROUND_ARC, 'ground'], ['accentHue', ACCENT_ARC, 'emphatic accent']]) {
+      const gap = hueGap(fingerprint[field], entry.fingerprint?.[field])
+      if (gap === null || gap > arc) continue
+      if (field === 'groundHue' && fingerprint.ground !== entry.fingerprint?.ground) continue
+      vetoes.push(
+        `the ${what} is ${gap} degrees from a record from ${entry.when} (${fingerprint[field]} against ${entry.fingerprint[field]}); ${arc} degrees is the arc this ledger refuses`,
+      )
     }
   }
 
@@ -383,8 +443,38 @@ export async function measure(target) {
           return s.fill === 'none' || s.fill === 'rgba(0, 0, 0, 0)' || parseFloat(s.fillOpacity) < 0.4
         })
       }).length
+      /* Same fiction portfolio-diversity.mjs graded: a site painting its ground on <html>
+         and leaving <body> transparent reads as rgba(0,0,0,0) and files as dark. */
+      const TRANSPARENT = /^(transparent|rgba\(0, 0, 0, 0\))$/
+      const paintedGround = TRANSPARENT.test(bodyStyle.backgroundColor)
+        ? getComputedStyle(document.documentElement).backgroundColor
+        : bodyStyle.backgroundColor
+      /* The emphatic accent is the most saturated colour the page actually paints with,
+         weighted by how much of the first screen it covers. Text colour counts: an accent
+         carrying the one sentence the page wants read is emphatic whether or not it fills
+         anything. */
+      const sat = (c) => {
+        const m = String(c).match(/(\d+(?:\.\d+)?)/g)
+        if (!m || m.length < 3) return 0
+        if (m.length > 3 && Number(m[3]) < 0.5) return 0
+        const [r, g, b] = m.slice(0, 3).map((v) => Number(v) / 255)
+        const mx = Math.max(r, g, b), mn = Math.min(r, g, b)
+        if (mx - mn < 0.12) return 0
+        const l = (mx + mn) / 2
+        return l > 0.5 ? (mx - mn) / (2 - mx - mn) : (mx - mn) / (mx + mn)
+      }
+      let accent = null, best = 0
+      for (const el of all) {
+        const s = getComputedStyle(el)
+        for (const c of [s.backgroundColor, s.color, s.borderTopColor]) {
+          const v = sat(c)
+          if (v > 0.35 && v > best) { best = v; accent = c }
+        }
+      }
       return {
-        luminance: Number(lum(bodyStyle.backgroundColor).toFixed(3)),
+        luminance: Number(lum(paintedGround).toFixed(3)),
+        groundColor: paintedGround,
+        accentColor: accent,
         displayFamily: (h1 ? getComputedStyle(h1).fontFamily : bodyStyle.fontFamily)
           .split(',')[0].replace(/["']/g, '').trim(),
         assetShare: Number((assets.reduce((a, el) => a + area(el.getBoundingClientRect()), 0) / (W * H) * 100).toFixed(2)),
@@ -579,6 +669,8 @@ if (!invokedDirectly) { /* imported for its parts; nothing runs */ } else {
     const recordProblems = directionProblems(record)
 
     const { raw, source } = await obtainRaw(dir)
+    raw.groundHue = hueOf(raw.groundColor)
+    raw.accentHue = hueOf(raw.accentColor)
     const fingerprint = fingerprintOf(raw)
 
     let ledger
@@ -594,7 +686,8 @@ if (!invokedDirectly) { /* imported for its parts; nothing runs */ } else {
     console.log(`record:      ${recordPath}`)
     console.log(`measurement: ${source}`)
     console.log(`fingerprint: ${fingerprintKey(fingerprint)}`)
-    console.log(`  ground     ${fingerprint.ground} (relative luminance ${raw.luminance})`)
+    console.log(`  ground     ${fingerprint.ground} (relative luminance ${raw.luminance}, hue ${fingerprint.groundHue ?? 'achromatic'}, ${hueRegion(fingerprint.groundHue)})`)
+    console.log(`  accent     ${fingerprint.accentHue ?? 'none saturated'} (${hueRegion(fingerprint.accentHue)})`)
     console.log(`  display    ${fingerprint.display}`)
     console.log(`  imagery    ${fingerprint.imagery} (${raw.assetShare}% of the first screen)`)
     console.log(`  devices    ${fingerprint.devices.join(', ') || 'none measured'}`)

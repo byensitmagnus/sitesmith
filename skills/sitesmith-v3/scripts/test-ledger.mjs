@@ -167,6 +167,26 @@ const templateParses = run(['parse', newDir]).status === 1
 if (!templateParses) failed++
 results.push(`${templateParses ? '  ok  ' : '  FAIL'} an unfilled template is refused by parse`)
 
+/* A9 round two, real numbers. Three unrelated trades landed their grounds at 41, 42 and 38
+   degrees after four separate rewrites of the instruction had already been applied. Prose
+   could not stop that, so these pin the veto that replaced the fifth rewrite. */
+const { judge, hueOf, hueGap } = await import('./ledger.mjs')
+/* The other fingerprint axes are deliberately different in each pair, so these cases
+   isolate hue. An earlier version of this block held them equal and the same-fingerprint
+   veto fired instead, which the suite caught. */
+const at = (h, band = 'light', display = 'sans') => ({ ground: band, groundHue: h, accentHue: null, display, imagery: 'imageless', devices: [] })
+const prior = (h, band = 'light') => [{ id: 'prior', when: '2026-08-01', fingerprint: at(h, band, 'serif') }]
+for (const [name, got, want] of [
+  ['two grounds one degree apart are vetoed', judge({ fingerprint: at(41), ledger: prior(42), selfId: 'me' }).some((v) => /ground is 1 degrees/.test(v)), true],
+  ['the same hue in a different luminance band is not a repeat', judge({ fingerprint: at(41, 'dark'), ledger: prior(42), selfId: 'me' }).length === 0, true],
+  ['a ground far from the record is allowed', judge({ fingerprint: at(210), ledger: prior(42), selfId: 'me' }).length === 0, true],
+  ['grey has no hue, so two greys are not a shared one', hueOf('rgb(128, 128, 128)') === null && hueGap(null, 40) === null, true],
+]) {
+  const ok = got === want
+  if (!ok) failed++
+  results.push(`${ok ? '  ok  ' : '  FAIL'} ${name}`)
+}
+
 for (const line of results) console.log(line)
 console.log(failed ? `\n${failed} case(s) disagreed with the expected exit\n` : `\nall ${results.length} cases agreed\n`)
 if (existsSync(tmp)) console.log(`working files: ${tmp}`)
