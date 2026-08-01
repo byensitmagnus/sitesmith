@@ -3,10 +3,11 @@
   "workflow": "sitesmith-unified-rebuild",
   "branch": "rebuild/sitesmith-unified",
   "base": "dc00598cce2af92435a749856393e287506753bc",
-  "state": "S2_REPO_AUTOPSIES",
-  "previousState": "S1_SOURCE_RESOLUTION",
+  "state": "S10_MECHANISM_TESTS",
+  "previousState": "S2_REPO_AUTOPSIES",
   "allowedNextStates": [
-    "S3_MECHANISM_GRAPH"
+    "S11_PROTOTYPE_BUILD",
+    "S9_MINIMAL_IMPLEMENTATION"
   ],
   "states": [
     "S0_REPO_TRUTH",
@@ -29,10 +30,10 @@
   "gates": {
     "G0_repo_truth": "pass",
     "G1_source_resolution": "pass",
-    "G2_autopsies": "running",
-    "G3_architecture_selected": "not-started",
-    "G4_red_team": "not-started",
-    "G5_mechanism_tests": "not-started",
+    "G2_autopsies": "pass",
+    "G3_architecture_selected": "pass",
+    "G4_red_team": "pass",
+    "G5_mechanism_tests": "running",
     "G6_holdout": "not-started"
   },
   "budget": {
@@ -42,13 +43,14 @@
     "prototypeSitesLimit": 2,
     "paidThirdPartyApiSpend": 0,
     "newHeadToHeadArms": 0,
-    "agentRunsSoFar": 23
+    "agentRunsSoFar": 61
   },
   "openRisks": [
-    "The central conflict constraint:no-skill-chain >< constraint:no-mechanical-creativity is now closer to resolution: frontend-design's method is 2078 tokens of prose, which fits inside a unified skill's always-loaded surface. Untested whether it transfers when re-expressed in our own words.",
-    "Three sources may not be copied at all: remotion-dev/skills (no licence, upstream NOASSERTION with commercial restrictions), 21st-dev/magic-mcp (ISC in package.json only, no LICENSE file, GitHub licence null), tenfoldmarc/website-builder-setup (no licence, two files total).",
-    "Two named sources have no canonical artifact under that name: 'Before Implementing' and 'Graph Engineering'. Neither blocks the rebuild because the master prompt specifies both contracts in full.",
-    "remotion-dev/remotion moves fast (pushed 2026-08-01); re-pin before any autopsy that reads the monorepo."
+    "risk:reexpression-may-not-transfer is now under test (S10-1). Our creative surface is 2161 est tokens against a section budget of 1726; if it wins, the overage is paid for by moving the control plane out of SKILL.md into a fetched run.md, which the architecture decision pre-registers.",
+    "risk:ci-coupling — check-repo.py imports core.py from skills/sitesmith/scripts and four checks glob references/*.md, so nothing may be deleted before the repo is taught the new shape. Verified directly at tools/check-repo.py:645.",
+    "risk:blocks-deletion — dropping the block library means accessible combobox and focus-trap implementations come from memory; the journey gate catches absence of testing, not absence of correctness.",
+    "risk:anti-argmax-audited-not-forced — the model can write three theses and justify the one it already wanted.",
+    "A9 is unproven until three builds exist."
   ],
   "pushPolicy": "no push, no merge, no force-push until Magnus approves once for this branch"
 }
