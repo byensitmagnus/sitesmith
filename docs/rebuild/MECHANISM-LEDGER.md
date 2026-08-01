@@ -10,7 +10,7 @@ ai_generated: "(C)"
 
 Generated. Do not hand-edit.
 
-67 mechanisms from 5 sources. Red team: 55 confirmed, 3 refuted, 9 unchallenged. Decisions after refutation is applied: 42 adopt, 15 adapt, 1 investigate, 9 reject.
+140 mechanisms from 18 sources. Red team: 85 confirmed, 14 refuted, 41 unchallenged. Decisions after refutation is applied: 72 adopt, 25 adapt, 12 investigate, 31 reject.
 
 "Unchallenged" means the red team did not examine it, which is weaker than "confirmed" and is kept as a separate state on purpose.
 
@@ -44,7 +44,117 @@ Claimed: 30-row CSV: category -> pattern, style priority, color mood, typography
 Checked at: `.claude/skills/ui-ux-pro-max/data/ui-reasoning.csv (162 lines total; csv.DictReader confirms 161 data rows, not 30)`
 
 
-## Adopt (42)
+### ai-website-cloner-template/appearance-and-behavior-taxonomy
+
+Claimed: Requires appearance (getComputedStyle) AND behavior (trigger, before/after, transition) for every element, backed by a 13-category illustrative behavior list.
+
+**Refuted:** The appearance/behavior requirement itself is real (line 65: 'For every element, extract its appearance (exact computed CSS via getComputedStyle()) AND its behavior...'). But the claimed '13-category' list is a miscount: the illustrative bullet list at lines 68-79 was counted by hand and contains exactly 12 items, not 13. Per the numeric-verification rule, a wrong count refutes the claim as stated.
+
+Checked at: `.claude/skills/clone-website/SKILL.md:68-79`
+
+Decision was `adopt`, now `investigate`.
+
+### ai-website-cloner-template/computed-style-extraction-script
+
+Claimed: Reusable JS snippet: depth-4 DOM walk, getComputedStyle against ~40 named properties per element, filters out default/no-op values.
+
+**Refuted:** The script, the depth-4 recursion guard ('if (depth > 4) return null' at line 269), and the default-value filtering (line 265: filters out 'none'/'normal'/'auto'/'0px'/'rgba(0, 0, 0, 0)') are all real and confirmed. However the claimed property count is wrong: I counted the literal strings in the props array (lines 248-260) and got 61 named properties, not '~40' as claimed - a 50%+ overstatement of the actual count, which fails the numeric-verification check.
+
+Checked at: `.claude/skills/clone-website/SKILL.md:247-261`
+
+Decision was `adopt`, now `investigate`.
+
+### scroll-world/mobile-scrub-hardening-bundle
+
+Claimed: Four bundled fixes behind one isMobile() check: seek-coalescing (skip re-queuing currentTime while still seeking), iOS priming (muted play/pause on first touch, wait for 'seeked' not just 'loadedmetadata'), resize-gating (ignore height-only resize on touch), coarser mobile seek epsilon.
+
+**Refuted:** 3 of 4 sub-parts check out inside the cited ranges: seek-coalescing at line 281 (if s.video.seeking continue), resize-gating at 317-320, coarser epsilon at line 274 — all within 273-323. But the 'wait for seeked not just loadedmetadata' detail actually lives in loadClip() at line 216, outside the cited 66-73,273-323 ranges entirely. The additional CSS citation (413-435) is generic mobile layout media queries (nav hiding, copy anchoring, route dot hit-area) and contains none of the four described JS fixes — it doesn't support the claim at all. The claim merges code from an uncited location and an unrelated CSS block into one citation.
+
+Checked at: `skills/scroll-world/references/scrub-engine.js:66-73,216,273-323; CSS 413-435 (does not contain the described fixes)`
+
+Decision was `adopt`, now `investigate`.
+
+### scroll-world/progressive-disclosure-file-split
+
+Claimed: SKILL.md is the only always-loaded file; it names each reference file by relative path at the exact step it's needed, none pre-loaded speculatively.
+
+**Refuted:** The cited lines 752-762 are just the final '## References' summary list at the end of SKILL.md — a bare enumeration of the reference files with one-line descriptions, not evidence of just-in-time referencing throughout the steps. The claim's own whyItWorks concedes this 'matches the general skill-authoring principle' — i.e. this is standard Claude-skill structure (SKILL.md as sole entry point, references loaded on demand), not a distinctive mechanism of scroll-world. Treated as a platitude dressed up as a mechanism; the citation doesn't show what's actually being claimed (loading discipline at each step) — that would require citing the scattered inline 'See references/X' pointers throughout Steps 1-8, not the closing list.
+
+Checked at: `skills/scroll-world/SKILL.md:752-762`
+
+Decision was `adapt`, now `investigate`.
+
+### ai-dev-tasks/prd-non-goals-and-success-metrics
+
+Claimed: Of 9 mandated PRD sections, Non-Goals (Out of Scope) and Success Metrics carry real weight for scope control and a concrete definition of done.
+
+**Refuted:** The section count is accurate (lines 57-65 list exactly 9 numbered sections, Non-Goals is #5, Success Metrics is #8), but the claim overstates what the source does with them: Non-Goals gets one generic bullet ('Clearly state what this feature will not include to manage scope') with zero elaboration, examples, or emphasis distinguishing it from the other 7 sections. The whyItWorks goes further and speculates 'Directly counters house-style convergence IF do-not-converge-on-last-brief is stated as a non-goal' -- this is the claiming agent's own hypothetical, not anything create-prd.md instructs or exemplifies. This is rule-3's exact failure mode: a template heading treated as a targeted anti-convergence mechanism.
+
+Checked at: `/c/Users/Usmo1/AppData/Local/Temp/claude/C--Users-Usmo1-Documents-sitesmith/60a368a9-e3a0-4ebc-aadf-386ee1a4a75a/scratchpad/upstream/ai-dev-tasks/create-prd.md`
+
+Decision was `adapt`, now `investigate`.
+
+### before-implementing/blocking-question-template-with-budget
+
+Claimed: Every question must be material, grounded, and answerable, delivered via a template (question/why it matters/evidence/recommended default); ~5-question budget; fatigue valve stops interviewing on short/impatient answers and batches remaining unknowns as one assumptions list; ban on asking users to verbalize taste they can only recognize when shown.
+
+**Refuted:** The mechanism itself is real -- SKILL.md lines 92-126 confirm Material/Grounded/Answerable (92-96), the bad-question ban on verbalizing taste (103), the blocking-question template (110-118), the ~5-question budget and fatigue valve (122-126). However the whyItWorks overstates its provenance: it asserts 'The package's own CHANGELOG documents this as a deliberate 0.1.2 fix for real user-exhaustion feedback -- a tested fix, not a speculative addition.' Opening CHANGELOG.md shows the 0.1.2 entry only says 'Anti-exhaustion release -- addresses the failure mode where grilling primes an agent to over-question to the point of user exhaustion,' with no named user, no cited feedback, no 'reported by' -- unlike the 0.1.1 entry two sections down which explicitly credits '@mattpocock's feedback that the skill was long, costly in tokens, and hard to review.' Claiming CHANGELOG-documented 'real user-exhaustion feedback' and calling it 'tested' misrepresents a self-described anti-pattern fix as empirically validated user research.
+
+Checked at: `/c/Users/Usmo1/AppData/Local/Temp/claude/C--Users-Usmo1-Documents-sitesmith/60a368a9-e3a0-4ebc-aadf-386ee1a4a75a/scratchpad/upstream/before-implementing/CHANGELOG.md`
+
+Decision was `adopt`, now `investigate`.
+
+### agency-agents/orch-01-finish-gate-design-contract
+
+Claimed: Single-pass review procedure: write a one-paragraph product lens (user, job, first-read object), collect 3-5 comparable reference patterns, fill a Design Contract naming density/hierarchy/interaction-model/forbidden-defaults, then audit the implementation against it and return a hard PASS or HOLD verdict (never a soft list of nice-to-haves).
+
+**Refuted:** Opened agency-agents/design/design-ui-finish-gate-reviewer.md in full. The cited range (106-165) only contains Steps 3-5 (Design Contract template, implementation audit, PASS/HOLD report). Two of the five components the claim describes live outside that range: the 'one-paragraph product lens' is Step 1 at lines 85-97 ('Write a one-paragraph lens before critiquing pixels'), and 'collect 3-5 comparable reference patterns' is Step 2 at lines 98-105 ('Build a short evidence set with 3-5 screens or patterns'). The 'never a soft list of nice-to-haves' qualifier is also not in the cited range -- it's at lines 56-57 in the earlier 'Run a Hard Finish Gate' section ('do not soften a hold into a vague list of nice-to-haves'). The underlying five-step workflow is real, but the claim merges three separate sections (Core Mission lines 56-57, Step 1 lines 85-97, Step 2 lines 98-105) into a citation window that covers none of them, only Steps 3-4-5.
+
+Checked at: `scratchpad/upstream/agency-agents/design/design-ui-finish-gate-reviewer.md:56-57,85-105 (outside the cited 106-165 range)`
+
+Decision was `adapt`, now `investigate`.
+
+### graph-engineering/orch-04-fresh-context-review
+
+Claimed: Verify in a separate context from the one that produced the work -- even without any other agent or fleet, a second pass with no memory of writing the code catches errors a same-context self-review does not.
+
+**Refuted:** Opened graph-engineering/graph-engineering/references/task-graphs.md (actual path requires an extra nested 'graph-engineering/' directory not present in the sourcePath as given). Lines 40-44 do say 'verify in a separate context... a model grading its own work in its own context misses most of its own mistakes' -- but this sentence sits inside the 'Diamond Pattern' section, which is explicitly a multi-worker graph (worker 1/2/3 -> verify -> merge, per the diagram at lines 34-38). Nothing in the cited lines, or anywhere in the file, states the principle is 'agent-count-independent' or holds 'even without any other agent or fleet' -- that generalization is invented, not sourced. Additionally, the claim's whyItWorks attributes support to 'a controlled multi-agent study (DeepMind x MIT, 180 configs)', but that study (with the 80%/39-70%/17.2x/4.4x figures) appears in the separate 'Stop Rule' section at lines 46-52, about coordination overhead and when NOT to split work -- it says nothing about self-grading blindness. The claim misattributes a different section's evidence to this mechanism.
+
+Checked at: `scratchpad/upstream/graph-engineering/graph-engineering/references/task-graphs.md:30-52 (diamond pattern + stop rule sections)`
+
+Decision was `adapt`, now `investigate`.
+
+### awesome-claude-code-subagents/orch-09-design-bridge-checklist
+
+Claimed: Fixed extraction checklist run before any implementation: visual theme/atmosphere, colour palette with named roles + hover/active states, typography rules, component stylings, layout/spacing rules, elevation/shadow system, responsive breakpoints. Treats a missing category as a question to ask, not an assumption to invent.
+
+**Refuted:** Opened awesome-claude-code-subagents/categories/01-core-development/design-bridge.md. The extraction checklist items (Visual Theme, Color Palette & Roles with hover/active states, Typography, Component Stylings, Layout Principles, Depth & Elevation, Responsive Behavior) genuinely match at lines 46-55 and 83-90 -- that part checks out. But the claim's second half, 'treats a missing category as a question to ask, not an assumption to invent,' is not in either cited range. That behavior is stated at lines 35 ('Ask before assuming') and 43 ('Don't: ... Guess missing info'), inside the separate 'Do's and Don'ts' block (lines 31-44) -- entirely outside the cited 46-55/83-90 windows. Also worth noting: this agent is scoped to translating one specific external repo (VoltAgent/awesome-design-md DESIGN.md files), not a general brand-matching checklist independent of that tool, which the whyItWorks framing ('the checklist shape, not the tool, is portable') glosses over.
+
+Checked at: `scratchpad/upstream/awesome-claude-code-subagents/categories/01-core-development/design-bridge.md:31-44 (outside the cited 46-55,83-90 ranges)`
+
+Decision was `adapt`, now `investigate`.
+
+### agent-elements-21st/agent-elements-companion-skill-reference
+
+Claimed: A short static SKILL.md ships alongside the shadcn registry, listing every component's exact props, exact file path, and an explicit 'never import from a barrel' rule. No design opinions encoded, only API ground truth.
+
+**Refuted:** Opened the file in full (278 lines via wc -l, i.e. not 'short' by any standard set elsewhere in this same claim set — compare the 47-line remotion-best-practices/SKILL.md called 'short' in a sibling claim). The cited range 104-166,240-250 does NOT contain the barrel-import rule or the per-component file-path listing at all — those live at lines 53-91 (Paths section) and line 93 ('Import rule: always import from the exact file, never from a barrel.'), outside the cited lines. The claim stitches together three separate sections (Paths, Component catalog, Theming) and attributes all of it to the cited range. The catalog (104-166) lists prop *names* for some components but not 'every component's exact props' — SendButton/AttachmentButton/FileAttachment get zero prop documentation ('usable standalone if you're building a custom composer'). Most importantly, the cited range itself contradicts 'no design opinions encoded': lines 249-250 read 'Customising a component is just editing the installed file. Prefer that over wrapping — the code is yours now,' which is an explicit workflow/design opinion, not API ground truth.
+
+Checked at: `C:\Users\Usmo1\AppData\Local\Temp\claude\C--Users-Usmo1-Documents-sitesmith\60a368a9-e3a0-4ebc-aadf-386ee1a4a75a\scratchpad\upstream\agent-elements-21st\skills\agent-elements\SKILL.md (lines 53-102 for paths/barrel rule; 104-166 for catalog; 240-250 for theming/opinion; 278 lines total via wc -l)`
+
+Decision was `adapt`, now `investigate`.
+
+### remotion-skills/remotion-router-skill
+
+Claimed: One short SKILL.md (48 lines), a one-paragraph-per-topic table of contents, each a relative markdown link to that topic's own entry file, loaded only when relevant.
+
+**Refuted:** Opened and counted the file directly: `wc -l` reports 47 lines, not 48 as claimed — a guessed/wrong count per the verification rule. The structural description (headed sections each with a short blurb and a relative link like './remotion-create/REFERENCE.md') is accurate, so the shape itself is real, but the claim's 'whyItWorks' rests on an unverifiable cross-reference ('Same shape as the 55-line frontend-design file that beat SiteSmith's 630k-token package') — neither the 55-line file nor the 630k-token package figure is present in, or verifiable from, the cited sourcePath. That comparison is imported from outside evidence and asserted as fact without a citable source in this file.
+
+Checked at: `C:\Users\Usmo1\AppData\Local\Temp\claude\C--Users-Usmo1-Documents-sitesmith\60a368a9-e3a0-4ebc-aadf-386ee1a4a75a\scratchpad\upstream\remotion-skills\skills\remotion-best-practices\SKILL.md (47 lines via wc -l, not 48)`
+
+Decision was `adopt`, now `investigate`.
+
+## Adopt (72)
 
 | mechanism | source | context cost | red team | what it solves |
 | --- | --- | --- | --- | --- |
@@ -65,6 +175,10 @@ Checked at: `.claude/skills/ui-ux-pro-max/data/ui-reasoning.csv (162 lines total
 | `cross-project-anti-repeat-ledger` | sitesmith-current | low | confirmed | Per-project novelty checks cannot see repetition across projects, which is where house style forms. |
 | `production-gate-honesty-checks` | sitesmith-current | medium | confirmed | A page can pass every a11y/layout check and still ship placeholder imagery or an empty logo box. |
 | `portfolio-diversity-gate` | sitesmith-current | medium | unchallenged | Individual-page gates can all pass while a set of sites still reads as one studio's work. |
+| `explicit-never-simplify-carveouts` | ponytail | low | confirmed | A bare 'write less' instruction cuts validation/security/accessibility along with real bloat. |
+| `blob-seek-scrubbing` | scroll-world | low | confirmed | Setting video.currentTime from scroll silently fails on hosts without HTTP byte-range support: seekable pins to [0,0] an |
+| `four-quadrant-unknowns-taxonomy` | before-implementing | low | confirmed | An agent treats all uncertainty the same way (ask a question), when some is a fact to look up, some is unverbalized tast |
+| `unknown-knowns-prototypes` | before-implementing | low | confirmed | The user has taste they recognize when shown but can't specify up front; asking them to verbalize it drives a generic de |
 | `two-gate-separation-technical-vs-visual` | sitesmith-current | low | confirmed | Merging 'works' and 'good' is how PASS came to be read as 'this is good'. |
 | `contract-after-direction-plus-token-drift` | sitesmith-current | low | confirmed | Not one of nine legacy pages had a spacing/type scale; every value chosen ad hoc at point of use. |
 | `official-design-system-honesty-rule` | taste-skill | low | confirmed | Models claim hand-rolled CSS is an official platform technology (e.g. calling glassmorphism 'Apple Liquid Glass'). |
@@ -73,25 +187,51 @@ Checked at: `.claude/skills/ui-ux-pro-max/data/ui-reasoning.csv (162 lines total
 | `mechanical-antipattern-detector` | impeccable | medium | confirmed | Design critique/floor rules are useless without something actually checking shipped code against them. |
 | `mode-based-visitor-registers` | impeccable | low | confirmed | Applying one aesthetic/behavior register to every surface produces surfaces that fight their own purpose. |
 | `interaction-journeys` | sitesmith-current | medium | confirmed | Nine legacy pages had zero <script> tags; every interactive state was drawn but never reachable. |
+| `seven-rung-simplicity-ladder` | ponytail | low | confirmed | Agents default to writing new code before checking cheaper layers exist (existing code, stdlib, native feature). |
+| `segment-interleave-scene-model` | scroll-world | low | confirmed | A scroll-scrubbed multi-scene film needs a single flat timeline (scroll position -> which clip, and how far into it) bui |
+| `clarifying-questions-before-spec` | ai-dev-tasks | low | confirmed | Agent starts writing a spec/plan on an underspecified request and locks in a wrong interpretation before the user can co |
 | `subject-grounding-mandate` | frontend-design | low | confirmed | Vague briefs cause generic output because the model has nothing specific to differentiate against. |
 | `two-pass-token-system` | frontend-design | low | confirmed | Jumping to code causes ad hoc, uncritiqued design decisions. |
 | `single-clarifying-question-cap` | taste-skill | low | confirmed | Agents either guess wrong silently or dump multi-question interrogations before doing work. |
 | `stack-never-assume` | ui-ux-pro-max | low | confirmed | Preventing every downstream recommendation from silently targeting the wrong framework. |
 | `document-after-build-not-before` | impeccable | low | confirmed | A design-system doc written before the build describes intentions and can silently canonize a shipped mistake as a rule  |
+| `self-validating-llm-judge` | ponytail | medium | confirmed | An unvalidated LLM judge for a non-deterministic quality axis (over-engineering) is an opinion, not evidence. |
+| `interaction-model-identification-first` | ai-website-cloner-template | low | confirmed | Named as the single most expensive cloning mistake: building click-based UI when the original is scroll-driven, or vice  |
+| `spec-file-inline-only-contract` | ai-website-cloner-template | medium | unchallenged | A builder told to consult a referenced doc either doesn't read it or the reference drifts; a builder given a short promp |
+| `distance-based-seam-crossfade` | scroll-world | low | confirmed | Even frame-matched clip boundaries need a visual handoff rather than an instantaneous cut between video elements. |
+| `blindspot-pass` | before-implementing | medium | confirmed | Constraints or failure modes nobody has considered yet, which asking about known unknowns will never surface. |
+| `calibration-over-under-constrain` | before-implementing | low | unchallenged | Over-specified plans make the agent follow instructions even when a pivot is better; under-specified plans make it defau |
+| `remotion-technique-independence` | remotion-skills | low | confirmed | Multiple mutually-exclusive implementation techniques for the same feature need presenting without forcing the model to  |
 | `hero-as-thesis` | frontend-design | low | confirmed | Hero sections default to stat-block+gradient regardless of subject. |
 | `brief-primacy-override` | frontend-design | low | confirmed | Anti-cliché rule could wrongly override an explicit client request matching a named cliché. |
 | `self-critique-loop` | frontend-design | low | confirmed | A model's first idea is disproportionately likely to be its most generic idea. |
 | `full-output-enforcement` | taste-skill | low | unchallenged | Models truncate long code output with placeholder comments or premature stop. |
 | `context-aware-no-argument-routing` | impeccable | low | confirmed | A static command menu forces users to already know which command they want; auto-picking removes user control. |
 | `mode-based-routing-not-defaults` | sitesmith-current | low | unchallenged | v1 issued global rules and then contradicted itself when context demanded otherwise. |
+| `honest-benchmark-correction` | ponytail | low | confirmed | Inflated published numbers tend to survive even after being shown flawed. |
+| `exhaustive-state-capture` | ai-website-cloner-template | medium | confirmed | Extracting only the default on-load state misses every other tab/scroll/hover state. |
+| `linger-ease-pacing` | scroll-world | low | confirmed | A linear scroll-to-time mapping gives no way to make a scene's best/most narratively important frame coincide with the m |
+| `reduced-motion-full-degrade` | scroll-world | low | confirmed | prefers-reduced-motion should stop clip loading entirely, not just disable visible animation while still fetching/decodi |
+| `css-layer-theme-override` | scroll-world | low | confirmed | A component injecting default CSS custom properties needs a host page's own theme rules to win without predicting every  |
+| `map-vs-territory-framing` | before-implementing | low | confirmed | Agent conflates its internal model of the problem with the actual codebase/product/constraints and never notices the gap |
+| `deviation-policy` | before-implementing | low | unchallenged | Mid-build, reality contradicts the plan and the agent either barrels ahead wrongly or halts on every tiny surprise. |
+| `self-contained-packaging-lesson` | before-implementing | low | unchallenged | A skill silently depending on other skills being installed gives almost nothing to an agent that only loads the headline |
 | `structure-as-information` | frontend-design | low | confirmed | Numbered markers and other structural devices get applied decoratively regardless of whether content is sequential. |
 | `signature-element-restraint` | frontend-design | low | unchallenged | Undisciplined creativity spreads boldness evenly, reading as busy or unfocused; conversely over-restraint fails to take  |
 | `copy-as-design-material` | frontend-design | low | unchallenged | Generic/placeholder copy signals templated design even when visuals are original. |
+| `tool-agnostic-preflight-detection` | ai-website-cloner-template | low | confirmed | Hard-coding one browser-automation tool breaks in any environment with a different one. |
+| `layered-asset-vigilance` | ai-website-cloner-template | low | confirmed | A section that looks like one image is often multiple stacked layers; missing an overlay makes the rebuild look empty. |
+| `asset-enumeration-and-batched-download` | ai-website-cloner-template | low | unchallenged | Manually finding and downloading every asset one at a time is slow and easy to under-count. |
+| `scrub-video-encoding-recipe` | scroll-world | low | confirmed | Naive assumptions about scrub smoothness (all-intra encoding, quality downscaling) are backwards; the real levers are se |
 | `persona-framing` | frontend-design | low | confirmed | Default LLM output for 'build a UI' regresses to safe, generic templates because there is no evaluative pressure. |
 | `typography-as-personality` | frontend-design | low | confirmed | Type pairing defaults to the same 'safe' families regardless of project. |
 | `deliberate-motion` | frontend-design | low | confirmed | Motion is either absent or scattered across hover effects with no orchestration. |
+| `scope-defaults-block` | ai-website-cloner-template | low | confirmed | Ambiguous fidelity/scope forces either a clarifying question every time or silent scope drift. |
+| `no-guessing-completeness-mandate` | ai-website-cloner-template | low | confirmed | A builder given an incomplete spec fills gaps by invisible guessing. |
+| `pre-dispatch-checklist-gate` | ai-website-cloner-template | low | unchallenged | Without an explicit stopping point, extraction can feel 'done enough' and dispatch happens on an incomplete spec. |
+| `named-failure-log` | ai-website-cloner-template | low | unchallenged | Generic 'be careful' guidance doesn't transfer lessons from actual past mistakes. |
 
-## Adapt (15)
+## Adapt (25)
 
 | mechanism | source | context cost | red team | what it solves |
 | --- | --- | --- | --- | --- |
@@ -107,31 +247,861 @@ Checked at: `.claude/skills/ui-ux-pro-max/data/ui-reasoning.csv (162 lines total
 | `image-first-generation-discipline` | taste-skill | high | unchallenged | Coded output visually drifts from a strong generated reference image. |
 | `design-dials` | ui-ux-pro-max | low | confirmed | Letting a caller nudge the deterministic generator toward more/less bold, motion, or density. |
 | `surface-brief-scoping` | impeccable | low | confirmed | Global product/design docs get bloated with one-off route-specific strategy, or that strategy is never written down. |
+| `complexity-budget-rule` | ai-website-cloner-template | low | confirmed | A single agent given an entire complex section approximates rather than nailing exact values. |
+| `checkbox-state-in-file` | ai-dev-tasks | low | confirmed | Losing track of which sub-steps of a multi-step build are done across a long/resumed session. |
+| `post-implementation-explainer` | before-implementing | low | unchallenged | A reviewer receiving a finished build with no record of what was decided, assumed, or verified. |
 | `private-reasoning-before-reveal` | frontend-design | low | confirmed | Showing half-formed ideas too early anchors the conversation on a weak draft. |
 | `model-specific-rendition-prior-correction` | impeccable | low | confirmed | A specific model has a measured, named default rendering bias for certain subjects that a general 'be original' warning  |
+| `interleaved-extract-and-build` | ai-website-cloner-template | low | confirmed | Strict inspect-then-build sequencing delays feedback and lets extraction gaps accumulate silently across a whole page. |
+| `open-subject-question-not-fabricated-menu` | scroll-world | low | confirmed | A fabricated multiple-choice list of subjects at intake biases the user and reads as the assistant deciding their busine |
+| `two-phase-approval-gate` | ai-dev-tasks | low | confirmed | Agent generates a huge granular breakdown before the user agrees with the high-level shape. |
+| `domain-modeling-context-adr` | before-implementing | medium | confirmed | Vocabulary drift and undocumented hard-to-reverse decisions confusing future readers. |
+| `launch-packet-role-split` | before-implementing | medium | unchallenged | Spawning a subagent with an underspecified prompt so it re-derives context badly or misses taste work already done. |
+| `orch-02-persona-walkthrough` | agency-agents | medium | confirmed | Design decisions justified by taste rather than by how a real visitor with a specific intent would actually read the pag |
 | `css-specificity-caution` | frontend-design | low | confirmed | Narrow implementation bug: type-based and element-based CSS selectors cancelling each other out. |
+| `capability-gate-before-commit` | scroll-world | low | unchallenged | Silently substituting an incompatible tool/model for a user's stated preference produces a broken result without explana |
 
-## Investigate (1)
+## Investigate (12)
 
 | mechanism | source | context cost | red team | what it solves |
 | --- | --- | --- | --- | --- |
 | `named-cliche-calibration` | frontend-design | low | refuted | Model has no internal reference for what current generic AI design looks like, so can't recognize its own output matchin |
+| `remotion-router-skill` | remotion-skills | low | refuted | A body of knowledge too large to load in full needs to be reachable without bloating every invocation. |
+| `computed-style-extraction-script` | ai-website-cloner-template | low | refuted | Hand-measuring CSS properties one at a time is slow and invites estimation errors. |
+| `blocking-question-template-with-budget` | before-implementing | low | refuted | Agents that grill relentlessly exhaust the user, or ask vague/unanswerable questions like 'what does modern mean to you? |
+| `mobile-scrub-hardening-bundle` | scroll-world | low | refuted | Scroll-scrubbed video has several distinct phone failure modes: fast-flick seek pileup, iOS blank-muted-video quirk, URL |
+| `orch-01-finish-gate-design-contract` | agency-agents | low | refuted | Generic, interchangeable UI shipping without anyone naming why it is generic or what would make it product-specific. |
+| `appearance-and-behavior-taxonomy` | ai-website-cloner-template | medium | refuted | Static-CSS-only extraction looks right in a screenshot but feels dead in use. |
+| `agent-elements-companion-skill-reference` | agent-elements-21st | low | refuted | Model hallucinates component names, prop shapes, and import paths when a component library is only known from training d |
+| `progressive-disclosure-file-split` | scroll-world | low | refuted | Heavy reference material inlined into a main procedure file bloats context on every invocation even for steps a build ne |
+| `prd-non-goals-and-success-metrics` | ai-dev-tasks | low | refuted | Scope creep and no shared definition of done for a build. |
+| `orch-04-fresh-context-review` | graph-engineering | low | refuted | A model reviewing its own freshly-written output in the same context misses most of its own mistakes. |
+| `orch-09-design-bridge-checklist` | awesome-claude-code-subagents | low | refuted | Faithfully matching a specific existing product/brand's look when a brief explicitly asks to emulate it, without guessin |
 
-## Reject (9)
+## Reject (31)
 
 | mechanism | source | context cost | red team | what it solves |
 | --- | --- | --- | --- | --- |
+| `orch-07-ruflo-swarm-platform` | ruflo | high | unchallenged | Coordinated multi-agent swarms, persistent semantic memory, learned model routing, and plugin ecosystem for large multi- |
+| `orch-11-graph-engineering-kg-pipeline` | graph-engineering | low | unchallenged | Building knowledge graphs (ontology, entity/relation/event extraction, fusion, GraphRAG serving) as agent memory. |
+| `magic-21st-hosted-proxy` | magic-21st | low | unchallenged | Backward compatibility for old MCP configs after the service moved to a paid hosted endpoint. |
 | `gpt-fake-rng` | taste-skill | low | confirmed | Attempts to break the LLM default-to-first-option failure across repeated calls. |
 | `design-system-generator` | ui-ux-pro-max | medium | confirmed | Producing one coherent design-system recommendation from a single query in one command. |
 | `direction-candidate-search` | sitesmith-current | medium | confirmed | Naive top-3 BM25 search returns three near-identical rows. |
+| `orch-03-noun-list-antipattern` | awesome-claude-code-subagents | high | unchallenged | N/A -- this is a negative example, not a mechanism to adopt. |
+| `orch-06-agents-orchestrator-pipeline` | agency-agents | high | unchallenged | Coordinating a PM -> Architect -> Dev/QA loop -> Integration pipeline across separately-spawned specialist agents. |
+| `orch-10-agency-agents-role-taxonomy` | agency-agents | high | unchallenged | Giving a fleet of specialist agents distinct personas/specialties to route work to. |
+| `agent-elements-full-catalog` | agent-elements-21st | medium | unchallenged | Rendering an AI agent's own tool calls inside a chat transcript. |
 | `fixed-aesthetic-template-skills` | taste-skill | low | refuted | Gives a user who already chose a direction a ready-made fully-specified rule set instead of an open brief. |
 | `ui-reasoning-category-table` | ui-ux-pro-max | low | refuted | Giving ~30 product categories a starting style/color/typography/effects bundle. |
+| `orch-05-diamond-fanout-pattern` | graph-engineering | high | unchallenged | Coordinating independent work across multiple agents (research, drafting, verification) in a fleet. |
+| `remotion-embedded-skill-duplication` | remotion-skills | high | unchallenged | A sub-skill needs to be reachable both standalone and nested inside a router skill, without the harness double-registeri |
 | `uncited-laziness-research-essay` | taste-skill | low | unchallenged | Attempts to justify output-skill's claims with cited research. |
 | `multi-copy-sync-architecture` | ui-ux-pro-max | low | confirmed | Shipping identical data/scripts to three consumption paths from one source of truth. |
 | `design-system-py-legacy-generator` | sitesmith-current | high | confirmed | Nothing — dead v1 code never called by the current pipeline. |
+| `mandatory-branch-task` | ai-dev-tasks | low | unchallenged | Work happening on the wrong git branch. |
+| `website-builder-setup-numbers-as-authority` | website-builder-setup | low | unchallenged | Making an unverified external dependency sound credible to a non-technical user during onboarding. |
+| `cross-platform-portability-plumbing` | ponytail | high | unchallenged | Getting one ruleset in front of ~20 different agent hosts. |
+| `visual-qa-diff-unmeasured` | ai-website-cloner-template | low | unchallenged | Nominally, confirming the finished rebuild matches the source. |
+| `junior-dev-audience-framing` | ai-dev-tasks | low | unchallenged | A human junior developer misreading a spec. |
 | `combinatorial-variation-picklists` | taste-skill | medium | unchallenged | Same repetitive-output problem as gpt-fake-rng, applied to the image-generation-first workflow. |
+| `git-worktree-parallel-builder-dispatch` | ai-website-cloner-template | high | unchallenged | Building every section serially blocks extraction of later sections on completion of earlier builds. |
+| `orch-08-ruflo-vector-memory` | ruflo | high | unchallenged | Cross-session recall of what an agent previously did/decided, via HNSW-indexed semantic vector memory. |
+| `multi-platform-single-source-sync` | ai-website-cloner-template | low | unchallenged | Supporting 13 different AI agent platforms with native instruction formats would mean hand-maintaining 13 near-duplicate |
+| `single-aesthetic-camera-roster` | scroll-world | low | unchallenged | Frames 'cohesion' as fixing art direction to a small enumerated set (clay diorama/papercraft/glossy toy/claymation/neon- |
+| `website-builder-setup-stepwise-onboarding` | website-builder-setup | low | unchallenged | A multi-step external-dependency install flow needs to survive individual step failures without stalling. |
+| `border-flood-fill-knockout` | scroll-world | low | unchallenged | Removing a flat background from a still while preserving interior regions that happen to match the background colour. |
+| `budget-before-spend-gate` | scroll-world | low | unchallenged | Metered, real-money generation needs informed user consent on cost before rendering, since mid-run failure is recoverabl |
+| `frame-identical-seam-chaining` | scroll-world | medium | unchallenged | Two independently-generated video clips meant to connect won't visually match because every generation renders slightly  |
 
 ## Full records
+
+### agency-agents/orch-01-finish-gate-design-contract — `investigate`
+
+**Solves:** Generic, interchangeable UI shipping without anyone naming why it is generic or what would make it product-specific.
+
+**Mechanism:** Single-pass review procedure: write a one-paragraph product lens (user, job, first-read object), collect 3-5 comparable reference patterns, fill a Design Contract naming density/hierarchy/interaction-model/forbidden-defaults, then audit the implementation against it and return a hard PASS or HOLD verdict (never a soft list of nice-to-haves).
+
+**Why it works:** Forces the model to state product-specific constraints and explicitly name forbidden generic defaults before judging the UI, converting vague taste critique into checkable claims tied to visible states.
+
+**In SiteSmith:** Add as an optional self-review pass in SiteSmith's audit stage: produce the one-paragraph product lens + forbidden-defaults list before generation, then re-check the rendered output against it as a PASS/HOLD gate alongside scripts/verify.mjs.
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `design/design-ui-finish-gate-reviewer.md:106-165` | low | 0.75 | refuted | Run the gate on a generated page and confirm it produces a PASS/HOLD with named forbidden-default violations, not generic praise/criticism. |
+
+Failure modes:
+- Reviewer invents forbidden defaults not grounded in real evidence
+- Could become a rubber-stamp if run in the same context that wrote the code
+
+Conflicts: ui-designer.md (awesome-claude-code-subagents) demonstrates the noun-list failure mode this procedure explicitly avoids
+
+> Downgraded to investigate: the red team refuted the claim as stated. Re-read the source before adopting.
+
+### agency-agents/orch-02-persona-walkthrough — `adapt`
+
+**Solves:** Design decisions justified by taste rather than by how a real visitor with a specific intent would actually read the page.
+
+**Mechanism:** Build one persona profile (search query, psychology, attachment style, fears), then simulate a scroll-by-scroll first read producing two voices per fold: raw persona monologue plus a framework-grounded analyst note (LIFT / Cialdini / Fogg), ending in a scored verdict and prioritised, fold-specific recommendations.
+
+**Why it works:** Forces concrete, falsifiable claims per fold instead of adjective-only critique, and ties every recommendation to a specific fold and framework rather than a generic aesthetic judgment.
+
+**In SiteSmith:** Offer as an optional post-build QA step for conversion-oriented briefs (landing pages, e-commerce, lead-gen) -- not mandatory for every site type.
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `design/design-persona-walkthrough.md:59-188` | medium | 0.55 | confirmed | Run against one real brief's landing page and check whether at least one finding maps to a fold + framework citation the team did not already know. |
+
+Failure modes:
+- Qualitative simulation only -- source file itself flags this is not statistical evidence
+- Low value if the persona is generic instead of specific to the brief
+
+### agency-agents/orch-06-agents-orchestrator-pipeline — `reject`
+
+**Solves:** Coordinating a PM -> Architect -> Dev/QA loop -> Integration pipeline across separately-spawned specialist agents.
+
+**Mechanism:** A dedicated orchestrator agent that spawns other agent files, tracks pipeline phase/state, enforces retry limits and quality gates between phases via JSON handoffs.
+
+**Why it works:** Only pays off when multiple distinct agent processes actually need coordinating; a single skill run once per build has no phases to hand off between.
+
+**In SiteSmith:** none
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `specialized/agents-orchestrator.md:9-16,60` | high | 0.9 | unchallenged | N/A |
+
+Failure modes:
+- Pure overhead with nothing to orchestrate
+
+### agency-agents/orch-10-agency-agents-role-taxonomy — `reject`
+
+**Solves:** Giving a fleet of specialist agents distinct personas/specialties to route work to.
+
+**Mechanism:** ~200 agent persona files across 15 divisions, each following Identity/Mission/Rules/Workflow/Deliverables/Communication-Style template, installed individually into an agent runtime and addressed by name.
+
+**Why it works:** Valid for a multi-agent product (this is literally what the repo is for); has no role in a single skill that has no other agents to route to or personas to switch between.
+
+**In SiteSmith:** none
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `README.md:110-507` | high | 0.9 | unchallenged | N/A |
+
+Failure modes:
+- N/A -- out of scope by construction
+
+### agent-elements-21st/agent-elements-companion-skill-reference — `investigate`
+
+**Solves:** Model hallucinates component names, prop shapes, and import paths when a component library is only known from training data.
+
+**Mechanism:** A short static SKILL.md ships alongside the shadcn registry, listing every component's exact props, exact file path, and an explicit 'never import from a barrel' rule. No design opinions encoded, only API ground truth.
+
+**Why it works:** Answers a factual question (what does this API look like) rather than a judgement question, removing a class of hallucination without moving a design decision out of the model.
+
+**In SiteSmith:** If SiteSmith ever bundles/references a fixed component set, ship a short regenerated-on-change reference of exact paths/props rather than relying on model memory.
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `skills/agent-elements/SKILL.md:104-166,240-250` | low | 0.7 | refuted | Generate code against the registry with and without the reference doc loaded; count import/prop errors. |
+
+Failure modes:
+- Goes stale if registry changes and reference doc isn't regenerated alongside it
+
+> Downgraded to investigate: the red team refuted the claim as stated. Re-read the source before adopting.
+
+### agent-elements-21st/agent-elements-full-catalog — `reject`
+
+**Solves:** Rendering an AI agent's own tool calls inside a chat transcript.
+
+**Mechanism:** 26 pre-built React components (AgentChat, MessageList, InputBar, tool cards) installed via shadcn CLI from a hosted registry.
+
+**Why it works:** n/a — not applicable to ordinary websites.
+
+**In SiteSmith:** Not a default dependency; only relevant when a brief explicitly calls for an embedded agent/chat UI.
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `lib/agent-ui/components/tools/*.tsx; README.md:15-21` | medium | 0.9 | unchallenged | n/a |
+
+Failure modes:
+- Becoming a default dependency of every SiteSmith build regardless of whether the site has a chat interface
+
+Conflicts: Any site with no agent/chat surface
+
+### ai-dev-tasks/checkbox-state-in-file — `adapt`
+
+**Solves:** Losing track of which sub-steps of a multi-step build are done across a long/resumed session.
+
+**Mechanism:** The task list markdown file is itself the state: each sub-task line flips '- [ ]' to '- [x]' after every sub-task, not batched per parent task.
+
+**Why it works:** A single small state file is cheap; the risk is the exact shape that sank the old SiteSmith package if multiplied across many files — kept to one file it's fine.
+
+**In SiteSmith:** One flat task-state file per build, checked off per sub-step; never more than one state file for a single site build.
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `generate-tasks.md:43-50` | low | 0.6 | confirmed | Interrupt a build mid-task-list and resume; confirm no redoing of completed sub-tasks. |
+
+Failure modes:
+- Proliferating into a state file per phase/world, mirroring the 139-file sprawl that already lost once
+- Checkbox state drifting out of sync if updates are batched
+
+Conflicts: None direct; complements existing WORKFLOW-STATE.json pattern in this repo
+
+### ai-dev-tasks/clarifying-questions-before-spec — `adopt`
+
+**Solves:** Agent starts writing a spec/plan on an underspecified request and locks in a wrong interpretation before the user can correct it.
+
+**Mechanism:** Cap clarifying questions at 3-5, ask only where the prompt is ambiguous or missing essential context, present lettered options so the user answers in one line, and forbid starting implementation before questions are answered.
+
+**Why it works:** A thinking aid, not a lookup table: changes what the model asks itself before acting. Independently corroborated by grill-for-unknowns' material/grounded/answerable bar (SKILL.md:92-118) — two unrelated sources converging on 'ask fewer, sharper questions' is stronger signal than either alone.
+
+**In SiteSmith:** Pre-build question gate: max 2-3 lettered questions, asked only when the brief is silent on something that changes layout/scope/brand feel.
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `create-prd.md:9-10,14-23,77-81` | low | 0.8 | confirmed | Run the same ambiguous brief twice; confirm it asks <=5 questions once, then doesn't re-ask already-answered material. |
+
+Failure modes:
+- Turns into an exhaustive questionnaire if the cap/ambiguity guard is dropped
+- Lettered options can railroad the user if not genuinely representative
+
+Conflicts: Magnus's house rule 'Beslut, spørg ikke' — resolve by keeping the cap very small and only asking when it changes scope/architecture
+
+### ai-dev-tasks/junior-dev-audience-framing — `reject`
+
+**Solves:** A human junior developer misreading a spec.
+
+**Mechanism:** Both files instruct writing for a 'junior developer': explicit, unambiguous, jargon-free.
+
+**Why it works:** Rejected: the audience for SiteSmith is always a capable model reading a compact instruction, not a junior human. Adopting this would add explanatory padding that Fact 1 shows is counterproductive — the winning 55-line skill is terse and assumes a capable reader, the opposite of this framing.
+
+**In SiteSmith:** none
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `create-prd.md:67-69, generate-tasks.md:68-70` | low | 0.75 | unchallenged | N/A |
+
+Failure modes:
+- Optimizing prose for a human reader who doesn't exist in an agent-to-agent handoff wastes tokens
+
+Conflicts: Fact 1: the winning skill is terse, the opposite of 'explain for a junior dev'
+
+### ai-dev-tasks/mandatory-branch-task — `reject`
+
+**Solves:** Work happening on the wrong git branch.
+
+**Mechanism:** Task generation always inserts a hardcoded '0.0 Create feature branch' as the first task regardless of context, unless the user opts out.
+
+**Why it works:** Rejected: exactly the class of mechanism Fact 1 warns against — a step executed unconditionally from a rule rather than judged from context, conflicting with Magnus's own solo-dev direct-to-branch workflow. SiteSmith's own project CLAUDE.md already governs git workflow per-repo.
+
+**In SiteSmith:** none
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `generate-tasks.md:17` | low | 0.8 | unchallenged | N/A |
+
+Failure modes:
+- Fires even when no branch is wanted, forcing an opt-out every time instead of reading context
+
+Conflicts: Magnus's 'Solo-udvikler, intet PR-flow' house rule; Fact 1: decision moved into a fixed rule rather than model judgment
+
+### ai-dev-tasks/prd-non-goals-and-success-metrics — `investigate`
+
+**Solves:** Scope creep and no shared definition of done for a build.
+
+**Mechanism:** Of 9 mandated PRD sections, Non-Goals (Out of Scope) and Success Metrics carry real weight for scope control and a concrete definition of done.
+
+**Why it works:** Cheap, model-facing constraint rather than a rendering rule (Fact 1). Directly counters house-style convergence if 'do not converge on the same layout as the last brief' is stated as a non-goal.
+
+**In SiteSmith:** Two required lines in brief-intake: 'will not look like <named prior site>' and 'done means <concrete criterion>'.
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `create-prd.md:53-65` | low | 0.6 | refuted | Check a completed brief for an explicit Non-Goals line and Success Metrics line; confirm the build was checked against both. |
+
+Failure modes:
+- Non-goals left as boilerplate 'N/A'
+- Success metrics stated only in engineering terms, missing the visual-sameness failure mode
+
+Conflicts: The full 9-section PRD template this is extracted from
+
+> Downgraded to investigate: the red team refuted the claim as stated. Re-read the source before adopting.
+
+### ai-dev-tasks/two-phase-approval-gate — `adapt`
+
+**Solves:** Agent generates a huge granular breakdown before the user agrees with the high-level shape.
+
+**Mechanism:** Generate only parent tasks first, present them, and pause for the user to say 'Go' before generating sub-tasks.
+
+**Why it works:** Cheap two-step confirmation before committing to detail; converges with grill-for-unknowns' 'Ask for confirmation before build' (SKILL.md:61) — a sequencing discipline, not new content-generation logic.
+
+**In SiteSmith:** One gate: show proposed site structure/sections before writing code; proceed automatically if the brief already authorized full autonomy, otherwise wait.
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `generate-tasks.md:17-18` | low | 0.55 | confirmed | Verify the skill produces a short parent-task list and stops until an explicit go-ahead signal exists. |
+
+Failure modes:
+- Literal string-match on 'Go' is brittle outside a live chat turn; needs generalizing in a non-interactive agent context
+
+Conflicts: Long-run/autonomous-agent house rules that say don't stop-and-wait mid-mission unless irreversible or genuinely ambiguous
+
+### ai-website-cloner-template/appearance-and-behavior-taxonomy — `investigate`
+
+**Solves:** Static-CSS-only extraction looks right in a screenshot but feels dead in use.
+
+**Mechanism:** Requires appearance (getComputedStyle) AND behavior (trigger, before/after, transition) for every element, backed by a 13-category illustrative behavior list.
+
+**Why it works:** Gives the agent a concrete scanning checklist instead of relying on incidental noticing.
+
+**In SiteSmith:** Reuse the appearance-plus-behavior split and re-expressed behavior checklist as the audit step's definition of 'fully extracted.'
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `SKILL.md:61-79` | medium | 0.7 | refuted | Asserted only for completeness; extraction itself is measured |
+
+Failure modes:
+- List is explicitly non-exhaustive; treating it as closed misses behaviors outside the 13 categories
+
+> Downgraded to investigate: the red team refuted the claim as stated. Re-read the source before adopting.
+
+### ai-website-cloner-template/asset-enumeration-and-batched-download — `adopt`
+
+**Solves:** Manually finding and downloading every asset one at a time is slow and easy to under-count.
+
+**Mechanism:** Single DOM-query script enumerates every img/video/background-image/font/favicon in one JSON dump; batched download (4 parallel) with error handling.
+
+**Why it works:** One enumeration pass produces a complete inventory before downloading starts.
+
+**In SiteSmith:** Reuse the enumerate-then-batch-download pattern, hardened as an actual checked-in script rather than re-derived each run.
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `SKILL.md:189-227` | low | 0.65 | unchallenged | Enumeration is a real DOM measurement; download completeness has no post-download verification |
+
+Failure modes:
+- The download script itself is re-authored from scratch each run; no checked-in tested version exists in the repo
+
+### ai-website-cloner-template/complexity-budget-rule — `adapt`
+
+**Solves:** A single agent given an entire complex section approximates rather than nailing exact values.
+
+**Mechanism:** Mechanical numeric threshold (~150 lines of spec content) forces splitting into one agent per sub-component, explicitly overriding 'but it's all related.'
+
+**Why it works:** Removes judgment from exactly the point where judgment tends to be optimistic.
+
+**In SiteSmith:** Keep the numeric-ceiling-forces-split principle for any sub-agent handoff; re-derive the actual number for SiteSmith's own spec format.
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `SKILL.md:43-49,444,458` | low | 0.6 | confirmed | Asserted only |
+
+Failure modes:
+- 150 is an arbitrary constant tuned to this pipeline's spec verbosity
+
+### ai-website-cloner-template/computed-style-extraction-script — `investigate`
+
+**Solves:** Hand-measuring CSS properties one at a time is slow and invites estimation errors.
+
+**Mechanism:** Reusable JS snippet: depth-4 DOM walk, getComputedStyle against ~40 named properties per element, filters out default/no-op values.
+
+**Why it works:** One script call replaces dozens of manual inspections; default-value filtering keeps output signal-dense.
+
+**In SiteSmith:** Port this script's structure as SiteSmith's standard truth-extraction tool for the audit step, extending the property list.
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `SKILL.md:239-283` | low | 0.8 | refuted | This is itself a real measurement tool, not an estimate |
+
+Failure modes:
+- Depth-4/20-child caps silently truncate deep or wide trees with no warning
+- Fixed property list misses CSS features outside it (clip-path, mask, container queries)
+
+> Downgraded to investigate: the red team refuted the claim as stated. Re-read the source before adopting.
+
+### ai-website-cloner-template/exhaustive-state-capture — `adopt`
+
+**Solves:** Extracting only the default on-load state misses every other tab/scroll/hover state.
+
+**Mechanism:** Click every tab and capture content/styles per state; for scroll-dependent elements, capture at position 0 and past the trigger, then diff the two captures.
+
+**Why it works:** Turns 'document what changes' into a mechanical two-snapshot-and-diff procedure with exact before/after values.
+
+**In SiteSmith:** Adopt the two-snapshot-diff procedure as SiteSmith's standard method for documenting stateful elements.
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `SKILL.md:93-108,285-296,349-358,451` | medium | 0.7 | confirmed | This is a real measurement — two actual getComputedStyle snapshots compared |
+
+Failure modes:
+- Cost scales with number of states; no stopping guidance for very large state spaces
+
+### ai-website-cloner-template/git-worktree-parallel-builder-dispatch — `reject`
+
+**Solves:** Building every section serially blocks extraction of later sections on completion of earlier builds.
+
+**Mechanism:** Every builder works in its own git worktree branch; foreman doesn't wait, merges as worktrees complete, rebuilding after each merge.
+
+**Why it works:** Git worktrees enable isolated parallel edits without collision; a single foreman vantage point enables intelligent conflict resolution.
+
+**In SiteSmith:** Do not adopt for the audit step; revisit only if a future SiteSmith mode reconstructs sites from scratch.
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `SKILL.md:377-403; AGENTS.md MOST IMPORTANT NOTES` | high | 0.7 | unchallenged | Asserted only |
+
+Failure modes:
+- Requires orchestration capability not every host provides
+- Merge-conflict quality depends entirely on foreman judgment with no described gate
+
+Conflicts: Conflicts with SiteSmith's redesign task shape: audit measures an existing site, it does not need parallel construction agents against a fresh scaffold
+
+### ai-website-cloner-template/interaction-model-identification-first — `adopt`
+
+**Solves:** Named as the single most expensive cloning mistake: building click-based UI when the original is scroll-driven, or vice versa.
+
+**Mechanism:** Strict order: scroll first and watch for unprompted change; only test click/hover if nothing changes on scroll. Interaction model must be written into the spec before any builder prompt.
+
+**Why it works:** Counters availability bias — click-testing is the habitual first move, but scroll-driven behavior is invisible unless scrolled first.
+
+**In SiteSmith:** Make scroll-before-click a mandatory ordered step in SiteSmith's audit pass.
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `SKILL.md:81-91,450` | low | 0.75 | confirmed | Asserted only, but named from the source's own retrospective of past failures |
+
+Failure modes:
+- Relies on the agent actually following the order; nothing external gates it
+
+### ai-website-cloner-template/interleaved-extract-and-build — `adapt`
+
+**Solves:** Strict inspect-then-build sequencing delays feedback and lets extraction gaps accumulate silently across a whole page.
+
+**Mechanism:** Explicitly framed as NOT two-phase: a 'foreman' inspects one section, writes its spec, hands it to a builder, keeps walking — extraction and construction interleave section by section.
+
+**Why it works:** Keeps units of work small and independently checkable; failures stay local to a section instead of compounding.
+
+**In SiteSmith:** Keep the extract-fully-before-moving-on discipline for the audit step; drop the parallel-worktree-builder half.
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `SKILL.md:14` | low | 0.55 | confirmed | Asserted only |
+
+Failure modes:
+- Requires true parallel dispatch capability; no fallback given for hosts without it
+
+Conflicts: SiteSmith's redesign task edits in place; it has no fresh-clone target to build into
+
+### ai-website-cloner-template/layered-asset-vigilance — `adopt`
+
+**Solves:** A section that looks like one image is often multiple stacked layers; missing an overlay makes the rebuild look empty.
+
+**Mechanism:** Explicit instruction to walk the full DOM tree of a container and enumerate every img and background-image, including absolutely-positioned overlays.
+
+**Why it works:** Names a specific, easy-to-miss pattern concretely enough to check for directly.
+
+**In SiteSmith:** Carry the specific DOM-tree-walk check into SiteSmith's asset-extraction step verbatim.
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `SKILL.md:51-55,298,452` | low | 0.65 | confirmed | Asserted only |
+
+Failure modes:
+- Covers image layering only, not layered CSS effects without an img tag
+
+### ai-website-cloner-template/multi-platform-single-source-sync — `reject`
+
+**Solves:** Supporting 13 different AI agent platforms with native instruction formats would mean hand-maintaining 13 near-duplicate files.
+
+**Mechanism:** Two single-source files (AGENTS.md, SKILL.md) plus two regeneration scripts producing 4 and 9 generated platform files respectively, with an @file import syntax resolved at generation time.
+
+**Why it works:** Treats platform config as a generated build artifact rather than hand-maintained parallel copies, eliminating drift by construction.
+
+**In SiteSmith:** Not applicable to the current rebuild goal; revisit only if SiteSmith is ever repackaged for multi-platform distribution, with a CI staleness check added.
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `AGENTS.md; scripts/sync-agent-rules.sh:1-70; scripts/sync-skills.mjs:1-113` | low | 0.55 | unchallenged | No automated test suite for the sync scripts themselves |
+
+Failure modes:
+- No CI check that generated files are current
+- CHANGELOG 0.3.1 documents this exact staleness class already breaking once (CRLF import resolution failure on Windows)
+
+Conflicts: Not applicable: SiteSmith is being unified into one skill for this project's own tool trio, not distributed as a 13-platform template
+
+### ai-website-cloner-template/named-failure-log — `adopt`
+
+**Solves:** Generic 'be careful' guidance doesn't transfer lessons from actual past mistakes.
+
+**Mechanism:** 12-item 'What NOT to Do' list framed explicitly as lessons from previous failed clones, each costing hours of rework.
+
+**Why it works:** Names specific, concrete observed failures rather than an abstract principle — same technique as frontend-design's named-cliché list.
+
+**In SiteSmith:** Keep a similarly concrete failure list for SiteSmith's audit step, treated explicitly as a living document.
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `SKILL.md:446-462` | low | 0.6 | unchallenged | Asserted only |
+
+Failure modes:
+- No mechanism actually captures and appends new failures; frozen at whatever was known when last edited
+
+### ai-website-cloner-template/no-guessing-completeness-mandate — `adopt`
+
+**Solves:** A builder given an incomplete spec fills gaps by invisible guessing.
+
+**Mechanism:** States: if a builder has to guess anything, extraction has already failed — extract one more property rather than ship incomplete.
+
+**Why it works:** Names the actual failure condition concretely rather than a vague 'be thorough' instruction.
+
+**In SiteSmith:** Reuse as a self-check question at the end of SiteSmith's audit-extraction step.
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `SKILL.md:39-41` | low | 0.6 | confirmed | Asserted only |
+
+Failure modes:
+- Self-applied, no external check that guessing was avoided
+
+### ai-website-cloner-template/pre-dispatch-checklist-gate — `adopt`
+
+**Solves:** Without an explicit stopping point, extraction can feel 'done enough' and dispatch happens on an incomplete spec.
+
+**Mechanism:** 9-item checklist that must be fully satisfied before any builder is dispatched.
+
+**Why it works:** Consolidates scattered completeness requirements into one checkable moment, restated as yes/no items.
+
+**In SiteSmith:** Reuse the pattern of one explicit pre-handoff checklist, re-derived for whatever SiteSmith's audit step hands off.
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `SKILL.md:431-444` | low | 0.6 | unchallenged | Asserted only, though each item is individually checkable in principle |
+
+Failure modes:
+- Self-applied and self-graded; nothing confirms it was actually run item-by-item
+
+### ai-website-cloner-template/scope-defaults-block — `adopt`
+
+**Solves:** Ambiguous fidelity/scope forces either a clarifying question every time or silent scope drift.
+
+**Mechanism:** States explicit default fidelity level and in/out-of-scope lists up front, overridable by the user's own instructions.
+
+**Why it works:** Converts an implicit assumption into an explicit, overridable statement without a Q&A round trip.
+
+**In SiteSmith:** Give SiteSmith's audit entry point the same default-fidelity/scope block, overridable by user words.
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `SKILL.md:16-25` | low | 0.6 | confirmed | Asserted only |
+
+Failure modes:
+- Users who don't read defaults may be surprised by silent exclusions
+
+### ai-website-cloner-template/spec-file-inline-only-contract — `adopt`
+
+**Solves:** A builder told to consult a referenced doc either doesn't read it or the reference drifts; a builder given a short prompt guesses to fill gaps.
+
+**Mechanism:** Every component gets a template-shaped spec file; its full contents, not a pointer, are pasted inline into the builder's prompt.
+
+**Why it works:** The template forces exhaustive extraction; inlining removes any chance the builder skips a referenced file.
+
+**In SiteSmith:** Adopt persistent template-shaped spec artifacts, always inlined in full, for any SiteSmith handoff step.
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `SKILL.md:110-118,302-375,385-390,456,462` | medium | 0.75 | unchallenged | Asserted for 'no guessing'; the template structure itself is checkable |
+
+Failure modes:
+- Nothing enforces the inlined copy stays identical to the file on disk if either is edited later
+
+### ai-website-cloner-template/tool-agnostic-preflight-detection — `adopt`
+
+**Solves:** Hard-coding one browser-automation tool breaks in any environment with a different one.
+
+**Mechanism:** Detects any of several browser MCP tools, prefers Chrome MCP, asks the user how to connect one if none found.
+
+**Why it works:** Detect-and-degrade beats hard dependency; explicit ask avoids silent failure.
+
+**In SiteSmith:** Apply the same detect-preferred-then-ask pattern to SiteSmith's audit step.
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `SKILL.md:29` | low | 0.65 | confirmed | Asserted only |
+
+Failure modes:
+- Fixed tool-name list will go stale as new MCPs appear
+
+### ai-website-cloner-template/visual-qa-diff-unmeasured — `reject`
+
+**Solves:** Nominally, confirming the finished rebuild matches the source.
+
+**Mechanism:** Side-by-side screenshot comparison at two viewports, narrated section by section; discrepancies traced to spec-wrong or builder-deviated and fixed accordingly.
+
+**Why it works:** It doesn't measure anything — same self-graded shape as frontend-design's critique loop, applied to fidelity instead of originality.
+
+**In SiteSmith:** Do not adopt as SiteSmith's fidelity gate; use an actual measured comparison (structural CSS/DOM diff or a real perceptual-diff tool) instead.
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `SKILL.md:415-429` | low | 0.75 | unchallenged | Asserted only — confirmed by direct inspection, no diff-computing script exists anywhere in the repo |
+
+Failure modes:
+- No pixel-diff tool, similarity score, or threshold anywhere in the repo
+- Upstream extraction rigor creates a false impression the whole pipeline is measured
+
+Conflicts: Directly violates the 'REDESIGN audits before touching, fidelity should be measured not asserted' principle this task is scoped against
+
+### awesome-claude-code-subagents/orch-03-noun-list-antipattern — `reject`
+
+**Solves:** N/A -- this is a negative example, not a mechanism to adopt.
+
+**Mechanism:** Long bullet lists of nouns with no concrete technique, threshold, or worked example, plus a mandatory first step of querying a 'context-manager' subagent.
+
+**Why it works:** It doesn't -- this is exactly the token-heavy, decision-in-a-list shape that the 55-line frontend-design skill beat 59-40. Cited as evidence, not adopted.
+
+**In SiteSmith:** none
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `categories/01-core-development/ui-designer.md:12-172` | high | 0.9 | unchallenged | N/A |
+
+Failure modes:
+- Padding masquerading as expertise
+- Hard dependency on a non-existent subagent for context gathering
+
+Conflicts: Directly contradicts the frontend-design vs SiteSmith measured result
+
+### awesome-claude-code-subagents/orch-09-design-bridge-checklist — `investigate`
+
+**Solves:** Faithfully matching a specific existing product/brand's look when a brief explicitly asks to emulate it, without guessing at missing details.
+
+**Mechanism:** Fixed extraction checklist run before any implementation: visual theme/atmosphere, colour palette with named roles + hover/active states, typography rules, component stylings, layout/spacing rules, elevation/shadow system, responsive breakpoints. Treats a missing category as a question to ask, not an assumption to invent.
+
+**Why it works:** Grounds a 'match this brand' brief in a specific external reference rather than the model's internal default aesthetic -- the checklist shape (not the tool) is what's portable.
+
+**In SiteSmith:** Optional pre-generation step, own wording only: when a brief names a specific site/brand to emulate, extract these categories from what's actually observable before writing code; ask rather than invent for anything not observed.
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `categories/01-core-development/design-bridge.md:46-55,83-90` | low | 0.5 | refuted | Give the brief a named reference site and confirm the extracted checklist has no invented/guessed values in categories not actually observed. |
+
+Failure modes:
+- Source depends on an external repo SiteSmith does not have and should not assume exists
+- Multi-agent JSON handoff protocol around the checklist is not portable and must be dropped
+
+> Downgraded to investigate: the red team refuted the claim as stated. Re-read the source before adopting.
+
+### before-implementing/blindspot-pass — `adopt`
+
+**Solves:** Constraints or failure modes nobody has considered yet, which asking about known unknowns will never surface.
+
+**Mechanism:** Before interviewing, search relevant docs/source/tests — including documented limits and failure modes of load-bearing dependencies — for risks that could materially change the plan; output a ranked list with why-it-matters/evidence/cheap-resolution/decision-owner.
+
+**Why it works:** Directly operationalizes 'investigate-before-asking' — the clearest match to the requester's contract term. Bounded to unfamiliar-domain/high-stakes work so it doesn't fire on trivial tasks.
+
+**In SiteSmith:** Bounded pre-build check: scan named platform/CMS/library docs for hard constraints, triggered only when the brief names an unfamiliar target.
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `plugins/grill-for-unknowns/SKILL.md:134-155` | medium | 0.75 | confirmed | Point at a brief involving an unfamiliar CMS/integration; confirm it surfaces a documented limit before asking the user anything. |
+
+Failure modes:
+- Can become an unbounded research spiral without the stated trigger condition limiting when it runs
+
+Conflicts: None found
+
+### before-implementing/blocking-question-template-with-budget — `investigate`
+
+**Solves:** Agents that grill relentlessly exhaust the user, or ask vague/unanswerable questions like 'what does modern mean to you?'
+
+**Mechanism:** Every question must be material, grounded, and answerable, delivered via a template (question/why it matters/evidence/recommended default); ~5-question budget; fatigue valve stops interviewing on short/impatient answers and batches remaining unknowns as one assumptions list; ban on asking users to verbalize taste they can only recognize when shown.
+
+**Why it works:** The package's own CHANGELOG documents this as a deliberate 0.1.2 fix for real user-exhaustion feedback — a tested fix, not a speculative addition. Stays on the thinking side of Fact 1 since the quality bar is a judgment criterion, not a script.
+
+**In SiteSmith:** Question-quality bar and fatigue valve become the intake gate's only question-asking rule, replacing open-ended 'anything else?' prompting.
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `plugins/grill-for-unknowns/SKILL.md:92-126` | low | 0.8 | refuted | Run a session with one-word answers twice in a row; confirm the agent stops asking and presents one batched assumptions list. |
+
+Failure modes:
+- Budget/fatigue valve is advisory text; without an explicit counter an agent can drift past 5 questions unnoticed
+
+Conflicts: None — reinforces Magnus's 'Beslut, spørg ikke' house rule
+
+> Downgraded to investigate: the red team refuted the claim as stated. Re-read the source before adopting.
+
+### before-implementing/calibration-over-under-constrain — `adopt`
+
+**Solves:** Over-specified plans make the agent follow instructions even when a pivot is better; under-specified plans make it default to generic best practices.
+
+**Mechanism:** One paragraph naming both failure directions and their fix: define goal/constraints/stop-continue rules but leave room for judgment; provide references/taste-examples/acceptance-criteria against under-specifying.
+
+**Why it works:** A near-exact post-hoc explanation of both of SiteSmith's own measured failures at once — under-constraining plausibly produced house-style convergence, over-constraining plausibly produced the loss to the 55-line skill. Extremely cheap, extremely high signal.
+
+**In SiteSmith:** State this calibration paragraph near the top of the rebuilt skill as an explicit editorial principle for every future addition.
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `plugins/grill-for-unknowns/SKILL.md:213-216` | low | 0.75 | unchallenged | Audit whether new instructions each state a constraint+goal or instead dictate a specific rendered answer. |
+
+Failure modes:
+- Doesn't self-enforce as a one-paragraph principle; needs a concrete review step to actually bite
+
+Conflicts: None; resolves the tension the task brief poses between the two measured facts
+
+### before-implementing/deviation-policy — `adopt`
+
+**Solves:** Mid-build, reality contradicts the plan and the agent either barrels ahead wrongly or halts on every tiny surprise.
+
+**Mechanism:** Three-way rule: low-risk/local issues get a conservative choice, logged, and continue; architecture/data/security/cost/user-facing changes stop and ask; docs contradicting the plan win over the original plan.
+
+**Why it works:** A short, three-branch judgment rule — cheap, and the model reasoning about risk level rather than a table mapping situations to actions. Matches 'stop-on-invalidated-assumption' precisely.
+
+**In SiteSmith:** Same three-branch rule: silently substitute-and-log for invisible/internal surprises, stop-and-ask for anything changing the visible design or brand promise.
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `plugins/grill-for-unknowns/SKILL.md:182-186` | low | 0.7 | unchallenged | Inject a mid-build contradiction; confirm the agent stops for a user-facing change but substitutes-and-logs for a low-risk internal one. |
+
+Failure modes:
+- 'Low-risk and local' is a judgment call; without examples an agent may misjudge a user-facing visual change as local
+
+Conflicts: None; complements Magnus's 'default to fix, not diagnose' house rule
+
+### before-implementing/domain-modeling-context-adr — `adapt`
+
+**Solves:** Vocabulary drift and undocumented hard-to-reverse decisions confusing future readers.
+
+**Mechanism:** Lazily-created CONTEXT.md glossary of canonical terms with an 'Avoid' field; offer an ADR only when a decision is hard to reverse, surprising without context, and a real trade-off.
+
+**Why it works:** Cheap when actually lazy; becomes overhead if applied to every small build. The three-part ADR gate is a good judgment rule, but the file infrastructure only pays for its cost on multi-page or long-lived builds.
+
+**In SiteSmith:** Keep the ADR gate as a judgment rule for the SiteSmith rebuild's own engineering decisions; do not generate CONTEXT.md/ADR files in the standard single-site build flow.
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `plugins/grill-for-unknowns/SKILL.md:128-132; references/domain-modeling-add-on.md:1-95` | medium | 0.55 | confirmed | Run a one-page build and a multi-page build; confirm files are created in proportion to actual complexity, not by default. |
+
+Failure modes:
+- Creating CONTEXT.md/ADR files by default for every build reintroduces the file-sprawl that already lost once
+
+Conflicts: Fact 1 directly, if applied unconditionally
+
+### before-implementing/four-quadrant-unknowns-taxonomy — `adopt`
+
+**Solves:** An agent treats all uncertainty the same way (ask a question), when some is a fact to look up, some is unverbalized taste, and some is an unnamed risk.
+
+**Mechanism:** Classify gaps into known-knowns (cite/restate), known-unknowns (ask or default), unknown-knowns (resolve via prototypes/contrasting references, not questions), and unknown-unknowns (resolve via a blindspot pass over docs/source/tests).
+
+**Why it works:** Pure thinking-mechanism, one short table, no external lookup. Maps directly onto the showcase 0/8 failure: convergence is the signature of an agent that only handles known-unknowns and silently defaults on unknown-knowns instead of routing them to prototypes/contrast.
+
+**In SiteSmith:** Quadrant table in intake instructions, with the unknown-knowns row routing to 'produce 2-3 contrasting layout/style directions, do not silently pick one'.
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `plugins/grill-for-unknowns/SKILL.md:65-74` | low | 0.85 | confirmed | Feed three unrelated site briefs; confirm the unknown-knowns branch produces 2-3 contrasting directions per brief rather than one default per brief. |
+
+Failure modes:
+- Classifying everything as known-unknown anyway if not enforced with a concrete routing rule per quadrant
+
+Conflicts: None found
+
+### before-implementing/launch-packet-role-split — `adapt`
+
+**Solves:** Spawning a subagent with an underspecified prompt so it re-derives context badly or misses taste work already done.
+
+**Mechanism:** Assemble a launch packet (goal, map, territory to inspect, unknowns categories, deviation policy, verification gates); split roles across docs scout, codebase scout, prototype scout (exposes unknown-knowns), implementer, reviewer.
+
+**Why it works:** The prototype-scout role is the fan-out equivalent of the unknown-knowns mechanism, applied to a multi-agent architecture — directly relevant to fanning out a build without losing taste-extraction.
+
+**In SiteSmith:** Fold the prototype-scout concept into existing context-diamond fan-out rather than adding a second protocol; keep launch-packet fields as the minimum context a spawned worker needs.
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `plugins/grill-for-unknowns/SKILL.md:201-211; templates/launch-packet.md` | medium | 0.55 | unchallenged | Spawn a prototype-scout-equivalent worker with only its launch packet; confirm it produces contrasting directions without re-asking resolved questions. |
+
+Failure modes:
+- Five distinct roles for every build is overkill for a single landing page
+
+Conflicts: context-diamond skill's own fan-out procedure — should be reconciled, not run side by side as a second competing protocol
+
+### before-implementing/map-vs-territory-framing — `adopt`
+
+**Solves:** Agent conflates its internal model of the problem with the actual codebase/product/constraints and never notices the gap.
+
+**Mechanism:** Name the two things separately — 'the map' (prompt, plan, assumptions) vs 'the territory' (real codebase, constraints, docs, user taste, failure modes) — so 'unknowns' has a crisp definition: the gap between them.
+
+**Why it works:** One paragraph, zero lookup tables, purely a naming device that primes checking assumptions against reality before acting — cheapest possible thinking aid, squarely on the winning side of Fact 1.
+
+**In SiteSmith:** One line in system framing: 'the brief is the map, live constraints are the territory — check the gap before designing.'
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `plugins/grill-for-unknowns/SKILL.md:19-21` | low | 0.7 | confirmed | Not independently testable; test via the mechanisms that operationalize it. |
+
+Failure modes:
+- Framing without a concrete follow-up action is just vocabulary with no behavior change
+
+Conflicts: None found
+
+### before-implementing/post-implementation-explainer — `adapt`
+
+**Solves:** A reviewer receiving a finished build with no record of what was decided, assumed, or verified.
+
+**Mechanism:** After implementation: what changed and why, which unknowns were resolved, which assumptions remain, docs/source evidence, real verification results, and for complex work a quiz/checklist answerable from the report itself.
+
+**Why it works:** Cheap summary discipline; the 'answerable from the report' rule is a good self-check against padding, but the quiz format only pays off on complex/reviewed work.
+
+**In SiteSmith:** Keep the summary (changed/assumed/verified) as the standard build report; drop the formal quiz format entirely.
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `plugins/grill-for-unknowns/SKILL.md:188-199` | low | 0.6 | unchallenged | Check that a completed build's report states real verification results, not just an assertion that things work. |
+
+Failure modes:
+- Producing a formal quiz for a trivial one-page site is pure padding, the opposite of Fact 1's terse-and-effective lesson
+
+Conflicts: Magnus's ADHD-reader house format (conclusion-first, max 5 bullets) is a better fit than a formal quiz
+
+### before-implementing/self-contained-packaging-lesson — `adopt`
+
+**Solves:** A skill silently depending on other skills being installed gives almost nothing to an agent that only loads the headline file.
+
+**Mechanism:** grill-with-docs (upstream) depended on two other skills; grill-for-unknowns inlines the grilling loop and domain-modeling rules so the whole behavior ships in one self-contained file.
+
+**Why it works:** A packaging lesson, not a runtime mechanism, but direct first-party evidence for this rebuild's own stated goal of one unified skill — an unrelated author independently reached the same conclusion after shipping the fragmented version first.
+
+**In SiteSmith:** Keep the core loop (question bar, unknowns routing, deviation policy, calibration principle) inline in the single SKILL.md; reference files only for material genuinely out of the hot path.
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `README.md:159-165; plugins/grill-for-unknowns/references/upstream-lineage.md:51-57` | low | 0.7 | unchallenged | Load only the top-level SKILL.md with no reference files present; confirm the core behavior is still present, not just referenced. |
+
+Failure modes:
+- A single file that then requires several external reference files to be read 'first' for basic behavior recreates the same failure under a different layout
+
+Conflicts: None; corroborating evidence for the rebuild's own architecture
+
+### before-implementing/unknown-knowns-prototypes — `adopt`
+
+**Solves:** The user has taste they recognize when shown but can't specify up front; asking them to verbalize it drives a generic default.
+
+**Mechanism:** Ban asking the user to verbalize unshowable taste; build cheap prototypes with genuinely contrasting directions (not tiny variations), or point to in-repo/external references and ask which to match, then distill the reaction into a rubric that becomes the verification gate.
+
+**Why it works:** The mechanism most directly aimed at SiteSmith's own measured failure — showcase 0/8 house-style convergence. Cheap (a short instruction, not a style lookup table), so it improves thinking without adding a fixed decision table — wins on both measured facts at once.
+
+**In SiteSmith:** Required step before layout/style commitment: propose 2-3 contrasting directions per brief; never silently default to one look without a captured user-reaction rubric.
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `plugins/grill-for-unknowns/SKILL.md:104,157-165` | low | 0.85 | confirmed | Re-run the three briefs that previously converged; confirm intake proposes 2-3 visually distinct directions before committing to one. |
+
+Failure modes:
+- 'Contrasting directions' can become superficial (same layout, different color) if 'meaningful contrast' is not enforced
+
+Conflicts: None found
 
 ### frontend-design/brief-primacy-override — `adopt`
 
@@ -384,6 +1354,61 @@ Failure modes:
 Failure modes:
 - No guidance on sourcing non-default pairs; model may still reach for its usual 'safe' fonts
 
+### graph-engineering/orch-04-fresh-context-review — `investigate`
+
+**Solves:** A model reviewing its own freshly-written output in the same context misses most of its own mistakes.
+
+**Mechanism:** Verify in a separate context from the one that produced the work -- even without any other agent or fleet, a second pass with no memory of writing the code catches errors a same-context self-review does not.
+
+**Why it works:** Cited from a controlled multi-agent study (DeepMind x MIT, 180 configs) but the specific claim about self-grading blindness is agent-count-independent: it is about context continuity, not fleet size.
+
+**In SiteSmith:** Run the audit/finish-gate step as a fresh invocation with only the rendered output as input, not appended to the generation transcript.
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `graph-engineering/references/task-graphs.md:40-44` | low | 0.6 | refuted | Compare defect catch-rate of same-context self-review vs a fresh-context re-read on the same generated page. |
+
+Failure modes:
+- Easy to accidentally carry over context and lose the benefit
+- Not a substitute for scripts/verify.mjs's objective checks
+
+Conflicts: The diamond/fan-out framing this point is embedded in is out of scope
+
+> Downgraded to investigate: the red team refuted the claim as stated. Re-read the source before adopting.
+
+### graph-engineering/orch-05-diamond-fanout-pattern — `reject`
+
+**Solves:** Coordinating independent work across multiple agents (research, drafting, verification) in a fleet.
+
+**Mechanism:** Split independent work into parallel workers, verify in a separate context per worker, merge under one owner; the 'stop rule' says only split work whose pieces never read each other's results.
+
+**Why it works:** Valid mechanism for genuine multi-agent fleets; irrelevant to a single skill invoked once per site build, and duplicates the project's own context-diamond skill.
+
+**In SiteSmith:** none
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `graph-engineering/references/task-graphs.md:30-59` | high | 0.85 | unchallenged | N/A |
+
+Failure modes:
+- Orchestration overhead with no fleet to coordinate
+
+Conflicts: Already implemented by this project's context-diamond skill; nothing new to import even if in scope
+
+### graph-engineering/orch-11-graph-engineering-kg-pipeline — `reject`
+
+**Solves:** Building knowledge graphs (ontology, entity/relation/event extraction, fusion, GraphRAG serving) as agent memory.
+
+**Mechanism:** 9-stage pipeline for turning text into a queryable knowledge graph.
+
+**Why it works:** Not applicable -- a website-building skill has no entities/relations/events to extract, model, or fuse.
+
+**In SiteSmith:** none
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `graph-engineering/SKILL.md:11-15,44-102` | low | 0.95 | unchallenged | N/A |
+
 ### impeccable/bounded-finish-review-loop — `adopt`
 
 **Solves:** Open-ended self-QA loops burn budget without a stop condition, and a build thread reviewing itself inherits its own blind spots.
@@ -588,6 +1613,480 @@ Failure modes:
 
 Failure modes:
 - A third document type is one more thing that can drift stale
+
+### magic-21st/magic-21st-hosted-proxy — `reject`
+
+**Solves:** Backward compatibility for old MCP configs after the service moved to a paid hosted endpoint.
+
+**Mechanism:** A ~220-line stdio-to-HTTP relay with no component data, generation logic, or registry present locally.
+
+**Why it works:** n/a — no mechanism to evaluate; the real capability is invisible, behind the remote paid endpoint.
+
+**In SiteSmith:** No role in SiteSmith.
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `src/index.ts:1-16,118-153; README.md:1-3` | low | 0.95 | unchallenged | n/a |
+
+Failure modes:
+- Total dependency on a paid third-party service with no local fallback
+- Latches into permanent failure after one 401
+
+Conflicts: Any offline, license-clean, redistributable design principle
+
+### ponytail/cross-platform-portability-plumbing — `reject`
+
+**Solves:** Getting one ruleset in front of ~20 different agent hosts.
+
+**Mechanism:** 13 near-duplicate copies of the same ruleset text across per-host rule files and plugin manifests, synced only by a CI drift-checker comparing 7 files byte-for-byte plus 8 invariant substrings.
+
+**Why it works:** Works for an open-source project targeting every agent host; irrelevant to a single-platform skill.
+
+**In SiteSmith:** N/A — do not add per-platform adapters SiteSmith doesn't target; the drift-check *technique* (canary substrings) is reusable if ever needed, the 13-copy structure is not.
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `README.md:108-271; 13 adapter directories at repo root` | high | 0.75 | unchallenged | `check-rule-copies.js`: byte-equality + 8 invariant substring checks |
+
+Failure modes:
+- Duplication is self-inflicted complexity that then requires a drift-detector to manage
+- Canary-substring check can miss drift that doesn't touch a chosen phrase
+
+Conflicts: Directly conflicts with proportionality: SiteSmith targets one platform, replicating this would reintroduce unrequested scope
+
+### ponytail/explicit-never-simplify-carveouts — `adopt`
+
+**Solves:** A bare 'write less' instruction cuts validation/security/accessibility along with real bloat.
+
+**Mechanism:** Named exception list in the same file as the ladder: never cut trust-boundary validation, data-loss error handling, security, accessibility, or explicit requests.
+
+**Why it works:** Exception is co-located with the instruction it limits rather than trusting inference.
+
+**In SiteSmith:** Pair any SiteSmith simplicity instruction with a named never-cut list (accessibility, responsive correctness, semantic HTML) in the same breath.
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `skills/ponytail/SKILL.md:90-105` | low | 0.85 | confirmed | Adversarial exploit scripts executed against produced functions in the safety tier |
+
+Failure modes:
+- Finite named list; categories not listed have no equivalent protection
+
+### ponytail/honest-benchmark-correction — `adopt`
+
+**Solves:** Inflated published numbers tend to survive even after being shown flawed.
+
+**Mechanism:** Publishes the original inflated number, names the critique that found the flaw (chatty bare-model baseline), rebuilds against a fair baseline, publishes the corrected smaller number next to the original with the correction explicit; also documents catching its own contamination bug (hook firing on baseline arm) mid-project.
+
+**Why it works:** Process discipline: keep the uncomfortable number visible and explain why the old one was wrong, don't quietly delete it.
+
+**In SiteSmith:** When SiteSmith publishes any benchmark, keep prior numbers visible and name the flaw a critique found rather than replacing the claim silently.
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `benchmarks/results/2026-06-18-agentic.md:1-24,40-47,200-212` | low | 0.7 | confirmed | Per-arm process isolation (--setting-sources, --plugin-dir) plus per-task tables so aggregates can't hide outliers |
+
+Failure modes:
+- Correction was manual/issue-driven, nothing self-triggers a re-audit on the next critique
+
+### ponytail/self-validating-llm-judge — `adopt`
+
+**Solves:** An unvalidated LLM judge for a non-deterministic quality axis (over-engineering) is an opinion, not evidence.
+
+**Mechanism:** Fixed judge model at temp 0, published rubric, must rank a known-over-engineered reference above a known-minimal one before any real run is scored; refuses to run if it can't.
+
+**Why it works:** Gates the judge's own discriminating power before trusting its verdict on ambiguous real cases.
+
+**In SiteSmith:** Build a self-validating judge for SiteSmith's house-style/genericness problem: must rank a templated reference below a distinctive one before scoring real builds.
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `benchmarks/agentic/judge.py:28-39,89-137` | medium | 0.75 | confirmed | `judge.py --selftest` pass/fail gate before `--run` proceeds |
+
+Failure modes:
+- Reference pairs are hand-written by the same team, so selftest could pass without real-world reliability
+- Judge could drift version-to-version between runs
+
+### ponytail/seven-rung-simplicity-ladder — `adopt`
+
+**Solves:** Agents default to writing new code before checking cheaper layers exist (existing code, stdlib, native feature).
+
+**Mechanism:** 7-step ordered checklist run before writing code: YAGNI, reuse, stdlib, native, installed dep, one-line, minimum code — explicitly run after understanding the problem, not instead of it.
+
+**Why it works:** Pure prose reasoning scaffolding the model applies with judgment, not a mechanical classifier.
+
+**In SiteSmith:** Add a short prose reasoning ladder to SiteSmith's build phase; never convert to a routing script.
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `skills/ponytail/SKILL.md:32-48` | low | 0.8 | confirmed | Agentic benchmark: real Claude Code sessions, git-diff LOC, n=4/cell |
+
+Failure modes:
+- Model can skip the ladder under pressure since it's prompt-only, not enforced
+- Rung 2 requires an actual codebase search a model might skip
+
+Conflicts: A mechanical script implementing the same ladder would violate the no-mechanical-creativity constraint
+
+### remotion-skills/remotion-embedded-skill-duplication — `reject`
+
+**Solves:** A sub-skill needs to be reachable both standalone and nested inside a router skill, without the harness double-registering it.
+
+**Mechanism:** Dev-time symlinking of sub-skill folders into the parent, plus a publish-time rename of the embedded copy's SKILL.md to REFERENCE.md and link rewriting.
+
+**Why it works:** Solves a real problem, but only the problem a multi-skill monorepo has; verified via git ls-tree that what ships is physical duplicate trees (not symlinks), and a repo-wide md5sum pass found 83 files sharing only 62 unique hashes.
+
+**In SiteSmith:** Do not adopt the symlink+rename+duplicate pipeline; only the router idea (separate mechanism) is worth keeping.
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `scripts/sync-embedded-skills.ts:37-90; scripts/prepare-embedded-skills.ts:78-110` | high | 0.85 | unchallenged | n/a for a single-skill target |
+
+Failure modes:
+- Drift between canonical and embedded copies if sync script is skipped
+- Triple-copy nesting (remotion-maps appears 3 times in this checkout)
+
+Conflicts: SiteSmith is one skill; the double-registration problem this solves does not exist for a single-skill package.
+
+### remotion-skills/remotion-router-skill — `investigate`
+
+**Solves:** A body of knowledge too large to load in full needs to be reachable without bloating every invocation.
+
+**Mechanism:** One short SKILL.md (48 lines), a one-paragraph-per-topic table of contents, each a relative markdown link to that topic's own entry file, loaded only when relevant.
+
+**Why it works:** Same shape as the 55-line frontend-design file that beat SiteSmith's 630k-token package: small root, expand only on need.
+
+**In SiteSmith:** SiteSmith's SKILL.md should stay a short entry point linking to on-demand reference files, treating the 500-line cap as router-file discipline, not just a size limit.
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `skills/remotion-best-practices/SKILL.md:9-47` | low | 0.85 | refuted | Link-validation script in CI confirming every router entry resolves. |
+
+Failure modes:
+- Router entries go stale if a linked file moves and the link isn't updated
+
+> Downgraded to investigate: the red team refuted the claim as stated. Re-read the source before adopting.
+
+### remotion-skills/remotion-technique-independence — `adopt`
+
+**Solves:** Multiple mutually-exclusive implementation techniques for the same feature need presenting without forcing the model to load all of them.
+
+**Mechanism:** Instructs the model to select exactly one technique matching the brief and load only that technique's own doc; each technique directory is a stated-independent, individually removable unit.
+
+**Why it works:** A genuine one-of-N judgement call left to the model, not a script pre-selecting for it.
+
+**In SiteSmith:** For any SiteSmith topic with mutually exclusive implementation paths, use 'pick exactly one, load only that one, each independently removable' instead of one file covering all options.
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `skills/remotion-best-practices/remotion-maps/REFERENCE.md:9-10` | low | 0.75 | confirmed | Delete one technique directory; confirm the others still resolve. |
+
+Failure modes:
+- None specific; risk shifts to whether technique docs are actually independent
+
+### ruflo/orch-07-ruflo-swarm-platform — `reject`
+
+**Solves:** Coordinated multi-agent swarms, persistent semantic memory, learned model routing, and plugin ecosystem for large multi-session engineering work.
+
+**Mechanism:** npm package 'claude-flow': hierarchical/mesh agent swarms with 60+ specialized agents, 314 MCP tools, a 3-tier deterministic->Haiku->Sonnet/Opus router, 30+ plugins.
+
+**Why it works:** Genuinely built for large, multi-agent, multi-session engineering platforms. Its own SKILL.md explicitly disclaims one-shot/single-agent use.
+
+**In SiteSmith:** none
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `SKILL.md:8-21,36-47; package.json:9` | high | 0.95 | unchallenged | N/A |
+
+Failure modes:
+- Orchestration overhead the source itself warns against for this exact use case
+
+Conflicts: Self-disclaiming: SKILL.md:21 rules out the SiteSmith use case in the source's own words
+
+### ruflo/orch-08-ruflo-vector-memory — `reject`
+
+**Solves:** Cross-session recall of what an agent previously did/decided, via HNSW-indexed semantic vector memory.
+
+**Mechanism:** mcp__claude-flow__memory_* tools store and semantically retrieve prior decisions/patterns across sessions.
+
+**Why it works:** Sounds attractive as 'don't repeat mistakes,' but for a design tool it means letting past design choices leak into unrelated new briefs -- the same mechanism class implicated in SiteSmith's own measured house-style convergence.
+
+**In SiteSmith:** none
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `SKILL.md:15,40` | high | 0.7 | unchallenged | N/A -- reasoned rejection, not empirically tested here. |
+
+Failure modes:
+- Cross-project memory becomes an implicit house-style engine
+
+Conflicts: Directly conflicts with the showcase 0/8 finding this rebuild is meant to fix
+
+### scroll-world/blob-seek-scrubbing — `adopt`
+
+**Solves:** Setting video.currentTime from scroll silently fails on hosts without HTTP byte-range support: seekable pins to [0,0] and every seek clamps to frame 0.
+
+**Mechanism:** loadClip() fetches each clip via fetch().then(blob) and plays it from URL.createObjectURL(blob) instead of a direct network src.
+
+**Why it works:** Sidesteps the root cause (server range support) entirely by scrubbing an in-memory object; this is why all-intra encoding is unnecessary.
+
+**In SiteSmith:** Standard technique for any SiteSmith build scrubbing video by scroll position: fetch-to-blob before scrubbing, assume static-host byte-range gaps by default.
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `skills/scroll-world/references/scrub-engine.js:198-220; skills/scroll-world/SKILL.md:528-534` | low | 0.85 | confirmed | Asserted only; well-known browser behavior, independently verifiable. |
+
+Failure modes:
+- Loads whole clip into memory before scrubbable — fine for short clips, wouldn't scale to long-form video.
+- Silent catch on fetch failure permanently skips that clip for the session.
+
+### scroll-world/border-flood-fill-knockout — `reject`
+
+**Solves:** Removing a flat background from a still while preserving interior regions that happen to match the background colour.
+
+**Mechanism:** Samples corner pixels as background colour, flood-fills from the image border inward within an RGB-distance tolerance, so only border-connected pixels are knocked out; blurs the alpha mask edge.
+
+**Why it works:** Border-connectivity is correct for this pipeline's exact 'floating island on solid background' framing — a small, correctly-scoped algorithm, not a general background remover.
+
+**In SiteSmith:** No current SiteSmith use case — serves the AI-diorama pipeline's own visual convention, which SiteSmith isn't adopting. Revisit only if a specific feature needs solid-background cutout.
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `skills/scroll-world/references/knockout.py:1-89` | low | 0.4 | unchallenged | None automated; visual inspection only. |
+
+Failure modes:
+- Tolerance-based matching can eat into subject pixels near the background colour.
+- Assumes a genuinely flat corner-sampled background; fails silently on gradient/textured backgrounds.
+
+### scroll-world/budget-before-spend-gate — `reject`
+
+**Solves:** Metered, real-money generation needs informed user consent on cost before rendering, since mid-run failure is recoverable but ugly.
+
+**Mechanism:** Presents render tiers with a cost table, computes an estimated total from actual scene count/mobile choice, calibrates against live balance, requires explicit go-ahead.
+
+**Why it works:** State the number, get consent, then act — sound wherever an action has irreversible metered cost.
+
+**In SiteSmith:** No coherent role in SiteSmith today. Revisit only if a paid generation backend is wired in as a build-time dependency.
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `skills/scroll-world/SKILL.md:151-198` | low | 0.3 | unchallenged | Asserted only. |
+
+Failure modes:
+- No analogue at all when there is no paid, metered generation step in the build.
+
+Conflicts: Conflicts with SiteSmith's current scope: no metered paid-generation backend exists to protect against.
+
+### scroll-world/capability-gate-before-commit — `adapt`
+
+**Solves:** Silently substituting an incompatible tool/model for a user's stated preference produces a broken result without explanation.
+
+**Mechanism:** States the selection rule as a hard capability check, directing that an out-of-roster request be declined with a one-line reason rather than silently substituted.
+
+**Why it works:** Fail-loud-with-reason beats silent substitution or silent failure.
+
+**In SiteSmith:** General engineering discipline, not a discrete feature: verify a requested library/API/font actually supports the plan before committing, say so if not. Low priority to formalize.
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `skills/scroll-world/SKILL.md:200-203,278-297` | low | 0.4 | unchallenged | Asserted only; no automated check in-repo. |
+
+Failure modes:
+- Entirely dependent on a capability-introspection command existing for the tool in question.
+
+### scroll-world/css-layer-theme-override — `adopt`
+
+**Solves:** A component injecting default CSS custom properties needs a host page's own theme rules to win without predicting every selector or using !important.
+
+**Mechanism:** The engine's injected stylesheet is wrapped in @layer sw; unlayered page CSS always outranks @layer-wrapped CSS regardless of specificity or order.
+
+**Why it works:** Native platform feature doing what a specificity hack would otherwise require, order-independent.
+
+**In SiteSmith:** Wrap any SiteSmith-authored component's default CSS custom properties in @layer, leave host page theme rules unlayered.
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `skills/scroll-world/references/scrub-engine.js:438-444` | low | 0.7 | confirmed | None automated; a verifiable CSS-cascade fact. |
+
+Failure modes:
+- No fallback noted for browsers without @layer support.
+
+### scroll-world/distance-based-seam-crossfade — `adopt`
+
+**Solves:** Even frame-matched clip boundaries need a visual handoff rather than an instantaneous cut between video elements.
+
+**Mechanism:** read() computes pixel distance to each segment's start/end and maps it through a smoothstep to set opacity/z-index, cross-dissolving over a configurable crossfade band around each seam.
+
+**Why it works:** A short dissolve masks small residual mismatch at a seam without requiring perfect asset continuity; complements frame-matching rather than replacing it.
+
+**In SiteSmith:** Generic rule for SiteSmith: any two adjacent scroll-bound media segments cross-dissolve over N vh at their shared boundary, regardless of media source.
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `skills/scroll-world/references/scrub-engine.js:222-242` | low | 0.75 | confirmed | None automated; verified by eye per the source's own QA step. |
+
+Failure modes:
+- Content-agnostic — will mask a genuinely mismatched pair of clips just as readily as a well-matched one.
+
+### scroll-world/frame-identical-seam-chaining — `reject`
+
+**Solves:** Two independently-generated video clips meant to connect won't visually match because every generation renders slightly differently.
+
+**Mechanism:** Requires a connector's conditioning images be the ACTUAL last/first frame extracted from already-rendered neighbouring clips, never the original source still, so seams are frame-identical by construction.
+
+**Why it works:** A generalizable idea (condition on your own actual prior output, not the original input, to prevent drift across a generative chain) but only actionable with a generative backend that supports image conditioning.
+
+**In SiteSmith:** Not applicable to SiteSmith today. The abstract idea (condition on actual own output, not original input) is worth remembering but has no concrete SiteSmith use case.
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `skills/scroll-world/SKILL.md:467-520; skills/scroll-world/references/pipeline.md:85-117` | medium | 0.3 | unchallenged | Manual screenshot diffing; no automated frame-comparison tool ships in the repo. |
+
+Failure modes:
+- Zero applicability without a generative video backend — there is no 'next frame' to extract when clips aren't generated in a chain.
+
+Conflicts: SiteSmith has no generative video backend, so there is no chain to keep frame-identical.
+
+### scroll-world/linger-ease-pacing — `adopt`
+
+**Solves:** A linear scroll-to-time mapping gives no way to make a scene's best/most narratively important frame coincide with the moment its copy peaks.
+
+**Mechanism:** lingerEase(x, L) is a monotone cubic remap that flattens the middle of a segment's range and steepens the edges as L rises, while preserving f(0)=0 and f(1)=1 exactly.
+
+**Why it works:** A single per-section parameter changes pacing without touching the clip or breaking the seam guarantee.
+
+**In SiteSmith:** Reusable as-is: boundary-preserving cubic ease with a single linger parameter per scroll-bound section.
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `skills/scroll-world/references/scrub-engine.js:175-178,232` | low | 0.7 | confirmed | None automated. |
+
+Failure modes:
+- L close to 1 with a short scroll distance can feel stuck; source recommends L<=0.6 but doesn't enforce it.
+
+### scroll-world/mobile-scrub-hardening-bundle — `investigate`
+
+**Solves:** Scroll-scrubbed video has several distinct phone failure modes: fast-flick seek pileup, iOS blank-muted-video quirk, URL-bar resize scroll jump, heavier decode budget.
+
+**Mechanism:** Four bundled fixes behind one isMobile() check: seek-coalescing (skip re-queuing currentTime while still seeking), iOS priming (muted play/pause on first touch, wait for 'seeked' not just 'loadedmetadata'), resize-gating (ignore height-only resize on touch), coarser mobile seek epsilon.
+
+**Why it works:** Each fix targets one concrete, named bug, independently testable and removable, matched to the source's own Gotchas list.
+
+**In SiteSmith:** Adopt all four as a standard checklist for any SiteSmith scroll-video build; none depend on how the video was produced.
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `skills/scroll-world/references/scrub-engine.js:66-73,273-323; CSS at 413-435` | low | 0.75 | refuted | None automated; source recommends manual CPU-throttled and real-device iOS testing. |
+
+Failure modes:
+- coarse pointer check captured once at mount, never re-evaluated (acknowledged intentional).
+
+> Downgraded to investigate: the red team refuted the claim as stated. Re-read the source before adopting.
+
+### scroll-world/open-subject-question-not-fabricated-menu — `adapt`
+
+**Solves:** A fabricated multiple-choice list of subjects at intake biases the user and reads as the assistant deciding their business for them.
+
+**Mechanism:** Instructs asking the subject as an open plain-prose question, reserving structured multiple-choice for genuinely enumerable, lower-stakes choices later, always with an 'Other' escape hatch.
+
+**Why it works:** A reasoning/prompting instruction about when structured choice helps versus constrains — the same category as the frontend-design skill's winning mechanisms.
+
+**In SiteSmith:** Extract the general rule for SiteSmith's own interview step: ask identity-defining questions as open prose, reserve structured choice for genuinely enumerable, lower-stakes decisions with an explicit 'describe your own' option.
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `skills/scroll-world/SKILL.md:80-93` | low | 0.55 | confirmed | Asserted only. |
+
+Failure modes:
+- No mechanism verifies the model actually asked openly rather than defaulting to a menu under time pressure.
+
+### scroll-world/progressive-disclosure-file-split — `investigate`
+
+**Solves:** Heavy reference material inlined into a main procedure file bloats context on every invocation even for steps a build never reaches.
+
+**Mechanism:** SKILL.md is the only always-loaded file; it names each reference file by relative path at the exact step it's needed, none pre-loaded speculatively.
+
+**Why it works:** Matches the general skill-authoring principle of separating procedure from heavy reference data.
+
+**In SiteSmith:** Keep the pattern but apply more strictly: move vendor-pricing/model-capability tables out of the main procedure file into a reference file.
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `skills/scroll-world/SKILL.md:752-762 and references/ file structure` | low | 0.6 | refuted | Verified directly by reading SKILL.md and confirming reference files are named only at point of use. |
+
+Failure modes:
+- SKILL.md still inlines ~150 lines of volatile vendor pricing/schema tables that belong in a deferred reference file instead.
+
+> Downgraded to investigate: the red team refuted the claim as stated. Re-read the source before adopting.
+
+### scroll-world/reduced-motion-full-degrade — `adopt`
+
+**Solves:** prefers-reduced-motion should stop clip loading entirely, not just disable visible animation while still fetching/decoding video.
+
+**Mechanism:** reduce is read once at mount; loadClip() short-circuits immediately if true, leaving only stills that cross-dissolve via the same opacity math used for seams.
+
+**Why it works:** Full degrade at the fetch layer, not a cosmetic override — no wasted bandwidth/decode, reuses existing code paths for the fallback.
+
+**In SiteSmith:** Gate any generated/heavy media fetch behind the same check used to gate its motion, so accessibility and 'no backend available' share one code path.
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `skills/scroll-world/references/scrub-engine.js:199-201; CSS at 436` | low | 0.7 | confirmed | None automated; testable by toggling the OS setting. |
+
+Failure modes:
+- Only triggers on OS-level preference; no separate opt-in for bandwidth/low-end-device reasons.
+
+### scroll-world/scrub-video-encoding-recipe — `adopt`
+
+**Solves:** Naive assumptions about scrub smoothness (all-intra encoding, quality downscaling) are backwards; the real levers are seekability and keyframe distance.
+
+**Mechanism:** Native resolution, crf ~20, small GOP (-g 8, not all-intra), stripped audio, +faststart, light unsharp; a tighter mobile profile (-g 4, 720p, crf 23) trades keyframes for cheaper phone-decoder seeks.
+
+**Why it works:** Ties every setting to a stated cause rather than folklore, with two calibrated presets instead of one compromise.
+
+**In SiteSmith:** Carry as reference documentation for any SiteSmith scroll-video build regardless of asset source.
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `skills/scroll-world/SKILL.md:523-559; skills/scroll-world/references/pipeline.md:119-171` | low | 0.65 | confirmed | None automated in-repo; asserted from experience, not measured in this codebase. |
+
+Failure modes:
+- Tuned for short (5-10s) clips; not claimed to hold for longer-form video.
+
+### scroll-world/segment-interleave-scene-model — `adopt`
+
+**Solves:** A scroll-scrubbed multi-scene film needs a single flat timeline (scroll position -> which clip, and how far into it) built from a designer's per-section config, without hand-computing pixel ranges.
+
+**Mechanism:** Builds a flat SEGMENTS array by walking SECTIONS and interleaving a dive segment per section with an optional conn segment between consecutive sections (skipped when connectors[i] is falsy). Each segment carries a scroll-width weight; layout() turns weights into cumulative pixel start/end offsets.
+
+**Why it works:** Decouples 'what media exists and in what order' (editable config) from 'how much scroll height that requires' (computed) and 'what is currently active' (derived per scroll tick).
+
+**In SiteSmith:** Reuse this shape for any SiteSmith scroll-scrubbed hero: ordered scene array with optional connector slots, flattened to a weighted timeline at layout time, independent of clip source.
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `skills/scroll-world/references/scrub-engine.js:86-101` | low | 0.8 | confirmed | No automated test in repo; correctness implied by rest of engine working. |
+
+Failure modes:
+- No validation that connectors.length === sections.length - 1; a mismatch silently misaligns connectors.
+
+### scroll-world/single-aesthetic-camera-roster — `reject`
+
+**Solves:** Frames 'cohesion' as fixing art direction to a small enumerated set (clay diorama/papercraft/glossy toy/claymation/neon-night) and camera behavior to a 3-way roster, reused verbatim across a build.
+
+**Mechanism:** A shared style preamble composed once at intake is reused byte-for-byte in every scene prompt; camera behavior is selected once from a fixed roster and applied uniformly.
+
+**Why it works:** Genuinely produces per-build cohesion, but the same mechanism shape (small fixed menu of looks reused verbatim) is what this project's own three-site convergence test flagged as a liability, just scoped to one genre instead of SiteSmith's whole output.
+
+**In SiteSmith:** Do not adopt the fixed style-roster shape. If a scroll-cinematic capability is ever offered, treat art direction/camera behavior as brief-driven creative decisions reasoned per project, not a preset menu.
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `skills/scroll-world/SKILL.md:100-122,268-322` | low | 0.55 | unchallenged | Not tested for cross-build convergence in the source. |
+
+Failure modes:
+- Every build necessarily looks like a member of the same small family by design — no mechanism for the model to invent a genuinely novel treatment per subject.
+- Two unrelated businesses choosing the same defaults converge on similar sites for structural reasons, not coincidence.
+
+Conflicts: Directly in tension with the measured fact that a fixed-look mechanism is a liability even when each output is individually good.
 
 ### sitesmith-current/assignment-blinded-critique-gate — `adapt`
 
@@ -1362,4 +2861,40 @@ Conflicts: C-no-house-style
 
 Failure modes:
 - prefix/suffix suggestion matching can surface lexically close but semantically unrelated terms
+
+### website-builder-setup/website-builder-setup-numbers-as-authority — `reject`
+
+**Solves:** Making an unverified external dependency sound credible to a non-technical user during onboarding.
+
+**Mechanism:** Specific-sounding counts of design styles, palettes, font pairings and components asserted as scripted dialogue, unbacked by any content in this repo.
+
+**Why it works:** It doesn't, for the task's purposes — it's the lookup-table framing the frontend-design result argues against.
+
+**In SiteSmith:** No role.
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `website-builder-setup/SKILL.md:14,16; README.md:45,47` | low | 0.8 | unchallenged | n/a — no data in-repo to test |
+
+Failure modes:
+- Convergent output across unrelated projects sharing the identical closed catalog — the same failure class as SiteSmith's 0/8 showcase, potentially worse since shared across every user
+
+Conflicts: Both measured facts in the brief
+
+### website-builder-setup/website-builder-setup-stepwise-onboarding — `reject`
+
+**Solves:** A multi-step external-dependency install flow needs to survive individual step failures without stalling.
+
+**Mechanism:** Narrate one step at a time, never dump all instructions at once, and on failure acknowledge/give manual fallback/keep moving rather than halt.
+
+**Why it works:** Generic UX resilience pattern for scripted multi-step flows with side effects.
+
+**In SiteSmith:** SiteSmith has no comparable flow today; nothing to attach this to.
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `website-builder-setup/SKILL.md:137-143` | low | 0.5 | unchallenged | n/a — no analogous flow currently exists in SiteSmith |
+
+Failure modes:
+- None specific
 

@@ -4,18 +4,1143 @@
   "generatedFrom": "docs/rebuild/research/_mechanisms/RAW-AUTOPSIES.json",
   "doNotEditByHand": true,
   "counts": {
-    "total": 67,
-    "adopt": 42,
-    "adapt": 15,
-    "reject": 9,
-    "investigate": 1,
-    "confirmed": 55,
-    "refuted": 3,
-    "unchallenged": 9,
-    "lowContextCost": 46,
-    "highContextCost": 4
+    "total": 140,
+    "adopt": 72,
+    "adapt": 25,
+    "reject": 31,
+    "investigate": 12,
+    "confirmed": 85,
+    "refuted": 14,
+    "unchallenged": 41,
+    "lowContextCost": 100,
+    "highContextCost": 13
   },
   "mechanisms": [
+    {
+      "key": "agency-agents/orch-01-finish-gate-design-contract",
+      "id": "orch-01-finish-gate-design-contract",
+      "source": "agency-agents",
+      "sourcePath": "design/design-ui-finish-gate-reviewer.md:106-165",
+      "problemSolved": "Generic, interchangeable UI shipping without anyone naming why it is generic or what would make it product-specific.",
+      "mechanism": "Single-pass review procedure: write a one-paragraph product lens (user, job, first-read object), collect 3-5 comparable reference patterns, fill a Design Contract naming density/hierarchy/interaction-model/forbidden-defaults, then audit the implementation against it and return a hard PASS or HOLD verdict (never a soft list of nice-to-haves).",
+      "whyItWorks": "Forces the model to state product-specific constraints and explicitly name forbidden generic defaults before judging the UI, converting vague taste critique into checkable claims tied to visible states.",
+      "requiredContext": [
+        "the brief/product lens",
+        "screenshots or rendered output at target viewports"
+      ],
+      "contextCost": "low",
+      "outputImpact": "Directly counters the measured house-style convergence (showcase 0/8) by requiring a named, per-project set of forbidden defaults instead of a shared default aesthetic.",
+      "failureModes": [
+        "Reviewer invents forbidden defaults not grounded in real evidence",
+        "Could become a rubber-stamp if run in the same context that wrote the code"
+      ],
+      "conflicts": [
+        "ui-designer.md (awesome-claude-code-subagents) demonstrates the noun-list failure mode this procedure explicitly avoids"
+      ],
+      "testMethod": "Run the gate on a generated page and confirm it produces a PASS/HOLD with named forbidden-default violations, not generic praise/criticism.",
+      "decision": "investigate",
+      "sitesmithForm": "Add as an optional self-review pass in SiteSmith's audit stage: produce the one-paragraph product lens + forbidden-defaults list before generation, then re-check the rendered output against it as a PASS/HOLD gate alongside scripts/verify.mjs.",
+      "confidence": 0.75,
+      "redTeam": "refuted",
+      "redTeamReason": "Opened agency-agents/design/design-ui-finish-gate-reviewer.md in full. The cited range (106-165) only contains Steps 3-5 (Design Contract template, implementation audit, PASS/HOLD report). Two of the five components the claim describes live outside that range: the 'one-paragraph product lens' is Step 1 at lines 85-97 ('Write a one-paragraph lens before critiquing pixels'), and 'collect 3-5 comparable reference patterns' is Step 2 at lines 98-105 ('Build a short evidence set with 3-5 screens or patterns'). The 'never a soft list of nice-to-haves' qualifier is also not in the cited range -- it's at lines 56-57 in the earlier 'Run a Hard Finish Gate' section ('do not soften a hold into a vague list of nice-to-haves'). The underlying five-step workflow is real, but the claim merges three separate sections (Core Mission lines 56-57, Step 1 lines 85-97, Step 2 lines 98-105) into a citation window that covers none of them, only Steps 3-4-5.",
+      "redTeamEvidence": "scratchpad/upstream/agency-agents/design/design-ui-finish-gate-reviewer.md:56-57,85-105 (outside the cited 106-165 range)",
+      "decisionBeforeRefutation": "adapt",
+      "decisionNote": "Downgraded to investigate: the red team refuted the claim as stated. Re-read the source before adopting."
+    },
+    {
+      "key": "agency-agents/orch-02-persona-walkthrough",
+      "id": "orch-02-persona-walkthrough",
+      "source": "agency-agents",
+      "sourcePath": "design/design-persona-walkthrough.md:59-188",
+      "problemSolved": "Design decisions justified by taste rather than by how a real visitor with a specific intent would actually read the page.",
+      "mechanism": "Build one persona profile (search query, psychology, attachment style, fears), then simulate a scroll-by-scroll first read producing two voices per fold: raw persona monologue plus a framework-grounded analyst note (LIFT / Cialdini / Fogg), ending in a scored verdict and prioritised, fold-specific recommendations.",
+      "whyItWorks": "Forces concrete, falsifiable claims per fold instead of adjective-only critique, and ties every recommendation to a specific fold and framework rather than a generic aesthetic judgment.",
+      "requiredContext": [
+        "one persona profile (can be inferred from the brief)",
+        "screenshots per fold/viewport"
+      ],
+      "contextCost": "medium",
+      "outputImpact": "Improves conversion-relevant judgment (first-read clarity, trust signal placement) independent of visual style -- orthogonal to the house-style risk, additive to it.",
+      "failureModes": [
+        "Qualitative simulation only -- source file itself flags this is not statistical evidence",
+        "Low value if the persona is generic instead of specific to the brief"
+      ],
+      "conflicts": [],
+      "testMethod": "Run against one real brief's landing page and check whether at least one finding maps to a fold + framework citation the team did not already know.",
+      "decision": "adapt",
+      "sitesmithForm": "Offer as an optional post-build QA step for conversion-oriented briefs (landing pages, e-commerce, lead-gen) -- not mandatory for every site type.",
+      "confidence": 0.55,
+      "redTeam": "confirmed",
+      "redTeamReason": "Opened agency-agents/design/design-persona-walkthrough.md and checked every element against lines 59-188. Persona Profile Template with Google-query/attachment-tendency/primary-fears fields is at 59-91. The 'two voices per fold' rule is explicitly stated inside the cited range at line 176 ('For each: persona monologue + analyst assessment'), backed by the Analyst Assessment Template (99-112) which names LIFT, Cialdini, and Fogg fields directly. The Verdict Template (114-136) and Recommendation Template with priority tiers (138-152, plus Phase 4 at 187-188) match 'scored verdict' and 'prioritised, fold-specific recommendations'. Every component the claim names is verifiably inside the cited line range -- this one holds up.",
+      "redTeamEvidence": "scratchpad/upstream/agency-agents/design/design-persona-walkthrough.md:59-188"
+    },
+    {
+      "key": "agency-agents/orch-06-agents-orchestrator-pipeline",
+      "id": "orch-06-agents-orchestrator-pipeline",
+      "source": "agency-agents",
+      "sourcePath": "specialized/agents-orchestrator.md:9-16,60",
+      "problemSolved": "Coordinating a PM -> Architect -> Dev/QA loop -> Integration pipeline across separately-spawned specialist agents.",
+      "mechanism": "A dedicated orchestrator agent that spawns other agent files, tracks pipeline phase/state, enforces retry limits and quality gates between phases via JSON handoffs.",
+      "whyItWorks": "Only pays off when multiple distinct agent processes actually need coordinating; a single skill run once per build has no phases to hand off between.",
+      "requiredContext": [
+        "a fleet of spawnable specialist agents"
+      ],
+      "contextCost": "high",
+      "outputImpact": "None for a single-skill website builder.",
+      "failureModes": [
+        "Pure overhead with nothing to orchestrate"
+      ],
+      "conflicts": [],
+      "testMethod": "N/A",
+      "decision": "reject",
+      "sitesmithForm": "none",
+      "confidence": 0.9,
+      "redTeam": "unchallenged",
+      "redTeamReason": "",
+      "redTeamEvidence": ""
+    },
+    {
+      "key": "agency-agents/orch-10-agency-agents-role-taxonomy",
+      "id": "orch-10-agency-agents-role-taxonomy",
+      "source": "agency-agents",
+      "sourcePath": "README.md:110-507",
+      "problemSolved": "Giving a fleet of specialist agents distinct personas/specialties to route work to.",
+      "mechanism": "~200 agent persona files across 15 divisions, each following Identity/Mission/Rules/Workflow/Deliverables/Communication-Style template, installed individually into an agent runtime and addressed by name.",
+      "whyItWorks": "Valid for a multi-agent product (this is literally what the repo is for); has no role in a single skill that has no other agents to route to or personas to switch between.",
+      "requiredContext": [
+        "a runtime that installs and addresses multiple named agents"
+      ],
+      "contextCost": "high",
+      "outputImpact": "None for a single skill.",
+      "failureModes": [
+        "N/A -- out of scope by construction"
+      ],
+      "conflicts": [],
+      "testMethod": "N/A",
+      "decision": "reject",
+      "sitesmithForm": "none",
+      "confidence": 0.9,
+      "redTeam": "unchallenged",
+      "redTeamReason": "",
+      "redTeamEvidence": ""
+    },
+    {
+      "key": "agent-elements-21st/agent-elements-companion-skill-reference",
+      "id": "agent-elements-companion-skill-reference",
+      "source": "agent-elements-21st",
+      "sourcePath": "skills/agent-elements/SKILL.md:104-166,240-250",
+      "problemSolved": "Model hallucinates component names, prop shapes, and import paths when a component library is only known from training data.",
+      "mechanism": "A short static SKILL.md ships alongside the shadcn registry, listing every component's exact props, exact file path, and an explicit 'never import from a barrel' rule. No design opinions encoded, only API ground truth.",
+      "whyItWorks": "Answers a factual question (what does this API look like) rather than a judgement question, removing a class of hallucination without moving a design decision out of the model.",
+      "requiredContext": [
+        "component catalog text (~280 lines)"
+      ],
+      "contextCost": "low",
+      "outputImpact": "Reduces broken imports/props when generating code against a real component library; no effect on visual/design quality.",
+      "failureModes": [
+        "Goes stale if registry changes and reference doc isn't regenerated alongside it"
+      ],
+      "conflicts": [],
+      "testMethod": "Generate code against the registry with and without the reference doc loaded; count import/prop errors.",
+      "decision": "investigate",
+      "sitesmithForm": "If SiteSmith ever bundles/references a fixed component set, ship a short regenerated-on-change reference of exact paths/props rather than relying on model memory.",
+      "confidence": 0.7,
+      "redTeam": "refuted",
+      "redTeamReason": "Opened the file in full (278 lines via wc -l, i.e. not 'short' by any standard set elsewhere in this same claim set — compare the 47-line remotion-best-practices/SKILL.md called 'short' in a sibling claim). The cited range 104-166,240-250 does NOT contain the barrel-import rule or the per-component file-path listing at all — those live at lines 53-91 (Paths section) and line 93 ('Import rule: always import from the exact file, never from a barrel.'), outside the cited lines. The claim stitches together three separate sections (Paths, Component catalog, Theming) and attributes all of it to the cited range. The catalog (104-166) lists prop *names* for some components but not 'every component's exact props' — SendButton/AttachmentButton/FileAttachment get zero prop documentation ('usable standalone if you're building a custom composer'). Most importantly, the cited range itself contradicts 'no design opinions encoded': lines 249-250 read 'Customising a component is just editing the installed file. Prefer that over wrapping — the code is yours now,' which is an explicit workflow/design opinion, not API ground truth.",
+      "redTeamEvidence": "C:\\Users\\Usmo1\\AppData\\Local\\Temp\\claude\\C--Users-Usmo1-Documents-sitesmith\\60a368a9-e3a0-4ebc-aadf-386ee1a4a75a\\scratchpad\\upstream\\agent-elements-21st\\skills\\agent-elements\\SKILL.md (lines 53-102 for paths/barrel rule; 104-166 for catalog; 240-250 for theming/opinion; 278 lines total via wc -l)",
+      "decisionBeforeRefutation": "adapt",
+      "decisionNote": "Downgraded to investigate: the red team refuted the claim as stated. Re-read the source before adopting."
+    },
+    {
+      "key": "agent-elements-21st/agent-elements-full-catalog",
+      "id": "agent-elements-full-catalog",
+      "source": "agent-elements-21st",
+      "sourcePath": "lib/agent-ui/components/tools/*.tsx; README.md:15-21",
+      "problemSolved": "Rendering an AI agent's own tool calls inside a chat transcript.",
+      "mechanism": "26 pre-built React components (AgentChat, MessageList, InputBar, tool cards) installed via shadcn CLI from a hosted registry.",
+      "whyItWorks": "n/a — not applicable to ordinary websites.",
+      "requiredContext": [
+        "React 19 + Tailwind v4 project",
+        "Vercel AI SDK UIMessage types"
+      ],
+      "contextCost": "medium",
+      "outputImpact": "None for an ordinary website; only relevant to a site that itself embeds an agent/chat interface.",
+      "failureModes": [
+        "Becoming a default dependency of every SiteSmith build regardless of whether the site has a chat interface"
+      ],
+      "conflicts": [
+        "Any site with no agent/chat surface"
+      ],
+      "testMethod": "n/a",
+      "decision": "reject",
+      "sitesmithForm": "Not a default dependency; only relevant when a brief explicitly calls for an embedded agent/chat UI.",
+      "confidence": 0.9,
+      "redTeam": "unchallenged",
+      "redTeamReason": "",
+      "redTeamEvidence": ""
+    },
+    {
+      "key": "ai-dev-tasks/checkbox-state-in-file",
+      "id": "checkbox-state-in-file",
+      "source": "ai-dev-tasks",
+      "sourcePath": "generate-tasks.md:43-50",
+      "problemSolved": "Losing track of which sub-steps of a multi-step build are done across a long/resumed session.",
+      "mechanism": "The task list markdown file is itself the state: each sub-task line flips '- [ ]' to '- [x]' after every sub-task, not batched per parent task.",
+      "whyItWorks": "A single small state file is cheap; the risk is the exact shape that sank the old SiteSmith package if multiplied across many files — kept to one file it's fine.",
+      "requiredContext": [
+        "the running task list file"
+      ],
+      "contextCost": "low",
+      "outputImpact": "Execution reliability across a long build; no design impact.",
+      "failureModes": [
+        "Proliferating into a state file per phase/world, mirroring the 139-file sprawl that already lost once",
+        "Checkbox state drifting out of sync if updates are batched"
+      ],
+      "conflicts": [
+        "None direct; complements existing WORKFLOW-STATE.json pattern in this repo"
+      ],
+      "testMethod": "Interrupt a build mid-task-list and resume; confirm no redoing of completed sub-tasks.",
+      "decision": "adapt",
+      "sitesmithForm": "One flat task-state file per build, checked off per sub-step; never more than one state file for a single site build.",
+      "confidence": 0.6,
+      "redTeam": "confirmed",
+      "redTeamReason": "Opened generate-tasks.md lines 43-50. Confirmed verbatim: 'you must check it off in this markdown file by changing - [ ] to - [x]' and 'Update the file after completing each sub-task, not just after completing an entire parent task.' Matches the claim exactly, including the 'not batched per parent task' detail.",
+      "redTeamEvidence": "/c/Users/Usmo1/AppData/Local/Temp/claude/C--Users-Usmo1-Documents-sitesmith/60a368a9-e3a0-4ebc-aadf-386ee1a4a75a/scratchpad/upstream/ai-dev-tasks/generate-tasks.md"
+    },
+    {
+      "key": "ai-dev-tasks/clarifying-questions-before-spec",
+      "id": "clarifying-questions-before-spec",
+      "source": "ai-dev-tasks",
+      "sourcePath": "create-prd.md:9-10,14-23,77-81",
+      "problemSolved": "Agent starts writing a spec/plan on an underspecified request and locks in a wrong interpretation before the user can correct it.",
+      "mechanism": "Cap clarifying questions at 3-5, ask only where the prompt is ambiguous or missing essential context, present lettered options so the user answers in one line, and forbid starting implementation before questions are answered.",
+      "whyItWorks": "A thinking aid, not a lookup table: changes what the model asks itself before acting. Independently corroborated by grill-for-unknowns' material/grounded/answerable bar (SKILL.md:92-118) — two unrelated sources converging on 'ask fewer, sharper questions' is stronger signal than either alone.",
+      "requiredContext": [
+        "the user's original request"
+      ],
+      "contextCost": "low",
+      "outputImpact": "Prevents building the wrong thing; does not by itself prevent generic-looking output.",
+      "failureModes": [
+        "Turns into an exhaustive questionnaire if the cap/ambiguity guard is dropped",
+        "Lettered options can railroad the user if not genuinely representative"
+      ],
+      "conflicts": [
+        "Magnus's house rule 'Beslut, spørg ikke' — resolve by keeping the cap very small and only asking when it changes scope/architecture"
+      ],
+      "testMethod": "Run the same ambiguous brief twice; confirm it asks <=5 questions once, then doesn't re-ask already-answered material.",
+      "decision": "adopt",
+      "sitesmithForm": "Pre-build question gate: max 2-3 lettered questions, asked only when the brief is silent on something that changes layout/scope/brand feel.",
+      "confidence": 0.8,
+      "redTeam": "confirmed",
+      "redTeamReason": "Opened create-prd.md. Line 10 literally caps questions at 3-5 ('Limit questions to 3-5 critical gaps') and requires lettered/number-list options; lines 14-23 restate 'ambiguous or missing essential context' near-verbatim; lines 77-81 ('Final instructions': 'Do NOT start implementing the PRD', 'Make sure to ask the user clarifying questions') support the no-implementation-before-Q&A framing. The whyItWorks cross-check to grill-for-unknowns SKILL.md:92-118 also holds (Material/Grounded/Answerable + question template are exactly there). All cited content is present as described.",
+      "redTeamEvidence": "/c/Users/Usmo1/AppData/Local/Temp/claude/C--Users-Usmo1-Documents-sitesmith/60a368a9-e3a0-4ebc-aadf-386ee1a4a75a/scratchpad/upstream/ai-dev-tasks/create-prd.md"
+    },
+    {
+      "key": "ai-dev-tasks/junior-dev-audience-framing",
+      "id": "junior-dev-audience-framing",
+      "source": "ai-dev-tasks",
+      "sourcePath": "create-prd.md:67-69, generate-tasks.md:68-70",
+      "problemSolved": "A human junior developer misreading a spec.",
+      "mechanism": "Both files instruct writing for a 'junior developer': explicit, unambiguous, jargon-free.",
+      "whyItWorks": "Rejected: the audience for SiteSmith is always a capable model reading a compact instruction, not a junior human. Adopting this would add explanatory padding that Fact 1 shows is counterproductive — the winning 55-line skill is terse and assumes a capable reader, the opposite of this framing.",
+      "requiredContext": [],
+      "contextCost": "low",
+      "outputImpact": "None for SiteSmith.",
+      "failureModes": [
+        "Optimizing prose for a human reader who doesn't exist in an agent-to-agent handoff wastes tokens"
+      ],
+      "conflicts": [
+        "Fact 1: the winning skill is terse, the opposite of 'explain for a junior dev'"
+      ],
+      "testMethod": "N/A",
+      "decision": "reject",
+      "sitesmithForm": "none",
+      "confidence": 0.75,
+      "redTeam": "unchallenged",
+      "redTeamReason": "",
+      "redTeamEvidence": ""
+    },
+    {
+      "key": "ai-dev-tasks/mandatory-branch-task",
+      "id": "mandatory-branch-task",
+      "source": "ai-dev-tasks",
+      "sourcePath": "generate-tasks.md:17",
+      "problemSolved": "Work happening on the wrong git branch.",
+      "mechanism": "Task generation always inserts a hardcoded '0.0 Create feature branch' as the first task regardless of context, unless the user opts out.",
+      "whyItWorks": "Rejected: exactly the class of mechanism Fact 1 warns against — a step executed unconditionally from a rule rather than judged from context, conflicting with Magnus's own solo-dev direct-to-branch workflow. SiteSmith's own project CLAUDE.md already governs git workflow per-repo.",
+      "requiredContext": [],
+      "contextCost": "low",
+      "outputImpact": "None for SiteSmith's design mechanism; purely repo hygiene.",
+      "failureModes": [
+        "Fires even when no branch is wanted, forcing an opt-out every time instead of reading context"
+      ],
+      "conflicts": [
+        "Magnus's 'Solo-udvikler, intet PR-flow' house rule",
+        "Fact 1: decision moved into a fixed rule rather than model judgment"
+      ],
+      "testMethod": "N/A",
+      "decision": "reject",
+      "sitesmithForm": "none",
+      "confidence": 0.8,
+      "redTeam": "unchallenged",
+      "redTeamReason": "",
+      "redTeamEvidence": ""
+    },
+    {
+      "key": "ai-dev-tasks/prd-non-goals-and-success-metrics",
+      "id": "prd-non-goals-and-success-metrics",
+      "source": "ai-dev-tasks",
+      "sourcePath": "create-prd.md:53-65",
+      "problemSolved": "Scope creep and no shared definition of done for a build.",
+      "mechanism": "Of 9 mandated PRD sections, Non-Goals (Out of Scope) and Success Metrics carry real weight for scope control and a concrete definition of done.",
+      "whyItWorks": "Cheap, model-facing constraint rather than a rendering rule (Fact 1). Directly counters house-style convergence if 'do not converge on the same layout as the last brief' is stated as a non-goal.",
+      "requiredContext": [
+        "the site brief",
+        "prior similar builds to name as an explicit non-goal reference"
+      ],
+      "contextCost": "low",
+      "outputImpact": "Reduces scope drift and gives a checkable definition of done; does not itself diversify visual output.",
+      "failureModes": [
+        "Non-goals left as boilerplate 'N/A'",
+        "Success metrics stated only in engineering terms, missing the visual-sameness failure mode"
+      ],
+      "conflicts": [
+        "The full 9-section PRD template this is extracted from"
+      ],
+      "testMethod": "Check a completed brief for an explicit Non-Goals line and Success Metrics line; confirm the build was checked against both.",
+      "decision": "investigate",
+      "sitesmithForm": "Two required lines in brief-intake: 'will not look like <named prior site>' and 'done means <concrete criterion>'.",
+      "confidence": 0.6,
+      "redTeam": "refuted",
+      "redTeamReason": "The section count is accurate (lines 57-65 list exactly 9 numbered sections, Non-Goals is #5, Success Metrics is #8), but the claim overstates what the source does with them: Non-Goals gets one generic bullet ('Clearly state what this feature will not include to manage scope') with zero elaboration, examples, or emphasis distinguishing it from the other 7 sections. The whyItWorks goes further and speculates 'Directly counters house-style convergence IF do-not-converge-on-last-brief is stated as a non-goal' -- this is the claiming agent's own hypothetical, not anything create-prd.md instructs or exemplifies. This is rule-3's exact failure mode: a template heading treated as a targeted anti-convergence mechanism.",
+      "redTeamEvidence": "/c/Users/Usmo1/AppData/Local/Temp/claude/C--Users-Usmo1-Documents-sitesmith/60a368a9-e3a0-4ebc-aadf-386ee1a4a75a/scratchpad/upstream/ai-dev-tasks/create-prd.md",
+      "decisionBeforeRefutation": "adapt",
+      "decisionNote": "Downgraded to investigate: the red team refuted the claim as stated. Re-read the source before adopting."
+    },
+    {
+      "key": "ai-dev-tasks/two-phase-approval-gate",
+      "id": "two-phase-approval-gate",
+      "source": "ai-dev-tasks",
+      "sourcePath": "generate-tasks.md:17-18",
+      "problemSolved": "Agent generates a huge granular breakdown before the user agrees with the high-level shape.",
+      "mechanism": "Generate only parent tasks first, present them, and pause for the user to say 'Go' before generating sub-tasks.",
+      "whyItWorks": "Cheap two-step confirmation before committing to detail; converges with grill-for-unknowns' 'Ask for confirmation before build' (SKILL.md:61) — a sequencing discipline, not new content-generation logic.",
+      "requiredContext": [
+        "the draft high-level task/phase list"
+      ],
+      "contextCost": "low",
+      "outputImpact": "Avoids wasted detailed planning when the shape is wrong; no direct design impact.",
+      "failureModes": [
+        "Literal string-match on 'Go' is brittle outside a live chat turn; needs generalizing in a non-interactive agent context"
+      ],
+      "conflicts": [
+        "Long-run/autonomous-agent house rules that say don't stop-and-wait mid-mission unless irreversible or genuinely ambiguous"
+      ],
+      "testMethod": "Verify the skill produces a short parent-task list and stops until an explicit go-ahead signal exists.",
+      "decision": "adapt",
+      "sitesmithForm": "One gate: show proposed site structure/sections before writing code; proceed automatically if the brief already authorized full autonomy, otherwise wait.",
+      "confidence": 0.55,
+      "redTeam": "confirmed",
+      "redTeamReason": "Opened generate-tasks.md. Lines 17-18 match exactly: 'Present these tasks to the user in the specified format (without sub-tasks yet). Inform the user: ... Respond with Go to proceed.' then '4. Wait for Confirmation: Pause and wait for the user to respond with Go.' The cross-reference to grill-for-unknowns SKILL.md:61 also checks out verbatim ('Ask for confirmation before build -- do not enact the plan until the user confirms...').",
+      "redTeamEvidence": "/c/Users/Usmo1/AppData/Local/Temp/claude/C--Users-Usmo1-Documents-sitesmith/60a368a9-e3a0-4ebc-aadf-386ee1a4a75a/scratchpad/upstream/ai-dev-tasks/generate-tasks.md"
+    },
+    {
+      "key": "ai-website-cloner-template/appearance-and-behavior-taxonomy",
+      "id": "appearance-and-behavior-taxonomy",
+      "source": "ai-website-cloner-template",
+      "sourcePath": "SKILL.md:61-79",
+      "problemSolved": "Static-CSS-only extraction looks right in a screenshot but feels dead in use.",
+      "mechanism": "Requires appearance (getComputedStyle) AND behavior (trigger, before/after, transition) for every element, backed by a 13-category illustrative behavior list.",
+      "whyItWorks": "Gives the agent a concrete scanning checklist instead of relying on incidental noticing.",
+      "requiredContext": [
+        "ability to trigger each behavior category live"
+      ],
+      "contextCost": "medium",
+      "outputImpact": "High — explicitly the difference between looking right and feeling right.",
+      "failureModes": [
+        "List is explicitly non-exhaustive; treating it as closed misses behaviors outside the 13 categories"
+      ],
+      "conflicts": [],
+      "testMethod": "Asserted only for completeness; extraction itself is measured",
+      "decision": "investigate",
+      "sitesmithForm": "Reuse the appearance-plus-behavior split and re-expressed behavior checklist as the audit step's definition of 'fully extracted.'",
+      "confidence": 0.7,
+      "redTeam": "refuted",
+      "redTeamReason": "The appearance/behavior requirement itself is real (line 65: 'For every element, extract its appearance (exact computed CSS via getComputedStyle()) AND its behavior...'). But the claimed '13-category' list is a miscount: the illustrative bullet list at lines 68-79 was counted by hand and contains exactly 12 items, not 13. Per the numeric-verification rule, a wrong count refutes the claim as stated.",
+      "redTeamEvidence": ".claude/skills/clone-website/SKILL.md:68-79",
+      "decisionBeforeRefutation": "adopt",
+      "decisionNote": "Downgraded to investigate: the red team refuted the claim as stated. Re-read the source before adopting."
+    },
+    {
+      "key": "ai-website-cloner-template/asset-enumeration-and-batched-download",
+      "id": "asset-enumeration-and-batched-download",
+      "source": "ai-website-cloner-template",
+      "sourcePath": "SKILL.md:189-227",
+      "problemSolved": "Manually finding and downloading every asset one at a time is slow and easy to under-count.",
+      "mechanism": "Single DOM-query script enumerates every img/video/background-image/font/favicon in one JSON dump; batched download (4 parallel) with error handling.",
+      "whyItWorks": "One enumeration pass produces a complete inventory before downloading starts.",
+      "requiredContext": [
+        "browser MCP for enumeration",
+        "a JS runtime for the download script"
+      ],
+      "contextCost": "low",
+      "outputImpact": "Medium-high — determines completeness of the visual asset set.",
+      "failureModes": [
+        "The download script itself is re-authored from scratch each run; no checked-in tested version exists in the repo"
+      ],
+      "conflicts": [],
+      "testMethod": "Enumeration is a real DOM measurement; download completeness has no post-download verification",
+      "decision": "adopt",
+      "sitesmithForm": "Reuse the enumerate-then-batch-download pattern, hardened as an actual checked-in script rather than re-derived each run.",
+      "confidence": 0.65,
+      "redTeam": "unchallenged",
+      "redTeamReason": "",
+      "redTeamEvidence": ""
+    },
+    {
+      "key": "ai-website-cloner-template/complexity-budget-rule",
+      "id": "complexity-budget-rule",
+      "source": "ai-website-cloner-template",
+      "sourcePath": "SKILL.md:43-49,444,458",
+      "problemSolved": "A single agent given an entire complex section approximates rather than nailing exact values.",
+      "mechanism": "Mechanical numeric threshold (~150 lines of spec content) forces splitting into one agent per sub-component, explicitly overriding 'but it's all related.'",
+      "whyItWorks": "Removes judgment from exactly the point where judgment tends to be optimistic.",
+      "requiredContext": [
+        "a line-count estimate of the spec before dispatch"
+      ],
+      "contextCost": "low",
+      "outputImpact": "High for per-unit precision per the source's own claim.",
+      "failureModes": [
+        "150 is an arbitrary constant tuned to this pipeline's spec verbosity"
+      ],
+      "conflicts": [],
+      "testMethod": "Asserted only",
+      "decision": "adapt",
+      "sitesmithForm": "Keep the numeric-ceiling-forces-split principle for any sub-agent handoff; re-derive the actual number for SiteSmith's own spec format.",
+      "confidence": 0.6,
+      "redTeam": "confirmed",
+      "redTeamReason": "Confirmed at lines 43-49: '**Complexity budget rule:** If a builder prompt exceeds ~150 lines of spec content, the section is too complex for one agent. Break it into smaller pieces. This is a mechanical check - don't override it with \"but it's all related.\"' Reinforced verbatim in the checklist at line 444 ('under ~150 lines of spec; if over, the section needs to be split') and echoed at line 458 ('too much scope ... signal to break it into smaller tasks'). All three citations check out.",
+      "redTeamEvidence": ".claude/skills/clone-website/SKILL.md:43-49"
+    },
+    {
+      "key": "ai-website-cloner-template/computed-style-extraction-script",
+      "id": "computed-style-extraction-script",
+      "source": "ai-website-cloner-template",
+      "sourcePath": "SKILL.md:239-283",
+      "problemSolved": "Hand-measuring CSS properties one at a time is slow and invites estimation errors.",
+      "mechanism": "Reusable JS snippet: depth-4 DOM walk, getComputedStyle against ~40 named properties per element, filters out default/no-op values.",
+      "whyItWorks": "One script call replaces dozens of manual inspections; default-value filtering keeps output signal-dense.",
+      "requiredContext": [
+        "a CSS selector for the container",
+        "browser MCP execution"
+      ],
+      "contextCost": "low",
+      "outputImpact": "High — the concrete tool underneath every 'exact computed style' claim in the source.",
+      "failureModes": [
+        "Depth-4/20-child caps silently truncate deep or wide trees with no warning",
+        "Fixed property list misses CSS features outside it (clip-path, mask, container queries)"
+      ],
+      "conflicts": [],
+      "testMethod": "This is itself a real measurement tool, not an estimate",
+      "decision": "investigate",
+      "sitesmithForm": "Port this script's structure as SiteSmith's standard truth-extraction tool for the audit step, extending the property list.",
+      "confidence": 0.8,
+      "redTeam": "refuted",
+      "redTeamReason": "The script, the depth-4 recursion guard ('if (depth > 4) return null' at line 269), and the default-value filtering (line 265: filters out 'none'/'normal'/'auto'/'0px'/'rgba(0, 0, 0, 0)') are all real and confirmed. However the claimed property count is wrong: I counted the literal strings in the props array (lines 248-260) and got 61 named properties, not '~40' as claimed - a 50%+ overstatement of the actual count, which fails the numeric-verification check.",
+      "redTeamEvidence": ".claude/skills/clone-website/SKILL.md:247-261",
+      "decisionBeforeRefutation": "adopt",
+      "decisionNote": "Downgraded to investigate: the red team refuted the claim as stated. Re-read the source before adopting."
+    },
+    {
+      "key": "ai-website-cloner-template/exhaustive-state-capture",
+      "id": "exhaustive-state-capture",
+      "source": "ai-website-cloner-template",
+      "sourcePath": "SKILL.md:93-108,285-296,349-358,451",
+      "problemSolved": "Extracting only the default on-load state misses every other tab/scroll/hover state.",
+      "mechanism": "Click every tab and capture content/styles per state; for scroll-dependent elements, capture at position 0 and past the trigger, then diff the two captures.",
+      "whyItWorks": "Turns 'document what changes' into a mechanical two-snapshot-and-diff procedure with exact before/after values.",
+      "requiredContext": [
+        "ability to trigger each state and re-run extraction per state"
+      ],
+      "contextCost": "medium",
+      "outputImpact": "High for any stateful component.",
+      "failureModes": [
+        "Cost scales with number of states; no stopping guidance for very large state spaces"
+      ],
+      "conflicts": [],
+      "testMethod": "This is a real measurement — two actual getComputedStyle snapshots compared",
+      "decision": "adopt",
+      "sitesmithForm": "Adopt the two-snapshot-diff procedure as SiteSmith's standard method for documenting stateful elements.",
+      "confidence": 0.7,
+      "redTeam": "confirmed",
+      "redTeamReason": "Confirmed at lines 93-108 ('Extract Every State, Not Just the Default'): tabbed content instructs clicking each tab/button and recording per-state content; scroll-dependent elements instruct capturing styles at position 0, then past the trigger threshold, then diffing. The multi-state code comment at 285-296 ('State A... State B... The diff between A and B IS the behavior specification'), the spec template's Per-State Content section at 349-358, and the 'Don't extract only the default state' warning at 451 all corroborate the same mechanism, not unrelated content stitched together.",
+      "redTeamEvidence": ".claude/skills/clone-website/SKILL.md:93-108"
+    },
+    {
+      "key": "ai-website-cloner-template/git-worktree-parallel-builder-dispatch",
+      "id": "git-worktree-parallel-builder-dispatch",
+      "source": "ai-website-cloner-template",
+      "sourcePath": "SKILL.md:377-403; AGENTS.md MOST IMPORTANT NOTES",
+      "problemSolved": "Building every section serially blocks extraction of later sections on completion of earlier builds.",
+      "mechanism": "Every builder works in its own git worktree branch; foreman doesn't wait, merges as worktrees complete, rebuilding after each merge.",
+      "whyItWorks": "Git worktrees enable isolated parallel edits without collision; a single foreman vantage point enables intelligent conflict resolution.",
+      "requiredContext": [
+        "a runtime capable of dispatching/tracking concurrent sub-agents",
+        "local git worktree support"
+      ],
+      "contextCost": "high",
+      "outputImpact": "Throughput only, not fidelity.",
+      "failureModes": [
+        "Requires orchestration capability not every host provides",
+        "Merge-conflict quality depends entirely on foreman judgment with no described gate"
+      ],
+      "conflicts": [
+        "Conflicts with SiteSmith's redesign task shape: audit measures an existing site, it does not need parallel construction agents against a fresh scaffold"
+      ],
+      "testMethod": "Asserted only",
+      "decision": "reject",
+      "sitesmithForm": "Do not adopt for the audit step; revisit only if a future SiteSmith mode reconstructs sites from scratch.",
+      "confidence": 0.7,
+      "redTeam": "unchallenged",
+      "redTeamReason": "",
+      "redTeamEvidence": ""
+    },
+    {
+      "key": "ai-website-cloner-template/interaction-model-identification-first",
+      "id": "interaction-model-identification-first",
+      "source": "ai-website-cloner-template",
+      "sourcePath": "SKILL.md:81-91,450",
+      "problemSolved": "Named as the single most expensive cloning mistake: building click-based UI when the original is scroll-driven, or vice versa.",
+      "mechanism": "Strict order: scroll first and watch for unprompted change; only test click/hover if nothing changes on scroll. Interaction model must be written into the spec before any builder prompt.",
+      "whyItWorks": "Counters availability bias — click-testing is the habitual first move, but scroll-driven behavior is invisible unless scrolled first.",
+      "requiredContext": [
+        "slow scroll-through before any click testing"
+      ],
+      "contextCost": "low",
+      "outputImpact": "High — named as the highest-cost mistake class since it forces a full rewrite.",
+      "failureModes": [
+        "Relies on the agent actually following the order; nothing external gates it"
+      ],
+      "conflicts": [],
+      "testMethod": "Asserted only, but named from the source's own retrospective of past failures",
+      "decision": "adopt",
+      "sitesmithForm": "Make scroll-before-click a mandatory ordered step in SiteSmith's audit pass.",
+      "confidence": 0.75,
+      "redTeam": "confirmed",
+      "redTeamReason": "Confirmed at lines 81-91: '1. Don't click first. Scroll through the section slowly... 2. If they do, it's scroll-driven... 3. If nothing changes on scroll, THEN click/hover to test... 4. Document the interaction model explicitly in the component spec.' Reinforced in the 'What NOT to Do' list at line 450 ('Determine the interaction model FIRST by scrolling before clicking').",
+      "redTeamEvidence": ".claude/skills/clone-website/SKILL.md:81-91"
+    },
+    {
+      "key": "ai-website-cloner-template/interleaved-extract-and-build",
+      "id": "interleaved-extract-and-build",
+      "source": "ai-website-cloner-template",
+      "sourcePath": "SKILL.md:14",
+      "problemSolved": "Strict inspect-then-build sequencing delays feedback and lets extraction gaps accumulate silently across a whole page.",
+      "mechanism": "Explicitly framed as NOT two-phase: a 'foreman' inspects one section, writes its spec, hands it to a builder, keeps walking — extraction and construction interleave section by section.",
+      "whyItWorks": "Keeps units of work small and independently checkable; failures stay local to a section instead of compounding.",
+      "requiredContext": [
+        "a host supporting parallel sub-agent/worktree dispatch mid-task"
+      ],
+      "contextCost": "low",
+      "outputImpact": "Structural sequencing, not stylistic.",
+      "failureModes": [
+        "Requires true parallel dispatch capability; no fallback given for hosts without it"
+      ],
+      "conflicts": [
+        "SiteSmith's redesign task edits in place; it has no fresh-clone target to build into"
+      ],
+      "testMethod": "Asserted only",
+      "decision": "adapt",
+      "sitesmithForm": "Keep the extract-fully-before-moving-on discipline for the audit step; drop the parallel-worktree-builder half.",
+      "confidence": 0.55,
+      "redTeam": "confirmed",
+      "redTeamReason": "Confirmed verbatim at line 14: 'This is not a two-phase process (inspect then build). You are a foreman walking the job site - as you inspect each section of the page, you write a detailed specification to a file, then hand that file to a specialist builder agent... Extraction and construction happen in parallel.' Real, specific mechanism, not a platitude.",
+      "redTeamEvidence": ".claude/skills/clone-website/SKILL.md:14"
+    },
+    {
+      "key": "ai-website-cloner-template/layered-asset-vigilance",
+      "id": "layered-asset-vigilance",
+      "source": "ai-website-cloner-template",
+      "sourcePath": "SKILL.md:51-55,298,452",
+      "problemSolved": "A section that looks like one image is often multiple stacked layers; missing an overlay makes the rebuild look empty.",
+      "mechanism": "Explicit instruction to walk the full DOM tree of a container and enumerate every img and background-image, including absolutely-positioned overlays.",
+      "whyItWorks": "Names a specific, easy-to-miss pattern concretely enough to check for directly.",
+      "requiredContext": [
+        "DOM access including computed position/z-index"
+      ],
+      "contextCost": "low",
+      "outputImpact": "Medium-high for sections using layered/composited imagery.",
+      "failureModes": [
+        "Covers image layering only, not layered CSS effects without an img tag"
+      ],
+      "conflicts": [],
+      "testMethod": "Asserted only",
+      "decision": "adopt",
+      "sitesmithForm": "Carry the specific DOM-tree-walk check into SiteSmith's asset-extraction step verbatim.",
+      "confidence": 0.65,
+      "redTeam": "confirmed",
+      "redTeamReason": "Confirmed at lines 51-55: 'Inspect each container's full DOM tree and enumerate ALL <img> elements and background images within it, including absolutely-positioned overlays.' Reinforced at line 298 (extraction step: 'Check for layered images') and line 452 ('Don't miss overlay/layered images... Check every container's DOM tree for multiple <img> elements and positioned overlays').",
+      "redTeamEvidence": ".claude/skills/clone-website/SKILL.md:51-55"
+    },
+    {
+      "key": "ai-website-cloner-template/multi-platform-single-source-sync",
+      "id": "multi-platform-single-source-sync",
+      "source": "ai-website-cloner-template",
+      "sourcePath": "AGENTS.md; scripts/sync-agent-rules.sh:1-70; scripts/sync-skills.mjs:1-113",
+      "problemSolved": "Supporting 13 different AI agent platforms with native instruction formats would mean hand-maintaining 13 near-duplicate files.",
+      "mechanism": "Two single-source files (AGENTS.md, SKILL.md) plus two regeneration scripts producing 4 and 9 generated platform files respectively, with an @file import syntax resolved at generation time.",
+      "whyItWorks": "Treats platform config as a generated build artifact rather than hand-maintained parallel copies, eliminating drift by construction.",
+      "requiredContext": [
+        "contributors must remember to re-run sync scripts after editing sources; nothing enforces this automatically"
+      ],
+      "contextCost": "low",
+      "outputImpact": "None on clone quality; only affects how many platforms can invoke the skill.",
+      "failureModes": [
+        "No CI check that generated files are current",
+        "CHANGELOG 0.3.1 documents this exact staleness class already breaking once (CRLF import resolution failure on Windows)"
+      ],
+      "conflicts": [
+        "Not applicable: SiteSmith is being unified into one skill for this project's own tool trio, not distributed as a 13-platform template"
+      ],
+      "testMethod": "No automated test suite for the sync scripts themselves",
+      "decision": "reject",
+      "sitesmithForm": "Not applicable to the current rebuild goal; revisit only if SiteSmith is ever repackaged for multi-platform distribution, with a CI staleness check added.",
+      "confidence": 0.55,
+      "redTeam": "unchallenged",
+      "redTeamReason": "",
+      "redTeamEvidence": ""
+    },
+    {
+      "key": "ai-website-cloner-template/named-failure-log",
+      "id": "named-failure-log",
+      "source": "ai-website-cloner-template",
+      "sourcePath": "SKILL.md:446-462",
+      "problemSolved": "Generic 'be careful' guidance doesn't transfer lessons from actual past mistakes.",
+      "mechanism": "12-item 'What NOT to Do' list framed explicitly as lessons from previous failed clones, each costing hours of rework.",
+      "whyItWorks": "Names specific, concrete observed failures rather than an abstract principle — same technique as frontend-design's named-cliché list.",
+      "requiredContext": [
+        "none — but implicitly should grow as new failures are observed"
+      ],
+      "contextCost": "low",
+      "outputImpact": "Medium — reinforces earlier principles as a compressed final-pass reminder.",
+      "failureModes": [
+        "No mechanism actually captures and appends new failures; frozen at whatever was known when last edited"
+      ],
+      "conflicts": [],
+      "testMethod": "Asserted only",
+      "decision": "adopt",
+      "sitesmithForm": "Keep a similarly concrete failure list for SiteSmith's audit step, treated explicitly as a living document.",
+      "confidence": 0.6,
+      "redTeam": "unchallenged",
+      "redTeamReason": "",
+      "redTeamEvidence": ""
+    },
+    {
+      "key": "ai-website-cloner-template/no-guessing-completeness-mandate",
+      "id": "no-guessing-completeness-mandate",
+      "source": "ai-website-cloner-template",
+      "sourcePath": "SKILL.md:39-41",
+      "problemSolved": "A builder given an incomplete spec fills gaps by invisible guessing.",
+      "mechanism": "States: if a builder has to guess anything, extraction has already failed — extract one more property rather than ship incomplete.",
+      "whyItWorks": "Names the actual failure condition concretely rather than a vague 'be thorough' instruction.",
+      "requiredContext": [
+        "the spec being written, checked against this test before dispatch"
+      ],
+      "contextCost": "low",
+      "outputImpact": "Reduces silent fidelity drift from unstated assumptions.",
+      "failureModes": [
+        "Self-applied, no external check that guessing was avoided"
+      ],
+      "conflicts": [],
+      "testMethod": "Asserted only",
+      "decision": "adopt",
+      "sitesmithForm": "Reuse as a self-check question at the end of SiteSmith's audit-extraction step.",
+      "confidence": 0.6,
+      "redTeam": "confirmed",
+      "redTeamReason": "Confirmed at lines 39-41 ('Completeness Beats Speed'): 'If a builder has to guess anything - a color, a font size, a padding value - you have failed at extraction. Take the extra minute to extract one more property rather than shipping an incomplete brief.' Matches near-verbatim.",
+      "redTeamEvidence": ".claude/skills/clone-website/SKILL.md:39-41"
+    },
+    {
+      "key": "ai-website-cloner-template/pre-dispatch-checklist-gate",
+      "id": "pre-dispatch-checklist-gate",
+      "source": "ai-website-cloner-template",
+      "sourcePath": "SKILL.md:431-444",
+      "problemSolved": "Without an explicit stopping point, extraction can feel 'done enough' and dispatch happens on an incomplete spec.",
+      "mechanism": "9-item checklist that must be fully satisfied before any builder is dispatched.",
+      "whyItWorks": "Consolidates scattered completeness requirements into one checkable moment, restated as yes/no items.",
+      "requiredContext": [
+        "the draft spec file to check against"
+      ],
+      "contextCost": "low",
+      "outputImpact": "Consolidates completeness requirements rather than trusting they were followed along the way.",
+      "failureModes": [
+        "Self-applied and self-graded; nothing confirms it was actually run item-by-item"
+      ],
+      "conflicts": [],
+      "testMethod": "Asserted only, though each item is individually checkable in principle",
+      "decision": "adopt",
+      "sitesmithForm": "Reuse the pattern of one explicit pre-handoff checklist, re-derived for whatever SiteSmith's audit step hands off.",
+      "confidence": 0.6,
+      "redTeam": "unchallenged",
+      "redTeamReason": "",
+      "redTeamEvidence": ""
+    },
+    {
+      "key": "ai-website-cloner-template/scope-defaults-block",
+      "id": "scope-defaults-block",
+      "source": "ai-website-cloner-template",
+      "sourcePath": "SKILL.md:16-25",
+      "problemSolved": "Ambiguous fidelity/scope forces either a clarifying question every time or silent scope drift.",
+      "mechanism": "States explicit default fidelity level and in/out-of-scope lists up front, overridable by the user's own instructions.",
+      "whyItWorks": "Converts an implicit assumption into an explicit, overridable statement without a Q&A round trip.",
+      "requiredContext": [
+        "none"
+      ],
+      "contextCost": "low",
+      "outputImpact": "Prevents post-hoc scope disputes.",
+      "failureModes": [
+        "Users who don't read defaults may be surprised by silent exclusions"
+      ],
+      "conflicts": [],
+      "testMethod": "Asserted only",
+      "decision": "adopt",
+      "sitesmithForm": "Give SiteSmith's audit entry point the same default-fidelity/scope block, overridable by user words.",
+      "confidence": 0.6,
+      "redTeam": "confirmed",
+      "redTeamReason": "Confirmed: lines 16-25 are a 'Scope Defaults' block listing Fidelity level, In scope, Out of scope, Customization, followed by 'If the user provides additional instructions ... honor those over the defaults.' Matches claim exactly.",
+      "redTeamEvidence": ".claude/skills/clone-website/SKILL.md:16-25"
+    },
+    {
+      "key": "ai-website-cloner-template/spec-file-inline-only-contract",
+      "id": "spec-file-inline-only-contract",
+      "source": "ai-website-cloner-template",
+      "sourcePath": "SKILL.md:110-118,302-375,385-390,456,462",
+      "problemSolved": "A builder told to consult a referenced doc either doesn't read it or the reference drifts; a builder given a short prompt guesses to fill gaps.",
+      "mechanism": "Every component gets a template-shaped spec file; its full contents, not a pointer, are pasted inline into the builder's prompt.",
+      "whyItWorks": "The template forces exhaustive extraction; inlining removes any chance the builder skips a referenced file.",
+      "requiredContext": [
+        "none external — the point is zero external reads required"
+      ],
+      "contextCost": "medium",
+      "outputImpact": "High — prevents incomplete instructions based on memory of a browsing session.",
+      "failureModes": [
+        "Nothing enforces the inlined copy stays identical to the file on disk if either is edited later"
+      ],
+      "conflicts": [],
+      "testMethod": "Asserted for 'no guessing'; the template structure itself is checkable",
+      "decision": "adopt",
+      "sitesmithForm": "Adopt persistent template-shaped spec artifacts, always inlined in full, for any SiteSmith handoff step.",
+      "confidence": 0.75,
+      "redTeam": "unchallenged",
+      "redTeamReason": "",
+      "redTeamEvidence": ""
+    },
+    {
+      "key": "ai-website-cloner-template/tool-agnostic-preflight-detection",
+      "id": "tool-agnostic-preflight-detection",
+      "source": "ai-website-cloner-template",
+      "sourcePath": "SKILL.md:29",
+      "problemSolved": "Hard-coding one browser-automation tool breaks in any environment with a different one.",
+      "mechanism": "Detects any of several browser MCP tools, prefers Chrome MCP, asks the user how to connect one if none found.",
+      "whyItWorks": "Detect-and-degrade beats hard dependency; explicit ask avoids silent failure.",
+      "requiredContext": [
+        "known list of browser-MCP tool names to check"
+      ],
+      "contextCost": "low",
+      "outputImpact": "Portability only.",
+      "failureModes": [
+        "Fixed tool-name list will go stale as new MCPs appear"
+      ],
+      "conflicts": [],
+      "testMethod": "Asserted only",
+      "decision": "adopt",
+      "sitesmithForm": "Apply the same detect-preferred-then-ask pattern to SiteSmith's audit step.",
+      "confidence": 0.65,
+      "redTeam": "confirmed",
+      "redTeamReason": "Confirmed at line 29: 'Check for available browser MCP tools (Chrome MCP, Playwright MCP, Browserbase MCP, Puppeteer MCP, etc.). Use whichever is available - if multiple exist, prefer Chrome MCP. If none are detected, ask the user which browser tool they have and how to connect it.' Matches exactly.",
+      "redTeamEvidence": ".claude/skills/clone-website/SKILL.md:29"
+    },
+    {
+      "key": "ai-website-cloner-template/visual-qa-diff-unmeasured",
+      "id": "visual-qa-diff-unmeasured",
+      "source": "ai-website-cloner-template",
+      "sourcePath": "SKILL.md:415-429",
+      "problemSolved": "Nominally, confirming the finished rebuild matches the source.",
+      "mechanism": "Side-by-side screenshot comparison at two viewports, narrated section by section; discrepancies traced to spec-wrong or builder-deviated and fixed accordingly.",
+      "whyItWorks": "It doesn't measure anything — same self-graded shape as frontend-design's critique loop, applied to fidelity instead of originality.",
+      "requiredContext": [
+        "screenshots of original and clone at matching viewports"
+      ],
+      "contextCost": "low",
+      "outputImpact": "This is the entire fidelity gate for the whole pipeline, and it catches only what the agent's eye catches.",
+      "failureModes": [
+        "No pixel-diff tool, similarity score, or threshold anywhere in the repo",
+        "Upstream extraction rigor creates a false impression the whole pipeline is measured"
+      ],
+      "conflicts": [
+        "Directly violates the 'REDESIGN audits before touching, fidelity should be measured not asserted' principle this task is scoped against"
+      ],
+      "testMethod": "Asserted only — confirmed by direct inspection, no diff-computing script exists anywhere in the repo",
+      "decision": "reject",
+      "sitesmithForm": "Do not adopt as SiteSmith's fidelity gate; use an actual measured comparison (structural CSS/DOM diff or a real perceptual-diff tool) instead.",
+      "confidence": 0.75,
+      "redTeam": "unchallenged",
+      "redTeamReason": "",
+      "redTeamEvidence": ""
+    },
+    {
+      "key": "awesome-claude-code-subagents/orch-03-noun-list-antipattern",
+      "id": "orch-03-noun-list-antipattern",
+      "source": "awesome-claude-code-subagents",
+      "sourcePath": "categories/01-core-development/ui-designer.md:12-172",
+      "problemSolved": "N/A -- this is a negative example, not a mechanism to adopt.",
+      "mechanism": "Long bullet lists of nouns with no concrete technique, threshold, or worked example, plus a mandatory first step of querying a 'context-manager' subagent.",
+      "whyItWorks": "It doesn't -- this is exactly the token-heavy, decision-in-a-list shape that the 55-line frontend-design skill beat 59-40. Cited as evidence, not adopted.",
+      "requiredContext": [],
+      "contextCost": "high",
+      "outputImpact": "Negative if imitated: bloats token budget without giving the model any executable judgment.",
+      "failureModes": [
+        "Padding masquerading as expertise",
+        "Hard dependency on a non-existent subagent for context gathering"
+      ],
+      "conflicts": [
+        "Directly contradicts the frontend-design vs SiteSmith measured result"
+      ],
+      "testMethod": "N/A",
+      "decision": "reject",
+      "sitesmithForm": "none",
+      "confidence": 0.9,
+      "redTeam": "unchallenged",
+      "redTeamReason": "",
+      "redTeamEvidence": ""
+    },
+    {
+      "key": "awesome-claude-code-subagents/orch-09-design-bridge-checklist",
+      "id": "orch-09-design-bridge-checklist",
+      "source": "awesome-claude-code-subagents",
+      "sourcePath": "categories/01-core-development/design-bridge.md:46-55,83-90",
+      "problemSolved": "Faithfully matching a specific existing product/brand's look when a brief explicitly asks to emulate it, without guessing at missing details.",
+      "mechanism": "Fixed extraction checklist run before any implementation: visual theme/atmosphere, colour palette with named roles + hover/active states, typography rules, component stylings, layout/spacing rules, elevation/shadow system, responsive breakpoints. Treats a missing category as a question to ask, not an assumption to invent.",
+      "whyItWorks": "Grounds a 'match this brand' brief in a specific external reference rather than the model's internal default aesthetic -- the checklist shape (not the tool) is what's portable.",
+      "requiredContext": [
+        "a specific reference site/brand the brief names",
+        "access to inspect it"
+      ],
+      "contextCost": "low",
+      "outputImpact": "Useful only for the subset of briefs that explicitly ask to emulate a named existing product; irrelevant otherwise.",
+      "failureModes": [
+        "Source depends on an external repo SiteSmith does not have and should not assume exists",
+        "Multi-agent JSON handoff protocol around the checklist is not portable and must be dropped"
+      ],
+      "conflicts": [],
+      "testMethod": "Give the brief a named reference site and confirm the extracted checklist has no invented/guessed values in categories not actually observed.",
+      "decision": "investigate",
+      "sitesmithForm": "Optional pre-generation step, own wording only: when a brief names a specific site/brand to emulate, extract these categories from what's actually observable before writing code; ask rather than invent for anything not observed.",
+      "confidence": 0.5,
+      "redTeam": "refuted",
+      "redTeamReason": "Opened awesome-claude-code-subagents/categories/01-core-development/design-bridge.md. The extraction checklist items (Visual Theme, Color Palette & Roles with hover/active states, Typography, Component Stylings, Layout Principles, Depth & Elevation, Responsive Behavior) genuinely match at lines 46-55 and 83-90 -- that part checks out. But the claim's second half, 'treats a missing category as a question to ask, not an assumption to invent,' is not in either cited range. That behavior is stated at lines 35 ('Ask before assuming') and 43 ('Don't: ... Guess missing info'), inside the separate 'Do's and Don'ts' block (lines 31-44) -- entirely outside the cited 46-55/83-90 windows. Also worth noting: this agent is scoped to translating one specific external repo (VoltAgent/awesome-design-md DESIGN.md files), not a general brand-matching checklist independent of that tool, which the whyItWorks framing ('the checklist shape, not the tool, is portable') glosses over.",
+      "redTeamEvidence": "scratchpad/upstream/awesome-claude-code-subagents/categories/01-core-development/design-bridge.md:31-44 (outside the cited 46-55,83-90 ranges)",
+      "decisionBeforeRefutation": "adapt",
+      "decisionNote": "Downgraded to investigate: the red team refuted the claim as stated. Re-read the source before adopting."
+    },
+    {
+      "key": "before-implementing/blindspot-pass",
+      "id": "blindspot-pass",
+      "source": "before-implementing",
+      "sourcePath": "plugins/grill-for-unknowns/SKILL.md:134-155",
+      "problemSolved": "Constraints or failure modes nobody has considered yet, which asking about known unknowns will never surface.",
+      "mechanism": "Before interviewing, search relevant docs/source/tests — including documented limits and failure modes of load-bearing dependencies — for risks that could materially change the plan; output a ranked list with why-it-matters/evidence/cheap-resolution/decision-owner.",
+      "whyItWorks": "Directly operationalizes 'investigate-before-asking' — the clearest match to the requester's contract term. Bounded to unfamiliar-domain/high-stakes work so it doesn't fire on trivial tasks.",
+      "requiredContext": [
+        "docs/source/tests for the relevant domain/library/integration"
+      ],
+      "contextCost": "medium",
+      "outputImpact": "Surfaces real constraints (CMS/hosting limit, licensing restriction) before design work starts.",
+      "failureModes": [
+        "Can become an unbounded research spiral without the stated trigger condition limiting when it runs"
+      ],
+      "conflicts": [
+        "None found"
+      ],
+      "testMethod": "Point at a brief involving an unfamiliar CMS/integration; confirm it surfaces a documented limit before asking the user anything.",
+      "decision": "adopt",
+      "sitesmithForm": "Bounded pre-build check: scan named platform/CMS/library docs for hard constraints, triggered only when the brief names an unfamiliar target.",
+      "confidence": 0.75,
+      "redTeam": "confirmed",
+      "redTeamReason": "Opened SKILL.md:134-155. Line 136 matches verbatim ('search the relevant docs/source/tests -- including documented limits and known failure modes of load-bearing dependencies -- for unknown unknowns that could materially change the plan ... rank by implementation risk'); the output-shape code block (140-155) has the exact fields: Why it matters / Evidence / Cheap resolution / Decision owner. Fully confirmed, no overstatement.",
+      "redTeamEvidence": "/c/Users/Usmo1/AppData/Local/Temp/claude/C--Users-Usmo1-Documents-sitesmith/60a368a9-e3a0-4ebc-aadf-386ee1a4a75a/scratchpad/upstream/before-implementing/plugins/grill-for-unknowns/SKILL.md"
+    },
+    {
+      "key": "before-implementing/blocking-question-template-with-budget",
+      "id": "blocking-question-template-with-budget",
+      "source": "before-implementing",
+      "sourcePath": "plugins/grill-for-unknowns/SKILL.md:92-126",
+      "problemSolved": "Agents that grill relentlessly exhaust the user, or ask vague/unanswerable questions like 'what does modern mean to you?'",
+      "mechanism": "Every question must be material, grounded, and answerable, delivered via a template (question/why it matters/evidence/recommended default); ~5-question budget; fatigue valve stops interviewing on short/impatient answers and batches remaining unknowns as one assumptions list; ban on asking users to verbalize taste they can only recognize when shown.",
+      "whyItWorks": "The package's own CHANGELOG documents this as a deliberate 0.1.2 fix for real user-exhaustion feedback — a tested fix, not a speculative addition. Stays on the thinking side of Fact 1 since the quality bar is a judgment criterion, not a script.",
+      "requiredContext": [
+        "candidate questions",
+        "the docs/source uncertainty each points to"
+      ],
+      "contextCost": "low",
+      "outputImpact": "Prevents over-asking and unanswerable taste-questions, which is exactly what produces a generic default when the user gives up.",
+      "failureModes": [
+        "Budget/fatigue valve is advisory text; without an explicit counter an agent can drift past 5 questions unnoticed"
+      ],
+      "conflicts": [
+        "None — reinforces Magnus's 'Beslut, spørg ikke' house rule"
+      ],
+      "testMethod": "Run a session with one-word answers twice in a row; confirm the agent stops asking and presents one batched assumptions list.",
+      "decision": "investigate",
+      "sitesmithForm": "Question-quality bar and fatigue valve become the intake gate's only question-asking rule, replacing open-ended 'anything else?' prompting.",
+      "confidence": 0.8,
+      "redTeam": "refuted",
+      "redTeamReason": "The mechanism itself is real -- SKILL.md lines 92-126 confirm Material/Grounded/Answerable (92-96), the bad-question ban on verbalizing taste (103), the blocking-question template (110-118), the ~5-question budget and fatigue valve (122-126). However the whyItWorks overstates its provenance: it asserts 'The package's own CHANGELOG documents this as a deliberate 0.1.2 fix for real user-exhaustion feedback -- a tested fix, not a speculative addition.' Opening CHANGELOG.md shows the 0.1.2 entry only says 'Anti-exhaustion release -- addresses the failure mode where grilling primes an agent to over-question to the point of user exhaustion,' with no named user, no cited feedback, no 'reported by' -- unlike the 0.1.1 entry two sections down which explicitly credits '@mattpocock's feedback that the skill was long, costly in tokens, and hard to review.' Claiming CHANGELOG-documented 'real user-exhaustion feedback' and calling it 'tested' misrepresents a self-described anti-pattern fix as empirically validated user research.",
+      "redTeamEvidence": "/c/Users/Usmo1/AppData/Local/Temp/claude/C--Users-Usmo1-Documents-sitesmith/60a368a9-e3a0-4ebc-aadf-386ee1a4a75a/scratchpad/upstream/before-implementing/CHANGELOG.md",
+      "decisionBeforeRefutation": "adopt",
+      "decisionNote": "Downgraded to investigate: the red team refuted the claim as stated. Re-read the source before adopting."
+    },
+    {
+      "key": "before-implementing/calibration-over-under-constrain",
+      "id": "calibration-over-under-constrain",
+      "source": "before-implementing",
+      "sourcePath": "plugins/grill-for-unknowns/SKILL.md:213-216",
+      "problemSolved": "Over-specified plans make the agent follow instructions even when a pivot is better; under-specified plans make it default to generic best practices.",
+      "mechanism": "One paragraph naming both failure directions and their fix: define goal/constraints/stop-continue rules but leave room for judgment; provide references/taste-examples/acceptance-criteria against under-specifying.",
+      "whyItWorks": "A near-exact post-hoc explanation of both of SiteSmith's own measured failures at once — under-constraining plausibly produced house-style convergence, over-constraining plausibly produced the loss to the 55-line skill. Extremely cheap, extremely high signal.",
+      "requiredContext": [],
+      "contextCost": "low",
+      "outputImpact": "Meta-level governing principle for how detailed every other instruction should be.",
+      "failureModes": [
+        "Doesn't self-enforce as a one-paragraph principle; needs a concrete review step to actually bite"
+      ],
+      "conflicts": [
+        "None; resolves the tension the task brief poses between the two measured facts"
+      ],
+      "testMethod": "Audit whether new instructions each state a constraint+goal or instead dictate a specific rendered answer.",
+      "decision": "adopt",
+      "sitesmithForm": "State this calibration paragraph near the top of the rebuilt skill as an explicit editorial principle for every future addition.",
+      "confidence": 0.75,
+      "redTeam": "unchallenged",
+      "redTeamReason": "",
+      "redTeamEvidence": ""
+    },
+    {
+      "key": "before-implementing/deviation-policy",
+      "id": "deviation-policy",
+      "source": "before-implementing",
+      "sourcePath": "plugins/grill-for-unknowns/SKILL.md:182-186",
+      "problemSolved": "Mid-build, reality contradicts the plan and the agent either barrels ahead wrongly or halts on every tiny surprise.",
+      "mechanism": "Three-way rule: low-risk/local issues get a conservative choice, logged, and continue; architecture/data/security/cost/user-facing changes stop and ask; docs contradicting the plan win over the original plan.",
+      "whyItWorks": "A short, three-branch judgment rule — cheap, and the model reasoning about risk level rather than a table mapping situations to actions. Matches 'stop-on-invalidated-assumption' precisely.",
+      "requiredContext": [
+        "the current plan",
+        "the contradicting evidence encountered mid-build"
+      ],
+      "contextCost": "low",
+      "outputImpact": "Keeps autonomous builds from silently going wrong on a bad assumption without constant check-ins.",
+      "failureModes": [
+        "'Low-risk and local' is a judgment call; without examples an agent may misjudge a user-facing visual change as local"
+      ],
+      "conflicts": [
+        "None; complements Magnus's 'default to fix, not diagnose' house rule"
+      ],
+      "testMethod": "Inject a mid-build contradiction; confirm the agent stops for a user-facing change but substitutes-and-logs for a low-risk internal one.",
+      "decision": "adopt",
+      "sitesmithForm": "Same three-branch rule: silently substitute-and-log for invisible/internal surprises, stop-and-ask for anything changing the visible design or brand promise.",
+      "confidence": 0.7,
+      "redTeam": "unchallenged",
+      "redTeamReason": "",
+      "redTeamEvidence": ""
+    },
+    {
+      "key": "before-implementing/domain-modeling-context-adr",
+      "id": "domain-modeling-context-adr",
+      "source": "before-implementing",
+      "sourcePath": "plugins/grill-for-unknowns/SKILL.md:128-132; references/domain-modeling-add-on.md:1-95",
+      "problemSolved": "Vocabulary drift and undocumented hard-to-reverse decisions confusing future readers.",
+      "mechanism": "Lazily-created CONTEXT.md glossary of canonical terms with an 'Avoid' field; offer an ADR only when a decision is hard to reverse, surprising without context, and a real trade-off.",
+      "whyItWorks": "Cheap when actually lazy; becomes overhead if applied to every small build. The three-part ADR gate is a good judgment rule, but the file infrastructure only pays for its cost on multi-page or long-lived builds.",
+      "requiredContext": [
+        "fuzzy/conflicting terms during planning",
+        "candidate hard-to-reverse decisions"
+      ],
+      "contextCost": "medium",
+      "outputImpact": "Indirect: reduces miscommunication on complex, multi-session builds; no effect on a single landing page.",
+      "failureModes": [
+        "Creating CONTEXT.md/ADR files by default for every build reintroduces the file-sprawl that already lost once"
+      ],
+      "conflicts": [
+        "Fact 1 directly, if applied unconditionally"
+      ],
+      "testMethod": "Run a one-page build and a multi-page build; confirm files are created in proportion to actual complexity, not by default.",
+      "decision": "adapt",
+      "sitesmithForm": "Keep the ADR gate as a judgment rule for the SiteSmith rebuild's own engineering decisions; do not generate CONTEXT.md/ADR files in the standard single-site build flow.",
+      "confidence": 0.55,
+      "redTeam": "confirmed",
+      "redTeamReason": "Opened SKILL.md:128-132 (three-part ADR gate stated verbatim: 'hard to reverse', 'surprising without context', 'the result of a real trade-off') and references/domain-modeling-add-on.md 1-95 in full: line 34 'Create files lazily. Do not add CONTEXT.md or ADRs until there is something worth recording'; line 53 'Add _Avoid_ terms when synonyms would cause confusion'; lines 68-72 repeat the identical three-part ADR gate. Every element of the claim is directly verifiable in both files.",
+      "redTeamEvidence": "/c/Users/Usmo1/AppData/Local/Temp/claude/C--Users-Usmo1-Documents-sitesmith/60a368a9-e3a0-4ebc-aadf-386ee1a4a75a/scratchpad/upstream/before-implementing/plugins/grill-for-unknowns/references/domain-modeling-add-on.md"
+    },
+    {
+      "key": "before-implementing/four-quadrant-unknowns-taxonomy",
+      "id": "four-quadrant-unknowns-taxonomy",
+      "source": "before-implementing",
+      "sourcePath": "plugins/grill-for-unknowns/SKILL.md:65-74",
+      "problemSolved": "An agent treats all uncertainty the same way (ask a question), when some is a fact to look up, some is unverbalized taste, and some is an unnamed risk.",
+      "mechanism": "Classify gaps into known-knowns (cite/restate), known-unknowns (ask or default), unknown-knowns (resolve via prototypes/contrasting references, not questions), and unknown-unknowns (resolve via a blindspot pass over docs/source/tests).",
+      "whyItWorks": "Pure thinking-mechanism, one short table, no external lookup. Maps directly onto the showcase 0/8 failure: convergence is the signature of an agent that only handles known-unknowns and silently defaults on unknown-knowns instead of routing them to prototypes/contrast.",
+      "requiredContext": [
+        "the user's request",
+        "docs/source/tests to check known-knowns against"
+      ],
+      "contextCost": "low",
+      "outputImpact": "Directly targets house-style convergence by giving an explicit 'this is taste — show contrasting options' branch instead of a silent default.",
+      "failureModes": [
+        "Classifying everything as known-unknown anyway if not enforced with a concrete routing rule per quadrant"
+      ],
+      "conflicts": [
+        "None found"
+      ],
+      "testMethod": "Feed three unrelated site briefs; confirm the unknown-knowns branch produces 2-3 contrasting directions per brief rather than one default per brief.",
+      "decision": "adopt",
+      "sitesmithForm": "Quadrant table in intake instructions, with the unknown-knowns row routing to 'produce 2-3 contrasting layout/style directions, do not silently pick one'.",
+      "confidence": 0.85,
+      "redTeam": "confirmed",
+      "redTeamReason": "Opened SKILL.md lines 65-74. The table has exactly four rows matching the claim: Known knowns -> 'Restate and cite'; Known unknowns -> 'Ask targeted questions or choose labeled defaults'; Unknown knowns -> 'Prototype, sketches, examples, references'; Unknown unknowns -> 'Blindspot pass over docs/source/tests/internet; ask experts; search prior art'. Row count and mapping verified line-by-line.",
+      "redTeamEvidence": "/c/Users/Usmo1/AppData/Local/Temp/claude/C--Users-Usmo1-Documents-sitesmith/60a368a9-e3a0-4ebc-aadf-386ee1a4a75a/scratchpad/upstream/before-implementing/plugins/grill-for-unknowns/SKILL.md"
+    },
+    {
+      "key": "before-implementing/launch-packet-role-split",
+      "id": "launch-packet-role-split",
+      "source": "before-implementing",
+      "sourcePath": "plugins/grill-for-unknowns/SKILL.md:201-211; templates/launch-packet.md",
+      "problemSolved": "Spawning a subagent with an underspecified prompt so it re-derives context badly or misses taste work already done.",
+      "mechanism": "Assemble a launch packet (goal, map, territory to inspect, unknowns categories, deviation policy, verification gates); split roles across docs scout, codebase scout, prototype scout (exposes unknown-knowns), implementer, reviewer.",
+      "whyItWorks": "The prototype-scout role is the fan-out equivalent of the unknown-knowns mechanism, applied to a multi-agent architecture — directly relevant to fanning out a build without losing taste-extraction.",
+      "requiredContext": [
+        "goal, current plan/prototype, docs/source paths, known/unknown ledgers"
+      ],
+      "contextCost": "medium",
+      "outputImpact": "Improves subagent output quality via thin, role-scoped packets instead of full session transcripts.",
+      "failureModes": [
+        "Five distinct roles for every build is overkill for a single landing page"
+      ],
+      "conflicts": [
+        "context-diamond skill's own fan-out procedure — should be reconciled, not run side by side as a second competing protocol"
+      ],
+      "testMethod": "Spawn a prototype-scout-equivalent worker with only its launch packet; confirm it produces contrasting directions without re-asking resolved questions.",
+      "decision": "adapt",
+      "sitesmithForm": "Fold the prototype-scout concept into existing context-diamond fan-out rather than adding a second protocol; keep launch-packet fields as the minimum context a spawned worker needs.",
+      "confidence": 0.55,
+      "redTeam": "unchallenged",
+      "redTeamReason": "",
+      "redTeamEvidence": ""
+    },
+    {
+      "key": "before-implementing/map-vs-territory-framing",
+      "id": "map-vs-territory-framing",
+      "source": "before-implementing",
+      "sourcePath": "plugins/grill-for-unknowns/SKILL.md:19-21",
+      "problemSolved": "Agent conflates its internal model of the problem with the actual codebase/product/constraints and never notices the gap.",
+      "mechanism": "Name the two things separately — 'the map' (prompt, plan, assumptions) vs 'the territory' (real codebase, constraints, docs, user taste, failure modes) — so 'unknowns' has a crisp definition: the gap between them.",
+      "whyItWorks": "One paragraph, zero lookup tables, purely a naming device that primes checking assumptions against reality before acting — cheapest possible thinking aid, squarely on the winning side of Fact 1.",
+      "requiredContext": [],
+      "contextCost": "low",
+      "outputImpact": "Framing only; underlies every other mechanism in this package.",
+      "failureModes": [
+        "Framing without a concrete follow-up action is just vocabulary with no behavior change"
+      ],
+      "conflicts": [
+        "None found"
+      ],
+      "testMethod": "Not independently testable; test via the mechanisms that operationalize it.",
+      "decision": "adopt",
+      "sitesmithForm": "One line in system framing: 'the brief is the map, live constraints are the territory — check the gap before designing.'",
+      "confidence": 0.7,
+      "redTeam": "confirmed",
+      "redTeamReason": "Opened SKILL.md lines 19-21, verbatim match: '**The map** = the prompt, plan, assumptions, skills, prior context, docs excerpts, and the agent's current mental model.', '**The territory** = the real codebase, product constraints, APIs, docs, user taste, deployment environment, and failure modes.', '**Unknowns** = the gap between the map and the territory.' No embellishment beyond the source text.",
+      "redTeamEvidence": "/c/Users/Usmo1/AppData/Local/Temp/claude/C--Users-Usmo1-Documents-sitesmith/60a368a9-e3a0-4ebc-aadf-386ee1a4a75a/scratchpad/upstream/before-implementing/plugins/grill-for-unknowns/SKILL.md"
+    },
+    {
+      "key": "before-implementing/post-implementation-explainer",
+      "id": "post-implementation-explainer",
+      "source": "before-implementing",
+      "sourcePath": "plugins/grill-for-unknowns/SKILL.md:188-199",
+      "problemSolved": "A reviewer receiving a finished build with no record of what was decided, assumed, or verified.",
+      "mechanism": "After implementation: what changed and why, which unknowns were resolved, which assumptions remain, docs/source evidence, real verification results, and for complex work a quiz/checklist answerable from the report itself.",
+      "whyItWorks": "Cheap summary discipline; the 'answerable from the report' rule is a good self-check against padding, but the quiz format only pays off on complex/reviewed work.",
+      "requiredContext": [
+        "the build's decision/assumption/verification trail"
+      ],
+      "contextCost": "low",
+      "outputImpact": "Improves handoff clarity; no direct design impact.",
+      "failureModes": [
+        "Producing a formal quiz for a trivial one-page site is pure padding, the opposite of Fact 1's terse-and-effective lesson"
+      ],
+      "conflicts": [
+        "Magnus's ADHD-reader house format (conclusion-first, max 5 bullets) is a better fit than a formal quiz"
+      ],
+      "testMethod": "Check that a completed build's report states real verification results, not just an assertion that things work.",
+      "decision": "adapt",
+      "sitesmithForm": "Keep the summary (changed/assumed/verified) as the standard build report; drop the formal quiz format entirely.",
+      "confidence": 0.6,
+      "redTeam": "unchallenged",
+      "redTeamReason": "",
+      "redTeamEvidence": ""
+    },
+    {
+      "key": "before-implementing/self-contained-packaging-lesson",
+      "id": "self-contained-packaging-lesson",
+      "source": "before-implementing",
+      "sourcePath": "README.md:159-165; plugins/grill-for-unknowns/references/upstream-lineage.md:51-57",
+      "problemSolved": "A skill silently depending on other skills being installed gives almost nothing to an agent that only loads the headline file.",
+      "mechanism": "grill-with-docs (upstream) depended on two other skills; grill-for-unknowns inlines the grilling loop and domain-modeling rules so the whole behavior ships in one self-contained file.",
+      "whyItWorks": "A packaging lesson, not a runtime mechanism, but direct first-party evidence for this rebuild's own stated goal of one unified skill — an unrelated author independently reached the same conclusion after shipping the fragmented version first.",
+      "requiredContext": [],
+      "contextCost": "low",
+      "outputImpact": "Determines whether the rebuilt skill works when only its own file is loaded — load-bearing for the 'one unified skill' goal.",
+      "failureModes": [
+        "A single file that then requires several external reference files to be read 'first' for basic behavior recreates the same failure under a different layout"
+      ],
+      "conflicts": [
+        "None; corroborating evidence for the rebuild's own architecture"
+      ],
+      "testMethod": "Load only the top-level SKILL.md with no reference files present; confirm the core behavior is still present, not just referenced.",
+      "decision": "adopt",
+      "sitesmithForm": "Keep the core loop (question bar, unknowns routing, deviation policy, calibration principle) inline in the single SKILL.md; reference files only for material genuinely out of the hot path.",
+      "confidence": 0.7,
+      "redTeam": "unchallenged",
+      "redTeamReason": "",
+      "redTeamEvidence": ""
+    },
+    {
+      "key": "before-implementing/unknown-knowns-prototypes",
+      "id": "unknown-knowns-prototypes",
+      "source": "before-implementing",
+      "sourcePath": "plugins/grill-for-unknowns/SKILL.md:104,157-165",
+      "problemSolved": "The user has taste they recognize when shown but can't specify up front; asking them to verbalize it drives a generic default.",
+      "mechanism": "Ban asking the user to verbalize unshowable taste; build cheap prototypes with genuinely contrasting directions (not tiny variations), or point to in-repo/external references and ask which to match, then distill the reaction into a rubric that becomes the verification gate.",
+      "whyItWorks": "The mechanism most directly aimed at SiteSmith's own measured failure — showcase 0/8 house-style convergence. Cheap (a short instruction, not a style lookup table), so it improves thinking without adding a fixed decision table — wins on both measured facts at once.",
+      "requiredContext": [
+        "the brief",
+        "in-repo or reference sites to contrast against"
+      ],
+      "contextCost": "low",
+      "outputImpact": "Directly counters house-style convergence — the single highest-value mechanism found across both sources.",
+      "failureModes": [
+        "'Contrasting directions' can become superficial (same layout, different color) if 'meaningful contrast' is not enforced"
+      ],
+      "conflicts": [
+        "None found"
+      ],
+      "testMethod": "Re-run the three briefs that previously converged; confirm intake proposes 2-3 visually distinct directions before committing to one.",
+      "decision": "adopt",
+      "sitesmithForm": "Required step before layout/style commitment: propose 2-3 contrasting directions per brief; never silently default to one look without a captured user-reaction rubric.",
+      "confidence": 0.85,
+      "redTeam": "confirmed",
+      "redTeamReason": "The bulk of the citation (SKILL.md:157-165) is verbatim-correct: 'Build cheap prototypes ... showing 3 distinct directions', 'Offer multiple directions with meaningful contrast, not tiny variations', 'Ask the user to react to examples ... reference source ... ask which behavior to match', 'distill them into a short rubric that becomes the verification gate.' One flaw: the citation also points to line 104 for the taste-verbalization ban, but line 104 actually reads 'Open-ended anything else questions with no context' -- the taste-verbalization ban is one line earlier, at line 103. The mechanism is real, just mis-cited by one line, not fabricated.",
+      "redTeamEvidence": "/c/Users/Usmo1/AppData/Local/Temp/claude/C--Users-Usmo1-Documents-sitesmith/60a368a9-e3a0-4ebc-aadf-386ee1a4a75a/scratchpad/upstream/before-implementing/plugins/grill-for-unknowns/SKILL.md"
+    },
     {
       "key": "frontend-design/brief-primacy-override",
       "id": "brief-primacy-override",
@@ -382,6 +1507,85 @@
       "redTeamEvidence": "skills/frontend-design/SKILL.md:19"
     },
     {
+      "key": "graph-engineering/orch-04-fresh-context-review",
+      "id": "orch-04-fresh-context-review",
+      "source": "graph-engineering",
+      "sourcePath": "graph-engineering/references/task-graphs.md:40-44",
+      "problemSolved": "A model reviewing its own freshly-written output in the same context misses most of its own mistakes.",
+      "mechanism": "Verify in a separate context from the one that produced the work -- even without any other agent or fleet, a second pass with no memory of writing the code catches errors a same-context self-review does not.",
+      "whyItWorks": "Cited from a controlled multi-agent study (DeepMind x MIT, 180 configs) but the specific claim about self-grading blindness is agent-count-independent: it is about context continuity, not fleet size.",
+      "requiredContext": [
+        "the generated output",
+        "none of the generation reasoning/context"
+      ],
+      "contextCost": "low",
+      "outputImpact": "Improves defect-catch rate in the audit stage without requiring any orchestration platform.",
+      "failureModes": [
+        "Easy to accidentally carry over context and lose the benefit",
+        "Not a substitute for scripts/verify.mjs's objective checks"
+      ],
+      "conflicts": [
+        "The diamond/fan-out framing this point is embedded in is out of scope"
+      ],
+      "testMethod": "Compare defect catch-rate of same-context self-review vs a fresh-context re-read on the same generated page.",
+      "decision": "investigate",
+      "sitesmithForm": "Run the audit/finish-gate step as a fresh invocation with only the rendered output as input, not appended to the generation transcript.",
+      "confidence": 0.6,
+      "redTeam": "refuted",
+      "redTeamReason": "Opened graph-engineering/graph-engineering/references/task-graphs.md (actual path requires an extra nested 'graph-engineering/' directory not present in the sourcePath as given). Lines 40-44 do say 'verify in a separate context... a model grading its own work in its own context misses most of its own mistakes' -- but this sentence sits inside the 'Diamond Pattern' section, which is explicitly a multi-worker graph (worker 1/2/3 -> verify -> merge, per the diagram at lines 34-38). Nothing in the cited lines, or anywhere in the file, states the principle is 'agent-count-independent' or holds 'even without any other agent or fleet' -- that generalization is invented, not sourced. Additionally, the claim's whyItWorks attributes support to 'a controlled multi-agent study (DeepMind x MIT, 180 configs)', but that study (with the 80%/39-70%/17.2x/4.4x figures) appears in the separate 'Stop Rule' section at lines 46-52, about coordination overhead and when NOT to split work -- it says nothing about self-grading blindness. The claim misattributes a different section's evidence to this mechanism.",
+      "redTeamEvidence": "scratchpad/upstream/graph-engineering/graph-engineering/references/task-graphs.md:30-52 (diamond pattern + stop rule sections)",
+      "decisionBeforeRefutation": "adapt",
+      "decisionNote": "Downgraded to investigate: the red team refuted the claim as stated. Re-read the source before adopting."
+    },
+    {
+      "key": "graph-engineering/orch-05-diamond-fanout-pattern",
+      "id": "orch-05-diamond-fanout-pattern",
+      "source": "graph-engineering",
+      "sourcePath": "graph-engineering/references/task-graphs.md:30-59",
+      "problemSolved": "Coordinating independent work across multiple agents (research, drafting, verification) in a fleet.",
+      "mechanism": "Split independent work into parallel workers, verify in a separate context per worker, merge under one owner; the 'stop rule' says only split work whose pieces never read each other's results.",
+      "whyItWorks": "Valid mechanism for genuine multi-agent fleets; irrelevant to a single skill invoked once per site build, and duplicates the project's own context-diamond skill.",
+      "requiredContext": [
+        "multiple independent workers/agents"
+      ],
+      "contextCost": "high",
+      "outputImpact": "None for a single-skill website builder.",
+      "failureModes": [
+        "Orchestration overhead with no fleet to coordinate"
+      ],
+      "conflicts": [
+        "Already implemented by this project's context-diamond skill; nothing new to import even if in scope"
+      ],
+      "testMethod": "N/A",
+      "decision": "reject",
+      "sitesmithForm": "none",
+      "confidence": 0.85,
+      "redTeam": "unchallenged",
+      "redTeamReason": "",
+      "redTeamEvidence": ""
+    },
+    {
+      "key": "graph-engineering/orch-11-graph-engineering-kg-pipeline",
+      "id": "orch-11-graph-engineering-kg-pipeline",
+      "source": "graph-engineering",
+      "sourcePath": "graph-engineering/SKILL.md:11-15,44-102",
+      "problemSolved": "Building knowledge graphs (ontology, entity/relation/event extraction, fusion, GraphRAG serving) as agent memory.",
+      "mechanism": "9-stage pipeline for turning text into a queryable knowledge graph.",
+      "whyItWorks": "Not applicable -- a website-building skill has no entities/relations/events to extract, model, or fuse.",
+      "requiredContext": [],
+      "contextCost": "low",
+      "outputImpact": "None.",
+      "failureModes": [],
+      "conflicts": [],
+      "testMethod": "N/A",
+      "decision": "reject",
+      "sitesmithForm": "none",
+      "confidence": 0.95,
+      "redTeam": "unchallenged",
+      "redTeamReason": "",
+      "redTeamEvidence": ""
+    },
+    {
       "key": "impeccable/bounded-finish-review-loop",
       "id": "bounded-finish-review-loop",
       "source": "impeccable",
@@ -686,6 +1890,691 @@
       "redTeam": "confirmed",
       "redTeamReason": "new-work.md section 5 confirms verbatim: 'Keep the brief small: scope and visitor mode; audience, job, action/task, proof/content, and constraints; chosen direction and memorable moment; unresolved decisions. Do not copy global product truth or DESIGN.md tokens into it.'",
       "redTeamEvidence": "skill/reference/new-work.md:77-83"
+    },
+    {
+      "key": "magic-21st/magic-21st-hosted-proxy",
+      "id": "magic-21st-hosted-proxy",
+      "source": "magic-21st",
+      "sourcePath": "src/index.ts:1-16,118-153; README.md:1-3",
+      "problemSolved": "Backward compatibility for old MCP configs after the service moved to a paid hosted endpoint.",
+      "mechanism": "A ~220-line stdio-to-HTTP relay with no component data, generation logic, or registry present locally.",
+      "whyItWorks": "n/a — no mechanism to evaluate; the real capability is invisible, behind the remote paid endpoint.",
+      "requiredContext": [
+        "a paid API key from a third-party console"
+      ],
+      "contextCost": "low",
+      "outputImpact": "None observable from this repo.",
+      "failureModes": [
+        "Total dependency on a paid third-party service with no local fallback",
+        "Latches into permanent failure after one 401"
+      ],
+      "conflicts": [
+        "Any offline, license-clean, redistributable design principle"
+      ],
+      "testMethod": "n/a",
+      "decision": "reject",
+      "sitesmithForm": "No role in SiteSmith.",
+      "confidence": 0.95,
+      "redTeam": "unchallenged",
+      "redTeamReason": "",
+      "redTeamEvidence": ""
+    },
+    {
+      "key": "ponytail/cross-platform-portability-plumbing",
+      "id": "cross-platform-portability-plumbing",
+      "source": "ponytail",
+      "sourcePath": "README.md:108-271; 13 adapter directories at repo root",
+      "problemSolved": "Getting one ruleset in front of ~20 different agent hosts.",
+      "mechanism": "13 near-duplicate copies of the same ruleset text across per-host rule files and plugin manifests, synced only by a CI drift-checker comparing 7 files byte-for-byte plus 8 invariant substrings.",
+      "whyItWorks": "Works for an open-source project targeting every agent host; irrelevant to a single-platform skill.",
+      "requiredContext": [
+        "N/A for SiteSmith"
+      ],
+      "contextCost": "high",
+      "outputImpact": "Zero impact on output quality — pure distribution plumbing, the part of ponytail's own repo most analogous to SiteSmith's original over-build.",
+      "failureModes": [
+        "Duplication is self-inflicted complexity that then requires a drift-detector to manage",
+        "Canary-substring check can miss drift that doesn't touch a chosen phrase"
+      ],
+      "conflicts": [
+        "Directly conflicts with proportionality: SiteSmith targets one platform, replicating this would reintroduce unrequested scope"
+      ],
+      "testMethod": "`check-rule-copies.js`: byte-equality + 8 invariant substring checks",
+      "decision": "reject",
+      "sitesmithForm": "N/A — do not add per-platform adapters SiteSmith doesn't target; the drift-check *technique* (canary substrings) is reusable if ever needed, the 13-copy structure is not.",
+      "confidence": 0.75,
+      "redTeam": "unchallenged",
+      "redTeamReason": "",
+      "redTeamEvidence": ""
+    },
+    {
+      "key": "ponytail/explicit-never-simplify-carveouts",
+      "id": "explicit-never-simplify-carveouts",
+      "source": "ponytail",
+      "sourcePath": "skills/ponytail/SKILL.md:90-105",
+      "problemSolved": "A bare 'write less' instruction cuts validation/security/accessibility along with real bloat.",
+      "mechanism": "Named exception list in the same file as the ladder: never cut trust-boundary validation, data-loss error handling, security, accessibility, or explicit requests.",
+      "whyItWorks": "Exception is co-located with the instruction it limits rather than trusting inference.",
+      "requiredContext": [
+        "none"
+      ],
+      "contextCost": "low",
+      "outputImpact": "Agentic safety tier: ponytail 100% safe (20/20) vs bare one-liner prompt 95% (dropped a path-traversal guard).",
+      "failureModes": [
+        "Finite named list; categories not listed have no equivalent protection"
+      ],
+      "conflicts": [],
+      "testMethod": "Adversarial exploit scripts executed against produced functions in the safety tier",
+      "decision": "adopt",
+      "sitesmithForm": "Pair any SiteSmith simplicity instruction with a named never-cut list (accessibility, responsive correctness, semantic HTML) in the same breath.",
+      "confidence": 0.85,
+      "redTeam": "confirmed",
+      "redTeamReason": "Confirmed. skills/ponytail/SKILL.md '## When NOT to be lazy' section (lines 90-95) reads: 'Never simplify away: input validation at trust boundaries, error handling that prevents data loss, security measures, accessibility basics, anything explicitly requested. User insists on the full version -> build it, no re-arguing.' This matches all five named carve-outs exactly and is in the same file as the ladder (which is at lines 32-48). One caveat: the cited line range (90-105) is slightly loose — the actual exception list ends at line 95/101, and lines 102-105 contain an unrelated paragraph about hardware calibration, not part of this mechanism. Also, 'co-located with the instruction it limits' overstates physical proximity somewhat (the two sections are ~60 lines apart, separated by Rules/Output/Intensity sections) — same-file, not adjacent. The core mechanism claim itself is accurate.",
+      "redTeamEvidence": "skills/ponytail/SKILL.md (lines 90-95, not literally 96-105)"
+    },
+    {
+      "key": "ponytail/honest-benchmark-correction",
+      "id": "honest-benchmark-correction",
+      "source": "ponytail",
+      "sourcePath": "benchmarks/results/2026-06-18-agentic.md:1-24,40-47,200-212",
+      "problemSolved": "Inflated published numbers tend to survive even after being shown flawed.",
+      "mechanism": "Publishes the original inflated number, names the critique that found the flaw (chatty bare-model baseline), rebuilds against a fair baseline, publishes the corrected smaller number next to the original with the correction explicit; also documents catching its own contamination bug (hook firing on baseline arm) mid-project.",
+      "whyItWorks": "Process discipline: keep the uncomfortable number visible and explain why the old one was wrong, don't quietly delete it.",
+      "requiredContext": [
+        "none — documentation practice"
+      ],
+      "contextCost": "low",
+      "outputImpact": "Changes the defensible claim from '80-94%' to '60-94% where there's an over-build trap, ~0% otherwise, never drops a safety guard.'",
+      "failureModes": [
+        "Correction was manual/issue-driven, nothing self-triggers a re-audit on the next critique"
+      ],
+      "conflicts": [],
+      "testMethod": "Per-arm process isolation (--setting-sources, --plugin-dir) plus per-task tables so aggregates can't hide outliers",
+      "decision": "adopt",
+      "sitesmithForm": "When SiteSmith publishes any benchmark, keep prior numbers visible and name the flaw a critique found rather than replacing the claim silently.",
+      "confidence": 0.7,
+      "redTeam": "confirmed",
+      "redTeamReason": "Confirmed. benchmarks/results/2026-06-18-agentic.md lines 5-24 explicitly name 'Colin Eberhardt's critique in issue #126' and restate his point that 'The baseline was a bare, chatty model... The 80-94% reductions were partly a conversational-baseline artifact.' Lines 40-47 ('A contamination bug we found in our own numbers') describe exactly the claimed bug: the ponytail/caveman Claude Code plugins fired a SessionStart hook on every arm including baseline, secretly running ponytail in the control condition, fixed via --setting-sources isolation. The Conclusion (lines 200-212) states 'The original 80-94% single-shot numbers were inflated by a chatty baseline, Colin was right,' placing the new aggregate result (-54% LOC / 60-94% per-task range) alongside the old figure with the correction spelled out. All specific facts in the claim (critique name, contamination cause, correction) are directly quoted from the file, not inferred.",
+      "redTeamEvidence": "benchmarks/results/2026-06-18-agentic.md (lines 5-24, 40-47, 200-212)"
+    },
+    {
+      "key": "ponytail/self-validating-llm-judge",
+      "id": "self-validating-llm-judge",
+      "source": "ponytail",
+      "sourcePath": "benchmarks/agentic/judge.py:28-39,89-137",
+      "problemSolved": "An unvalidated LLM judge for a non-deterministic quality axis (over-engineering) is an opinion, not evidence.",
+      "mechanism": "Fixed judge model at temp 0, published rubric, must rank a known-over-engineered reference above a known-minimal one before any real run is scored; refuses to run if it can't.",
+      "whyItWorks": "Gates the judge's own discriminating power before trusting its verdict on ambiguous real cases.",
+      "requiredContext": [
+        "API key",
+        "hand-written reference pairs"
+      ],
+      "contextCost": "medium",
+      "outputImpact": "Underwrites the over-engineering-by-arm results table; without the gate the table is unverifiable.",
+      "failureModes": [
+        "Reference pairs are hand-written by the same team, so selftest could pass without real-world reliability",
+        "Judge could drift version-to-version between runs"
+      ],
+      "conflicts": [],
+      "testMethod": "`judge.py --selftest` pass/fail gate before `--run` proceeds",
+      "decision": "adopt",
+      "sitesmithForm": "Build a self-validating judge for SiteSmith's house-style/genericness problem: must rank a templated reference below a distinctive one before scoring real builds.",
+      "confidence": 0.75,
+      "redTeam": "confirmed",
+      "redTeamReason": "Confirmed. benchmarks/agentic/judge.py sets JUDGE_MODEL = 'claude-sonnet-4-6' (fixed) and calls the API with temperature=0 (line 66). RUBRIC is a published, fixed string (lines 28-39) with an explicit 0-3 scale and required JSON output. The selftest() function (lines 120-137) runs SELFTEST_PAIRS — a hand-written over-engineered CacheEntry/ComputeCache and PathPolicy/PathSanitizer pair vs the task's minimal reference solution — and fails (`ok = False`) if the over-engineered sample does not score strictly higher than the minimal one. In main() (lines 178-181), the --run path calls `if selftest(key): sys.exit('judge not trustworthy; refusing to judge the matrix')` before scoring any real workspace — i.e., it genuinely refuses to run if the judge fails self-validation. The 'refuses to run' logic sits at lines 179-181, just outside the cited 89-137 range, but it exists in the same file and is real.",
+      "redTeamEvidence": "benchmarks/agentic/judge.py (lines 26,28-39,64-137,178-181)"
+    },
+    {
+      "key": "ponytail/seven-rung-simplicity-ladder",
+      "id": "seven-rung-simplicity-ladder",
+      "source": "ponytail",
+      "sourcePath": "skills/ponytail/SKILL.md:32-48",
+      "problemSolved": "Agents default to writing new code before checking cheaper layers exist (existing code, stdlib, native feature).",
+      "mechanism": "7-step ordered checklist run before writing code: YAGNI, reuse, stdlib, native, installed dep, one-line, minimum code — explicitly run after understanding the problem, not instead of it.",
+      "whyItWorks": "Pure prose reasoning scaffolding the model applies with judgment, not a mechanical classifier.",
+      "requiredContext": [
+        "the task",
+        "the existing codebase"
+      ],
+      "contextCost": "low",
+      "outputImpact": "Measured: -54% mean LOC vs real Claude Code baseline across 12 feature tasks, up to -94% on native-substitute tasks, ~0% on already-minimal code.",
+      "failureModes": [
+        "Model can skip the ladder under pressure since it's prompt-only, not enforced",
+        "Rung 2 requires an actual codebase search a model might skip"
+      ],
+      "conflicts": [
+        "A mechanical script implementing the same ladder would violate the no-mechanical-creativity constraint"
+      ],
+      "testMethod": "Agentic benchmark: real Claude Code sessions, git-diff LOC, n=4/cell",
+      "decision": "adopt",
+      "sitesmithForm": "Add a short prose reasoning ladder to SiteSmith's build phase; never convert to a routing script.",
+      "confidence": 0.8,
+      "redTeam": "confirmed",
+      "redTeamReason": "Confirmed verbatim. skills/ponytail/SKILL.md has a '## The ladder' section (lines 32-48) with exactly 7 numbered rungs matching the claimed order: (1) 'Does this need to exist at all?' (YAGNI), (2) 'Already in this codebase?' (reuse), (3) 'Stdlib does it?', (4) 'Native platform feature covers it?', (5) 'Already-installed dependency solves it?', (6) 'Can it be one line?', (7) 'Only then: the minimum code that works.' Lines 44-46 explicitly state the ladder 'runs after you understand the problem, not instead of it. Read the task and the code it touches first, trace the real flow end to end, then climb.' Every element of the claim is directly verifiable text, not an inference.",
+      "redTeamEvidence": "skills/ponytail/SKILL.md (lines 32-48)"
+    },
+    {
+      "key": "remotion-skills/remotion-embedded-skill-duplication",
+      "id": "remotion-embedded-skill-duplication",
+      "source": "remotion-skills",
+      "sourcePath": "scripts/sync-embedded-skills.ts:37-90; scripts/prepare-embedded-skills.ts:78-110",
+      "problemSolved": "A sub-skill needs to be reachable both standalone and nested inside a router skill, without the harness double-registering it.",
+      "mechanism": "Dev-time symlinking of sub-skill folders into the parent, plus a publish-time rename of the embedded copy's SKILL.md to REFERENCE.md and link rewriting.",
+      "whyItWorks": "Solves a real problem, but only the problem a multi-skill monorepo has; verified via git ls-tree that what ships is physical duplicate trees (not symlinks), and a repo-wide md5sum pass found 83 files sharing only 62 unique hashes.",
+      "requiredContext": [
+        "two build scripts",
+        "a SKILL.md/REFERENCE.md naming convention repo-wide"
+      ],
+      "contextCost": "high",
+      "outputImpact": "None on generation quality; packaging/build tooling only.",
+      "failureModes": [
+        "Drift between canonical and embedded copies if sync script is skipped",
+        "Triple-copy nesting (remotion-maps appears 3 times in this checkout)"
+      ],
+      "conflicts": [
+        "SiteSmith is one skill; the double-registration problem this solves does not exist for a single-skill package."
+      ],
+      "testMethod": "n/a for a single-skill target",
+      "decision": "reject",
+      "sitesmithForm": "Do not adopt the symlink+rename+duplicate pipeline; only the router idea (separate mechanism) is worth keeping.",
+      "confidence": 0.85,
+      "redTeam": "unchallenged",
+      "redTeamReason": "",
+      "redTeamEvidence": ""
+    },
+    {
+      "key": "remotion-skills/remotion-router-skill",
+      "id": "remotion-router-skill",
+      "source": "remotion-skills",
+      "sourcePath": "skills/remotion-best-practices/SKILL.md:9-47",
+      "problemSolved": "A body of knowledge too large to load in full needs to be reachable without bloating every invocation.",
+      "mechanism": "One short SKILL.md (48 lines), a one-paragraph-per-topic table of contents, each a relative markdown link to that topic's own entry file, loaded only when relevant.",
+      "whyItWorks": "Same shape as the 55-line frontend-design file that beat SiteSmith's 630k-token package: small root, expand only on need.",
+      "requiredContext": [
+        "router file itself (~48 lines)"
+      ],
+      "contextCost": "low",
+      "outputImpact": "Keeps unrelated topics out of context; model self-selects the relevant slice.",
+      "failureModes": [
+        "Router entries go stale if a linked file moves and the link isn't updated"
+      ],
+      "conflicts": [],
+      "testMethod": "Link-validation script in CI confirming every router entry resolves.",
+      "decision": "investigate",
+      "sitesmithForm": "SiteSmith's SKILL.md should stay a short entry point linking to on-demand reference files, treating the 500-line cap as router-file discipline, not just a size limit.",
+      "confidence": 0.85,
+      "redTeam": "refuted",
+      "redTeamReason": "Opened and counted the file directly: `wc -l` reports 47 lines, not 48 as claimed — a guessed/wrong count per the verification rule. The structural description (headed sections each with a short blurb and a relative link like './remotion-create/REFERENCE.md') is accurate, so the shape itself is real, but the claim's 'whyItWorks' rests on an unverifiable cross-reference ('Same shape as the 55-line frontend-design file that beat SiteSmith's 630k-token package') — neither the 55-line file nor the 630k-token package figure is present in, or verifiable from, the cited sourcePath. That comparison is imported from outside evidence and asserted as fact without a citable source in this file.",
+      "redTeamEvidence": "C:\\Users\\Usmo1\\AppData\\Local\\Temp\\claude\\C--Users-Usmo1-Documents-sitesmith\\60a368a9-e3a0-4ebc-aadf-386ee1a4a75a\\scratchpad\\upstream\\remotion-skills\\skills\\remotion-best-practices\\SKILL.md (47 lines via wc -l, not 48)",
+      "decisionBeforeRefutation": "adopt",
+      "decisionNote": "Downgraded to investigate: the red team refuted the claim as stated. Re-read the source before adopting."
+    },
+    {
+      "key": "remotion-skills/remotion-technique-independence",
+      "id": "remotion-technique-independence",
+      "source": "remotion-skills",
+      "sourcePath": "skills/remotion-best-practices/remotion-maps/REFERENCE.md:9-10",
+      "problemSolved": "Multiple mutually-exclusive implementation techniques for the same feature need presenting without forcing the model to load all of them.",
+      "mechanism": "Instructs the model to select exactly one technique matching the brief and load only that technique's own doc; each technique directory is a stated-independent, individually removable unit.",
+      "whyItWorks": "A genuine one-of-N judgement call left to the model, not a script pre-selecting for it.",
+      "requiredContext": [
+        "one REFERENCE.md (~37 lines) + one chosen technique doc"
+      ],
+      "contextCost": "low",
+      "outputImpact": "Prevents loading N-times the content when only one technique is ever used per task.",
+      "failureModes": [
+        "None specific; risk shifts to whether technique docs are actually independent"
+      ],
+      "conflicts": [],
+      "testMethod": "Delete one technique directory; confirm the others still resolve.",
+      "decision": "adopt",
+      "sitesmithForm": "For any SiteSmith topic with mutually exclusive implementation paths, use 'pick exactly one, load only that one, each independently removable' instead of one file covering all options.",
+      "confidence": 0.75,
+      "redTeam": "confirmed",
+      "redTeamReason": "Opened the exact cited lines and the text matches: line 9 reads 'Choose exactly one technique from the intended shot, then load only that technique's `TECHNIQUE.md`.' and line 10 reads 'Every technique directory is self-contained and may be removed without breaking the others.' This directly supports both halves of the claimed mechanism ('exactly one technique... load only that doc' and 'stated-independent, individually removable'). The whyItWorks framing ('a genuine one-of-N judgement call left to the model, not a script pre-selecting for it') is a fair reading since the instruction addresses the model directly with no pre-selection logic shown in this file.",
+      "redTeamEvidence": "C:\\Users\\Usmo1\\AppData\\Local\\Temp\\claude\\C--Users-Usmo1-Documents-sitesmith\\60a368a9-e3a0-4ebc-aadf-386ee1a4a75a\\scratchpad\\upstream\\remotion-skills\\skills\\remotion-best-practices\\remotion-maps\\REFERENCE.md (lines 9-10, verified verbatim)"
+    },
+    {
+      "key": "ruflo/orch-07-ruflo-swarm-platform",
+      "id": "orch-07-ruflo-swarm-platform",
+      "source": "ruflo",
+      "sourcePath": "SKILL.md:8-21,36-47; package.json:9",
+      "problemSolved": "Coordinated multi-agent swarms, persistent semantic memory, learned model routing, and plugin ecosystem for large multi-session engineering work.",
+      "mechanism": "npm package 'claude-flow': hierarchical/mesh agent swarms with 60+ specialized agents, 314 MCP tools, a 3-tier deterministic->Haiku->Sonnet/Opus router, 30+ plugins.",
+      "whyItWorks": "Genuinely built for large, multi-agent, multi-session engineering platforms. Its own SKILL.md explicitly disclaims one-shot/single-agent use.",
+      "requiredContext": [
+        "a project running many coordinated agents across sessions"
+      ],
+      "contextCost": "high",
+      "outputImpact": "None for SiteSmith as a single skill invoked once per site.",
+      "failureModes": [
+        "Orchestration overhead the source itself warns against for this exact use case"
+      ],
+      "conflicts": [
+        "Self-disclaiming: SKILL.md:21 rules out the SiteSmith use case in the source's own words"
+      ],
+      "testMethod": "N/A",
+      "decision": "reject",
+      "sitesmithForm": "none",
+      "confidence": 0.95,
+      "redTeam": "unchallenged",
+      "redTeamReason": "",
+      "redTeamEvidence": ""
+    },
+    {
+      "key": "ruflo/orch-08-ruflo-vector-memory",
+      "id": "orch-08-ruflo-vector-memory",
+      "source": "ruflo",
+      "sourcePath": "SKILL.md:15,40",
+      "problemSolved": "Cross-session recall of what an agent previously did/decided, via HNSW-indexed semantic vector memory.",
+      "mechanism": "mcp__claude-flow__memory_* tools store and semantically retrieve prior decisions/patterns across sessions.",
+      "whyItWorks": "Sounds attractive as 'don't repeat mistakes,' but for a design tool it means letting past design choices leak into unrelated new briefs -- the same mechanism class implicated in SiteSmith's own measured house-style convergence.",
+      "requiredContext": [
+        "persistent memory store across builds"
+      ],
+      "contextCost": "high",
+      "outputImpact": "Negative: actively works against style diversity across unrelated site builds, which is the opposite of what SiteSmith needs after its own convergence failure.",
+      "failureModes": [
+        "Cross-project memory becomes an implicit house-style engine"
+      ],
+      "conflicts": [
+        "Directly conflicts with the showcase 0/8 finding this rebuild is meant to fix"
+      ],
+      "testMethod": "N/A -- reasoned rejection, not empirically tested here.",
+      "decision": "reject",
+      "sitesmithForm": "none",
+      "confidence": 0.7,
+      "redTeam": "unchallenged",
+      "redTeamReason": "",
+      "redTeamEvidence": ""
+    },
+    {
+      "key": "scroll-world/blob-seek-scrubbing",
+      "id": "blob-seek-scrubbing",
+      "source": "scroll-world",
+      "sourcePath": "skills/scroll-world/references/scrub-engine.js:198-220; skills/scroll-world/SKILL.md:528-534",
+      "problemSolved": "Setting video.currentTime from scroll silently fails on hosts without HTTP byte-range support: seekable pins to [0,0] and every seek clamps to frame 0.",
+      "mechanism": "loadClip() fetches each clip via fetch().then(blob) and plays it from URL.createObjectURL(blob) instead of a direct network src.",
+      "whyItWorks": "Sidesteps the root cause (server range support) entirely by scrubbing an in-memory object; this is why all-intra encoding is unnecessary.",
+      "requiredContext": [
+        "clip URL fetchable same-origin or CORS-permitting"
+      ],
+      "contextCost": "low",
+      "outputImpact": "Without this the entire premise (scroll-scrubbed video) breaks on many static hosts.",
+      "failureModes": [
+        "Loads whole clip into memory before scrubbable — fine for short clips, wouldn't scale to long-form video.",
+        "Silent catch on fetch failure permanently skips that clip for the session."
+      ],
+      "conflicts": [],
+      "testMethod": "Asserted only; well-known browser behavior, independently verifiable.",
+      "decision": "adopt",
+      "sitesmithForm": "Standard technique for any SiteSmith build scrubbing video by scroll position: fetch-to-blob before scrubbing, assume static-host byte-range gaps by default.",
+      "confidence": 0.85,
+      "redTeam": "confirmed",
+      "redTeamReason": "Opened scrub-engine.js:198-220: fetch(url).then(blob).then(v.src = URL.createObjectURL(blob)) at lines 205-211, matching exactly. SKILL.md:528-533 states the byte-range rationale ('fetch each clip as a Blob... you do not need all-intra video') consistent with the claim.",
+      "redTeamEvidence": "skills/scroll-world/references/scrub-engine.js:198-220; skills/scroll-world/SKILL.md:528-533"
+    },
+    {
+      "key": "scroll-world/border-flood-fill-knockout",
+      "id": "border-flood-fill-knockout",
+      "source": "scroll-world",
+      "sourcePath": "skills/scroll-world/references/knockout.py:1-89",
+      "problemSolved": "Removing a flat background from a still while preserving interior regions that happen to match the background colour.",
+      "mechanism": "Samples corner pixels as background colour, flood-fills from the image border inward within an RGB-distance tolerance, so only border-connected pixels are knocked out; blurs the alpha mask edge.",
+      "whyItWorks": "Border-connectivity is correct for this pipeline's exact 'floating island on solid background' framing — a small, correctly-scoped algorithm, not a general background remover.",
+      "requiredContext": [
+        "PIL only"
+      ],
+      "contextCost": "low",
+      "outputImpact": "Cosmetic-only, explicitly optional in the source itself.",
+      "failureModes": [
+        "Tolerance-based matching can eat into subject pixels near the background colour.",
+        "Assumes a genuinely flat corner-sampled background; fails silently on gradient/textured backgrounds."
+      ],
+      "conflicts": [],
+      "testMethod": "None automated; visual inspection only.",
+      "decision": "reject",
+      "sitesmithForm": "No current SiteSmith use case — serves the AI-diorama pipeline's own visual convention, which SiteSmith isn't adopting. Revisit only if a specific feature needs solid-background cutout.",
+      "confidence": 0.4,
+      "redTeam": "unchallenged",
+      "redTeamReason": "",
+      "redTeamEvidence": ""
+    },
+    {
+      "key": "scroll-world/budget-before-spend-gate",
+      "id": "budget-before-spend-gate",
+      "source": "scroll-world",
+      "sourcePath": "skills/scroll-world/SKILL.md:151-198",
+      "problemSolved": "Metered, real-money generation needs informed user consent on cost before rendering, since mid-run failure is recoverable but ugly.",
+      "mechanism": "Presents render tiers with a cost table, computes an estimated total from actual scene count/mobile choice, calibrates against live balance, requires explicit go-ahead.",
+      "whyItWorks": "State the number, get consent, then act — sound wherever an action has irreversible metered cost.",
+      "requiredContext": [
+        "a billed backend with an inspectable balance/pricing API"
+      ],
+      "contextCost": "low",
+      "outputImpact": "High stakes when applicable, zero relevance without a metered backend.",
+      "failureModes": [
+        "No analogue at all when there is no paid, metered generation step in the build."
+      ],
+      "conflicts": [
+        "Conflicts with SiteSmith's current scope: no metered paid-generation backend exists to protect against."
+      ],
+      "testMethod": "Asserted only.",
+      "decision": "reject",
+      "sitesmithForm": "No coherent role in SiteSmith today. Revisit only if a paid generation backend is wired in as a build-time dependency.",
+      "confidence": 0.3,
+      "redTeam": "unchallenged",
+      "redTeamReason": "",
+      "redTeamEvidence": ""
+    },
+    {
+      "key": "scroll-world/capability-gate-before-commit",
+      "id": "capability-gate-before-commit",
+      "source": "scroll-world",
+      "sourcePath": "skills/scroll-world/SKILL.md:200-203,278-297",
+      "problemSolved": "Silently substituting an incompatible tool/model for a user's stated preference produces a broken result without explanation.",
+      "mechanism": "States the selection rule as a hard capability check, directing that an out-of-roster request be declined with a one-line reason rather than silently substituted.",
+      "whyItWorks": "Fail-loud-with-reason beats silent substitution or silent failure.",
+      "requiredContext": [
+        "a way to introspect the chosen tool's actual capability contract before depending on it"
+      ],
+      "contextCost": "low",
+      "outputImpact": "Prevents a specific silent-failure class, low frequency but meaningful when triggered.",
+      "failureModes": [
+        "Entirely dependent on a capability-introspection command existing for the tool in question."
+      ],
+      "conflicts": [],
+      "testMethod": "Asserted only; no automated check in-repo.",
+      "decision": "adapt",
+      "sitesmithForm": "General engineering discipline, not a discrete feature: verify a requested library/API/font actually supports the plan before committing, say so if not. Low priority to formalize.",
+      "confidence": 0.4,
+      "redTeam": "unchallenged",
+      "redTeamReason": "",
+      "redTeamEvidence": ""
+    },
+    {
+      "key": "scroll-world/css-layer-theme-override",
+      "id": "css-layer-theme-override",
+      "source": "scroll-world",
+      "sourcePath": "skills/scroll-world/references/scrub-engine.js:438-444",
+      "problemSolved": "A component injecting default CSS custom properties needs a host page's own theme rules to win without predicting every selector or using !important.",
+      "mechanism": "The engine's injected stylesheet is wrapped in @layer sw; unlayered page CSS always outranks @layer-wrapped CSS regardless of specificity or order.",
+      "whyItWorks": "Native platform feature doing what a specificity hack would otherwise require, order-independent.",
+      "requiredContext": [
+        "browser support for CSS @layer, broadly available"
+      ],
+      "contextCost": "low",
+      "outputImpact": "Removes an entire class of theming bugs for near-zero cost.",
+      "failureModes": [
+        "No fallback noted for browsers without @layer support."
+      ],
+      "conflicts": [],
+      "testMethod": "None automated; a verifiable CSS-cascade fact.",
+      "decision": "adopt",
+      "sitesmithForm": "Wrap any SiteSmith-authored component's default CSS custom properties in @layer, leave host page theme rules unlayered.",
+      "confidence": 0.7,
+      "redTeam": "confirmed",
+      "redTeamReason": "Opened scrub-engine.js:438-444: style.textContent = '@layer sw {\\n' + css + '\\n}' at line 442, with an explicit comment at 438-440 stating the intent. This matches real CSS cascade-layer semantics (unlayered rules beat layered ones regardless of specificity/order).",
+      "redTeamEvidence": "skills/scroll-world/references/scrub-engine.js:438-444"
+    },
+    {
+      "key": "scroll-world/distance-based-seam-crossfade",
+      "id": "distance-based-seam-crossfade",
+      "source": "scroll-world",
+      "sourcePath": "skills/scroll-world/references/scrub-engine.js:222-242",
+      "problemSolved": "Even frame-matched clip boundaries need a visual handoff rather than an instantaneous cut between video elements.",
+      "mechanism": "read() computes pixel distance to each segment's start/end and maps it through a smoothstep to set opacity/z-index, cross-dissolving over a configurable crossfade band around each seam.",
+      "whyItWorks": "A short dissolve masks small residual mismatch at a seam without requiring perfect asset continuity; complements frame-matching rather than replacing it.",
+      "requiredContext": [
+        "scroll position, segment start/end offsets"
+      ],
+      "contextCost": "low",
+      "outputImpact": "Directly determines whether transitions look connected or cut.",
+      "failureModes": [
+        "Content-agnostic — will mask a genuinely mismatched pair of clips just as readily as a well-matched one."
+      ],
+      "conflicts": [],
+      "testMethod": "None automated; verified by eye per the source's own QA step.",
+      "decision": "adopt",
+      "sitesmithForm": "Generic rule for SiteSmith: any two adjacent scroll-bound media segments cross-dissolve over N vh at their shared boundary, regardless of media source.",
+      "confidence": 0.75,
+      "redTeam": "confirmed",
+      "redTeamReason": "Opened scrub-engine.js:222-242: outside = s.start-y or y-s.end (line 234), op = smooth(1-outside/fade) (line 235, smooth() is the classic x*x*(3-2x) smoothstep defined at line 174), applied to s.el.style.opacity and zIndex (236-237). Matches claim exactly.",
+      "redTeamEvidence": "skills/scroll-world/references/scrub-engine.js:222-242"
+    },
+    {
+      "key": "scroll-world/frame-identical-seam-chaining",
+      "id": "frame-identical-seam-chaining",
+      "source": "scroll-world",
+      "sourcePath": "skills/scroll-world/SKILL.md:467-520; skills/scroll-world/references/pipeline.md:85-117",
+      "problemSolved": "Two independently-generated video clips meant to connect won't visually match because every generation renders slightly differently.",
+      "mechanism": "Requires a connector's conditioning images be the ACTUAL last/first frame extracted from already-rendered neighbouring clips, never the original source still, so seams are frame-identical by construction.",
+      "whyItWorks": "A generalizable idea (condition on your own actual prior output, not the original input, to prevent drift across a generative chain) but only actionable with a generative backend that supports image conditioning.",
+      "requiredContext": [
+        "a video-generation backend accepting image conditioning on both ends of a clip"
+      ],
+      "contextCost": "medium",
+      "outputImpact": "The rule the source calls out as the difference between a connected world and a visibly cut one — entirely inside the paid-pipeline half.",
+      "failureModes": [
+        "Zero applicability without a generative video backend — there is no 'next frame' to extract when clips aren't generated in a chain."
+      ],
+      "conflicts": [
+        "SiteSmith has no generative video backend, so there is no chain to keep frame-identical."
+      ],
+      "testMethod": "Manual screenshot diffing; no automated frame-comparison tool ships in the repo.",
+      "decision": "reject",
+      "sitesmithForm": "Not applicable to SiteSmith today. The abstract idea (condition on actual own output, not original input) is worth remembering but has no concrete SiteSmith use case.",
+      "confidence": 0.3,
+      "redTeam": "unchallenged",
+      "redTeamReason": "",
+      "redTeamEvidence": ""
+    },
+    {
+      "key": "scroll-world/linger-ease-pacing",
+      "id": "linger-ease-pacing",
+      "source": "scroll-world",
+      "sourcePath": "skills/scroll-world/references/scrub-engine.js:175-178,232",
+      "problemSolved": "A linear scroll-to-time mapping gives no way to make a scene's best/most narratively important frame coincide with the moment its copy peaks.",
+      "mechanism": "lingerEase(x, L) is a monotone cubic remap that flattens the middle of a segment's range and steepens the edges as L rises, while preserving f(0)=0 and f(1)=1 exactly.",
+      "whyItWorks": "A single per-section parameter changes pacing without touching the clip or breaking the seam guarantee.",
+      "requiredContext": [
+        "local progress x within a segment (0..1)"
+      ],
+      "contextCost": "low",
+      "outputImpact": "Pacing/craft refinement, not a correctness fix.",
+      "failureModes": [
+        "L close to 1 with a short scroll distance can feel stuck; source recommends L<=0.6 but doesn't enforce it."
+      ],
+      "conflicts": [],
+      "testMethod": "None automated.",
+      "decision": "adopt",
+      "sitesmithForm": "Reusable as-is: boundary-preserving cubic ease with a single linger parameter per scroll-bound section.",
+      "confidence": 0.7,
+      "redTeam": "confirmed",
+      "redTeamReason": "Opened scrub-engine.js:175-178: lingerEase = (1-L)*x + L*(4c^3+0.5) with c=x-0.5. Hand-verified f(0): c=-0.5, 4c^3=-0.5, +0.5=0, term=0 -> result 0. f(1): c=0.5, 4c^3=0.5,+0.5=1, result 1. Usage at line 232 (s.target = s.linger ? lingerEase(local, s.linger) : local) matches.",
+      "redTeamEvidence": "skills/scroll-world/references/scrub-engine.js:175-178,232"
+    },
+    {
+      "key": "scroll-world/mobile-scrub-hardening-bundle",
+      "id": "mobile-scrub-hardening-bundle",
+      "source": "scroll-world",
+      "sourcePath": "skills/scroll-world/references/scrub-engine.js:66-73,273-323; CSS at 413-435",
+      "problemSolved": "Scroll-scrubbed video has several distinct phone failure modes: fast-flick seek pileup, iOS blank-muted-video quirk, URL-bar resize scroll jump, heavier decode budget.",
+      "mechanism": "Four bundled fixes behind one isMobile() check: seek-coalescing (skip re-queuing currentTime while still seeking), iOS priming (muted play/pause on first touch, wait for 'seeked' not just 'loadedmetadata'), resize-gating (ignore height-only resize on touch), coarser mobile seek epsilon.",
+      "whyItWorks": "Each fix targets one concrete, named bug, independently testable and removable, matched to the source's own Gotchas list.",
+      "requiredContext": [
+        "coarse-pointer/viewport-width check at mount plus live width tracking"
+      ],
+      "contextCost": "low",
+      "outputImpact": "High for mobile visitors — without this the same engine reliably breaks on iOS Safari and stutters on mid-range Android.",
+      "failureModes": [
+        "coarse pointer check captured once at mount, never re-evaluated (acknowledged intentional)."
+      ],
+      "conflicts": [],
+      "testMethod": "None automated; source recommends manual CPU-throttled and real-device iOS testing.",
+      "decision": "investigate",
+      "sitesmithForm": "Adopt all four as a standard checklist for any SiteSmith scroll-video build; none depend on how the video was produced.",
+      "confidence": 0.75,
+      "redTeam": "refuted",
+      "redTeamReason": "3 of 4 sub-parts check out inside the cited ranges: seek-coalescing at line 281 (if s.video.seeking continue), resize-gating at 317-320, coarser epsilon at line 274 — all within 273-323. But the 'wait for seeked not just loadedmetadata' detail actually lives in loadClip() at line 216, outside the cited 66-73,273-323 ranges entirely. The additional CSS citation (413-435) is generic mobile layout media queries (nav hiding, copy anchoring, route dot hit-area) and contains none of the four described JS fixes — it doesn't support the claim at all. The claim merges code from an uncited location and an unrelated CSS block into one citation.",
+      "redTeamEvidence": "skills/scroll-world/references/scrub-engine.js:66-73,216,273-323; CSS 413-435 (does not contain the described fixes)",
+      "decisionBeforeRefutation": "adopt",
+      "decisionNote": "Downgraded to investigate: the red team refuted the claim as stated. Re-read the source before adopting."
+    },
+    {
+      "key": "scroll-world/open-subject-question-not-fabricated-menu",
+      "id": "open-subject-question-not-fabricated-menu",
+      "source": "scroll-world",
+      "sourcePath": "skills/scroll-world/SKILL.md:80-93",
+      "problemSolved": "A fabricated multiple-choice list of subjects at intake biases the user and reads as the assistant deciding their business for them.",
+      "mechanism": "Instructs asking the subject as an open plain-prose question, reserving structured multiple-choice for genuinely enumerable, lower-stakes choices later, always with an 'Other' escape hatch.",
+      "whyItWorks": "A reasoning/prompting instruction about when structured choice helps versus constrains — the same category as the frontend-design skill's winning mechanisms.",
+      "requiredContext": [
+        "none — self-contained instruction"
+      ],
+      "contextCost": "low",
+      "outputImpact": "Affects the quality of the first interaction in a build; a biased intake question propagates downstream.",
+      "failureModes": [
+        "No mechanism verifies the model actually asked openly rather than defaulting to a menu under time pressure."
+      ],
+      "conflicts": [],
+      "testMethod": "Asserted only.",
+      "decision": "adapt",
+      "sitesmithForm": "Extract the general rule for SiteSmith's own interview step: ask identity-defining questions as open prose, reserve structured choice for genuinely enumerable, lower-stakes decisions with an explicit 'describe your own' option.",
+      "confidence": 0.55,
+      "redTeam": "confirmed",
+      "redTeamReason": "Opened SKILL.md:80-93: verified verbatim — 'ask it as an open question in plain prose, never a fabricated multiple-choice... Reserve structured multiple-choice... for the genuinely enumerable, lower-stakes choices below — art direction, camera style, and brand-kit approach — and even there, signal they can go their own way (\"Other\")'. This is a specific, concrete instruction, not a vague platitude. Caveat: the whyItWorks claim that this is 'the same category as the frontend-design skill's winning mechanisms' is an unverifiable comparison to a file not provided in evidence — that specific comparative assertion could not be checked, though it does not change the underlying mechanism's authenticity.",
+      "redTeamEvidence": "skills/scroll-world/SKILL.md:80-93"
+    },
+    {
+      "key": "scroll-world/progressive-disclosure-file-split",
+      "id": "progressive-disclosure-file-split",
+      "source": "scroll-world",
+      "sourcePath": "skills/scroll-world/SKILL.md:752-762 and references/ file structure",
+      "problemSolved": "Heavy reference material inlined into a main procedure file bloats context on every invocation even for steps a build never reaches.",
+      "mechanism": "SKILL.md is the only always-loaded file; it names each reference file by relative path at the exact step it's needed, none pre-loaded speculatively.",
+      "whyItWorks": "Matches the general skill-authoring principle of separating procedure from heavy reference data.",
+      "requiredContext": [
+        "an agent runtime that can read a named file mid-procedure"
+      ],
+      "contextCost": "low",
+      "outputImpact": "Keeps always-loaded cost to SKILL.md alone rather than the full combined reference total, though SKILL.md itself is still large (see CONTEXT-STRATEGY.md).",
+      "failureModes": [
+        "SKILL.md still inlines ~150 lines of volatile vendor pricing/schema tables that belong in a deferred reference file instead."
+      ],
+      "conflicts": [],
+      "testMethod": "Verified directly by reading SKILL.md and confirming reference files are named only at point of use.",
+      "decision": "investigate",
+      "sitesmithForm": "Keep the pattern but apply more strictly: move vendor-pricing/model-capability tables out of the main procedure file into a reference file.",
+      "confidence": 0.6,
+      "redTeam": "refuted",
+      "redTeamReason": "The cited lines 752-762 are just the final '## References' summary list at the end of SKILL.md — a bare enumeration of the reference files with one-line descriptions, not evidence of just-in-time referencing throughout the steps. The claim's own whyItWorks concedes this 'matches the general skill-authoring principle' — i.e. this is standard Claude-skill structure (SKILL.md as sole entry point, references loaded on demand), not a distinctive mechanism of scroll-world. Treated as a platitude dressed up as a mechanism; the citation doesn't show what's actually being claimed (loading discipline at each step) — that would require citing the scattered inline 'See references/X' pointers throughout Steps 1-8, not the closing list.",
+      "redTeamEvidence": "skills/scroll-world/SKILL.md:752-762",
+      "decisionBeforeRefutation": "adapt",
+      "decisionNote": "Downgraded to investigate: the red team refuted the claim as stated. Re-read the source before adopting."
+    },
+    {
+      "key": "scroll-world/reduced-motion-full-degrade",
+      "id": "reduced-motion-full-degrade",
+      "source": "scroll-world",
+      "sourcePath": "skills/scroll-world/references/scrub-engine.js:199-201; CSS at 436",
+      "problemSolved": "prefers-reduced-motion should stop clip loading entirely, not just disable visible animation while still fetching/decoding video.",
+      "mechanism": "reduce is read once at mount; loadClip() short-circuits immediately if true, leaving only stills that cross-dissolve via the same opacity math used for seams.",
+      "whyItWorks": "Full degrade at the fetch layer, not a cosmetic override — no wasted bandwidth/decode, reuses existing code paths for the fallback.",
+      "requiredContext": [
+        "prefers-reduced-motion media query support"
+      ],
+      "contextCost": "low",
+      "outputImpact": "Satisfies accessibility requirement; the same path is the only fully-graceful route when video assets are entirely unavailable.",
+      "failureModes": [
+        "Only triggers on OS-level preference; no separate opt-in for bandwidth/low-end-device reasons."
+      ],
+      "conflicts": [],
+      "testMethod": "None automated; testable by toggling the OS setting.",
+      "decision": "adopt",
+      "sitesmithForm": "Gate any generated/heavy media fetch behind the same check used to gate its motion, so accessibility and 'no backend available' share one code path.",
+      "confidence": 0.7,
+      "redTeam": "confirmed",
+      "redTeamReason": "Opened scrub-engine.js:67 (reduce captured once at mount) and 199-201 (loadClip returns immediately if reduce is true). read()'s opacity/crossfade math at 233-236 runs unconditionally for every segment regardless of reduce, so stills do cross-dissolve via the same code path. CSS line 436 is a minor secondary detail (hides hint-arrow animation/particles), not central to the claim but not contradicting it either.",
+      "redTeamEvidence": "skills/scroll-world/references/scrub-engine.js:67,199-201,233-236"
+    },
+    {
+      "key": "scroll-world/scrub-video-encoding-recipe",
+      "id": "scrub-video-encoding-recipe",
+      "source": "scroll-world",
+      "sourcePath": "skills/scroll-world/SKILL.md:523-559; skills/scroll-world/references/pipeline.md:119-171",
+      "problemSolved": "Naive assumptions about scrub smoothness (all-intra encoding, quality downscaling) are backwards; the real levers are seekability and keyframe distance.",
+      "mechanism": "Native resolution, crf ~20, small GOP (-g 8, not all-intra), stripped audio, +faststart, light unsharp; a tighter mobile profile (-g 4, 720p, crf 23) trades keyframes for cheaper phone-decoder seeks.",
+      "whyItWorks": "Ties every setting to a stated cause rather than folklore, with two calibrated presets instead of one compromise.",
+      "requiredContext": [
+        "ffmpeg; any source video"
+      ],
+      "contextCost": "low",
+      "outputImpact": "Determines whether scroll-scrubbed video feels smooth or stutters/bloats.",
+      "failureModes": [
+        "Tuned for short (5-10s) clips; not claimed to hold for longer-form video."
+      ],
+      "conflicts": [],
+      "testMethod": "None automated in-repo; asserted from experience, not measured in this codebase.",
+      "decision": "adopt",
+      "sitesmithForm": "Carry as reference documentation for any SiteSmith scroll-video build regardless of asset source.",
+      "confidence": 0.65,
+      "redTeam": "confirmed",
+      "redTeamReason": "Opened SKILL.md:534-543 and pipeline.md:119-132: enc() uses crf 20, -g 8 -keyint_min 8, -an, +faststart, unsharp=5:5:0.8:5:5:0.0 exactly. Mobile encm() at pipeline.md:149-156 uses scale to 720, crf 23, -g 4 -keyint_min 4, matching the claim precisely, including the stated rationale (phone seek cost scales with frames-from-keyframe).",
+      "redTeamEvidence": "skills/scroll-world/SKILL.md:534-543; skills/scroll-world/references/pipeline.md:119-132,149-156"
+    },
+    {
+      "key": "scroll-world/segment-interleave-scene-model",
+      "id": "segment-interleave-scene-model",
+      "source": "scroll-world",
+      "sourcePath": "skills/scroll-world/references/scrub-engine.js:86-101",
+      "problemSolved": "A scroll-scrubbed multi-scene film needs a single flat timeline (scroll position -> which clip, and how far into it) built from a designer's per-section config, without hand-computing pixel ranges.",
+      "mechanism": "Builds a flat SEGMENTS array by walking SECTIONS and interleaving a dive segment per section with an optional conn segment between consecutive sections (skipped when connectors[i] is falsy). Each segment carries a scroll-width weight; layout() turns weights into cumulative pixel start/end offsets.",
+      "whyItWorks": "Decouples 'what media exists and in what order' (editable config) from 'how much scroll height that requires' (computed) and 'what is currently active' (derived per scroll tick).",
+      "requiredContext": [
+        "a config object with an ordered sections array and an optional connectors array"
+      ],
+      "contextCost": "low",
+      "outputImpact": "The load-bearing data structure the entire engine reads from.",
+      "failureModes": [
+        "No validation that connectors.length === sections.length - 1; a mismatch silently misaligns connectors."
+      ],
+      "conflicts": [],
+      "testMethod": "No automated test in repo; correctness implied by rest of engine working.",
+      "decision": "adopt",
+      "sitesmithForm": "Reuse this shape for any SiteSmith scroll-scrubbed hero: ordered scene array with optional connector slots, flattened to a weighted timeline at layout time, independent of clip source.",
+      "confidence": 0.8,
+      "redTeam": "confirmed",
+      "redTeamReason": "Opened scrub-engine.js:86-101: SEGMENTS.push(dive) at 91, conditional CONNECTORS[i] push at 96-100, exactly as described. layout()'s cumulative-offset math (s.start=off*vh; off+=s.w; s.end=off*vh) is real but lives at lines 182-191, outside the cited 86-101 range — the claim folds in behavior from an uncited function. Core interleaving mechanism itself is verified.",
+      "redTeamEvidence": "skills/scroll-world/references/scrub-engine.js:86-101,182-191"
+    },
+    {
+      "key": "scroll-world/single-aesthetic-camera-roster",
+      "id": "single-aesthetic-camera-roster",
+      "source": "scroll-world",
+      "sourcePath": "skills/scroll-world/SKILL.md:100-122,268-322",
+      "problemSolved": "Frames 'cohesion' as fixing art direction to a small enumerated set (clay diorama/papercraft/glossy toy/claymation/neon-night) and camera behavior to a 3-way roster, reused verbatim across a build.",
+      "mechanism": "A shared style preamble composed once at intake is reused byte-for-byte in every scene prompt; camera behavior is selected once from a fixed roster and applied uniformly.",
+      "whyItWorks": "Genuinely produces per-build cohesion, but the same mechanism shape (small fixed menu of looks reused verbatim) is what this project's own three-site convergence test flagged as a liability, just scoped to one genre instead of SiteSmith's whole output.",
+      "requiredContext": [
+        "the shared style preamble and chosen camera architecture, held fixed for the whole build"
+      ],
+      "contextCost": "low",
+      "outputImpact": "High within a build; a house-style risk if generalized as SiteSmith's default answer to scroll storytelling.",
+      "failureModes": [
+        "Every build necessarily looks like a member of the same small family by design — no mechanism for the model to invent a genuinely novel treatment per subject.",
+        "Two unrelated businesses choosing the same defaults converge on similar sites for structural reasons, not coincidence."
+      ],
+      "conflicts": [
+        "Directly in tension with the measured fact that a fixed-look mechanism is a liability even when each output is individually good."
+      ],
+      "testMethod": "Not tested for cross-build convergence in the source.",
+      "decision": "reject",
+      "sitesmithForm": "Do not adopt the fixed style-roster shape. If a scroll-cinematic capability is ever offered, treat art direction/camera behavior as brief-driven creative decisions reasoned per project, not a preset menu.",
+      "confidence": 0.55,
+      "redTeam": "unchallenged",
+      "redTeamReason": "",
+      "redTeamEvidence": ""
     },
     {
       "key": "sitesmith-current/assignment-blinded-critique-gate",
@@ -1835,6 +3724,58 @@
       "redTeam": "confirmed",
       "redTeamReason": "format_output() in search.py emits the exact 'No matches. This is not a match with an empty value...' text and appends suggestions from _suggest_terms(), which does prefix-based (first-3-char) nearest-vocabulary matching over bm25.vocabulary(). SKILL.md's 'If a search returns 0 results' section (retry once -> fall back with explicit disclosure -> never present 0-result as data) is a genuine 3-step mirror of this behavior.",
       "redTeamEvidence": ".claude/skills/ui-ux-pro-max/scripts/search.py:64-74; scripts/core.py:292-316; SKILL.md:149-154"
+    },
+    {
+      "key": "website-builder-setup/website-builder-setup-numbers-as-authority",
+      "id": "website-builder-setup-numbers-as-authority",
+      "source": "website-builder-setup",
+      "sourcePath": "website-builder-setup/SKILL.md:14,16; README.md:45,47",
+      "problemSolved": "Making an unverified external dependency sound credible to a non-technical user during onboarding.",
+      "mechanism": "Specific-sounding counts of design styles, palettes, font pairings and components asserted as scripted dialogue, unbacked by any content in this repo.",
+      "whyItWorks": "It doesn't, for the task's purposes — it's the lookup-table framing the frontend-design result argues against.",
+      "requiredContext": [
+        "none — asserted, not backed by inspectable data"
+      ],
+      "contextCost": "low",
+      "outputImpact": "Likely negative if it substitutes for actual design reasoning.",
+      "failureModes": [
+        "Convergent output across unrelated projects sharing the identical closed catalog — the same failure class as SiteSmith's 0/8 showcase, potentially worse since shared across every user"
+      ],
+      "conflicts": [
+        "Both measured facts in the brief"
+      ],
+      "testMethod": "n/a — no data in-repo to test",
+      "decision": "reject",
+      "sitesmithForm": "No role.",
+      "confidence": 0.8,
+      "redTeam": "unchallenged",
+      "redTeamReason": "",
+      "redTeamEvidence": ""
+    },
+    {
+      "key": "website-builder-setup/website-builder-setup-stepwise-onboarding",
+      "id": "website-builder-setup-stepwise-onboarding",
+      "source": "website-builder-setup",
+      "sourcePath": "website-builder-setup/SKILL.md:137-143",
+      "problemSolved": "A multi-step external-dependency install flow needs to survive individual step failures without stalling.",
+      "mechanism": "Narrate one step at a time, never dump all instructions at once, and on failure acknowledge/give manual fallback/keep moving rather than halt.",
+      "whyItWorks": "Generic UX resilience pattern for scripted multi-step flows with side effects.",
+      "requiredContext": [
+        "a multi-step setup flow with side effects to narrate"
+      ],
+      "contextCost": "low",
+      "outputImpact": "Onboarding UX only, not site-generation quality.",
+      "failureModes": [
+        "None specific"
+      ],
+      "conflicts": [],
+      "testMethod": "n/a — no analogous flow currently exists in SiteSmith",
+      "decision": "reject",
+      "sitesmithForm": "SiteSmith has no comparable flow today; nothing to attach this to.",
+      "confidence": 0.5,
+      "redTeam": "unchallenged",
+      "redTeamReason": "",
+      "redTeamEvidence": ""
     }
   ]
 }
