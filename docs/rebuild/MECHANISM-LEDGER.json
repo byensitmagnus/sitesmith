@@ -1,0 +1,1840 @@
+{
+  "schemaVersion": 1,
+  "generatedBy": "tools/build-mechanism-ledger.mjs",
+  "generatedFrom": "docs/rebuild/research/_mechanisms/RAW-AUTOPSIES.json",
+  "doNotEditByHand": true,
+  "counts": {
+    "total": 67,
+    "adopt": 42,
+    "adapt": 15,
+    "reject": 9,
+    "investigate": 1,
+    "confirmed": 55,
+    "refuted": 3,
+    "unchallenged": 9,
+    "lowContextCost": 46,
+    "highContextCost": 4
+  },
+  "mechanisms": [
+    {
+      "key": "frontend-design/brief-primacy-override",
+      "id": "brief-primacy-override",
+      "source": "frontend-design",
+      "sourcePath": "SKILL.md:31",
+      "problemSolved": "Anti-cliché rule could wrongly override an explicit client request matching a named cliché.",
+      "mechanism": "Single clause: brief's own words always win, even if it asks for one of the named looks.",
+      "whyItWorks": "Scopes anti-cliché pressure only to axes the brief left open, preventing it from becoming its own rigid rule.",
+      "requiredContext": [
+        "brief text"
+      ],
+      "contextCost": "low",
+      "outputImpact": "Low-frequency, high-consequence when triggered.",
+      "failureModes": [
+        "Requires correctly classifying 'pinned down' vs 'free', no check provided"
+      ],
+      "conflicts": [],
+      "testMethod": "Asserted only",
+      "decision": "adopt",
+      "sitesmithForm": "Keep this override adjacent to any cliché list adopted.",
+      "confidence": 0.7,
+      "redTeam": "confirmed",
+      "redTeamReason": "Confirmed at line 31: 'Where the brief pins down a visual direction, follow it exactly — the brief's own words always win, including when it asks for one of these looks.' Exact match, correctly scoped as a single clause.",
+      "redTeamEvidence": "skills/frontend-design/SKILL.md:31"
+    },
+    {
+      "key": "frontend-design/copy-as-design-material",
+      "id": "copy-as-design-material",
+      "source": "frontend-design",
+      "sourcePath": "SKILL.md:27,45-55",
+      "problemSolved": "Generic/placeholder copy signals templated design even when visuals are original.",
+      "mechanism": "Treats words as design material: user-facing vocabulary not system internals, active voice with persistent verb identity across a flow, error/empty states in interface voice, tone tuned to brand/audience.",
+      "whyItWorks": "Generalizes the anti-genericism pressure from visuals to language with concrete, checkable rules.",
+      "requiredContext": [
+        "actual content/flow of the interface"
+      ],
+      "contextCost": "low",
+      "outputImpact": "Medium-high; closes a gap purely visual design guidance would miss.",
+      "failureModes": [
+        "No test for tone appropriateness",
+        "Persistent verb identity across a flow isn't verified across a build"
+      ],
+      "conflicts": [],
+      "testMethod": "Asserted only",
+      "decision": "adopt",
+      "sitesmithForm": "Port the concrete copy rules as an explicit checklist alongside the visual token system.",
+      "confidence": 0.65,
+      "redTeam": "unchallenged",
+      "redTeamReason": "",
+      "redTeamEvidence": ""
+    },
+    {
+      "key": "frontend-design/css-specificity-caution",
+      "id": "css-specificity-caution",
+      "source": "frontend-design",
+      "sourcePath": "SKILL.md:37",
+      "problemSolved": "Narrow implementation bug: type-based and element-based CSS selectors cancelling each other out.",
+      "mechanism": "Single warning sentence naming the failure pattern.",
+      "whyItWorks": "Specific and names a real recurring bug class, not a creative-reasoning mechanism.",
+      "requiredContext": [
+        "none"
+      ],
+      "contextCost": "low",
+      "outputImpact": "Low; orthogonal to the creativity/house-style axes.",
+      "failureModes": [
+        "Only relevant for hand-rolled class-based cascades, less so for utility-first CSS"
+      ],
+      "conflicts": [
+        "Stack-dependent; less relevant under Tailwind/CSS-in-JS which SiteSmith mostly targets"
+      ],
+      "testMethod": "Asserted only",
+      "decision": "adapt",
+      "sitesmithForm": "Not a priority; gate behind stack detection if kept.",
+      "confidence": 0.4,
+      "redTeam": "confirmed",
+      "redTeamReason": "Confirmed at line 37: 'be careful of structuring your CSS selector specificities. It's easy to generate CSS classes that cancel each other out (especially with a type-based selector like .section and an element-based selector like .cta).' Accurately described as a narrow, specific technical warning, not inflated into a creative-reasoning mechanism.",
+      "redTeamEvidence": "skills/frontend-design/SKILL.md:37"
+    },
+    {
+      "key": "frontend-design/deliberate-motion",
+      "id": "deliberate-motion",
+      "source": "frontend-design",
+      "sourcePath": "SKILL.md:23",
+      "problemSolved": "Motion is either absent or scattered across hover effects with no orchestration.",
+      "mechanism": "Frames motion as a subject-tied choice, prefers one orchestrated moment, and explicitly warns extra animation reads as AI-generated.",
+      "whyItWorks": "Counters the overcorrection where models sprinkle micro-interactions to seem polished.",
+      "requiredContext": [
+        "subject grounding"
+      ],
+      "contextCost": "low",
+      "outputImpact": "Medium; affects craft/restraint perception.",
+      "failureModes": [
+        "No check that chosen motion respects reduced-motion or performance"
+      ],
+      "conflicts": [],
+      "testMethod": "Asserted only",
+      "decision": "adopt",
+      "sitesmithForm": "One-line principle: pick zero or one orchestrated motion moment, not scattered defaults.",
+      "confidence": 0.6,
+      "redTeam": "confirmed",
+      "redTeamReason": "Confirmed at line 23: 'An orchestrated moment usually lands harder than scattered effects... extra animation contributes to the feeling that the design is AI-generated.' Matches claim closely.",
+      "redTeamEvidence": "skills/frontend-design/SKILL.md:23"
+    },
+    {
+      "key": "frontend-design/hero-as-thesis",
+      "id": "hero-as-thesis",
+      "source": "frontend-design",
+      "sourcePath": "SKILL.md:17",
+      "problemSolved": "Hero sections default to stat-block+gradient regardless of subject.",
+      "mechanism": "Hero must be 'a thesis' — the most characteristic thing in the subject's world; names the stat-block pattern as the template answer to be justified, not defaulted to.",
+      "whyItWorks": "Naming the default out loud converts an unconscious habit into an effortful, arguable choice.",
+      "requiredContext": [
+        "subject grounding"
+      ],
+      "contextCost": "low",
+      "outputImpact": "High — hero is the first impression a blind judge sees.",
+      "failureModes": [
+        "Still permits the cliché when 'truly best', which a weak rationalization can invoke"
+      ],
+      "conflicts": [],
+      "testMethod": "Asserted only",
+      "decision": "adopt",
+      "sitesmithForm": "Keep a short list of default hero patterns requiring justification before use.",
+      "confidence": 0.7,
+      "redTeam": "confirmed",
+      "redTeamReason": "Confirmed at line 17: 'the hero is a thesis... a big number with a small label, supporting stats, and a gradient accent is the template answer, only use if that's truly the best option.' The stat-block is named explicitly as the default to justify, exactly as claimed.",
+      "redTeamEvidence": "skills/frontend-design/SKILL.md:17"
+    },
+    {
+      "key": "frontend-design/named-cliche-calibration",
+      "id": "named-cliche-calibration",
+      "source": "frontend-design",
+      "sourcePath": "SKILL.md:31",
+      "problemSolved": "Model has no internal reference for what current generic AI design looks like, so can't recognize its own output matching it.",
+      "mechanism": "Names three specific observed AI-design clusters (cream/serif/terracotta; near-black/acid accent; broadsheet hairline layout) verbatim and requires the model to check its plan against them before building; brief's explicit request always wins.",
+      "whyItWorks": "The only mechanism giving the model a concrete, checkable self-test for house-style convergence instead of a vague originality mood.",
+      "requiredContext": [
+        "none, but time-bound"
+      ],
+      "contextCost": "low",
+      "outputImpact": "High — most plausible single driver of the 59-vs-40 result.",
+      "failureModes": [
+        "List will go stale with no refresh mechanism",
+        "Only catches the three named patterns, not a fourth unnamed one"
+      ],
+      "conflicts": [
+        "Tension with hard brand-lock requirements, resolved only via the brief-primacy override"
+      ],
+      "testMethod": "Asserted only; externally corroborated by blind-test result",
+      "decision": "investigate",
+      "sitesmithForm": "Carry a living, periodically-updated cliché list as a mandatory pre-build self-check.",
+      "confidence": 0.85,
+      "redTeam": "refuted",
+      "redTeamReason": "The three clusters (cream/serif/terracotta; near-black/acid accent; broadsheet hairline) are confirmed verbatim at line 31. But line 31 itself only presents them 'for calibration' and says not to spend free axes on them — it does not contain an instruction to check a plan against this specific list before building. The actual 'review your plan, revise if generic' instruction lives in a separate paragraph (line 35, already captured by the distinct 'self-critique-loop' claim) and does not reference the three named clusters at all. Citing line 31 alone for a 'requires checking against them' mechanism conflates two paragraphs into one over-stated claim.",
+      "redTeamEvidence": "skills/frontend-design/SKILL.md:31",
+      "decisionBeforeRefutation": "adopt",
+      "decisionNote": "Downgraded to investigate: the red team refuted the claim as stated. Re-read the source before adopting."
+    },
+    {
+      "key": "frontend-design/persona-framing",
+      "id": "persona-framing",
+      "source": "frontend-design",
+      "sourcePath": "SKILL.md:9",
+      "problemSolved": "Default LLM output for 'build a UI' regresses to safe, generic templates because there is no evaluative pressure.",
+      "mechanism": "Opens by assigning the model a persona ('design lead at a small studio') plus a fictional client who already rejected templated proposals.",
+      "whyItWorks": "Persona + adversarial backstory changes the model's implicit self-evaluation criterion mid-generation, before any design decision is made.",
+      "requiredContext": [
+        "none"
+      ],
+      "contextCost": "low",
+      "outputImpact": "Sets the acceptance bar inherited by every downstream decision.",
+      "failureModes": [
+        "Persona alone doesn't guarantee follow-through without the later self-critique step"
+      ],
+      "conflicts": [],
+      "testMethod": "Asserted only",
+      "decision": "adopt",
+      "sitesmithForm": "Open direction-setting with a short persona+adversarial-client sentence.",
+      "confidence": 0.6,
+      "redTeam": "confirmed",
+      "redTeamReason": "Confirmed verbatim at SKILL.md line 9: 'Approach this as the design lead at a small studio known for giving every client a visual identity that could not be mistaken for anyone else's. This client has already rejected proposals that felt templated...' The cited line contains exactly the persona + adversarial-backstory framing claimed.",
+      "redTeamEvidence": "skills/frontend-design/SKILL.md:9"
+    },
+    {
+      "key": "frontend-design/private-reasoning-before-reveal",
+      "id": "private-reasoning-before-reveal",
+      "source": "frontend-design",
+      "sourcePath": "SKILL.md:39",
+      "problemSolved": "Showing half-formed ideas too early anchors the conversation on a weak draft.",
+      "mechanism": "Instructs doing planning/iteration in private thinking, only showing ideas once confident.",
+      "whyItWorks": "Pushes brainstorm-critique into a private reasoning trace so the visible output is already past self-rejection.",
+      "requiredContext": [
+        "a runtime with a private/extended-thinking channel"
+      ],
+      "contextCost": "low",
+      "outputImpact": "Medium; degrades to a soft suggestion without a private-thinking feature.",
+      "failureModes": [
+        "Assumes a runtime feature that may not exist everywhere"
+      ],
+      "conflicts": [
+        "Runtime-dependent value"
+      ],
+      "testMethod": "Asserted only",
+      "decision": "adapt",
+      "sitesmithForm": "Keep as runtime-agnostic instruction to iterate before presenting.",
+      "confidence": 0.55,
+      "redTeam": "confirmed",
+      "redTeamReason": "Confirmed at line 39: 'Try to do a lot of this planning and iteration in your thinking, and only show ideas to the user when you have higher confidence it'll delight them.' Exact match.",
+      "redTeamEvidence": "skills/frontend-design/SKILL.md:39"
+    },
+    {
+      "key": "frontend-design/self-critique-loop",
+      "id": "self-critique-loop",
+      "source": "frontend-design",
+      "sourcePath": "SKILL.md:35",
+      "problemSolved": "A model's first idea is disproportionately likely to be its most generic idea.",
+      "mechanism": "After drafting the plan, model reviews it against the brief and against 'what a similar brief would produce', revises and states what changed, only then writes code.",
+      "whyItWorks": "Forces an explicit counterfactual comparison rather than a vague self-check; enforces the cliché-list mechanism.",
+      "requiredContext": [
+        "draft token system",
+        "cliché list"
+      ],
+      "contextCost": "low",
+      "outputImpact": "Likely second-highest-leverage mechanism after the cliché list.",
+      "failureModes": [
+        "Single iteration, self-graded, no external check",
+        "Can be skipped under pressure since nothing external gates it"
+      ],
+      "conflicts": [],
+      "testMethod": "Asserted only, no rubric",
+      "decision": "adopt",
+      "sitesmithForm": "Mandatory single self-critique pass against the living cliché list; log the 'what changed and why' note for auditability.",
+      "confidence": 0.7,
+      "redTeam": "confirmed",
+      "redTeamReason": "Confirmed at line 35: 'review that plan against the brief before building: if any part of it reads like the generic default you would produce for any similar page (work through a similar prompt to see if you arrive somewhere similar)... revise that part, say what you changed and why. Only after you've confirmed... should you start to write the code.' Matches claim precisely.",
+      "redTeamEvidence": "skills/frontend-design/SKILL.md:35"
+    },
+    {
+      "key": "frontend-design/signature-element-restraint",
+      "id": "signature-element-restraint",
+      "source": "frontend-design",
+      "sourcePath": "SKILL.md:41-43",
+      "problemSolved": "Undisciplined creativity spreads boldness evenly, reading as busy or unfocused; conversely over-restraint fails to take a risk.",
+      "mechanism": "Concentrate boldness in the one signature element; hold everything else to a quiet, disciplined quality floor (responsive, keyboard focus, reduced motion) without announcing it.",
+      "whyItWorks": "Operationalizes 'elegance' as a resource-allocation rule rather than a vague aesthetic goal.",
+      "requiredContext": [
+        "signature element from token system"
+      ],
+      "contextCost": "low",
+      "outputImpact": "High for perceived craft and cohesion.",
+      "failureModes": [
+        "No tooling to verify the quality floor was actually met",
+        "Screenshot self-critique is conditional and unenforced"
+      ],
+      "conflicts": [],
+      "testMethod": "Asserted for aesthetics; quality-floor items are checkable but no tool is named",
+      "decision": "adopt",
+      "sitesmithForm": "Keep the resource-allocation framing and pair with SiteSmith's real verify.mjs-equivalent gate rather than leaving it as an assertion.",
+      "confidence": 0.65,
+      "redTeam": "unchallenged",
+      "redTeamReason": "",
+      "redTeamEvidence": ""
+    },
+    {
+      "key": "frontend-design/structure-as-information",
+      "id": "structure-as-information",
+      "source": "frontend-design",
+      "sourcePath": "SKILL.md:21",
+      "problemSolved": "Numbered markers and other structural devices get applied decoratively regardless of whether content is sequential.",
+      "mechanism": "States structural devices should encode something true about content; numbered markers legitimate only if content is truly a sequence, and instructs questioning the choice.",
+      "whyItWorks": "Gives a testable condition instead of a vague 'avoid clichés' instruction, targeting one of the most recognizable AI-template tells.",
+      "requiredContext": [
+        "page content/IA"
+      ],
+      "contextCost": "low",
+      "outputImpact": "Medium; removes an obvious generic-design signal.",
+      "failureModes": [
+        "Only names one structural device; doesn't generalize explicitly to other decorative structures"
+      ],
+      "conflicts": [],
+      "testMethod": "Asserted only",
+      "decision": "adopt",
+      "sitesmithForm": "Generalize the test ('does this structural device encode something true?') to all structural devices.",
+      "confidence": 0.65,
+      "redTeam": "confirmed",
+      "redTeamReason": "Confirmed at line 21: 'Structure is information... numbered markers (01/02/03)... that's only appropriate if the content actually is a sequence - like a real process or a typed timeline... Question if choices like numbered markers actually make sense before incorporating them.' Testable condition is real, not a vague platitude.",
+      "redTeamEvidence": "skills/frontend-design/SKILL.md:21"
+    },
+    {
+      "key": "frontend-design/subject-grounding-mandate",
+      "id": "subject-grounding-mandate",
+      "source": "frontend-design",
+      "sourcePath": "SKILL.md:11-13",
+      "problemSolved": "Vague briefs cause generic output because the model has nothing specific to differentiate against.",
+      "mechanism": "If brief is thin, model must invent a concrete subject/audience/page-job itself and state the choice, drawing distinctiveness from the subject's own materials/vernacular.",
+      "whyItWorks": "Directly counters house-style convergence by forcing domain-specific texture that can't be identical across subjects.",
+      "requiredContext": [
+        "brief text",
+        "optional user memory"
+      ],
+      "contextCost": "low",
+      "outputImpact": "Most direct antidote to the three-sites-converge failure.",
+      "failureModes": [
+        "Invented subject can itself be generic; no verification it was used throughout"
+      ],
+      "conflicts": [],
+      "testMethod": "Asserted only",
+      "decision": "adopt",
+      "sitesmithForm": "Mandatory explicit subject/audience/job statement before token system.",
+      "confidence": 0.75,
+      "redTeam": "confirmed",
+      "redTeamReason": "Confirmed at lines 11-13: 'If the brief does not pin down what the product or subject is, pin it yourself before designing: name one concrete subject, its audience, and the page's single job... The subject's own world, its materials, instruments, artifacts, and vernacular, is where distinctive choices come from.' Matches claim exactly, not an overstatement.",
+      "redTeamEvidence": "skills/frontend-design/SKILL.md:11-13"
+    },
+    {
+      "key": "frontend-design/two-pass-token-system",
+      "id": "two-pass-token-system",
+      "source": "frontend-design",
+      "sourcePath": "SKILL.md:33",
+      "problemSolved": "Jumping to code causes ad hoc, uncritiqued design decisions.",
+      "mechanism": "Requires a compact token system before code: 4-6 named hex colors, 2+ typefaces by role, layout concept (prose+ASCII), and one signature element.",
+      "whyItWorks": "Externalizes the decision into a small reviewable artifact the self-critique step can operate on.",
+      "requiredContext": [
+        "subject grounding"
+      ],
+      "contextCost": "low",
+      "outputImpact": "High — enables the critique step to have something concrete to review.",
+      "failureModes": [
+        "ASCII wireframes hide real layout problems",
+        "Nothing requires showing the plan to the user before building"
+      ],
+      "conflicts": [],
+      "testMethod": "Asserted only",
+      "decision": "adopt",
+      "sitesmithForm": "Reuse the four-part token system as SiteSmith's direction-phase output contract.",
+      "confidence": 0.75,
+      "redTeam": "confirmed",
+      "redTeamReason": "Confirmed at line 33: 'create a compact token system with color, type, layout, and signature. Color: describe the palette as 4-6 named hex values. Type: the typefaces for 2+ roles... Layout: a layout concept, using one-sentence prose descriptions and ASCII wireframes... Signature: the single unique element...' Near word-for-word match.",
+      "redTeamEvidence": "skills/frontend-design/SKILL.md:33"
+    },
+    {
+      "key": "frontend-design/typography-as-personality",
+      "id": "typography-as-personality",
+      "source": "frontend-design",
+      "sourcePath": "SKILL.md:19",
+      "problemSolved": "Type pairing defaults to the same 'safe' families regardless of project.",
+      "mechanism": "Requires deliberate display/body pairing specific to the brief and a clear intentional type scale, framed as memorable, not neutral.",
+      "whyItWorks": "Elevates typography to design-decision status equal to color.",
+      "requiredContext": [
+        "brief"
+      ],
+      "contextCost": "low",
+      "outputImpact": "Targets a highly visible house-style tell.",
+      "failureModes": [
+        "No guidance on sourcing non-default pairs; model may still reach for its usual 'safe' fonts"
+      ],
+      "conflicts": [],
+      "testMethod": "Asserted only",
+      "decision": "adopt",
+      "sitesmithForm": "Require token system to justify the type pairing per subject.",
+      "confidence": 0.6,
+      "redTeam": "confirmed",
+      "redTeamReason": "Confirmed at line 19: 'Pair the display and body faces deliberately, not the same families you would reach for on any other project, and set a clear type scale with intentional weights, widths, and spacing. Make the type treatment itself a memorable part of the design, not a neutral delivery vehicle.' This is a specific anti-habit instruction, not a bare platitude like 'use good typography.'",
+      "redTeamEvidence": "skills/frontend-design/SKILL.md:19"
+    },
+    {
+      "key": "impeccable/bounded-finish-review-loop",
+      "id": "bounded-finish-review-loop",
+      "source": "impeccable",
+      "sourcePath": "skill/reference/new-work.md:107; skill/agents/impeccable-finish-reviewer.md:1-49",
+      "problemSolved": "Open-ended self-QA loops burn budget without a stop condition, and a build thread reviewing itself inherits its own blind spots.",
+      "mechanism": "Finish is capped at two inspection rounds; a fresh, non-forked sub-agent reviews against a fixed 6-check order and must open with a derived disposition (rebuild/fix/ship); material_fixes capped at 8; a rebuild disposition skips the fix batch entirely; a verdict pass after one fix batch scores each fix resolved/partial/unresolved against new screenshots only.",
+      "whyItWorks": "Structural stop condition (round count + a reviewer with no stake in continuing) rather than a vague 'iterate until good' instruction.",
+      "requiredContext": [
+        "screenshots",
+        "direction contract",
+        "approved comp/quality-bar card when available",
+        "craft-floor.md",
+        "fresh non-forked sub-agent spawn capability"
+      ],
+      "contextCost": "medium",
+      "outputImpact": "Core answer to bounded polish / when the loop stops — directly maps to the brief's focus area.",
+      "failureModes": [
+        "Depends on genuinely fresh sub-agent spawn; weaker fallback otherwise",
+        "Reviewer has no browser, blind to anything screenshots don't show",
+        "Two rounds is a default an attended user can always override"
+      ],
+      "conflicts": [],
+      "testMethod": "No automated calibration test; enforcement is prose ('has no authority to soften it').",
+      "decision": "adopt",
+      "sitesmithForm": "Adopt the two-round cap + fresh-eyes reviewer + derived disposition pattern directly for SiteSmith's build-verification step.",
+      "confidence": 0.85,
+      "redTeam": "confirmed",
+      "redTeamReason": "new-work.md section 7 states 'Two rounds is the budget an unattended run ends at' and 'spawn the reviewer fresh, with no forked conversation history (fork_turns: 0 in codex)' and 'When the reviewer's first material fix is a rebuild directive... skip the fix batch.' impeccable-finish-reviewer.md lists exactly 6 numbered Checks, states disposition line is 'derived, never felt', and Output Contract caps material_fixes 'at most eight'. Verdict Pass section confirms scoring only against recaptured screenshots, not narration.",
+      "redTeamEvidence": "skill/reference/new-work.md:103-108; skill/agents/impeccable-finish-reviewer.md:1-49"
+    },
+    {
+      "key": "impeccable/context-aware-no-argument-routing",
+      "id": "context-aware-no-argument-routing",
+      "source": "impeccable",
+      "sourcePath": "skill/reference/routing.md:1-19; skill/scripts/context-signals.mjs",
+      "problemSolved": "A static command menu forces users to already know which command they want; auto-picking removes user control.",
+      "mechanism": "A script gathers cheap real signals (design/code presence, critique score history, git dirty files, dev-server state, a fast detector scan) and the model reasons over them (no formula) to lead with 2-3 recommendations with one-line reasons, always followed by the full menu; never auto-runs.",
+      "whyItWorks": "Cheap deterministic signal-gathering feeding a model judgment call, preserving user agency by construction.",
+      "requiredContext": [
+        "git-aware working tree",
+        "prior critique snapshots if any",
+        "dev-server process detection"
+      ],
+      "contextCost": "low",
+      "outputImpact": "Improves relevance of the first suggestion without removing user choice.",
+      "failureModes": [
+        "Reasoning over ad-hoc signals means runs could reasonably differ in their top pick",
+        "Detector scan explicitly skipped for native platforms"
+      ],
+      "conflicts": [],
+      "testMethod": "None found; a UX judgment call.",
+      "decision": "adopt",
+      "sitesmithForm": "Adopt the shape (cheap signals → model-reasoned, non-executing recommendation) for SiteSmith's no-argument entry point.",
+      "confidence": 0.7,
+      "redTeam": "confirmed",
+      "redTeamReason": "routing.md confirms the 2-3-picks-then-full-menu structure and 'Never auto-run a command; the recommendation is a suggestion the user confirms.' context-signals.mjs gathers setup/critique/git/devServer signals per its own docstring, explicitly WITHOUT running the detector ('no detector run'); the detect.mjs scan is instead invoked separately by the model per routing.md's own instructions (line 16), not by context-signals.mjs. Minor imprecision: the claim bundles the detector scan into 'a script gathers' as if one script does all five, but the same overall no-formula reasoning + never-auto-run mechanism is real and grounded in the cited files.",
+      "redTeamEvidence": "skill/reference/routing.md:1-19; skill/scripts/context-signals.mjs:1-34"
+    },
+    {
+      "key": "impeccable/craft-floor-ban-list",
+      "id": "craft-floor-ban-list",
+      "source": "impeccable",
+      "sourcePath": "skill/reference/craft-floor.md:18-48",
+      "problemSolved": "LLMs default to a recognizable handful of AI-slop surface habits regardless of brief.",
+      "mechanism": "A short reference loaded once before UI edits: a Verify checklist of measurable floor properties plus a Refuse list of named category-default patterns framed mostly as overridable defaults, with a couple of true hard bans; includes model-specific addenda blocks.",
+      "whyItWorks": "Narrow, mechanically-checkable blocklist that removes convergent defaults without dictating a replacement style — cheap and testable.",
+      "requiredContext": [
+        "direction/brief already decided"
+      ],
+      "contextCost": "low",
+      "outputImpact": "Reduces C-no-house-style risk by removing shared convergent habits while leaving direction to the model.",
+      "failureModes": [
+        "Relies on model judgment for which brief 'earns back' a banned default",
+        "Model-specific addenda suggest a generic list may mis-fire per model"
+      ],
+      "conflicts": [],
+      "testMethod": "Partly enforced by the mechanical detector encoding overlapping rules; no controlled study of the ban list itself found.",
+      "decision": "adopt",
+      "sitesmithForm": "Adopt as a short, model-agnostic refuse list loaded right before implementation, paired with (not duplicating) a mechanical detector.",
+      "confidence": 0.8,
+      "redTeam": "confirmed",
+      "redTeamReason": "craft-floor.md has exactly this structure: measurable Verify items (contrast ratios, spacing, type measure ranges), a Refuse section explicitly stated as 'the category's defaults, not bans: the brief's own words can earn any of them' with one item (eyebrow/kicker) explicitly marked 'This one is a ban, not a default: no brief earns it back.' <codex> and <gemini> tagged addenda blocks are present verbatim.",
+      "redTeamEvidence": "skill/reference/craft-floor.md:1-54"
+    },
+    {
+      "key": "impeccable/document-after-build-not-before",
+      "id": "document-after-build-not-before",
+      "source": "impeccable",
+      "sourcePath": "skill/reference/new-work.md:75; skill/agents/impeccable-documenter.md:1-35",
+      "problemSolved": "A design-system doc written before the build describes intentions and can silently canonize a shipped mistake as a rule for future surfaces.",
+      "mechanism": "DESIGN.md is written only at finish, by a separate fresh sub-agent whose only input is the shipped artifact plus the direction contract; explicitly cross-checks every rule about to be recorded against the craft-floor ban list and logs anything deliberately excluded as a defect, not a rule.",
+      "whyItWorks": "Ground-truths documentation against the artifact and adds a second line of defense against banned patterns becoming house style.",
+      "requiredContext": [
+        "built artifact stylesheets/components",
+        "direction contract",
+        "PRODUCT.md",
+        "craft-floor.md ban list"
+      ],
+      "contextCost": "low",
+      "outputImpact": "Prevents the exact mechanism C-no-house-style warns about: one AI misstep institutionalized as style.",
+      "failureModes": [
+        "Only guards against already-known-banned patterns, not novel bad patterns",
+        "Degraded fallback presumably weaker isolation"
+      ],
+      "conflicts": [],
+      "testMethod": "Anecdotal (cites a real prior failure); not a formal test.",
+      "decision": "adopt",
+      "sitesmithForm": "Write our own design-system-of-record only after a build ships, from the artifact, cross-checked against our own anti-slop list before writing.",
+      "confidence": 0.75,
+      "redTeam": "confirmed",
+      "redTeamReason": "new-work.md:75 states 'DESIGN.md is written at finish, from the built world, by the shipped documenter... a rulebook written before the build gets defended against reality.' impeccable-documenter.md workflow step 5 explicitly instructs: 'Never canonize a craft-floor refusal into the system... recorded in your not-canonized line as a defect the build carries.'",
+      "redTeamEvidence": "skill/reference/new-work.md:75; skill/agents/impeccable-documenter.md:1-36"
+    },
+    {
+      "key": "impeccable/dual-isolated-critique-subagents",
+      "id": "dual-isolated-critique-subagents",
+      "source": "impeccable",
+      "sourcePath": "skill/reference/critique.md:5-46",
+      "problemSolved": "A single context doing both subjective and mechanical review anchors on whichever ran first.",
+      "mechanism": "Two isolated sub-agents (LLM design review vs detector+browser evidence) run in parallel with no visibility into each other; synthesis afterward; degraded (inline/sequential) runs must print a mandatory first-line banner, never silent.",
+      "whyItWorks": "Keeps qualitative judgment separate from deterministic evidence and forces disclosure whenever isolation breaks.",
+      "requiredContext": [
+        "sub-agent/Task tool exposed"
+      ],
+      "contextCost": "medium",
+      "outputImpact": "Improves critique quality via structural anti-bias; orthogonal to the two hard constraints but valuable for our own audit/critique command.",
+      "failureModes": [
+        "Doubles token/run cost",
+        "Degraded banner is a prose promise, not code-enforced",
+        "Codex carve-out adds an extra permission round-trip"
+      ],
+      "conflicts": [
+        "Requires harness sub-agent capability"
+      ],
+      "testMethod": "No automated isolation-quality test found; enforcement is entirely prose.",
+      "decision": "adapt",
+      "sitesmithForm": "Adopt isolation + mandatory degraded-disclosure for our own critique/audit command, scoped to when the 2x cost is worth it.",
+      "confidence": 0.75,
+      "redTeam": "confirmed",
+      "redTeamReason": "critique.md Hard Invariants explicitly state both assessments are required, must run as isolated sub-agents when a Task tool exists, and 'If you degrade for any reason, the report's first line MUST be a banner: DEGRADED: single-context (<reason>). A silent degraded critique is a failed critique.' Section further details independent Assessment A (design review) vs Assessment B (detector+browser) with 'They must not see each other's output.'",
+      "redTeamEvidence": "skill/reference/critique.md:5-46"
+    },
+    {
+      "key": "impeccable/forced-index-direction-roll",
+      "id": "forced-index-direction-roll",
+      "source": "impeccable",
+      "sourcePath": "skill/scripts/concept-seed.mjs:1-73,257-303,350-369",
+      "problemSolved": "A single model's resonance ranking over its own grounded concept list is deterministic — repo's own measurement: 30/35 identical concepts across 16 prompt framings.",
+      "mechanism": "Model derives its own grounded candidate directions; a SHA-256 hash of a session key then forces a non-top-ranked index (3..7) into that same list, never substituting a script-authored idea. Re-rolls exclude all prior rounds. Up to 6 external 'challenger' concepts are dealt from a catalog/API and must beat the assigned direction on two named axes to win.",
+      "whyItWorks": "Attacks argmax convergence at the selection step only, leaving 100% of generation to the model — the exact shape C-no-mechanical-creativity asks for.",
+      "requiredContext": [
+        "PRODUCT.md must exist (hard-gated)",
+        "a mode (persuade/operate/read/experience)",
+        "optional external catalog/API for challengers"
+      ],
+      "contextCost": "low",
+      "outputImpact": "Directly targets C-no-house-style: the repo's only mechanism explicitly aimed at preventing convergent output.",
+      "failureModes": [
+        "Richest version depends on a private, unshipped catalog/API",
+        "Still bounded by the quality of the model's own shortlist",
+        "Real workflow overhead, explicitly gated off for small/narrow requests"
+      ],
+      "conflicts": [
+        "Hard-gates on PRODUCT.md existing",
+        "Forbids presenting a ranked lineup to the user"
+      ],
+      "testMethod": "Asserted by repo comment (30/35 identical concepts across 16 framings); no linked methodology file found in this checkout.",
+      "decision": "adapt",
+      "sitesmithForm": "Re-express as a lightweight decision-forcing step: model produces its own ranked shortlist, a simple non-LLM tie-breaker (e.g. hash of session/time) forces a non-top-1 pick, no external catalog/API dependency.",
+      "confidence": 0.85,
+      "redTeam": "confirmed",
+      "redTeamReason": "Verified in concept-seed.mjs: buildIndex = 3 + Math.floor(unit(indexSalt) * (candidateCount-2)) gives 3..candidateCount (default 7) using crypto.createHash('sha256'). promotedInstruction text explicitly says 'the assignment never points at a challenger... build candidate N of your own grounded list.' challengerInstruction text names exactly 'audience identification and product clarity' as the two axes. roll-selection.mjs confirms 6 challengers = 2 per tier x 3 WELL_TIERS ('graphic','interaction','atmosphere'), and re-roll logic explicitly excludes all ids from prior rounds.",
+      "redTeamEvidence": "skill/scripts/concept-seed.mjs:290-303,350-369; skill/scripts/lib/roll-selection.mjs:126-237"
+    },
+    {
+      "key": "impeccable/mechanical-antipattern-detector",
+      "id": "mechanical-antipattern-detector",
+      "source": "impeccable",
+      "sourcePath": "cli/engine/registry/antipatterns.mjs:1-140; cli/engine/rules/checks.mjs (5580 lines); skill/scripts/detect.mjs:1-21",
+      "problemSolved": "Design critique/floor rules are useless without something actually checking shipped code against them.",
+      "mechanism": "59-rule deterministic registry of named AI-tell patterns each mapped to a static-HTML/CSS or rendered-page check; invoked as a Bash tool call from critique, audit, routing, and an editor hook, sharing one implementation.",
+      "whyItWorks": "Pure static analysis, no model call, fully reproducible — cannot itself cause convergence, only flags known-bad patterns.",
+      "requiredContext": [
+        "HTML/CSS/JSX markup on disk or a live URL"
+      ],
+      "contextCost": "medium",
+      "outputImpact": "High leverage at near-zero context cost since the 5580-line implementation never enters model context.",
+      "failureModes": [
+        "Static-HTML path can't see runtime-computed values without a live server",
+        "Explicitly not proof of quality, only defect evidence",
+        "Frozen snapshot of one aesthetic era"
+      ],
+      "conflicts": [],
+      "testMethod": "Exit 0/2 gate used across flows; no accuracy/precision study found in this checkout.",
+      "decision": "adopt",
+      "sitesmithForm": "Build a small equivalent static linter invoked as a deterministic Bash step, kept separate from and complementary to model-driven critique.",
+      "confidence": 0.8,
+      "redTeam": "confirmed",
+      "redTeamReason": "antipatterns.mjs contains exactly 59 'id:' entries (grep -c confirmed). checks.mjs implements real detection logic for these ids (e.g. side-tab border-radius/width checks, gradient-text background-clip detection, overused-font share calculation) -- not just declarations. detect.mjs is invoked from critique.md, routing.md, layout.md, typeset.md, and separate hook.mjs/hook-before-edit.mjs files confirm the shared editor-hook path.",
+      "redTeamEvidence": "cli/engine/registry/antipatterns.mjs:1-140; cli/engine/rules/checks.mjs (matches at lines 54,176,3912,4172); skill/scripts/detect.mjs:1-21; .claude/skills/impeccable/scripts/hook.mjs"
+    },
+    {
+      "key": "impeccable/mode-based-visitor-registers",
+      "id": "mode-based-visitor-registers",
+      "source": "impeccable",
+      "sourcePath": "skill/SKILL.src.md:31-40",
+      "problemSolved": "Applying one aesthetic/behavior register to every surface produces surfaces that fight their own purpose.",
+      "mechanism": "Four named modes (Persuade/Operate/Read/Experience) chosen from the requested surface, not the product category, persisted only in that surface's own brief.",
+      "whyItWorks": "A model-judgment classification, not a script decision — improves per-surface fit without constraining actual visual choices within a mode.",
+      "requiredContext": [
+        "identification of which surface is being worked on"
+      ],
+      "contextCost": "low",
+      "outputImpact": "Improves fit-for-purpose; doesn't by itself fight cross-surface sameness within the same mode.",
+      "failureModes": [
+        "Coarse taxonomy; blended-mode surfaces (e.g. pricing pages) aren't well covered",
+        "No check catches a wrong classification"
+      ],
+      "conflicts": [],
+      "testMethod": "None found; a taxonomy.",
+      "decision": "adopt",
+      "sitesmithForm": "Adopt directly as vocabulary for SiteSmith's routing/brief-writing step.",
+      "confidence": 0.8,
+      "redTeam": "confirmed",
+      "redTeamReason": "SKILL.src.md Modes section lists exactly Persuade/Operate/Read/Experience and states 'Choose the mode from the requested surface, not the product, and persist it only in that surface brief.'",
+      "redTeamEvidence": "skill/SKILL.src.md:31-40"
+    },
+    {
+      "key": "impeccable/model-specific-rendition-prior-correction",
+      "id": "model-specific-rendition-prior-correction",
+      "source": "impeccable",
+      "sourcePath": "skill/reference/new-work.md:67-69",
+      "problemSolved": "A specific model has a measured, named default rendering bias for certain subjects that a general 'be original' warning doesn't stop.",
+      "mechanism": "A model-tagged block names the exact bias in second person, instructs treating that palette as already spent, and to reread the model's own just-written output for named trigger words before coding.",
+      "whyItWorks": "Specificity plus a self-check step targeted at a documented failure mode is more likely to catch the bias than a generic exhortation.",
+      "requiredContext": [
+        "knowledge of which model is running",
+        "the model's own just-generated text to reread"
+      ],
+      "contextCost": "low",
+      "outputImpact": "Directly targets C-no-house-style at its most concrete: a documented convergent output for one specific model.",
+      "failureModes": [
+        "Model-specific and will rot as models change",
+        "Only covers one named subject cluster; doesn't scale without ongoing measurement"
+      ],
+      "conflicts": [],
+      "testMethod": "Asserted, not demonstrated in this checkout.",
+      "decision": "adapt",
+      "sitesmithForm": "Adapt the technique (name a specific convergent output, instruct a targeted reread-and-check) for patterns our own evaluators actually observe, not this exact example.",
+      "confidence": 0.55,
+      "redTeam": "confirmed",
+      "redTeamReason": "Confirmed verbatim in the <claude> tagged block: 'Your measured rendition prior: warm, bookish, family, and child-facing subjects come out as cream grounds, serif display with italic accents, and lamplight... Treat that first palette as already spent. Before writing code, reread your OWN-WORLD block: when it says cream, paper, parchment, ivory, or lamplight...'",
+      "redTeamEvidence": "skill/reference/new-work.md:67-69"
+    },
+    {
+      "key": "impeccable/preserve-vs-redesign-semantics",
+      "id": "preserve-vs-redesign-semantics",
+      "source": "impeccable",
+      "sourcePath": "skill/SKILL.src.md:27-29; skill/reference/new-work.md:5-14",
+      "problemSolved": "Ambiguity about refinement vs redesign leads to timid polish of a broken direction or unrequested visual rewrites.",
+      "mechanism": "Binary distinction: Refinement preserves everything outside scope; Redesign preserves product truth but replaces the old look, treating it as anti-reference. Missing DESIGN.md is explicitly not sufficient evidence of greenfield — the code itself is the evidence.",
+      "whyItWorks": "Closes a common failure where an LLM treats 'no design doc' as license to invent a new look on an already-branded product.",
+      "requiredContext": [
+        "representative existing code/tokens/components to read as evidence"
+      ],
+      "contextCost": "low",
+      "outputImpact": "Directly load-bearing for the brief's preserve-vs-redesign focus area.",
+      "failureModes": [
+        "Judgment call with no mechanical check",
+        "The 'incomplete brand' middle case is harder to get right than the two clean buckets"
+      ],
+      "conflicts": [],
+      "testMethod": "None found; a definitional rule.",
+      "decision": "adopt",
+      "sitesmithForm": "Adopt the vocabulary and 'evidence not filename' rule as one of the first questions our routing step answers.",
+      "confidence": 0.85,
+      "redTeam": "confirmed",
+      "redTeamReason": "Confirmed verbatim: SKILL.src.md 'Refinement preserves; redesign replaces... Visual authority is evidence, not a filename. Missing DESIGN.md alone does not make a project greenfield.' new-work.md section 1 states redesign should 'replace the old visual world rather than polishing it' treating the old look 'as evidence of what the subject is, not authority over what it becomes' and 'A missing DESIGN.md does not erase a coherent identity already present in code.'",
+      "redTeamEvidence": "skill/SKILL.src.md:27-29; skill/reference/new-work.md:5-14"
+    },
+    {
+      "key": "impeccable/surface-brief-scoping",
+      "id": "surface-brief-scoping",
+      "source": "impeccable",
+      "sourcePath": "skill/reference/new-work.md:77-83",
+      "problemSolved": "Global product/design docs get bloated with one-off route-specific strategy, or that strategy is never written down.",
+      "mechanism": "A third, narrower per-route 'surface brief' artifact stores only scope/mode/audience/job/constraints/chosen direction, explicitly excluding global product truth or DESIGN.md tokens.",
+      "whyItWorks": "Cleanly separates three tiers of durable memory by scope, avoiding both context bloat and lost route-specific decisions.",
+      "requiredContext": [
+        "an existing surface brief to read before writing, when one exists"
+      ],
+      "contextCost": "low",
+      "outputImpact": "A context-management pattern relevant to keeping our own progressive-loading design lean.",
+      "failureModes": [
+        "A third document type is one more thing that can drift stale"
+      ],
+      "conflicts": [],
+      "testMethod": "None found.",
+      "decision": "adapt",
+      "sitesmithForm": "Adapt the three-tier scoping idea into SiteSmith's own context files, sized to our actual document count.",
+      "confidence": 0.6,
+      "redTeam": "confirmed",
+      "redTeamReason": "new-work.md section 5 confirms verbatim: 'Keep the brief small: scope and visitor mode; audience, job, action/task, proof/content, and constraints; chosen direction and memorable moment; unresolved decisions. Do not copy global product truth or DESIGN.md tokens into it.'",
+      "redTeamEvidence": "skill/reference/new-work.md:77-83"
+    },
+    {
+      "key": "sitesmith-current/assignment-blinded-critique-gate",
+      "id": "assignment-blinded-critique-gate",
+      "source": "sitesmith-current",
+      "sourcePath": "skills/sitesmith/scripts/critique-gate.mjs:1-289; v2/50-critique.md:79-97,141-155",
+      "problemSolved": "A blind review only described in prose is a blind review that will not happen.",
+      "mechanism": "Enforces reviewer!=builder, shared brief/rubric/screenshot hashes, opaque labels, >=2 independent reviewers, sha256-locked unedited reviews, key-opened-after-lock ordering, sentence-level generic-tell scan with negation grammar, median/floor scoring with disagreement reported not averaged.",
+      "whyItWorks": "Targets specific, named prior ceremony failures (self-review, post-hoc editing, early key-open, buried criticism) rather than a generic 'be rigorous' instruction.",
+      "requiredContext": [
+        "two CRITIQUE-<reviewer>.md files",
+        "key.json with opened/built-by"
+      ],
+      "contextCost": "medium",
+      "outputImpact": "Real, portable verification ceremony, explicitly scoped by the source to benchmark/portfolio work only.",
+      "failureModes": [
+        "Negation-detection regex grammar can miss unanticipated praise phrasing",
+        "Cannot prove two reviewer identities are cognitively independent, only that the mechanics happened"
+      ],
+      "conflicts": [
+        "Applying ceremony overhead to every ordinary build would be disproportionate — source itself gates it lab-only"
+      ],
+      "testMethod": "real hash+timestamp+regex verification of an actual artifact trail",
+      "decision": "adapt",
+      "sitesmithForm": "Keep ceremony available as explicit opt-in for portfolio/benchmark claims, not a default single-site step.",
+      "confidence": 0.75,
+      "redTeam": "confirmed",
+      "redTeamReason": "Confirmed line-for-line. Builder-is-reviewer check at lines 143-156. Shared brief/rubric/sheet sha256 + run-id check at lines 158-166. Opaque-label check at lines 168-174. >=2 independent reviewer + distinct-name check at lines 176-183. sha256 lock-verification (body must hash to recorded sha256) at lines 186-194. Key-opened-after-lock ordering check at lines 204-215. genericTellAt/genericMentionIsDenied implement a regex bank plus explicit negation-grammar exceptions (lines 43-97). THRESHOLD/FLOOR constants and median() implement median-with-floor scoring (lines 40-41,107).",
+      "redTeamEvidence": "skills/sitesmith/scripts/critique-gate.mjs:7-20,40-41,43-97,107,134-215"
+    },
+    {
+      "key": "sitesmith-current/contract-after-direction-plus-token-drift",
+      "id": "contract-after-direction-plus-token-drift",
+      "source": "sitesmith-current",
+      "sourcePath": "skills/sitesmith/v2/30-contract.md:1-252; scripts/token-drift.mjs:1-304",
+      "problemSolved": "Not one of nine legacy pages had a spacing/type scale; every value chosen ad hoc at point of use.",
+      "mechanism": "Contract written after the winning comp is chosen, deriving values from it; required 8 token groups + documented one-off escape hatch; token-drift scans literals against declared tokens/one-offs.",
+      "whyItWorks": "Ordering fix for the same convergence bug diagnosed in the direction lab; makes 'token or documented exception' a mechanically enforced property.",
+      "requiredContext": [
+        "v2/30-contract.md",
+        "DESIGN-SYSTEM.md contract block",
+        "built pages' inline CSS"
+      ],
+      "contextCost": "low",
+      "outputImpact": "Converts consistency from aspiration to verified property while allowing genuine one-offs.",
+      "failureModes": [
+        "Only scans inline <style> blocks, blind to separate CSS/CSS-in-JS/Tailwind",
+        "One-off table trusted verbatim, no check it's genuinely rare"
+      ],
+      "conflicts": [],
+      "testMethod": "real static/DOM analysis against written contract",
+      "decision": "adopt",
+      "sitesmithForm": "Keep contract-after-direction ordering and 8-group token block; extend scanner beyond inline styles.",
+      "confidence": 0.82,
+      "redTeam": "confirmed",
+      "redTeamReason": "Confirmed. 30-contract.md states 'Derived from the brief, not from this file... A contract that reuses its values has skipped the only step that mattered' and is opened 'at step 5, before any page exists' (lines 1-7). Exactly 8 required token groups are named at line 121: 'spacing, type, shape, elevation, container, colour, families, motion.' One-off documentation is required at lines 50-64 and 212. token-drift.mjs implements checkAgainstContract(html, tokens, oneOffs) that flags literal values not behind a token and not in the one-off set (lines 100-188, 231).",
+      "redTeamEvidence": "skills/sitesmith/v2/30-contract.md:1-7,50-64,72-121,212; skills/sitesmith/scripts/token-drift.mjs:100-188,231"
+    },
+    {
+      "key": "sitesmith-current/cross-project-anti-repeat-ledger",
+      "id": "cross-project-anti-repeat-ledger",
+      "source": "sitesmith-current",
+      "sourcePath": "skills/sitesmith/scripts/direction-history.mjs:1-294; v2/20-direction-lab.md:195-210",
+      "problemSolved": "Per-project novelty checks cannot see repetition across projects, which is where house style forms.",
+      "mechanism": "Append-only cross-project ledger (~/.sitesmith/direction-history.jsonl); checks exact fingerprint match, hard-coded known-bad recipe (fails even on empty ledger), >=4 shared devices with another project, identical macro axes; stores no client URL.",
+      "whyItWorks": "Only cross-project memory can catch a habit the model doesn't know it has.",
+      "requiredContext": [
+        "~/.sitesmith/direction-history.jsonl",
+        "rendered URL",
+        "playwright"
+      ],
+      "contextCost": "low",
+      "outputImpact": "Most directly targets the brief's C-no-house-style constraint.",
+      "failureModes": [
+        "Ledger is local to one machine, doesn't travel with repo/team",
+        "Thresholds hand-tuned to one measured episode"
+      ],
+      "conflicts": [],
+      "testMethod": "real fingerprinting against persisted ledger",
+      "decision": "adopt",
+      "sitesmithForm": "Keep append-only no-URL cross-project fingerprint ledger with fixed known-recipe blocklist seeded from measured patterns.",
+      "confidence": 0.85,
+      "redTeam": "confirmed",
+      "redTeamReason": "Confirmed exactly. DEFAULT_HISTORY = ~/.sitesmith/direction-history.jsonl (line 23). KNOWN_RECIPES hard-codes 'technical-editorial-flat' with an explicit comment 'must be blocked even on a clean install whose personal history is empty' (lines 27-35). compareWithHistory (lines 185-213) checks exact fingerprint clashes, a >=4 shared-device threshold ('if (shared.length < 4) continue'), and identical macro-axis matches across all five AXES. Header comment states 'Future records contain no URL; the ledger describes a design, not a client.'",
+      "redTeamEvidence": "skills/sitesmith/scripts/direction-history.mjs:1-35,185-213"
+    },
+    {
+      "key": "sitesmith-current/design-system-py-legacy-generator",
+      "id": "design-system-py-legacy-generator",
+      "source": "sitesmith-current",
+      "sourcePath": "skills/sitesmith/scripts/design_system.py:1-80 (1151 lines); zero references in v2/*.md or PIPELINE.json",
+      "problemSolved": "Nothing — dead v1 code never called by the current pipeline.",
+      "mechanism": "Multi-domain BM25 + CSV rule-matcher assembling a full design system procedurally.",
+      "whyItWorks": "N/A, unreachable.",
+      "requiredContext": [
+        "data/ui-reasoning.csv",
+        "data/*.csv"
+      ],
+      "contextCost": "high",
+      "outputImpact": "Zero on normal builds; a latent mechanical-creativity trap if ever reconnected.",
+      "failureModes": [
+        "Silent dead code",
+        "Reproduces mechanical-creativity failure at design-system level if invoked"
+      ],
+      "conflicts": [
+        "Contradicts v2/30-contract.md's 'derived from the brief, not from this file'"
+      ],
+      "testMethod": "none",
+      "decision": "reject",
+      "sitesmithForm": "Do not carry forward.",
+      "confidence": 0.8,
+      "redTeam": "confirmed",
+      "redTeamReason": "Confirmed as described, including the 'unreachable' characterization. design_system.py exists (1151 lines), implements a DesignSystemGenerator with multi-domain search and CSV-driven reasoning rules. It is imported only by search.py (line 28) behind a --design-system CLI flag, but every actual pipeline invocation of search.py in v2/20-direction-lab.md:46 and PIPELINE.json:196 uses --candidates only, never --design-system. Grep across v2/*.md and PIPELINE.json for 'design_system'/'design-system' returns no hits outside unrelated prose usages. So the code is real but dead in the shipped pipeline, matching the original claim's own 'N/A, unreachable' framing.",
+      "redTeamEvidence": "skills/sitesmith/scripts/design_system.py:1-80; skills/sitesmith/scripts/search.py:28; skills/sitesmith/v2/20-direction-lab.md:46; skills/sitesmith/PIPELINE.json:196"
+    },
+    {
+      "key": "sitesmith-current/direction-candidate-search",
+      "id": "direction-candidate-search",
+      "source": "sitesmith-current",
+      "sourcePath": "skills/sitesmith/scripts/candidates.py:1-322; core.py:107-166; search.py:107-126; v2/20-direction-lab.md:42-48",
+      "problemSolved": "Naive top-3 BM25 search returns three near-identical rows.",
+      "mechanism": "BM25 over fixed style/color/typography CSVs, greedy Jaccard-distance-maximizing pick of 3 rows, anti-repeat history exclusion.",
+      "whyItWorks": "Good as pure search diversity technique.",
+      "requiredContext": [
+        "data/<domain>.csv",
+        "query",
+        "dials",
+        "search-history.jsonl"
+      ],
+      "contextCost": "medium",
+      "outputImpact": "Most likely cause of the 40-vs-59 benchmark loss: anchors the model's creative choice to a closed, dated named-style menu instead of evidence-driven reasoning.",
+      "failureModes": [
+        "Directions pulled toward a fixed 2024 vocabulary",
+        "detect_domain silently defaults to 'style' on no match",
+        "distance-from-chosen is a proxy for structural difference, not a measure of it"
+      ],
+      "conflicts": [
+        "Contradicts v2/05-evidence.md's 'nothing here decides a colour'",
+        "Textbook C-no-mechanical-creativity violation"
+      ],
+      "testMethod": "asserted only",
+      "decision": "reject",
+      "sitesmithForm": "Do not port; let the model generate three directions from EVIDENCE.md reasoning, optional CSV lookup as background reference only.",
+      "confidence": 0.9,
+      "redTeam": "confirmed",
+      "redTeamReason": "Confirmed. core.py:107-166 contains a full working BM25 class (k1/b, tokenize, fit, score). candidates.py imports it, defines _jaccard (line 41), reads a history file at .sitesmith/search-history.jsonl (line 29), and the selection loop (lines 195-260) seeds on the top BM25 match then greedily picks the row maximizing a weighted distance-plus-relevance score (0.75*distance + 0.25*score - repeat penalty), explicitly excluding history repeats from the first seat and demoting them elsewhere.",
+      "redTeamEvidence": "skills/sitesmith/scripts/candidates.py:19-260; skills/sitesmith/scripts/core.py:107-166"
+    },
+    {
+      "key": "sitesmith-current/direction-fidelity-render-check",
+      "id": "direction-fidelity-render-check",
+      "source": "sitesmith-current",
+      "sourcePath": "skills/sitesmith/scripts/direction-fidelity.mjs:1-452",
+      "problemSolved": "A declared direction can be real on paper and absent on screen (dark-mode-only direction rendering light by default).",
+      "mechanism": "Renders in default colour scheme, measures luminance/font/asset-share/bands/device-counts/signature-share, checks against classified expectations from DIRECTION.md.",
+      "whyItWorks": "Measures what a reviewer actually sees, not what the CSS source intends.",
+      "requiredContext": [
+        "DIRECTION.md axis record",
+        "built page URL",
+        "playwright"
+      ],
+      "contextCost": "medium",
+      "outputImpact": "Catches a real, previously-shipped defect class no other check catches.",
+      "failureModes": [
+        "Classifier regexes recognise only a fixed vocabulary of axis phrasing",
+        "Malformed DIRECTION.md format fails the whole check before any visual judgement"
+      ],
+      "conflicts": [],
+      "testMethod": "real DOM measurement against written contract",
+      "decision": "adopt",
+      "sitesmithForm": "Keep as canonical shipped-vs-declared check, default colour scheme, no exceptions.",
+      "confidence": 0.88,
+      "redTeam": "confirmed",
+      "redTeamReason": "Confirmed. direction-fidelity.mjs parses ground/imagery/rhythm expectations from DIRECTION.md text (lines 87-148), launches a single-viewport (1440x900) browser render (line 406-408), measures luminance, displayFamily, assetShare/largestAssetShare, bands, monoCaps/hairlines/tabularNums/shadowed ('devices' row), and a declared signature selector's share, then reports PASS/FAIL against the classified expectation (lines 219-300, 430-448). 'device-counts' in the claim maps to the monoCaps/hairlines/tabularNums/shadowed counts the script itself labels 'devices' — a stylistic-device count, not a viewport-device count, but the underlying measurement machinery is real and matches the rest of the claim exactly.",
+      "redTeamEvidence": "skills/sitesmith/scripts/direction-fidelity.mjs:87-300,406-448"
+    },
+    {
+      "key": "sitesmith-current/evidence-before-direction",
+      "id": "evidence-before-direction",
+      "source": "sitesmith-current",
+      "sourcePath": "skills/sitesmith/v2/05-evidence.md:1-127",
+      "problemSolved": "A brief alone can only look like its category; a page designed from it alone converges with peers.",
+      "mechanism": "Seven-section research artifact (artefacts, vocabulary, materials, true colour, constraints, references/anti-references, asset reality), strict sourcing preference, (inferred)/(needed) markers.",
+      "whyItWorks": "Grounds the model in real subject-specifics before any visual decision — improves model reasoning, not mechanical.",
+      "requiredContext": [
+        "v2/05-evidence.md",
+        "client material/site content"
+      ],
+      "contextCost": "low",
+      "outputImpact": "Anti-references target house-style convergence directly.",
+      "failureModes": [
+        "No mechanical check that EVIDENCE.md content influenced DIRECTION.md",
+        "'stated as unknown' has no forcing function against skipping research"
+      ],
+      "conflicts": [],
+      "testMethod": "asserted only",
+      "decision": "adopt",
+      "sitesmithForm": "Keep as required pre-direction research pass with same seven sections.",
+      "confidence": 0.85,
+      "redTeam": "confirmed",
+      "redTeamReason": "Confirmed. File is 127 lines with exactly seven numbered sections at lines 30, 39, 48, 54, 63, 69, 82 matching the claimed topics (artefacts, vocabulary, materials/surfaces, colour already true, constraints, references/anti-references, asset reality). Line 94 states 'In order of preference' for sourcing, and lines 106/116 use the literal markers (inferred) and (needed).",
+      "redTeamEvidence": "skills/sitesmith/v2/05-evidence.md:1-127"
+    },
+    {
+      "key": "sitesmith-current/interaction-journeys",
+      "id": "interaction-journeys",
+      "source": "sitesmith-current",
+      "sourcePath": "skills/sitesmith/v2/40-interaction.md:1-156; scripts/journey.mjs:1-51",
+      "problemSolved": "Nine legacy pages had zero <script> tags; every interactive state was drawn but never reachable.",
+      "mechanism": "Playwright journeys asserting: something observably changed, change is announced (role=status/alert/focus), a failure path is handled and field-attached, keyboard-only path works with visible focus.",
+      "whyItWorks": "A much higher bar than 'click didn't throw', catches exactly the styled-but-unwired defect class.",
+      "requiredContext": [
+        "v2/40-interaction.md",
+        "running dev server",
+        "playwright"
+      ],
+      "contextCost": "medium",
+      "outputImpact": "Converts 'has states' from visual claim to behavioral proof.",
+      "failureModes": [
+        "Journey quality depends entirely on hand-authoring; no generator or coverage check",
+        "Fixed 120s timeout with no per-journey override"
+      ],
+      "conflicts": [],
+      "testMethod": "real browser automation against live page",
+      "decision": "adopt",
+      "sitesmithForm": "Keep four-part assertion contract as the definition of a valid journey; keep empty-journeys-fails-production-gate rule.",
+      "confidence": 0.8,
+      "redTeam": "confirmed",
+      "redTeamReason": "Confirmed. 40-interaction.md's worked example (lines 95-102) shows a Playwright script waiting for [role=status], checking status text, and checking keyboard focus visibility. The four-part rule is stated explicitly at lines 121-125 (observable change, role=status/alert/focus announcement, failure path, keyboard path). journey.mjs (all 50 lines) is a real, generic *.spec.mjs runner that executes each journey file and reports pass/fail, matching the 'thin runner' framing.",
+      "redTeamEvidence": "skills/sitesmith/v2/40-interaction.md:37-42,54-58,95-125; skills/sitesmith/scripts/journey.mjs:1-50"
+    },
+    {
+      "key": "sitesmith-current/mode-based-routing-not-defaults",
+      "id": "mode-based-routing-not-defaults",
+      "source": "sitesmith-current",
+      "sourcePath": "skills/sitesmith/SKILL.md:28-46; v2/README.md:79-83",
+      "problemSolved": "v1 issued global rules and then contradicted itself when context demanded otherwise.",
+      "mechanism": "Two ordered routing questions: mode (3 rows, decided per page not per project) then task (5 rows); mode files state outcomes deliberately, not defaults.",
+      "whyItWorks": "Separates 'what kind of page' from 'what task', removing the contradiction pattern; refusing defaults removes what an agent reaches for under pressure.",
+      "requiredContext": [
+        "SKILL.md routing tables",
+        "one v2/modes/*.md file"
+      ],
+      "contextCost": "low",
+      "outputImpact": "Prevents v1's global-rule-vs-contextual-override self-contradiction.",
+      "failureModes": [
+        "No tie-break mechanism for a genuinely ambiguous page (part-marketing, part-configurator)"
+      ],
+      "conflicts": [],
+      "testMethod": "asserted only",
+      "decision": "adopt",
+      "sitesmithForm": "Keep per-page mode routing as first decision; keep mode files as outcomes not defaults.",
+      "confidence": 0.7,
+      "redTeam": "unchallenged",
+      "redTeamReason": "",
+      "redTeamEvidence": ""
+    },
+    {
+      "key": "sitesmith-current/portfolio-diversity-gate",
+      "id": "portfolio-diversity-gate",
+      "source": "sitesmith-current",
+      "sourcePath": "skills/sitesmith/scripts/portfolio-diversity.mjs:1-251; v2/50-critique.md:141-155",
+      "problemSolved": "Individual-page gates can all pass while a set of sites still reads as one studio's work.",
+      "mechanism": "Measures a set of rendered URLs: ground-luminance clustering within a band, shared-device-across-set counts (>2 of 3 flagged), imagery-load-bearing-anywhere threshold, layout-signature collisions, display-face diversity.",
+      "whyItWorks": "Measures a set-level property no single-site gate can see by construction; directly targets C-no-house-style.",
+      "requiredContext": [
+        "2+ rendered URLs",
+        "playwright"
+      ],
+      "contextCost": "medium",
+      "outputImpact": "Most literal existing implementation of catching house-style formation across independently-briefed outputs.",
+      "failureModes": [
+        "Thresholds hand-tuned to one measured episode; a differently-shaped convergence (e.g. shared motion/copy cadence) is invisible",
+        "Only runs when explicitly invoked, not part of ordinary single-site pipeline"
+      ],
+      "conflicts": [],
+      "testMethod": "real cross-site DOM measurement and comparison",
+      "decision": "adopt",
+      "sitesmithForm": "Keep as mandatory pre-showcase/portfolio gate, not a per-site step.",
+      "confidence": 0.85,
+      "redTeam": "unchallenged",
+      "redTeamReason": "",
+      "redTeamEvidence": ""
+    },
+    {
+      "key": "sitesmith-current/production-gate-honesty-checks",
+      "id": "production-gate-honesty-checks",
+      "source": "sitesmith-current",
+      "sourcePath": "skills/sitesmith/scripts/production-gate.mjs:1-519",
+      "problemSolved": "A page can pass every a11y/layout check and still ship placeholder imagery or an empty logo box.",
+      "mechanism": "Regex scan for placeholder language/dummy identifiers, empty brand-mark detection, manifest cross-reference for every image/svg (state=ready required), traceable commerce-claim checking in mode E against EVIDENCE.md, borrowed-logo evidencing, journey-existence check.",
+      "whyItWorks": "Operationalizes honesty checks invisible to accessibility/layout tooling via text/DOM pattern matching plus manifest cross-reference.",
+      "requiredContext": [
+        "ASSET-MANIFEST.md",
+        "EVIDENCE.md",
+        "built pages or rendered URL",
+        "journeys/"
+      ],
+      "contextCost": "medium",
+      "outputImpact": "Catches fabricated-authenticity failures the brief treats as absolute red lines.",
+      "failureModes": [
+        "Static scan misses client-script-rendered content unless a URL is passed",
+        "Closed hand-maintained placeholder regex list",
+        "Commerce-claim tracing uses fragile substring matching"
+      ],
+      "conflicts": [],
+      "testMethod": "real regex/DOM scan against manifest and evidence file",
+      "decision": "adopt",
+      "sitesmithForm": "Keep as distinct finished/honest gate separate from a11y/layout gate; keep draft vs production modes.",
+      "confidence": 0.85,
+      "redTeam": "confirmed",
+      "redTeamReason": "Confirmed. Placeholder/dummy regexes at lines 25-38. Brand-mark block detection at line 177. Borrowed-mark evidence-cross-reference against EVIDENCE.md at lines 187-222. Manifest state=ready enforcement at line 397 ('if (row.state !== \\'ready\\')'). Mode-E-only commerce-claim check gated at line 310 ('if (mode !== \\'E\\') return;') plus EVIDENCE.md requirement at line 459. Journey-existence check reads the journeys/ dir and blocks if no *.spec.mjs exists (lines 493-496).",
+      "redTeamEvidence": "skills/sitesmith/scripts/production-gate.mjs:25-38,177-222,310,397,459,493-496"
+    },
+    {
+      "key": "sitesmith-current/progressive-disclosure-manifest",
+      "id": "progressive-disclosure-manifest",
+      "source": "sitesmith-current",
+      "sourcePath": "skills/sitesmith/PIPELINE.json:14-16,24-28; SKILL.md:18-20,129-148",
+      "problemSolved": "Pulling the whole rule corpus + 1.4MB of CSV data into context on every task burns budget and dilutes attention.",
+      "mechanism": "A machine-readable step->reads manifest; only SKILL.md + v2/10-core.md + one mode file are alwaysLoaded.",
+      "whyItWorks": "Converts a discipline into a router property instead of a thing the model must remember.",
+      "requiredContext": [
+        "SKILL.md",
+        "v2/10-core.md",
+        "one mode file",
+        "PIPELINE.json"
+      ],
+      "contextCost": "low",
+      "outputImpact": "Fixed ~27KB standing cost regardless of project size.",
+      "failureModes": [
+        "Nothing verifies an agent actually limited reads to the manifest",
+        "Ad-hoc tasks fall back to informal routing"
+      ],
+      "conflicts": [],
+      "testMethod": "asserted only",
+      "decision": "adopt",
+      "sitesmithForm": "Router + one universal rule file + one mode file always loaded; explicit reads-manifest per phase.",
+      "confidence": 0.85,
+      "redTeam": "confirmed",
+      "redTeamReason": "Confirmed verbatim. PIPELINE.json lines 14-16 state the progressive-disclosure rule; lines 24-28 list alwaysLoaded: [\"SKILL.md\", \"v2/10-core.md\", \"one file from v2/modes/\"]. Every command step (init/build/audit/harden/polish) carries an explicit \"reads\" array (lines 92, 104, 112, 122, 134...). SKILL.md lines 18-20 restate the same constraint and the file table at lines 129-148 lists exactly what is read at which step, ending with 'Sixty core rules plus one mode file is what you hold while working.'",
+      "redTeamEvidence": "skills/sitesmith/PIPELINE.json:1-28,92-320; skills/sitesmith/SKILL.md:15-21,120-148"
+    },
+    {
+      "key": "sitesmith-current/structurally-different-direction-gate",
+      "id": "structurally-different-direction-gate",
+      "source": "sitesmith-current",
+      "sourcePath": "skills/sitesmith/v2/20-direction-lab.md:55-134,246-293; scripts/direction-check.mjs:1-266",
+      "problemSolved": "Three comps sharing layout but differing in hue is one direction rendered three times; round-8 sites passed a 5-axis check and still shared one recipe.",
+      "mechanism": "Fixed parseable record (5 macro axes + 4 visual-grammar fields + 3 dials); mechanical pairwise-difference check on declared axes AND rendered DOM measurement, with hard-coded known-bad-recipe detection.",
+      "whyItWorks": "Measurement over declaration closes the gap between claimed and rendered difference.",
+      "requiredContext": [
+        "v2/20-direction-lab.md",
+        "three rendered comps + NOTE.md",
+        "playwright (optional)"
+      ],
+      "contextCost": "medium",
+      "outputImpact": "Enforces real portfolio variety, not just adjective variety.",
+      "failureModes": [
+        "Fixed taxonomy of recognised axis/grammar values; unrecognised phrasing becomes a skipped 'note'",
+        "Requires playwright, degrades to declared-only"
+      ],
+      "conflicts": [],
+      "testMethod": "real render + DOM measurement",
+      "decision": "adopt",
+      "sitesmithForm": "Keep declared-record + rendered-measurement double check and hard-coded known-recipe blocklist.",
+      "confidence": 0.9,
+      "redTeam": "confirmed",
+      "redTeamReason": "Confirmed. 20-direction-lab.md defines 5 named axes (lines 55-118), 4 visual-grammar fields (surface/labels/figures/depth), and 3 dials (density/motion/boldness, lines 30-50, 266-276). direction-check.mjs measures rendered pages (groundLuminance, displayFamily, image counts, distinctSizes) and flags comps that 'measure identically' or share >=3 of 4 stylistic devices as a known 'micro-recipe' (lines 194-217), which is exactly the round-8 tell described in the .md file's own text (lines 118-124).",
+      "redTeamEvidence": "skills/sitesmith/v2/20-direction-lab.md:30-134,266-276; skills/sitesmith/scripts/direction-check.mjs:1-260"
+    },
+    {
+      "key": "sitesmith-current/two-gate-separation-technical-vs-visual",
+      "id": "two-gate-separation-technical-vs-visual",
+      "source": "sitesmith-current",
+      "sourcePath": "skills/sitesmith/v2/50-critique.md:1-155; v2/README.md:75-77",
+      "problemSolved": "Merging 'works' and 'good' is how PASS came to be read as 'this is good'.",
+      "mechanism": "Technical gate must be green before visual critique runs; 7-criterion rubric scored on screenshots only; mandatory primary-criticism sentence answered before scores seen; generic-template answer fails regardless of scores; specificity capped at 3 if rebadgeable.",
+      "whyItWorks": "Separates floor from ceiling; primary-criticism test targets genericness directly rather than averaging it away.",
+      "requiredContext": [
+        "v2/50-critique.md",
+        "screenshots at 3 widths x 2 schemes plus 3 rejected comps"
+      ],
+      "contextCost": "low",
+      "outputImpact": "Most direct operationalization of 'would a designer say a machine made this' as a failable check.",
+      "failureModes": [
+        "Ordinary-build reviewer is the same agent that built the page — no independence guarantee",
+        "Specificity cap has no mechanical proxy in ordinary path"
+      ],
+      "conflicts": [],
+      "testMethod": "asserted for ordinary builds; enforced mechanically only in lab variant",
+      "decision": "adopt",
+      "sitesmithForm": "Keep hard order (technical green first) and primary-criticism generic-tell test with score-override rule.",
+      "confidence": 0.83,
+      "redTeam": "confirmed",
+      "redTeamReason": "Confirmed. v2/README.md:75-77 states the two-gate split verbatim ('Two gates, not one... after the first is green'). 50-critique.md defines seven criteria scored 1-10 (lines 44-73), a mandatory primary-criticism question 'answered before the scores' (lines 99-107) that fails the gate regardless of numeric scores if it's the generic-template answer, and criterion 2 explicitly says 'If yes, cap this criterion at 3' for a rebadgeable page (line 52).",
+      "redTeamEvidence": "skills/sitesmith/v2/README.md:75-77; skills/sitesmith/v2/50-critique.md:44-107"
+    },
+    {
+      "key": "sitesmith-current/verify-fail-closed-gates",
+      "id": "verify-fail-closed-gates",
+      "source": "sitesmith-current",
+      "sourcePath": "skills/sitesmith/scripts/verify.mjs:1-313",
+      "problemSolved": "A gate that silently 'did not run' and still prints PASS is worse than no gate; layouts fitting only under the developer's own font shipped broken elsewhere invisibly.",
+      "mechanism": "Screenshots at 3 widths with axe-core in both colour schemes; missing axe scan is a blocking failure unless --no-axe is explicitly passed; reads raw HTML source (not live DOM) for structural defects since the DOM auto-repairs a missing root element; --font-stress mode swaps a deliberately wide font before measuring overflow.",
+      "whyItWorks": "Every check targets a real, previously-shipped, previously-invisible defect class named in the code's own comments.",
+      "requiredContext": [
+        "playwright + axe-core installed in target project",
+        "reachable URL"
+      ],
+      "contextCost": "medium",
+      "outputImpact": "Fail-closed defaults and source-not-DOM structural checks both specifically prevent false-green signals.",
+      "failureModes": [
+        "Requires target project to have playwright installed; fresh projects can't run it at all yet",
+        "--no-axe preview mode depends on the agent re-running the full check before claiming done"
+      ],
+      "conflicts": [],
+      "testMethod": "real browser automation, real axe-core engine, real HTTP checks",
+      "decision": "adopt",
+      "sitesmithForm": "Keep dual-scheme axe scanning, fail-closed-on-missing-scan, raw-source structural checks, font-stress mode, and the preview-vs-release distinction.",
+      "confidence": 0.87,
+      "redTeam": "unchallenged",
+      "redTeamReason": "",
+      "redTeamEvidence": ""
+    },
+    {
+      "key": "taste-skill/bias-correction-bans-with-override-paths",
+      "id": "bias-correction-bans-with-override-paths",
+      "source": "taste-skill",
+      "sourcePath": "skills/taste-skill/SKILL.md:161-349,595-701",
+      "problemSolved": "Blocklisting known LLM-default tells without permanently outlawing them for briefs that genuinely want them.",
+      "mechanism": "Every ban stated as 'discouraged/banned as DEFAULT' with an explicit 'Override:' clause naming exactly when it's acceptable again.",
+      "whyItWorks": "A ban with a stated override is falsifiable/revisitable; bare bans get ignored (per file's own claim) or, if absolute (em-dash), become machine-checkable.",
+      "requiredContext": [
+        "design read to evaluate override conditions"
+      ],
+      "contextCost": "high",
+      "outputImpact": "Reduces commonly-cited AI tells per the file's own asserted (not published) production-test provenance.",
+      "failureModes": [
+        "banning specific named clichés only holds until the next wave emerges — whack-a-mole, needs re-curation",
+        "only the absolute em-dash ban is reliably enforceable; everything else depends on correct model judgment of its own override condition"
+      ],
+      "conflicts": [
+        "70+ enumerated bans risk becoming the mechanical rules-execution the file's own thesis argues against"
+      ],
+      "testMethod": "em-dash ban states a mechanical test (grep); nothing else does",
+      "decision": "adapt",
+      "sitesmithForm": "Split into (1) short list of absolute, script-checkable bans and (2) a short list of judgment principles with one example each, not a recited blocklist.",
+      "confidence": 0.75,
+      "redTeam": "confirmed",
+      "redTeamReason": "Confirmed pattern throughout Section 4 (161-349) and Section 9 (595-701): e.g. Inter font ban with 'Override: Inter is acceptable when...' (169-170), Lila/purple ban with 'Override: if the brand or brief explicitly asks for purple...' (187-188), premium-consumer beige/brass palette ban with its own Override clause (207), centered-hero ban with Override (210-211). The pattern is real and consistent, not just in the cited ranges but throughout the file.",
+      "redTeamEvidence": "skills/taste-skill/SKILL.md:161-349,595-701"
+    },
+    {
+      "key": "taste-skill/brief-inference-design-read",
+      "id": "brief-inference-design-read",
+      "source": "taste-skill",
+      "sourcePath": "skills/taste-skill/SKILL.md:13-39",
+      "problemSolved": "Models jump straight to a default aesthetic instead of reasoning about who the site is for and what it should feel like.",
+      "mechanism": "Before any code, read five signal types (page kind, vibe words, references, audience, quiet constraints); emit one committed sentence: 'Reading this as: <page kind> for <audience>, with a <vibe> language, leaning toward <system/aesthetic family>.' Ask at most ONE clarifying question only if the read genuinely diverges; otherwise commit and proceed.",
+      "whyItWorks": "Forces externalized evidence-based judgment before generation — matches the 'reasoning natively from evidence' behavior scored 59 vs 40 for template generation in the C-no-mechanical-creativity brief.",
+      "requiredContext": [
+        "user's brief text",
+        "pasted references/screenshots/URLs"
+      ],
+      "contextCost": "low",
+      "outputImpact": "Determines every downstream decision — highest-leverage mechanism in the file.",
+      "failureModes": [
+        "a bad design read propagates silently with nothing downstream to catch it",
+        "no mechanism forces revisiting the read if later sections contradict it"
+      ],
+      "conflicts": [],
+      "testMethod": "asserted only — checklist line 916 asks 'declared?' not quality",
+      "decision": "adopt",
+      "sitesmithForm": "Keep as mandatory first move: one committed, evidence-cited sentence before any file is written. Do not turn it into a dropdown form — the value is forced prose reasoning.",
+      "confidence": 0.9,
+      "redTeam": "confirmed",
+      "redTeamReason": "Confirmed verbatim. Section 0 (lines 13-39) of skills/taste-skill/SKILL.md contains exactly this: 0.A lists the five signal types (page kind, vibe words, references, audience, quiet constraints) at lines 17-23; 0.B mandates the one-line 'Reading this as: <page kind> for <audience>, with a <vibe> language, leaning toward <system/aesthetic family>' at lines 25-31; 0.C caps clarification at exactly one question, only when the read diverges, at lines 33-36.",
+      "redTeamEvidence": "skills/taste-skill/SKILL.md:13-39"
+    },
+    {
+      "key": "taste-skill/brief-to-design-system-router",
+      "id": "brief-to-design-system-router",
+      "source": "taste-skill",
+      "sourcePath": "skills/taste-skill/SKILL.md:82-119,987-1109",
+      "problemSolved": "LLMs hand-roll bad imitation CSS for Fluent/Material/Carbon/GOV.UK instead of using real packages, or treat pure aesthetics as having an official source.",
+      "mechanism": "Two-bucket router: named enterprise/gov system → install official package, never mix two systems; pure aesthetic (bento, brutalism, glassmorphism) → native CSS, label honestly, including explicit note that Apple Liquid Glass has no public web package.",
+      "whyItWorks": "Grounding mechanism preventing a specific hallucination class (invented framework, false official-status claims) via a checkable fact table.",
+      "requiredContext": [
+        "design read",
+        "Appendix B doc links conditionally"
+      ],
+      "contextCost": "medium",
+      "outputImpact": "Prevents a recurring, verifiable factual error class without touching creative decisions.",
+      "failureModes": [
+        "vendored package names/APIs go stale since this is static text, not a live doc fetch"
+      ],
+      "conflicts": [],
+      "testMethod": "none in-repo, trivially checkable against real registries",
+      "decision": "adopt",
+      "sitesmithForm": "Port the two-bucket logic and honesty rule as-is; re-verify install commands/doc links at rebuild time rather than copying verbatim.",
+      "confidence": 0.85,
+      "redTeam": "confirmed",
+      "redTeamReason": "Confirmed. Section 2.A (lines 82-104) is the real-system table with install guidance and a 'One system per project' rule; Section 2.B (106-119) is the aesthetic-only table, ending with the Apple Liquid Glass row stating explicitly 'There is no official liquid-glass.css.' Appendix A (987-1109) backs this with real npm/yarn install commands and canonical doc URLs for every listed system.",
+      "redTeamEvidence": "skills/taste-skill/SKILL.md:82-119,987-1109"
+    },
+    {
+      "key": "taste-skill/combinatorial-variation-picklists",
+      "id": "combinatorial-variation-picklists",
+      "source": "taste-skill",
+      "sourcePath": "skills/image-to-code-skill/SKILL.md:415-488",
+      "problemSolved": "Same repetitive-output problem as gpt-fake-rng, applied to the image-generation-first workflow.",
+      "mechanism": "'Choose 1' from each of 5 enumerated category lists (theme, background, typography, hero architecture, section system) plus 'choose exactly 4' components and 'choose exactly 2' motion cues, then commit consistently.",
+      "whyItWorks": "Unlike gpt-fake-rng, honestly presented as a menu, not a fake dice roll; genuinely helps within-project consistency.",
+      "requiredContext": [
+        "none beyond the six fixed menus"
+      ],
+      "contextCost": "medium",
+      "outputImpact": "Improves within-project coherence but still bounds cross-project variety to a fixed combinatorial space rather than brief-grounded reasoning.",
+      "failureModes": [
+        "substitutes a brief-agnostic menu selection for reasoning grounded in the specific brief — two unrelated 'premium tech startup' briefs draw from identical menus",
+        "no mechanism ties the choice back to why THIS brief calls for one option over another"
+      ],
+      "conflicts": [
+        "partially conflicts with C-no-mechanical-creativity — better than fake RNG but still menu selection, not evidence-grounded reasoning"
+      ],
+      "testMethod": "none",
+      "decision": "reject",
+      "sitesmithForm": "Do not port the fixed menus. Keep only the one-sentence instruction: pick a coherent direction and commit to it across every section.",
+      "confidence": 0.7,
+      "redTeam": "unchallenged",
+      "redTeamReason": "",
+      "redTeamEvidence": ""
+    },
+    {
+      "key": "taste-skill/em-dash-absolute-ban",
+      "id": "em-dash-absolute-ban",
+      "source": "taste-skill",
+      "sourcePath": "skills/taste-skill/SKILL.md:685-701,920",
+      "problemSolved": "The most-violated stylistic tell kept recurring under softer 'use sparingly' phrasing.",
+      "mechanism": "Zero em-dashes anywhere, no override, phrased fully binary — a single instance anywhere visible fails the pre-flight check.",
+      "whyItWorks": "The only rule phrased as fully binary and mechanically testable via a single regex scan.",
+      "requiredContext": [
+        "none — unconditional"
+      ],
+      "contextCost": "low",
+      "outputImpact": "Removes one fatigued tell; no effect on creative direction.",
+      "failureModes": [
+        "none as written — cleanest mechanism in the repo"
+      ],
+      "conflicts": [],
+      "testMethod": "regex over rendered output; automatable, not automated here",
+      "decision": "adopt",
+      "sitesmithForm": "Copy verbatim as a style fact; wire into SiteSmith's verify.mjs as a real automated check instead of leaving it to self-report.",
+      "confidence": 0.95,
+      "redTeam": "confirmed",
+      "redTeamReason": "Confirmed. Section 9.G (685-701) states the ban is complete with 'no limited-use allowance... None' and explicitly contrasts itself with the overridable bans elsewhere ('The agent has historically ignored em-dash limits when phrased as sparingly. The phrasing here is binary: zero em-dashes'). Line 920 in the Pre-Flight Checklist independently re-states 'ZERO em-dashes anywhere on the page... Zero.' This is the only rule in the file phrased with no override path.",
+      "redTeamEvidence": "skills/taste-skill/SKILL.md:685-701,920"
+    },
+    {
+      "key": "taste-skill/fixed-aesthetic-template-skills",
+      "id": "fixed-aesthetic-template-skills",
+      "source": "taste-skill",
+      "sourcePath": "skills/soft-skill/SKILL.md:1-98; skills/minimalist-skill/SKILL.md:1-85; skills/brutalist-skill/SKILL.md:1-93; skills/gpt-tasteskill/SKILL.md:1-75",
+      "problemSolved": "Gives a user who already chose a direction a ready-made fully-specified rule set instead of an open brief.",
+      "mechanism": "Each hardcodes a complete design system directly in the prompt: exact hex codes, exact radii, exact font-stack priority, numbered component construction methods (e.g. minimalist-skill's #FFFFFF/#F7F6F3/#EAEAEA and four pastel accents; gpt-tasteskill's mandatory #f9fafb background with no override).",
+      "whyItWorks": "For a one-off build where the user explicitly wants exactly this look, a fully-specified template produces a coherent result quickly.",
+      "requiredContext": [
+        "none beyond 'user wants this aesthetic family'"
+      ],
+      "contextCost": "low",
+      "outputImpact": "Every project built with the same fixed-template skill converges on the same hex codes/radii/patterns by construction, not accident.",
+      "failureModes": [
+        "this IS the C-no-house-style failure mode in its purest form — three independently-briefed sites using the same skill would necessarily share the same tokens",
+        "gpt-tasteskill's mandatory hex has no override path at all, unlike the flagship's ban+override pattern"
+      ],
+      "conflicts": [
+        "directly conflicts with C-no-house-style"
+      ],
+      "testMethod": "none",
+      "decision": "reject",
+      "sitesmithForm": "Do not port as skills or presets. Fold descriptive vocabulary (what 'brutalist' connotes) into a reference-vocabulary glossary and let the design-read reasoning pick fresh specifics every time.",
+      "confidence": 0.85,
+      "redTeam": "refuted",
+      "redTeamReason": "Partially fabricated evidence. soft-skill/SKILL.md (1-98), minimalist-skill/SKILL.md (1-85), and brutalist-skill/SKILL.md (1-93) do genuinely hardcode hex-level design systems as described - minimalist-skill's #FFFFFF/#F7F6F3/#EAEAEA + four pastel accents is verified verbatim (lines 33-40). However, gpt-tasteskill/SKILL.md (checked in full, all 75 lines) contains NO mention of '#f9fafb' or any mandatory background hex at all - it uses picsum.photos placeholder images and CSS filters, not a fixed palette. The string '#f9fafb' actually exists in a different file entirely: skills/taste-skill-v1/SKILL.md:197 ('Background in #f9fafb'). The claim misattributes evidence from one skill file to another, so the specific example given for gpt-tasteskill does not exist at the cited path.",
+      "redTeamEvidence": "skills/gpt-tasteskill/SKILL.md:1-75 (no #f9fafb present); actual match at skills/taste-skill-v1/SKILL.md:197"
+    },
+    {
+      "key": "taste-skill/full-output-enforcement",
+      "id": "full-output-enforcement",
+      "source": "taste-skill",
+      "sourcePath": "skills/output-skill/SKILL.md:1-49",
+      "problemSolved": "Models truncate long code output with placeholder comments or premature stop.",
+      "mechanism": "Banned-pattern list for code and prose, a three-step scope/build/cross-check process, and a defined pause/resume protocol for token-limited responses.",
+      "whyItWorks": "Orthogonal general-purpose prompt engineering against a known laziness failure mode, backed (per this repo's own uncited essay) by asserted effects.",
+      "requiredContext": [
+        "none — general-purpose"
+      ],
+      "contextCost": "low",
+      "outputImpact": "No effect on visual/creative quality; reduces incomplete-file delivery.",
+      "failureModes": [
+        "pause/resume protocol assumes the host harness sends back a literal keyword and resumes state correctly — not guaranteed"
+      ],
+      "conflicts": [],
+      "testMethod": "none",
+      "decision": "adopt",
+      "sitesmithForm": "Fold the banned-pattern list and scope-lock process into general execution discipline if truncation is an observed problem; skip pause/resume unless the harness supports it.",
+      "confidence": 0.7,
+      "redTeam": "unchallenged",
+      "redTeamReason": "",
+      "redTeamEvidence": ""
+    },
+    {
+      "key": "taste-skill/gpt-fake-rng",
+      "id": "gpt-fake-rng",
+      "source": "taste-skill",
+      "sourcePath": "skills/gpt-tasteskill/SKILL.md:13-20,67-74",
+      "problemSolved": "Attempts to break the LLM default-to-first-option failure across repeated calls.",
+      "mechanism": "Instructs the model to 'simulate a Python script execution,' narrate a mock RNG output derived from prompt-character-count modulo arithmetic, and treat that fabrication as a deterministic selector across four small enumerated menus.",
+      "whyItWorks": "It doesn't work as claimed — no code actually executes; the model hallucinates a plausible-looking output and trusts its own fabrication. Does not decorrelate outputs across separate conversations and adds token cost for zero real signal.",
+      "requiredContext": [
+        "none beyond the four enumerated menus"
+      ],
+      "contextCost": "low",
+      "outputImpact": "Bounds variety to whatever is in four small fixed lists — illusion of randomization doesn't expand the real design space.",
+      "failureModes": [
+        "textbook example of moving a creative decision into a fake script rather than making the model think — exactly the losing side (40 vs 59) of C-no-mechanical-creativity",
+        "adds token cost and false rigor with no output-quality gain",
+        "menus are small enough that even genuine randomization would converge quickly"
+      ],
+      "conflicts": [
+        "directly conflicts with C-no-mechanical-creativity"
+      ],
+      "testMethod": "none — and none possible since the Python execution never runs",
+      "decision": "reject",
+      "sitesmithForm": "Do not port. Real variance should come from the design read citing brief-specific evidence, not fabricated dice rolls.",
+      "confidence": 0.9,
+      "redTeam": "confirmed",
+      "redTeamReason": "Confirmed verbatim, and the critique holds up. Lines 13-20 instruct the model to 'simulate a Python script execution' using 'character count of the user prompt modulo math' to 'simulate random.choice()' across exactly four categories (Hero Architecture, Typography Stack, Component Architectures, GSAP Paradigms). Lines 67-74 mandate a pre-flight <design_plan> block with 'a 3-line mock Python output.' No actual code execution occurs anywhere in the skill - it is pure LLM narration of a fake deterministic process, exactly as the whyItWorks claims.",
+      "redTeamEvidence": "skills/gpt-tasteskill/SKILL.md:13-20,67-74"
+    },
+    {
+      "key": "taste-skill/gsap-canonical-code-skeletons",
+      "id": "gsap-canonical-code-skeletons",
+      "source": "taste-skill",
+      "sourcePath": "skills/taste-skill/SKILL.md:365-473",
+      "problemSolved": "Scroll-pin/hijack GSAP patterns are easy to get subtly wrong (trigger fires mid-scroll instead of pinning at top).",
+      "mechanism": "Two complete working React components (StickyStack, HorizontalPan) with exact ScrollTrigger config called out as 'critical points,' plus a lighter Motion-only whileInView alternative for simple reveals.",
+      "whyItWorks": "Real, specific engineering knowledge delivered as working code for a well-known failure mode, loaded conditionally.",
+      "requiredContext": [
+        "only needed when sticky-stack/horizontal-pan pattern is chosen"
+      ],
+      "contextCost": "low",
+      "outputImpact": "Prevents a specific reproducible implementation bug; no effect on creative direction.",
+      "failureModes": [
+        "tied to GSAP+Motion specifically; needs re-authoring if stack differs"
+      ],
+      "conflicts": [],
+      "testMethod": "none in-repo; visually verifiable by checking pin offset",
+      "decision": "adapt",
+      "sitesmithForm": "Re-express in SiteSmith's chosen animation stack; keep the 'critical points' callout pattern since that's the load-bearing content.",
+      "confidence": 0.8,
+      "redTeam": "confirmed",
+      "redTeamReason": "Confirmed. Lines 365-423 contain the full StickyStack component (real GSAP/ScrollTrigger code, reduced-motion guard, cleanup via ctx.revert()); lines 427-471 contain the full HorizontalPan component; each is followed by a 'Critical points:' callout line (425, 473) naming the exact config values. Line 475+ (5.C) is the lighter Motion whileInView alternative referenced by the claim.",
+      "redTeamEvidence": "skills/taste-skill/SKILL.md:365-473"
+    },
+    {
+      "key": "taste-skill/image-first-generation-discipline",
+      "id": "image-first-generation-discipline",
+      "source": "taste-skill",
+      "sourcePath": "skills/image-to-code-skill/SKILL.md:112-230,860-895",
+      "problemSolved": "Coded output visually drifts from a strong generated reference image.",
+      "mechanism": "Mandatory ordering (generate reference → deeply analyze text/type/spacing/color/components → implement to match); hard rule against cropping sections from a larger composite (regenerate fresh instead); explicit 'Anti-Drift' rule naming concrete drift symptoms to check against.",
+      "whyItWorks": "Targets a real, specific, named failure mode with a concrete countermeasure rather than a vague 'make it look nice.'",
+      "requiredContext": [
+        "an image-generation tool must be available",
+        "generated images must be re-inspected during implementation"
+      ],
+      "contextCost": "high",
+      "outputImpact": "When followed, directly prevents a specific real degradation, agnostic to aesthetic chosen.",
+      "failureModes": [
+        "depends entirely on image-gen tool availability/quality with no defined fallback",
+        "'deeply analyze' step is still self-report with no independent check"
+      ],
+      "conflicts": [],
+      "testMethod": "21-item self-administered 'Clarity Check' — same weakness as the flagship checklist",
+      "decision": "adapt",
+      "sitesmithForm": "Port the ordering discipline and named anti-drift symptom list as a lightweight principle; skip the Codex-specific image-count escalation rules.",
+      "confidence": 0.65,
+      "redTeam": "unchallenged",
+      "redTeamReason": "",
+      "redTeamEvidence": ""
+    },
+    {
+      "key": "taste-skill/official-design-system-honesty-rule",
+      "id": "official-design-system-honesty-rule",
+      "source": "taste-skill",
+      "sourcePath": "skills/taste-skill/SKILL.md:102-104,1113-1138",
+      "problemSolved": "Models claim hand-rolled CSS is an official platform technology (e.g. calling glassmorphism 'Apple Liquid Glass').",
+      "mechanism": "Install official packages when a real system is matched, never recreate 90% by hand; when no official source exists (Liquid Glass named specifically), label any implementation as an approximation in code comments.",
+      "whyItWorks": "Factual/labeling discipline costing nothing to the design read, preventing user-facing misrepresentation.",
+      "requiredContext": [
+        "Appendix C skeleton only if Liquid Glass specifically requested"
+      ],
+      "contextCost": "low",
+      "outputImpact": "Prevents a narrow but concrete factual-accuracy failure.",
+      "failureModes": [
+        "none identified"
+      ],
+      "conflicts": [],
+      "testMethod": "none",
+      "decision": "adopt",
+      "sitesmithForm": "State the general principle once rather than copying the specific CSS skeleton verbatim.",
+      "confidence": 0.8,
+      "redTeam": "confirmed",
+      "redTeamReason": "Confirmed. Lines 102-104 state the 'Honesty rule' verbatim ('install and use the official package... Do not import a system's tokens but then override 90% of them'). Appendix C (1113-1138) is dedicated entirely to Apple Liquid Glass, stating plainly 'There is no liquid-glass.css from Apple for normal websites' and 'Label it as such in comments.'",
+      "redTeamEvidence": "skills/taste-skill/SKILL.md:102-104,1113-1138"
+    },
+    {
+      "key": "taste-skill/redesign-mode-detection-and-audit-first",
+      "id": "redesign-mode-detection-and-audit-first",
+      "source": "taste-skill",
+      "sourcePath": "skills/taste-skill/SKILL.md:783-833",
+      "problemSolved": "Redesigns treated identically to greenfield builds, silently destroying SEO/brand/IA.",
+      "mechanism": "First action is mode classification (Greenfield/Preserve/Overhaul), ask once if ambiguous; Preserve/Overhaul require a documented audit before any change, plus a fixed 'never change silently' list.",
+      "whyItWorks": "Process/ordering mechanism preventing destructive mistakes independent of aesthetic choice.",
+      "requiredContext": [
+        "access to existing site/codebase to audit"
+      ],
+      "contextCost": "medium",
+      "outputImpact": "Matches SiteSmith's own documented Truth→Proof→UX→Beta ordering and audit-before-redesign rule.",
+      "failureModes": [
+        "audit is a self-produced artifact; nothing forces a second pass to confirm it was acted on"
+      ],
+      "conflicts": [],
+      "testMethod": "none automated; could diff the 'never change silently' list against the actual diff",
+      "decision": "adopt",
+      "sitesmithForm": "Port the three-mode classification and audit-before-fix ordering directly; make the 'never change silently' list a literal pre-merge diff check where feasible.",
+      "confidence": 0.85,
+      "redTeam": "confirmed",
+      "redTeamReason": "Confirmed. Section 11.A (787-792) is literally titled 'Detect the Mode (first action)' with the three named modes and a single-question ambiguity fallback; 11.B (794-802) is the mandatory pre-change audit; 11.F (825-831) is the explicit fixed list of things that never change without approval (URL slugs, nav labels, form field names, logo, legal copy).",
+      "redTeamEvidence": "skills/taste-skill/SKILL.md:783-833"
+    },
+    {
+      "key": "taste-skill/self-administered-preflight-checklist",
+      "id": "self-administered-preflight-checklist",
+      "source": "taste-skill",
+      "sourcePath": "skills/taste-skill/SKILL.md:910-979",
+      "problemSolved": "Prevents shipping known defects (bad contrast, wrapped CTAs, duplicate CTA intent, mixed radii).",
+      "mechanism": "~70-item Yes/No checklist the generating model runs against its own output right before delivery.",
+      "whyItWorks": "Checklists catch mechanically-describable defects when the model actually re-reads its output against them.",
+      "requiredContext": [
+        "the fully generated output to check against"
+      ],
+      "contextCost": "high",
+      "outputImpact": "Unverifiable within this repo whether it improves output — no independent grader exists.",
+      "failureModes": [
+        "single-pass same-model self-grading is the weakest verification form",
+        "no external critic, no defined stop condition beyond 'honestly ticked'",
+        "mechanical count-based items are strongest; aesthetic-judgment items are weakest (rubber-stamping risk)"
+      ],
+      "conflicts": [],
+      "testMethod": "self-report only, no external verification anywhere in repo",
+      "decision": "adapt",
+      "sitesmithForm": "Split: automate the mechanically-countable items in verify.mjs; keep judgment items as prompts for a genuinely separate critic pass, not a self-administered box.",
+      "confidence": 0.8,
+      "redTeam": "confirmed",
+      "redTeamReason": "Confirmed as real machinery: Section 14 (910-979) is a mandatory checklist explicitly framed as 'THIS IS NOT OPTIONAL. Run every box' with 'If a single checkbox cannot be honestly ticked, the page is not done.' One caveat: I counted the actual checkboxes at 62, not '~70' as the claim states - a ~12% overcount, though within loose 'approximately' framing. The mechanism itself is accurately described.",
+      "redTeamEvidence": "skills/taste-skill/SKILL.md:910-979"
+    },
+    {
+      "key": "taste-skill/single-clarifying-question-cap",
+      "id": "single-clarifying-question-cap",
+      "source": "taste-skill",
+      "sourcePath": "skills/taste-skill/SKILL.md:33-36",
+      "problemSolved": "Agents either guess wrong silently or dump multi-question interrogations before doing work.",
+      "mechanism": "Ask exactly one question, only when the design read genuinely diverges; otherwise infer confidently and proceed.",
+      "whyItWorks": "Bounds the interrogation failure mode without removing the ability to ask when it matters.",
+      "requiredContext": [
+        "design read from the prior step"
+      ],
+      "contextCost": "low",
+      "outputImpact": "Reduces friction; no direct visual effect.",
+      "failureModes": [
+        "no criterion given for 'genuinely diverges' beyond model judgment — unfalsifiable"
+      ],
+      "conflicts": [],
+      "testMethod": "none",
+      "decision": "adopt",
+      "sitesmithForm": "State plainly: one question max, only when two plausible reads would produce materially different builds.",
+      "confidence": 0.75,
+      "redTeam": "confirmed",
+      "redTeamReason": "Confirmed. Lines 33-36 read: 'Ask exactly one clarifying question - never a multi-question dump - and only when the design read genuinely diverges... If you can confidently infer from context, do not ask.' Matches the claim exactly.",
+      "redTeamEvidence": "skills/taste-skill/SKILL.md:33-36"
+    },
+    {
+      "key": "taste-skill/three-dial-system",
+      "id": "three-dial-system",
+      "source": "taste-skill",
+      "sourcePath": "skills/taste-skill/SKILL.md:43-79,552-569",
+      "problemSolved": "Gives shared vocabulary for how experimental/animated/dense a design should be instead of vague words.",
+      "mechanism": "Three named 1-10 scales (VARIANCE/MOTION/DENSITY) with baseline 8/6/4 and two lookup tables assigning numeric ranges from vibe words or use-case presets.",
+      "whyItWorks": "Useful as shared vocabulary; as a decision mechanism it's a table lookup, not reasoning — the liability side of C-no-mechanical-creativity when it substitutes for judgment.",
+      "requiredContext": [
+        "design read"
+      ],
+      "contextCost": "low",
+      "outputImpact": "Gates almost every downstream layout/motion/density decision — high leverage, high convergence risk since baseline is default absent override.",
+      "failureModes": [
+        "stateless lookup tables produce identical numbers for the same vibe words across unrelated projects — a structural driver of C-no-house-style convergence",
+        "numeric dials give false precision for a qualitative judgment"
+      ],
+      "conflicts": [
+        "C-no-house-style: deterministic vibe-word→number tables are a rules engine, not a design read"
+      ],
+      "testMethod": "none — checklist only asks if reasoned, cannot verify",
+      "decision": "adapt",
+      "sitesmithForm": "Keep the three named concepts as reasoning vocabulary in prose; drop the numeric 1-10 scale and lookup tables entirely.",
+      "confidence": 0.8,
+      "redTeam": "confirmed",
+      "redTeamReason": "Confirmed. Lines 43-79 define DESIGN_VARIANCE/MOTION_INTENSITY/VISUAL_DENSITY with baseline 8/6/4 and two lookup tables (1.A vibe-word inference, 1.B use-case presets). Lines 552-569 give the full technical definitions of each dial's 1-10 bands. The claim's own framing that this is 'a table lookup, not reasoning' is an accurate characterization, not an overstatement.",
+      "redTeamEvidence": "skills/taste-skill/SKILL.md:43-79,552-569"
+    },
+    {
+      "key": "taste-skill/uncited-laziness-research-essay",
+      "id": "uncited-laziness-research-essay",
+      "source": "taste-skill",
+      "sourcePath": "research/laziness/findings/empirical-results.md:1-58; research/laziness/findings/references.md:1-20",
+      "problemSolved": "Attempts to justify output-skill's claims with cited research.",
+      "mechanism": "Names five studies by short label (EmotionPrompt, LazyBench, Compounding Error Avoidance, Seasonal Behavior Analysis, '2025 Controlled Laziness Experiments') with no links, no locatable authors, no DOIs.",
+      "whyItWorks": "Doesn't establish anything verifiable — most citations are not independently locatable, and specific numbers (+45%, +115%, 34%→80%) cannot be traced from the repo.",
+      "requiredContext": [
+        "none provided — reader would have to independently verify"
+      ],
+      "contextCost": "low",
+      "outputImpact": "None directly on generated pages; lends false authority to output-skill's rules.",
+      "failureModes": [
+        "asserted-not-verifiable research re-published as if verified",
+        "precise percentage claims manufacture false confidence"
+      ],
+      "conflicts": [],
+      "testMethod": "none — no links, unverifiable from the repo alone",
+      "decision": "reject",
+      "sitesmithForm": "Do not port citations or percentage claims; state any anti-truncation rationale as observed practical behavior without inventing statistics.",
+      "confidence": 0.8,
+      "redTeam": "unchallenged",
+      "redTeamReason": "",
+      "redTeamEvidence": ""
+    },
+    {
+      "key": "ui-ux-pro-max/bm25-csv-retrieval",
+      "id": "bm25-csv-retrieval",
+      "source": "ui-ux-pro-max",
+      "sourcePath": ".claude/skills/ui-ux-pro-max/scripts/core.py:161-289",
+      "problemSolved": "Fetching relevant reference rows from a flat CSV corpus by free-text query without an embeddings service or network call.",
+      "mechanism": "Stdlib-only BM25 over per-domain CSV files, tokenized with a stopword list and synonym dict, with mtime-based caching.",
+      "whyItWorks": "Pure retrieval, not decision-making; cheap, deterministic, testable in isolation.",
+      "requiredContext": [
+        "query string",
+        "target CSV + declared search/output cols"
+      ],
+      "contextCost": "low",
+      "outputImpact": "Only as good as corpus curation; some files (google-fonts.csv) are raw exports not curated content.",
+      "failureModes": [
+        "BM25 is overkill machinery for ~100-row CSVs",
+        "silent domain misrouting if --domain omitted and keywords overlap"
+      ],
+      "conflicts": [],
+      "testMethod": "unittest tokenizer + known-query-to-domain sanity checks (structural, not accuracy-graded)",
+      "decision": "adapt",
+      "sitesmithForm": "Reuse only for pulling stimulus material the model reasons over (UX rules, stack idioms), never for auto-selecting a creative decision.",
+      "confidence": 0.85,
+      "redTeam": "confirmed",
+      "redTeamReason": "Opened core.py in full. BM25 class (k1/b, tokenize, fit, score) is real stdlib-only (csv, re, math.log, collections.defaultdict). _STOPWORDS and _SYNONYMS dicts exist exactly as described. _csv_cache/_bm25_cache with mtime comparison in _load_csv/_get_bm25 confirm the mtime-based caching claim. Nothing overstated.",
+      "redTeamEvidence": ".claude/skills/ui-ux-pro-max/scripts/core.py:161-289"
+    },
+    {
+      "key": "ui-ux-pro-max/design-dials",
+      "id": "design-dials",
+      "source": "ui-ux-pro-max",
+      "sourcePath": ".claude/skills/ui-ux-pro-max/scripts/design_system.py:46-77,230-262",
+      "problemSolved": "Letting a caller nudge the deterministic generator toward more/less bold, motion, or density.",
+      "mechanism": "Three optional 1-10 flags bucketed into low/mid/high tiers biasing the style query, pulling a motion.csv row, or swapping the spacing-scale dict.",
+      "whyItWorks": "Cheap, explainable, degrades gracefully when unset.",
+      "requiredContext": [
+        "1-3 integers",
+        "static tier dict"
+      ],
+      "contextCost": "low",
+      "outputImpact": "Widens the same narrow funnel; still terminates in one auto-picked row per dimension.",
+      "failureModes": [
+        "still a script making the final pick",
+        "only 3-5 bias keywords per tier against an 84-row style CSV"
+      ],
+      "conflicts": [
+        "C-no-mechanical-creativity"
+      ],
+      "testMethod": "none beyond generate() smoke tests",
+      "decision": "adapt",
+      "sitesmithForm": "Repurpose the shape (named sliders mapping to prose tiers) as vocabulary handed to the model to reason with, not as auto-selector inputs.",
+      "confidence": 0.6,
+      "redTeam": "confirmed",
+      "redTeamReason": "DIAL_TIERS dict defines (1-3)/(4-7)/(8-10) tiers for variance/motion/density; _resolve_dial() buckets a 1-10 int into one of these and returns None if unset. In generate(), variance_info biases effective_style_priority, motion_info triggers a search(..., 'gsap', 5) pull filtered by Intensity Tier, and density_info's spacing dict is threaded through to spacing_scale / MASTER.md output. All three behave exactly as claimed and no-op when unset.",
+      "redTeamEvidence": ".claude/skills/ui-ux-pro-max/scripts/design_system.py:46-77,230-262"
+    },
+    {
+      "key": "ui-ux-pro-max/design-review-subagent-and-heuristic-audit",
+      "id": "design-review-subagent-and-heuristic-audit",
+      "source": "ui-ux-pro-max",
+      "sourcePath": "stack/.claude/agents/design-review.md (97 lines); stack/scripts/design-audit.mjs (233 lines)",
+      "problemSolved": "Actually verifying built UI instead of asserting it's done.",
+      "mechanism": "A 233-line Playwright heuristic script (6 viewports, real focus/contrast/overflow/tap-target measurement) plus a 7-phase model-driven review subagent forbidden from inventing findings, reporting ranked Blockers/High/Medium/Nitpicks plus what's working.",
+      "whyItWorks": "The one mechanism in the repo that is genuinely evidence-based rather than asserted or templated — observes real DOM/CSSOM state.",
+      "requiredContext": [
+        "a live URL or file",
+        "Playwright browser binary"
+      ],
+      "contextCost": "medium",
+      "outputImpact": "Catches real regressions (missing focus ring, overlapping badge, premature animation) demonstrated in a worked example. Subagent definition ~700 tokens; audit script executes rather than loading, only its report re-enters context.",
+      "failureModes": [
+        "single-pass single-reviewer, may share blind spots with the building model",
+        "contrast check explicitly approximate",
+        "no code enforces the fix-then-reverify loop, it's a documented habit"
+      ],
+      "conflicts": [],
+      "testMethod": "is itself the test method for the rest of the repo; one worked example (juniper-audit) as proof",
+      "decision": "adopt",
+      "sitesmithForm": "Fold tap-target, real-focus-visibility, and accessible-name checks into SiteSmith's own verify.mjs; consider a documented model-driven review pass.",
+      "confidence": 0.85,
+      "redTeam": "confirmed",
+      "redTeamReason": "design-audit.mjs (232 lines, one off from the claimed 233 -- immaterial, likely a trailing-newline counting difference) defines exactly 6 VIEWPORTS (360/390/768/1024/1440/1920) and runs real DOM measurements in inPageChecks(): horizontal overflow via scrollWidth, tap-target size via getBoundingClientRect, focus visibility via getComputedStyle after .focus(), and an approximate WCAG contrast ratio calculation -- genuine measurement, not assertion. design-review.md (96 lines, same off-by-one) has Phase 0 through Phase 6 (7 phases), explicitly says 'never invent findings' and 'no finding without something you observed,' and its required report format literally contains Blockers/High/Medium/Nitpicks/What's working sections verbatim.",
+      "redTeamEvidence": "stack/.claude/agents/design-review.md (96 lines); stack/scripts/design-audit.mjs (232 lines)"
+    },
+    {
+      "key": "ui-ux-pro-max/design-system-generator",
+      "id": "design-system-generator",
+      "source": "ui-ux-pro-max",
+      "sourcePath": ".claude/skills/ui-ux-pro-max/scripts/design_system.py:81-329",
+      "problemSolved": "Producing one coherent design-system recommendation from a single query in one command.",
+      "mechanism": "BM25-match a product category, look it up verbatim in ui-reasoning.csv for a pre-written style/color/typography tuple, bias further searches toward those keywords, auto-pick the top row per domain, render to ASCII/Markdown/JSON. No LLM call anywhere in the path.",
+      "whyItWorks": "Fast and complete-looking, which is exactly the danger: this is the deterministic template-generator shape the brief's benchmark scored 40 against an LLM's 59.",
+      "requiredContext": [
+        "query",
+        "ui-reasoning.csv",
+        "4 supporting CSVs"
+      ],
+      "contextCost": "medium",
+      "outputImpact": "The single biggest lever on final output; moves the creative decision out of the model into a lookup table.",
+      "failureModes": [
+        "every project mapped to the same product category gets the identical style/color/type tuple",
+        "project's own WORKFLOW.md admits this and tells users to run a separate taste skill to reject its defaults",
+        "Decision_Rules JSON looks conditional but is never branched on"
+      ],
+      "conflicts": [
+        "C-no-mechanical-creativity",
+        "C-no-house-style"
+      ],
+      "testMethod": "unittest checks non-empty output and persistence branches; nothing tests output diversity/quality",
+      "decision": "reject",
+      "sitesmithForm": "Do not port the auto-selecting generator; surface top-3 candidates per dimension as options-with-rationale for the model to choose and justify.",
+      "confidence": 0.9,
+      "redTeam": "confirmed",
+      "redTeamReason": "generate() does exactly this: product search -> category -> _apply_reasoning() looks up ui-reasoning.csv -> style_priority feeds _multi_domain_search() as a biasing query -> color/typography/landing take index 0 of results (true top-row pick), style uses _select_best_match() (a keyword-scored pick, still deterministic, no LLM). format_ascii_box/format_markdown/JSON output confirmed. No model call anywhere in this file.",
+      "redTeamEvidence": ".claude/skills/ui-ux-pro-max/scripts/design_system.py:81-329"
+    },
+    {
+      "key": "ui-ux-pro-max/domain-auto-detect",
+      "id": "domain-auto-detect",
+      "source": "ui-ux-pro-max",
+      "sourcePath": ".claude/skills/ui-ux-pro-max/scripts/core.py:344-408",
+      "problemSolved": "Routing a free-text query to the right CSV when --domain is omitted.",
+      "mechanism": "Hand-authored keyword-list-per-domain dict scored by regex word-boundary match, multi-word phrases weighted higher, ties broken by fixed priority order, falls back to 'style' if nothing scores.",
+      "whyItWorks": "Deterministic and debuggable; product-domain keywords self-update from products.csv so they can't drift from the data.",
+      "requiredContext": [
+        "query string",
+        "static keyword dict"
+      ],
+      "contextCost": "low",
+      "outputImpact": "Wrong domain silently returns off-topic-but-plausible rows instead of an empty result.",
+      "failureModes": [
+        "documented overlap ('font' hits typography and google-fonts)",
+        "silent style-domain fallback on zero score, unlike the zero-result path which self-reports"
+      ],
+      "conflicts": [],
+      "testMethod": "unittest sanity checks only, no adversarial query suite",
+      "decision": "adapt",
+      "sitesmithForm": "Worth keeping if we retain a multi-file reference corpus; surface the runner-up domain as this repo does.",
+      "confidence": 0.7,
+      "redTeam": "confirmed",
+      "redTeamReason": "detect_domain() uses re.search(r'\\b'+re.escape(kw)+r'\\b', ...) for word-boundary matching, weights by max(1, len(kw.split())) so multi-word phrases score higher, breaks ties via the fixed _DOMAIN_TIEBREAK_ORDER list, and falls back to 'style' when best_score is 0. The 'product' keyword list is also confirmed self-updating from products.csv via _load_product_keywords(), matching the whyItWorks claim.",
+      "redTeamEvidence": ".claude/skills/ui-ux-pro-max/scripts/core.py:344-408"
+    },
+    {
+      "key": "ui-ux-pro-max/master-overrides-persistence",
+      "id": "master-overrides-persistence",
+      "source": "ui-ux-pro-max",
+      "sourcePath": ".claude/skills/ui-ux-pro-max/scripts/design_system.py:709-789",
+      "problemSolved": "Keeping one canonical design doc plus per-page overrides without a re-run silently clobbering prior decisions.",
+      "mechanism": "Skip-write-unless-force when MASTER.md exists, structured skipped_exists status, whitelist slugifier preventing path traversal via project/page names.",
+      "whyItWorks": "Defensive engineering independent of the creativity debate; idempotent by default.",
+      "requiredContext": [
+        "output_dir",
+        "name strings"
+      ],
+      "contextCost": "low",
+      "outputImpact": "No visual effect; protects whether prior human decisions survive a re-run.",
+      "failureModes": [
+        "override-precedence logic is plain-English instruction only, not enforced programmatically"
+      ],
+      "conflicts": [],
+      "testMethod": "unittest covers skip/force/fresh-write branches directly",
+      "decision": "adopt",
+      "sitesmithForm": "Reuse verbatim shape for any persisted SiteSmith artifact.",
+      "confidence": 0.85,
+      "redTeam": "confirmed",
+      "redTeamReason": "persist_design_system() checks `if master_file.exists() and not force: return {status: 'skipped_exists', ...}` verbatim. safe_slug() applies `re.sub(r'[^a-z0-9_-]+', '-', ...)` -- a positive whitelist regex, not a blacklist, so traversal sequences like '../../etc' collapse to a single '-' segment. Confirmed idempotent-by-default behavior.",
+      "redTeamEvidence": ".claude/skills/ui-ux-pro-max/scripts/design_system.py:709-789"
+    },
+    {
+      "key": "ui-ux-pro-max/multi-copy-sync-architecture",
+      "id": "multi-copy-sync-architecture",
+      "source": "ui-ux-pro-max",
+      "sourcePath": "CLAUDE.md:41-101; cli/scripts/sync-assets.mjs; .github/workflows/check-asset-sync.yml",
+      "problemSolved": "Shipping identical data/scripts to three consumption paths from one source of truth.",
+      "mechanism": "Physically-synced copies (no symlinks, they break on git-for-Windows) plus a CI drift-check.",
+      "whyItWorks": "Solves a real distribution problem this project has that SiteSmith doesn't.",
+      "requiredContext": [
+        "none at runtime"
+      ],
+      "contextCost": "low",
+      "outputImpact": "None on generated design output; packaging concern only.",
+      "failureModes": [
+        "real maintenance surface for a distribution problem SiteSmith does not have"
+      ],
+      "conflicts": [
+        "adds complexity without value for our form factor"
+      ],
+      "testMethod": "CI diff-check between source and mirrors",
+      "decision": "reject",
+      "sitesmithForm": "Not applicable; note only as an anti-pattern to avoid building prematurely.",
+      "confidence": 0.8,
+      "redTeam": "confirmed",
+      "redTeamReason": "CLAUDE.md's Sync Rules section states verbatim that there are no symlinks because 'git-on-Windows checks them out as plain text files pointing at a path, which silently breaks the skill.' sync-assets.mjs implements real hash-based drift detection (sha256 over LF-normalized content) across src/, cli/assets/, 6 sub-skills, and the orchestrator's own .claude/skills/ui-ux-pro-max/{data,scripts} copy, with an assertInsideRepo() guard against writing outside the repo. check-asset-sync.yml runs `node scripts/sync-assets.mjs --check` on PR and push to main. All three pieces are genuinely wired together.",
+      "redTeamEvidence": "CLAUDE.md:73-101; cli/scripts/sync-assets.mjs:1-208; .github/workflows/check-asset-sync.yml:1-37"
+    },
+    {
+      "key": "ui-ux-pro-max/stack-never-assume",
+      "id": "stack-never-assume",
+      "source": "ui-ux-pro-max",
+      "sourcePath": ".claude/skills/ui-ux-pro-max/SKILL.md:55",
+      "problemSolved": "Preventing every downstream recommendation from silently targeting the wrong framework.",
+      "mechanism": "One instruction: detect stack from project files; ask or default only if undetectable; names the failure mode explicitly.",
+      "whyItWorks": "Cheap, names the exact failure it prevents rather than just asserting a rule.",
+      "requiredContext": [
+        "project file listing"
+      ],
+      "contextCost": "low",
+      "outputImpact": "Prevents wrong-stack guidance being applied.",
+      "failureModes": [
+        "purely instructional, nothing enforces the detection step actually happened"
+      ],
+      "conflicts": [],
+      "testMethod": "none, prose only",
+      "decision": "adopt",
+      "sitesmithForm": "Keep the phrasing style for our own stack-detection instruction.",
+      "confidence": 0.75,
+      "redTeam": "confirmed",
+      "redTeamReason": "SKILL.md line 55 reads verbatim: 'detect from the project — check package.json deps ... If nothing is detectable, ask the user or default to html-tailwind. Never assume a stack — a hardcoded default silently misroutes every recommendation.' Matches the claim exactly, including the named failure mode.",
+      "redTeamEvidence": ".claude/skills/ui-ux-pro-max/SKILL.md:55"
+    },
+    {
+      "key": "ui-ux-pro-max/static-ux-knowledge-tables",
+      "id": "static-ux-knowledge-tables",
+      "source": "ui-ux-pro-max",
+      "sourcePath": "references/quick-reference.md (240 lines); references/pro-rules.md (109 lines)",
+      "problemSolved": "Giving the model concrete UX/accessibility/performance facts to reason against.",
+      "mechanism": "Two static markdown files, loaded only on demand, terse rule-id + standard + rationale organized by priority category.",
+      "whyItWorks": "Knowledge injection, not decision automation — squarely the 'makes the model think better' side of the axis.",
+      "requiredContext": [
+        "none preloaded, read on demand"
+      ],
+      "contextCost": "medium",
+      "outputImpact": "Improves accessibility/interaction correctness; no bearing on visual sameness. Costs ~5,469 + ~2,423 tokens if both loaded, zero otherwise.",
+      "failureModes": [
+        "dated platform citations without version numbers",
+        "correctness rules only, cannot fix genericness alone"
+      ],
+      "conflicts": [],
+      "testMethod": "none, reference prose",
+      "decision": "adopt",
+      "sitesmithForm": "Re-express as SiteSmith's own on-demand accessibility/interaction reference, gated the same way.",
+      "confidence": 0.85,
+      "redTeam": "confirmed",
+      "redTeamReason": "Line counts confirmed exactly: quick-reference.md is 240 lines, pro-rules.md is 109 lines. Content is a static bullet index (`rule-id` - description (citation), grouped under numbered priority categories like '1. Accessibility (CRITICAL)'), and SKILL.md explicitly says to 'read it on demand rather than loading it every time.' No decision automation here -- genuinely just reference material.",
+      "redTeamEvidence": ".claude/skills/ui-ux-pro-max/references/quick-reference.md (240 lines); references/pro-rules.md (109 lines)"
+    },
+    {
+      "key": "ui-ux-pro-max/ui-reasoning-category-table",
+      "id": "ui-reasoning-category-table",
+      "source": "ui-ux-pro-max",
+      "sourcePath": ".claude/skills/ui-ux-pro-max/data/ui-reasoning.csv:1-2",
+      "problemSolved": "Giving ~30 product categories a starting style/color/typography/effects bundle.",
+      "mechanism": "30-row CSV: category -> pattern, style priority, color mood, typography mood, effects, decision-rules JSON, anti-patterns, severity; resolved by near-exact then substring then keyword match.",
+      "whyItWorks": "As a checklist of questions it would help; as implemented it's a fixed lookup with no branching actually exercised.",
+      "requiredContext": [
+        "category string"
+      ],
+      "contextCost": "low",
+      "outputImpact": "Sets 'the' style/color/type mood for the whole generated system — highest-leverage house-style risk in the repo.",
+      "failureModes": [
+        "one category = one style pairing = structural sameness",
+        "Decision_Rules JSON parsed but never read to branch output"
+      ],
+      "conflicts": [
+        "C-no-house-style"
+      ],
+      "testMethod": "schema-only validation (validate_data.py), never checked for branching correctness",
+      "decision": "reject",
+      "sitesmithForm": "Re-express as prose heuristics the model reads and questions, not a keyed table a script resolves.",
+      "confidence": 0.85,
+      "redTeam": "refuted",
+      "redTeamReason": "The column-schema and 3-tier match logic (_find_reasoning_rule: exact -> substring -> keyword) are real and match the code. But the file is NOT a 30-row CSV -- csv.DictReader on the actual file returns 161 data rows (162 lines including header), more than 5x the claimed size. The citation 'ui-reasoning.csv:1-2' only shows the header plus first row, suggesting the '30-row' figure was guessed rather than verified against the actual file.",
+      "redTeamEvidence": ".claude/skills/ui-ux-pro-max/data/ui-reasoning.csv (162 lines total; csv.DictReader confirms 161 data rows, not 30)"
+    },
+    {
+      "key": "ui-ux-pro-max/zero-result-honesty",
+      "id": "zero-result-honesty",
+      "source": "ui-ux-pro-max",
+      "sourcePath": ".claude/skills/ui-ux-pro-max/scripts/search.py:64-74; core.py:292-316",
+      "problemSolved": "Stopping the model from presenting a failed search as a real recommendation.",
+      "mechanism": "Explicit no-match sentence plus vocabulary-nearness suggestions for retry, mirrored as a 3-step protocol in SKILL.md.",
+      "whyItWorks": "Makes the model behave more honestly rather than mechanically; costs nothing.",
+      "requiredContext": [
+        "failed query",
+        "fitted BM25 vocabulary already in memory"
+      ],
+      "contextCost": "low",
+      "outputImpact": "Closes a specific hallucination path (presenting a default as data-backed).",
+      "failureModes": [
+        "prefix/suffix suggestion matching can surface lexically close but semantically unrelated terms"
+      ],
+      "conflicts": [],
+      "testMethod": "not unit-tested directly",
+      "decision": "adopt",
+      "sitesmithForm": "Adopt the instruction pattern verbatim for any retrieval step SiteSmith keeps.",
+      "confidence": 0.8,
+      "redTeam": "confirmed",
+      "redTeamReason": "format_output() in search.py emits the exact 'No matches. This is not a match with an empty value...' text and appends suggestions from _suggest_terms(), which does prefix-based (first-3-char) nearest-vocabulary matching over bm25.vocabulary(). SKILL.md's 'If a search returns 0 results' section (retry once -> fall back with explicit disclosure -> never present 0-result as data) is a genuine 3-step mirror of this behavior.",
+      "redTeamEvidence": ".claude/skills/ui-ux-pro-max/scripts/search.py:64-74; scripts/core.py:292-316; SKILL.md:149-154"
+    }
+  ]
+}
