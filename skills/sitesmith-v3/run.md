@@ -1,7 +1,14 @@
 ---
 title: Run order, precedence and degraded mode
 read: once, at the start of a run, before section 2
+status: incomplete — the scripts named below are not written yet
 ---
+
+> **Not yet runnable.** `stack.mjs`, `gate.mjs` and `ledger.mjs` are named here and do
+> not exist, and `floor/` and `stacks/` are empty. Until they land, do the step by hand
+> and say in the report that the mechanical verdict was not taken. An instruction that
+> names a missing file is worse than no instruction, so this notice stays until every
+> path below resolves.
 
 ## 10. Run order
 
@@ -11,8 +18,8 @@ never in a question.
 **Build.**
 
 1. Read the brief. Sort what you do not know into four piles: look it up, prototype it,
-   assume it and say so, or ask. Only the last becomes a question. **One round, at most
-   two questions, each with your default attached. Silence means your default.**
+   assume it and say so, or ask. Only the last becomes a question. **One round, one
+   question, with your default attached. Silence means your default.**
 2. Do sections 2 to 6. The plan is written to `.sitesmith/direction.md` before any code:
    subject, noun list, the theses you wrote, which you chose and on what axis, the
    colour names and what each is for, the type roles, the signature, the named risk, and
