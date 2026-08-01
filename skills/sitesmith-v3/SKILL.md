@@ -50,7 +50,7 @@ repairs water-damaged ledgers has somewhere to go.
 
 Spend real effort here. Write down the concrete things in this subject's actual world:
 materials, tools, formats, surfaces, units, jargon, the artefacts it makes, the marks it
-leaves. Bone folder. Sizing drum. Cure schedule. Berth number. Six-hour proof.
+leaves. Bone folder. Sizing drum. Berth number. Six-hour proof.
 
 **Nouns, not adjectives.** Warm, premium, modern, trustworthy are category words. Every
 business in the category can claim them, so anything derived from them converges with
@@ -71,50 +71,52 @@ Rank them, then **build the case for the second one as if the first did not exis
 Argue it properly, from the nouns in section 3, before deciding.
 
 This is not a formality. A model asked to pick the best idea from its own list picks its
-top-ranked one almost every time: measured at thirty of thirty-five, across sixteen
-framings of the same request. The top-ranked idea is the most available one, and
-availability is exactly what makes an idea generic. Arguing the runner-up is how you
-find out whether your ranking was taste or reflex.
+top-ranked one almost every time: measured at thirty of thirty-five. The top-ranked idea
+is the most available one, and availability is what makes an idea generic. Arguing the
+runner-up is how you learn whether your ranking was taste or reflex.
 
 Choose on a named axis and write the axis down: what this direction gets that the others
 do not. You may still choose the first. You may not choose it without having argued for
 another.
 
-## 5. The looks that mean you stopped choosing
+## 5. The look you would produce if you were not trying
 
-These are where design lands when nobody decided. Know them by name, so you can tell
-whether you arrived somewhere or defaulted there.
+**Describe the page you would make on autopilot, then do not build it.** Ground, accent,
+type, first screen, the clever move, specific enough to build. Writing it is the only way
+to see it.
 
-- Warm cream ground, high contrast serif display, terracotta accent.
-- Near black ground, one acid green or vermilion accent.
-- Broadsheet layout, hairline rules, zero radius, dense columns.
-- A hero of one big number, a small label, three supporting stats, and a gradient
-  behind them.
-- Near black ground, one saturated accent, generously spaced sans, soft cornered cards
-  in a three column grid. **This one is ours.** Three unrelated briefs converged on it;
-  every page passed on its own and the portfolio failed on sameness.
+A list of looks to avoid cannot work: an earlier version named four, and three briefs
+avoided all four and converged on a fifth. Naming defaults moves the work to the next
+unnamed one. The recipes that already cost us a portfolio live in `ledger.mjs`, which
+refuses a render matching one.
 
-Each is right for some brief. **If the brief asks for one, give it exactly that and stop
-worrying.** The brief's own words outrank everything in this file.
-
-What is forbidden is landing on one without deciding to. Where an axis is left free, do
-not spend that freedom on the nearest default.
+**If the brief asks for a look, give it exactly that and stop worrying.** The brief's own
+words outrank everything in this file. What is forbidden is arriving somewhere without
+having seen the alternative you skipped.
 
 ## 6. Plan the design before writing code
 
 **First pass.** Write the plan down. It is short.
 
-**Colour.** Four to six values, each named from section 3's nouns rather than from the
-framework's vocabulary. `--paper`, `--grid`, `--caution` steer every later decision,
-because the name answers the question. `--bg`, `--surface`, `--accent` steer nothing,
-because they answer it with "whatever is conventional". Say what each value is for, in
-the subject's terms. An accent usually clears contrast against only one of your two
-grounds, so an accent is punctuation and body text lives on the ground to surface axis.
+**Colour.** Take the values from the subject's own materials, named after them.
+`--paper`, `--grid`, `--caution` steer every later decision because the name answers the
+question; `--bg`, `--surface`, `--accent` steer nothing because they answer it with
+"whatever is conventional".
+
+**Do not decide how many, and do not give them roles.** Three briefs each produced four
+to six well named values and each landed on the same five jobs: light ground, lighter
+surface, near black ink, one saturated accent, desaturated secondary. The names diverged
+and the roles did not, because asking what each colour is *for* answers with the same
+list every time. Ask what this trade is actually coloured, and let the count fall out of
+that. A workshop with two colours gets two. A polychrome one gets nine. **A palette with
+exactly one saturated colour is the default under another name.**
+
+A saturated colour usually clears contrast against some of your values and not others.
+Measure before you set a paragraph in one.
 
 **Type.** At least two roles: a display face with real character used with restraint,
 and a body face that supports it. Not the pairing you would reach for on any other
-project. State the scale and the weights. The type treatment is part of the design, not
-the vehicle for it.
+project. State the scale and the weights.
 
 **Layout.** One or two sentences and an ASCII sketch. Enough to compare against
 something else. The first screen is built around the strongest true material this
@@ -130,17 +132,33 @@ Spend your boldness here and keep everything around it quiet. A texture rendered
 three lines of CSS beats an expensive effect that could belong to anyone. If the page
 moves, that is one deliberate moment and it comes from the same nouns; scattered hover
 effects read as machine made because nobody chose them. Nothing moves between an intent
-and its result: no form animates, no click waits. Then ask what the page would lose if
-the signature were swapped for the category's default, and if the answer is nothing you
-have not chosen a direction yet.
+and its result: no form animates, no click waits.
+
+**Name its kind before you build it.** An instrument, a document, a specimen, a map, a
+worn surface, a machine part, a piece of writing set apart. Three builds once produced
+signatures that looked nothing alike and were all one kind: a horizontal CSS gauge
+encoding a quantity as width, high on the page, captioned. Same idea in three costumes.
+Say the kind out loud, and if it is the kind the medium reaches for first, pick another.
+
+Then ask what the page would lose if the signature were swapped for the category's
+default, and if the answer is nothing you have not chosen a direction yet.
 
 **One risk.** Name the thing you are doing that the category would not. If you cannot
 name one, you have not decided anything yet; you have assembled defaults competently.
 
-**Second pass, before any code.** Take a neighbouring brief in the same category and run
-your own plan against it. If most of the plan would survive the swap, it is a plan about
-the category, not about this client. Revise what would survive, and write one line
-saying what changed and why.
+**Second pass, before any code. Two swaps, and the second one is the one that works.**
+
+Swap the brief: run your plan against a neighbouring business in the same trade. What
+survives is about the category rather than this client. Revise it.
+
+Then swap the trade and keep the plan. Hand it to a business with nothing in common with
+this one, on a different floor. If the *shape* still works, same number of colours doing
+the same jobs, same kind of signature, same closing move, then you have made a process
+rather than a design and it will match the last thing this process made. That is how a
+plan passes the first swap and still arrives where two builds it never saw arrived.
+
+One line per swap saying what changed. If nothing changed on the second, you are not
+finished.
 
 ## 7. The words are design material
 

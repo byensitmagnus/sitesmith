@@ -1,11 +1,7 @@
 ---
 title: Run order, precedence and degraded mode
 read: once, at the start of a run, before section 2
-status: incomplete, because the scripts named below are not written yet
 ---
-
-> If a script named here does not exist yet, do the step by hand and say in the report
-> that the mechanical verdict was not taken. Never imply a check ran.
 
 ## 10. Run order
 
@@ -25,29 +21,26 @@ never in a question.
    directions that differ in structure rather than in hue, or name two real pages and
    ask which is closer. A look-up that comes back empty does not become a plausible
    fact, it moves to the assumption pile in those words.
-2. Do sections 2 to 6. Run `node scripts/ledger.mjs new <surface>` and fill every
-   heading it writes to `.sitesmith/direction.md` before any code; a blank heading fails
-   the ledger check. Without the script, write the record by hand under these headings:
-   surface, subject, constraints in force, assets that exist, nouns, theses, chosen
-   thesis and axis, colour, type, density and motion and boldness, structure, first
-   screen, imagery treatment, argument order, signature, risk, assumptions, originality
-   change. One entry per surface, not per project: when a second surface lands in a
-   project that already has one, read the existing entry, keep the system it names, and
-   write down only what differs and why. **Revision after the originality pass: cap 1.**
-   Before a typeface, library or API named in the plan reaches code, confirm it supports
-   what the plan asks of it. If the brief asks to see the direction before code, stop
-   here and present the record as one screen.
-3. If the brief names a platform, CMS or component library you have not built on in this
-   run, read its own documentation first, once. Run
-   `node scripts/stack.mjs detect .` and open the one adapter it names. Never assume a
-   stack from the brief's wording or from what is usual for the category.
-4. Ask what the visitor is doing on this surface, and open the floor file for it.
-   Buying, or looking at a price: `floor/buy.md`. Operating a tool they already trust
-   you with: `floor/operate.md`. Deciding whether to care, or reading: nothing, because
-   sections 1 to 8 are the whole instruction. When one page is two surfaces at once, a
-   pricing page you also configure on, open both and say which governs where. If a brief fits none of them, say so, pick the
-   closest with a reason, and carry on. Do not invent a third floor and do not stall.
-5. Build from the plan exactly. Every colour and type decision in the code comes from
+2. Write the autopilot description section 5 asks for, four or five lines, into
+   `.sitesmith/direction.md` before anything else. It is the first field, so the rest of
+   the plan is written next to the thing it must not become.
+3. Do sections 2 to 6. Run `node scripts/ledger.mjs new <surface>` and fill every heading
+   it writes to `.sitesmith/direction.md` before any code; a blank heading fails the
+   check, and the script owns the heading list so this file does not repeat it. One entry
+   per surface, not per project: when a second surface lands in a project that has one,
+   keep the system it names and write down only what differs and why. **Revision after
+   the originality pass: cap 1.** Before a typeface, library or API in the plan reaches
+   code, confirm it supports what the plan asks of it. If the brief asks to see the
+   direction first, stop here and present the record as one screen.
+4. If the brief names a platform, CMS or component library new to this run, read its own
+   documentation once. Run `node scripts/stack.mjs detect .` and open the adapter it
+   names. Never assume a stack from the brief's wording or from category habit.
+5. Ask what the visitor is doing here and open the floor file for it. Buying or looking
+   at a price: `floor/buy.md`. Operating a tool: `floor/operate.md`. Reading or deciding:
+   nothing, because sections 1 to 8 are the whole instruction. When one page is two
+   surfaces at once, open both and say which governs where. If a brief fits none, say so,
+   pick the closest with a reason, and carry on. Do not invent a third floor.
+6. Build from the plan exactly. Every colour and type decision in the code comes from
    it, and changing your mind mid build means changing the plan first. Before writing
    each piece, climb: does it need to exist at all, is it already in this codebase, can
    the platform do it natively, and any dependency you add names the native API it

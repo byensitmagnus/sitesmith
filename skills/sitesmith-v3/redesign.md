@@ -35,10 +35,9 @@ its own budget.
 ## Read, score, repair, in that order
 
 You may not edit during the read. Score every finding with a file reference and fix
-nothing yet. Then repair in obligation order, the contract above first, then the floor,
-then structure, re-running the affected pass after each group. A fix applied while
-reading destroys the evidence of the pattern it belonged to, and four targeted changes
-beat forty files that improve nothing.
+nothing yet. Then repair in obligation order, contract first, then floor, then structure,
+re-running the affected pass after each group. A fix applied while reading destroys the
+evidence of the pattern it belonged to.
 
 ## What the audit has to contain
 
@@ -69,9 +68,9 @@ not already have it.
 
 ## Score before and after
 
-Score six dimensions at 1, 3 or 5 before the repair and after: hierarchy,
-originality, cohesion, responsiveness, usability, slop resistance. Anything still at or
-below 2 is a work item in the report, and where the next session starts.
+Score six dimensions at 1, 3 or 5 before the repair and after: hierarchy, originality,
+cohesion, responsiveness, usability, slop resistance. Anything still at or below 2 is a
+work item and where the next session starts.
 
 Score originality against this studio's own previous builds, not against sites in
 general. Three sites once passed that test one at a time while the portfolio failed on
