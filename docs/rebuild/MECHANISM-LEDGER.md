@@ -10,7 +10,7 @@ ai_generated: "(C)"
 
 Generated. Do not hand-edit.
 
-216 mechanisms from 19 sources. Red team: 85 confirmed, 14 refuted, 117 unchallenged. Decisions after refutation is applied: 119 adopt, 49 adapt, 13 investigate, 35 reject.
+243 mechanisms from 19 sources. Red team: 85 confirmed, 14 refuted, 144 unchallenged. Decisions after refutation is applied: 128 adopt, 62 adapt, 13 investigate, 40 reject.
 
 "Unchallenged" means the red team did not examine it, which is weaker than "confirmed" and is kept as a separate state on purpose.
 
@@ -154,7 +154,7 @@ Checked at: `C:\Users\Usmo1\AppData\Local\Temp\claude\C--Users-Usmo1-Documents-s
 
 Decision was `adopt`, now `investigate`.
 
-## Adopt (119)
+## Adopt (128)
 
 | mechanism | source | context cost | red team | what it solves |
 | --- | --- | --- | --- | --- |
@@ -186,6 +186,7 @@ Decision was `adopt`, now `investigate`.
 | `no-motion-between-intent-and-result` | sitesmith-modes | low | unchallenged | Animation placed where a user is committing to something: a form that animates while being filled, a button whose transi |
 | `stack-decision-gate` | sitesmith-modes | low | unchallenged | A design task installs a framework into a project that already has one, or adds a second styling system, turning a scope |
 | `forgotten-surfaces-checklist` | sitesmith-modes | low | unchallenged | Generated sites are consistently missing the same six things, and each one is the difference between a mockup and a site |
+| `impeccable/run-notes-skip-accounting` | sitesmith-modes | low | unchallenged | Directly the rebuild's third measured fact: prose guardrails the model polices itself with fail silently. This file has  |
 | `direction-fidelity-render-check` | sitesmith-current | medium | confirmed | A declared direction can be real on paper and absent on screen (dark-mode-only direction rendering light by default). |
 | `verify-fail-closed-gates` | sitesmith-current | medium | unchallenged | A gate that silently 'did not run' and still prints PASS is worse than no gate; layouts fitting only under the developer |
 | `brief-to-design-system-router` | taste-skill | medium | confirmed | LLMs hand-roll bad imitation CSS for Fluent/Material/Carbon/GOV.UK instead of using real packages, or treat pure aesthet |
@@ -217,6 +218,9 @@ Decision was `adopt`, now `investigate`.
 | `one-imagery-treatment-per-site` | sitesmith-modes | low | unchallenged | Two photographic treatments on one page reads as two brands, and it is the most common way a site assembled from mixed s |
 | `imagery-provenance-ladder` | sitesmith-modes | low | unchallenged | Imagery is the layer where a page most easily starts lying: a rendered fake of the product's interface, a stock photogra |
 | `phone-navigation-obligations` | sitesmith-modes | low | unchallenged | A phone navigation that hides the primary action behind a menu, or that gives no indication of where the visitor current |
+| `impeccable/three-way-evidence-reconciliation` | sitesmith-modes | low | unchallenged | This is the file's answer to critic-vs-critic disagreement, and it is the thing the coverage gap most obviously cost us. |
+| `applicability-scope-notice-on-rule-blocks` | sitesmith-modes | low | unchallenged | A reference corpus is retrieved by keyword, so rules true in one context get pulled into a build where they are false —  |
+| `form-error-recovery-and-announcement-contract` | sitesmith-modes | low | unchallenged | Generated forms fail correctly and unhelpfully: the error exists in the DOM, is not announced, does not say how to fix i |
 | `two-gate-separation-technical-vs-visual` | sitesmith-current | low | confirmed | Merging 'works' and 'good' is how PASS came to be read as 'this is good'. |
 | `contract-after-direction-plus-token-drift` | sitesmith-current | low | confirmed | Not one of nine legacy pages had a spacing/type scale; every value chosen ad hoc at point of use. |
 | `official-design-system-honesty-rule` | taste-skill | low | confirmed | Models claim hand-rolled CSS is an official platform technology (e.g. calling glassmorphism 'Apple Liquid Glass'). |
@@ -236,6 +240,10 @@ Decision was `adopt`, now `investigate`.
 | `content-variance-check` | sitesmith-modes | low | unchallenged | Identical timestamps across a blog roll, or one photograph reused for four people. Real content is untidy; generated con |
 | `sufficient-stack-definition` | sitesmith-modes | low | unchallenged | Tooling accretes during a design task. A page ends up with a state library, a component library and three styling system |
 | `no-key-gated-service-in-setup` | sitesmith-modes | low | unchallenged | A design task quietly acquires a paid dependency or writes a credential into a config file on the user's behalf. |
+| `impeccable/score-inflation-calibration-anchor` | sitesmith-modes | low | unchallenged | A self-scoring model grades generously. Without an external anchor a 0-4 scale collapses toward 3-4 and the score stops  |
+| `impeccable/severity-tiebreak-question` | sitesmith-modes | low | unchallenged | Severity labels drift. Without a tie-breaker, P1 and P2 are assigned by mood and the priority ordering that the whole do |
+| `dependency-declared-optional-with-named-prose-fallback` | sitesmith-modes | low | unchallenged | A skill whose retrieval layer needs a runtime that may be absent either fails hard, or silently installs software on the |
+| `animation-interruptible-and-never-blocking` | sitesmith-modes | low | unchallenged | Motion that owns the user: a transition that must finish before the next tap registers, or an entrance animation that sw |
 | `subject-grounding-mandate` | frontend-design | low | confirmed | Vague briefs cause generic output because the model has nothing specific to differentiate against. |
 | `two-pass-token-system` | frontend-design | low | confirmed | Jumping to code causes ad hoc, uncritiqued design decisions. |
 | `single-clarifying-question-cap` | taste-skill | low | confirmed | Agents either guess wrong silently or dump multi-question interrogations before doing work. |
@@ -249,6 +257,7 @@ Decision was `adopt`, now `investigate`.
 | `calibration-over-under-constrain` | before-implementing | low | unchallenged | Over-specified plans make the agent follow instructions even when a pivot is better; under-specified plans make it defau |
 | `remotion-technique-independence` | remotion-skills | low | confirmed | Multiple mutually-exclusive implementation techniques for the same feature need presenting without forcing the model to  |
 | `icon-coherence` | sitesmith-modes | low | unchallenged | Icons drawn from three families at three stroke weights, or emoji standing in for icons and rendering differently on eve |
+| `impeccable/findings-grounded-followup-questions` | sitesmith-modes | low | unchallenged | Post-audit questioning defaults to generic discovery ('who is your audience?'), which wastes the user's time and produce |
 | `hero-as-thesis` | frontend-design | low | confirmed | Hero sections default to stat-block+gradient regardless of subject. |
 | `brief-primacy-override` | frontend-design | low | confirmed | Anti-cliché rule could wrongly override an explicit client request matching a named cliché. |
 | `self-critique-loop` | frontend-design | low | confirmed | A model's first idea is disproportionately likely to be its most generic idea. |
@@ -278,13 +287,14 @@ Decision was `adopt`, now `investigate`.
 | `pre-dispatch-checklist-gate` | ai-website-cloner-template | low | unchallenged | Without an explicit stopping point, extraction can feel 'done enough' and dispatch happens on an incomplete spec. |
 | `named-failure-log` | ai-website-cloner-template | low | unchallenged | Generic 'be careful' guidance doesn't transfer lessons from actual past mistakes. |
 
-## Adapt (49)
+## Adapt (62)
 
 | mechanism | source | context cost | red team | what it solves |
 | --- | --- | --- | --- | --- |
 | `buy-one-unmistakable-purchase-control` | sitesmith-modes | low | unchallenged | When the acquire control has the same weight as three other controls, the buyer hesitates over which one commits them. |
 | `buy-reference-price-is-real` | sitesmith-modes | low | unchallenged | Invented 'was' prices are the most common commerce lie and in several jurisdictions they are illegal. |
 | `comparison-axis-alignment` | sitesmith-modes | low | unchallenged | Things the reader is comparing do not line up: prices jitter between rows, card CTAs sit at three different heights, pri |
+| `impeccable/licensed-empty-slot` | sitesmith-modes | low | unchallenged | A report template with fixed quota slots manufactures content to fill them. This file is the case study for both halves: |
 | `bm25-csv-retrieval` | ui-ux-pro-max | low | confirmed | Fetching relevant reference rows from a flat CSV corpus by free-text query without an embeddings service or network call |
 | `forced-index-direction-roll` | impeccable | low | confirmed | A single model's resonance ranking over its own grounded concept list is deterministic — repo's own measurement: 30/35 i |
 | `buy-price-is-found-not-hunted` | sitesmith-modes | low | unchallenged | A price the buyer has to search for is read as a price being hidden. |
@@ -298,6 +308,7 @@ Decision was `adopt`, now `investigate`.
 | `operate-latency-is-narrated` | sitesmith-modes | low | unchallenged | An action that takes longer than perception with no acknowledgement gets clicked twice, and a whole-screen spinner destr |
 | `six-states-enumerated` | sitesmith-modes | medium | unchallenged | Interactive elements ship with rest and hover and nothing else. Missing states read as unfinished work and are then defe |
 | `argument-shape-six-beats` | sitesmith-modes | low | unchallenged | A persuade surface with a beautiful first screen and no argument beneath it: three feature cards standing in for the fou |
+| `impeccable/na-renormalized-scoring` | sitesmith-modes | low | unchallenged | A fixed rubric applied to a surface it was not designed for silently punishes the surface for lacking checks that cannot |
 | `three-dial-system` | taste-skill | low | confirmed | Gives shared vocabulary for how experimental/animated/dense a design should be instead of vague words. |
 | `self-administered-preflight-checklist` | taste-skill | high | confirmed | Prevents shipping known defects (bad contrast, wrapped CTAs, duplicate CTA intent, mixed radii). |
 | `gsap-canonical-code-skeletons` | taste-skill | low | confirmed | Scroll-pin/hijack GSAP patterns are easy to get subtly wrong (trigger fires mid-scroll instead of pinning at top). |
@@ -314,13 +325,24 @@ Decision was `adopt`, now `investigate`.
 | `operate-signal-verified-in-every-context` | sitesmith-modes | medium | unchallenged | A state colour checked once, on one surface, in one scheme, and then used as text on a light ground where it is illegibl |
 | `scoring-rubric-with-resumption` | sitesmith-modes | medium | unchallenged | A redesign ends with no statement of what improved and no statement of what is still broken, so the next session starts  |
 | `one-intent-one-label` | sitesmith-modes | low | unchallenged | Two controls with the same intent carrying different labels, and the reader has to work out whether they do the same thi |
+| `impeccable/cross-run-score-trend` | sitesmith-modes | medium | unchallenged | A critique that leaves no comparable trace cannot tell you whether the last round of fixes helped. Without a stable iden |
+| `orientation-and-text-scale-as-verification-axes` | sitesmith-modes | low | unchallenged | A responsive verification matrix that only varies width passes layouts that break when the viewport is short or when the |
 | `domain-auto-detect` | ui-ux-pro-max | low | confirmed | Routing a free-text query to the right CSV when --domain is omitted. |
+| `impeccable/user-owned-ignore-list` | sitesmith-modes | low | unchallenged | A repeat critique re-raises findings the user has already considered and dismissed, which trains the user to ignore the  |
+| `impeccable/countable-cognitive-load-checks` | sitesmith-modes | medium | unchallenged | 'Too complex' and 'cluttered' are unfalsifiable review verdicts. The model will assert them or not assert them with no r |
+| `model-facing-vs-machine-facing-declaration` | sitesmith-modes | low | unchallenged | A knowledge file that a script parses must answer every field it declares; a file only the model reads may leave things  |
+| `modal-foreground-must-be-isolated` | sitesmith-modes | low | unchallenged | A modal or sheet whose backdrop still competes visually, so the user cannot tell what is now interactive and the dialog  |
+| `native-first-justified-by-checkable-accessibility` | sitesmith-modes | low | unchallenged | A prose 'prefer native' rule is unenforceable and fails silently, because its stated justification (dependency decay) is |
 | `image-first-generation-discipline` | taste-skill | high | unchallenged | Coded output visually drifts from a strong generated reference image. |
+| `impeccable/adversarial-persona-walkthrough` | sitesmith-modes | high | unchallenged | A single 'design director' viewpoint has consistent blind spots — it evaluates the happy path at desktop width with full |
 | `design-dials` | ui-ux-pro-max | low | confirmed | Letting a caller nudge the deterministic generator toward more/less bold, motion, or density. |
 | `surface-brief-scoping` | impeccable | low | confirmed | Global product/design docs get bloated with one-off route-specific strategy, or that strategy is never written down. |
 | `complexity-budget-rule` | ai-website-cloner-template | low | confirmed | A single agent given an entire complex section approximates rather than nailing exact values. |
 | `checkbox-state-in-file` | ai-dev-tasks | low | confirmed | Losing track of which sub-steps of a multi-step build are done across a long/resumed session. |
 | `post-implementation-explainer` | before-implementing | low | unchallenged | A reviewer receiving a finished build with no record of what was decided, assumed, or verified. |
+| `impeccable/issue-to-remedy-command-mapping` | sitesmith-modes | low | unchallenged | A critique that ends in observations leaves the user to translate 'weak hierarchy' into an action. The opposite failure  |
+| `skill-applicability-self-gate-with-skip-list` | sitesmith-modes | low | unchallenged | A broadly-described skill triggers on work it cannot help with, spending context and inserting design opinions into back |
+| `counter-rows-inside-the-rule-table` | sitesmith-modes | low | unchallenged | A stated preference hardens into dogma and gets applied where it is wrong, because the guidance never shows a case where |
 | `private-reasoning-before-reveal` | frontend-design | low | confirmed | Showing half-formed ideas too early anchors the conversation on a weak draft. |
 | `model-specific-rendition-prior-correction` | impeccable | low | confirmed | A specific model has a measured, named default rendering bias for certain subjects that a general 'be original' warning  |
 | `interleaved-extract-and-build` | ai-website-cloner-template | low | confirmed | Strict inspect-then-build sequencing delays feedback and lets extraction gaps accumulate silently across a whole page. |
@@ -350,7 +372,7 @@ Decision was `adopt`, now `investigate`.
 | `buy-the-object-is-the-subject` | sitesmith-modes | low | unchallenged | Card chrome, badges and framing that compete with the photograph of the thing being sold. |
 | `orch-09-design-bridge-checklist` | awesome-claude-code-subagents | low | refuted | Faithfully matching a specific existing product/brand's look when a brief explicitly asks to emulate it, without guessin |
 
-## Reject (35)
+## Reject (40)
 
 | mechanism | source | context cost | red team | what it solves |
 | --- | --- | --- | --- | --- |
@@ -366,17 +388,22 @@ Decision was `adopt`, now `investigate`.
 | `orch-06-agents-orchestrator-pipeline` | agency-agents | high | unchallenged | Coordinating a PM -> Architect -> Dev/QA loop -> Integration pipeline across separately-spawned specialist agents. |
 | `orch-10-agency-agents-role-taxonomy` | agency-agents | high | unchallenged | Giving a fleet of specialist agents distinct personas/specialties to route work to. |
 | `agent-elements-full-catalog` | agent-elements-21st | medium | unchallenged | Rendering an AI agent's own tool calls inside a chat transcript. |
+| `generator-mandated-in-prose-and-reroll-as-remedy` | sitesmith-modes | low | unchallenged | Claimed: the model needs a single deterministic entry point so every build starts from a complete, coherent design syste |
+| `native-first-capability-lookup-table` | sitesmith-modes | high | unchallenged | An agent reaches for a package before checking whether the platform already ships the capability. |
 | `fixed-aesthetic-template-skills` | taste-skill | low | refuted | Gives a user who already chose a direction a ready-made fully-specified rule set instead of an open brief. |
 | `ui-reasoning-category-table` | ui-ux-pro-max | low | refuted | Giving ~30 product categories a starting style/color/typography/effects bundle. |
 | `orch-05-diamond-fanout-pattern` | graph-engineering | high | unchallenged | Coordinating independent work across multiple agents (research, drafting, verification) in a fleet. |
 | `remotion-embedded-skill-duplication` | remotion-skills | high | unchallenged | A sub-skill needs to be reachable both standalone and nested inside a router skill, without the harness double-registeri |
 | `defaults-to-alternatives-table` | sitesmith-modes | medium | unchallenged | Nominally: replacing generic component patterns with less generic ones. |
 | `round-numbers-read-as-fake` | sitesmith-modes | low | unchallenged | Nominally: detecting fabricated statistics, which are tidy in a way real data is not. |
+| `impeccable/nielsen-band-text-verbatim` | sitesmith-modes | high | unchallenged | Nothing this rebuild has. It is a full restatement of Nielsen's ten heuristics with a check-for list and a five-row 0-4  |
+| `concrete-hex-inside-a-token-example` | sitesmith-modes | low | unchallenged | Nothing — this is the convergence hazard appearing in the wild, recorded so we do not reproduce it. |
 | `uncited-laziness-research-essay` | taste-skill | low | unchallenged | Attempts to justify output-skill's claims with cited research. |
 | `multi-copy-sync-architecture` | ui-ux-pro-max | low | confirmed | Shipping identical data/scripts to three consumption paths from one source of truth. |
 | `design-system-py-legacy-generator` | sitesmith-current | high | confirmed | Nothing — dead v1 code never called by the current pipeline. |
 | `mandatory-branch-task` | ai-dev-tasks | low | unchallenged | Work happening on the wrong git branch. |
 | `website-builder-setup-numbers-as-authority` | website-builder-setup | low | unchallenged | Making an unverified external dependency sound credible to a non-technical user during onboarding. |
+| `impeccable/thumb-zone-placement-rule` | sitesmith-modes | low | unchallenged | Claims to solve one-handed mobile reachability. |
 | `cross-platform-portability-plumbing` | ponytail | high | unchallenged | Getting one ruleset in front of ~20 different agent hosts. |
 | `visual-qa-diff-unmeasured` | ai-website-cloner-template | low | unchallenged | Nominally, confirming the finished rebuild matches the source. |
 | `junior-dev-audience-framing` | ai-dev-tasks | low | unchallenged | A human junior developer misreading a spec. |
@@ -2441,6 +2468,34 @@ Failure modes:
 - Requires target project to have playwright installed; fresh projects can't run it at all yet
 - --no-axe preview mode depends on the agent re-running the full check before claiming done
 
+### sitesmith-modes/animation-interruptible-and-never-blocking — `adopt`
+
+**Solves:** Motion that owns the user: a transition that must finish before the next tap registers, or an entrance animation that swallows input for its duration.
+
+**Mechanism:** Two rules stated as absolutes rather than preferences. 'interruptible - Animations must be interruptible; user tap/gesture cancels in-progress animation immediately' (185) and 'no-blocking-animation - Never block user input during an animation; UI must stay interactive' (186), both attributed to Apple HIG.
+
+**Why it works:** It is an obligation about control, not about look — it constrains what motion may cost the user without saying anything about what the motion is. That makes it survivable across every visual direction, unlike the surrounding motion rules in the same section (stagger 30-50ms, exit at 60-70% of enter, press scale 0.95-1.05) which are appearance values dressed as standards.
+
+**In SiteSmith:** Fold into SiteSmith's motion obligations alongside the existing transform/opacity-only and no-motion-between-intent-and-result rules, which govern what animates and where — neither governs whether the user can cut it short. Explicitly leave the numeric motion values in this section behind; they are house style.
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `src/ui-ux-pro-max/templates/base/quick-reference.md:185-186` | low | 0.8 | unchallenged | not stated |
+
+### sitesmith-modes/applicability-scope-notice-on-rule-blocks — `adopt`
+
+**Solves:** A reference corpus is retrieved by keyword, so rules true in one context get pulled into a build where they are false — mobile-only rules (safe areas, haptics, bottom nav, Dynamic Type) applied to a desktop web page.
+
+**Mechanism:** Rule blocks carry an inline applicability declaration rather than assuming universality. Line 282: 'Scope notice: The rules below are for App UI (iOS/Android/React Native/Flutter), not desktop-web interaction patterns.' Repeated verbatim above the pre-delivery checklist (347). Step 1 names the exclusions concretely up front: 'Several sections below are scoped to App UI ... safe areas, haptics, bottom nav and Dynamic Type are mobile-only concerns' (48-50).
+
+**Why it works:** It converts a silent misapplication into a visible mismatch. The model can only decline a rule it knows the boundary of; an unscoped rule list reads as universally binding, and a keyword retriever will happily surface a Material bottom-nav rule for a marketing page. This is knowledge-injection hygiene, not decision automation — it raises the standard without prescribing output.
+
+**In SiteSmith:** Every reference block SiteSmith loads on demand declares what it applies to (surface mode, platform, stack) in its first line, and the loader prints that line with the block. A rule cited in a review must be quoted with its scope; a rule whose scope does not match the current build is inadmissible.
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `src/ui-ux-pro-max/templates/base/skill-content.md:48-50,281-282,346-347` | low | 0.85 | unchallenged | not stated |
+
 ### sitesmith-modes/argument-shape-six-beats — `adapt`
 
 **Solves:** A persuade surface with a beautiful first screen and no argument beneath it: three feature cards standing in for the four questions the reader actually has.
@@ -2819,6 +2874,20 @@ Failure modes:
 | --- | --- | --- | --- | --- |
 | `skills/sitesmith/v2/tasks/redesign-audit.md:59,92,93` | low | 0.9 | unchallenged | not stated |
 
+### sitesmith-modes/concrete-hex-inside-a-token-example — `reject`
+
+**Solves:** Nothing — this is the convergence hazard appearing in the wild, recorded so we do not reproduce it.
+
+**Mechanism:** Line 42 illustrates 'Global design tokens / theming' with `CSS custom properties (--color-primary: #7c3aed)`. The row's job is to name a mechanism (custom properties); it ships a specific colour as the demonstration. #7c3aed is Tailwind violet-600.
+
+**Why it works:** It is the same failure shape as the authoring schema with appearance slots, one line long: an instruction file that had no reason to have a colour in it now has one, and it is the colour every model already over-reaches for. A file obliged to demonstrate a token answered with a hex, exactly as a file obliged to answer 'Radius' answered with a radius. The example does not have to be prescriptive to be copied — it only has to be the nearest concrete value in context.
+
+**In SiteSmith:** Ban concrete colour, radius, font and spacing values from illustrative examples anywhere in the rebuilt skill, including examples whose subject is not appearance. Demonstrate the mechanism with a non-visual name (--color-accent, or an ellipsis) and let the brief supply the value.
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `docs/platform-native.md:42` | low | 0.85 | unchallenged | not stated |
+
 ### sitesmith-modes/content-variance-check — `adopt`
 
 **Solves:** Identical timestamps across a blog roll, or one photograph reused for four people. Real content is untidy; generated content is uniform, and the uniformity is the tell.
@@ -2832,6 +2901,20 @@ Failure modes:
 | source path | context cost | confidence | red team | test method |
 | --- | --- | --- | --- | --- |
 | `skills/sitesmith/v2/tasks/redesign-audit.md:134-135` | low | 0.8 | unchallenged | not stated |
+
+### sitesmith-modes/counter-rows-inside-the-rule-table — `adapt`
+
+**Solves:** A stated preference hardens into dogma and gets applied where it is wrong, because the guidance never shows a case where the preference loses.
+
+**Mechanism:** The table contains rows that argue against its own thesis, in the same column that normally holds the replacement: `ms` — 'keep `ms`, it's genuinely useful and tiny' (138); `URLSession` — 'Alamofire earns it for complex retry/multipart at scale' (114); `urllib.request` — '`requests` for anything real' (165). Closed by the escape clause at 211: when native is genuinely insufficient (old browser support, edge cases it doesn't handle, ergonomics that matter at scale) the library earns its place — install it then, not before.
+
+**Why it works:** The exception sits in the same visual position as the rule, so a model scanning the table cannot absorb the rule without absorbing its limit. Same family as the already-recorded `explicit-never-simplify-carveouts`, but a different carve-out class: that one protects validation/security/a11y from deletion, this one names the capability-insufficiency condition under which the cheaper layer is correctly skipped. Note the honest limit: 3 counter-rows against ~180 rule-rows is a thin inoculation, and the escape clause is one sentence at the very bottom where a truncated read never reaches it.
+
+**In SiteSmith:** Wherever the rebuilt skill states a default, state the named condition under which the default loses, in the same sentence — not in a later caveats section. Applies to the native-first rule and to every other 'prefer X' line.
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `docs/platform-native.md:114, 138, 165, 209-211` | low | 0.6 | unchallenged | not stated |
 
 ### sitesmith-modes/defaults-to-alternatives-table — `reject`
 
@@ -2861,6 +2944,20 @@ Failure modes:
 | --- | --- | --- | --- | --- |
 | `skills/sitesmith/v2/modes/marketing.md:188-191` | low | 0.95 | unchallenged | not stated |
 
+### sitesmith-modes/dependency-declared-optional-with-named-prose-fallback — `adopt`
+
+**Solves:** A skill whose retrieval layer needs a runtime that may be absent either fails hard, or silently installs software on the user's machine.
+
+**Mechanism:** Two boundaries stated before any workflow step. First, the skill is forbidden from fixing the environment itself: 'If Python is not installed, **do not install it yourself**. Stop and ask the user ... Never run package-manager or system-modifying commands (`sudo`, `brew`, `apt`, `winget`, etc.) on the user's machine for this skill' (13). Second, a named degraded path: 'If the user prefers not to install Python, skip the CLI searches and rely on the Quick Reference sections above' (15).
+
+**Why it works:** Line 15 is the most useful sentence in the file, and it is an admission: the package's entire retrieval layer is declared optional, and the prose alone is the supported fallback. That is the 55-line-prose-beats-630k-token-package result stated by the package's own authors. The no-install rule is separately correct — a design skill acquiring system state is a scope violation the user never approved.
+
+**In SiteSmith:** State SiteSmith's tooling boundary in the same shape: name what verify.mjs needs, state that SiteSmith never installs it, and name what the model does when it is missing. Critically — if the honest fallback is 'the prose still works', that is an argument for the prose carrying the weight, not for adding more machinery behind it. Overlaps with ai-website-cloner-template/tool-agnostic-preflight-detection (detect-then-ask); what is new here is the explicit no-system-mutation ban and the declared prose-sufficient path.
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `src/ui-ux-pro-max/templates/base/skill-content.md:5-18` | low | 0.8 | unchallenged | not stated |
+
 ### sitesmith-modes/first-screen-from-strongest-material — `adopt`
 
 **Solves:** Every marketing brief gets the same hero because a default arrangement exists to be reached for.
@@ -2888,6 +2985,34 @@ Failure modes:
 | source path | context cost | confidence | red team | test method |
 | --- | --- | --- | --- | --- |
 | `skills/sitesmith/v2/tasks/redesign-audit.md:170-181` | low | 0.9 | unchallenged | not stated |
+
+### sitesmith-modes/form-error-recovery-and-announcement-contract — `adopt`
+
+**Solves:** Generated forms fail correctly and unhelpfully: the error exists in the DOM, is not announced, does not say how to fix itself, and leaves the user hunting for the field that failed.
+
+**Mechanism:** Six WCAG/Material-cited rules that together form one contract: errors state cause plus fix, not 'Invalid input' (215); after a submit error, focus moves to the first invalid field (222); with multiple errors, a summary at the top anchor-links to each field (223); errors are announced via aria-live or role='alert' (227); toasts must not steal focus and use aria-live='polite' (226); error and success state colours meet 4.5:1 (228).
+
+**Why it works:** These are answers, not decisions — each is verifiable and none constrains how the page looks. It is also the exact gap axe cannot close: axe will pass a form whose error message is invisible to a screen reader user because it was injected without a live region and without moving focus. The ledger's a11y coverage from sitesmith-modes is about disabled controls and keyboard reach; nothing there covers the post-submit failure path.
+
+**In SiteSmith:** One short 'when a form fails' obligation block in the interaction reference, plus a real check: submit every form on the page empty and invalid, then assert focus landed on an invalid control and that an aria-live region or role='alert' received text. Prose and check, per the third measured fact.
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `src/ui-ux-pro-max/templates/base/quick-reference.md:215-228` | low | 0.85 | unchallenged | not stated |
+
+### sitesmith-modes/generator-mandated-in-prose-and-reroll-as-remedy — `reject`
+
+**Solves:** Claimed: the model needs a single deterministic entry point so every build starts from a complete, coherent design system instead of improvising one.
+
+**Mechanism:** The installed skill body makes the already-rejected generator compulsory in prose, not just available. Step 2 is titled 'Generate Design System (REQUIRED)' (52) and opens '**Always start with `--design-system`**' (54). The command is described as returning the finished answer — 'Applies reasoning rules from ui-reasoning.csv to select best matches' and 'Returns complete design system: pattern, style, colors, typography, effects' (62-63). The 'Common Sticking Points' table then names the only sanctioned remedy for a creative impasse: 'Can't decide on style/color | Re-run --design-system with different keywords' (260). Nothing anywhere in the 384-line body tells the model to decide, justify, or reject the script's output.
+
+**Why it works:** It does not. This is the prose half of the mechanism the ledger already rejected at design_system.py:81-329, and it is worse than the script: the five-slot tuple (pattern / style / colors / typography / effects) is an authoring schema with appearance slots, and the body obliges the model to fill it before writing a line. That is exactly the shape that produced three unrelated briefs converging on one look. The re-roll instruction at 260 is the tell — when the deterministic answer feels wrong, the prescribed fix is another deterministic answer, never the model's own judgement.
+
+**In SiteSmith:** No role. Record as the confirming evidence that ui-ux-pro-max's liability is not confined to its Python: the instruction the machinery serves mandates the machinery. If SiteSmith ever ships a retrieval step, its body must say 'retrieval returns candidates you argue with', and must never contain a step whose success condition is a filled slot.
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `src/ui-ux-pro-max/templates/base/skill-content.md:52-69,247-266` | low | 0.9 | unchallenged | not stated |
 
 ### sitesmith-modes/icon-coherence — `adopt`
 
@@ -2917,6 +3042,230 @@ Failure modes:
 | --- | --- | --- | --- | --- |
 | `skills/sitesmith/v2/modes/marketing.md:107-115` | low | 0.85 | unchallenged | not stated |
 
+### sitesmith-modes/impeccable/adversarial-persona-walkthrough — `adapt`
+
+**Solves:** A single 'design director' viewpoint has consistent blind spots — it evaluates the happy path at desktop width with full context, and never discovers what breaks for someone who cannot see hover states, is interrupted mid-flow, or pastes 400 characters into a name field.
+
+**Mechanism:** Five archetypes defined by what they break rather than by demographics (power user, first-timer, screen-reader/keyboard user, edge-case stress tester, interrupted mobile user), each with test questions and a named red-flag list; 2-3 selected per surface from a lookup table; optionally 1-2 more derived from project context. The load-bearing rule is the output contract at line 171: name the exact elements and interactions that fail each persona, do not write generic persona descriptions — write what broke for them.
+
+**Why it works:** Forced viewpoint-switching surfaces defects a single evaluation frame cannot see, and the 'name what broke' rule makes each walkthrough falsifiable rather than a character sketch. But most of the value is concentrated in two of the five: the accessibility persona largely duplicates what axe already checks mechanically, and the stress tester duplicates edge-case testing we do elsewhere.
+
+**In SiteSmith:** Two adversarial walkthroughs per surface, chosen for the surface rather than fixed, each of which must return element-level failures or explicitly return none. Drop the accessibility persona entirely — it is already a mechanical check and a prose duplicate weakens it. Carry the archetypes as one line each, not as 150 lines of profile prose.
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `skill/reference/critique.md:160-171,635-790` | high | 0.65 | unchallenged | not stated |
+
+### sitesmith-modes/impeccable/countable-cognitive-load-checks — `adapt`
+
+**Solves:** 'Too complex' and 'cluttered' are unfalsifiable review verdicts. The model will assert them or not assert them with no reproducibility, and neither the builder nor the user can act on them.
+
+**Mechanism:** An 8-item binary checklist scored by counting failures against fixed thresholds (0-1 low, 2-3 moderate, 4+ critical), plus a counting rule at decision points sourced to Cowan's revision of Miller (<=4 manageable, 5-7 boundary, 8+ overloaded). The checklist items that matter are the ones that reduce to a count a script could make: items per group, visible options at a decision point, top-level nav entries.
+
+**Why it works:** It turns an aesthetic complaint into an integer with a threshold, which is the prose-plus-a-check shape the rebuild requires. It also does not say what the page should look like — only how many simultaneous decisions it may impose — so the same number is satisfiable by wildly different designs.
+
+**In SiteSmith:** Extract only the countable subset into the static checker (visible interactive options per decision point, top-level nav count, competing same-weight elements) and discard the ~100 lines of intrinsic/extraneous/germane taxonomy and the eight named violations — the model reproduces that from memory. Keep one prose line stating the threshold, and let the checker enforce it.
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `skill/reference/critique.md:325-356` | medium | 0.7 | unchallenged | not stated |
+
+### sitesmith-modes/impeccable/cross-run-score-trend — `adapt`
+
+**Solves:** A critique that leaves no comparable trace cannot tell you whether the last round of fixes helped. Without a stable identity for 'the thing being reviewed', scores from different runs are not comparable at all, and dev-server URLs are not stable identities.
+
+**Mechanism:** Target is resolved to a canonical source path in preference to a URL ('ports drift, paths do not'), slugged by a helper and never hand-written, and the report body is persisted with structured frontmatter — total_score, max_score, na list, p0_count, p1_count. A later run reads the last five entries and prints one trend line. Critically, the comparison is denominator-aware: when entries carry different applicable maxima it must print each score with its own denominator and state that the runs are not like-for-like. Persistence is fire-and-forget — a failure prints and moves on rather than blocking the critique.
+
+**Why it works:** It gives the loop an objective, external measure of whether it is converging, which is the only honest basis for a stop decision beyond a round cap. The denominator-awareness rule is what stops it becoming a lie: it prevents a run that skipped two dimensions from appearing as an improvement over one that scored all of them.
+
+**In SiteSmith:** Verification results persist as a small machine-readable record keyed by a canonical target path, carrying the score, the applicable maximum, and the defect counts. A subsequent run reads prior records and reports the delta, refusing to present a delta across differing applicable sets as like-for-like. Persistence failure never blocks the run.
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `skill/reference/critique.md:18,22-26,195-229` | medium | 0.75 | unchallenged | not stated |
+
+### sitesmith-modes/impeccable/findings-grounded-followup-questions — `adopt`
+
+**Solves:** Post-audit questioning defaults to generic discovery ('who is your audience?'), which wastes the user's time and produces answers the review already had. The opposite failure is asking nothing and proceeding on assumptions.
+
+**Mechanism:** Every question must reference a specific finding from the report and offer 2-3 concrete options drawn from what was actually found; generic questions are named and banned; maximum 2-4 questions; and the whole step is skipped when findings are straightforward — but the skip must be printed as `Questions skipped: <reason>` rather than being silent. The four question archetypes are scoped: which category first, was the tonal mismatch intentional, how much scope, anything off-limits.
+
+**Why it works:** It ties the interaction budget to evidence. A question that cannot cite a finding is not asked, so the cost of asking is bounded by the size of the finding set rather than by a fixed script, and the mandatory skip announcement means 'no questions' is a decision rather than an omission.
+
+**In SiteSmith:** After a SiteSmith audit, any clarifying question must quote the finding that motivates it and offer concrete options; no findings means no questions and a printed reason. Never ask brief-discovery questions after a build — those belong before it.
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `skill/reference/critique.md:231-251` | low | 0.75 | unchallenged | not stated |
+
+### sitesmith-modes/impeccable/issue-to-remedy-command-mapping — `adapt`
+
+**Solves:** A critique that ends in observations leaves the user to translate 'weak hierarchy' into an action. The opposite failure is a boilerplate recommendation list where every available remedy appears whether or not it addresses anything found.
+
+**Mechanism:** Every priority issue is tagged with a severity, a why-it-matters, a concrete fix, and the specific next command that would address it. The recommendation list is then derived: ordered by the user's stated priority then impact, each item carrying enough context that the receiving step knows what to focus on, with two hard filters — skip any remedy that would address zero issues, and exclude anything in a scope the user marked off-limits.
+
+**Why it works:** The zero-issue filter is the part worth taking. It makes the recommendation list a function of the findings rather than a menu, so a clean page produces a short list and a broken one produces a long one. The 19-command roster itself is impeccable's product surface and does not transfer to a single unified skill.
+
+**In SiteSmith:** Each finding carries its own remedy inline (file, change, expected effect). Any generated plan is derived strictly from the finding set — no step may appear that resolves zero findings, and scope exclusions stated by the user remove steps rather than annotating them.
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `skill/reference/critique.md:154-158,253-273` | low | 0.6 | unchallenged | not stated |
+
+### sitesmith-modes/impeccable/licensed-empty-slot — `adapt`
+
+**Solves:** A report template with fixed quota slots manufactures content to fill them. This file is the case study for both halves: it applies an escape hatch to the heuristic table (n/a) and to the follow-up questions ('Questions skipped: <reason>'), but leaves 'Highlight 2-3 things done well', 'the 3-5 most impactful design problems', and 'Auto-select 2-3 personas' as unconditional quotas. On a genuinely clean page the reviewer must invent three problems; on a genuinely broken one it caps at five; on a one-page portfolio it must produce persona red flags for personas that have no journey to fail.
+
+**Mechanism:** Generalized from the file's two consistent slots: any obligatory report section must admit a licensed empty answer with a stated reason, and that reason must be recorded rather than the section silently disappearing. Line 251 is the sharpest instance — the visible response must either contain the questions or explicitly print `Questions skipped: <reason>`.
+
+**Why it works:** This is the same lesson as the appearance-slot convergence, arriving from the critique side rather than the authoring side. A schema obliged to answer 'Radius' answered it; a report obliged to list three strengths lists three. The countermeasure is identical in both directions: make the null answer explicit, cheap, and recorded, so the honest response and the padded response are distinguishable after the fact.
+
+**In SiteSmith:** No fixed-count quotas anywhere in our report contract. Every section is nullable-with-reason; a null without a reason fails validation; counts are reported as found, not as targets. Explicitly: never write 'list 3-5 issues' — write 'list every issue at or above severity X, or state that there are none'.
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `skill/reference/critique.md:129-133,148-152,160-171,249-251` | low | 0.9 | unchallenged | not stated |
+
+### sitesmith-modes/impeccable/na-renormalized-scoring — `adapt`
+
+**Solves:** A fixed rubric applied to a surface it was not designed for silently punishes the surface for lacking checks that cannot apply. Scoring a landing page on 'Help and Documentation' and 'Flexibility and Efficiency' guarantees a depressed score that carries no information, and a reviewer facing a mandatory numeric cell will invent a number rather than leave it blank.
+
+**Mechanism:** Any dimension that genuinely cannot apply to the surface under review is scored `n/a` with a one-line reason instead of a number. The denominator is then recomputed as 4x the number of dimensions actually scored ('Never print /40 over a partial set'), the rating band is read off the percentage rather than the raw total (line 616: 90%+/70%+/50%+/30%+), and the persisted snapshot must record both the applicable maximum and which dimensions were skipped so a later run can tell a renormalized total from a full one.
+
+**Why it works:** It removes the incentive to fabricate. The failure mode being patched is exactly the appearance-slot failure: a form field that demands an answer will get one whether or not the answer exists. The fix is not to delete the field but to make 'this does not apply, because X' a first-class, recorded answer that costs the scorer nothing.
+
+**In SiteSmith:** Every scored dimension in our verification report carries an explicit applicability state: scored, or skipped-with-reason. The checker computes the denominator from the scored set only and refuses to emit a total against a denominator containing a skipped dimension. Skipped dimensions and their reasons are written into the machine-readable result, not just the prose.
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `skill/reference/critique.md:129-133,616 (actual: .agents/skills/impeccable/reference/critique.md)` | low | 0.85 | unchallenged | not stated |
+
+### sitesmith-modes/impeccable/nielsen-band-text-verbatim — `reject`
+
+**Solves:** Nothing this rebuild has. It is a full restatement of Nielsen's ten heuristics with a check-for list and a five-row 0-4 criteria table for each — roughly 205 of the file's 812 lines.
+
+**Mechanism:** Ten sections, each with five bullet 'check for' items and a scoring table defining what 0 through 4 mean for that heuristic.
+
+**Why it works:** It does not, for us. This is textbook material any current model restates accurately from memory, so carrying it buys no behavioural change and costs a fifth of the file. It is also the exact shape the 59-to-40 measurement condemns: instruction enumerating what the output should contain rather than raising the standard the model applies. The two genuinely non-obvious lines nearby — the population prior at 131 and the percentage-band renormalization at 616 — are captured separately as their own mechanisms.
+
+**In SiteSmith:** none — name the heuristics, state the scale, state the base rate, and stop
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `skill/reference/critique.md:396-601` | high | 0.85 | unchallenged | not stated |
+
+### sitesmith-modes/impeccable/run-notes-skip-accounting — `adopt`
+
+**Solves:** Directly the rebuild's third measured fact: prose guardrails the model polices itself with fail silently. This file has roughly a dozen steps that can be skipped for legitimate reasons (detector missing, browser unavailable, script injection blocked, slug null, sub-agents unavailable) and any one of them can be skipped for illegitimate reasons with an identical-looking report.
+
+**Mechanism:** A mandatory Run Notes block enumerating a fixed field list — target slug, ignore list, assessment independence, CLI detector, browser visibility, overlay injection, live-server cleanup, temp-file cleanup, snapshot write, trend read. Every field carries a status, and for anything failed or skipped it must carry the concrete observed reason plus the fallback signal actually used. Paired with a hard anti-fabrication rule (line 14: do not claim a user-visible overlay exists unless injection actually succeeded in the page) and a cleanup obligation (line 13: any server started must have a recorded stop method and be stopped before reporting).
+
+**Why it works:** It converts every soft, skippable step into a reported field, so silence becomes structurally impossible: the absence of a field is itself a detectable defect, whereas the absence of a self-policed prose behaviour is invisible. This is the cheapest available substitute for a real check on steps that genuinely cannot be automated, and it is machine-gradeable — a parser can assert the field set is complete without judging the content.
+
+**In SiteSmith:** Every SiteSmith verification run emits a fixed provenance block covering each step that can degrade: which viewports were captured, whether axe ran in both schemes, whether a live server was reachable, whether the anti-slop linter ran, whether any step fell back. Missing field or missing reason on a non-run step fails the gate. No claim of a check having run may be made without the artifact it produces.
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `skill/reference/critique.md:9,13-14,76,82,88,92,182-185,212` | low | 0.9 | unchallenged | not stated |
+
+### sitesmith-modes/impeccable/score-inflation-calibration-anchor — `adopt`
+
+**Solves:** A self-scoring model grades generously. Without an external anchor a 0-4 scale collapses toward 3-4 and the score stops discriminating, which is the mechanism by which a review loop terminates early on work that is not good.
+
+**Mechanism:** Three cheap lines rather than a system: an explicit population prior ('Most real interfaces score 20-32 out of 40'), a definition of the ceiling that resists reflexive use ('A 4 means genuinely excellent', repeated at 398 as 'not good enough'), and a delivery discipline block (187-193) — be specific, name the exact element not 'some elements', cut 'consider exploring...' entirely, do not soften criticism.
+
+**Why it works:** This is instruction that raises the model's standard rather than enumerating what the output should contain — the class the rebuild's own 59-to-40 measurement says is worth paying for. The population prior is the load-bearing part: it makes a high score a claim the model must be willing to defend against a stated base rate, at a cost of one sentence.
+
+**In SiteSmith:** Wherever SiteSmith asks the model to score its own output, state the expected distribution alongside the scale and define the top band as rare. Ban hedged remediation language ('consider', 'you might want to') in review output — that one is also mechanically greppable, so it gets prose plus a check.
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `skill/reference/critique.md:131,187-193,398,604-616` | low | 0.8 | unchallenged | not stated |
+
+### sitesmith-modes/impeccable/severity-tiebreak-question — `adopt`
+
+**Solves:** Severity labels drift. Without a tie-breaker, P1 and P2 are assigned by mood and the priority ordering that the whole downstream plan depends on becomes noise.
+
+**Mechanism:** A four-level ladder defined by user consequence rather than by code area (blocking task completion / significant difficulty / annoyance with a workaround / no real impact), plus a single disambiguation test for the boundary case: 'Would a user contact support about this? If yes, it is at least P1.'
+
+**Why it works:** It converts a subjective ranking into a semi-objective one by substituting a concrete, imaginable external event for an internal judgment. Costs one sentence, and it is the only part of the 200-line scoring apparatus that the model does not already reproduce from memory.
+
+**In SiteSmith:** Adopt the ladder and the tie-break sentence verbatim in shape for SiteSmith finding severity, with our own external event substituted (would this make a visitor leave the page, or make the client ask us to fix it before launch).
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `skill/reference/critique.md:620-631` | low | 0.8 | unchallenged | not stated |
+
+### sitesmith-modes/impeccable/three-way-evidence-reconciliation — `adopt`
+
+**Solves:** This is the file's answer to critic-vs-critic disagreement, and it is the thing the coverage gap most obviously cost us. Two independent assessments — one subjective, one mechanical — will disagree, and the default behaviour is to concatenate both and let the reader reconcile, which means neither is accountable.
+
+**Mechanism:** Synthesis is explicitly forbidden to concatenate. The combined report must weave the two and disposition the disagreements into three named buckets: where the design review and the detector agree, where the detector caught something the review missed, and where the detector's findings are false positives. Ordering is enforced upstream (line 10): Assessment A must be finished before detector output enters the synthesis context, because deterministic output still anchors judgment. The specificity verdict then carries both an 'LLM assessment' and a 'Deterministic scan' subsection side by side (135-143) rather than one merged number.
+
+**Why it works:** The machine is allowed to be wrong and the human critic is allowed to overrule it, but only out loud and per finding. That is the correct resolution shape: neither critic wins by default, and every mechanical finding leaves the run with a disposition attached. It also produces a free calibration signal over time — a detector rule that is repeatedly dispositioned false-positive is a rule to delete.
+
+**In SiteSmith:** Where SiteSmith runs both a model critique and the static anti-slop/axe checks, the model forms its judgment before it sees the checker output, and the combined result must disposition every mechanical finding as confirmed, missed-by-the-model, or false-positive-with-reason. Unreconciled findings fail the gate. False-positive dispositions accumulate as evidence against the rule, not against the reviewer.
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `skill/reference/critique.md:10,96,135-143` | low | 0.85 | unchallenged | not stated |
+
+### sitesmith-modes/impeccable/thumb-zone-placement-rule — `reject`
+
+**Solves:** Claims to solve one-handed mobile reachability.
+
+**Mechanism:** 'Uses thumb only; prefers bottom-of-screen actions' as a stated behaviour, 'Are primary actions in the thumb zone (bottom half of screen)?' as a test question, and 'Important actions positioned at the top of the screen (unreachable by thumb)' as a reportable red flag.
+
+**Why it works:** It does not — it is a layout prescription wearing a persona's clothes, and it is the one item in this file with the shape the rebuild has already been burned by. A reviewer obliged to answer 'is the primary action in the bottom half' will push every mobile layout toward the same composition, for the same reason a schema slot named Radius produced the same radius three times. The adjacent items in the same block are genuine obligations — 44x44pt targets, state survives interruption, works on a slow connection — all satisfiable by unrelated designs. This one names a screen region.
+
+**In SiteSmith:** none — if reachability matters, check reachability (target size, tap-target spacing, whether the primary action is reachable without a scroll), never a prescribed screen region
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `skill/reference/critique.md:757,764,771` | low | 0.8 | unchallenged | not stated |
+
+### sitesmith-modes/impeccable/user-owned-ignore-list — `adapt`
+
+**Solves:** A repeat critique re-raises findings the user has already considered and dismissed, which trains the user to ignore the report. The opposite risk is a review that quietly inherits its own prior conclusions and stops looking.
+
+**Mechanism:** A single user-owned suppression file whose matching findings are dropped silently — and the rule that it is 'the only prior-run input critique consumes'. Prior scores, prior reports and prior verdicts are deliberately not read into the assessment context, only the suppression list.
+
+**Why it works:** Two things at once, and the second is the interesting one. The suppression file gives the user a durable veto without arguing with the reviewer. The exclusivity clause keeps the assessment genuinely fresh — a reviewer that reads its own last report anchors on it, which would quietly defeat the fresh-eyes property the dual-subagent mechanism is paying for. Note: this line falls inside the ledger's already-cited :5-46 range, but no ledger entry records it.
+
+**In SiteSmith:** A user-owned dismissal list is the only prior-run state SiteSmith's audit reads. Prior scores may be read by the reporting layer for the trend line, but must not enter the assessment context.
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `skill/reference/critique.md:27` | low | 0.7 | unchallenged | not stated |
+
+### sitesmith-modes/modal-foreground-must-be-isolated — `adapt`
+
+**Solves:** A modal or sheet whose backdrop still competes visually, so the user cannot tell what is now interactive and the dialog reads as an overlay rather than a state change.
+
+**Mechanism:** 'Scrim and modal legibility | Use a modal scrim strong enough to isolate foreground content (typically 40-60% black) | Weak scrim that leaves background visually competing' (327), repeated as a checklist item (368).
+
+**Why it works:** The obligation — the foreground of a modal state must be unambiguously separated from what is behind it — is real and routinely missed, because a 20% scrim looks tasteful in a screenshot and fails in use. The '40-60% black' figure is not the mechanism; it is an appearance value, and carrying it verbatim is how a rule becomes a house style.
+
+**In SiteSmith:** Keep the obligation in the interaction reference phrased as separation, not opacity, and say plainly that the number is deliberately not specified. If it needs enforcement, the check is contrast/legibility of the foreground against whatever is behind it, never a scrim-opacity threshold.
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `src/ui-ux-pro-max/templates/base/skill-content.md:327,368` | low | 0.7 | unchallenged | not stated |
+
+### sitesmith-modes/model-facing-vs-machine-facing-declaration — `adapt`
+
+**Solves:** A knowledge file that a script parses must answer every field it declares; a file only the model reads may leave things open. When the two roles are mixed in one artifact, the schema wins and the open questions become slots.
+
+**Mechanism:** A 10-row priority index (Priority / Category / Impact / Domain / Key Checks / Anti-Patterns) that explicitly declares its own consumer. Line 41: '供人工/AI 查阅：按 1→10 决定先关注哪类规则；需要细则时用 --domain <Domain> 查询。脚本不读取本表。' — 'For human/AI reference: use 1→10 to decide which class of rule to attend to first; query --domain for detail. Scripts do not read this table.' The ordering itself is a triage claim (Accessibility and Touch CRITICAL; Charts LOW), and each row carries must-haves and anti-patterns rather than values.
+
+**Why it works:** The declaration is the mechanism, not the table. Naming a file as model-facing-only frees it from having to be complete or resolvable, which is precisely the pressure that turned ui-ux-pro-max's other data files into appearance schemas. The priority ordering then does something a flat rule dump cannot: it tells the model what to spend attention on first when it cannot read everything.
+
+**In SiteSmith:** Split SiteSmith's reference material by consumer and say so in the file: files the verify script parses have a fixed schema and no aesthetic fields at all; files only the model reads are prose, may be incomplete, and carry an explicit 'nothing here is a value to fill in' line. Keep the attention-ordering idea, drop the ten-category taxonomy (SiteSmith already orders obligations by when the visitor meets them).
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `src/ui-ux-pro-max/templates/base/quick-reference.md:39-54` | low | 0.7 | unchallenged | not stated |
+
 ### sitesmith-modes/named-z-index-scale — `adopt`
 
 **Solves:** Stacking becomes an arms race. z-index: 9999 means the scale was lost, and every later overlay has to outbid it.
@@ -2930,6 +3279,34 @@ Failure modes:
 | source path | context cost | confidence | red team | test method |
 | --- | --- | --- | --- | --- |
 | `skills/sitesmith/v2/tasks/redesign-audit.md:164` | low | 0.8 | unchallenged | not stated |
+
+### sitesmith-modes/native-first-capability-lookup-table — `reject`
+
+**Solves:** An agent reaches for a package before checking whether the platform already ships the capability.
+
+**Mechanism:** Seven side-by-side tables ('You think you need' vs 'What the platform has') covering HTML form controls (13-26), CSS capabilities (34-50), JS/browser APIs (58-85), Swift/SwiftUI (93-123), Node stdlib (131-147), Python stdlib (156-170) and SQL (178-193). Roughly 180 rows, each naming a specific API as the replacement for a specific package or hand-rolled component.
+
+**Why it works:** It does not work durably. This is a snapshot with no verification date, no 'last checked' marker, no baseline/caniuse instruction and no staleness owner anywhere in the 212 lines. The dating is visible in the content itself: `field-sizing: content` (25), `@container` (41), native nesting (49), `:has()` (50), `Object.groupBy` (62), vendor-prefixed `-webkit-line-clamp` (47), and hard version stamps 'Python 3.7+/3.9+/3.4' (157-168) plus 'six | drop it, Python 2 is gone' (160). Five of the seven tables (Swift, Node, Python, SQL, and most of JS) are irrelevant to a website-building skill outright. This is exactly the enumerate-the-contents shape that lost 40-59 to 2078 tokens of prose, at maybe 20x the context cost of the one-line rung it backs.
+
+**In SiteSmith:** Do not port any of it. Rung 4 of the already-adopted ladder ('use the native platform feature') carries the entire durable payload in seven words; this file is the part that would date the skill and blow the budget. If a capability list is ever wanted, it needs a verification date and an owner, and it still would not earn its place.
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `docs/platform-native.md:9-195` | high | 0.9 | unchallenged | not stated |
+
+### sitesmith-modes/native-first-justified-by-checkable-accessibility — `adapt`
+
+**Solves:** A prose 'prefer native' rule is unenforceable and fails silently, because its stated justification (dependency decay) is invisible in the shipped artifact.
+
+**Mechanism:** The file justifies native-first purely from maintenance economics — the wrapper-decay chain at 201-207: platform team solves it, package author wraps it, you install the wrapper, the wrapper goes unmaintained, you debug the wrapper. It never once argues from accessibility, even where the rows are entirely about it (`<dialog>` + showModal at 21, `<details>/<summary>` at 22, `title`+CSS tooltip at 23, `<input list>`+`<datalist>` at 24 — native focus trapping, keyboard handling, IME and mobile affordances all come free).
+
+**Why it works:** The a11y reframing is our addition, not the file's, and it is what converts an unpolicable preference into a rule with a check. 'Prefer native for maintenance reasons' has no signal in the output. 'Prefer native because rebuilt controls lose keyboard and focus behaviour' is directly measurable by the existing verify gate — axe in both colour schemes plus keyboard traversal already catches a hand-rolled div-modal or a JS accordion that a dependency-count check never would. Prose AND a check, from a file that supplied only prose.
+
+**In SiteSmith:** One sentence in the build phase: when a browser control exists for the job, use it — a rebuilt control has to re-earn focus, keyboard and screen-reader behaviour, and verify.mjs will find out. No API list attached.
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `docs/platform-native.md:21-24, 197-211` | low | 0.7 | unchallenged | not stated |
 
 ### sitesmith-modes/never-default-styled-generated-components — `adopt`
 
@@ -3323,6 +3700,20 @@ Failure modes:
 | --- | --- | --- | --- | --- |
 | `skills/sitesmith/v2/modes/product-ui.md:59-68` | low | 0.9 | unchallenged | not stated |
 
+### sitesmith-modes/orientation-and-text-scale-as-verification-axes — `adapt`
+
+**Solves:** A responsive verification matrix that only varies width passes layouts that break when the viewport is short or when the user has enlarged text — two of the commonest real-world failure conditions.
+
+**Mechanism:** The pre-delivery checklist adds two axes beyond width. Orientation: 'Test on 375px (small phone) and landscape orientation' (273) and 'Verified on small phone, large phone, and tablet (portrait + landscape)' (374), backed by 'orientation-support - Keep layout readable and operable in landscape mode' (quick-reference:148). Text scale: 'Verify behavior with reduced-motion enabled and Dynamic Type at largest size' (273-274), 'Reduced motion and dynamic text size are supported without layout breakage' (383), backed by 'dynamic-type - Support system text scaling; avoid truncation as text grows' (quick-reference:69).
+
+**Why it works:** Both are failure conditions the model cannot reason its way to — they must be rendered to be seen. A landscape phone is short, not narrow, so every vertically-centred hero and sticky bar fails there while passing at 375 wide. Enlarged text breaks fixed-height containers and truncates labels that read fine at 100%. SiteSmith's verify.mjs currently varies width only (375/768/1440), so both classes of defect ship undetected today.
+
+**In SiteSmith:** Add two axes to verify.mjs: one short-viewport pass (roughly 812x375) reusing the existing overflow and sticky-element assertions, and one enlarged-text pass at 200% asserting no clipped or overlapping text. Take the axes, not the mobile framing — Dynamic Type is the iOS name for something browser text-zoom tests just as well.
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `src/ui-ux-pro-max/templates/base/skill-content.md:272-275,374,383; quick-reference.md:69,148` | low | 0.75 | unchallenged | not stated |
+
 ### sitesmith-modes/phone-navigation-obligations — `adopt`
 
 **Solves:** A phone navigation that hides the primary action behind a menu, or that gives no indication of where the visitor currently is.
@@ -3434,6 +3825,20 @@ Failure modes:
 | source path | context cost | confidence | red team | test method |
 | --- | --- | --- | --- | --- |
 | `skills/sitesmith/v2/tasks/redesign-audit.md:96-112` | medium | 0.85 | unchallenged | not stated |
+
+### sitesmith-modes/skill-applicability-self-gate-with-skip-list — `adapt`
+
+**Solves:** A broadly-described skill triggers on work it cannot help with, spending context and inserting design opinions into backend, data or infrastructure tasks.
+
+**Mechanism:** Three explicit bands — Primary Use Cases (9-15), Recommended (19-25), Skip (29-35, naming pure backend, API/database design, non-visual performance work, infra/DevOps, non-visual scripting) — closed by a single-sentence test at line 37: '判断准则：如果任务会改变某个功能看起来如何、使用起来如何、如何运动或如何被交互，就应该使用此 Skill' ('if the task changes how something looks, how it is used, how it moves, or how it is interacted with, use this skill').
+
+**Why it works:** The Skip list is the working half. Most skill descriptions enumerate what they cover, which biases toward firing; enumerating what they do not cover, plus one falsifiable test, gives the model a way to decline. The test is phrased as an observable property of the change, not of the request wording.
+
+**In SiteSmith:** SiteSmith's trigger description already lists a long set of positive triggers. Add the negative band and a one-line test in the skill body so an over-broad trigger can be declined in the first paragraph rather than after a mode is chosen. Do not carry the three-tier Primary/Recommended/Skip structure — one positive test plus a short Skip list is enough.
+
+| source path | context cost | confidence | red team | test method |
+| --- | --- | --- | --- | --- |
+| `src/ui-ux-pro-max/templates/base/quick-reference.md:1-37` | low | 0.6 | unchallenged | not stated |
 
 ### sitesmith-modes/stack-decision-gate — `adopt`
 

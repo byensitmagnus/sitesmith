@@ -27,6 +27,7 @@ const WAVES = [
   'docs/rebuild/research/_mechanisms/RAW-AUTOPSIES.json',
   'docs/rebuild/research/_mechanisms/RAW-AUTOPSIES-WAVE2.json',
   'docs/rebuild/research/_mechanisms/RAW-MODE-FLOOR.json',
+  'docs/rebuild/research/_mechanisms/RAW-GAPFILL.json',
 ]
 const raw = { result: WAVES.flatMap((p) => JSON.parse(readFileSync(join(root, p), 'utf8')).result) }
 
