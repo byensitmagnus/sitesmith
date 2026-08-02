@@ -6,7 +6,7 @@ branch: rebuild/sitesmith-unified
 ai_generated: "(C)"
 ---
 
-# Runde 4: to accepts af tre mulige
+# Runde 4: tre accepts af tre mulige
 
 Tre nye briefs, tomt install, tre friske agenter, tre blinde køberdommere med den
 udvidede rubrik. Protokollen er `PLAN-TIL-FAERDIG.md`; stopreglen stod fast før runden.
