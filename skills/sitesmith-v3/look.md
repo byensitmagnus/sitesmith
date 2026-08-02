@@ -73,6 +73,33 @@ Three things it must have, and `verify.mjs` measures the first two:
 - **One thing that is unmistakably this subject.** If the first screen could be cropped
   into a competitor's site without anyone noticing, build another one.
 
+## 4b. The second reading, and where the subject's unknown goes
+
+Nine cold builds have been shown to nine reviewers who saw only the brief and the render.
+Every one of them named one thing they liked, and all nine were the same move: **one of
+the subject's own measurements, made readable in a second.** The hatching density *is* the
+shore rating. The section *is* the 41 and 47 metres. The dotted edge *is* the 3,1 km.
+
+Four of the first six answered the "could this be anyone" question the same way: *no, but
+only because of that one drawing; cut it out and the page is generic.* The move was used
+once, on the signature, and the rest of the page was chrome around it.
+
+**So it happens at least twice, and the second one is not in the first screen.** Name it
+in the record beside the signature: which other measurement of this subject it renders,
+and the selector. It has to read from a different fact than the signature does, because
+the cheapest answer to "do it again" is the same drawing twice.
+
+**And the subject's own unknown is set in the same form as the values it stands among**,
+next to the value or the control it qualifies. Three of the six best things reviewers
+named were exactly this: a coil that has not answered since 17:12 with the sentence *look
+out of the window before you open*; a register searched by hand that takes three weeks,
+printed above the button rather than below it; a route with no reading, named by number
+instead of shown as 0,0. A page that says what it does not know, in the same typography as
+what it does, is the one they trusted.
+
+This is the opposite of writing down what the brief did not contain. That is the studio's
+paperwork and it belongs in the report.
+
 ## 5. Materiality
 
 Flat is a choice and it is the one every default makes. Ask what this subject is made of

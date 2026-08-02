@@ -1543,6 +1543,67 @@ if (!direction || !direction.palette || !direction.type) {
            whose every other line stopped at 57 per cent. The eye reads the majority of the
            rows, so the measure does too. */
         const STRIP = 16;
+        /* A rule, a row or a panel drawn far wider than anything inside it. Three
+           reviewers on three unrelated pages in three rounds wrote the same sentence in
+           their own words: "the line over Temperatur runs 860px out to x=1150 while the
+           figures under it stop at x=516, a rule that points at nothing for three quarters
+           of its length"; "the band is 1368px wide and holds two 12px dots and a 210px
+           chip, about 80 per cent bare, it looks like a component that has not finished
+           loading"; "the table's lines run to x=1050 but the numbers stop at x=690, so
+           every row has 360px of rule going nowhere".
+
+           Not the same defect as a lopsided band. That one is about a column against an
+           edge; this one is about a single element whose own box promises content it does
+           not have, and it fires on elements far too short to be a band. */
+        const overdrawn = [];
+        for (const n of document.querySelectorAll('*')) {
+          if (n.closest('svg') || !n.getClientRects().length) continue;
+          const q = n.getBoundingClientRect();
+          /* Short things only: a rule, a row, a strip. Every case a reviewer named was one
+             of those. Taller boxes are bands, and the band measures above already read
+             them; letting this one see them made it refuse an ordinary footer whose two
+             lines are shorter than its own border. */
+          if (q.width < 320 || q.height < 6 || q.height > 80) continue;
+          const cs = getComputedStyle(n);
+          const draws = (cs.backgroundColor && !/rgba?\(\s*0,\s*0,\s*0,\s*0\)|transparent/.test(cs.backgroundColor))
+            || parseFloat(cs.borderTopWidth) > 0 || parseFloat(cs.borderBottomWidth) > 0
+            || (cs.backgroundImage && cs.backgroundImage !== 'none');
+          if (!draws || !n.children.length) continue;
+          let l = Infinity, r = -Infinity;
+          for (const c of n.querySelectorAll('*')) {
+            const t = [...c.childNodes].some((x) => x.nodeType === 3 && x.textContent.trim().length > 1);
+            if (!t && !c.matches(PICTORIAL)) continue;
+            const g = c.getBoundingClientRect();
+            if (g.width < 3 || g.height < 3) continue;
+            l = Math.min(l, g.left); r = Math.max(r, g.right);
+          }
+          /* A heading that does not fill its line is not this defect. Every case a
+             reviewer named was a container: a table row whose cells stop short of its own
+             rule, a strip holding two dots and a chip, a dl row whose figures stop at a
+             quarter of the line over them. So only containers, and only the ink in their
+             children. */
+          if (!Number.isFinite(l)) continue;          // an empty rule is a rule, not a defect
+          /* Overhang, not fill. A row with a label on the left and a figure on the right is
+             full at both ends and reads as finished however much air is between them; what
+             the reviewers named was one end of a drawn element running past the last thing
+             in it. "A rule that points at nothing for three quarters of its length." */
+          const rightOver = q.right - r;
+          const leftOver = l - q.left;
+          const over = Math.max(rightOver, leftOver);
+          if (over > 240 && over / q.width > 0.25) {
+            overdrawn.push({
+              tag: n.tagName.toLowerCase() + (n.className && typeof n.className === 'string' ? `.${n.className.trim().split(/\s+/)[0]}` : ''),
+              y: Math.round(window.scrollY + q.top),
+              width: Math.round(q.width),
+              contentWidth: Math.round(r - l),
+              overhang: Math.round(over),
+              side: rightOver >= leftOver ? 'right' : 'left',
+              share: Number((over / q.width).toFixed(2)),
+              text: (n.textContent || '').trim().replace(/\s+/g, ' ').slice(0, 40),
+            });
+          }
+        }
+
         const bands = [];
         for (const band of bandList) {
           const br = band.getBoundingClientRect();
@@ -1667,6 +1728,7 @@ if (!direction || !direction.palette || !direction.type) {
           body: first(getComputedStyle(document.body).fontFamily),
           signature: !!el && (el.getClientRects().length > 0 || !!el.getBoundingClientRect().width),
           bands,
+          overdrawn: overdrawn.sort((a, b) => b.overhang - a.overhang).slice(0, 8),
           firstViewport: {
             paintedShare: Number(share(painted).toFixed(3)),
             deadShare: Number((best / (COLS * ROWS)).toFixed(3)),
@@ -1891,6 +1953,23 @@ if (!direction || !direction.palette || !direction.type) {
          Only operate, because a page that reads or persuades earns its first screen with a
          picture and an argument, and demanding a control there would put a button on an
          essay. */
+      /* Elements drawn wider than the content they hold. Reported per element with its own
+         numbers, because the fix is per element: shorten the rule to what it underlines,
+         or put something under it that earns the width. */
+      const over = measured.overdrawn ?? [];
+      if (over.length && !deliberate.has('wider-than-its-content')) {
+        const worst = over[0];
+        refuse('look/wider-than-its-content', join(BUILD, 'index.html'), 1,
+          `${worst.tag} at y=${worst.y} is ${worst.width}px wide and its content stops ${worst.overhang}px short of the `
+          + `${worst.side}, ${Math.round(worst.share * 100)}% of its own width${worst.text ? ` ("${snip(worst.text, 36)}")` : ''}`
+          + `${over.length > 1 ? `, and ${over.length - 1} more element(s) like it` : ''}. `
+          + 'A rule that points at nothing for most of its length, or a panel drawn for content that is not there, '
+          + 'reads as something that failed to load. Shorten it to what it holds, give it something that earns the '
+          + 'width, or claim `wider-than-its-content` under Deliberate:.');
+      } else if (over.length) {
+        waived.push({ cls: 'look/wider-than-its-content', file: show(join(BUILD, 'index.html')), line: 1, detail: deliberate.get('wider-than-its-content') });
+      }
+
       const operateSurface = /\b(operate|console|dashboard|admin|panel|tool)\b/i.test(declaredSurface);
       if (operateSurface && fv?.reachableActions) {
         if (!fv.reachableActions.length) {

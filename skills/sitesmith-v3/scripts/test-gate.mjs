@@ -240,6 +240,16 @@ const CASES = [
     why: 'a reader scrolling past three identical frames stops reading the page and starts reading a document',
   },
   {
+    name: 'a rule that points at nothing for most of its length',
+    fixture: 'refuse-overdrawn', browser: true, expect: 2,
+    must: ['look/wider-than-its-content'],
+    // Three reviewers, three rounds, three unrelated pages: "a line that points at nothing
+    // for three quarters of its length"; "1368px wide holding two dots and a chip, about
+    // 80 per cent bare, it looks like a component that has not finished loading"; "the
+    // lines run to x=1050 but the numbers stop at x=690".
+    why: 'a drawn element whose ink stops far short of its own edge reads as something that failed to load',
+  },
+  {
     name: 'a console whose first screen has nothing to press',
     fixture: 'operate-no-action', browser: true, expect: 2,
     must: ['operate/nothing-to-do-on-the-first-screen'],

@@ -186,11 +186,11 @@ fact, ask for it or cut the sentence. The bottom rung is nothing at all: a page 
 proof section is honest and an invented one is not. Voice is yours to invent. Facts are
 not.
 
-**Nothing at all means nothing, not a note saying nothing.** Four pages have cut a fact
-and then written the cut onto the page: no reviews and none to show, no address because
-the programme does not mention one. A buyer reads it as the answer, that nobody has ever
-been happy here. The missing fact goes in the report and the asset manifest, where the
-client can act on it. The page simply does not have that section.
+**The brief's gap and the subject's own unknown are opposites.** A page that writes down
+what the brief did not contain has filed the studio's paperwork on the client's page, and
+a buyer reads it as the answer. That goes in the report. What the subject itself does not
+know is the other thing, and reviewers praised it three times in six: a gauge silent since
+17:12, an index searched by hand. `look.md` says where it goes.
 
 Before you defend a layout, strip the page to its text and read what is left. If the
 words alone do not persuade, the design was carrying an empty page, and the fix is the
