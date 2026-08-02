@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="da">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Grubbe Segl, stormfok nr. 4 i Dacron 340</title>
+<meta name="description" content="Én stormfok, syet i hånden efter mål. 8 til 11 uger. Grubbe Segl, Marstal.">
+<style>
+/* En stormfok er et måltilbud, ikke en vare på hylden. Siden er bygget som selve
+   ordresedlen: to spalter, mål til venstre, beslutning til højre, og prisen som en
+   sum der bygges op linje for linje. Ingen galleri, ingen anmeldelser, ingen kort. */
+:root{
+  --lys:#e8eef1; --felt:#fbfdfe; --linje:#93a2ab; --linje-2:#c3ced4;
+  --blaek:#0f2430; --blaek-2:#3c525f;
+  --maerke:#0b6b70; --paa-maerke:#ffffff;
+  --advarsel:#8a2f14;
+  --grot:'Helvetica Neue',Helvetica,Arial,sans-serif;
+  --mono:ui-monospace,'Cascadia Mono','SF Mono','Segoe UI Mono',monospace;
+  --a:4px; --b:8px; --c:16px; --d:24px; --e:40px; --f:64px;
+  --brod:16px; --lille:13px; --mikro:11px; --tal:26px; --overskrift:34px;
+}
+@media (prefers-color-scheme:dark){
+  :root{ --lys:#0b1519; --felt:#12212a; --linje:#3f5561; --linje-2:#253a45;
+         --blaek:#e7eef1; --blaek-2:#a9bcc6; --maerke:#4fd0d6; --paa-maerke:#04191a; }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--lys);color:var(--blaek);
+     font-family:var(--grot);font-size:var(--brod);line-height:1.5}
+.spring{position:absolute;left:-9999px;top:0;min-height:44px;padding:14px 18px}
+.spring:focus{position:fixed;left:10px;top:10px;z-index:99;background:var(--maerke);
+              color:var(--paa-maerke);text-decoration:none}
+a{color:var(--maerke)}
+:focus-visible{outline:3px solid var(--maerke);outline-offset:2px}
+
+.seddel{max-width:1080px;margin:0 auto;padding:var(--d) var(--c) var(--f)}
+.hoved{display:flex;flex-wrap:wrap;gap:var(--b) var(--d);align-items:baseline;
+       border-bottom:2px solid var(--blaek);padding-bottom:var(--c);margin-bottom:var(--e)}
+.hoved b{font-family:var(--mono);font-size:var(--brod);font-weight:700}
+.hoved span{font-family:var(--mono);font-size:var(--lille);color:var(--blaek-2)}
+
+h1{font-size:clamp(26px,4.6vw,var(--overskrift));line-height:1.12;margin:0 0 var(--b);font-weight:600}
+.under{margin:0 0 var(--e);color:var(--blaek-2);max-width:56ch}
+
+.spalter{display:grid;grid-template-columns:1fr;gap:var(--e)}
+@media (min-width:900px){.spalter{grid-template-columns:1fr 380px;gap:var(--f)}}
+
+table{border-collapse:collapse;width:100%;font-size:var(--brod)}
+caption{text-align:left;font-family:var(--mono);font-size:var(--lille);
+        color:var(--blaek-2);padding-bottom:var(--b)}
+th,td{text-align:left;padding:var(--b) var(--b) var(--b) 0;border-bottom:1px solid var(--linje-2)}
+th{font-weight:600;width:44%}
+td.tal{font-family:var(--mono);text-align:right;white-space:nowrap}
+
+.valg{margin:var(--e) 0 0}
+.valg legend{font-family:var(--mono);font-size:var(--lille);color:var(--blaek-2);padding:0}
+.valg{border:0;padding:0}
+.valg label{display:flex;gap:var(--c);align-items:flex-start;padding:var(--c) 0;
+            border-bottom:1px solid var(--linje-2);cursor:pointer;min-height:44px}
+.valg input{margin:2px 0 0;width:20px;height:20px;accent-color:var(--maerke);flex:none}
+.valg .navn{font-weight:600}
+.valg .om{display:block;color:var(--blaek-2);font-size:var(--lille);margin-top:2px}
+.valg .pris{margin-left:auto;font-family:var(--mono);white-space:nowrap}
+
+.sum{background:var(--felt);border:2px solid var(--blaek);padding:var(--d);
+     box-shadow:6px 6px 0 var(--linje-2);
+     position:sticky;top:var(--c);align-self:start}
+.sum h2{margin:0 0 var(--c);font-size:var(--lille);font-family:var(--mono);
+        font-weight:400;color:var(--blaek-2)}
+.sum ul{list-style:none;margin:0 0 var(--c);padding:0}
+.sum li{display:flex;justify-content:space-between;gap:var(--c);padding:var(--a) 0;
+        font-family:var(--mono);font-size:var(--lille);color:var(--blaek-2)}
+.sum .ialt{display:flex;justify-content:space-between;gap:var(--c);align-items:baseline;
+           border-top:2px solid var(--blaek);padding-top:var(--c);font-size:var(--tal);
+           font-family:var(--mono)}
+.knap{display:block;width:100%;min-height:52px;margin-top:var(--d);padding:var(--c);
+      background:var(--maerke);color:var(--paa-maerke);border:0;font:inherit;font-weight:600;
+      cursor:pointer;text-align:center}
+.knap:hover{filter:brightness(1.08)}
+.kvit{margin:var(--c) 0 0;font-size:var(--lille);color:var(--blaek-2)}
+.kvit[data-tilstand="fejl"]{color:var(--advarsel);font-weight:600}
+.leveringstid{margin:var(--c) 0 0;font-family:var(--mono);font-size:var(--lille);color:var(--blaek-2)}
+
+.vilkaar{margin-top:var(--f);border-top:1px solid var(--linje);padding-top:var(--d);
+         font-family:var(--mono);font-size:var(--lille);color:var(--blaek-2);max-width:62ch}
+</style>
+</head>
+<body>
+<a class="spring" href="#bestil">Spring til bestilling</a>
+
+<main class="seddel">
+  <div class="hoved">
+    <b>Grubbe Segl</b>
+    <span>Marstal</span>
+    <span>Ordreseddel 4-STF</span>
+  </div>
+
+  <h1>Stormfok nr. 4, Dacron 340, syet efter dine mål</h1>
+  <p class="under">Ét sejl ad gangen. Vi skærer efter forstagets faktiske længde, ikke efter
+    bådtypen, fordi to både af samme model sjældent måler ens efter tyve år.</p>
+
+  <div class="spalter">
+    <div>
+      <table>
+        <caption>Sådan er den skåret</caption>
+        <tbody>
+          <tr><th scope="row">Dug</th><td class="tal">Dacron 340 g/m²</td></tr>
+          <tr><th scope="row">Sømme</th><td class="tal">Trippel zigzag</td></tr>
+          <tr><th scope="row">Hals og skøde</th><td class="tal">Håndsyet kovs</td></tr>
+          <tr><th scope="row">Lig</th><td class="tal">Forstærket, 3 lag</td></tr>
+          <tr><th scope="row">Areal, standard</th><td class="tal">7,4 m²</td></tr>
+          <tr><th scope="row">Vindområde</th><td class="tal">18 til 33 m/s</td></tr>
+        </tbody>
+      </table>
+
+      <form id="bestil" novalidate>
+        <fieldset class="valg">
+          <legend>Tilvalg</legend>
+          <label>
+            <input type="checkbox" data-pris="1400" checked>
+            <span><span class="navn">Opmåling hos båden</span>
+              <span class="om">Vi kommer og måler forstaget selv. Uden dette skærer vi efter dine tal.</span></span>
+            <span class="pris">1.400 kr.</span>
+          </label>
+          <label>
+            <input type="checkbox" data-pris="900">
+            <span><span class="navn">Refpunkter, to rækker</span>
+              <span class="om">Til rev i stormfokken. Sjældent brugt, men ikke til at sætte i bagefter.</span></span>
+            <span class="pris">900 kr.</span>
+          </label>
+          <label>
+            <input type="checkbox" data-pris="2200">
+            <span><span class="navn">Sejlpose i samme dug</span>
+              <span class="om">Syet af resten. Der er altid rest nok til én pose.</span></span>
+            <span class="pris">2.200 kr.</span>
+          </label>
+        </fieldset>
+      </form>
+    </div>
+
+    <aside class="sum" aria-label="Sum">
+      <h2>Sum</h2>
+      <ul id="linjer">
+        <li><span>Stormfok nr. 4</span><span>14.800 kr.</span></li>
+      </ul>
+      <div class="ialt"><span>I alt</span><span id="ialt">16.200 kr.</span></div>
+      <p class="leveringstid" id="tid">Leveringstid: 8 til 11 uger</p>
+      <button class="knap" id="send" type="button">Send ordresedlen</button>
+      <p class="kvit" id="kvit" role="status">Ingenting sendes, før du har trykket.</p>
+    </aside>
+  </div>
+
+  <p class="vilkaar">Priserne er sejlmagerens egne, i danske kroner, uden moms.
+    Leveringstiden er den han oplyser i højsæson. Der står ingen anmeldelser, ingen
+    kundeantal og ingen garantiperiode på siden, fordi ordresedlen ikke nævner dem.</p>
+</main>
+
+<script>
+/* Summen er en ren funktion af afkrydsningerne. Den annonceres i role="status", og
+   knappen har en fejlvej: uden opmåling og uden egne mål kan sedlen ikke sendes. */
+(function(){
+  var GRUND = 14800;
+  var bokse = [].slice.call(document.querySelectorAll('.valg input'));
+  var linjer = document.getElementById('linjer');
+  var ialt = document.getElementById('ialt');
+  var tid = document.getElementById('tid');
+  var kvit = document.getElementById('kvit');
+  var kr = function(n){ return n.toLocaleString('da-DK') + ' kr.'; };
+
+  function tegn(){
+    var sum = GRUND;
+    var html = '<li><span>Stormfok nr. 4</span><span>' + kr(GRUND) + '</span></li>';
+    bokse.forEach(function(b){
+      if(!b.checked) return;
+      var pris = Number(b.getAttribute('data-pris'));
+      sum += pris;
+      html += '<li><span>' + b.closest('label').querySelector('.navn').textContent + '</span><span>' + kr(pris) + '</span></li>';
+    });
+    linjer.innerHTML = html;
+    ialt.textContent = kr(sum);
+    var uger = bokse[1].checked ? '10 til 13 uger' : '8 til 11 uger';
+    tid.textContent = 'Leveringstid: ' + uger;
+  }
+  bokse.forEach(function(b){ b.addEventListener('change', function(){ tegn(); kvit.textContent = 'Summen er opdateret.'; kvit.removeAttribute('data-tilstand'); }); });
+
+  document.getElementById('send').addEventListener('click', function(){
+    if(!bokse[0].checked){
+      kvit.setAttribute('data-tilstand','fejl');
+      kvit.textContent = 'Vi mangler et mål. Vælg opmåling hos båden, eller ring med forstagets længde på 62 53 11 08.';
+      bokse[0].focus();
+      return;
+    }
+    kvit.removeAttribute('data-tilstand');
+    kvit.textContent = 'Sedlen er noteret. Vi ringer inden for to hverdage for at aftale opmåling.';
+  });
+  tegn();
+})();
+</script>
+</body>
+</html>
