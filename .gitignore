@@ -24,6 +24,9 @@ benchmarks/results/**/raw.json
 !docs/rebuild/**/fixtures/**/.sitesmith/
 docs/rebuild/**/fixtures/**/.sitesmith/*
 !docs/rebuild/**/fixtures/**/.sitesmith/direction.md
+!docs/rebuild/**/holdouts/**/.sitesmith/
+docs/rebuild/**/holdouts/**/.sitesmith/*
+!docs/rebuild/**/holdouts/**/.sitesmith/direction.md
 !pilots/*/.sitesmith/
 pilots/*/.sitesmith/*
 !pilots/*/.sitesmith/direction.md
