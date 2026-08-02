@@ -65,10 +65,10 @@ the vertical rule with dots on it (`.partitur`). Its kind is a score, not a time
 A page with no picture of a bell may read as unfinished to someone expecting a craft site. Accepted: the foundry supplied no photograph and inventing one is the failure this package exists to prevent.
 
 ## Answer to the risk
-The risk above is answered by nothing, and that is why this page was rejected. The record said it may read as unfinished and the build shipped anyway. Recorded here as a failure rather than repaired, because this page is the evidence.
+The risk above is answered by nothing on this page, which is why it was rejected. Kept unrepaired on purpose.
 
 ## The shell
-There is none. One anchor on the whole page and it is the skip link. Kept visible as the defect it is.
+There is none, and this page is kept as the evidence of that defect. It has one anchor, the skip link. The rebuilt version of this subject is docs/rebuild/s18/pilot-klokkestoberiet.
 
 ## Assumptions
 Assumed the 14 September date is the current one. Assumed the pour minute is exact rather than approximate, because the programme prints it to the minute.

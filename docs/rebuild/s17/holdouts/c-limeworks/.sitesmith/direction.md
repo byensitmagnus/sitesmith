@@ -65,10 +65,10 @@ the state word in a bordered chip (`.tilstand`). Its kind is a stamped label, no
 Four large numbers and no chart may read as unfinished to a manager who wants trends. Accepted: this screen is for the operator, and the manager has a different screen.
 
 ## Answer to the risk
-The risk above is answered by `.tilstand`, the bordered state word, which survives grey printing and colour blindness. That answer holds; the page was rejected for other reasons.
+The risk above is answered by `.tilstand`, the bordered state word. A manager who wants trends is on a different screen; the operator gets a condition that survives a grey printout and a reader who cannot separate the hues.
 
 ## The shell
-Who: `Ovnvagt` and the operator name in the status bar. Where: the works, named. Do: the acknowledgement and damper buttons, which are the whole job.
+Who: `Ovnvagt`, Kalkvaerket, with the shift and the operator in the same bar. Where: the works, named. Do: acknowledge a shaft and adjust a damper, the two things this desk exists for, plus a nav to the shafts and the watch log.
 
 ## Assumptions
 Assumed the band limits are the works' own and current. Assumed a shift is eight hours, which the status bar states.

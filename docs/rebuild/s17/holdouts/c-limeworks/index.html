@@ -36,7 +36,17 @@ a{color:var(--skrift)}
 .bjaelke{display:flex;flex-wrap:wrap;gap:var(--p2) var(--p4);align-items:baseline;
          padding:var(--p3) var(--p4);background:var(--plade-2);border-bottom:1px solid var(--kant);
          font-family:var(--mono);font-size:var(--lille);color:var(--skrift-2)}
-.bjaelke b{color:var(--skrift);font-size:var(--brod);letter-spacing:.04em}
+.bjaelke b{color:var(--skrift);font-size:var(--stor);display:block;line-height:1.1}
+.mrk{text-decoration:none;color:var(--skrift-2)}
+.bjaelke nav{display:flex;gap:var(--p4)}
+.bjaelke nav a{min-height:44px;display:inline-flex;align-items:center;
+               text-decoration:none;color:var(--skrift-2)}
+.bjaelke nav a:hover,.bjaelke nav a:focus-visible{color:var(--skrift)}
+.fod{display:flex;flex-wrap:wrap;gap:var(--p2) var(--p5);align-items:baseline;
+     padding:var(--p4);border-top:1px solid var(--kant);background:var(--plade-2);
+     font-family:var(--mono);font-size:var(--lille);color:var(--skrift-2)}
+.fod a{min-height:44px;display:inline-flex;align-items:center;color:var(--skrift)}
+.kildeblok{padding:var(--p4)}
 
 main{padding:var(--p4)}
 h1{font-size:var(--stor);margin:0 0 var(--p4);font-weight:600}
@@ -84,12 +94,15 @@ h1{font-size:var(--stor);margin:0 0 var(--p4);font-weight:600}
 <body>
 <a class="spring" href="#skakter">Spring til ovnene</a>
 
-<div class="bjaelke">
-  <b>Ovnvagt</b>
-  <span>Kalkværket</span>
+<header class="bjaelke">
+  <a class="mrk" href="#skakter"><b>Ovnvagt</b><span>Kalkværket</span></a>
+  <nav aria-label="Vagtbordet">
+    <a href="#skakter">Skakterne</a>
+    <a href="#vagtlog">Vagtlog</a>
+  </nav>
   <span>Vagt 06.00 til 14.00</span>
   <span>A. Bjerregaard</span>
-</div>
+</header>
 
 <main>
   <h1>Fire skakter, sidst aflæst for 40 sekunder siden</h1>
@@ -148,7 +161,7 @@ h1{font-size:var(--stor);margin:0 0 var(--p4);font-weight:600}
 
   <p class="status" id="status" role="status">Ingen handling siden vagten begyndte.</p>
 
-  <section class="log">
+  <section class="log" id="vagtlog">
     <h2>Vagtlog</h2>
     <ol id="log">
       <li><span>06.03</span><span>Skakt 3</span><b>Kvitteret, A.B.</b></li>
@@ -159,9 +172,18 @@ h1{font-size:var(--stor);margin:0 0 var(--p4);font-weight:600}
     </ol>
   </section>
 
+</main>
+
+<footer class="fod">
+  <a href="#skakter">Ovnvagt, Kalkværket</a>
+  <a href="#vagtlog">Vagtlog for denne vagt</a>
+  <span>Skift 06.00 til 14.00</span>
+</footer>
+
+<div class="kildeblok">
   <p class="kilde">Tallene er værkets egne båndgrænser og vagtlog. Der står ingen
     produktionsmål, ingen skiftplan og ingen personhistorik, fordi vagtbordet ikke fører dem.</p>
-</main>
+</div>
 
 <script>
 /* Hver handling ændrer noget synligt, skriver i loggen og annonceres i role="status".

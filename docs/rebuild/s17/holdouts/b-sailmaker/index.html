@@ -33,10 +33,21 @@ a{color:var(--maerke)}
 :focus-visible{outline:3px solid var(--maerke);outline-offset:2px}
 
 .seddel{max-width:1080px;margin:0 auto;padding:var(--d) var(--c) var(--f)}
-.hoved{display:flex;flex-wrap:wrap;gap:var(--b) var(--d);align-items:baseline;
-       border-bottom:2px solid var(--blaek);padding-bottom:var(--c);margin-bottom:var(--e)}
-.hoved b{font-family:var(--mono);font-size:var(--brod);font-weight:700}
-.hoved span{font-family:var(--mono);font-size:var(--lille);color:var(--blaek-2)}
+.hoved{display:flex;flex-wrap:wrap;gap:var(--b) var(--d);align-items:center;
+       border-bottom:2px solid var(--blaek);padding:var(--c) var(--c);
+       max-width:1080px;margin:0 auto}
+.loft{text-decoration:none;color:inherit;display:block}
+.loft b{font-size:var(--tal);font-weight:600;letter-spacing:-.02em;display:block;line-height:1.1}
+.loft span{font-size:var(--lille);color:var(--blaek-2)}
+.hoved nav{margin-left:auto;display:flex;flex-wrap:wrap;gap:var(--d)}
+.hoved nav a,.ring{min-height:44px;display:inline-flex;align-items:center;
+                   font-size:var(--lille);text-decoration:none;color:var(--blaek-2)}
+.hoved nav a:hover,.hoved nav a:focus-visible,.ring:hover{color:var(--maerke)}
+.ring{font-family:var(--mono);color:var(--maerke);font-weight:600}
+.fod{max-width:1080px;margin:0 auto;padding:var(--e) var(--c) var(--f);
+     border-top:2px solid var(--blaek);display:flex;flex-wrap:wrap;gap:var(--b) var(--e);
+     align-items:baseline;font-size:var(--lille);color:var(--blaek-2)}
+.fod a{min-height:44px;display:inline-flex;align-items:center}
 
 h1{font-size:clamp(26px,4.6vw,var(--overskrift));line-height:1.12;margin:0 0 var(--b);font-weight:600}
 .under{margin:0 0 var(--e);color:var(--blaek-2);max-width:56ch}
@@ -87,12 +98,17 @@ td.tal{font-family:var(--mono);text-align:right;white-space:nowrap}
 <body>
 <a class="spring" href="#bestil">Spring til bestilling</a>
 
-<main class="seddel">
-  <div class="hoved">
-    <b>Grubbe Segl</b>
-    <span>Marstal</span>
-    <span>Ordreseddel 4-STF</span>
-  </div>
+<header class="hoved">
+  <a class="loft" href="#top"><b>Grubbe Segl</b><span>Sejlmager, Marstal</span></a>
+  <nav aria-label="Ordresedlen">
+    <a href="#skaaret">Sådan er den skåret</a>
+    <a href="#bestil">Tilvalg</a>
+    <a href="#vilkaar">Vilkår</a>
+  </nav>
+  <a class="ring" href="tel:+4562531108">62 53 11 08</a>
+</header>
+
+<main class="seddel" id="top">
 
   <h1>Stormfok nr. 4, Dacron 340, syet efter dine mål</h1>
   <p class="under">Ét sejl ad gangen. Vi skærer efter forstagets faktiske længde, ikke efter
@@ -101,7 +117,7 @@ td.tal{font-family:var(--mono);text-align:right;white-space:nowrap}
   <div class="spalter">
     <div>
       <table>
-        <caption>Sådan er den skåret</caption>
+        <caption id="skaaret">Sådan er den skåret</caption>
         <tbody>
           <tr><th scope="row">Dug</th><td class="tal">Dacron 340 g/m²</td></tr>
           <tr><th scope="row">Sømme</th><td class="tal">Trippel zigzag</td></tr>
@@ -149,10 +165,17 @@ td.tal{font-family:var(--mono);text-align:right;white-space:nowrap}
     </aside>
   </div>
 
-  <p class="vilkaar">Priserne er sejlmagerens egne, i danske kroner, uden moms.
+  <p class="vilkaar" id="vilkaar">Priserne er sejlmagerens egne, i danske kroner, uden moms.
     Leveringstiden er den han oplyser i højsæson. Der står ingen anmeldelser, ingen
     kundeantal og ingen garantiperiode på siden, fordi ordresedlen ikke nævner dem.</p>
 </main>
+
+<footer class="fod">
+  <a href="#top">Grubbe Segl, Marstal</a>
+  <a href="tel:+4562531108">Ring 62 53 11 08</a>
+  <a href="#bestil">Start en ordreseddel</a>
+  <span>Ordreseddel 4-STF. Priser i danske kroner, uden moms.</span>
+</footer>
 
 <script>
 /* Summen er en ren funktion af afkrydsningerne. Den annonceres i role="status", og
