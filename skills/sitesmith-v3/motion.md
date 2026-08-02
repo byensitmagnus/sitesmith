@@ -47,6 +47,12 @@ Two failures that are not obvious:
   a cut. The clips must also actually meet: the second's first frame is the frame the
   first has to end on.
 
+And four on a phone, each independently testable: never queue a seek while one is
+resolving, hold the latest target and issue it on `seeked`; prime iOS with a muted
+play-pause on first touch and keep the poster up until `seeked`, not `loadedmetadata`;
+ignore height-only `resize`, which is the URL bar; widen the seek epsilon, because
+frame-exact chasing on a phone decoder is jank with extra steps.
+
 Before committing: confirm the clips exist, who is making them, and that the host serves
 ranges. If the clips do not exist, this level is not available on this job. Level 1 with
 stills is the fallback, and it is a finished answer rather than a reduced one.
@@ -78,30 +84,21 @@ animation and gestures are what it is for. Absent, do not add it; a page whose o
 for a runtime dependency is one hover state bought it for the wrong reason, and the client
 maintains it forever.
 
-Two rules when it is in use, and both are checked by `verify.mjs` rather than trusted:
-
-- **The content is there without JavaScript.** Animate from a visible resting state, never
-  into one. An element whose initial style is `opacity: 0` and whose only path to visible
-  runs through a script is content that does not exist for a reader whose script failed.
-- **Reduced motion switches it off rather than shortening it.** The preference is a
-  statement about vestibular symptoms, not about taste. Read it once and take the branch
-  that does not animate; do not scale a duration towards zero.
-
-The direction record decides the character, the same as everything else. A stiff spring on
-a workshop's job sheet is the library's default personality, not the client's, and a page
-where every interaction has the same overshoot is the one house style this whole package
-exists to avoid.
+The direction record decides the character, the same as everything else. A stiff spring
+on a workshop's job sheet is the library's default personality, not the client's, and a
+page where every interaction has the same overshoot is the one house style this whole
+package exists to avoid. Animate from a visible resting state, never into one, and read
+`prefers-reduced-motion` as a branch that does not animate, not a shorter duration; both
+are checked by `verify.mjs` rather than trusted.
 
 Upstream: `motiondivision/motion`, MIT, commit `a4e4b3ab73dd64fbab2574fae27d28c0418f25cb`.
 Nothing is copied from it. What is taken is the rule about when a project already has it.
 
 ## What every level owes
 
-`prefers-reduced-motion` stops the **work**, not only the visible animation. No clip is
-fetched, no timeline runs, no loop starts. The page must be complete without any of it.
-
-A page whose content is invisible until a script runs is broken, not animated. Load it
-with JavaScript disabled and read it: everything must be there.
+`prefers-reduced-motion` stops the **work**, not only the visible animation: no clip
+fetched, no timeline run, no loop started. And a page whose content is invisible until a
+script runs is broken, not animated. Load it with JavaScript disabled and read it.
 
 The rule about nothing moving between an intent and its result is section 6 of
 `SKILL.md`, and it applies here unchanged.
