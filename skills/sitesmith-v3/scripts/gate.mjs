@@ -1547,6 +1547,7 @@ if (!direction || !direction.palette || !direction.type) {
           if (!rects.length) continue;
 
           let strips = 0, lopsided = 0, worstLeft = 0, worstRight = 0, narrowest = 1;
+          let minL = Infinity, maxR = -Infinity;
           for (let y = br.top; y < br.bottom; y += STRIP) {
             let l = Infinity, r = -Infinity;
             for (const q of rects) {
@@ -1556,6 +1557,7 @@ if (!direction || !direction.palette || !direction.type) {
             }
             if (!Number.isFinite(l)) continue;   // a strip with nothing in it is padding
             strips++;
+            minL = Math.min(minL, l); maxR = Math.max(maxR, r);
             const used = (r - l) / br.width;
             const lg = l - br.left, rg = br.right - r;
             if (used < 0.62 && Math.abs(lg - rg) / br.width > 0.15) {
@@ -1573,7 +1575,62 @@ if (!direction || !direction.palette || !direction.type) {
             return o.height > br.height * 0.8;
           });
           if (swallowed) continue;
+
+          /* The band's outer frame, and only the outer frame. An earlier version of this
+             keyed on tables, figures, lists and forms as well, and reported five distinct
+             families on a page where a reviewer counted three of five sections identical.
+             The reviewer was reading the shape of the column, so this reads that too: how
+             many columns the widest row has, and how much of the band they use. */
+          /* Down three levels, not one. The first version read the band's own children,
+             so a section holding a heading and one grid of three cards counted as one
+             column: the cards were a level deeper than it looked. It reported four of five
+             bands identical on a console a reviewer had just called six distinct layouts,
+             one per section, and the reviewer was right. */
+          const vis2 = (k) => {
+            const c = getComputedStyle(k);
+            const q = k.getBoundingClientRect();
+            return c.display !== 'none' && c.visibility !== 'hidden' && q.width > 8 && q.height > 8;
+          };
+          let widest = [];
+          const walk = (node, depth) => {
+            if (depth > 3) return;
+            const kids = [...node.children].filter(vis2);
+            const rows = new Map();
+            for (const k of kids) {
+              const q = k.getBoundingClientRect();
+              const key = Math.round(q.top / 24);
+              if (!rows.has(key)) rows.set(key, []);
+              rows.get(key).push(q);
+            }
+            for (const row of rows.values()) {
+              const span = row.reduce((s, q) => s + q.width, 0);
+              /* Three quarters of the band, because the reviewer who counted these read the
+                 outer frame and said so: a two-column list inside a prose column is "a
+                 variation, not a family". A row has to span most of the band before it is
+                 the band's shape. */
+              if (row.length > widest.length && span > br.width * 0.75) widest = row
+            }
+            for (const k of kids) walk(k, depth + 1);
+          };
+          walk(band, 0);
+          const cols = Math.min(widest.length, 4);
+          const spanShare = (maxR - minL) / br.width;
+          const width = spanShare > 0.9 ? 'full' : spanShare > 0.7 ? 'wide' : 'narrow';
+          let family = `${cols || 1}col-${width}`;
+          if (cols === 2 && widest.length === 2) {
+            const share = widest[0].width / (widest[0].width + widest[1].width);
+            family += share > 0.6 ? '-wideleft' : share < 0.4 ? '-wideright' : '-even';
+          }
+
           bands.push({
+            family,
+            contentLeft: Math.round(minL),
+            /* A band, not the box that holds the bands. main and body are containers whose
+               content-left is whichever of their children reaches furthest left, so
+               comparing one against its own child reported a page as ragged against
+               itself. */
+            topLevel: (band.parentElement === main || band.parentElement === document.body)
+              && band !== main && band.tagName !== 'MAIN' && band.tagName !== 'BODY',
             name: (band.querySelector('h1,h2,h3')?.textContent ?? band.tagName).trim().slice(0, 48),
             tag: band.tagName.toLowerCase() + (band.id ? `#${band.id}` : ''),
             y: Math.round(window.scrollY + br.top),
@@ -1709,6 +1766,67 @@ if (!direction || !direction.palette || !direction.type) {
           + `claim \`lopsided-band\` under Deliberate: with the reason.`;
         if (claimed) waived.push({ cls: 'look/lopsided-band', file: show(join(BUILD, 'index.html')), line: 1, detail: deliberate.get('lopsided-band') ?? deliberate.get(band.tag.toLowerCase()) });
         else refuse('look/lopsided-band', join(BUILD, 'index.html'), 1, detail);
+      }
+
+      /* The page's left edge, and whether it has one. A reviewer paid to accept a read
+         surface put this first, above everything else on the page: "H1 starts at x=148,
+         the next heading at x=339, the two after that at x=291, the footer back at 148.
+         Four blocks straight above each other, three different left edges. It is the first
+         thing the eye catches when you scroll, and it is the kind of thing that makes a
+         paying board ask whether the page is finished."
+
+         Near misses only, and that is the whole idea. Two edges three hundred pixels apart
+         read as a decision; two edges forty-eight pixels apart read as an accident. So a
+         full-bleed band beside an indented column is untouched, and a column that almost
+         lines up with the one above it is not. */
+      const EDGE_SAME = 6;                 // within this, the same edge
+      const EDGE_DELIBERATE = 0.22;        // beyond this share of the width, a decision
+      const topBands = (measured.bands ?? []).filter((b) => b.topLevel && b.height > 200);
+      const edges = [];
+      for (const b of topBands) {
+        const near = edges.find((e) => Math.abs(e.x - b.contentLeft) <= EDGE_SAME);
+        if (near) near.bands.push(b);
+        else edges.push({ x: b.contentLeft, bands: [b] });
+      }
+      const VIEW = 1440;
+      const ragged = [];
+      for (let i = 0; i < edges.length; i++) {
+        for (let j = i + 1; j < edges.length; j++) {
+          const d = Math.abs(edges[i].x - edges[j].x);
+          if (d > EDGE_SAME && d < VIEW * EDGE_DELIBERATE) ragged.push([edges[i], edges[j], d]);
+        }
+      }
+      if (ragged.length && !deliberate.has('ragged-margin')) {
+        const [a, b, d] = ragged.sort((p, q) => p[2] - q[2])[0];
+        refuse('look/ragged-margin', join(BUILD, 'index.html'), 1,
+          `${a.bands[0].tag} "${a.bands[0].name}" starts at x=${a.x} and ${b.bands[0].tag} "${b.bands[0].name}" at x=${b.x}, `
+          + `${d}px apart on a ${VIEW}px screen. That is not two measures, it is one measure missed. `
+          + `${edges.length} distinct left edges in ${topBands.length} bands`
+          + `${ragged.length > 1 ? `, ${ragged.length} of them near misses` : ''}. `
+          + 'Put them on the same edge, move one far enough that it reads as a decision, or claim `ragged-margin` under Deliberate:.');
+      } else if (ragged.length) {
+        waived.push({ cls: 'look/ragged-margin', file: show(join(BUILD, 'index.html')), line: 1, detail: deliberate.get('ragged-margin') });
+      }
+
+      /* One layout, worn by most of the page. Three reviewers on three unrelated pages
+         across two rounds said the same sentence in their own words: "three of five
+         sections use the same layout", "four sections plus six nested uses of one split",
+         "the front has an idea, after that it is a Word document on a green ground".
+
+         Four bands or more, because a three-section page repeating twice is a rhythm and
+         a seven-section page repeating five times is a template. */
+      const families = new Map();
+      for (const b of topBands) families.set(b.family, (families.get(b.family) ?? 0) + 1);
+      const worst = [...families.entries()].sort((a, b) => b[1] - a[1])[0];
+      if (topBands.length >= 4 && worst && worst[1] / topBands.length > 0.5) {
+        const which = topBands.filter((b) => b.family === worst[0]);
+        const detail = `${worst[1]} of ${topBands.length} bands are the same shape, \`${worst[0]}\`: `
+          + `${which.map((b) => `"${b.name}"`).join(', ')}. `
+          + `${families.size} distinct layout${families.size === 1 ? '' : 's'} on the page. `
+          + 'A reader scrolling past three identical frames stops reading the page and starts reading a document. '
+          + 'Give one of them a shape its own content asks for, or claim `one-layout` under Deliberate:.';
+        if (deliberate.has('one-layout')) waived.push({ cls: 'look/one-layout', file: show(join(BUILD, 'index.html')), line: 1, detail: deliberate.get('one-layout') });
+        else refuse('look/one-layout', join(BUILD, 'index.html'), 1, detail);
       }
 
       if (looksSurface && fv) {

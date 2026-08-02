@@ -221,6 +221,25 @@ const CASES = [
     why: 'a page is allowed one wide margin and one narrow, and the cost of that answer is typing it into the record',
   },
   {
+    name: 'two bands that nearly line up',
+    fixture: 'refuse-ragged', browser: true, expect: 2,
+    must: ['look/ragged-margin', '48px apart'],
+    mustNot: ['look/lopsided-band'],
+    // A reviewer paid to accept a read surface put this above everything else on the page:
+    // four blocks straight above each other, three different left edges, 48px apart. Near
+    // misses only: three hundred pixels apart is a decision, forty-eight is an accident.
+    why: 'a page has one left edge or it has a reason, and two edges 48px apart on a 1440px screen are one measure missed',
+  },
+  {
+    name: 'most of the page wearing one shape',
+    fixture: 'refuse-one-layout', browser: true, expect: 2,
+    must: ['look/one-layout', '4 of 4 bands are the same shape', '1col-full'],
+    // Three reviewers on three unrelated pages across two rounds wrote the same sentence
+    // in their own words. The console that got six distinct layouts, one per section, is
+    // the control: it must not trip this.
+    why: 'a reader scrolling past three identical frames stops reading the page and starts reading a document',
+  },
+  {
     name: 'a rendered page with no critique locked against it',
     fixture: 'critique-missing', browser: true, expect: 2,
     must: ['critique/not-taken'],
