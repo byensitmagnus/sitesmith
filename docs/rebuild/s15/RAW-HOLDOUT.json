@@ -1,0 +1,455 @@
+{
+  "producedBy": "workflow wf_cb7c5cd6-dbe — 6 blind builders, 3 blind judges",
+  "subagentTokens": 1873082,
+  "at": "2026-08-02",
+  "result": {
+    "builds": [
+      {
+        "label": "P",
+        "skillRead": "C:/Users/Usmo1/Documents/sitesmith/skills/sitesmith-v3/SKILL.md, read in full, 229 lines. It routed me to run.md (95 lines, read at its step 9 instruction before section 2), then floor/buy.md (100 lines, selected at run.md step 5 because the visitor is looking at a price), stacks/static.md (40 lines, after `stack.mjs detect .` named no adapter), and verify.md (114 lines) at the inspect step.",
+        "approachInOneLine": "Built the page as the written condition report the customer actually buys for 1.850 kr., on the real buff colour of music-roll paper, with its one bold move being a CSS air duct running down the left edge of the whole page and a red leak mark at each of the five named faults.",
+        "filesWritten": [
+          "C:/Users/Usmo1/Documents/sitesmith/docs/rebuild/s15/builds/P/index.html",
+          "C:/Users/Usmo1/Documents/sitesmith/docs/rebuild/s15/builds/P/.sitesmith/direction.md",
+          "C:/Users/Usmo1/Documents/sitesmith/docs/rebuild/s15/builds/P/PRODUCTION-REPORT.md",
+          "C:/Users/Usmo1/Documents/sitesmith/docs/rebuild/s15/builds/P/ASSET-MANIFEST.md",
+          "C:/Users/Usmo1/Documents/sitesmith/docs/rebuild/s15/builds/P/.sitesmith/verify/375.png",
+          "C:/Users/Usmo1/Documents/sitesmith/docs/rebuild/s15/builds/P/.sitesmith/verify/768.png",
+          "C:/Users/Usmo1/Documents/sitesmith/docs/rebuild/s15/builds/P/.sitesmith/verify/1440.png",
+          "C:/Users/Usmo1/Documents/sitesmith/docs/rebuild/s15/builds/P/.sitesmith/verify/reduced-motion-1440.png",
+          "C:/Users/Usmo1/Documents/sitesmith/docs/rebuild/s15/builds/P/.sitesmith/verify/report.json"
+        ],
+        "selfAssessment": "The whole claim to originality rests on one device. Strip the duct out and what remains is a conventional skeleton: stacked lettered sections, text column left, small note column right, dark band with a button at the end. I found that in the second swap test and fixed it by moving the drawing into the page's left edge, but I did not fix the skeleton itself, so a reader who does not read the left edge as a pipe sees a competent form and nothing more. Second weakest: section E, the rolls. It is two sentences and a decorative drawing, the 340 kr. product has no way to be bought because the brief gives none, and the drawing is the one place where I made something visual that carries no information, only atmosphere. Third: three of the six margin glosses (Tilstandsrapport, Tilbud, Åbent) are close to restating the body text next to them, so the note column earns its width in B and E and not really in C, D and F. Finally, the 1440 layout leaves a large quiet area right of section B; I convinced myself it reads as a document margin after narrowing the sheet to 1040px, and I am not fully sure a client would read it that way rather than as a missing section."
+      },
+      {
+        "label": "Q",
+        "skillRead": "C:/Users/Usmo1/AppData/Local/Temp/claude/C--Users-Usmo1-Documents-sitesmith/60a368a9-e3a0-4ebc-aadf-386ee1a4a75a/scratchpad/upstream/anthropic-skills/skills/frontend-design/SKILL.md — 56 lines (~4.6 KB), read in full. No other skill was read.",
+        "approachInOneLine": "Grounded the design in the instrument's own materials — manila roll paper, brass tracker bar, punched slots — and made the signature a CSS-gradient music roll feeding under a tracker bar, with structural markers (DU/VI, and the fault words SMULDRET/REVNET/SLIDT/SPRUKKET/HÅRDE) taken from the brief's content instead of generic 01/02/03 numbering.",
+        "filesWritten": [
+          "C:/Users/Usmo1/Documents/sitesmith/docs/rebuild/s15/builds/Q/index.html",
+          "C:/Users/Usmo1/Documents/sitesmith/docs/rebuild/s15/builds/Q/design-plan.md"
+        ],
+        "selfAssessment": "Weakest thing: the whole design rests on one bold element — the animated punched roll — and it is legible only to someone who already recognises a piano roll. To anyone else it is an abstract pattern occupying a big band of screen, and at 375 it pushes the key facts (1.850 kr., half a day, written report) below the fold. If the roll fails to read, the rest of the page is a quiet ledger layout with little to distinguish it, because I deliberately spent all the boldness in that one place.\n\nSecond weakness: several sections are content-thin. The brief has few facts, and I refused to pad — so \"Noderuller\" is essentially two numbers and a sentence, and the two-people section is two years plus one line each. Honest, but visually sparse; a reader may feel the page ends too quickly relative to its confident opening.\n\nThird: verification is incomplete. The Playwright browser is shared and another builder was driving it mid-run — two screenshots returned other arms' pages, which I discarded and did not use. I confirmed my own build visually at 1425px and 360px (no console errors, no horizontal overflow), but never got a trustworthy 768px render of my own page; that breakpoint rests on CSS reasoning, not on a picture. I also did not run an automated contrast/axe check — the contrast ratios (5.8:1 brass on paper, 5.4:1 brass on dark, 13:1 ink on paper) were computed by hand, not measured.\n\nMinor risk I accepted: Danish terminology for the mechanical parts (\"pungelæderet\", \"slagpneumatikkerne\", \"vindkanalen\") is my rendering of the brief's English fault names; a specialist might use different words. I kept each item to the fault plus the part, adding no explanation, precisely so I would not invent mechanics the brief does not state."
+      },
+      {
+        "label": "R",
+        "skillRead": "C:/Users/Usmo1/AppData/Local/Temp/claude/C--Users-Usmo1-Documents-sitesmith/60a368a9-e3a0-4ebc-aadf-386ee1a4a75a/scratchpad/upstream/taste-skill/skills/taste-skill/SKILL.md — 1207 lines, read in full across three passes (Sections 0-14 plus Appendices A-C).",
+        "approachInOneLine": "Ran the skill's brief-inference first (trust-first local craft service for a non-expert who inherited an instrument), set dials 5/3/4, deliberately rotated off the banned premium-consumer beige-brass palette to a cool paper neutral with one deep-green accent, built eight sections in eight distinct layout families with zero eyebrows and a CSS-gradient perforated-roll as the only visual, then verified in both colour schemes at 375/768/1440 and fixed what the screenshots exposed.",
+        "filesWritten": [
+          "C:/Users/Usmo1/Documents/sitesmith/docs/rebuild/s15/builds/R/index.html",
+          "C:/Users/Usmo1/Documents/sitesmith/docs/rebuild/s15/builds/R/DESIGN-READ.md"
+        ],
+        "selfAssessment": "Weakest thing is the perforated-roll motif. It is the page's only visual, and it is a repeating radial-gradient field with track lines. On screen it reads as texture more than as a recognisable music roll; a visitor who does not already know what a piano roll looks like will register \"dot pattern\", not \"the thing they cut in the workshop\". I improved it once after looking at the first render (added tracker guides, narrowed and lengthened it, gave it a lifted paper token so it survives dark mode), but it is still the element I would replace first if photography existed.\n\nSecond weakness: the five-fault bento carries only a name per cell. The brief lists the failures but gives me no licence to explain what any of them does, so rather than invent mechanism copy I left the cells as labels. Honest, but the section is thin for the vertical space it occupies, and at 1440 those cells are 192px tall holding four words.\n\nThird: the page is completely static. MOTION_INTENSITY 3 is a defensible reading of a trust-first brief for an older audience with no JS allowed, and the skill explicitly blesses shipping clean and static over half-built motion, but against arms that animated, this will look plainer.\n\nOne process note for integrity: the verification browser and one HTTP port are shared across arms on this machine. Two captures came back showing another arm's page instead of mine. I discarded both, pinned every later capture to my own URL with a title assertion before screenshotting, and deleted the stray files. Nothing from that page influenced this build, which was fully designed and written before it happened."
+      },
+      {
+        "label": "S",
+        "skillRead": "C:/Users/Usmo1/AppData/Local/Temp/claude/C--Users-Usmo1-Documents-sitesmith/60a368a9-e3a0-4ebc-aadf-386ee1a4a75a/scratchpad/upstream/ui-ux-pro-max/src/ui-ux-pro-max/templates/base/skill-content.md — 385 lines, read in full. Its body contains a {{QUICK_REFERENCE}} placeholder and then repeatedly directs work to \"Quick Reference §1–§3\", so I also read the companion it names: .../templates/base/quick-reference.md — 297 lines. No other skill file was read. I did run the skill's own bundled tool as Steps 2/2b/2c instruct (src/ui-ux-pro-max/scripts/search.py, Python 3.11.9) for --design-system, --persist, and --domain color/typography/landing/product/ux/style.",
+        "approachInOneLine": "Ran the skill's --design-system generator three times (it proposed carnival orange + Amatic SC, then an \"Enterprise Gateway\" with a mega menu and Login), kept only its Trust & Authority pattern and its transparent-pricing rule, rebuilt the \"proof\" step out of facts the brief actually contains because testimonials/logos/stats are forbidden, and overrode its palette, typography, shadows and GSAP motion in a documented page-override file before writing a single self-contained HTML page.",
+        "filesWritten": [
+          "C:/Users/Usmo1/Documents/sitesmith/docs/rebuild/s15/builds/S/index.html",
+          "C:/Users/Usmo1/Documents/sitesmith/docs/rebuild/s15/builds/S/design-system/klinke-og-datter/MASTER.md",
+          "C:/Users/Usmo1/Documents/sitesmith/docs/rebuild/s15/builds/S/design-system/klinke-og-datter/pages/forside.md"
+        ],
+        "selfAssessment": "Three honest weaknesses.\n\n1. I never saw it. The browser pane was never displayed in this environment, so the page never composited a frame and every screenshot timed out. Everything I claim is measured from the live DOM — scrollWidth, per-element bounding boxes, computed colours, touch-target heights, font load status, console, anchors — at 375/768/1440 in both colour schemes, each with a fresh load. That catches structural failure. It cannot catch ugly. Whether the burgundy actually looks like a workshop rather than dried blood, and whether the perforated-roll strip reads as paper at 39px tall on a phone or just as visual noise, is unverified. That is the single biggest risk in this build.\n\n2. The \"Fem fejl\" section is thin, and it is thin on purpose. The brief names five failures and nothing else about them. Any sentence explaining what perished pouch leather does to an instrument would be me inventing mechanism, so each card is a Danish name plus the English trade term and stops. Five near-empty boxes in a grid is the weakest stretch of the page visually, and I chose that over fabricating plausible-sounding expertise. I think that trade is right but I am not pretending it looks good.\n\n3. The skill contributed less than the artefacts imply. Its generator gave three mutually contradictory systems for the same two-person workshop — Soft UI Evolution with event-orange and Amatic SC, then an Enterprise Gateway with a mega menu and a Login button, then the one I kept — and roughly half of the skill's body and its entire pre-delivery checklist are scoped to iOS/Android app UI (safe areas, haptics, bottom nav, Dynamic Type), which do not apply to a web page. So the colour palette, the typeface pairing, the removal of all shadows and rounded cards, the decision to have no entrance motion at all, and the whole information architecture are my overrides, documented in forside.md rather than derived from the tool. A reader of the design-system folder should not credit the generator for the page.\n\nMinor: I also caught myself writing invented promises on the first pass — \"det siger vi højt, når du ringer\", \"så du ikke betaler for at få det at vide\", \"vi tager telefonen i værkstedets åbningstid\" — and stripped eight of them after proof-reading the rendered text against the brief line by line. They are gone, but the fact that they appeared at all means the copy needed a second audit pass, not one."
+      },
+      {
+        "label": "T",
+        "skillRead": "C:/Users/Usmo1/AppData/Local/Temp/claude/C--Users-Usmo1-Documents-sitesmith/60a368a9-e3a0-4ebc-aadf-386ee1a4a75a/scratchpad/upstream/impeccable/.agents/skills/impeccable/SKILL.md — 79 lines, 10,480 bytes. Also read, as it directed: reference/init.md, reference/new-work.md, reference/craft-floor.md, reference/degraded/finish-reviewer.md, reference/degraded/documenter.md, reference/document.md; and ran scripts/context.mjs, scripts/concept-seed.mjs, scripts/serve-question.mjs --schema, scripts/detect.mjs.",
+        "approachInOneLine": "Ran impeccable's full new-work flow — PRODUCT.md, seven grounded directions from the audience's world, then concept-seed.mjs rolled index 3 — and built that direction, a mid-century trade parts catalogue: bottle-green flooded sections on grey card stock, yolk index tabs, authored keyline part drawings, ruled rows instead of cards, and a CSS-only :target/:has() thumb-tab state.",
+        "filesWritten": [
+          "C:/Users/Usmo1/Documents/sitesmith/docs/rebuild/s15/builds/T/index.html",
+          "C:/Users/Usmo1/Documents/sitesmith/docs/rebuild/s15/builds/T/PRODUCT.md",
+          "C:/Users/Usmo1/Documents/sitesmith/docs/rebuild/s15/builds/T/DESIGN.md"
+        ],
+        "selfAssessment": "Weakest thing: the five fault drawings in section 02. They are the page's only real proof — the thing a competitor could not copy-paste — and they are the least resolved element on it. Drawn as flat keyline SVG at 112–164px, several read as generic icons rather than catalogue plates: the pouch reads as a dome in a box, the striker pneumatic as an abstract wedge. Someone who has actually opened a player piano would not recognise them. A photograph or a properly draughted plate would carry that section; my geometry only gestures at it. Second weakest: two copy lines sit at the edge of the brief. \"Det er os, der kommer, og det er os, der laver arbejdet\" asserts that the same two people do both the visit and the restoration — true of a two-person shop but not literally stated; and I glossed \"trackerbar\" as \"bjælken med huller, som papirrullen løber hen over\", which is a definition of the component, not a claim about the business, but it is still a sentence the brief did not supply. Everything numeric, named or countable comes only from the brief. Third: the cover asks a lot of a 375 reader — wordmark, promise, two actions and a spec block before the instrument drawing appears — and the drawing is the fastest way for someone who inherited one of these to know they are in the right place. Verified: no horizontal overflow at 375/768/1440, all sixteen sampled text roles 5.84–9.24:1, zero console errors, detect.mjs clean, both fonts loaded, primary action above the fold at every width."
+      },
+      {
+        "label": "U",
+        "skillRead": "C:/Users/Usmo1/Documents/sitesmith/skills/sitesmith/SKILL.md — 197 lines. It routes into v2/, so I also read, at their declared steps: v2/README.md (123), v2/00-done.md (241), v2/05-evidence.md (128), v2/10-core.md (215), v2/modes/marketing.md (195), v2/20-direction-lab.md (293), v2/24-asset-plan.md (168), v2/25-assets.md (132), v2/30-contract.md (253), v2/40-interaction.md (156), v2/50-critique.md (156). No other skill on this machine was opened.",
+        "approachInOneLine": "Evidence pack on the pneumatic player-piano trade first, then three structurally different comps scored against it (winner: the page made of the same material as the product — a drawn band of punched music-roll paper running the page's full height, with a numbered pneumatic cross-section answering the five named failures), then the contract, then the build, verified with the skill's own scripts and corrected across three render-and-look rounds.",
+        "filesWritten": [
+          "C:/Users/Usmo1/Documents/sitesmith/docs/rebuild/s15/builds/U/index.html",
+          "C:/Users/Usmo1/Documents/sitesmith/docs/rebuild/s15/builds/U/BRIEF.md",
+          "C:/Users/Usmo1/Documents/sitesmith/docs/rebuild/s15/builds/U/EVIDENCE.md",
+          "C:/Users/Usmo1/Documents/sitesmith/docs/rebuild/s15/builds/U/ASSET-PLAN.md",
+          "C:/Users/Usmo1/Documents/sitesmith/docs/rebuild/s15/builds/U/DIRECTION.md",
+          "C:/Users/Usmo1/Documents/sitesmith/docs/rebuild/s15/builds/U/DESIGN-SYSTEM.md",
+          "C:/Users/Usmo1/Documents/sitesmith/docs/rebuild/s15/builds/U/ASSET-MANIFEST.md",
+          "C:/Users/Usmo1/Documents/sitesmith/docs/rebuild/s15/builds/U/INTERACTIONS.md",
+          "C:/Users/Usmo1/Documents/sitesmith/docs/rebuild/s15/builds/U/CRITIQUE.md",
+          "C:/Users/Usmo1/Documents/sitesmith/docs/rebuild/s15/builds/U/PRODUCTION-REPORT.md",
+          "C:/Users/Usmo1/Documents/sitesmith/docs/rebuild/s15/builds/U/directions/a/index.html",
+          "C:/Users/Usmo1/Documents/sitesmith/docs/rebuild/s15/builds/U/directions/a/NOTE.md",
+          "C:/Users/Usmo1/Documents/sitesmith/docs/rebuild/s15/builds/U/directions/b/index.html",
+          "C:/Users/Usmo1/Documents/sitesmith/docs/rebuild/s15/builds/U/directions/b/NOTE.md",
+          "C:/Users/Usmo1/Documents/sitesmith/docs/rebuild/s15/builds/U/directions/c/index.html",
+          "C:/Users/Usmo1/Documents/sitesmith/docs/rebuild/s15/builds/U/directions/c/NOTE.md",
+          "C:/Users/Usmo1/Documents/sitesmith/docs/rebuild/s15/builds/U/journeys/ring-op.spec.mjs",
+          "C:/Users/Usmo1/Documents/sitesmith/docs/rebuild/s15/builds/U/journeys/fejl-udfoldning.spec.mjs",
+          "C:/Users/Usmo1/Documents/sitesmith/docs/rebuild/s15/builds/U/journeys/navigation.spec.mjs"
+        ],
+        "selfAssessment": "The weakest thing is the cross-section drawing, and it is weak in the one place the page can least afford it. The whole argument for spending 1.850 kr. is that the interior of the instrument is knowable, and the drawing is what is supposed to prove that — but it is a chain of abstract shapes. The striker pneumatic is a triangle, the hammer is a small rectangle, and the string is a line at the right edge that is easy to miss entirely at 340px. The five numerals rescue it by turning five unfamiliar words into five places, which is why the section works at all; what it still does not do is look like the inside of a piano, so a reader who has never opened one may not be able to map it onto the instrument in their living room. Assets were the criterion I scored lowest (7) and the criticism is execution, not plan.\n\nSecond: five of six sections are the same shape below the fold — a heading and a column of prose at the same measure. The hanging numerals and the drawing block breaking out into the margin gave the page a left-hand index and one wide moment, but that was a repair round, not something the direction produced on its own; the rhythm is still carried mostly by spacing. Related: the roll rail is one texture at one density for 7,000px and never changes with the argument, so it stops being read after the first screen.\n\nThird, and it is a process gap rather than a design one: the blinded two-reviewer critique did not run. What exists is my own critique of my own screenshots, which is exactly the bias that ceremony is there to remove, so the visual gate's pass condition is unmet and I have not claimed it. I also skipped two journeys the marketing mode asks for (enquiry form, mobile menu) because the page has neither — defensible, but it means the interaction coverage is thinner than the mode intends. And the dark scheme has to lift the felt red to a terracotta to clear AA, which makes the brand read warmer and less severe than in light; a client should see both before signing anything."
+      }
+    ],
+    "verdicts": [
+      {
+        "lens": "A non-technical person who has inherited a player piano and does not know whether it can be saved. Judged only on: does this make me want to phone them, do I understand what happens next, and do I know roughly what it costs to find out. Beauty counts only where it makes me believe they are competent.",
+        "rendered": true,
+        "scores": [
+          {
+            "label": "P",
+            "distinctiveness": 8,
+            "subjectGrounding": 9,
+            "typography": 7,
+            "colourAndSignature": 8,
+            "copyQuality": 8,
+            "briefFit": 9,
+            "craft": 8,
+            "total": 57,
+            "note": "The only build whose layout IS the mechanism: a brass-walled air channel runs down the left margin of every band, and at each of the five faults a red mark cuts across it with a spur branching to the text — the leak, drawn. Custom properties are named for the materials of the trade (rullepapir, blæk, valnød, messing, hammerfilt, blyrør), which is why the palette holds together. It is also the only build that explains how the instrument works in one plain paragraph BEFORE naming the five faults, so by the time I read 'lommelæderet er smuldret' I already know what a lomme is. Price panel sits beside the H1 with pris/varighed/sted/du får and the phone number under it — my three questions answered in one screen. No JS, no motion, skip link, sensible small-screen token overrides. Marked down: Atkinson Hyperlegible is a stiff reading face, the A–F letter tabs are arbitrary organisation, the right-hand margin column is thin at 1440, and it asserts several material facts the brief does not give (the tracker bar as a 'messingliste', striker bellows 'beklædt med gummieret stof'). The drawing caption disclaiming its own accuracy is a class act."
+          },
+          {
+            "label": "U",
+            "distinctiveness": 8,
+            "subjectGrounding": 9,
+            "typography": 8,
+            "colourAndSignature": 8,
+            "copyQuality": 7,
+            "briefFit": 7,
+            "craft": 9,
+            "total": 56,
+            "note": "The handsomest object here and the best-engineered. A punched roll runs the full height of the page as a left rail and rotates to a horizontal band under 1000px — the single cleverest responsive move in the set. The cutaway is the best drawing anyone made: spool, drive belt, tracker bar, tubing, valve chest, pouch, striker bellows, wind trunk, pedal pump, with five callouts that map 1:1 to the five fault entries, plus a caption admitting it is schematic. The price table with the caption 'To ting har en fast pris. Restaureringen har ikke, og det er med vilje' is the best piece of information design in the whole set — it turns a missing number into evidence of honesty. Fraunces over IBM Plex Sans, tight measure, real tabular figures. details/summary instead of JS. Where it loses to P is the top of the page: 'Vi reparerer selvspillende klaverer' is a directory listing, not a sentence aimed at me, and my actual fear only surfaces in paragraph two. And the five faults are collapsed behind accordions, so the frightened reader must click five times to learn anything. Section 03 dumps people, waiting time, restoration pricing and rolls into one block."
+          },
+          {
+            "label": "T",
+            "distinctiveness": 9,
+            "subjectGrounding": 8,
+            "typography": 7,
+            "colourAndSignature": 8,
+            "copyQuality": 8,
+            "briefFit": 6,
+            "craft": 5,
+            "total": 51,
+            "note": "The most committed world by a distance: bottle-green flooded plates on grey card stock, yolk index tabs, numbered sections 01–06, part codes 02.1–02.5, five hand-drawn keyline part diagrams and a front elevation of the instrument. Nothing else in the set looks remotely like it, and it contains the two best sentences written for this brief: 'Et tal givet på forhånd ville være et gæt, og et gæt kan du ikke bruge til noget' and 'Vi gætter ikke over telefonen.' But the register is wrong for the person in the brief. I have just inherited my grandmother's piano and I am being handed an industrial spare-parts catalogue; the contact section is headed 'BESTILLING', as if I were ordering a part rather than asking two people for help. Every heading is condensed uppercase, which is tiring across a whole page. Craft is where it falls apart: the file ships with NO DOCTYPE and I confirmed it renders in quirks mode (compatMode BackCompat), and the delivered file opens with an internal build note — thesis, own-world brief, 'candidate 3 of the grounded list; seed key 3eb75fd9', and a line saying unreviewed work is unfinished. That is production scaffolding shipped to the customer."
+          },
+          {
+            "label": "S",
+            "distinctiveness": 4,
+            "subjectGrounding": 7,
+            "typography": 7,
+            "colourAndSignature": 6,
+            "copyQuality": 9,
+            "briefFit": 9,
+            "craft": 8,
+            "total": 50,
+            "note": "The best-written page here and one of the two most useful, sitting on entirely borrowed bones. 'Det kan vi ikke svare på i telefonen' is the right first sentence for this business, and 'Første skridt er en samtale, ikke en formular' earns the phone-only contact. Listing each fault in Danish with the English trade term beneath it (Mørnet pungelæder / POUCH LEATHER) is the single most practically useful thing anyone did — I can now google my own instrument. Correct black-and-white key pattern in the footer strip. But the structure is the stock editorial-agency template: sticky eyebrow label column, tick-list price block, checkmark/cross scope columns, decimal-leading-zero step list, three-up fault grid, big-number stats, definition-list facts. The token names give it away — --bg, --surface, --fg, --accent, --muted, --border, --hairline — generic English where P and Q named theirs after the trade. Cream and oxblood is the default 'trustworthy craft business' palette. Excellent tailoring of a suit off the rack."
+          },
+          {
+            "label": "Q",
+            "distinctiveness": 6,
+            "subjectGrounding": 6,
+            "typography": 7,
+            "colourAndSignature": 7,
+            "copyQuality": 5,
+            "briefFit": 6,
+            "craft": 7,
+            "total": 44,
+            "note": "One real authored image — a ten-track perforated roll built from pure CSS gradients running slowly under a brass tracker bar with a proper metallic gradient and a shadow — and it is genuinely good. Archivo's variable width axis is used with intent (wdth 100–120 across roles), Martian Mono labels, Newsreader body. Then the section that matters most to me collapses. 'De fejl, vi oftest nævner' gives me five bare nouns with an adjective and no explanation: Pungelæderet. Slagpneumatikkerne. Vindkanalen. I do not know what any of those are, and this is the exact page where I was supposed to start believing these people can help me. 'Slangerne til tracker baren' is half-English. 'Markøren viser, hvem der handler' is confusing — markør reads as cursor. Underneath the roll it is the same eyebrow-label split template as S and R. Infinite background animation with a reduced-motion opt-out, and body overflow-x:hidden masking rather than solving."
+          },
+          {
+            "label": "R",
+            "distinctiveness": 2,
+            "subjectGrounding": 4,
+            "typography": 5,
+            "colourAndSignature": 3,
+            "copyQuality": 6,
+            "briefFit": 7,
+            "craft": 7,
+            "total": 34,
+            "note": "The default. Cool grey neutral, one deep-green accent, a single grotesque, sticky nav with four anchor links, radius 0 everywhere, and a five-cell bento grid where cell five is tinted green for no reason anyone could name. The music roll is a repeating radial-gradient dot field — a texture standing in for the subject rather than a drawing of it. The five faults are five empty boxes containing five jargon phrases and nothing else, and one of them, 'Revnet vindkasse', renames the wind trunk as a wind chest, which is a different part. Its virtues are real and worth stating: it is the most factually restrained page here, it invents almost nothing, it has a dark scheme, a skip link, honest focus states, and 'Prisen kommer efter vurderingen, aldrig før' is a good line. But it tells me a web person made a page for a client. It does not tell me two people in Odense have spent forty-five years inside these machines, and that is the only thing that would make me phone."
+          }
+        ],
+        "ranking": [
+          "P",
+          "U",
+          "T",
+          "S",
+          "Q",
+          "R"
+        ],
+        "topTwoSeparation": "One point, and it is a real difference rather than a manufactured one — but it is narrow enough that on a different day I could be argued out of it. U is the better object: better drawing, better type, better price table, better engineering. P is the better first screen. As the person in the brief I decide whether to phone in the first ten seconds, and P's H1 says my exact thought back to me — 'Kan det reddes? Det finder vi ud af hjemme hos dig' — with the price, duration, place and deliverable in a panel immediately to its right. U opens with 'Vi reparerer selvspillende klaverer', which is a directory entry; my fear does not appear until the second paragraph. The second separator is the five faults. P explains how the machine works in one paragraph, then walks the five failures with a red leak mark cut across the air channel beside each one, all of it visible without touching anything. U hides the same five behind accordions I have to click open one at a time. U is the page I would rather have made; P is the page that gets me to pick up the phone.",
+        "factualErrors": [
+          "P — asserts the tracker bar is brass: 'Trakterstang: den messingliste med en række huller'. Brief names no materials for the tracker bar.",
+          "P — 'Slagbælgene ... er beklædt med gummieret stof, og stoffet slides.' Material claim not in the brief.",
+          "P — 'Lommerne er små læderskiver, der løfter sig' plus a full undertryk/bælg/lomme/ventil mechanism paragraph. Domain-plausible, none of it given.",
+          "P — coins 'trakterstang' as the Danish term for tracker bar; not an established Danish word.",
+          "Q — 'Papir, huller, messing og luft — det er hele mekanikken.' Asserts brass and asserts completeness.",
+          "Q — aria-label: 'en tracker bar af messing'. Brass again, stated as fact.",
+          "Q — 'Hullerne bliver stanset her i værkstedet.' Brief says they cut rolls; punching, and the location, are inferred.",
+          "Q — 'Instrumenter, der spiller ved hjælp af luft, bælge og perforeret papir.' Mechanism not in the brief.",
+          "R — 'Revnet vindkasse' renames the wind trunk as a wind chest. Domain slip; every other build says vindkanal.",
+          "R — 'Vi skærer dem selv i værkstedet.' Brief does not say where the cutting happens.",
+          "S — 'Selvspillende klaverer og pianolaer, der spiller ved hjælp af luft, læder og papir.' Mechanism claim beyond the brief.",
+          "S — CSS comment claims measured contrast 'laveste kontrast er 7,03:1 (WCAG AAA)'. Unverifiable assertion shipped in the file (internal, not user-facing).",
+          "T — cover drawing title states a specific internal layout: 'Rullen, mærket 1, sidder øverst i rullekassen. Trackerbaren, mærket 2, sidder under den.'",
+          "T — 'Slangerne ved trackerbaren — bjælken med huller, som papirrullen løber hen over' and the four other fault explanations; accurate to the trade, absent from the brief.",
+          "T — ships internal build scaffolding to the visitor in the source: THESIS / OWN-WORLD / FORM 'candidate 3 of the grounded list; seed key 3eb75fd9' / FINISH note. Not a false claim about the business, but process leaked into the delivered artefact.",
+          "U — the diagram's aria-label asserts a complete pneumatic action layout (spole, drivrem, trackerbar, ventilkasse, pouch, slagbælg, vindkanal, pedalpumpe). The most elaborate invented description in the set, partly mitigated by the caption calling it schematic.",
+          "U — 'Pouchen er den lille skive læder, der løfter ventilen til én tone' and 'en revnet slange betyder, at den tone ikke bliver spillet'. Mechanism and consequence claims not in the brief.",
+          "ALL SIX — every build explains how a pneumatic action works in order to make the five named failures intelligible. Strictly the brief forbids this; in practice it is the only way to serve the reader, so I weighted these by how checkable and load-bearing each claim is rather than penalising the category. The claims I would actually make a workshop verify before publishing are the brass assertions (P, Q) and R's vindkasse."
+        ],
+        "reasoning": "Method: I rendered all six. Served docs/rebuild/s15/builds over localhost and drove Chromium via Playwright — full-page screenshots of every build at 1440x1000 and again at 375x812, all viewed. Then I read all six index.html files end to end including the CSS, and ran two instrumented checks in the browser: document.compatMode and scrollWidth vs clientWidth at 375 for each build, plus a scan for script tags. No horizontal overflow anywhere; no external JS anywhere (brief satisfied); Q, R and T set body overflow-x:hidden, which masks rather than proves. T is the only build without a DOCTYPE and I confirmed it renders in quirks mode.\n\nWhere the decisions actually live: the CSS custom property names split the field cleanly. P names its tokens after the materials of the trade (--rullepapir, --blæk, --valnød, --messing, --hammerfilt, --blyrør) and Q does something similar (--papir, --blaek, --messing); T names its own world (--stock, --green, --yolk, --rule-green). S, R and U use generic system names (--bg, --surface, --fg, --ink, --accent, --line). That maps almost exactly onto how much each page feels like it was made for this workshop rather than adapted to it — U being the exception, since it earns its identity through the drawing and the rail instead of the palette.\n\nOn not spreading scores: Q, R and S are structurally the same page — eyebrow label in a left column, content block to the right, scope in two lists, faults in a grid, big numbers, definition-list facts, phone-only contact. I scored them as one family and let them separate only where they genuinely differ. Q has an authored image (the running roll under a brass tracker bar) that R does not, so Q sits above R on distinctiveness. S has by some distance the best copy in the entire set, so it sits above both on writing and brief fit despite having the least original structure. Their totals — 50, 44, 34 — reflect that these are the same skeleton in progressively better clothes, not three different ideas. P, T and U each have a genuine own idea and are scored on whether that idea serves the reader.\n\nThe hardest call was T. It is the most distinctive page here and it contains the best writing, and I wanted to rank it higher. Two things stopped me. First, the register: a parts catalogue is a confident answer to 'don't make it a soft artisan landing page', but the brief's reader is anxious and non-technical, and heading the contact section 'Bestilling' asks me to place an order when what I want is to ask for help. Second, craft: no DOCTYPE means quirks mode, confirmed not assumed, and the file opens with internal build notes including a seed key. Distinctiveness does not survive shipping the scaffolding.\n\nR is the only build I marked severely. It is not badly made — it is technically the tidiest, has a dark scheme, and invents the least. It simply has no signature at all, and its five-fault bento is five empty boxes with jargon in them, with one cell tinted green for no reason that exists in the design. Under my lens it fails the only test that matters: it does not make me believe these two specific people can save my instrument."
+      },
+      {
+        "lens": "Design director choosing one of six to put in front of a client. The question is not \"is this well built\" but \"does this page have an idea, and does that idea come from player pianos specifically rather than from the general category of small craft business.\"",
+        "rendered": true,
+        "scores": [
+          {
+            "label": "P",
+            "distinctiveness": 9,
+            "subjectGrounding": 9,
+            "typography": 7,
+            "colourAndSignature": 9,
+            "copyQuality": 8,
+            "briefFit": 6,
+            "craft": 8,
+            "total": 56,
+            "note": "The page is a workshop sheet, and its spine is a brass-lined pneumatic channel running down the left margin — closed at the top, open at the bottom, with a stub branching out of it to each of the five named faults and a hammer-felt-red mark across the channel where the air escapes. That is the only ornament on the page and it is also the argument. The palette is declared from materials rather than mood (--rullepapir, --blæk, --valnød, --messing, --hammerfilt, --blyrør), which is the difference between a warm palette and a grounded one. Sections are lettered A–F in brass keyline boxes like a diagram key, with a Courier Prime glossary hanging in the right margin defining pneumatisk, trakterstang, tilstandsrapport. Nothing moves, and the CSS says so on purpose. Cost: it is the heaviest inventor of the six — a full paragraph of physics the brief never supplied — and Atkinson Hyperlegible is an accessibility face doing duty as a typographic choice, which is the one place the page has no opinion."
+          },
+          {
+            "label": "T",
+            "distinctiveness": 9,
+            "subjectGrounding": 8,
+            "typography": 8,
+            "colourAndSignature": 9,
+            "copyQuality": 8,
+            "briefFit": 7,
+            "craft": 6,
+            "total": 55,
+            "note": "A trade parts catalogue: bottle green cover, yolk contents tab, grey card stock, thumb-tab rail numbered 01–06, fault codes 02.1 through 02.5, perforated roll strips used as section dividers. Five bespoke keyline part cuts — pouch in section, tracker bar with tubes dropping away, hammer pneumatic, wind trunk with a yolk crack, drive belt over two pulleys — plus a front elevation of the instrument with numbered callouts. That is real drawn work, not a texture. Archivo held at wdth 66–80 against Azeret Mono for every code and price is a genuine system. Two things hold it back: the catalogue is a transplanted genre, so its confidence comes partly from a form rather than from this machine; and the file has no doctype, so it renders in quirks mode (verified: document.compatMode = BackCompat). It survives that because of the reset, but it is not something to hand a client."
+          },
+          {
+            "label": "U",
+            "distinctiveness": 8,
+            "subjectGrounding": 8,
+            "typography": 7,
+            "colourAndSignature": 7,
+            "copyQuality": 7,
+            "briefFit": 6,
+            "craft": 7,
+            "total": 50,
+            "note": "The page's left margin IS a music roll — a full-height SVG pattern of punched slots — and the section numerals are drawn as slots in the same rhythm and pitch. Below 1000px the rail rotates into a horizontal punched strip across the top, which is the correct translation rather than a fallback. The sectional drawing of the whole air path with five numbered callouts wired to five matching disclosures is the most ambitious diagram in the set. Best single decision anywhere: a price table whose middle row reads \"Efter vurderingen\" instead of a number, with the caption saying that is deliberate. Against it: Fraunces plus IBM Plex Sans on buff with an oxblood accent is the current default costume for warm-craft, so the typography and colour do not carry their share and the rail carries the signature nearly alone; the page thins to a single plain column after the drawing; two identical primary Ring buttons appear within the first screen at 375."
+          },
+          {
+            "label": "Q",
+            "distinctiveness": 7,
+            "subjectGrounding": 7,
+            "typography": 7,
+            "colourAndSignature": 6,
+            "copyQuality": 7,
+            "briefFit": 7,
+            "craft": 7,
+            "total": 48,
+            "note": "One very good signature bolted to a very standard page. The full-bleed band of ten perforation tracks scrolling under a brass tracker bar is the most immediately legible piano-roll image of the six, and the four empty bellows-shaped rectangles for the four workshop slots is a nice quiet second gesture. Archivo's width axis is genuinely varied by role (wdth 100–120), which is more than most do with a variable font. But strip the roll band out and what remains is the label-left / content-right editorial grid, a dark section for the scary content, and a row of large numerals — the standard kit. Best copy idea in the set: the four steps tagged Du / Vi / Du / Du so the reader can see who is holding the ball."
+          },
+          {
+            "label": "S",
+            "distinctiveness": 3,
+            "subjectGrounding": 4,
+            "typography": 6,
+            "colourAndSignature": 4,
+            "copyQuality": 7,
+            "briefFit": 7,
+            "craft": 8,
+            "total": 39,
+            "note": "Same page as R in different clothes — masthead, section nav, eyebrow, serif headline, primary plus quiet CTA, price card with an accent left border and a tick list, scope in two columns, faults as a card grid, contact definition list. Warm paper and rust instead of cool grey and green. The subject appears only as applied decoration: two SVG roll strips dropped in as bands and a keyboard strip at the very bottom. It is however the best-built page here — 44px targets, prefers-contrast, documented contrast ratios, dark mode, and the only build that gets the ordinary-piano nuance exactly right by listing \"almindelige klaverer som opgave i sig selv\" under no and tuning-while-already-there under yes. \"Det kan vi ikke svare på i telefonen\" is a strong, honest opening line. Craft and copy are the whole score; there is no point of view underneath."
+          },
+          {
+            "label": "R",
+            "distinctiveness": 3,
+            "subjectGrounding": 3,
+            "typography": 5,
+            "colourAndSignature": 3,
+            "copyQuality": 6,
+            "briefFit": 7,
+            "craft": 7,
+            "total": 34,
+            "note": "The control group. Sticky nav, asymmetric hero split, two buttons, scope two-up, and — named as such in the source — a bento grid for the five faults. Its own CSS comment describes the palette as \"cool paper grey neutral plus one accent (deep green)\", which is an accurate description of every SaaS marketing page of the last three years and has nothing to do with player pianos. The perforated roll is radial-gradient dots at 34% opacity and reads on screen as a decorative swatch, not as punched paper; at 1440 it leaves a large dead field between the headline and itself. Single typeface, no voice. Two genuine merits: the fewest invented facts of the six, and \"Prisen kommer efter vurderingen, aldrig før\" is the sharpest sentence anyone wrote about the no-quote rule. Also the only build that mistranslates a component — wind trunk becomes \"vindkasse\" (wind chest), a different part."
+          }
+        ],
+        "ranking": [
+          "P",
+          "T",
+          "U",
+          "Q",
+          "S",
+          "R"
+        ],
+        "topTwoSeparation": "Very little, and I want to be plain about that. P and T are both genuine points of view, both fully committed, both would survive a client meeting. The one point between them is not taste, it is two specific defects pointing in opposite directions. T ships without a doctype and therefore renders in quirks mode — a build error a director should not hand over, and the sort of thing that only stays invisible until it does not. P writes a paragraph of pneumatic physics the brief never gave it, on a brief that says in so many words that nothing else may be stated as true. Fix T's first line and delete P's invented paragraph and the order flips. What actually decides it on the stated lens is where each page's idea comes from. T's idea is a transplanted genre: it is a parts catalogue, and much of its authority is borrowed from catalogues generally — bottle green and yolk on grey stock would look just as convincing over a bearing supplier. P's idea is taken from the machine: the vacuum path becomes the page's left margin, and the branch stubs land exactly on the five faults the brief names, so the ornament and the argument are the same object. That is the harder thing to have done. On sheer presence in a room T wins; on the question asked, P does.",
+        "factualErrors": [
+          "P — invents a full mechanism narrative absent from the brief: the bellows draws air out, holes in the roll admit air through the tracker bar, the air passes through tubing to the pouches, the pouches open valves to the striker pneumatics, which set the hammers going.",
+          "P — invents that each hole in the tracker bar has its own tube running to its own pouch.",
+          "P — invents that the striker pneumatics are covered in rubberised cloth ('beklædt med gummieret stof').",
+          "P — invents that the drive belts pull the roll past the tracker bar.",
+          "P — invents the Danish trade term 'trakterstang' and presents it as the profession's word for a tracker bar.",
+          "P — states the workshop answers the telephone Tuesday to Thursday 09.00–16.00; the brief gives those as workshop opening hours, not phone hours.",
+          "Q — states the holes are punched in the workshop ('Hullerne bliver stanset her i værkstedet'); the brief says only that they cut the rolls themselves.",
+          "Q — asserts 'papir, huller, messing og luft — det er hele mekanikken', inventing both that the tracker bar is brass and that this constitutes the entire mechanism.",
+          "Q — renders the tracker bar as brass in the hero graphic; no material is given in the brief.",
+          "Q — invents the Danish term 'pungelæder' for pouch leather.",
+          "Q — 'Telefonen er den vej ind' asserts the phone is the only intake channel; the brief supplies a phone number but states no such policy.",
+          "R — renders 'wind trunk' as 'vindkasse' (wind chest), a different component from the cracked wind trunk named in the brief.",
+          "R — adds that the rolls are cut 'i værkstedet'; the brief says only that they cut them themselves.",
+          "S — states the instruments play by means of 'luft, læder og papir', asserting a materials list the brief does not give.",
+          "S — invents the Danish term 'tracker-listen'.",
+          "S — 'Ring inden for åbningstiden, hvis du vil høre, hvilke titler det er' asserts the 38 titles can be recited over the phone; not stated in the brief.",
+          "T — invents fault descriptions beyond the named faults: that the pouch leather has become soft and porous, that the small bellows strike the note, that the belts have lost their give.",
+          "T — defines the tracker bar as 'bjælken med huller, som papirrullen løber hen over'; accurate to the world but not supplied by the brief.",
+          "T — the cover elevation depicts a specific instrument configuration (upright with keyboard, pedals, and roll box above the keys) that the brief does not specify.",
+          "T — 'Ring, hvis du vil høre, hvad der står på hylden' asserts the title list is available by phone; not in the brief.",
+          "U — invents a pedal pump ('pedalpumpen') as the source of suction, in both the drawing and the figure caption; the brief never says the instruments are foot-pumped.",
+          "U — invents that a cracked tube means that one note will not be played.",
+          "U — invents that a crack in the wind trunk affects the whole instrument at once rather than individual notes.",
+          "U — invents that the pouch is a small leather disc lifting the valve for a single note.",
+          "U — invents that the drive belts transfer the pull so the roll runs evenly over the tracker bar, and that old rubber slips rather than pulls."
+        ],
+        "reasoning": "I rendered all six rather than reading only. Served the builds directory over HTTP and drove a real browser: viewport captures of every build at 1440 and of P, T, Q and U at 375, plus a full-page capture of P. Two notes on the render. First, port 8791 was already occupied by a concurrent process serving an unrelated site, so the first capture returned the wrong page entirely; I moved to a unique port and verified the served title before trusting anything. Second, the browser instance is shared with another session, so tabs and viewport size were being changed under me mid-sequence — I verified the URL in every screenshot against the source I had read before accepting the image. I also read every index.html in full including all CSS, which is where the actual decisions are recorded.\n\nThe set splits three ways, cleanly.\n\nTwo of them are the same page. R and S share a skeleton: masthead, section nav or sticky nav, eyebrow, large headline, primary plus secondary CTA, a two-column in-scope/out-of-scope block, the five faults as a grid of cards, oversized numerals for 38 and 340 and 1850, a contact definition list, a hairline-ruled footer. Change the palette from cool grey with a forest-green accent to warm paper with a rust accent and you have converted one into the other. Neither contains a visual decision that could only have been made for player pianos. R's own CSS comment states the palette as neutral plus one accent, which is honest about what it is. S is the better-executed of the two by a clear margin — better typesetting, better contrast discipline, better handling of the ordinary-piano nuance, better opening sentence — so I scored it above R, but on the axis that matters here they are one page and I have said so in both notes.\n\nQ is a good page with one strong signature attached. The scrolling band of perforations under a brass tracker bar is the most legible piano-roll image in the set and it is doing real work. But remove it and the underlying page is the standard label-left/content-right editorial grid with a dark section for the difficult material.\n\nThree have an actual idea, and they are different ideas. U turns the page's margin into a music roll and then punches the section numerals in the same slot rhythm, which is a consistent thought rather than a decorated one. T becomes a trade parts catalogue and commits totally — index tabs, section codes, fault codes, five drawn part cuts, perforated dividers. P turns the page into a workshop sheet whose spine is the vacuum channel, with stubs branching out of it to each named fault.\n\nOn the brief's own test — do the visual decisions come from player pianos specifically or from the general category of small craft business — P is furthest from generic craft. Its palette is enumerated from the materials of the trade, its structural ornament is a diagram of how the machine works, and the branch stubs land precisely on the five faults the brief names. T is nearly as far, but a measurable part of its authority is borrowed from the catalogue genre rather than from this machine.\n\nI marked hard and did not spread. Four builds sit within eight points of each other at the top because four builds genuinely earned close scores; the bottom two sit far below because the gap there is real and it is a gap of intent, not of skill.\n\nEvery build embellishes the mechanism beyond the brief's facts, which matters because the brief states that nothing else may be stated as true. P and U are the worst offenders and both lost briefFit points for it. That is an uncomfortable finding, because the invented physics in both cases is also the thing that makes them useful to a frightened person who has inherited a machine — but the brief drew the line, not me."
+      },
+      {
+        "lens": "AI-tell hunt: cream/greige-plus-brass grounds, near-black-plus-one-accent, three-column card grids, decorative 01/02/03 markers, generic token names, letterspaced uppercase eyebrows, scattered hover effects, swappable copy, invented facts. Fewer tells scores higher even if plainer.",
+        "rendered": true,
+        "scores": [
+          {
+            "label": "T",
+            "distinctiveness": 8,
+            "subjectGrounding": 9,
+            "typography": 8,
+            "colourAndSignature": 8,
+            "copyQuality": 8,
+            "briefFit": 8,
+            "craft": 6,
+            "total": 55,
+            "note": "Trade parts catalogue. Bottle green plates, yolk index tabs, grey card stock, condensed Archivo at wdth 66-78, Azeret Mono for codes and prices. Declines both cliche grounds. Five bespoke keyline part drawings plus a full instrument elevation with callouts 1 and 2 that actually label the roll and the tracker bar; fault codes 02.1-02.5; a 4-9 month scale bar; four hatched boxes for four workshop places. The 01-06 numbering is load-bearing: it drives a sticky tab rail with :target states, a contents plate, and in-copy cross-references (se afsnit 01). Copy is unswappable — 'Et tal givet på forhaand ville vaere et gaet, og et gaet kan du ikke bruge til noget.' Craft is where it loses: no <!doctype>, so it renders in BackCompat quirks mode (verified document.compatMode), and the internal THESIS / OWN-WORLD / 'seed key 3eb75fd9' comment block ships at the top of the file. Uppercase mono dt labels at 0.05em are the one tell present. Holds at 375."
+          },
+          {
+            "label": "P",
+            "distinctiveness": 7,
+            "subjectGrounding": 9,
+            "typography": 8,
+            "colourAndSignature": 6,
+            "copyQuality": 8,
+            "briefFit": 9,
+            "craft": 8,
+            "total": 55,
+            "note": "Workshop sheet. Its structural device is genuinely original: a wind channel drawn in brass keyline down the whole left gutter, with a branch stub reaching out to each of the five faults and a hammer-felt-red mark across the channel where the air escapes. That is the wind trunk, drawn, doing layout work. Custom properties are named for materials (--rullepapir, --blaek, --valnoed, --messing, --hammerfilt, --blyroer), not --bg/--surface. Explains the pneumatic chain before naming the faults, so the faults mean something. Margin notes define trade terms. Zero animation, and a reduced-motion rule stated as a guard against later additions. Against it: the ground is warm roll-paper cream with brass rules — the single most-named tell in the brief, sound reasoning notwithstanding — and the boxed A/B/C/D/E/F section letters encode nothing that 01/02/03 wouldn't. One console error. Otherwise the cleanest build in the set."
+          },
+          {
+            "label": "U",
+            "distinctiveness": 6,
+            "subjectGrounding": 8,
+            "typography": 6,
+            "colourAndSignature": 5,
+            "copyQuality": 8,
+            "briefFit": 8,
+            "craft": 7,
+            "total": 48,
+            "note": "Full-height punched roll-paper rail down the left edge of the whole page, reflowing to a horizontal strip below 1000px — a real committed signature, and --slot-w/--slot-pitch are tokens taken from the punch. The cross-section drawing is the most informative asset in the set: five callouts keyed to the five disclosure rows, with a long descriptive aria-label. Price table with a caption is the clearest cost answer anyone gives. Copy is excellent — 'Det staar i stuen, og ingen kan sige, om det kan reddes', 'Derfor staar der ikke et tal for den her paa siden', 'To ting har en fast pris. Restaureringen har ikke, og det er med vilje.' But strip the rail and it is cream ground plus one saturated brick accent, Fraunces headings, generic tokens (--bg/--surface/--surface-2/--ink/--accent/--on-accent), and 01-05 section numerals that encode nothing — running alongside a second 01-05 fault numbering that does. Staggered fade-up on load. At 1440 the text column sits narrow with a large dead area to its right."
+          },
+          {
+            "label": "Q",
+            "distinctiveness": 6,
+            "subjectGrounding": 7,
+            "typography": 7,
+            "colourAndSignature": 5,
+            "copyQuality": 7,
+            "briefFit": 8,
+            "craft": 6,
+            "total": 46,
+            "note": "Best single hero device in the set: a perforated roll built from ten independently-phased track gradients, running slowly under a brass tracker bar rendered as a gradient with a shadow. Four empty bordered boxes for the four workshop places; a strikethrough list for what they refuse; Du/Vi markers on the four steps so you can see who acts at each one. It explicitly refuses decorative numbering ('Ordet foran er selve fejlen — ikke en raekkefoelge'). But it lands on both named grounds at once: papir #E9DFC6 with brass, plus a near-black flooded fault section. The .label class — mono, uppercase, 0.16em — is used as an eyebrow eleven times. The five faults get a one-word adjective and a noun each, no explanation and no drawing, which is the thinnest content-per-section here. overflow-x:hidden on body papers over overflow instead of fixing it, and the roll animates forever."
+          },
+          {
+            "label": "S",
+            "distinctiveness": 3,
+            "subjectGrounding": 5,
+            "typography": 6,
+            "colourAndSignature": 3,
+            "copyQuality": 7,
+            "briefFit": 8,
+            "craft": 7,
+            "total": 39,
+            "note": "The reference AI page. Every tell in the lens, load-bearing: #FAF7F1 cream ground with one saturated #7C2D12 accent; a .eyebrow class at 0.75rem/0.14em uppercase used seven times; counter(trin, decimal-leading-zero) producing literal 01/02/03/04 that encode only sequence; generic tokens (--bg/--surface/--surface-2/--fg/--fg-muted/--accent/--on-accent/--border/--hairline); lucide-style tick and phone icons; sticky section nav with hover border-bottom transitions on every link. .faults is a three-column grid holding five items, so the last row sits two-thirds empty at 1024+. A decorative piano keyboard strip closes the page — generic 'piano' garnish for a business that explicitly does not do ordinary pianos. Real credit on content: the copy is the best-organised here ('Det kan vi ikke svare paa i telefonen', 'Foerste skridt er en samtale, ikke en formular') and putting the English term under each Danish fault name is the most useful handling of the five failures anywhere in the set."
+          },
+          {
+            "label": "R",
+            "distinctiveness": 3,
+            "subjectGrounding": 4,
+            "typography": 6,
+            "colourAndSignature": 4,
+            "copyQuality": 6,
+            "briefFit": 7,
+            "craft": 7,
+            "total": 37,
+            "note": "A modern product-marketing template with a green accent: sticky nav, split hero, one huge figure, bento, two-up, contact band. Swap the words and it sells software. Generic tokens throughout (--paper/--surface/--ink/--muted/--line/--accent/--on-accent), btn-primary/btn-secondary, hover transitions on nav and buttons, overflow-x:hidden. Its one subject motif — the perforated roll in pure CSS gradients — is so low-contrast that at both 375 and 1440 it reads as faint dot texture, not a music roll; the vertical one in the hero is nearly invisible. Three of the five bento cells carry a background texture and two do not, with no stated logic. Credit: no eyebrows anywhere (the source comment says so deliberately), no numbered markers, no invented facts, the bento spans 3/3/2/2/2 so five cells fill two rows cleanly, and the 1981/2011 year figures at 7rem are the one genuinely good typographic decision. But the five faults get a name and nothing else, so the reader the brief describes leaves knowing least here."
+          }
+        ],
+        "ranking": [
+          "T",
+          "P",
+          "U",
+          "Q",
+          "S",
+          "R"
+        ],
+        "topTwoSeparation": "Nothing separates them on total — both land on 55, and that is not a rounding artefact. They win on opposite things and lose on opposite things. T commits to a world P does not: a parts catalogue in bottle green, yolk and grey card stock, refusing both the cream-and-brass ground and the near-black-plus-accent ground, with five original keyline part drawings and a numbering system that genuinely indexes the document. P wears the most-worn costume in the set — warm roll-paper cream with brass rules — but executes more cleanly than anything here: no animation at all, material-named tokens, a wind channel drawn down the gutter that is simultaneously the page's spine and the subject's main air path, and the mechanism explained before the faults are named. T then throws away craft points P never risks: it ships with no doctype, so it renders in quirks mode, and its internal thesis block including a seed key sits at the top of the file for anyone who views source. I put T first because the lens is hunting tells and T's ground, palette and numbering all survive that hunt while P's ground does not — but if you weight hygiene over commitment, P is first and I would not argue.",
+        "factualErrors": [
+          "None of the six invents a business fact. No prices, no counts of instruments restored, no testimonials, no review scores, no customer names, no years beyond 1981 and 2011 appear anywhere. Everything listed below is domain elaboration about how a player piano works — real-world accurate, but not stated in the brief, and therefore technically asserted as true beyond the permitted facts.",
+          "P: describes the whole pneumatic chain as fact (instrument plays by suction, bellows draws air, holes in the roll admit air through the tracker bar, tubes feed pouches, pouches open valves to striker pneumatics). Asserts the tracker bar is a brass strip ('den messingliste med en raekke huller'). Asserts pouch leather is the thinnest material in the instrument. Asserts striker pneumatics are covered in rubberised cloth.",
+          "P: renames a cracked wind trunk as 'Vindkanalen har en revne' and adds that the trunk carries the vacuum around the instrument — an added mechanism claim.",
+          "Q: says the roll holes are punched in the workshop ('Hullerne bliver stanset her i vaerkstedet'); the brief says they cut rolls from original masters, not that they punch them. Minor but it is a process claim.",
+          "Q: asserts the drive belts are what have 'mistet deres eftergivenhed' — restating the brief's 'gone hard' as a specific material property. Borderline.",
+          "R: renames the cracked wind trunk 'Revnet vindkasse' (wind chest, a different component from a wind trunk). This is the only rename in the set that shifts the part rather than translating it.",
+          "S: asserts the instruments play 'ved hjaelp af luft, laeder og papir' — an added materials claim, though a fair inference from the named failures.",
+          "T: asserts the tracker bar is 'bjaelken med huller, som papirrullen loeber hen over' and that striker pneumatics are 'de smaa baelge, der slaar anslaget an'. Its cover elevation draws a specific cabinet layout — roll box position, keyboard, pedals, legs — none of which is given; it is captioned as a drawing but not declared schematic the way P and U declare theirs.",
+          "T: 'Der er en vej ind, og det er telefonen.' The brief supplies a phone number and no email, but never states the phone is the only route. Inference presented as a rule.",
+          "U: asserts 'Et selvspillende klaver er en pneumatisk maskine. Der er laeder, gummislanger og baelge inde i den.' Then explains pouch, valve, striker bellows, wind channel and drive belt function in five disclosure panels, and its cross-section asserts a full signal path from pedal pump to hammer. Mitigated by an explicit caption: 'Tegningen er skematisk ... ikke et bestemt instrument.'",
+          "P and U are the only two that explicitly disclaim their drawings as schematic and not a measured drawing of any real instrument. That disclaimer is the correct move under 'nothing else may be stated as true' and neither Q, R, S nor T makes it."
+        ],
+        "reasoning": "I rendered them. A separate process was driving the same Playwright browser and writing screenshots into the same directory with colliding filenames, which crossed several early captures — I caught it when a file labelled Q showed S's headline, verified with grep against the sources, and moved to a private output directory with per-build verification of the rendered content. Confirmed visual captures: P at 1440 and 375, Q at 375, R at 1440, S at 1440, T at 1440 and 375, U at 1440. I also read all six index.html files in full including the CSS, which is where most of the findings below actually come from, and I checked T's document mode directly in the browser (BackCompat, no doctype).\n\nThe set splits cleanly into three tiers, and I am not going to spread the scores to make it look more interesting than it is.\n\nTop tier, T and P at 55. Both are the same kind of achievement reached from opposite directions: a specific, non-obvious form (a trade parts catalogue; a workshop worksheet), a visual language derived from the instrument rather than from a mood, and copy that could not be moved to another page. T draws the faults; P diagrams the air path and makes it the page's spine. Neither invents a business fact. They are tied and I say so in the separation field.\n\nMiddle tier, U at 48 and Q at 46. Each has one genuinely strong idea — U's punched rail and cross-section, Q's running roll under a brass tracker bar — sitting on a body that is much more conventional than the idea deserves. Both land on the cream-and-brass ground. Q adds the near-black section on top of it and uses a letterspaced uppercase eyebrow eleven times; U runs two parallel 01-05 numbering systems where only one carries meaning. Both write well.\n\nBottom tier, S at 39 and R at 37. These two are close enough that I would not defend the two-point gap as meaningful — they are the same page in different clothes, one warm and one cool, both a neutral ground with a single saturated accent, generic token names, primary/secondary buttons, hover transitions scattered across nav and cards, and a grid of five faults that is really a grid of six with one cell missing. S is the fuller catalogue of tells (eyebrows, decimal-leading-zero counters, three-column card grid, decorative keyboard strip) but also has the best-organised copy in the whole set and the single most useful piece of information design anywhere here: each Danish fault name with its English term underneath. R has fewer tells on paper — no eyebrows at all, no numbered markers, a deliberately uneven bento so five cells fill two rows — but its one subject motif is rendered so faintly it does not read, and it gives the brief's reader the least help of any of the six. The lens says to score the page with fewer tells higher even if it is plainer; R is plainer and does have marginally fewer tells, but it is also the emptiest, and emptiness is not the same as restraint. That is why it sits last by two points rather than ahead of S.\n\nOn craft I marked T down hard for shipping without a doctype and with its internal thesis and seed key visible in view-source. Those are not taste failures, they are hygiene failures, and they are the only reason T is not clear of P."
+      }
+    ],
+    "tally": {
+      "P": 168,
+      "U": 154,
+      "T": 161,
+      "S": 128,
+      "Q": 138,
+      "R": 105
+    },
+    "key": [
+      {
+        "label": "P",
+        "arm": "sitesmith-v3"
+      },
+      {
+        "label": "Q",
+        "arm": "frontend-design"
+      },
+      {
+        "label": "R",
+        "arm": "taste-skill"
+      },
+      {
+        "label": "S",
+        "arm": "ui-ux-pro-max"
+      },
+      {
+        "label": "T",
+        "arm": "impeccable"
+      },
+      {
+        "label": "U",
+        "arm": "sitesmith-v2"
+      }
+    ]
+  }
+}

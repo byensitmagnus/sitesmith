@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Klinke &amp; Datter — værksted for selvspillende klaverer og pianolaer, Odense</title>
+<meta name="description" content="Verner og Liv Klinke reparerer pneumatiske selvspillende klaverer og pianolaer. En vurdering koster 1.850 kr. og ender i en skriftlig tilstandsrapport. Havnegade 22, Odense C.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   Klinke & Datter — design tokens
+   Se design-system/klinke-og-datter/pages/forside.md for hvorfor.
+   Alle tekstpar er målt: laveste kontrast er 7,03:1 (WCAG AAA).
+   ============================================================ */
+:root{
+  --bg:#FAF7F1;
+  --surface:#FFFFFF;
+  --surface-2:#F2EDE4;
+  --fg:#1A1512;
+  --fg-muted:#5C534B;
+  --accent:#7C2D12;
+  --on-accent:#FFFFFF;
+  --border:#C4B5A0;
+  --hairline:#E0D8CC;
+  --paper:#F0E7D6;
+  --punch:#1A1512;
+
+  --font-text:"Newsreader",Georgia,"Times New Roman",serif;
+  --font-ui:"Public Sans",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
+
+  --sp-1:4px; --sp-2:8px; --sp-3:16px; --sp-4:24px;
+  --sp-5:32px; --sp-6:48px; --sp-7:64px; --sp-8:96px; --sp-9:128px;
+
+  --measure:34rem;
+  --shell:1120px;
+  --radius:2px;
+  --t:180ms cubic-bezier(.2,.6,.3,1);
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --bg:#14110E;
+    --surface:#1E1A16;
+    --surface-2:#241F1A;
+    --fg:#F5F0E8;
+    --fg-muted:#B0A69A;
+    --accent:#E9A178;
+    --on-accent:#14110E;
+    --border:#55493F;
+    --hairline:#3A322A;
+    --paper:#2A241D;
+    --punch:#0C0A08;
+  }
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--fg);
+  font-family:var(--font-text);
+  font-size:1.0625rem;
+  line-height:1.65;
+  overflow-wrap:break-word;
+  -webkit-font-smoothing:antialiased;
+}
+@media (min-width:768px){ body{font-size:1.125rem} }
+
+img,svg{max-width:100%}
+::selection{background:var(--accent);color:var(--on-accent)}
+
+/* --- fokus: aldrig fjernet, altid 3px --- */
+a:focus-visible,button:focus-visible,[tabindex]:focus-visible{
+  outline:3px solid var(--accent);
+  outline-offset:3px;
+  border-radius:var(--radius);
+}
+
+/* --- struktur --- */
+.shell{width:100%;max-width:var(--shell);margin-inline:auto;padding-inline:20px}
+@media (min-width:768px){ .shell{padding-inline:40px} }
+@media (min-width:1200px){ .shell{padding-inline:24px} }
+
+.skip{
+  position:absolute;left:-9999px;top:0;z-index:20;
+  background:var(--accent);color:var(--on-accent);
+  font-family:var(--font-ui);font-weight:600;
+  padding:14px 20px;text-decoration:none;
+}
+.skip:focus{left:12px;top:12px}
+
+/* --- typografi --- */
+h1,h2,h3{font-weight:500;letter-spacing:-.012em;margin:0;text-wrap:balance}
+h1{
+  font-size:clamp(2.1rem,6.2vw,3.9rem);
+  line-height:1.06;
+  letter-spacing:-.025em;
+}
+h2{font-size:clamp(1.6rem,3.4vw,2.35rem);line-height:1.15}
+h3{font-size:1.14rem;line-height:1.3;font-weight:600}
+p{margin:0 0 var(--sp-4)}
+p:last-child{margin-bottom:0}
+.lead{font-size:clamp(1.15rem,2.3vw,1.4rem);line-height:1.55;color:var(--fg)}
+.measure{max-width:var(--measure)}
+.muted{color:var(--fg-muted)}
+
+.eyebrow{
+  font-family:var(--font-ui);
+  font-size:.75rem;font-weight:700;
+  letter-spacing:.14em;text-transform:uppercase;
+  color:var(--fg-muted);
+  margin:0 0 var(--sp-3);
+}
+.num{font-family:var(--font-ui);font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1}
+
+a{color:inherit}
+.link{
+  font-family:var(--font-ui);font-weight:600;
+  color:var(--fg);
+  text-decoration:none;
+  border-bottom:2px solid var(--accent);
+  padding-bottom:2px;
+  transition:color var(--t),border-color var(--t),background-color var(--t);
+}
+.link:hover{color:var(--accent)}
+
+/* --- knapper --- */
+.btn{
+  display:inline-flex;align-items:center;gap:10px;
+  min-height:52px;padding:12px 24px;
+  font-family:var(--font-ui);font-size:1.0625rem;font-weight:600;
+  font-variant-numeric:tabular-nums;
+  text-decoration:none;border-radius:var(--radius);
+  cursor:pointer;
+  transition:background-color var(--t),color var(--t),border-color var(--t);
+}
+.btn-primary{background:var(--accent);color:var(--on-accent);border:2px solid var(--accent)}
+.btn-primary:hover{background:var(--fg);border-color:var(--fg);color:var(--bg)}
+.btn-quiet{
+  background:transparent;color:var(--fg);
+  border:2px solid transparent;border-bottom-color:var(--accent);
+  border-radius:0;padding-inline:2px;
+}
+.btn-quiet:hover{color:var(--accent)}
+.btn svg{flex:none}
+
+/* --- perforeret rulle (dekorativ) --- */
+.roll{display:block;width:100%;height:auto}
+.roll-paper{fill:var(--paper)}
+.roll-punch{fill:var(--punch)}
+.roll-edge{stroke:var(--border);stroke-width:1.5;fill:none}
+
+/* --- header --- */
+.masthead{border-bottom:1px solid var(--hairline)}
+.masthead-in{
+  display:flex;flex-wrap:wrap;align-items:baseline;gap:var(--sp-2) var(--sp-4);
+  padding-block:var(--sp-4);
+}
+.wordmark{
+  display:inline-flex;align-items:center;min-height:44px;
+  font-size:1.3rem;font-weight:600;letter-spacing:-.02em;
+  text-decoration:none;color:var(--fg);line-height:1.2;
+}
+.masthead-meta{
+  font-family:var(--font-ui);font-size:.85rem;color:var(--fg-muted);
+  margin-right:auto;letter-spacing:.02em;
+}
+.masthead-tel{
+  font-family:var(--font-ui);font-weight:700;font-variant-numeric:tabular-nums;
+  font-size:1rem;text-decoration:none;color:var(--fg);
+  border-bottom:2px solid var(--accent);padding-bottom:2px;
+  min-height:44px;display:inline-flex;align-items:center;
+  transition:color var(--t);
+}
+.masthead-tel:hover{color:var(--accent)}
+
+nav.sections{border-bottom:1px solid var(--hairline)}
+nav.sections ul{
+  display:flex;flex-wrap:wrap;gap:0 var(--sp-4);
+  list-style:none;margin:0;padding:0;
+}
+nav.sections a{
+  display:inline-flex;align-items:center;min-height:48px;
+  font-family:var(--font-ui);font-size:.9rem;font-weight:500;
+  color:var(--fg-muted);text-decoration:none;
+  border-bottom:2px solid transparent;
+  transition:color var(--t),border-color var(--t);
+}
+nav.sections a:hover{color:var(--fg);border-bottom-color:var(--accent)}
+
+/* --- sektioner --- */
+section{padding-block:var(--sp-7)}
+@media (min-width:768px){ section{padding-block:var(--sp-8)} }
+.rule{border:0;border-top:1px solid var(--hairline);margin:0}
+
+/* redaktionelt to-kolonne-gitter: etiket + indhold */
+.split{display:grid;gap:var(--sp-4)}
+@media (min-width:1024px){
+  .split{grid-template-columns:minmax(0,3fr) minmax(0,9fr);gap:var(--sp-6)}
+  .split > .aside{position:sticky;top:var(--sp-4);align-self:start}
+}
+
+/* --- hero --- */
+.hero{padding-top:var(--sp-6);padding-bottom:0}
+.hero h1{margin-bottom:var(--sp-4);max-width:16ch}
+.hero .lead{max-width:var(--measure)}
+.hero-actions{
+  display:flex;flex-wrap:wrap;align-items:center;gap:var(--sp-4);
+  margin-top:var(--sp-5);
+}
+.hero-hours{
+  font-family:var(--font-ui);font-size:.9rem;color:var(--fg-muted);
+  font-variant-numeric:tabular-nums;margin-top:var(--sp-4);
+}
+.hero-roll{margin-top:var(--sp-7)}
+
+/* --- prisblok --- */
+.price{
+  margin-top:var(--sp-6);
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-left:4px solid var(--accent);
+  border-radius:var(--radius);
+  padding:var(--sp-4);
+}
+@media (min-width:768px){ .price{padding:var(--sp-5) var(--sp-6);display:grid;grid-template-columns:auto 1fr;gap:var(--sp-6);align-items:start} }
+.price-figure{
+  font-family:var(--font-ui);font-weight:700;font-variant-numeric:tabular-nums;
+  font-size:clamp(2.2rem,6vw,3rem);line-height:1;letter-spacing:-.03em;
+  color:var(--accent);white-space:nowrap;
+}
+.price-figure span{display:block;font-size:.8rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--fg-muted);margin-top:var(--sp-2)}
+.price-list{list-style:none;margin:var(--sp-4) 0 0;padding:0;font-size:1rem}
+@media (min-width:768px){ .price-list{margin-top:0} }
+.price-list li{
+  display:flex;gap:var(--sp-3);align-items:flex-start;
+  padding-block:10px;border-top:1px solid var(--hairline);
+}
+.price-list li:first-child{border-top:0;padding-top:0}
+.tick{flex:none;margin-top:6px;color:var(--accent)}
+
+/* --- scope: ind / ikke ind --- */
+.scope{display:grid;gap:var(--sp-5);margin-top:var(--sp-5)}
+@media (min-width:768px){ .scope{grid-template-columns:1fr 1fr;gap:var(--sp-6)} }
+.scope h3{margin-bottom:var(--sp-3);font-family:var(--font-ui);font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;color:var(--fg-muted)}
+.scope ul{list-style:none;margin:0;padding:0}
+.scope li{
+  display:flex;gap:var(--sp-3);align-items:flex-start;
+  padding-block:12px;border-top:1px solid var(--hairline);
+}
+.scope li:first-of-type{border-top:2px solid var(--fg)}
+.scope .mark{flex:none;margin-top:5px}
+.scope-yes .mark{color:var(--accent)}
+.scope-no .mark{color:var(--fg-muted)}
+.scope-no li span:last-child{color:var(--fg-muted)}
+
+/* --- trin --- */
+.steps{list-style:none;counter-reset:trin;margin:var(--sp-5) 0 0;padding:0}
+.steps > li{
+  counter-increment:trin;
+  display:grid;grid-template-columns:auto minmax(0,1fr);
+  gap:var(--sp-3) var(--sp-4);
+  padding-block:var(--sp-5);
+  border-top:1px solid var(--hairline);
+}
+.steps > li:first-child{border-top:2px solid var(--fg)}
+.steps > li::before{
+  content:counter(trin,decimal-leading-zero);
+  font-family:var(--font-ui);font-weight:700;font-variant-numeric:tabular-nums;
+  font-size:.95rem;letter-spacing:.04em;color:var(--accent);
+  padding-top:4px;
+}
+.steps h3{margin-bottom:var(--sp-2)}
+.steps p{font-size:1rem;color:var(--fg-muted);margin-bottom:0}
+.steps .step-body{max-width:52ch}
+
+.note{
+  margin-top:var(--sp-5);
+  background:var(--surface-2);
+  border:1px solid var(--hairline);
+  border-radius:var(--radius);
+  padding:var(--sp-4);
+  font-size:1rem;
+}
+.note strong{font-family:var(--font-ui);font-weight:700;font-variant-numeric:tabular-nums}
+
+/* --- fejlliste --- */
+.faults{list-style:none;display:grid;gap:1px;margin:var(--sp-5) 0 0;padding:0;background:var(--hairline);border:1px solid var(--hairline);border-radius:var(--radius)}
+@media (min-width:640px){ .faults{grid-template-columns:1fr 1fr} }
+@media (min-width:1024px){ .faults{grid-template-columns:1fr 1fr 1fr} }
+.faults li{background:var(--surface);padding:var(--sp-4)}
+.faults h3{margin-bottom:var(--sp-2)}
+.faults .orig{
+  font-family:var(--font-ui);font-size:.75rem;font-weight:600;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--fg-muted);
+}
+
+/* --- ruller --- */
+.rolls-figure{
+  border:1px solid var(--border);border-radius:var(--radius);
+  background:var(--surface);padding:var(--sp-4);margin-top:var(--sp-5);
+}
+.rolls-facts{
+  display:flex;flex-wrap:wrap;gap:var(--sp-5) var(--sp-7);
+  margin:var(--sp-5) 0 0;padding:0;list-style:none;
+}
+.rolls-facts div{border-top:2px solid var(--fg);padding-top:var(--sp-3)}
+.big-num{
+  display:block;
+  font-family:var(--font-ui);font-weight:700;font-variant-numeric:tabular-nums;
+  font-size:clamp(1.9rem,5vw,2.6rem);line-height:1;letter-spacing:-.03em;
+}
+.big-num + span{
+  display:block;font-family:var(--font-ui);font-size:.8rem;font-weight:600;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--fg-muted);
+  margin-top:var(--sp-2);
+}
+
+/* --- personer --- */
+.people{display:grid;gap:var(--sp-4);margin:var(--sp-5) 0 0;padding:0;list-style:none}
+@media (min-width:640px){ .people{grid-template-columns:1fr 1fr;gap:var(--sp-5)} }
+.people li{border-top:2px solid var(--fg);padding-top:var(--sp-4)}
+.people h3{font-family:var(--font-text);font-size:1.5rem;font-weight:500;letter-spacing:-.02em}
+.people .since{
+  display:block;margin-top:var(--sp-2);
+  font-family:var(--font-ui);font-weight:600;font-variant-numeric:tabular-nums;
+  font-size:.95rem;color:var(--fg-muted);letter-spacing:.02em;
+}
+
+/* --- kontakt --- */
+.contact{background:var(--surface);border-top:1px solid var(--hairline)}
+.contact-grid{display:grid;gap:var(--sp-6)}
+@media (min-width:900px){ .contact-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:var(--sp-8);align-items:start} }
+.facts{margin:0}
+.facts div{
+  display:grid;gap:var(--sp-1);
+  padding-block:var(--sp-4);border-top:1px solid var(--hairline);
+}
+@media (min-width:520px){ .facts div{grid-template-columns:9rem minmax(0,1fr);gap:var(--sp-4);align-items:baseline} }
+.facts div:first-child{border-top:2px solid var(--fg)}
+.facts dt{
+  font-family:var(--font-ui);font-size:.78rem;font-weight:700;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--fg-muted);
+}
+.facts dd{margin:0;font-size:1.0625rem;font-variant-numeric:tabular-nums}
+.facts dd a{
+  font-family:var(--font-ui);font-weight:600;text-decoration:none;
+  border-bottom:2px solid var(--accent);padding-bottom:2px;
+  display:inline-flex;min-height:44px;align-items:center;
+  transition:color var(--t);
+}
+.facts dd a:hover{color:var(--accent)}
+
+/* --- klaviatur (dekorativ) --- */
+.keys{
+  display:flex;height:56px;margin-top:var(--sp-7);
+  border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;
+}
+.keys i{flex:1 1 0;background:var(--surface-2);border-right:1px solid var(--hairline)}
+.keys i:last-child{border-right:0}
+.keys i.b{flex:0 0 auto;width:1.6%;min-width:5px;background:var(--fg);border-right:0}
+
+footer{border-top:1px solid var(--hairline);padding-block:var(--sp-5)}
+footer p{
+  font-family:var(--font-ui);font-size:.85rem;color:var(--fg-muted);
+  margin:0;font-variant-numeric:tabular-nums;
+}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition-duration:.01ms !important;animation-duration:.01ms !important;animation-iteration-count:1 !important;scroll-behavior:auto !important}
+}
+@media (prefers-contrast:more){
+  :root{--hairline:var(--border)}
+}
+</style>
+</head>
+<body>
+
+<a class="skip" href="#indhold">Spring til indhold</a>
+
+<header class="masthead">
+  <div class="shell masthead-in">
+    <a class="wordmark" href="#top">Klinke &amp; Datter</a>
+    <p class="masthead-meta">Værksted for selvspillende klaverer og pianolaer · Odense</p>
+    <a class="masthead-tel" href="tel:+4566124709">66 12 47 09</a>
+  </div>
+</header>
+
+<nav class="sections" aria-label="Sektioner på siden">
+  <div class="shell">
+    <ul>
+      <li><a href="#hvad">Hvad vi laver</a></li>
+      <li><a href="#saadan">Sådan starter du</a></li>
+      <li><a href="#fejl">Det vi typisk finder</a></li>
+      <li><a href="#ruller">Musikruller</a></li>
+      <li><a href="#vaerkstedet">Værkstedet</a></li>
+      <li><a href="#kontakt">Kontakt</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main id="indhold">
+
+  <!-- ===== HERO ===== -->
+  <section class="hero" id="top">
+    <div class="shell">
+      <p class="eyebrow">Verner siden 1981 · Liv siden 2011</p>
+      <h1>Kan det klaver, du har arvet, reddes?</h1>
+      <p class="lead">Det kan vi ikke svare på i telefonen. Vi kommer hjem til dig, bruger en
+      halv dag på instrumentet og skriver ned, hvad vi finder. Bagefter ved du, hvad du står
+      med — også hvis svaret er nej.</p>
+
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="tel:+4566124709">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.6 3.5h-2A1.6 1.6 0 0 0 3 5.1c0 8.8 7.1 15.9 15.9 15.9a1.6 1.6 0 0 0 1.6-1.6v-2a1.6 1.6 0 0 0-1.3-1.6l-2.6-.5a1.6 1.6 0 0 0-1.6.7l-.8 1.2a12.4 12.4 0 0 1-5.4-5.4l1.2-.8a1.6 1.6 0 0 0 .7-1.6l-.5-2.6a1.6 1.6 0 0 0-1.6-1.3Z"/></svg>
+          Ring 66 12 47 09
+        </a>
+        <a class="btn btn-quiet" href="#saadan">Se hvordan en vurdering foregår</a>
+      </div>
+
+      <p class="hero-hours">Værkstedet er åbent tirsdag til torsdag, 09:00–16:00.</p>
+
+      <div class="price">
+        <p class="price-figure">1.850 kr.<span>En vurdering</span></p>
+        <ul class="price-list">
+          <li><svg class="tick" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 12.5 5.5 5.5L20 6.5"/></svg><span>En halv dag hjemme hos dig, dér hvor instrumentet står.</span></li>
+          <li><svg class="tick" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 12.5 5.5 5.5L20 6.5"/></svg><span>Ender i en skriftlig tilstandsrapport.</span></li>
+          <li><svg class="tick" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 12.5 5.5 5.5L20 6.5"/></svg><span>Du får rapporten, uanset om arbejdet bliver til noget eller ej.</span></li>
+        </ul>
+      </div>
+
+      <div class="hero-roll">
+        <svg class="roll" viewBox="0 0 1200 140" role="img" aria-hidden="true" focusable="false">
+          <rect class="roll-paper" x="0" y="0" width="1200" height="140"/>
+          <path class="roll-edge" d="M0 8.5h1200M0 131.5h1200"/>
+          <g class="roll-punch">
+            <rect x="46" y="70" width="28" height="6" rx="3"/><rect x="92" y="96" width="10" height="6" rx="3"/><rect x="92" y="44" width="10" height="6" rx="3"/><rect x="116" y="109" width="10" height="6" rx="3"/><rect x="136" y="83" width="10" height="6" rx="3"/><rect x="154" y="70" width="10" height="6" rx="3"/><rect x="172" y="83" width="10" height="6" rx="3"/><rect x="206" y="57" width="40" height="6" rx="3"/><rect x="206" y="18" width="34" height="6" rx="3"/><rect x="254" y="70" width="14" height="6" rx="3"/><rect x="254" y="31" width="10" height="6" rx="3"/><rect x="292" y="44" width="20" height="6" rx="3"/><rect x="322" y="18" width="20" height="6" rx="3"/><rect x="366" y="44" width="10" height="6" rx="3"/><rect x="400" y="31" width="54" height="6" rx="3"/><rect x="472" y="18" width="54" height="6" rx="3"/><rect x="544" y="18" width="20" height="6" rx="3"/><rect x="574" y="31" width="20" height="6" rx="3"/><rect x="608" y="44" width="54" height="6" rx="3"/><rect x="608" y="18" width="48" height="6" rx="3"/><rect x="670" y="57" width="40" height="6" rx="3"/><rect x="670" y="96" width="34" height="6" rx="3"/><rect x="720" y="70" width="40" height="6" rx="3"/><rect x="720" y="18" width="34" height="6" rx="3"/><rect x="784" y="83" width="28" height="6" rx="3"/><rect x="826" y="96" width="54" height="6" rx="3"/><rect x="898" y="70" width="10" height="6" rx="3"/><rect x="926" y="96" width="10" height="6" rx="3"/><rect x="926" y="122" width="10" height="6" rx="3"/><rect x="960" y="122" width="54" height="6" rx="3"/><rect x="1028" y="96" width="54" height="6" rx="3"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <!-- ===== HVAD VI LAVER ===== -->
+  <section id="hvad">
+    <div class="shell split">
+      <div class="aside">
+        <p class="eyebrow">Hvad vi laver</p>
+      </div>
+      <div>
+        <h2>Vi arbejder kun med pneumatik</h2>
+        <p class="measure" style="margin-top:var(--sp-4)">Selvspillende klaverer og pianolaer,
+        der spiller ved hjælp af luft, læder og papir. Det er hele feltet, og vi tager ikke
+        andet ind.</p>
+
+        <div class="scope">
+          <div class="scope-yes">
+            <h3>Det tager vi ind</h3>
+            <ul>
+              <li><svg class="mark" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 12.5 5.5 5.5L20 6.5"/></svg><span>Pneumatiske selvspillende klaverer</span></li>
+              <li><svg class="mark" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 12.5 5.5 5.5L20 6.5"/></svg><span>Pianolaer</span></li>
+              <li><svg class="mark" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 12.5 5.5 5.5L20 6.5"/></svg><span>Stemning af et almindeligt klaver, hvis vi alligevel er hos dig</span></li>
+            </ul>
+          </div>
+          <div class="scope-no">
+            <h3>Det tager vi ikke</h3>
+            <ul>
+              <li><svg class="mark" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg><span>Elektroniske instrumenter</span></li>
+              <li><svg class="mark" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg><span>Almindelige klaverer som opgave i sig selv</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <!-- ===== SÅDAN STARTER DU ===== -->
+  <section id="saadan">
+    <div class="shell split">
+      <div class="aside">
+        <p class="eyebrow">Sådan starter du</p>
+      </div>
+      <div>
+        <h2>Fire skridt, og du kender først prisen på restaureringen til sidst</h2>
+
+        <ol class="steps">
+          <li>
+            <div class="step-body">
+              <h3>Du ringer</h3>
+              <p>66 12 47 09, tirsdag til torsdag mellem 09:00 og 16:00. Fortæl kort, hvad du
+              har stående, og hvor det står.</p>
+            </div>
+          </li>
+          <li>
+            <div class="step-body">
+              <h3>Vi kommer ud og vurderer</h3>
+              <p>En halv dag hjemme hos dig. Vurderingen koster 1.850 kr. Instrumentet bliver
+              hvor det er — vi kommer til det.</p>
+            </div>
+          </li>
+          <li>
+            <div class="step-body">
+              <h3>Du får en skriftlig tilstandsrapport</h3>
+              <p>Vurderingen ender altid i en rapport på skrift. Den er din, uanset om der
+              bliver en restaurering ud af det eller ej.</p>
+            </div>
+          </li>
+          <li>
+            <div class="step-body">
+              <h3>Først derefter et tilbud</h3>
+              <p>En fuld pneumatisk restaurering tager fire til ni måneder, og den bliver
+              prissat efter vurderingen. Vi giver ikke et tal før.</p>
+            </div>
+          </li>
+        </ol>
+
+        <p class="note"><strong>Fire instrumenter ad gangen.</strong> Der er som regel
+        ventetid.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <!-- ===== TYPISKE FEJL ===== -->
+  <section id="fejl">
+    <div class="shell split">
+      <div class="aside">
+        <p class="eyebrow">Det vi typisk finder</p>
+      </div>
+      <div>
+        <h2>Fem fejl, vi nævner ved navn</h2>
+        <p class="measure" style="margin-top:var(--sp-4)">Det er de fejl, vi oftest står med.
+        Her er de på dansk, og med den engelske betegnelse ved siden af.</p>
+
+        <ul class="faults">
+          <li><h3>Mørnet pungelæder</h3><p class="orig">Pouch leather</p></li>
+          <li><h3>Revnede slanger ved tracker-listen</h3><p class="orig">Tracker bar tubing</p></li>
+          <li><h3>Slidte slagbælge</h3><p class="orig">Striker pneumatics</p></li>
+          <li><h3>Revnet vindkanal</h3><p class="orig">Wind trunk</p></li>
+          <li><h3>Drivremme, der er blevet hårde</h3><p class="orig">Drive belts</p></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <!-- ===== MUSIKRULLER ===== -->
+  <section id="ruller">
+    <div class="shell split">
+      <div class="aside">
+        <p class="eyebrow">Musikruller</p>
+      </div>
+      <div>
+        <h2>Vi skærer nye ruller efter originale masters</h2>
+        <p class="measure" style="margin-top:var(--sp-4)">Perforerede papirruller, vi skærer
+        selv. De kan købes for sig.</p>
+
+        <div class="rolls-figure">
+          <svg class="roll" viewBox="0 0 1200 140" role="img" aria-hidden="true" focusable="false">
+            <rect class="roll-paper" x="0" y="0" width="1200" height="140"/>
+            <path class="roll-edge" d="M0 8.5h1200M0 131.5h1200"/>
+            <g class="roll-punch">
+              <rect x="40" y="18" width="48" height="6" rx="3"/><rect x="40" y="70" width="20" height="6" rx="3"/><rect x="104" y="31" width="20" height="6" rx="3"/><rect x="138" y="57" width="40" height="6" rx="3"/><rect x="138" y="109" width="14" height="6" rx="3"/><rect x="196" y="44" width="10" height="6" rx="3"/><rect x="220" y="83" width="54" height="6" rx="3"/><rect x="292" y="96" width="10" height="6" rx="3"/><rect x="316" y="70" width="28" height="6" rx="3"/><rect x="316" y="18" width="28" height="6" rx="3"/><rect x="362" y="57" width="14" height="6" rx="3"/><rect x="394" y="31" width="40" height="6" rx="3"/><rect x="452" y="44" width="20" height="6" rx="3"/><rect x="452" y="96" width="20" height="6" rx="3"/><rect x="490" y="122" width="10" height="6" rx="3"/><rect x="514" y="83" width="54" height="6" rx="3"/><rect x="586" y="70" width="20" height="6" rx="3"/><rect x="586" y="18" width="14" height="6" rx="3"/><rect x="624" y="44" width="40" height="6" rx="3"/><rect x="682" y="109" width="10" height="6" rx="3"/><rect x="706" y="57" width="28" height="6" rx="3"/><rect x="752" y="96" width="54" height="6" rx="3"/><rect x="752" y="31" width="48" height="6" rx="3"/><rect x="824" y="70" width="14" height="6" rx="3"/><rect x="856" y="122" width="20" height="6" rx="3"/><rect x="894" y="44" width="40" height="6" rx="3"/><rect x="952" y="83" width="10" height="6" rx="3"/><rect x="976" y="18" width="54" height="6" rx="3"/><rect x="976" y="57" width="34" height="6" rx="3"/><rect x="1048" y="96" width="28" height="6" rx="3"/><rect x="1094" y="70" width="20" height="6" rx="3"/><rect x="1132" y="31" width="20" height="6" rx="3"/>
+            </g>
+          </svg>
+        </div>
+
+        <div class="rolls-facts">
+          <div><span class="big-num">38</span><span>Titler på lager</span></div>
+          <div><span class="big-num">340 kr.</span><span>Pr. rulle</span></div>
+        </div>
+
+        <p style="margin-top:var(--sp-5)">Ring inden for åbningstiden, hvis du vil høre,
+        hvilke titler det er.</p>
+        <p><a class="btn btn-quiet" href="tel:+4566124709">Spørg til titlerne på 66 12 47 09</a></p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <!-- ===== VÆRKSTEDET ===== -->
+  <section id="vaerkstedet">
+    <div class="shell split">
+      <div class="aside">
+        <p class="eyebrow">Værkstedet</p>
+      </div>
+      <div>
+        <h2>To personer. Der er ikke andre</h2>
+        <p class="measure" style="margin-top:var(--sp-4)">Værkstedet ligger i Havnegade 22 i
+        Odense C.</p>
+
+        <ul class="people">
+          <li>
+            <h3>Verner Klinke</h3>
+            <span class="since">Har arbejdet med pneumatiske klaverer siden 1981</span>
+          </li>
+          <li>
+            <h3>Liv Klinke</h3>
+            <span class="since">Har arbejdet med pneumatiske klaverer siden 2011</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== KONTAKT ===== -->
+  <section class="contact" id="kontakt">
+    <div class="shell">
+      <div class="contact-grid">
+        <div>
+          <p class="eyebrow">Kontakt</p>
+          <h2>Ring, og fortæl hvad du har stående</h2>
+          <p class="measure" style="margin-top:var(--sp-4)">Første skridt er en samtale, ikke
+          en formular. Værkstedet er åbent tirsdag til torsdag, 09:00–16:00.</p>
+          <p style="margin-top:var(--sp-5)">
+            <a class="btn btn-primary" href="tel:+4566124709">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.6 3.5h-2A1.6 1.6 0 0 0 3 5.1c0 8.8 7.1 15.9 15.9 15.9a1.6 1.6 0 0 0 1.6-1.6v-2a1.6 1.6 0 0 0-1.3-1.6l-2.6-.5a1.6 1.6 0 0 0-1.6.7l-.8 1.2a12.4 12.4 0 0 1-5.4-5.4l1.2-.8a1.6 1.6 0 0 0 .7-1.6l-.5-2.6a1.6 1.6 0 0 0-1.6-1.3Z"/></svg>
+              Ring 66 12 47 09
+            </a>
+          </p>
+        </div>
+
+        <dl class="facts">
+          <div>
+            <dt>Telefon</dt>
+            <dd><a href="tel:+4566124709">66 12 47 09</a></dd>
+          </div>
+          <div>
+            <dt>Åbningstider</dt>
+            <dd>Tirsdag til torsdag<br>09:00–16:00</dd>
+          </div>
+          <div>
+            <dt>Adresse</dt>
+            <dd>Havnegade 22<br>5000 Odense C</dd>
+          </div>
+          <div>
+            <dt>Vurdering</dt>
+            <dd>1.850 kr. — en halv dag hjemme hos dig</dd>
+          </div>
+          <div>
+            <dt>Musikruller</dt>
+            <dd>340 kr. pr. rulle — 38 titler på lager</dd>
+          </div>
+        </dl>
+      </div>
+
+      <div class="keys" role="presentation" aria-hidden="true">
+        <i></i><i class="b"></i><i></i><i class="b"></i><i></i><i></i><i class="b"></i><i></i><i class="b"></i><i></i><i class="b"></i><i></i><i></i><i class="b"></i><i></i><i class="b"></i><i></i><i></i><i class="b"></i><i></i><i class="b"></i><i></i><i class="b"></i><i></i><i></i><i class="b"></i><i></i><i class="b"></i><i></i><i></i>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="shell">
+    <p>Klinke &amp; Datter · Havnegade 22, 5000 Odense C · 66 12 47 09 · Tirsdag til torsdag 09:00–16:00</p>
+  </div>
+</footer>
+
+</body>
+</html>

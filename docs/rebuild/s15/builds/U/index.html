@@ -1,0 +1,560 @@
+<!doctype html>
+<html lang="da">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Klinke &amp; Datter — reparation af selvspillende klaverer, Odense</title>
+<meta name="description" content="Verner og Liv Klinke reparerer pneumatiske selvspillende klaverer og pianolaer fra værkstedet i Havnegade i Odense. Tilstandsvurdering hjemme hos dig, 1.850 kr., med skriftlig rapport.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Klinke &amp; Datter — selvspillende klaverer, Odense">
+<meta property="og:description" content="Har du arvet et selvspillende klaver og ved ikke, om det kan reddes? En halv dags tilstandsvurdering hjemme hos dig koster 1.850 kr. og ender i en skriftlig rapport.">
+<meta property="og:locale" content="da_DK">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23f2e9d8'/%3E%3Crect x='5' y='5' width='5' height='14' rx='2.5' fill='%232b2721'/%3E%3Crect x='13.5' y='11' width='5' height='16' rx='2.5' fill='%232b2721'/%3E%3Crect x='22' y='4' width='5' height='10' rx='2.5' fill='%232b2721'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ─────────────────────────────────────────────────────────────────────────
+   Klinke & Datter — contract tokens, copied verbatim from DESIGN-SYSTEM.md
+   ───────────────────────────────────────────────────────────────────────── */
+:root{
+  color-scheme: light dark;
+
+  --step:8px;
+  --space-1:4px; --space-2:8px; --space-3:12px; --space-4:16px;
+  --space-5:24px; --space-6:32px; --space-7:48px; --space-8:64px; --space-9:96px;
+
+  --text-small:0.9375rem; --text-body:1.0625rem;
+  --text-lead:1.25rem; --text-h3:1.375rem; --text-h2:1.75rem; --text-h1:2.5rem;
+  --text-display:clamp(2.375rem,5.4vw,4rem);
+  --leading-tight:1.06; --leading-snug:1.3; --leading-body:1.6;
+  --measure:62ch;
+
+  --radius-inner:2px; --radius-outer:5px; --radius-full:999px;
+  --stroke:1.6px; --rule-thick:2px;
+
+  --elev-0:none;
+  --elev-1:none;
+  --elev-inset:inset 0 2px 5px rgb(35 32 27 / .17);
+
+  --container:1000px; --gutter:clamp(20px,5vw,40px); --grid-columns:12;
+  --rail:116px;
+
+  --slot-w:12px; --slot-tall:26px; --slot-pitch:44px;
+
+  --bg:#f2e9d8; --surface:#fbf6ec; --surface-2:#e7dcc5; --line:#b9a67f;
+  --ink:#23201b; --ink-2:#5b5449;
+  --accent:#9e2a2b; --on-accent:#fdf8ef;
+  --void:#2b2721; --slot-mark:#2b2721;
+
+  --font-display:Fraunces,Georgia,serif;
+  --font-body:"IBM Plex Sans",system-ui,sans-serif;
+
+  --motion-fast:120ms; --motion-slow:360ms;
+  --ease:cubic-bezier(.2,.6,.2,1);
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --bg:#191710; --surface:#211e16; --surface-2:#2b2719; --line:#4d4635;
+    --ink:#ece2cd; --ink-2:#b6ab93;
+    --accent:#e2836a; --on-accent:#1a140f;
+    --void:#0d0b07; --slot-mark:#b6ab93;
+    --elev-inset:inset 0 2px 5px rgb(0 0 0 / .5);
+  }
+}
+
+/* ── shell ─────────────────────────────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font:400 var(--text-body)/var(--leading-body) var(--font-body);
+  overflow-wrap:break-word;
+}
+.shell{
+  display:grid; grid-template-columns:var(--rail) minmax(0,1fr);
+  max-width:var(--container); margin:0 auto; min-height:100vh;
+}
+.col{padding:0 var(--gutter) var(--space-9) var(--gutter); min-width:0}
+main{outline:none}
+section{padding-top:var(--space-9); scroll-margin-top:var(--space-5)}
+
+/* ── the signature: a drawn band of punched roll paper ─────────────────── */
+.roll-rail{
+  width:var(--rail); height:100%; display:block;
+  background:var(--surface-2);
+  border-right:1px solid var(--line);
+}
+.roll-rail .strip-h{display:none}
+
+/* ── type ──────────────────────────────────────────────────────────────── */
+h1,h2,h3{font-family:var(--font-display); font-weight:400; margin:0}
+h1{font-size:var(--text-display); line-height:var(--leading-tight); max-width:24ch; letter-spacing:-0.015em}
+h2{font-size:var(--text-h2); line-height:var(--leading-snug); max-width:24ch}
+h3{font-size:var(--text-h3); line-height:var(--leading-snug)}
+p{margin:0; max-width:var(--measure)}
+.lead{font-size:var(--text-lead); line-height:var(--leading-snug); max-width:52ch}
+.caption{font-family:var(--font-display); font-size:var(--text-small); color:var(--ink-2); max-width:52ch}
+.stack > * + *{margin-top:var(--space-5)}
+.tight > * + *{margin-top:var(--space-3)}
+
+/* ── section numerals, cut in the same slot rhythm as the rail ─────────── */
+.num{
+  display:flex; align-items:center; gap:var(--space-3);
+  font-family:var(--font-display); font-size:var(--text-small); letter-spacing:0.06em;
+  color:var(--ink-2); margin:0 0 var(--space-4);
+}
+.num .slot{
+  display:block; width:var(--slot-pitch); height:var(--slot-w);
+  border-radius:var(--radius-full); background:var(--slot-mark);
+}
+section:target .num{color:var(--accent)}
+section:target .num .slot{background:var(--accent)}
+
+/* ── header ────────────────────────────────────────────────────────────── */
+.masthead{
+  display:flex; flex-wrap:wrap; align-items:center; gap:var(--space-4) var(--space-6);
+  padding:var(--space-5) 0; border-bottom:1px solid var(--line);
+}
+.mark{
+  font-family:var(--font-display); font-size:var(--text-h3); font-weight:600;
+  color:var(--ink); text-decoration:none; line-height:1;
+}
+.mark em{font-style:normal; font-weight:400; position:relative; top:var(--space-1)}
+.nav{display:flex; flex-wrap:wrap; gap:var(--space-3) var(--space-5); margin-right:auto}
+.nav a{display:inline-flex; align-items:center; min-height:44px; color:var(--ink-2);
+  text-decoration:none; font-size:var(--text-small)}
+.nav a:hover{color:var(--ink); text-decoration:underline; text-underline-offset:var(--space-1)}
+
+/* ── buttons ───────────────────────────────────────────────────────────── */
+.btn-primary{
+  display:inline-flex; align-items:center; min-height:48px;
+  padding:var(--space-3) var(--space-5);
+  background:var(--accent); color:var(--on-accent); text-decoration:none;
+  border-radius:var(--radius-inner); font-weight:500;
+  box-shadow:var(--elev-0); transition:box-shadow var(--motion-fast) var(--ease);
+}
+.btn-primary:hover{box-shadow:var(--elev-inset)}
+.btn-primary:active{transform:translateY(1px)}
+.btn-quiet{
+  display:inline-flex; align-items:center; min-height:48px; color:var(--ink);
+  text-decoration:underline; text-decoration-color:var(--line);
+  text-underline-offset:var(--space-1); text-decoration-thickness:1px;
+}
+.btn-quiet:hover{text-decoration-thickness:var(--rule-thick); text-decoration-color:var(--ink)}
+.btn-quiet:active{color:var(--accent)}
+
+/* one focus treatment for the whole page */
+a:focus-visible, summary:focus-visible, main:focus-visible, [tabindex]:focus-visible{
+  outline:3px solid var(--accent); outline-offset:3px; border-radius:var(--radius-inner);
+}
+.skip{
+  position:absolute; left:var(--space-4); top:calc(var(--space-9) * -1);
+  background:var(--surface); color:var(--ink); padding:var(--space-3) var(--space-4);
+  border:1px solid var(--line); border-radius:var(--radius-inner); z-index:2;
+}
+.skip:focus{top:var(--space-4)}
+
+/* ── hero ──────────────────────────────────────────────────────────────── */
+.hero{padding-top:var(--space-8)}
+.hero .lead{margin-top:var(--space-5)}
+.hero p + p{margin-top:var(--space-4)}
+.hero .action{margin-top:var(--space-6)}
+.hero .hours{margin-top:var(--space-4); font-size:var(--text-small); color:var(--ink-2)}
+
+/* ── scope list ────────────────────────────────────────────────────────── */
+.scope{list-style:none; padding:0; margin:0; max-width:var(--measure)}
+.scope li{padding:var(--space-3) 0; border-bottom:1px solid var(--line)}
+.scope li:first-child{border-top:1px solid var(--line)}
+.scope b{font-weight:500}
+
+/* ── mechanism: the plate and the five disclosures ─────────────────────── */
+.mech{display:grid; gap:var(--space-7); align-items:start}
+@media (min-width:900px){.mech{grid-template-columns:minmax(0,340px) minmax(0,1fr); gap:var(--space-6)}}
+@media (max-width:899px){.plate{max-width:520px} .plate svg{max-width:100%}}
+.plate{
+  margin:0; padding:var(--space-5); background:var(--surface);
+  border-radius:var(--radius-outer); box-shadow:var(--elev-inset);
+}
+.plate svg{display:block; width:100%; height:auto; max-width:380px; margin:0 auto}
+.plate svg g{stroke-width:var(--stroke)}
+.plate figcaption{
+  margin-top:var(--space-4); font-family:var(--font-display);
+  font-size:var(--text-small); line-height:var(--leading-snug); color:var(--ink-2);
+}
+.faults{margin:0; padding:0}
+details{border-top:1px solid var(--line)}
+.faults > details:last-of-type{border-bottom:1px solid var(--line)}
+summary{
+  display:flex; align-items:baseline; gap:var(--space-4);
+  padding:var(--space-4) var(--space-7) var(--space-4) 0;
+  font-family:var(--font-display); font-size:var(--text-h3); line-height:1.6;
+  cursor:pointer; position:relative; list-style:none;
+}
+summary::-webkit-details-marker{display:none}
+summary span{color:var(--ink-2); font-size:var(--text-small); letter-spacing:0.06em}
+summary::before, summary::after{
+  content:""; position:absolute; right:var(--space-2); top:calc(50% - 1px);
+  width:var(--space-4); height:var(--rule-thick); background:var(--ink);
+}
+summary::after{transform:rotate(90deg); transition:transform var(--motion-fast) var(--ease)}
+details[open] summary::after{transform:rotate(0deg)}
+details > .panel{
+  margin:0 0 var(--space-5); padding:var(--space-4) var(--space-5);
+  background:var(--surface); border-radius:var(--radius-outer); box-shadow:var(--elev-inset);
+}
+
+/* ── prices ────────────────────────────────────────────────────────────── */
+.prices{width:100%; border-collapse:collapse; margin-top:var(--space-5)}
+.prices caption{
+  text-align:left; font-family:var(--font-display); font-size:var(--text-small);
+  color:var(--ink-2); margin-bottom:var(--space-4); max-width:52ch;
+}
+.prices th{text-align:left; font-weight:500; font-size:var(--text-small); color:var(--ink-2);
+  padding:var(--space-2) 0; border-bottom:1px solid var(--line)}
+.prices td{padding:var(--space-4) 0; border-bottom:1px solid var(--line); vertical-align:baseline}
+.prices td + td{text-align:right; font-variant-numeric:tabular-nums; white-space:nowrap;
+  padding-left:var(--space-5)}
+.prices .key{color:var(--accent); font-size:var(--text-h3)}
+
+/* ── contact and footer ────────────────────────────────────────────────── */
+.facts{list-style:none; margin:var(--space-5) 0 0; padding:0; max-width:var(--measure)}
+.facts li{padding:var(--space-3) 0; border-bottom:1px solid var(--line)}
+.facts b{font-weight:500; display:block; font-size:var(--text-small); color:var(--ink-2)}
+.foot{
+  margin-top:var(--space-9); padding:var(--space-6) 0 0; border-top:1px solid var(--line);
+  font-size:var(--text-small); color:var(--ink-2);
+}
+.foot a{color:var(--ink-2)}
+.foot .mark{display:inline-block; margin-bottom:var(--space-4); font-size:var(--text-body)}
+address{font-style:normal}
+
+/* ── responsive ────────────────────────────────────────────────────────── */
+/* ≥1000px: the section numerals hang into a left margin beside the rail, so the page
+   reads as an indexed document and the text column sits between two margins rather than
+   against one. */
+@media (min-width:1000px){
+  .col{padding-left:calc(var(--gutter) + var(--space-9) + var(--space-5))}
+  section{display:grid; column-gap:0;
+    grid-template-columns:calc(var(--space-9) + var(--space-5)) minmax(0,1fr);
+    margin-left:calc((var(--space-9) + var(--space-5)) * -1)}
+  section > .num{grid-column:1; grid-row:1; margin:0; padding-top:var(--space-2)}
+  section > :not(.num){grid-column:2}
+  .hero{display:block; margin-left:0}
+  /* Three things span the whole sheet, from the numeral margin to the right edge: the
+     masthead, the footer rule and the drawing section. E7 — deliberate, recorded. */
+  .masthead, .foot, .mech{margin-left:calc((var(--space-9) + var(--space-5)) * -1)}
+}
+@media (max-width:999px){
+  .shell{grid-template-columns:minmax(0,1fr); min-height:0}
+  .roll-rail{
+    width:100%; height:var(--slot-tall); border-right:0; border-bottom:1px solid var(--line);
+  }
+  .roll-rail .strip-v{display:none}
+  .roll-rail .strip-h{display:block}
+  section{padding-top:var(--space-8)}
+  .col{padding-bottom:var(--space-8)}
+}
+@media (max-width:759px){
+  .masthead{gap:var(--space-4)}
+  .nav{width:100%; order:3; margin-right:0}
+  h1{letter-spacing:-0.01em}
+}
+
+/* ── motion, once, on the first screen only ────────────────────────────── */
+@media (prefers-reduced-motion: no-preference){
+  .rise{animation:rise var(--motion-slow) var(--ease) both}
+  .rise-2{animation-delay:80ms}
+  .rise-3{animation-delay:160ms}
+  @keyframes rise{from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:none}}
+}
+</style>
+</head>
+<body id="top">
+<a class="skip" href="#hovedindhold">Gå til indhold</a>
+
+<div class="shell">
+
+  <svg class="roll-rail" role="img" data-asset="roll-rail"
+       aria-label="Tegning af en musikrulle: slidser stanset i buff papir, i tre spor.">
+    <defs>
+      <pattern id="punch-v" x="0" y="0" width="116" height="132" patternUnits="userSpaceOnUse">
+        <g fill="var(--void)">
+          <rect x="18" y="6"   width="11" height="38" rx="5.5"/>
+          <rect x="38" y="20"  width="11" height="16" rx="5.5"/>
+          <rect x="58" y="2"   width="11" height="26" rx="5.5"/>
+          <rect x="78" y="34"  width="11" height="20" rx="5.5"/>
+          <rect x="38" y="58"  width="11" height="44" rx="5.5"/>
+          <rect x="18" y="66"  width="11" height="18" rx="5.5"/>
+          <rect x="78" y="72"  width="11" height="34" rx="5.5"/>
+          <rect x="58" y="88"  width="11" height="16" rx="5.5"/>
+          <rect x="18" y="104" width="11" height="24" rx="5.5"/>
+          <rect x="78" y="120" width="11" height="14" rx="5.5"/>
+        </g>
+        <g stroke="var(--line)" stroke-width="1" opacity="0.7">
+          <path d="M8 0 V132"/><path d="M108 0 V132"/>
+        </g>
+      </pattern>
+      <pattern id="punch-h" x="0" y="0" width="132" height="26" patternUnits="userSpaceOnUse">
+        <g fill="var(--void)">
+          <rect x="4"   y="3"  width="34" height="9" rx="4.5"/>
+          <rect x="46"  y="3"  width="16" height="9" rx="4.5"/>
+          <rect x="70"  y="3"  width="26" height="9" rx="4.5"/>
+          <rect x="104" y="3"  width="20" height="9" rx="4.5"/>
+          <rect x="16"  y="15" width="20" height="9" rx="4.5"/>
+          <rect x="44"  y="15" width="38" height="9" rx="4.5"/>
+          <rect x="90"  y="15" width="14" height="9" rx="4.5"/>
+          <rect x="110" y="15" width="18" height="9" rx="4.5"/>
+        </g>
+      </pattern>
+    </defs>
+    <rect class="strip-v" width="100%" height="100%" fill="url(#punch-v)"/>
+    <rect class="strip-h" width="100%" height="100%" fill="url(#punch-h)"/>
+  </svg>
+
+  <div class="col">
+
+    <header class="masthead">
+      <a class="mark" href="#top" data-asset="mark-klinke">Klinke <em>&amp;</em> Datter</a>
+      <nav class="nav" aria-label="Sektioner på siden">
+        <a href="#arvet">Arvet</a>
+        <a href="#fejlene">Fejlene</a>
+        <a href="#de-to">De to</a>
+        <a href="#priser">Priser</a>
+        <a href="#kontakt">Kontakt</a>
+      </nav>
+      <a class="btn-primary" href="tel:+4566124709"
+         aria-label="Ring til Klinke og Datter på 66 12 47 09">Ring 66 12 47 09</a>
+    </header>
+
+    <main id="hovedindhold" tabindex="-1">
+
+      <section class="hero" aria-labelledby="h-hero">
+        <h1 id="h-hero" class="rise">Vi reparerer selvspillende klaverer</h1>
+        <div class="rise rise-2">
+          <p class="lead">Verner og Liv Klinke. Værksted i Havnegade i Odense — pneumatiske
+            instrumenter og pianolaer.</p>
+          <p>Har du arvet et klaver, du ikke ved om kan reddes, kommer vi hjem til dig og bruger
+            en halv dag på at se på det. Du får en skriftlig tilstandsrapport med, uanset om der
+            bliver et arbejde ud af det.</p>
+        </div>
+        <div class="rise rise-3">
+          <p class="action"><a class="btn-primary" href="tel:+4566124709"
+             aria-label="Ring til Klinke og Datter på 66 12 47 09">Ring 66 12 47 09</a></p>
+          <p class="hours">Vurderingen koster 1.850 kr. Værkstedet er åbent tirsdag til torsdag,
+            09:00–16:00.</p>
+        </div>
+      </section>
+
+      <section id="arvet" aria-labelledby="h-arvet">
+        <p class="num"><span>01</span><span class="slot" aria-hidden="true"></span></p>
+        <h2 id="h-arvet">Det står i stuen, og ingen kan sige, om det kan reddes</h2>
+        <div class="stack" style="margin-top:var(--space-5)">
+          <p>Et selvspillende klaver er en pneumatisk maskine. Der er læder, gummislanger og
+            bælge inde i den, og de dele bliver hårde og utætte med årene. Hvad der er galt med
+            netop dit, kan hverken du eller vi se udefra.</p>
+          <p>Derfor findes tilstandsvurderingen. Vi kommer hjem til dig og bruger en halv dag
+            på at finde ud af, hvad der fejler. Rapporten er din bagefter, uanset om arbejdet
+            bliver til noget.</p>
+          <h3>Hvad vi arbejder på</h3>
+          <ul class="scope">
+            <li><b>Pneumatiske selvspillende klaverer og pianolaer.</b> Det er det, vi laver.</li>
+            <li><b>Ikke elektroniske instrumenter.</b></li>
+            <li><b>Ikke almindelige klaverer</b> — bortset fra at vi gerne stemmer et, hvis vi
+              alligevel er hjemme hos dig.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section id="fejlene" aria-labelledby="h-fejlene">
+        <p class="num"><span>02</span><span class="slot" aria-hidden="true"></span></p>
+        <h2 id="h-fejlene">De fem fejl, vi oftest støder på</h2>
+        <p class="caption" style="margin-top:var(--space-4)">Numrene på tegningen er de samme som
+          numrene på listen. Tegningen er skematisk og viser vejen fra pedalerne til hammeren —
+          ikke et bestemt instrument.</p>
+
+        <div class="mech" style="margin-top:var(--space-7)">
+          <figure class="plate">
+            <svg viewBox="-4 24 452 322" width="452" height="322" role="img"
+                 data-asset="snit-pneumatik"
+                 aria-label="Skematisk snit gennem et pneumatisk selvspillende klaver, set fra siden. Øverst til venstre sidder spolen med musikrullen; en drivrem forbinder den med et hjul nedenunder, mærket 5. Rullen løber mod højre hen over trackerbaren, hvis huller er mærket 1. Derfra går tre slanger ned i ventilkassen, hvor pouchen løfter ventilen, mærket 2. Til højre for ventilkassen sidder slagbælgen, der sender hammeren mod strengen, mærket 3. Nederst løber vindkanalen fra pedalpumpen i venstre hjørne hen under ventilkassen, med en revne mærket 4.">
+              <g fill="none" stroke="var(--ink)"
+                 stroke-linecap="round" stroke-linejoin="round">
+                <!-- spolen og drivremmen -->
+                <circle cx="56" cy="58" r="26"/><circle cx="56" cy="58" r="8"/>
+                <circle cx="56" cy="130" r="13"/>
+                <path d="M30 58 V130"/><path d="M82 58 V130"/>
+                <!-- papirrullen: en lukket bane fra spolen mod højre -->
+                <path d="M78 38 H424"/><path d="M78 78 H424"/><path d="M424 38 V78"/>
+                <!-- trackerbaren, med hullerne papiret laeses igennem -->
+                <rect x="120" y="90" width="256" height="17" rx="2"/>
+                <!-- slangerne ned i ventilkassen -->
+                <path d="M152 107 C152 138 142 146 142 172"/>
+                <path d="M248 107 V172"/>
+                <path d="M344 107 C344 138 330 146 330 172"/>
+                <!-- ventilkassen med pouch og ventil -->
+                <rect x="112" y="172" width="234" height="80" rx="4"/>
+                <path d="M186 232 Q216 198 246 232"/>
+                <path d="M216 212 V190"/><rect x="200" y="180" width="32" height="9" rx="2"/>
+                <!-- slagbælgen, hammeren og strengen -->
+                <path d="M346 190 L410 180 L410 226 Z"/>
+                <path d="M410 203 H420"/><rect x="420" y="194" width="9" height="18" rx="2"/>
+                <path d="M436 164 V244"/>
+                <!-- vindkanalen fra pedalpumpen -->
+                <path d="M200 252 V276"/><path d="M232 252 V276"/>
+                <rect x="52" y="276" width="308" height="24" rx="3"/>
+                <path d="M300 276 l-6 8 l10 6 l-7 10"/>
+                <path d="M104 300 V312"/><path d="M120 300 V312"/>
+                <path d="M60 326 L128 312 L128 336 Z"/>
+                <path d="M52 341 H136"/>
+              </g>
+              <!-- stansninger i papiret -->
+              <g fill="var(--void)">
+                <rect x="112" y="46" width="11" height="24" rx="5.5"/>
+                <rect x="160" y="50" width="11" height="16" rx="5.5"/>
+                <rect x="212" y="44" width="11" height="28" rx="5.5"/>
+                <rect x="262" y="52" width="11" height="14" rx="5.5"/>
+                <rect x="312" y="46" width="11" height="22" rx="5.5"/>
+                <rect x="364" y="50" width="11" height="18" rx="5.5"/>
+              </g>
+              <!-- hullerne i trackerbaren -->
+              <g fill="var(--ink)">
+                <circle cx="140" cy="98.5" r="2.6"/><circle cx="170" cy="98.5" r="2.6"/>
+                <circle cx="200" cy="98.5" r="2.6"/><circle cx="230" cy="98.5" r="2.6"/>
+                <circle cx="260" cy="98.5" r="2.6"/><circle cx="290" cy="98.5" r="2.6"/>
+                <circle cx="320" cy="98.5" r="2.6"/><circle cx="350" cy="98.5" r="2.6"/>
+              </g>
+              <!-- henvisningsstreger -->
+              <g fill="none" stroke="var(--ink)" stroke-linecap="round">
+                <path d="M392 128 L378 110"/>
+                <path d="M100 224 L190 231"/>
+                <path d="M378 258 L378 222"/>
+                <path d="M330 322 L308 302"/>
+                <path d="M56 166 L56 145"/>
+              </g>
+              <!-- nummererede punkter, lyse tal i stansede huller -->
+              <g font-family="Fraunces,Georgia,serif" font-size="15" text-anchor="middle">
+                <circle cx="400" cy="140" r="14" fill="var(--ink)"/>
+                <text x="400" y="145" fill="var(--surface)">1</text>
+                <circle cx="86" cy="223" r="14" fill="var(--ink)"/>
+                <text x="86" y="228" fill="var(--surface)">2</text>
+                <circle cx="378" cy="272" r="14" fill="var(--ink)"/>
+                <text x="378" y="277" fill="var(--surface)">3</text>
+                <circle cx="340" cy="331" r="14" fill="var(--ink)"/>
+                <text x="340" y="336" fill="var(--surface)">4</text>
+                <circle cx="56" cy="180" r="14" fill="var(--ink)"/>
+                <text x="56" y="185" fill="var(--surface)">5</text>
+              </g>
+            </svg>
+            <figcaption>Snit gennem instrumentet: rullen løber over trackerbaren øverst, suget
+              kommer fra pedalpumpen nederst, og hammeren sidder yderst til højre.</figcaption>
+          </figure>
+
+          <div class="faults">
+            <details>
+              <summary><span>01</span>Revnede slanger fra trackerbaren</summary>
+              <div class="panel"><p>Trackerbaren er den bar med en række huller, som papirrullen
+                løber hen over. Fra hvert hul går en tynd slange videre ind i instrumentet. Gummi
+                revner med årene, og en revnet slange betyder, at den tone ikke bliver spillet.</p>
+              </div>
+            </details>
+            <details>
+              <summary><span>02</span>Mørt pouchlæder</summary>
+              <div class="panel"><p>Pouchen er den lille skive læder, der løfter ventilen til én
+                tone. Læder bliver stift og utæt, når det er gammelt nok, og så løfter ventilen
+                ikke, som den skal.</p></div>
+            </details>
+            <details>
+              <summary><span>03</span>Slidte slagbælge</summary>
+              <div class="panel"><p>Slagbælgen er den lille bælg, der trækker sig sammen og
+                sender hammeren mod strengen. Er den slidt, kommer tonen svagt eller slet
+                ikke.</p></div>
+            </details>
+            <details>
+              <summary><span>04</span>En sprukken vindkanal</summary>
+              <div class="panel"><p>Vindkanalen er den kanal, suget løber i, fra pumpen ud til
+                ventilkasserne. En revne dér går ud over hele instrumentet på én gang og ikke
+                bare enkelte toner.</p></div>
+            </details>
+            <details>
+              <summary><span>05</span>Drivremme, der er blevet stive</summary>
+              <div class="panel"><p>Remmene overfører trækket, så rullen kører jævnt hen over
+                trackerbaren. Gammelt gummi bliver hårdt og glider i stedet for at trække.</p>
+              </div>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <section id="de-to" aria-labelledby="h-de-to">
+        <p class="num"><span>03</span><span class="slot" aria-hidden="true"></span></p>
+        <h2 id="h-de-to">Verner og Liv</h2>
+        <div class="stack" style="margin-top:var(--space-5)">
+          <p>Verner Klinke har lavet det her siden 1981. Liv siden 2011. Vi er to, og vi har fire
+            instrumenter inde ad gangen, så der er som regel ventetid.</p>
+          <p>Vi giver ikke pris på en restaurering, før vurderingen er lavet. En fuld pneumatisk
+            restaurering tager fire til ni måneder, og hvad den koster, afhænger af, hvad der
+            står i rapporten. Derfor står der ikke et tal for den her på siden.</p>
+          <p>Vi skærer også nye musikruller efter originale masters. Der er 38 titler på
+            lager.</p>
+        </div>
+      </section>
+
+      <section id="priser" aria-labelledby="h-priser">
+        <p class="num"><span>04</span><span class="slot" aria-hidden="true"></span></p>
+        <h2 id="h-priser">Priser</h2>
+        <table class="prices">
+          <caption>To ting har en fast pris. Restaureringen har ikke, og det er med vilje.</caption>
+          <thead>
+            <tr><th scope="col">Ydelse</th><th scope="col">Pris</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Tilstandsvurdering hjemme hos dig. En halv dag, og en skriftlig
+                tilstandsrapport bagefter.</td>
+              <td class="key">1.850 kr.</td>
+            </tr>
+            <tr>
+              <td>Fuld pneumatisk restaurering. Fire til ni måneder.</td>
+              <td>Efter vurderingen</td>
+            </tr>
+            <tr>
+              <td>Musikrulle, skåret efter original master. 38 titler på lager.</td>
+              <td>340 kr.</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="kontakt" aria-labelledby="h-kontakt">
+        <p class="num"><span>05</span><span class="slot" aria-hidden="true"></span></p>
+        <h2 id="h-kontakt">Sådan starter du</h2>
+        <div class="stack" style="margin-top:var(--space-5)">
+          <p>Ring og fortæl, hvad du har stående. Så aftaler vi en dag, hvor vi kommer hjem til
+            dig og laver vurderingen.</p>
+          <p><a class="btn-primary" href="tel:+4566124709"
+                aria-label="Ring til Klinke og Datter på 66 12 47 09">Ring 66 12 47 09</a></p>
+          <ul class="facts">
+            <li><b>Telefon</b>66 12 47 09</li>
+            <li><b>Værksted</b>Havnegade 22, 5000 Odense C</li>
+            <li><b>Åbent</b>Tirsdag til torsdag, 09:00–16:00</li>
+          </ul>
+          <p class="caption">Værkstedet er kun åbent tirsdag til torsdag. Ring, inden du kører
+            herud.</p>
+        </div>
+      </section>
+
+    </main>
+
+    <footer class="foot">
+      <a class="mark" href="#top" data-asset="mark-klinke">Klinke <em>&amp;</em> Datter</a>
+      <address>
+        Havnegade 22, 5000 Odense C. Åbent tirsdag til torsdag, 09:00–16:00.<br>
+        Telefon <a class="btn-quiet" href="tel:+4566124709">66 12 47 09</a>
+      </address>
+    </footer>
+
+  </div>
+</div>
+</body>
+</html>

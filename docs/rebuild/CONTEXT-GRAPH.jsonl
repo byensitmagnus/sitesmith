@@ -794,3 +794,9 @@
 {"kind":"edge","type":"SOLVES","from":"mech:colour-distance-veto","to":"failure:hue-veto-defeated-by-grey"}
 {"kind":"edge","type":"VALIDATED_BY","from":"decision:convergence-relocates-to-the-unmeasured","to":"result:a9-round4"}
 {"kind":"edge","type":"INVALIDATED_BY","from":"decision:extend-forced-veto-to-colour","to":"failure:signature-veto-wired-to-nothing","why":"the veto was extended and one of its three fields was never given a measurement"}
+{"kind":"node","type":"Result","id":"result:holdout-six-arms","label":"Six-arm holdout on a sealed brief: SiteSmith v3 ranked first with all three judges, 168 of 210, seven clear of impeccable, with frontend-design fourth and taste-skill sixth","confidence":0.8,"evidence":"docs/rebuild/s15/HOLDOUT-RESULT.md"}
+{"kind":"node","type":"FailureMode","id":"failure:domain-mechanism-read-as-general-knowledge","label":"The claims rule was read as governing claims about the client, so the winning arm explained how a player piano works in detail and invented more facts than any other arm","confidence":0.95,"evidence":"twelve flags against our arm, more than any other; almost all one cluster"}
+{"kind":"node","type":"Result","id":"result:win-came-from-production-not-taste","label":"Against the runner-up our arm led on brief fit and craft and was level or behind on distinctiveness. The win came from finishing the job, not from taste","confidence":0.85,"evidence":"per-axis scores across three judges"}
+{"kind":"edge","type":"VALIDATED_BY","from":"decision:architecture-minimal","to":"result:holdout-six-arms"}
+{"kind":"edge","type":"INVALIDATED_BY","from":"result:holdout-six-arms","to":"failure:domain-mechanism-read-as-general-knowledge"}
+{"kind":"edge","type":"VALIDATED_BY","from":"mech:craft-floor-without-look","to":"result:win-came-from-production-not-taste"}

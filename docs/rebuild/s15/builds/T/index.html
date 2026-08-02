@@ -1,0 +1,753 @@
+<!--
+THESIS: A trade parts catalogue for one workshop. It refuses the artisan-workshop
+landing page: warm hero, soft serif, sepia craft photos, testimonial row.
+OWN-WORLD: Bottle-green flooded section plates on grey card stock, yolk index
+tabs, black keyline part cuts, condensed grotesque, tabular mono for codes and
+prices. Zero radii, keylines instead of shadows.
+STORY: The visitor learns what a pneumatic player piano is, that the entry point
+is a paid half-day diagnosis at 1.850 kr., and that the phone is the way in.
+FIRST VIEWPORT: Green cover. Stacked wordmark left, keyline elevation of the
+instrument centre, yolk contents tab right. Price plate and phone under the
+wordmark, above the fold at every width.
+FORM: Reservedelskatalog, candidate 3 of the grounded list; seed key 3eb75fd9.
+FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md
+-->
+<html lang="da">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Klinke &amp; Datter — værksted for selvspillende klaverer og pianolaer, Odense</title>
+<meta name="description" content="Verner og Liv Klinke reparerer pneumatiske selvspillende klaverer og pianolaer i Odense. Tilstandsvurdering hjemme hos dig, 1.850 kr., med skriftlig rapport.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230e4636'/%3E%3Crect x='6' y='12' width='20' height='8' fill='none' stroke='%23e8b304' stroke-width='2'/%3E%3Crect x='9' y='15' width='2' height='2' fill='%23e8b304'/%3E%3Crect x='15' y='15' width='2' height='2' fill='%23e8b304'/%3E%3Crect x='21' y='15' width='2' height='2' fill='%23e8b304'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Azeret+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --stock:#e6e6e0;
+  --stock-2:#f1f1ec;
+  --ink:#15181a;
+  --ink-70:#4a4f4d;
+  --green:#0e4636;
+  --green-deep:#0a3428;
+  --yolk:#e8b304;
+  --yolk-lift:#f5c522;
+  --rule:#b4b6ac;
+  --rule-green:#3d6d5c;
+  --tint:#a9c5b9;
+  --tint-2:#d3e0d9;
+  --sans:"Archivo","Archivo Narrow","Helvetica Neue",Arial,sans-serif;
+  --mono:"Azeret Mono",ui-monospace,"Courier New",monospace;
+  --pad:clamp(1.15rem,4.4vw,4rem);
+  --rail:46px;
+  --ease:cubic-bezier(.16,.84,.28,1);
+}
+@media (min-width:768px){ :root{ --rail:54px; } }
+
+*,*::before,*::after{box-sizing:border-box;}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;}
+body{
+  margin:0;background:var(--stock);color:var(--ink);
+  font-family:var(--sans);
+  font-variation-settings:"wdth" 100,"wght" 420;
+  font-size:clamp(1rem,0.96rem + 0.2vw,1.075rem);
+  line-height:1.62;overflow-x:hidden;
+}
+h1,h2,h3{margin:0;font-weight:inherit;font-variation-settings:"wdth" 78,"wght" 800;letter-spacing:-0.02em;line-height:0.94;text-transform:uppercase;text-wrap:balance;}
+p{margin:0 0 1em;max-width:64ch;}
+p:last-child{margin-bottom:0;}
+a{color:inherit;}
+svg{display:block;max-width:100%;}
+ul,ol{margin:0;padding:0;list-style:none;}
+
+:where(a,button,summary):focus-visible{outline:3px solid var(--yolk);outline-offset:3px;}
+.on-yolk :where(a):focus-visible,.contents :where(a):focus-visible{outline-color:var(--ink);}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto;}
+  *{transition-duration:.001ms !important;animation-duration:.001ms !important;}
+}
+
+.wrap{max-width:1360px;margin:0 auto;padding-left:var(--pad);padding-right:var(--pad);}
+.mono{font-family:var(--mono);font-feature-settings:"tnum" 1;letter-spacing:0.01em;}
+.skip{
+  position:absolute;left:0;top:0;transform:translateY(-130%);
+  background:var(--yolk);color:var(--ink);
+  font-family:var(--mono);font-size:0.8rem;font-weight:700;
+  padding:0.7rem 1rem;z-index:60;text-decoration:none;
+}
+.skip:focus{transform:translateY(0);}
+
+/* ---- thumb-tab rail ---- */
+.rail{position:sticky;top:0;z-index:50;background:var(--green);border-bottom:2px solid var(--green-deep);}
+.rail-in{display:flex;align-items:stretch;height:var(--rail);}
+.rail-mark{
+  display:none;align-items:center;
+  font-variation-settings:"wdth" 68,"wght" 800;
+  text-transform:uppercase;color:var(--stock);font-size:0.95rem;
+  padding-right:1.3rem;margin-right:auto;white-space:nowrap;
+}
+@media (min-width:1120px){.rail-mark{display:flex;}}
+.tabs{display:flex;flex:1 1 auto;min-width:0;}
+@media (min-width:1120px){.tabs{flex:0 1 auto;}}
+.tab{
+  flex:1 1 0;min-width:0;
+  display:flex;flex-direction:column;justify-content:center;
+  padding:0 clamp(0.3rem,1.1vw,1rem);
+  border-left:1px solid var(--rule-green);
+  color:var(--stock);text-decoration:none;text-align:center;
+  font-family:var(--mono);font-size:0.78rem;font-weight:500;line-height:1.05;
+  transition:background-color .3s var(--ease),color .3s var(--ease);
+}
+.tab .t-num{font-weight:700;letter-spacing:0.06em;}
+.tab .t-name{
+  display:none;font-family:var(--sans);
+  font-variation-settings:"wdth" 66,"wght" 650;
+  font-size:0.7rem;text-transform:uppercase;letter-spacing:0.03em;
+  margin-top:0.15rem;white-space:nowrap;
+}
+@media (min-width:660px){.tab .t-name{display:block;}}
+.tab:hover{background:var(--green-deep);}
+.tab-call{
+  display:flex;align-items:center;gap:0.45rem;
+  background:var(--yolk);color:var(--ink);
+  padding:0 clamp(0.55rem,2.2vw,1.4rem);
+  text-decoration:none;white-space:nowrap;
+  font-family:var(--mono);font-weight:700;font-size:0.82rem;
+  border-left:2px solid var(--green-deep);
+  transition:background-color .3s var(--ease);
+}
+.tab-call:hover{background:var(--yolk-lift);}
+.tab-call .c-label{display:none;}
+@media (min-width:940px){.tab-call .c-label{display:inline;}}
+
+/* the one authored state: jumping to a section prints its tab */
+body:has(#s01:target) .tab[href="#s01"],
+body:has(#s02:target) .tab[href="#s02"],
+body:has(#s03:target) .tab[href="#s03"],
+body:has(#s04:target) .tab[href="#s04"],
+body:has(#s05:target) .tab[href="#s05"],
+body:has(#s06:target) .tab[href="#s06"]{background:var(--yolk);color:var(--ink);}
+section:target .sec-num{background:var(--yolk);color:var(--ink);border-color:var(--yolk);}
+
+/* ---- sections ---- */
+section{scroll-margin-top:calc(var(--rail) + 2px);}
+.sec{border-top:2px solid var(--ink);padding:clamp(2.5rem,5.6vw,4.6rem) 0 clamp(2.7rem,6.4vw,5.2rem);}
+.sec-head{display:flex;align-items:flex-start;gap:clamp(0.8rem,2.2vw,1.5rem);margin-bottom:clamp(1.6rem,3.4vw,2.5rem);}
+.sec-num{
+  flex:0 0 auto;font-family:var(--mono);font-weight:700;font-size:0.9rem;
+  border:2px solid var(--ink);padding:0.3rem 0.55rem;line-height:1;
+  transition:background-color .35s var(--ease),color .35s var(--ease),border-color .35s var(--ease);
+}
+.sec-title{font-size:clamp(1.55rem,4.2vw,2.7rem);}
+.sec-lead{margin-top:0.9rem;font-size:clamp(1.05rem,0.99rem + 0.35vw,1.22rem);max-width:54ch;}
+
+.dark{background:var(--green);color:var(--stock);border-top-color:var(--green-deep);}
+.dark .sec-num{border-color:var(--stock);color:var(--stock);}
+.dark .sec-lead{color:var(--tint-2);}
+
+/* ---- cover ---- */
+.cover{background:var(--green);color:var(--stock);padding-top:clamp(1.9rem,4.4vw,3.2rem);}
+.cover-grid{display:grid;gap:clamp(1.5rem,3.4vw,2.2rem);}
+@media (min-width:960px){
+  .cover-grid{grid-template-columns:minmax(0,1.02fr) minmax(0,1fr) 15.5rem;align-items:stretch;gap:clamp(1.6rem,2.6vw,2.6rem);}
+}
+.wordmark{font-size:clamp(2.9rem,12.6vw,5.6rem);letter-spacing:-0.035em;}
+.wordmark span{display:block;white-space:nowrap;font-variation-settings:"wdth" 66,"wght" 850;}
+.wordmark .amp{display:inline;color:var(--yolk);}
+.cover-lead{
+  margin-top:clamp(1.1rem,2.6vw,1.6rem);
+  font-size:clamp(1.1rem,1rem + 0.6vw,1.4rem);line-height:1.44;max-width:33ch;
+  font-variation-settings:"wdth" 96,"wght" 480;
+}
+.cover-actions{display:flex;flex-wrap:wrap;gap:0.65rem;margin-top:clamp(1.2rem,2.6vw,1.7rem);}
+.plate{
+  display:inline-flex;flex-direction:column;gap:0.15rem;
+  background:var(--yolk);color:var(--ink);text-decoration:none;
+  padding:0.7rem 1.05rem;border:2px solid var(--yolk);
+  font-family:var(--mono);font-weight:700;font-size:0.88rem;
+  transition:background-color .3s var(--ease);
+}
+.plate:hover{background:var(--yolk-lift);}
+.plate .p-sub{font-weight:400;font-size:0.72rem;letter-spacing:0.05em;text-transform:uppercase;}
+.plate-ghost{background:transparent;color:var(--stock);border-color:var(--stock);justify-content:center;}
+.plate-ghost:hover{background:var(--stock);color:var(--green);}
+.plate-ink{background:var(--ink);border-color:var(--ink);color:var(--yolk);}
+.plate-ink:hover{background:#000;}
+
+.spec{border-top:2px solid var(--stock);margin-top:clamp(1.3rem,2.8vw,1.9rem);padding-top:0.75rem;}
+.spec dl{display:grid;grid-template-columns:6.6rem minmax(0,1fr);gap:0.3rem 0.9rem;margin:0;
+  font-family:var(--mono);font-size:0.73rem;line-height:1.5;}
+.spec dt{color:var(--tint);letter-spacing:0.05em;text-transform:uppercase;}
+.spec dd{margin:0;}
+
+.cut{border:2px solid var(--stock);padding:0.85rem;display:flex;flex-direction:column;justify-content:center;}
+.cut svg{width:100%;height:auto;}
+.cut-cap{margin-top:0.8rem;display:flex;flex-wrap:wrap;gap:0.4rem 1.4rem;font-family:var(--mono);font-size:0.7rem;color:var(--tint);letter-spacing:0.04em;text-transform:uppercase;border-top:1px solid var(--rule-green);padding-top:0.6rem;}
+.cut-cap .lg{display:inline-flex;align-items:center;gap:0.45rem;}
+.cut-cap b{display:inline-flex;align-items:center;justify-content:center;width:1.15rem;height:1.15rem;border:1px solid var(--yolk);border-radius:50%;color:var(--yolk);font-size:0.66rem;}
+
+.contents{background:var(--yolk);color:var(--ink);padding:1rem 1.05rem 1.1rem;display:flex;flex-direction:column;}
+.contents h2{font-size:0.76rem;font-family:var(--mono);font-variation-settings:normal;font-weight:700;letter-spacing:0.12em;padding-bottom:0.5rem;border-bottom:2px solid var(--ink);}
+.contents li{border-bottom:1px solid rgba(21,24,26,.26);}
+.contents li:last-child{border-bottom:0;}
+.contents a{
+  display:flex;align-items:baseline;gap:0.6rem;padding:0.5rem 0;text-decoration:none;
+  font-variation-settings:"wdth" 74,"wght" 700;text-transform:uppercase;font-size:0.94rem;line-height:1.15;
+}
+.contents a .n{font-family:var(--mono);font-size:0.74rem;font-variation-settings:normal;font-weight:700;flex:0 0 1.5rem;}
+.contents a:hover .lbl{text-decoration:underline;text-underline-offset:3px;}
+.contents-foot{margin-top:auto;padding-top:1.2rem;font-family:var(--mono);font-size:0.74rem;line-height:1.5;}
+.contents-foot dl{display:grid;grid-template-columns:3.6rem minmax(0,1fr);gap:0.3rem 0.7rem;margin:0;border-top:2px solid var(--ink);padding-top:0.7rem;}
+.contents-foot dt{text-transform:uppercase;letter-spacing:0.05em;font-size:0.68rem;padding-top:0.1rem;}
+.contents-foot dd{margin:0;font-weight:700;}
+.contents-foot a{display:inline;padding:0;font-family:inherit;font-size:inherit;font-variation-settings:normal;text-transform:none;text-decoration:underline;text-underline-offset:2px;}
+
+/* ---- perforated roll edge ---- */
+.perf{
+  height:26px;background-color:var(--stock);
+  background-image:
+    radial-gradient(circle at 50% 50%, var(--green) 0 2.6px, transparent 2.9px),
+    radial-gradient(circle at 50% 50%, var(--green) 0 2.6px, transparent 2.9px);
+  background-size:15px 26px,15px 26px;
+  background-position:0 7px,7.5px 19px;
+  background-repeat:repeat-x,repeat-x;
+  border-top:2px solid var(--ink);border-bottom:2px solid var(--ink);
+}
+.cover .perf{border-top:0;margin-top:clamp(1.8rem,4vw,3rem);}
+
+/* ---- firm note ---- */
+.firm{padding:clamp(1.9rem,4.4vw,3rem) 0;}
+.firm-grid{display:grid;gap:clamp(1.1rem,2.8vw,2.2rem);}
+@media (min-width:820px){.firm-grid{grid-template-columns:14rem minmax(0,1fr);align-items:start;}}
+.firm h2{font-size:clamp(1.25rem,3vw,1.7rem);}
+.hands{display:grid;gap:0.5rem;margin-top:1.2rem;font-family:var(--mono);font-size:0.79rem;max-width:34rem;}
+.hands div{display:flex;justify-content:space-between;gap:1rem;border-bottom:1px solid var(--rule);padding-bottom:0.4rem;}
+.hands b{font-weight:500;}
+
+/* ---- 01 ---- */
+.entry{display:grid;gap:clamp(1.4rem,3.2vw,2.5rem);}
+@media (min-width:940px){.entry{grid-template-columns:minmax(0,1fr) 21rem;align-items:start;}}
+.rows{border-top:2px solid var(--stock);}
+.rows div{display:grid;grid-template-columns:9.2rem minmax(0,1fr);gap:0.4rem 1rem;padding:0.6rem 0;border-bottom:1px solid var(--rule-green);}
+@media (max-width:459px){.rows div{grid-template-columns:1fr;gap:0.05rem;}}
+.rows dt{font-family:var(--mono);font-size:0.72rem;letter-spacing:0.05em;text-transform:uppercase;color:var(--tint);padding-top:0.2rem;}
+.rows dd{margin:0;font-variation-settings:"wdth" 100,"wght" 520;}
+.after-rows{margin-top:1.3rem;color:var(--tint-2);}
+.price-plate{background:var(--yolk);color:var(--ink);padding:1.15rem 1.25rem 1.3rem;}
+.price-plate .pp-k{font-family:var(--mono);font-size:0.71rem;letter-spacing:0.09em;text-transform:uppercase;}
+.price-plate .pp-v{
+  font-size:clamp(2.2rem,6vw,2.9rem);font-variation-settings:"wdth" 72,"wght" 850;
+  letter-spacing:-0.03em;line-height:1;margin-top:0.35rem;white-space:nowrap;
+}
+.price-plate p{font-size:0.92rem;margin-top:0.8rem;max-width:30ch;}
+.price-plate .plate{margin-top:1rem;}
+
+/* ---- 02 ---- */
+.faults{border-top:2px solid var(--ink);display:grid;}
+@media (min-width:1000px){.faults{grid-template-columns:1fr 1fr;column-gap:clamp(2rem,4vw,3.4rem);}}
+.fault{
+  display:grid;grid-template-columns:clamp(112px,17vw,164px) minmax(0,1fr);
+  gap:0.2rem clamp(0.9rem,2.2vw,1.5rem);
+  padding:clamp(0.9rem,2vw,1.25rem) 0;border-bottom:1px solid var(--rule);
+  align-items:start;transition:background-color .3s var(--ease);
+}
+@media (min-width:1000px){.fault:nth-child(2n){border-left:0;}}
+.fault:hover{background:var(--stock-2);}
+.fault figure{margin:0;grid-row:span 2;}
+.fault svg{width:100%;height:auto;}
+.fault .f-code{font-family:var(--mono);font-size:0.71rem;letter-spacing:0.05em;color:var(--ink-70);align-self:end;}
+.fault h3{font-size:clamp(1.02rem,2.3vw,1.2rem);letter-spacing:-0.01em;margin-top:0.1rem;}
+.fault p{margin:0.35rem 0 0;max-width:40ch;color:var(--ink-70);font-size:0.97rem;}
+.fault-note{margin-top:1.6rem;max-width:56ch;}
+.fault-note a{color:var(--green);text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:2px;font-variation-settings:"wdth" 100,"wght" 620;}
+.fault-note a:hover{background:var(--yolk);color:var(--ink);text-decoration-color:var(--ink);}
+
+/* ---- 03 ---- */
+.pair{display:grid;gap:clamp(1.4rem,3.2vw,2.5rem);}
+@media (min-width:940px){.pair{grid-template-columns:minmax(0,1fr) 23rem;align-items:start;}}
+.pair > div:first-child p{color:var(--ink-70);}
+.scale{border:2px solid var(--stock);padding:1.1rem 1.15rem 1.15rem;}
+.scale-k{display:block;font-family:var(--mono);font-size:0.71rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--tint);}
+.scale-bar{position:relative;height:32px;margin:0.7rem 0 0.25rem;border:2px solid var(--stock);
+  background:repeating-linear-gradient(90deg,transparent 0 calc(20% - 1px),var(--rule-green) calc(20% - 1px) 20%);}
+.scale-fill{position:absolute;inset:0;background:var(--yolk);}
+.scale-ticks{display:flex;justify-content:space-between;font-family:var(--mono);font-size:0.72rem;font-weight:700;padding-top:0.3rem;color:var(--stock);}
+.scale-unit{font-family:var(--mono);font-size:0.73rem;margin:0.45rem 0 0;color:var(--tint);}
+.slots{display:flex;gap:0.5rem;margin-top:0.7rem;}
+.slot{flex:1 1 0;height:46px;border:2px solid var(--stock);
+  background:repeating-linear-gradient(135deg,transparent 0 6px,rgba(230,230,224,.16) 6px 7px);}
+
+/* ---- 04 ---- */
+.roll-grid{display:grid;gap:clamp(1.3rem,3vw,2.3rem);}
+@media (min-width:860px){.roll-grid{grid-template-columns:minmax(0,1fr) 21rem;align-items:start;}}
+.roll-grid > div:first-child p{color:var(--tint-2);}
+.stock-plate{background:var(--yolk);color:var(--ink);padding:1.15rem 1.25rem 1.3rem;}
+.stock-plate dl{margin:0;}
+.stock-plate dt{font-family:var(--mono);font-size:0.71rem;letter-spacing:0.09em;text-transform:uppercase;}
+.stock-plate dd{margin:0.12rem 0 0.9rem;font-size:clamp(2rem,5.6vw,2.7rem);font-variation-settings:"wdth" 72,"wght" 850;letter-spacing:-0.03em;line-height:1;white-space:nowrap;}
+.roll-strip{
+  height:74px;margin-top:1.3rem;border:2px solid var(--stock);background-color:var(--stock);
+  background-image:
+    radial-gradient(circle at 50% 50%, var(--green) 0 3.1px, transparent 3.4px),
+    radial-gradient(circle at 50% 50%, var(--green) 0 3.1px, transparent 3.4px),
+    radial-gradient(circle at 50% 50%, var(--green) 0 3.1px, transparent 3.4px),
+    radial-gradient(circle at 50% 50%, var(--green) 0 3.1px, transparent 3.4px);
+  background-size:15px 70px,15px 70px,15px 70px,15px 70px;
+  background-position:0 10px,7.5px 26px,0 42px,7.5px 58px;
+  background-repeat:repeat-x,repeat-x,repeat-x,repeat-x;
+}
+.roll-cap{font-family:var(--mono);font-size:0.71rem;color:var(--tint);letter-spacing:0.05em;text-transform:uppercase;margin-top:0.6rem;}
+
+/* ---- 05 ---- */
+.nope{border-top:2px solid var(--ink);max-width:60ch;}
+.nope li{display:grid;grid-template-columns:2.7rem minmax(0,1fr);gap:0.9rem;padding:0.85rem 0;border-bottom:1px solid var(--rule);}
+.nope .x{font-family:var(--mono);font-size:0.77rem;font-weight:700;color:var(--ink-70);}
+.nope b{font-variation-settings:"wdth" 80,"wght" 750;text-transform:uppercase;display:block;font-size:1.02rem;line-height:1.2;}
+.nope span.d{color:var(--ink-70);display:block;margin-top:0.15rem;}
+
+/* ---- 06 ---- */
+.order-grid{display:grid;gap:clamp(1.5rem,3.4vw,2.6rem);}
+@media (min-width:860px){.order-grid{grid-template-columns:minmax(0,1.1fr) minmax(0,0.9fr);}}
+.order-grid > div:first-child p{color:var(--tint-2);}
+.tel{
+  display:inline-block;text-decoration:none;color:var(--yolk);
+  font-family:var(--mono);font-weight:700;
+  font-size:clamp(1.95rem,8.2vw,3.4rem);letter-spacing:-0.02em;line-height:1.05;
+  border-bottom:3px solid var(--yolk);padding-bottom:0.08em;
+  transition:color .3s var(--ease),border-color .3s var(--ease);
+}
+.tel:hover{color:var(--stock);border-color:var(--stock);}
+.addr{border-top:2px solid var(--stock);padding-top:0.9rem;}
+.addr dl{display:grid;grid-template-columns:7.2rem minmax(0,1fr);gap:0.45rem 1rem;margin:0;font-family:var(--mono);font-size:0.8rem;line-height:1.5;}
+.addr dt{color:var(--tint);letter-spacing:0.05em;text-transform:uppercase;font-size:0.71rem;padding-top:0.18rem;}
+.addr dd{margin:0;}
+
+.colophon{background:var(--green-deep);color:var(--tint);font-family:var(--mono);font-size:0.73rem;padding:1.1rem 0;}
+.colophon .wrap{display:flex;flex-wrap:wrap;gap:0.5rem 1.4rem;justify-content:space-between;}
+</style>
+</head>
+<body>
+
+<a class="skip" href="#s01">Spring til tilstandsvurdering</a>
+
+<nav class="rail" aria-label="Afsnit">
+  <div class="wrap rail-in">
+    <span class="rail-mark">Klinke &amp; Datter</span>
+    <div class="tabs">
+      <a class="tab" href="#s01" aria-label="Afsnit 01, tilstandsvurdering"><span class="t-num">01</span><span class="t-name">Vurdering</span></a>
+      <a class="tab" href="#s02" aria-label="Afsnit 02, typiske fejl"><span class="t-num">02</span><span class="t-name">Fejl</span></a>
+      <a class="tab" href="#s03" aria-label="Afsnit 03, fuld restaurering"><span class="t-num">03</span><span class="t-name">Restaurering</span></a>
+      <a class="tab" href="#s04" aria-label="Afsnit 04, musikruller"><span class="t-num">04</span><span class="t-name">Ruller</span></a>
+      <a class="tab" href="#s05" aria-label="Afsnit 05, uden for faget"><span class="t-num">05</span><span class="t-name">Ikke os</span></a>
+      <a class="tab" href="#s06" aria-label="Afsnit 06, bestilling"><span class="t-num">06</span><span class="t-name">Bestilling</span></a>
+    </div>
+    <a class="tab-call" href="tel:+4566124709"><span class="c-label">Ring</span><span>66 12 47 09</span></a>
+  </div>
+</nav>
+
+<header class="cover">
+  <div class="wrap cover-grid">
+
+    <div>
+      <h1 class="wordmark"><span>Klinke</span><span><span class="amp">&amp;</span> Datter</span></h1>
+
+      <p class="cover-lead">Du har arvet et selvspillende klaver og ved ikke, om det kan reddes. Vi kommer hjem til dig og finder ud af det på en halv dag.</p>
+
+      <div class="cover-actions">
+        <a class="plate" href="#s01"><span>Tilstandsvurdering, 1.850 kr.</span><span class="p-sub">Afsnit 01</span></a>
+        <a class="plate plate-ghost" href="tel:+4566124709">Ring 66 12 47 09</a>
+      </div>
+
+      <div class="spec">
+        <dl>
+          <dt>Fag</dt><dd>Pneumatiske selvspillende klaverer og pianolaer</dd>
+          <dt>Værksted</dt><dd>Havnegade 22, 5000 Odense C</dd>
+          <dt>Hænder</dt><dd>Verner Klinke siden 1981 · Liv Klinke siden 2011</dd>
+        </dl>
+      </div>
+    </div>
+
+    <div class="cut">
+      <svg viewBox="0 0 360 404" role="img" aria-labelledby="elev-t">
+        <title id="elev-t">Tegning af et selvspillende klaver set forfra. Rullen, mærket 1, sidder øverst i rullekassen. Trackerbaren, mærket 2, sidder under den.</title>
+        <g fill="none" stroke="#e6e6e0" stroke-width="3" stroke-linejoin="miter">
+          <rect x="20" y="14" width="320" height="286"/>
+          <rect x="34" y="300" width="292" height="18"/>
+        </g>
+        <g fill="none" stroke="#e6e6e0" stroke-width="2">
+          <path d="M20 42 H340"/>
+          <rect x="76" y="64" width="208" height="104"/>
+          <rect x="100" y="80" width="160" height="32"/>
+          <path d="M94 74 v44 M100 74 v44 M260 74 v44 M266 74 v44"/>
+          <path d="M118 112 v24 M242 112 v24"/>
+          <rect x="100" y="136" width="160" height="18"/>
+          <path d="M20 192 H340"/>
+          <rect x="44" y="206" width="272" height="50"/>
+          <rect x="44" y="268" width="272" height="26"/>
+          <path d="M56 318 v40 M304 318 v40 M48 358 H68 M292 358 H312"/>
+          <rect x="158" y="318" width="44" height="30"/>
+          <path d="M164 348 v10 h14 v-10 M182 348 v10 h14 v-10"/>
+        </g>
+        <g fill="#e6e6e0">
+          <rect x="108" y="141" width="3" height="7"/><rect x="119" y="141" width="3" height="7"/>
+          <rect x="130" y="141" width="3" height="7"/><rect x="141" y="141" width="3" height="7"/>
+          <rect x="152" y="141" width="3" height="7"/><rect x="163" y="141" width="3" height="7"/>
+          <rect x="174" y="141" width="3" height="7"/><rect x="185" y="141" width="3" height="7"/>
+          <rect x="196" y="141" width="3" height="7"/><rect x="207" y="141" width="3" height="7"/>
+          <rect x="218" y="141" width="3" height="7"/><rect x="229" y="141" width="3" height="7"/>
+          <rect x="240" y="141" width="3" height="7"/><rect x="251" y="141" width="3" height="7"/>
+        </g>
+        <g stroke="#e6e6e0" stroke-width="1.5">
+          <path d="M57 206 V256 M70 206 V256 M83 206 V256 M96 206 V256 M109 206 V256 M122 206 V256 M135 206 V256 M148 206 V256 M161 206 V256 M174 206 V256 M187 206 V256 M200 206 V256 M213 206 V256 M226 206 V256 M239 206 V256 M252 206 V256 M265 206 V256 M278 206 V256 M291 206 V256 M304 206 V256"/>
+        </g>
+        <g fill="#e6e6e0">
+          <rect x="64" y="206" width="6" height="29"/><rect x="77" y="206" width="6" height="29"/>
+          <rect x="103" y="206" width="6" height="29"/><rect x="116" y="206" width="6" height="29"/>
+          <rect x="129" y="206" width="6" height="29"/><rect x="155" y="206" width="6" height="29"/>
+          <rect x="168" y="206" width="6" height="29"/><rect x="194" y="206" width="6" height="29"/>
+          <rect x="207" y="206" width="6" height="29"/><rect x="220" y="206" width="6" height="29"/>
+          <rect x="246" y="206" width="6" height="29"/><rect x="259" y="206" width="6" height="29"/>
+          <rect x="285" y="206" width="6" height="29"/><rect x="298" y="206" width="6" height="29"/>
+        </g>
+        <g stroke="#e8b304" stroke-width="2" fill="none">
+          <path d="M266 96 H296"/>
+          <path d="M260 145 H296"/>
+          <circle cx="310" cy="96" r="12"/>
+          <circle cx="310" cy="145" r="12"/>
+        </g>
+        <g fill="#e8b304" font-family="Azeret Mono, monospace" font-size="14" font-weight="700" text-anchor="middle">
+          <text x="310" y="101">1</text>
+          <text x="310" y="150">2</text>
+        </g>
+      </svg>
+      <p class="cut-cap"><span class="lg"><b>1</b> Rulle</span><span class="lg"><b>2</b> Trackerbar</span></p>
+    </div>
+
+    <div class="contents">
+      <h2>Indhold</h2>
+      <ol>
+        <li><a href="#s01"><span class="n">01</span><span class="lbl">Tilstandsvurdering</span></a></li>
+        <li><a href="#s02"><span class="n">02</span><span class="lbl">Typiske fejl</span></a></li>
+        <li><a href="#s03"><span class="n">03</span><span class="lbl">Fuld restaurering</span></a></li>
+        <li><a href="#s04"><span class="n">04</span><span class="lbl">Musikruller</span></a></li>
+        <li><a href="#s05"><span class="n">05</span><span class="lbl">Uden for faget</span></a></li>
+        <li><a href="#s06"><span class="n">06</span><span class="lbl">Bestilling</span></a></li>
+      </ol>
+      <div class="contents-foot">
+        <dl>
+          <dt>Tlf</dt><dd><a href="tel:+4566124709">66 12 47 09</a></dd>
+          <dt>Åbent</dt><dd>Tirs–tors 09.00–16.00</dd>
+          <dt>Sted</dt><dd>Havnegade 22, Odense C</dd>
+        </dl>
+      </div>
+    </div>
+
+  </div>
+  <div class="perf" aria-hidden="true"></div>
+</header>
+
+<main>
+
+  <section class="firm" aria-labelledby="firm-t">
+    <div class="wrap firm-grid">
+      <h2 id="firm-t">Vi er to</h2>
+      <div>
+        <p>Verner Klinke har arbejdet med pneumatiske instrumenter siden 1981. Liv Klinke siden 2011. Det er os, der kommer, og det er os, der laver arbejdet.</p>
+        <p>Vi arbejder kun med pneumatiske selvspillende klaverer og pianolaer. Vi skærer også nye musikruller efter originale masters.</p>
+        <div class="hands">
+          <div><b>Verner Klinke</b><span>siden 1981</span></div>
+          <div><b>Liv Klinke</b><span>siden 2011</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec dark" id="s01" aria-labelledby="t01">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="sec-num" aria-hidden="true">01</span>
+        <div>
+          <h2 class="sec-title" id="t01">Tilstandsvurdering</h2>
+          <p class="sec-lead">Det første, vi gør, er ikke at reparere noget. Det er at give dig et svar på, hvad du har stående, og om det kan reddes.</p>
+        </div>
+      </div>
+
+      <div class="entry">
+        <div>
+          <dl class="rows">
+            <div><dt>Udføres</dt><dd>Hjemme hos dig</dd></div>
+            <div><dt>Varighed</dt><dd>En halv dag</dd></div>
+            <div><dt>Resultat</dt><dd>Skriftlig tilstandsrapport</dd></div>
+            <div><dt>Gælder</dt><dd>Uanset om arbejdet bagefter bliver til noget</dd></div>
+            <div><dt>Instrumenter</dt><dd>Pneumatiske selvspillende klaverer og pianolaer</dd></div>
+            <div><dt>Pris</dt><dd class="mono">1.850 kr.</dd></div>
+          </dl>
+          <div class="after-rows">
+            <p>Vurderingen er ikke et tilbud. Den er gennemgangen af instrumentet, og den ender i en skriftlig rapport om, hvad der er galt. Rapporten får du, også hvis du bagefter beslutter dig for at lade det stå.</p>
+            <p>Instrumentet skal ikke flyttes for at blive vurderet. Vi kommer til det.</p>
+          </div>
+        </div>
+
+        <div class="price-plate on-yolk">
+          <span class="pp-k">Pris, tilstandsvurdering</span>
+          <div class="pp-v mono">1.850 kr.</div>
+          <p>En halv dag hjemme hos dig. Den skriftlige rapport er med i prisen.</p>
+          <a class="plate plate-ink" href="tel:+4566124709">Ring 66 12 47 09</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="s02" aria-labelledby="t02">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="sec-num" aria-hidden="true">02</span>
+        <div>
+          <h2 class="sec-title" id="t02">Typiske fejl</h2>
+          <p class="sec-lead">Fem ting, vi ofte finder i et pneumatisk instrument. Hvad der er galt med netop dit, står i rapporten.</p>
+        </div>
+      </div>
+
+      <div class="faults">
+
+        <article class="fault">
+          <figure>
+            <svg viewBox="0 0 140 100" role="img" aria-labelledby="f1"><title id="f1">Læderlomme i snit</title>
+              <g fill="none" stroke="#15181a" stroke-width="2.4">
+                <rect x="12" y="34" width="116" height="46"/>
+                <path d="M12 62 H128"/>
+                <path d="M40 62 q30 -30 60 0"/>
+                <path d="M40 62 H100"/>
+                <path d="M64 44 v-14 M76 44 v-14"/>
+              </g>
+              <g fill="none" stroke="#e8b304" stroke-width="3">
+                <path d="M50 55 l7 4 l-7 5"/>
+                <path d="M84 51 l6 5 l-7 4"/>
+                <path d="M68 44 l5 5 l-6 4"/>
+              </g>
+            </svg>
+          </figure>
+          <span class="f-code">02.1</span>
+          <div>
+            <h3>Mørnede læderlommer</h3>
+            <p>Læderet i pneumatikkens små lommer er blevet mørt og porøst.</p>
+          </div>
+        </article>
+
+        <article class="fault">
+          <figure>
+            <svg viewBox="0 0 140 100" role="img" aria-labelledby="f2"><title id="f2">Slanger under trackerbaren</title>
+              <g fill="none" stroke="#15181a" stroke-width="2.4">
+                <rect x="10" y="14" width="120" height="16"/>
+                <path d="M28 30 c0 24 -8 30 -8 56 M36 30 c0 24 -8 30 -8 56"/>
+                <path d="M62 30 c0 24 4 32 4 56 M70 30 c0 24 4 32 4 56"/>
+                <path d="M100 30 c0 24 10 30 10 56 M108 30 c0 24 10 30 10 56"/>
+              </g>
+              <g fill="#15181a">
+                <rect x="22" y="19" width="4" height="6"/><rect x="40" y="19" width="4" height="6"/>
+                <rect x="58" y="19" width="4" height="6"/><rect x="76" y="19" width="4" height="6"/>
+                <rect x="94" y="19" width="4" height="6"/><rect x="112" y="19" width="4" height="6"/>
+              </g>
+              <g fill="none" stroke="#e8b304" stroke-width="3">
+                <path d="M60 58 l14 -4"/><path d="M62 70 l14 -4"/>
+              </g>
+            </svg>
+          </figure>
+          <span class="f-code">02.2</span>
+          <div>
+            <h3>Revnede slanger</h3>
+            <p>Slangerne ved trackerbaren — bjælken med huller, som papirrullen løber hen over — er revnet.</p>
+          </div>
+        </article>
+
+        <article class="fault">
+          <figure>
+            <svg viewBox="0 0 140 100" role="img" aria-labelledby="f3"><title id="f3">Hammerbælg set fra siden</title>
+              <g fill="none" stroke="#15181a" stroke-width="2.4">
+                <path d="M18 22 H120"/>
+                <path d="M18 22 V82 H118"/>
+                <path d="M120 22 L118 82"/>
+                <path d="M28 28 l14 8 l-14 8 l14 8 l-14 8 l14 8 l-14 8"/>
+                <path d="M52 24 v56 M76 23 v58 M100 22 v60"/>
+              </g>
+              <g fill="none" stroke="#e8b304" stroke-width="3">
+                <path d="M84 32 l10 6 l-10 6"/>
+                <path d="M104 60 l10 6 l-10 6"/>
+              </g>
+            </svg>
+          </figure>
+          <span class="f-code">02.3</span>
+          <div>
+            <h3>Slidte hammerbælge</h3>
+            <p>De små bælge, der slår anslaget an, er slidt ned.</p>
+          </div>
+        </article>
+
+        <article class="fault">
+          <figure>
+            <svg viewBox="0 0 140 100" role="img" aria-labelledby="f4"><title id="f4">Vindkanal med revne</title>
+              <g fill="none" stroke="#15181a" stroke-width="2.4">
+                <rect x="8" y="36" width="124" height="34"/>
+                <rect x="8" y="26" width="14" height="54"/>
+                <rect x="118" y="26" width="14" height="54"/>
+                <path d="M44 36 v34 M92 36 v34"/>
+              </g>
+              <path d="M56 36 l8 12 l-10 6 l12 16" fill="none" stroke="#e8b304" stroke-width="3.4"/>
+            </svg>
+          </figure>
+          <span class="f-code">02.4</span>
+          <div>
+            <h3>Revnet vindkanal</h3>
+            <p>Der er kommet en revne i kanalen, som luften løber igennem.</p>
+          </div>
+        </article>
+
+        <article class="fault">
+          <figure>
+            <svg viewBox="0 0 140 100" role="img" aria-labelledby="f5"><title id="f5">Drivrem om to remskiver</title>
+              <g fill="none" stroke="#15181a" stroke-width="2.4">
+                <circle cx="36" cy="50" r="24"/><circle cx="36" cy="50" r="6"/>
+                <circle cx="104" cy="50" r="15"/><circle cx="104" cy="50" r="5"/>
+                <path d="M36 26 H104 M36 74 H104"/>
+              </g>
+              <g fill="none" stroke="#e8b304" stroke-width="3.4">
+                <path d="M54 26 H90"/>
+                <path d="M60 20 v5 M72 20 v5 M84 20 v5"/>
+              </g>
+            </svg>
+          </figure>
+          <span class="f-code">02.5</span>
+          <div>
+            <h3>Hårde drivremme</h3>
+            <p>Remmene har mistet deres eftergivenhed og er blevet hårde.</p>
+          </div>
+        </article>
+
+      </div>
+
+      <p class="fault-note">Hører eller ser du noget af det på dit instrument, er det stadig tilstandsvurderingen, der skal til først — se <a href="#s01">afsnit 01</a>. Vi gætter ikke over telefonen.</p>
+    </div>
+  </section>
+
+  <section class="sec" id="s03" aria-labelledby="t03">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="sec-num" aria-hidden="true">03</span>
+        <div>
+          <h2 class="sec-title" id="t03">Fuld pneumatisk restaurering</h2>
+          <p class="sec-lead">Det store arbejde. Prisen på det får du efter tilstandsvurderingen — og først der.</p>
+        </div>
+      </div>
+
+      <div class="pair">
+        <div>
+          <p>En fuld pneumatisk restaurering tager fire til ni måneder. Hvor i det spænd dit instrument lander, afhænger af, hvad rapporten viser.</p>
+          <p>Vi giver ikke et tilbud, før vi har været ude og se instrumentet. Et tal givet på forhånd ville være et gæt, og et gæt kan du ikke bruge til noget.</p>
+          <p>Vi har fire instrumenter inde ad gangen. Der er som regel ventetid.</p>
+        </div>
+
+        <div class="scale dark" style="background:var(--green)">
+          <span class="scale-k">Varighed, fuld restaurering</span>
+          <div class="scale-bar"><div class="scale-fill"></div></div>
+          <div class="scale-ticks" aria-hidden="true"><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span></div>
+          <p class="scale-unit">Måneder, fra fire til ni</p>
+
+          <span class="scale-k" style="margin-top:1.5rem">Pladser i værkstedet</span>
+          <div class="slots" aria-hidden="true"><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div></div>
+          <p class="scale-unit">Fire instrumenter ad gangen</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec dark" id="s04" aria-labelledby="t04">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="sec-num" aria-hidden="true">04</span>
+        <div>
+          <h2 class="sec-title" id="t04">Musikruller</h2>
+          <p class="sec-lead">Vi skærer nye perforerede musikruller efter originale masters. Vi gør det selv, her i værkstedet.</p>
+        </div>
+      </div>
+
+      <div class="roll-grid">
+        <div>
+          <p>Har du et instrument, der spiller, men ingenting at give det, er det her, du skal kigge. Vi har 38 titler på lager.</p>
+          <p>Ring, hvis du vil høre, hvad der står på hylden.</p>
+          <div class="roll-strip" aria-hidden="true"></div>
+          <p class="roll-cap">Perforeret musikrulle</p>
+        </div>
+
+        <div class="stock-plate on-yolk">
+          <dl>
+            <dt>På lager</dt>
+            <dd class="mono">38 titler</dd>
+            <dt>Pris pr. rulle</dt>
+            <dd class="mono">340 kr.</dd>
+          </dl>
+          <a class="plate plate-ink" href="tel:+4566124709" style="margin-top:0.9rem">Ring 66 12 47 09</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="s05" aria-labelledby="t05">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="sec-num" aria-hidden="true">05</span>
+        <div>
+          <h2 class="sec-title" id="t05">Uden for faget</h2>
+          <p class="sec-lead">Så du ikke bruger en halv dag på at ringe forgæves.</p>
+        </div>
+      </div>
+
+      <ul class="nope">
+        <li><span class="x">Nej</span><div><b>Elektroniske instrumenter</b><span class="d">Vi arbejder kun pneumatisk.</span></div></li>
+        <li><span class="x">Nej</span><div><b>Almindelige klaverer som opgave</b><span class="d">Et almindeligt klaver er ikke et arbejde, vi tager ind.</span></div></li>
+        <li><span class="x">Dog</span><div><b>Stemning, når vi alligevel er der</b><span class="d">Er vi ude hos dig i forvejen, stemmer vi gerne et almindeligt klaver.</span></div></li>
+      </ul>
+    </div>
+  </section>
+
+  <div class="perf" aria-hidden="true"></div>
+
+  <section class="sec dark" id="s06" aria-labelledby="t06" style="border-top:0">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="sec-num" aria-hidden="true">06</span>
+        <div>
+          <h2 class="sec-title" id="t06">Bestilling</h2>
+          <p class="sec-lead">Der er én vej ind, og det er telefonen. Sig hvad du har arvet, og hvor det står.</p>
+        </div>
+      </div>
+
+      <div class="order-grid">
+        <div>
+          <a class="tel" href="tel:+4566124709">66 12 47 09</a>
+          <p style="margin-top:1.3rem">Vi aftaler en dag, hvor vi kommer ud til instrumentet. En halv dag, 1.850 kr., og du får rapporten skriftligt bagefter.</p>
+        </div>
+
+        <div class="addr">
+          <dl>
+            <dt>Værksted</dt><dd>Havnegade 22<br>5000 Odense C</dd>
+            <dt>Åbent</dt><dd>Tirsdag til torsdag<br>09.00–16.00</dd>
+            <dt>Telefon</dt><dd>66 12 47 09</dd>
+            <dt>Vurdering</dt><dd>Hjemme hos dig, ikke på værkstedet</dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="colophon">
+  <div class="wrap">
+    <span>Klinke &amp; Datter · Havnegade 22 · 5000 Odense C</span>
+    <span>Pneumatiske selvspillende klaverer og pianolaer</span>
+  </div>
+</footer>
+
+</body>
+</html>
