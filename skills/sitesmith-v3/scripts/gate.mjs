@@ -1140,7 +1140,16 @@ const tell = (name, file, line, detail) => {
   if (toldAlready.has(key)) return;
   toldAlready.add(key);
   if (deliberate.has(name)) waived.push({ cls: `antipattern/${name}`, file: show(file), line, detail: deliberate.get(name) });
-  else refuse(`antipattern/${name}`, file, line, detail);
+  /* The way past is named in the refusal, and it is named as a decision rather than as a
+     replacement. v2.3 shipped a ten-row table pairing each default with a better one, and
+     the autopsy of our own file rejected it in one line: applied on every project the
+     alternatives become the new defaults, so three redesigns of three unrelated generic
+     sites converge on one non-generic site. What survives is the obligation, per subject:
+     name the default you are shipping and say why it is right here. */
+  else refuse(`antipattern/${name}`, file, line,
+    `${detail}. This is a default of the medium, not a fault. Build something else, or name `
+    + `\`${name}\` under Deliberate: with the reason it is right for this subject. The reason `
+    + 'has to be about this subject; "it is clean" is about the pattern and waives nothing.');
 };
 
 /* Tailwind's default elevation ramp and shadcn's default radius, matched on the exact
