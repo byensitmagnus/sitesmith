@@ -21,12 +21,9 @@
   --p1:4px; --p2:8px; --p3:14px; --p4:22px; --p5:34px;
   --brod:15px; --lille:12px; --mikro:10px; --kaempe:44px; --stor:19px;
 }
-@media (prefers-color-scheme:light){
-  :root{ --plade:#efece2; --plade-2:#f9f7f0; --kant:#cbc5b4; --kant-2:#948d7c;
-         --skrift:#20201a; --skrift-2:#565244;
-         --ok:#116b3f; --ok-flade:#dff2e7; --hoej:#7a5200; --hoej-flade:#fdf1d6;
-         --stop:#a32014; --stop-flade:#fce4e1; --handling:#1b56b8; }
-}
+/* Der er ingen lys tilstand. Rummet er mørkt hele døgnet, skærmen sidder på væggen, og
+   en lys variant ville kun findes for den der kigger på den fra et kontor. Retningen
+   siger det, og her står den i koden. */
 *{box-sizing:border-box}
 body{margin:0;background:var(--plade);color:var(--skrift);
      font-family:var(--sans);font-size:var(--brod);line-height:1.4}

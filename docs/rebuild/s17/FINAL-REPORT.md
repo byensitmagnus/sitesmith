@@ -84,6 +84,8 @@ Three unrelated Danish trades, three surfaces, built in sequence by one agent.
 | b | a sailmaker's storm jib order sheet | buy | 0 | 0 | 4 assertions, all held | 3 of 16 |
 | c | a lime works' kiln watch desk | operate | 0 | 0 | 5 assertions, all held | 3 of 16 |
 
+Holdout c ships dark in every colour scheme, on purpose, and the reason is in its record.
+
 The control page this repository keeps deliberately generic scores 10 of 16 on the same
 validated judge. Browser, accessibility in both colour schemes, responsive at 375, 768 and
 1440, and the reduced-motion render were run on all three.
@@ -99,9 +101,9 @@ as fast:
   of them. It was removed from all three, because one instruction surface producing the
   same micro-typographic device on three unrelated trades is the house style in miniature.
 
-## The measurement that still fails
+## The measurement that still fails, and the conflict underneath it
 
-`tools/portfolio-diversity.mjs` over the three:
+`tools/portfolio-diversity.mjs` over the three, after four rounds of measurement:
 
 ```text
 FAIL  imagery: the most image-led site gives assets 0.0% of its first screen.
@@ -110,21 +112,38 @@ note  a and c both use hairline borders as the separator
 note  a and c both use no elevation anywhere
 ```
 
-Two of the three original failures were closed by real changes: holdout c's light scheme
-became limewash rather than cool grey, which separated it from b, and holdout b's sum panel
-took a hard offset shadow, which is what a receipt lying on a sheet does.
+Started at three failures, ends at one. What closed, and what it cost:
 
-The third is not closed and is not being explained away. The honest reading has two halves
-and both belong here. Against it: all three briefs supplied no assets, so a portfolio of
+- **b's sum panel took a hard offset shadow.** A receipt lies on a sheet rather than
+  floating above it, so the shadow is a fact about the object. Closed the shared
+  no-elevation failure.
+- **c stopped having a light colour scheme at all.** This is the interesting one, and it
+  took three attempts. The first light scheme was a cool grey and the palette ban refused
+  it for sitting in taste-skill's premium-consumer band. The second was limewash and the
+  ban refused it again. The third was marl, which cleared the ban and immediately collided
+  with holdout a's ground family in the portfolio measure. Every escape from one gate
+  landed inside the other.
+
+  That is worth stating as a structural finding rather than as three edits: **for a set of
+  light-ground pages, the palette ban and the portfolio diversity gate can be
+  simultaneously unsatisfiable.** The band the ban forbids and the bands the portfolio gate
+  clusters on cover most of the near-white space between them. The way out was not a fourth
+  colour. It was noticing that the page did not need a light scheme: the room is dark around
+  the clock, the screen is on a wall, and a light board would exist only for someone looking
+  at it from an office. The direction record already said so. The record now also carries
+  the two refusals that led there, because the reasoning is worth more than the hex.
+
+What is still open, and is not being explained away: no site is carried by an image on its
+first screen. Against the finding: all three briefs supplied no assets, so a portfolio of
 three asset-less subjects cannot produce an image-led first screen, and the rule assumes at
-least one site could have been. For it: that is a description of the brief set, not a
-defence, and the same convergence has now been observed four times in this repository,
-each time relocating to whatever the current measures do not watch. Holdout a gained a
-drawn section this round, and it sits below the first screen because the direction record
-argues schedule over showcase. Moving it above the fold to satisfy the measurement would be
-rewriting the argument to pass a test, which is the one thing this repository does not do.
+least one could have. For it: that is a description of the brief set rather than a defence,
+and the same convergence has now been observed four times in this repository, each time
+relocating to whatever the current measures do not watch. Holdout a gained a drawn section
+this round and it sits below the first screen because its record argues schedule over
+showcase. Moving it above the fold to satisfy the measurement would be rewriting the
+argument to pass a test, which is the one thing this repository does not do.
 
-So: **two of three portfolio failures closed, one open and stated.**
+So: **two of three portfolio failures closed by real changes, one open and stated.**
 
 ## Every gate, at the end of this round
 

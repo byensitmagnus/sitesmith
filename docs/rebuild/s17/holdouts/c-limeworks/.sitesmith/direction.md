@@ -34,7 +34,7 @@ Thesis 2 was rejected: a trace needs history the desk does not store.
 Built: 1, axis: board over feed, because four shafts is a number a person can hold at once, and the answer to the most common question is the shape of the whole board rather than any one item
 
 ## Colour
-- ground: `#0d1620`, the wall of a dark control room, and `#efece2`, the colour of limewash on the wall, for the same board in daylight
+- ground: `#0d1620`, the wall of a dark control room, in every colour scheme. There is no light variant: the room is dark around the clock, the screen is on a wall, and a light board would exist only for someone looking at it from an office. Two attempts at a light scheme were made and both were refused, one for landing in the banned premium-consumer band and one for landing on the same ground family as another site in this portfolio. The third answer was that the page did not need one.
 - state: `#57c98a` inside band, `#f0b429` over band, `#ff6b5e` stop charging, each with a matched dark plate behind it
 - action: `#0b47b8`, only on the button that commits
 
