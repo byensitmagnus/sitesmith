@@ -18,6 +18,33 @@ A command that is missing, or that fails to start, is neither a pass nor a silen
 Record it in the run notes below with the observed reason and whatever you did by hand
 instead, then carry on.
 
+## Look at the render before you read the report
+
+The scripts measure. They cannot see. Open `375.png` and `1440.png` and look at them the way
+the client will, before any machine verdict: once you have read a PASS you will read the
+picture as confirming it. The render matrix already made them.
+
+Six questions, answered from the image alone:
+
+1. **Where does the eye land first, and is it the thing the brief said the page must
+   do?** If it lands on the navigation or a decorative panel, the hierarchy is wrong
+   whatever the heading levels say.
+2. **What reads as a template first?** Name it. There is always one.
+3. **Is the signature visible at 1440 and alive at 375?** One that exists only in the
+   design record is not a signature.
+4. **Where is the page emptiest, and is that emptiness doing work?** Space nobody chose
+   reads as a missing section.
+5. **Read the six largest words in order. Do they say what the business does?** If a
+   competitor could say them too, that is category copy.
+6. **Cover the top third. Does the rest still say what this is?** If not, the hero is
+   carrying everything and the page has one idea.
+
+One line per question in the report, then fix what you found. **Two passes at most.** A
+third is redecorating, and the second may not add an element, only change or remove one.
+
+With no browser, say the render was not inspected and mark the visual verdict not taken.
+Never answer these six from the code.
+
 ## The journey contract
 
 A journey is a `journeys/*.spec.mjs` file that drives one real path through the built page
