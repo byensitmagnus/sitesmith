@@ -20,9 +20,8 @@ instead, then carry on.
 
 ## Look at the render before you read the report
 
-The scripts measure. They cannot see. Open `375.png` and `1440.png` and look at them the way
-the client will, before any machine verdict: once you have read a PASS you will read the
-picture as confirming it. The render matrix already made them.
+The scripts measure. They cannot see. Open `375.png` and `1440.png` and look the way the client will, before any machine
+verdict: once you have read a PASS you read the picture as confirming it.
 
 Six questions, answered from the image alone:
 
@@ -39,8 +38,8 @@ Six questions, answered from the image alone:
 6. **Cover the top third. Does the rest still say what this is?** If not, the hero is
    carrying everything and the page has one idea.
 
-One line per question in the report, then fix what you found. **Two passes at most.** A
-third is redecorating, and the second may not add an element, only change or remove one.
+One line per question in the report, then fix what you found. **Two passes at most**, and
+the second may not add an element, only change or remove one.
 
 With no browser, say the render was not inspected and mark the visual verdict not taken.
 Never answer these six from the code.
