@@ -104,6 +104,17 @@ const CASES = [
     ],
   },
   {
+    name: 'must pass, the scan is not fooled by where the keyboard sweep left the page',
+    args: [`${base}${FIX}/scrolled-axe/`],
+    expect: 0,
+    why: 'the sweep leaves this page near scrollY 2000, and axe composites backgrounds in viewport coordinates, so the scan has to start from the top with nothing focused or its contrast results describe the wrong element; benchmark 09-data-entry produced a 1.1:1 blocker exactly this way',
+    expectOutput: [
+      'scan position      : scrollY 0, focused body',
+      'axe both schemes   : ran, 0 violations',
+      'PASS, nothing blocking',
+    ],
+  },
+  {
     name: 'must keep failing, motion survives the preference',
     args: [`${base}${FIX}/fail-motion/`],
     expect: 1,

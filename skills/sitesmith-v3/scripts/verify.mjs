@@ -712,8 +712,44 @@ try {
       report.notMeasured.push({ check: `focus sweep at ${width}px`, reason: String(e).split('\n')[0].slice(0, 160) });
     }
 
+    /*
+     * Put the page back where axe expects to find it. The focus sweep above presses Tab
+     * up to eighty times, which scrolls, and it leaves an element focused. axe resolves a
+     * background by compositing what is behind an element's box, in viewport coordinates.
+     * An element that has scrolled above the fold therefore gets the background of
+     * whatever now occupies that screen position.
+     *
+     * This is not theoretical. Against benchmark 09-data-entry it reported the dark
+     * header's caption as light grey on cream at 1.1:1, a blocking contrast failure, by
+     * compositing the header's text against the selection bar further down the page. The
+     * real background is #16171a and the real ratio passes. A gate that invents a blocker
+     * is worse than one that misses a defect: it teaches people to override it.
+     */
+    await page.evaluate(() => {
+      document.activeElement?.blur?.();
+      window.scrollTo(0, 0);
+    });
+    await page.waitForTimeout(120);
+
     // Link and axe checks only need to run once; the narrowest viewport is the strictest.
     if (width === Math.min(...widths)) {
+      /*
+       * Recorded rather than assumed, and recorded here rather than once per viewport.
+       * The restore above is the kind of line a later edit moves or drops without
+       * noticing, and its absence does not throw: it quietly turns some contrast results
+       * into fiction. A first version of this probe sat in the width loop and was
+       * overwritten by the widest viewport, where the page fits and never scrolls, so it
+       * reported a clean position for a scan that had run somewhere else entirely. It
+       * belongs next to the scan whose position it describes.
+       */
+      report.scanPosition = await page.evaluate(() => ({
+        scrollY: Math.round(window.scrollY),
+        focused:
+          document.activeElement === document.body || !document.activeElement
+            ? 'body'
+            : document.activeElement.tagName.toLowerCase(),
+      }));
+
       const links = await page.$$eval('a[href]', (as) =>
         as.map((a) => ({ href: a.href, text: (a.textContent || '').trim().slice(0, 60) })),
       );
@@ -890,6 +926,13 @@ function ranked() {
   say('  WORKING');
   say(`    viewports rendered : ${Object.keys(report.widths).join(', ')}px`);
   say(`    axe both schemes   : ${report.axe ? `ran, ${report.axe.violations.length} violations, ${serious.length} serious or critical` : axeWaived ? 'waived with --no-axe, so this page is unchecked for accessibility' : 'did not run'}`);
+  say(
+    `    scan position      : ${
+      report.scanPosition
+        ? `scrollY ${report.scanPosition.scrollY}, focused ${report.scanPosition.focused}`
+        : 'not recorded'
+    }`,
+  );
   say(`    reduced motion     : ${rm ? `rendered at ${rm.width}px, ${rm.requestCount} requests, ${motionFindings.length} findings` : 'did not run'}`);
   say(`    floor measures     : ${Object.keys(report.measures.perWidth).length} of ${widths.length} viewports measured`);
   say(`    keyboard sweep     : ${Object.entries(report.measures.focus).map(([w, f]) => `${w}px ${f.stops} stops`).join(', ') || 'did not run'}`);
