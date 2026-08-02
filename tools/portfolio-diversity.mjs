@@ -2,7 +2,7 @@
 /**
  * Do the finished sites look like different sites? Original work, MIT.
  *
- *   node scripts/portfolio-diversity.mjs <url> <url> <url> [--labels a,b,c] [--out DIR]
+ *   node tools/portfolio-diversity.mjs <url> <url> <url> [--labels a,b,c] [--out DIR]
  *
  * direction-check asks whether three comps differed. direction-fidelity asks whether one
  * site delivered the direction it chose. This asks the question a viewer asks when they see

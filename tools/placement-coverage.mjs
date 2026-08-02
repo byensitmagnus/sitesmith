@@ -52,6 +52,14 @@ const rows = needsHome.map((m) => {
 })
 
 const unaccounted = rows.filter((r) => r.kind === 'UNACCOUNTED')
+
+/* A placement that names a file which is not in the tree is a plan, not a placement, and
+   this tool reported "all accounted for" over four of them for the whole rebuild:
+   tools/genericness-judge.mjs, tools/self-contained-lint.mjs, tools/critique-gate.mjs and
+   tools/portfolio-diversity.mjs have zero commits between them in any branch. Accounting
+   by string match asks whether somebody wrote a destination down, which is not the
+   question. The question is whether the mechanism landed. */
+const phantom = rows.filter((r) => r.kind === 'scheduled' && !existsSync(join(root, r.target)))
 const disputed = rows.filter((r) => r.disputed)
 const orphanPlacements = (placement.placements ?? []).filter((p) => !needsHome.some((m) => m.key === p.key))
 
@@ -72,6 +80,7 @@ const report = {
   unaccounted: unaccounted.map((r) => ({ key: r.key, source: r.source })),
   disputedAlreadyPresent: disputed.map((r) => r.key),
   orphanPlacements: orphanPlacements.map((p) => p.key),
+  phantomTargets: phantom.map((r) => ({ key: r.key, target: r.target })),
 }
 
 if (process.argv.includes('--json')) {
@@ -110,9 +119,13 @@ if (process.argv.includes('--json')) {
     console.log(`\nORPHAN placements (${orphanPlacements.length}) — placed but not adopted in the ledger:`)
     for (const k of orphanPlacements) console.log(`  ${k}`)
   }
+  if (phantom.length) {
+    console.log(`\nPHANTOM targets (${phantom.length}) — scheduled into a file that is not in the tree:`)
+    for (const r of phantom) console.log(`  ${r.key}  ->  ${r.target}`)
+  }
 }
 
-const fatal = unaccounted.length + disputed.length + orphanPlacements.length
+const fatal = unaccounted.length + disputed.length + orphanPlacements.length + phantom.length
 if (fatal) {
   console.error(`\n${fatal} problem(s). Every adopted mechanism needs a file, a quote proving it is already there, or a written drop.`)
   process.exit(1)

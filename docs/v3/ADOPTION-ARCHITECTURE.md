@@ -212,7 +212,7 @@ A website enters the public showcase only after:
 3. the candidate set passes the rendered portfolio-diversity gate;
 4. the public manifest records source, licence, run/result IDs, limitations, and reproduction status.
 
-The gate preserves the correction already encoded by the current [showcase manifest](../../gallery/showcase.json) and [portfolio-diversity checker](../../skills/sitesmith/scripts/portfolio-diversity.mjs). No maintainer may promote a favourite page by replacing the evaluated portfolio after scores are known.
+The gate preserves the correction already encoded by the current [showcase manifest](../../gallery/showcase.json) and [portfolio-diversity checker](../../tools/portfolio-diversity.mjs). No maintainer may promote a favourite page by replacing the evaluated portfolio after scores are known.
 
 Templates are contract starters, not visual themes. Initial template classes are truthful-brief, existing-site-baseline, direction-policy, DesignSpec, provider-adapter, stack-adapter, verifier, and PublicResultRecord. Examples must pair at least one passing fixture with a nearby failing or blocked fixture and explain the difference.
 

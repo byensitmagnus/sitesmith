@@ -23,7 +23,7 @@ const base = value('--base', 'http://localhost:4321').replace(/\/$/, '');
 const out = resolve(value('--out', join(ROOT, '.sitesmith/showcase-gate')));
 const manifestPath = resolve(value('--manifest', join(ROOT, 'gallery/showcase.json')));
 const manifest = JSON.parse(await readFile(manifestPath, 'utf8'));
-const gate = join(ROOT, 'skills/sitesmith/scripts/portfolio-diversity.mjs');
+const gate = join(ROOT, 'tools/portfolio-diversity.mjs');
 const problems = [];
 
 console.log('\n  showcase gate\n');

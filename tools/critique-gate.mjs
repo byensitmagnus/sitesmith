@@ -2,7 +2,7 @@
 /**
  * The visual critique gate, enforced. Original work, MIT.
  *
- *   node scripts/critique-gate.mjs <dir>
+ *   node tools/critique-gate.mjs <dir>
  *
  * <dir> holds one `CRITIQUE-<reviewer>.md` per reviewer and one `key.json`. The rules are in
  * v2/50-critique.md; this is the part of them a script can hold.
