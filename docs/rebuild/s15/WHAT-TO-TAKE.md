@@ -104,7 +104,7 @@ at line 412. `stripDataUris` already blanks `href="data:..."`, so a favicon's ow
    is a regression check before it is anything else. currentColor and none are the two
    correct literals and stay allowed. */
 for (const svg of scan.matchAll(/<svg\b[\s\S]*?<\/svg>/gi)) {
-  for (const a of svg[0].matchAll(/\s(?:fill|stroke)=["']([^"']+)["']/gi)) {
+    // for (const a of svg[0].matchAll(/\s(?:fill|stroke)=PAINT/gi))  // see gate.mjs for the literal pattern
     const v = a[1].trim();
     if (/^(none|currentcolor|inherit|transparent)$/i.test(v) || /^(var|url)\(/i.test(v)) continue;
     refuse('render/drawing-carries-a-literal-colour', file, lineOf(src, svg.index + a.index),
