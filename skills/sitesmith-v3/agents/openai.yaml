@@ -36,6 +36,9 @@ commands:
   check_repeat: node ../scripts/ledger.mjs check <build-dir>
   record_render: node ../scripts/ledger.mjs commit <build-dir>
   render_and_measure: node ../scripts/verify.mjs <url> --out <dir>
+  # Behaviour, which the render step does not touch: it never clicks, submits or adds to
+  # a cart. Run it from the directory that has playwright installed.
+  run_journeys: node ../scripts/journey.mjs <build-dir>/journeys --base <url>
   release_gate: node ../scripts/gate.mjs <build-dir> --skill <skill-dir>
 
 requires:

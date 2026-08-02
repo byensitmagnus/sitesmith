@@ -165,6 +165,9 @@ jobs:
           node ../skills/sitesmith-v3/scripts/ledger.mjs parse ../pilots/04-byens-it
           node ../skills/sitesmith-v3/scripts/gate.mjs ../pilots/04-byens-it
           node ../skills/sitesmith-v3/scripts/verify.mjs http://localhost:4341/pilots/04-byens-it/ --out /tmp/pilot-04
+          # Behaviour, which the render step never touches. Run from benchmarks/ because
+          # that is where playwright is installed on this runner.
+          node ../skills/sitesmith-v3/scripts/journey.mjs ../pilots/04-byens-it/journeys             --base http://localhost:4341/pilots/04-byens-it
 
       # Every benchmark under the v3 gate, and the control group still refused by it. This
       # is what says the v3 verifier can replace the v2 one rather than merely coexist.

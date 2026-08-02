@@ -46,21 +46,17 @@ Never answer these six from the code.
 
 ## The journey contract
 
-A journey is a `journeys/*.spec.mjs` file that drives one real path through the built page
-and asserts four things. Fewer than four and it is a smoke test, not a journey.
+A `journeys/*.spec.mjs` file that drives one real path and asserts four things. Fewer than
+four is a smoke test.
 
-1. Something observably changed: a value, a row, a URL or a rendered region differs after
-   the action.
-2. The change was announced: a `role="status"` or `role="alert"` region carries it, or
-   focus moved to the thing that changed.
-3. The failure path was exercised, and its message is attached to the field that caused it
-   rather than floated at the top of the page.
-4. The whole path completed on the keyboard alone, with a focus indicator visible at every
-   stop.
+1. Something observably changed: a value, a row, a URL or a rendered region differs.
+2. It was announced: `role="status"`, `role="alert"`, or focus moved to what changed.
+3. The failure path ran, and its message sits on the field that caused it.
+4. The path completed on the keyboard alone, with an indicator visible at every stop.
 
-Write one journey per surface listed on the `Surfaces:` line of `.sitesmith/direction.md`.
-`node scripts/journey.mjs` runs them all. A surface with no journey fails `gate.mjs` at
-release, and an empty `journeys/` directory fails it outright.
+One per surface. Run from where playwright is: `node scripts/journey.mjs <dir> --base <url>`.
+Buy, operate and redesign are refused without one. Read and experience are not asked: a page
+with no interactive path has no journey, and demanding one yields smoke tests wearing the name.
 
 ## The state roster
 

@@ -397,6 +397,46 @@ function parseManifest(md) {
   return rows;
 }
 
+/* ── journeys ──────────────────────────────────────────────────────────── */
+
+/* verify.md, "The journey contract", has always said this: "A surface with no journey
+   fails gate.mjs at release, and an empty journeys/ directory fails it outright." Until
+   this block existed the string "journey" did not appear anywhere in this file, so the
+   sentence described a check nobody had written. Prose that describes an unbuilt check is
+   worse than no prose, because it reads as coverage.
+
+   Why it belongs here and not in verify.mjs: verify.mjs renders, measures and scans, and
+   its keyboard pass presses Tab and reads computed style. It never clicks. A product page
+   whose add-to-cart handler sits in a component that never hydrates clears every check it
+   makes. Behaviour is a different question from appearance and it needs a different check.
+
+   Draft downgrades it, the same as the asset manifest, because a draft is by definition a
+   build whose behaviour is not finished yet. */
+/* Scoped to the surfaces that have behaviour, and not to every build, because a brochure
+   with no interactive path has no journey to write and demanding one would produce a
+   directory of smoke tests named after a contract they do not meet. The surface is the
+   one the record declares. `buy` and `operate` are where a broken handler ships as a
+   working page; `read` and `experience` are not. */
+const BEHAVIOURAL_SURFACES = /\b(buy|operate|redesign)\b/i;
+const journeyDir = join(BUILD, 'journeys');
+const journeySpecs = (await readdir(journeyDir).catch(() => null))?.filter((f) => f.endsWith('.spec.mjs')) ?? null;
+const journeyRefusal = DRAFT ? warn : refuse;
+const declaredSurface = directionRaw
+  ? (directionRaw.match(/^[ \t]*#{1,6}[ \t]*Surfaces?[ \t]*$/im)
+      ? directionRaw.slice(directionRaw.search(/^[ \t]*#{1,6}[ \t]*Surfaces?[ \t]*$/im)).split('\n').slice(1, 4).join(' ')
+      : (directionRaw.match(/^[ \t]*Surfaces?:[ \t]*(.*)$/im)?.[1] ?? ''))
+  : '';
+
+if (BEHAVIOURAL_SURFACES.test(declaredSurface)) {
+  if (journeySpecs === null) {
+    journeyRefusal('journeys/none', join(journeyDir, '<surface>.spec.mjs'), 1,
+      `the record declares a ${declaredSurface.trim().split(/\s+/)[0]} surface and there is no journeys/ directory. Appearance was checked and behaviour was not: nothing in this gate clicks, submits or adds to a cart.`);
+  } else if (!journeySpecs.length) {
+    journeyRefusal('journeys/empty', journeyDir, 1,
+      'journeys/ exists and holds no *.spec.mjs. An empty directory reads as tested and is not.');
+  }
+}
+
 const manifestRaw = await readFile(MANIFEST_PATH, 'utf8').catch(() => null);
 const manifest = manifestRaw ? parseManifest(manifestRaw) : [];
 const assetRefusal = DRAFT ? warn : refuse;

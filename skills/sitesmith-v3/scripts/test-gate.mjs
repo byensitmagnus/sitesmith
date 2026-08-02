@@ -83,6 +83,23 @@ const CASES = [
     why: 'four tells, none of them claimed in the direction record',
   },
   {
+    name: 'a buy surface with nothing that drives it',
+    fixture: 'buy-no-journeys', browser: true, expect: 2,
+    must: ['journeys/none'],
+    // verify.md promised this gate long before anything implemented it. Nothing here
+    // clicks: verify.mjs renders and measures, its keyboard pass presses Tab and reads
+    // computed style, and gate.mjs contained no occurrence of the word journey at all. A
+    // product page whose add-to-cart handler never hydrates cleared every check.
+    why: 'a page that sells has to be driven, and the two fixtures differ only by the presence of one spec file',
+  },
+  {
+    name: 'the same surface with a journey beside it',
+    fixture: 'buy-with-journey', browser: true, expect: 0,
+    must: ['every check ran and none refused'],
+    mustNot: ['journeys/none', 'journeys/empty'],
+    why: 'the refusal has to lift when the thing it asks for is there, or it is not a gate, it is a wall',
+  },
+  {
     name: 'the record ledger.mjs writes is a record gate.mjs can read',
     fixture: 'canonical-record', browser: true, expect: 0,
     must: ['every check ran and none refused'],
