@@ -269,12 +269,23 @@
       "canonicalCommit": "913f9eaedee92627950544424e50339feaf98271",
       "license": "MIT",
       "redistribution": "allowed-with-notice",
-      "integration": null,
-      "mechanismsUsed": [],
-      "sitesmithPaths": [],
-      "loadedWhen": [],
-      "proof": [],
-      "attributionPath": null
+      "integration": "CLEAN_ROOM",
+      "mechanismsUsed": [
+        "durable run state that outlives the process",
+        "resume tells the next session what was happening rather than making it re-derive"
+      ],
+      "sitesmithPaths": [
+        "skills/sitesmith-v3/scripts/state.mjs",
+        "skills/sitesmith-v3/scripts/test-state.mjs"
+      ],
+      "loadedWhen": [
+        "every run, whenever a phase opens or closes",
+        "on resume, when a session picks up an interrupted build"
+      ],
+      "proof": [
+        "skills/sitesmith-v3/scripts/test-state.mjs"
+      ],
+      "attributionPath": "skills/sitesmith-v3/THIRD-PARTY-NOTICES.md"
     },
     {
       "source": "awesome-claude-code-subagents",
@@ -282,12 +293,22 @@
       "canonicalCommit": "91810b33c707111e05e0988b12e7385d7b5cfe9d",
       "license": "MIT",
       "redistribution": "allowed-with-notice",
-      "integration": null,
-      "mechanismsUsed": [],
-      "sitesmithPaths": [],
-      "loadedWhen": [],
-      "proof": [],
-      "attributionPath": null
+      "integration": "CLEAN_ROOM",
+      "mechanismsUsed": [
+        "a role carries an explicit output contract rather than a job title",
+        "the noun-list antipattern, applied against itself: four roles with contracts instead of two hundred with adjectives"
+      ],
+      "sitesmithPaths": [
+        "skills/sitesmith-v3/delegation.md"
+      ],
+      "loadedWhen": [
+        "delegate, and only when the work splits into independent parts"
+      ],
+      "proof": [
+        "tools/context-budget.mjs",
+        "skills/sitesmith-v3/delegation.md"
+      ],
+      "attributionPath": "skills/sitesmith-v3/THIRD-PARTY-NOTICES.md"
     },
     {
       "source": "ai-dev-tasks",
@@ -344,12 +365,25 @@
       "canonicalCommit": "cfacb56a05a31ba69bf84d0b8b00f5ce463127ef",
       "license": "MIT",
       "redistribution": "allowed-with-notice",
-      "integration": null,
-      "mechanismsUsed": [],
-      "sitesmithPaths": [],
-      "loadedWhen": [],
-      "proof": [],
-      "attributionPath": null
+      "integration": "CLEAN_ROOM",
+      "mechanismsUsed": [
+        "typed nodes and typed edges instead of a log",
+        "causation separated from sequence",
+        "blockers and proofs as edges, so \"why\" is a traversal",
+        "a hard cap on live nodes"
+      ],
+      "sitesmithPaths": [
+        "skills/sitesmith-v3/scripts/state.mjs",
+        "skills/sitesmith-v3/scripts/test-state.mjs"
+      ],
+      "loadedWhen": [
+        "every run, as the shape the state is written in",
+        "on check, when the graph is validated"
+      ],
+      "proof": [
+        "skills/sitesmith-v3/scripts/test-state.mjs"
+      ],
+      "attributionPath": "skills/sitesmith-v3/THIRD-PARTY-NOTICES.md"
     },
     {
       "source": "agent-elements-21st",
@@ -357,12 +391,22 @@
       "canonicalCommit": "b04b36cb6381a1dd1a0e86cc7c90564ddcd56d37",
       "license": "MIT",
       "redistribution": "allowed-with-notice",
-      "integration": null,
-      "mechanismsUsed": [],
-      "sitesmithPaths": [],
-      "loadedWhen": [],
-      "proof": [],
-      "attributionPath": null
+      "integration": "CLEAN_ROOM",
+      "mechanismsUsed": [
+        "an agent interface has a component vocabulary of its own",
+        "that vocabulary is conditional on the brief, never on the stack"
+      ],
+      "sitesmithPaths": [
+        "skills/sitesmith-v3/scripts/components.mjs",
+        "skills/sitesmith-v3/scripts/test-components.mjs"
+      ],
+      "loadedWhen": [
+        "only when the brief names an agent, chat, assistant or transcript surface"
+      ],
+      "proof": [
+        "skills/sitesmith-v3/scripts/test-components.mjs"
+      ],
+      "attributionPath": "skills/sitesmith-v3/THIRD-PARTY-NOTICES.md"
     },
     {
       "source": "magic-21st",
@@ -370,25 +414,45 @@
       "canonicalCommit": "dfba16c1b9baa63ed4efd0c69121ed08ba697b1a",
       "license": "ISC",
       "redistribution": "forbidden",
-      "integration": null,
-      "mechanismsUsed": [],
-      "sitesmithPaths": [],
-      "loadedWhen": [],
-      "proof": [],
-      "attributionPath": null
+      "integration": "CLEAN_ROOM",
+      "mechanismsUsed": [
+        "look for a component that exists before writing one",
+        "reuse before invention, bounded by licence"
+      ],
+      "sitesmithPaths": [
+        "skills/sitesmith-v3/scripts/components.mjs",
+        "skills/sitesmith-v3/scripts/test-components.mjs"
+      ],
+      "loadedWhen": [
+        "before writing any component, in every build"
+      ],
+      "proof": [
+        "skills/sitesmith-v3/scripts/test-components.mjs"
+      ],
+      "attributionPath": "skills/sitesmith-v3/THIRD-PARTY-NOTICES.md"
     },
     {
       "source": "website-builder-setup",
       "name": "tenfoldmarc/website-builder-setup",
       "canonicalCommit": "83d94dac66b90b1da37152084ac671989379b692",
-      "license": "",
+      "license": "none declared; two files and no LICENSE of any kind, so all rights reserved by default",
       "redistribution": "forbidden",
-      "integration": null,
-      "mechanismsUsed": [],
-      "sitesmithPaths": [],
-      "loadedWhen": [],
-      "proof": [],
-      "attributionPath": null
+      "integration": "CLEAN_ROOM",
+      "mechanismsUsed": [
+        "walk the environment one step at a time",
+        "on a failure, give the manual command and keep going rather than stopping"
+      ],
+      "sitesmithPaths": [
+        "tools/install-sitesmith.mjs"
+      ],
+      "loadedWhen": [
+        "install, once, when the skill is put where an agent will find it"
+      ],
+      "proof": [
+        "tools/install-sitesmith.mjs",
+        ".github/workflows/verify.yml"
+      ],
+      "attributionPath": "skills/sitesmith-v3/THIRD-PARTY-NOTICES.md"
     },
     {
       "source": "sitesmith-v2",
@@ -533,15 +597,27 @@
     {
       "source": "framer-motion",
       "name": "Framer Motion patterns",
-      "canonicalCommit": null,
+      "canonicalCommit": "a4e4b3ab73dd64fbab2574fae27d28c0418f25cb",
       "license": "MIT",
-      "redistribution": null,
-      "integration": null,
-      "mechanismsUsed": [],
-      "sitesmithPaths": [],
-      "loadedWhen": [],
-      "proof": [],
-      "attributionPath": null
+      "redistribution": "allowed-with-notice",
+      "integration": "CLEAN_ROOM",
+      "mechanismsUsed": [
+        "layout animation and gesture handling are what a motion library is for",
+        "use it only where it is already a dependency",
+        "animate from a visible resting state, never into one"
+      ],
+      "sitesmithPaths": [
+        "skills/sitesmith-v3/motion.md",
+        "skills/sitesmith-v3/scripts/components.mjs"
+      ],
+      "loadedWhen": [
+        "experience, and only when the brief asks to be carried through something"
+      ],
+      "proof": [
+        "skills/sitesmith-v3/scripts/test-components.mjs",
+        "skills/sitesmith-v3/scripts/test-verify.mjs"
+      ],
+      "attributionPath": "skills/sitesmith-v3/THIRD-PARTY-NOTICES.md"
     }
   ]
 }

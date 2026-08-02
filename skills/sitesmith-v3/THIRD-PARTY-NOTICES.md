@@ -56,15 +56,24 @@ re-expressed; no text moved.
 | grill-for-unknowns | `nicobailon/grill-for-unknowns` | `d8d5f4b4` | MIT | Idea. The four-quadrant unknowns taxonomy and prototypes for taste the user cannot verbalise. **Identity unconfirmed:** this was resolved as the best candidate for a source the brief called "Before Implementing", and no artifact under that name exists. |
 | SiteSmith v2.3 | this repository | `dc00598c` | MIT | Its verification machinery, largely intact: render-versus-declaration fidelity, fail-closed gates, journeys, the cross-project anti-repeat ledger, portfolio diversity, production honesty checks. Plus the craft floor extracted from `v2/modes/` and `v2/tasks/`. |
 
-## Sources read but not used
+## Sources whose contribution is a clean-room implementation
 
-| Source | Licence | Why nothing was taken |
+No text, no structure and no file was copied from any of these. Each one taught a
+mechanism, the mechanism was implemented here from its observed behaviour, and the
+measured 8-word overlap against every one of them is zero. Two of them carry no licence
+that permits redistribution, which is precisely why the implementation is original: a
+capability is not abandoned because its source cannot be copied.
+
+| Source | Licence | What was implemented, and where it lives |
 | --- | --- | --- |
-| `remotion-dev/skills` | **none declared**, upstream monorepo is NOASSERTION with commercial restrictions | Read for its skill-routing and nested-composition shape. One idea informed how techniques are presented without forcing a choice. No text, no structure, no file was copied, and the measured overlap is zero. |
-| `21st-dev/magic-mcp` | ISC declared only in `package.json`, no LICENSE file, GitHub licence field null | Weaker provenance than a licence file. Nothing taken. |
-| `tenfoldmarc/website-builder-setup` | **none** | The repository contains two files and no licence of any kind. All rights reserved by default. Nothing taken, measured overlap zero. |
-| `21st-dev/agent-elements` | MIT | Relevant only to sites that have an agent interface. Deliberately not a dependency of an ordinary website. |
-| `ruflo`, `awesome-claude-code-subagents`, `graph-engineering` | MIT | Seven of eleven mechanisms rejected: swarm platforms, vector memory and role taxonomies help when running a fleet, not when making one skill produce a better website. |
+| `remotion-dev/skills` | **none declared**, upstream monorepo is NOASSERTION with commercial restrictions | One technique selected per brief and only that technique's document opened. `stacks/remotion.md`, written without opening the upstream files at all, and reached only when remotion is already a dependency. |
+| `21st-dev/magic-mcp` | ISC in `package.json` only, no LICENSE file | Look for a component that exists before writing one. `scripts/components.mjs`, which searches the project in front of it rather than a hosted registry, because a key is spend and a check nobody can run is not a check. |
+| `tenfoldmarc/website-builder-setup` | **none**, two files and no LICENSE, so all rights reserved | Walk the environment one step at a time, and on a failure give the manual command and keep going. `tools/install-sitesmith.mjs`. |
+| `21st-dev/agent-elements` | MIT | An agent interface has a component vocabulary of its own, conditional on the brief and never on the stack. `scripts/components.mjs`, routed only when the brief names an agent, chat, assistant or transcript surface. |
+| `ruflo` | MIT | Durable state that outlives the process, and a resume that says what was happening. `scripts/state.mjs`. The swarm platform and the vector store were not taken: they are the wrong size for a skill that builds one website. |
+| `graph-engineering` | MIT | Typed nodes and typed edges rather than a log, with causation separate from sequence and a hard cap of twenty-five live nodes. `scripts/state.mjs`. The nine-stage extraction pipeline and the graph database were not taken. |
+| `awesome-claude-code-subagents` | MIT | A role carries an explicit output contract rather than a job title. `delegation.md`, four roles, opened only when the work splits. Its own two-hundred-persona taxonomy is the noun-list antipattern its own critique names, and is not carried. |
+| `motiondivision/motion` | MIT, commit `a4e4b3ab` | Reach for a motion library only where it is already a dependency, and animate from a visible resting state rather than into one. `motion.md` section 4, plus the detection in `scripts/components.mjs`. |
 
 ## The rule this package follows
 

@@ -10,12 +10,14 @@ context:
     operate: [run.md, floor/operate.md, stacks/*]
     redesign: [run.md, floor/buy.md, redesign.md, stacks/*]
     experience: [run.md, motion.md, stacks/*]
+    delegate: [run.md, delegation.md]
     inspect: [verify.md]
   ceilings:
-    always: 3100
-    routine: 6200
-    experience: 6400
-    redesign: 7200
+    always: 3120
+    routine: 6600
+    experience: 6800
+    redesign: 7600
+    delegate: 6000
     inspect: 4600
 ---
 

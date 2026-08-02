@@ -41,6 +41,12 @@ never in a question.
    carried through something, by scroll, animation or video, also open `motion.md`. When one page is two
    surfaces at once, open both and say which governs where. If a brief fits none, say so,
    pick the closest with a reason, and carry on. Do not invent a third floor.
+   Two conditional layers, neither of which loads by default. Run
+   `node scripts/components.mjs detect .` before writing any component: it reports what
+   this project already has, and `plan <thing>` answers reuse, adapt or write with the
+   reason. Nothing it says installs anything. Open `delegation.md` only when the work
+   genuinely splits into independent parts, which is rare; one agent is the normal case
+   and everything here works that way.
 6. Build from the plan exactly. Every colour and type decision in the code comes from
    it, and changing your mind mid build means changing the plan first. Before writing
    each piece, climb: does it need to exist at all, is it already in this codebase, can

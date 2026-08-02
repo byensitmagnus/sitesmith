@@ -130,6 +130,25 @@ jobs:
       - name: the anti-repeat ledger and the direction record parser
         run: node skills/sitesmith-v3/scripts/test-ledger.mjs
 
+      - name: durable run state and its typed graph
+        run: node skills/sitesmith-v3/scripts/test-state.mjs
+
+      - name: component retrieval routes, and refuses to install
+        run: node skills/sitesmith-v3/scripts/test-components.mjs
+
+      # Every analysed source has to change the product. This refuses when one has no
+      # mechanism, no path, no proof, no licence or no attribution, and when a path or a
+      # proof names a file that is not in the tree.
+      - name: every source contributes, and every contribution exists
+        run: node tools/source-coverage.mjs
+
+      # The package may only point at paths it ships. A file naming a script that does not
+      # exist is the failure this catches, and it had shipped once.
+      - name: the package is self-contained
+        run: |
+          node tools/self-contained-lint.mjs
+          node tools/self-contained-lint.mjs --self-test
+
       - name: the refusal gate, against work it must accept and work it must refuse
         working-directory: benchmarks
         run: node ../skills/sitesmith-v3/scripts/test-gate.mjs

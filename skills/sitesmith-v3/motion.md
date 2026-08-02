@@ -56,8 +56,38 @@ You write a composition. You do not render one; rendering is the project's own p
 
 ## 4. Micro-interaction
 
-Hover, focus, state change, the single deliberate moment. That is section 6 of `SKILL.md`
-and the package already does it. This file exists so the other three are reachable.
+Hover, focus, state change, the single deliberate moment. Section 6 of `SKILL.md` governs
+whether there is one at all. This section governs how it is built.
+
+**In CSS by default.** A transition on `transform` and `opacity` is two lines, ships no
+bytes, and cannot fail to load. Reach past it only for something CSS genuinely cannot do:
+an element that must animate between two places in the DOM, a gesture that follows a
+finger, or a list whose items reorder and must be followed by the eye.
+
+**Motion, formerly Framer Motion, only when it is already installed.** Run
+`node scripts/components.mjs detect` and read the `motion` line. If `motion` or
+`framer-motion` is a dependency, use it: layout animation and gesture handling are what it
+is for, and reimplementing them by hand is worse code with the same bundle already sitting
+in `node_modules`. If it is not installed, do not add it. A page whose only justification
+for a runtime dependency is one hover state has bought the dependency for the wrong reason,
+and the client maintains it forever.
+
+Two rules when it is in use, and both are checked by `verify.mjs` rather than trusted:
+
+- **The content is there without JavaScript.** Animate from a visible resting state, never
+  into one. An element whose initial style is `opacity: 0` and whose only path to visible
+  runs through a script is content that does not exist for a reader whose script failed.
+- **Reduced motion switches it off rather than shortening it.** The preference is a
+  statement about vestibular symptoms, not about taste. Read it once and take the branch
+  that does not animate; do not scale a duration towards zero.
+
+The direction record decides the character, the same as everything else. A stiff spring on
+a workshop's job sheet is the library's default personality, not the client's, and a page
+where every interaction has the same overshoot is the one house style this whole package
+exists to avoid.
+
+Upstream: `motiondivision/motion`, MIT, commit `a4e4b3ab73dd64fbab2574fae27d28c0418f25cb`.
+Nothing is copied from it. What is taken is the rule about when a project already has it.
 
 ## What every level owes
 
