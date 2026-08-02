@@ -1671,6 +1671,27 @@ if (!direction || !direction.palette || !direction.type) {
               nav: Boolean(document.querySelector('nav, [role="navigation"], header a[href]')),
               footer: Boolean(document.querySelector('footer, [role="contentinfo"]')),
             },
+            /* Controls a person can actually reach without scrolling, and not counting the
+               ones every page has at the top. Two reviewers of two unrelated consoles, one
+               per round, said the same thing: the screen opens on inventory and the work is
+               below the fold. "There is no button on the first screen ... the whole job is
+               1250px further down." A tool whose first screen has nothing to press is a
+               report. */
+            reachableActions: [...document.querySelectorAll('button, input:not([type=hidden]), select, textarea, a[href]')]
+              .filter((el) => {
+                if (el.closest('nav, header, footer, [role="navigation"], [role="banner"], [role="contentinfo"]')) return false;
+                /* The shell is not the work. A brand mark pointing at the site root and an
+                   anchor that only moves the viewport are both ways around the page, and a
+                   console whose first screen offers only those offers nothing. */
+                const href = el.getAttribute('href');
+                if (href !== null && (href.startsWith('#') || /^\.?\/?$/.test(href))) return false;
+                if (/skip|spring/i.test(el.textContent || '')) return false;
+                if (el.disabled) return false;
+                const r = el.getBoundingClientRect();
+                return r.width > 0 && r.height > 0 && r.top < VH && r.bottom > 0;
+              })
+              .map((el) => el.tagName.toLowerCase() + (el.getAttribute('type') ? `[${el.getAttribute('type')}]` : ''))
+              .slice(0, 12),
           },
           riskAnswerPresent: riskSel ? Boolean(document.querySelector(riskSel)) : null,
         };
@@ -1849,6 +1870,25 @@ if (!direction || !direction.palette || !direction.type) {
           + 'Give one of them a shape its own content asks for, or claim `one-layout` under Deliberate:.';
         if (deliberate.has('one-layout')) waived.push({ cls: 'look/one-layout', file: show(join(BUILD, 'index.html')), line: 1, detail: deliberate.get('one-layout') });
         else refuse('look/one-layout', join(BUILD, 'index.html'), 1, detail);
+      }
+
+      /* A tool's first screen has to hold the work. Two reviewers, two rounds, two
+         unrelated consoles, and neither saw the other's page: "the top 200px go on vehicle
+         inventory, not on routes, and the list starts at the bottom edge"; "there is no
+         button on the first screen, and the call that is waiting is 1250px further down".
+         Both pages passed every other check in this file.
+
+         Only operate, because a page that reads or persuades earns its first screen with a
+         picture and an argument, and demanding a control there would put a button on an
+         essay. */
+      const operateSurface = /\b(operate|console|dashboard|admin|panel|tool)\b/i.test(declaredSurface);
+      if (operateSurface && fv?.reachableActions) {
+        if (!fv.reachableActions.length) {
+          refuse('operate/nothing-to-do-on-the-first-screen', join(BUILD, 'index.html'), 1,
+            'the first screen at 1440x900 carries no control outside the navigation: no button, no field, no link '
+            + 'that does the thing this surface exists for. An operator opens this and can only read. '
+            + 'Put the work on the first screen, or move what is there below it.');
+        }
       }
 
       if (looksSurface && fv) {

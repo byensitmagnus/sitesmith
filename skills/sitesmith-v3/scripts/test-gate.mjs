@@ -240,6 +240,23 @@ const CASES = [
     why: 'a reader scrolling past three identical frames stops reading the page and starts reading a document',
   },
   {
+    name: 'a console whose first screen has nothing to press',
+    fixture: 'operate-no-action', browser: true, expect: 2,
+    must: ['operate/nothing-to-do-on-the-first-screen'],
+    // Two reviewers, two rounds, two unrelated consoles, neither seeing the other's page:
+    // "the top 200px go on vehicle inventory, not on routes"; "there is no button on the
+    // first screen, and the call that is waiting is 1250px further down". Both pages
+    // passed every other check in this file.
+    why: 'an operator opens a tool to do something, and a first screen that can only be read is a report',
+  },
+  {
+    name: 'the same console with the work on the first screen',
+    fixture: 'operate-with-action', browser: true, expect: 0,
+    must: ['every check ran and none refused'],
+    mustNot: ['operate/nothing-to-do-on-the-first-screen'],
+    why: 'the two fixtures differ by where one form sits, so the refusal has to lift when the work comes up to the fold',
+  },
+  {
     name: 'a rendered page with no critique locked against it',
     fixture: 'critique-missing', browser: true, expect: 2,
     must: ['critique/not-taken'],
