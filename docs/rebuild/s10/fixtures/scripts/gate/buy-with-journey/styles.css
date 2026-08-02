@@ -34,3 +34,5 @@ h1 {
   border-radius: var(--curl);
   background: var(--iron);
 }
+.ledgerpage { margin-top: 980px; }
+.ledgerpage dl { display: grid; grid-template-columns: auto auto; gap: 0.25rem 1rem; justify-content: start; }

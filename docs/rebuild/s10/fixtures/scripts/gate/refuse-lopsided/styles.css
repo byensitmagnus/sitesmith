@@ -37,3 +37,5 @@ h1 {
 
 .ledgerband { padding: 2rem 0; background: var(--paper); }
 .ledgerband h2, .ledgerband p { max-width: 34ch; margin-left: 3rem; }
+.ledgerpage { margin-top: 980px; }
+.ledgerpage dl { display: grid; grid-template-columns: auto auto; gap: 0.25rem 1rem; justify-content: start; }

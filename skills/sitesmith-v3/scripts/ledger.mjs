@@ -68,6 +68,18 @@ export const REQUIRED = [
      that selector in the rendered DOM the same way it already looks for the signature. A
      risk with no answer is now a refusal instead of a paragraph. */
   'Answer to the risk',
+  /* The second reading. Nine cold builds, nine blind reviewers, and every one of them
+     named one thing they liked; all nine were the same move, one of the subject's own
+     measurements made readable in a second. Four of the first six answered "could this be
+     anyone" with a variant of: no, but only because of that one drawing, cut it out and
+     the page is generic. The move was used once, on the signature, and everything else was
+     chrome around it.
+
+     So a second one is owed, it names its own selector, and it may not live in the first
+     screen or repeat the signature's fact. The disjointness is the whole mechanism: asked
+     for a second reading with no constraint, the cheapest answer is the same drawing
+     twice. */
+  'Second reading',
   /* The shell: who this is, where they are, and one thing the reader can do. The cleanest
      correlation in the whole set is this one. The four rejected pages have exactly one
      anchor each, the skip link, and no nav and no footer between them. The one accepted
@@ -244,6 +256,12 @@ export function directionProblems(record) {
   const answer = record.body('Answer to the risk')
   if (answer.trim() && !/`[^`]+`|\.[a-z][\w-]*|#[a-z][\w-]*|<[a-z]+>/i.test(answer)) {
     problems.push('the "Answer to the risk" section names no selector or element, so nothing can check that the answer is on the page')
+  }
+
+  /* And so does the second reading, for the same reason and from the same evidence. */
+  const second = record.body('Second reading')
+  if (second.trim() && !/`[^`]+`|\.[a-z][\w-]*|#[a-z][\w-]*/i.test(second)) {
+    problems.push('the "Second reading" section names no selector, so nothing can check that a second reading of this subject is on the page')
   }
 
   return problems
@@ -617,6 +635,7 @@ export function template(surface) {
     if (name === 'Case for the runner-up') out.push('For:', '')
     if (name === 'Built') out.push('Built: <thesis number>, axis: <the axis>, because <reason in this subject\'s terms>', '')
     if (name === 'Answer to the risk') out.push('The risk above is answered by <selector>, which <what it does about it>.', '')
+    if (name === 'Second reading') out.push('<selector> renders <which other measurement of this subject>, below the first screen, from a different fact than the signature.', '')
     if (name === 'The shell') out.push('Who: <name, visible where>. Where: <place or "no physical place">. Do: <the one action, and the element that carries it>.', '')
     if (name === 'One-offs') out.push('- `none` no literal length or shadow is written at a call site', '')
     if (name === 'Deliberate') out.push('- `none` this build claims no antipattern on purpose', '')

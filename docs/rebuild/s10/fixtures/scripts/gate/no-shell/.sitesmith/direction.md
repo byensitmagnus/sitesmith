@@ -15,6 +15,9 @@ Deliberate:
 ## Answer to the risk
 The risk above is answered by `.wetline`, the signature that runs under every heading and keeps the page reading as one object rather than as a document with sections.
 
+## Second reading
+`.ledgerpage` renders the pit book itself, hides in pit one and the oldest entry, below the first screen and from facts the signature does not carry.
+
 ## The shell
 The loft name is set as plain text and nothing else. There is no header link, no navigation and no footer, and no action a reader can take.
 

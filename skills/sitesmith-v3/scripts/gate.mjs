@@ -431,6 +431,7 @@ const sectionOf = (name) => {
 };
 const shellSection = sectionOf('The shell');
 const riskAnswerSelector = (sectionOf('Answer to the risk').match(/`([.#][\w-]+)`/) ?? [])[1] ?? null;
+const secondReadingSelector = (sectionOf('Second reading').match(/`([.#][\w-]+)`/) ?? [])[1] ?? null;
 
 const journeyDir = join(BUILD, 'journeys');
 const journeySpecs = (await readdir(journeyDir).catch(() => null))?.filter((f) => f.endsWith('.spec.mjs')) ?? null;
@@ -1389,7 +1390,7 @@ if (!direction || !direction.palette || !direction.type) {
     let measured = null;
     try {
       await page.goto(entry, { waitUntil: 'load', timeout: 20000 });
-      measured = await page.evaluate(({ s, riskSel }) => {
+      measured = await page.evaluate(({ s, riskSel, secondSel }) => {
         const paint = (el) => {
           const c = getComputedStyle(el).backgroundColor;
           return /rgba?\(\s*0,\s*0,\s*0,\s*0\)|transparent/.test(c) ? null : c;
@@ -1766,8 +1767,40 @@ if (!direction || !direction.palette || !direction.type) {
               .slice(0, 12),
           },
           riskAnswerPresent: riskSel ? Boolean(document.querySelector(riskSel)) : null,
+          /* The second reading, measured on three axes rather than one: is it there, is it
+             below the first screen, and does it read a different fact than the signature.
+             The third is the one that matters. Asked for a second reading with nothing
+             else said, the cheapest answer is the same drawing again lower down, and this
+             package has watched itself take the cheapest answer before. Facts are compared
+             as the numbers-with-units and proper nouns each element carries, because that
+             is what the reviewers were reading when they said "the hatching density IS the
+             shore rating". */
+          secondReading: (() => {
+            if (!secondSel) return null;
+            const e2 = document.querySelector(secondSel);
+            if (!e2) return { present: false };
+            const r2 = e2.getBoundingClientRect();
+            const factsOf = (node) => {
+              if (!node) return [];
+              const t = (node.textContent || '').replace(/\s+/g, ' ');
+              const nums = t.match(/\d[\d.,]*\s*(?:%|[a-zA-ZæøåÆØÅ]{1,6}\b)?/g) ?? [];
+              return [...new Set(nums.map((x) => x.trim().toLowerCase()).filter((x) => x.length > 1))];
+            };
+            const sigFacts = factsOf(el);
+            const myFacts = factsOf(e2);
+            const shared = myFacts.filter((f) => sigFacts.includes(f));
+            return {
+              present: true,
+              y: Math.round(window.scrollY + r2.top),
+              inFirstScreen: r2.top < VH && r2.bottom > 0,
+              facts: myFacts.length,
+              sharedWithSignature: shared.length,
+              shareRatio: myFacts.length ? Number((shared.length / myFacts.length).toFixed(2)) : 0,
+              examples: shared.slice(0, 5),
+            };
+          })(),
         };
-      }, { s: sel, riskSel: riskAnswerSelector });
+      }, { s: sel, riskSel: riskAnswerSelector, secondSel: secondReadingSelector });
     } catch (e) {
       withhold('direction fidelity', `${entry} did not render: ${e.message.split('\n')[0]}`);
     } finally {
@@ -1953,6 +1986,27 @@ if (!direction || !direction.palette || !direction.type) {
          Only operate, because a page that reads or persuades earns its first screen with a
          picture and an argument, and demanding a control there would put a button on an
          essay. */
+      /* The second reading has to be on the page, below the fold, and about something
+         else. Nine reviewers named one thing they liked and it was the same move nine
+         times; four of them then said the page was generic with that one thing cut out. */
+      const sr = measured.secondReading;
+      if (secondReadingSelector && sr) {
+        if (!sr.present) {
+          refuse('look/second-reading-missing', DIRECTION_PATH, 1,
+            `the record names "${secondReadingSelector}" as the second reading of this subject, and it is not in the rendered page.`);
+        } else if (sr.inFirstScreen) {
+          refuse('look/one-reading', join(BUILD, 'index.html'), 1,
+            `"${secondReadingSelector}" is in the first screen at y=${sr.y}, beside the signature. A page whose whole `
+            + 'argument fits above the fold has one reading, and a reviewer who scrolls past it meets chrome. '
+            + 'Put the second reading where the reader arrives after the first one has done its work.');
+        } else if (sr.facts >= 3 && sr.shareRatio > 0.6) {
+          refuse('look/one-reading', join(BUILD, 'index.html'), 1,
+            `"${secondReadingSelector}" reads the same facts as the signature: ${Math.round(sr.shareRatio * 100)}% shared`
+            + `${sr.examples.length ? ` (${sr.examples.join(', ')})` : ''}. That is the same drawing twice, which is the `
+            + 'cheapest answer to being asked for a second one. Render a different measurement of this subject.');
+        }
+      }
+
       /* Elements drawn wider than the content they hold. Reported per element with its own
          numbers, because the fix is per element: shorten the rule to what it underlines,
          or put something under it that earns the width. */
