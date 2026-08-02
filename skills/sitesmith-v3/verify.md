@@ -29,29 +29,13 @@ instead, then carry on.
 
 ## Look at the render before you read the report
 
-The scripts measure. They cannot see. Open `375.png` and `1440.png` and look the way the client will, before any machine
-verdict: once you have read a PASS you read the picture as confirming it.
+The scripts measure. They cannot see. `critique.mjs packet` holds the six questions and
+the images, and it is the whole input: once you have read a PASS you read the picture as
+confirming it, so the packet is answered first and the report second.
 
-Six questions, answered from the image alone:
-
-1. **Where does the eye land first, and is it the thing the brief said the page must
-   do?** If it lands on the navigation or a decorative panel, the hierarchy is wrong
-   whatever the heading levels say.
-2. **What reads as a template first?** Name it.
-3. **Is the signature visible at 1440 and alive at 375?** One that exists only in the
-   design record is not a signature.
-4. **Where is the page emptiest, and is that emptiness doing work?** Space nobody chose
-   reads as a missing section.
-5. **Read the six largest words in order. Do they say what the business does?** If a
-   competitor could say them too, that is category copy.
-6. **Cover the top third. Does the rest still say what this is?** If not, the hero is
-   carrying everything and the page has one idea.
-
-One line per question in the report, then fix what you found. **Two passes at most**, and
-the second may not add an element, only change or remove one.
-
-With no browser, say the render was not inspected and mark the visual verdict not taken.
-Never answer these six from the code.
+One line per question, then lock it and fix what you found. With no browser, say the
+render was not inspected and mark the visual verdict not taken. Never answer the six from
+the code.
 
 ## The journey contract
 
@@ -66,12 +50,6 @@ four is a smoke test.
 One per surface. Run from where playwright is: `node scripts/journey.mjs <dir> --base <url>`.
 Buy, operate and redesign are refused without one. Read and experience are not asked: a page
 with no interactive path has no journey, and demanding one yields smoke tests wearing the name.
-
-## Look at the render before you call it done
-
-`verify.mjs` counts defects. It does not have an opinion about the page. After it passes,
-open the screenshots it wrote at 1440 and at 375 and do `look.md` section 6: five
-sentences of critique against the image, then exactly one correction round.
 
 Both answers belong in the production report. A run that says the critique found nothing
 is making a claim, and it is the claim a reader is most entitled to disbelieve.
