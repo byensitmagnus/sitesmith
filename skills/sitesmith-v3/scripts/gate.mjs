@@ -849,11 +849,21 @@ if (existsSync(SHOTS_DIR) && readdirSync(SHOTS_DIR).some((f) => f.endsWith('.png
         h.update(f); h.update(readFileSync(join(SHOTS_DIR, f)));
       }
       const now = h.digest('hex').slice(0, 16);
-      if (now !== saved.render && !(saved.corrections ?? []).length) {
+      /* The lock has to name the render that ships, and nothing weaker. The first version
+         let a recorded correction stand in for a matching hash, and a cold build walked
+         straight through the hole it left: the critique was locked, the ledger then forced
+         a palette change, the page shipped, and the gate accepted a critique of a page
+         that no longer existed because one correction was on file. The builder reported it
+         against itself.
+
+         So the hash must match, always. A correction round explains why the page moved; it
+         does not excuse the critique from describing what was actually sent. */
+      if (now !== saved.render) {
+        const rounds = (saved.corrections ?? []).length;
         refuse('critique/stale', CRITIQUE_PATH, 1,
           `the critique is locked against render ${saved.render} and this build renders as ${now}. `
-          + 'The page moved after it was looked at, and no correction round says what changed. '
-          + 'Re-lock with --correction "what changed and why", or look at it again.');
+          + `The page moved after it was looked at${rounds ? `, and the ${rounds} recorded correction round${rounds > 1 ? 's do' : ' does'} not cover this change` : ' and nothing says what changed'}. `
+          + 'Look at the render that is actually shipping and re-lock it, with --correction "what changed and why" if this was the correction round.');
       }
     }
   }
