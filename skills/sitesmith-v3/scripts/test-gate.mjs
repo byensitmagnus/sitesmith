@@ -220,6 +220,24 @@ const CASES = [
     must: ['WAIVED', 'look/lopsided-band', 'every check ran and none refused'],
     why: 'a page is allowed one wide margin and one narrow, and the cost of that answer is typing it into the record',
   },
+  {
+    name: 'a rendered page with no critique locked against it',
+    fixture: 'critique-missing', browser: true, expect: 2,
+    must: ['critique/not-taken'],
+    // look.md section 6 and verify.md both ask for a critique and nothing has ever read
+    // one. Three builds wrote theirs, cleared their own gates, and were rejected by three
+    // reviewers who saw only the brief and the images. Two builders also reported reading
+    // the verify PASS before opening the screenshots, which is the ordering verify.md
+    // tells them not to use.
+    why: 'verify rendered the page, so the critique is owed, and a critique nothing reads is the field the risk was written in for five builds running',
+  },
+  {
+    name: 'the same page with the critique locked to its render',
+    fixture: 'critique-locked', browser: true, expect: 0,
+    must: ['every check ran and none refused'],
+    mustNot: ['critique/not-taken', 'critique/stale'],
+    why: 'the refusal lifts when the six answers exist and hash to the images that were actually shown',
+  },
 ];
 
 let failed = 0;

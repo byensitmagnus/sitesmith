@@ -10,9 +10,18 @@ entitles you to say the check ran.
 
 ```text
 node scripts/verify.mjs <target>   render matrix, axe in both colour schemes, floor measures
+node scripts/critique.mjs packet   the six questions and the images, and nothing else
+node scripts/critique.mjs lock --file <answers>   the answers, hashed to this render
 node scripts/journey.mjs           every journey in journeys/
 node scripts/gate.mjs              honesty, anti-pattern and contract refusals
 ```
+
+The critique runs second, before any report is read. `packet` prints the whole input a
+reviewer gets: the images, the brief, the six questions. Hand it to a fresh agent when one
+is available, and read it with the direction record closed when one is not. `lock` hashes
+the render, so a critique written after the page moved is refused as a critique of a page
+that no longer exists, and the one correction round look.md allows is `--correction "what
+changed and why"`. A second one is refused: that is where a page gets sanded flat.
 
 A command that is missing, or that fails to start, is neither a pass nor a silent skip.
 Record it in the run notes below with the observed reason and whatever you did by hand

@@ -31,10 +31,11 @@
  */
 
 import { readFile, readdir, stat } from 'node:fs/promises';
-import { existsSync } from 'node:fs';
+import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { join, resolve, relative, sep, extname, basename, dirname } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { createRequire } from 'node:module';
+import { createHash } from 'node:crypto';
 
 /* The one character this package bans outright, written as an escape so that the file
    enforcing the ban does not contain the thing it bans. Two refusal messages below are
@@ -816,6 +817,47 @@ if (reportRaw !== null) {
    the rule, not against the reviewer, which is why it owes a reason and the other two
    do not. */
 const DISPOSITION = /\b(confirmed|missed-by-the-model|false-positive)\b/i;
+
+/* ── the critique, and whether it was taken against this render ───────────── */
+
+/* look.md section 6 and verify.md both ask for a critique of the rendered page, in five
+   and six sentences, before anything is called done. Nothing has ever read one. Three
+   builds were made from this package on three unrelated briefs, all three wrote their
+   critique, all three cleared their own gates, and three reviewers who saw only the brief
+   and the screenshots rejected all three. Two of the three builders reported, unprompted,
+   that they read the verify PASS before opening the images, which is the one ordering
+   verify.md tells them not to use.
+
+   Conditional on the screenshots existing, because gate.mjs is documented as runnable on a
+   build directory alone and verify.mjs announces its own absence. Where verify has run,
+   the critique is owed and it is owed against the render that was actually shown. */
+const SHOTS_DIR = join(BUILD, '.sitesmith/shots');
+const CRITIQUE_PATH = join(BUILD, '.sitesmith/critique.json');
+if (existsSync(SHOTS_DIR) && readdirSync(SHOTS_DIR).some((f) => f.endsWith('.png'))) {
+  if (!existsSync(CRITIQUE_PATH)) {
+    refuse('critique/not-taken', CRITIQUE_PATH, 1,
+      'verify.mjs rendered this page and no critique is locked against it. Run `node scripts/critique.mjs packet` '
+      + 'and answer the six questions from the images alone, then `critique.mjs lock --file <answers>`. '
+      + 'A critique nothing reads is the field the risk was written in for five builds running.');
+  } else {
+    let saved = null;
+    try { saved = JSON.parse(readFileSync(CRITIQUE_PATH, 'utf8')); }
+    catch (e) { refuse('critique/unreadable', CRITIQUE_PATH, 1, `${e.message.split('\n')[0]}`); }
+    if (saved) {
+      const h = createHash('sha256');
+      for (const f of readdirSync(SHOTS_DIR).filter((x) => x.endsWith('.png')).sort()) {
+        h.update(f); h.update(readFileSync(join(SHOTS_DIR, f)));
+      }
+      const now = h.digest('hex').slice(0, 16);
+      if (now !== saved.render && !(saved.corrections ?? []).length) {
+        refuse('critique/stale', CRITIQUE_PATH, 1,
+          `the critique is locked against render ${saved.render} and this build renders as ${now}. `
+          + 'The page moved after it was looked at, and no correction round says what changed. '
+          + 'Re-lock with --correction "what changed and why", or look at it again.');
+      }
+    }
+  }
+}
 
 if (reportRaw !== null) {
   const found = section(reportRaw, 'Mechanical findings');
