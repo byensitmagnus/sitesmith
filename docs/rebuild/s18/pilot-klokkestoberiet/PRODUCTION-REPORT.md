@@ -91,3 +91,22 @@ What is missing, precisely: one photograph of the foundry floor, ideally during 
 What happens next: ask for it. The drawings on this page are correct for what they are, a
 section and a diagram, and they are the wrong answer for a thing that could be
 photographed. Nothing here should be replaced by a generated image.
+
+## Det typografiske gulv, målt og besvaret
+
+`verify.mjs` måler nu måltebredde, linjeafstand mod måltebredde, knibningsgulv,
+display-loft, skalatrin og lys-tekst-på-mørk-grund. Tallene er impeccables craft-floor
+(Apache-2.0), båret som målinger frem for som råd. Hvad den fandt på denne side, og hvad
+der skete:
+
+| Fund | Svar |
+| --- | --- |
+| lys tekst på mørk grund ved vægt 400 | kompenseret på tre akser: linjeafstand 1,68, knibning +0,006em, vægt 500 |
+| undertiden målte 33ch | udvidet til 46ch |
+| tonernes brødtekst målte 43ch | udvidet til 54ch |
+| to overskriftsstørrelser 1,06x fra hinanden | h2 hævet, h3 sænket, så trinnet er tydeligt |
+
+To trin-fund står tilbage ved 375 og 768 på 1,12 og 1,13. De er accepteret: de opstår
+mellem to clamp-kurver der krydser hinanden på netop de bredder, og at jage dem ville
+låse typen til faste størrelser i stedet for til viewporten. Målingen rapporterer og
+dømmer ikke, hvilket er det rigtige for et håndværksspørgsmål med et tal bag.

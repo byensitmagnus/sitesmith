@@ -25,8 +25,12 @@
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
+/* Lys tekst paa moerk grund kompenseres paa tre akser, ikke kun paa farve: lidt mere
+   linjeafstand, en anelse mere knibning, og ét trin mere vaegt. verify.mjs maalte det og
+   sagde det; det her er svaret. */
 body{margin:0;background:var(--sod);color:var(--skrift);
-     font-family:var(--brod);font-size:var(--tx-brod);line-height:1.6}
+     font-family:var(--brod);font-size:var(--tx-brod);line-height:1.68;
+     letter-spacing:.006em;font-weight:500}
 /* a3: sand og sod. Overfladen, ikke en fyldfarve. */
 body::before{
   content:"";position:fixed;inset:0;pointer-events:none;z-index:6;
@@ -76,7 +80,7 @@ h1{font-family:var(--display);font-weight:400;font-size:clamp(34px,4.4vw,58px);
 .klokkeslet{display:block;font-size:clamp(72px,10.5vw,148px);line-height:.86;
             letter-spacing:-.05em;margin:0 0 var(--r3);color:var(--gloed);
             text-shadow:0 0 var(--r5) rgba(255,106,18,.42)}
-.undertid{margin:0;font-size:var(--tx-note);line-height:1.55;color:var(--skrift-2);max-width:34ch}
+.undertid{margin:0;font-size:var(--tx-note);line-height:1.6;color:var(--skrift-2);max-width:46ch}
 .handling{display:flex;flex-wrap:wrap;gap:var(--r2) var(--r3);margin-top:var(--r4)}
 .knap{display:inline-flex;align-items:center;min-height:50px;padding:var(--r2) var(--r4);
       background:var(--gloed);color:var(--paa-gloed);text-decoration:none;font-weight:700;
@@ -102,13 +106,13 @@ h1{font-family:var(--display);font-weight:400;font-size:clamp(34px,4.4vw,58px);
        background:var(--sod-2);border-top:6px solid var(--gloed-dyb)}
 @media (min-width:900px){.dagen{padding-left:var(--r6);padding-right:var(--r6)}}
 .dagen h2,.toner h2,.praktisk h2{font-family:var(--display);font-weight:400;
-   font-size:clamp(28px,4.2vw,44px);line-height:1.05;letter-spacing:-.02em;margin:0 0 var(--r5)}
+   font-size:clamp(30px,5.0vw,46px);line-height:1.05;letter-spacing:-.02em;margin:0 0 var(--r5)}
 .slag{display:grid;grid-template-columns:1fr;gap:var(--r2);padding:var(--r4) 0;
       border-bottom:1px solid var(--linje)}
 @media (min-width:760px){.slag{grid-template-columns:160px minmax(0,1fr);gap:var(--r4);align-items:baseline}}
 .slag time{font-size:clamp(28px,3.4vw,40px);line-height:1;color:var(--sand);letter-spacing:-.03em}
 .slag h3{margin:0 0 var(--r1);font-family:var(--display);font-weight:400;
-         font-size:clamp(21px,2.4vw,27px);line-height:1.16}
+         font-size:clamp(20px,2.0vw,24px);line-height:1.2}
 .slag p{margin:0;color:var(--skrift-2);max-width:52ch}
 .slag--pour time,.slag--pour h3{color:var(--gloed)}
 .slag--pour{background:linear-gradient(90deg,var(--gloed-vask),var(--gloed-nul) 62%);
@@ -120,7 +124,7 @@ h1{font-family:var(--display);font-weight:400;font-size:clamp(34px,4.4vw,58px);
 @media (min-width:900px){.toner{grid-template-columns:minmax(0,1fr) minmax(0,1fr);
        padding-left:var(--r6);padding-right:var(--r6);gap:var(--r6)}}
 .toner h2{margin-bottom:var(--r3);max-width:16ch}
-.toner p{margin:0 0 var(--r4);color:var(--skrift-2);max-width:44ch}
+.toner p{margin:0 0 var(--r4);color:var(--skrift-2);max-width:54ch}
 .forhold{list-style:none;margin:0;padding:0;display:grid;gap:var(--r2)}
 .forhold li{display:flex;justify-content:space-between;gap:var(--r3);
             border-bottom:1px solid var(--linje);padding-bottom:var(--r2)}

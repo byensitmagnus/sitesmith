@@ -64,6 +64,20 @@ const STRESS_CSS = `
 const TOUCH_MIN_PX = 44;
 const TOUCH_GAP_PX = 24;
 const INDICATOR_CONTRAST = 3;
+/* The typographic floor, from impeccable's craft-floor.md (Apache-2.0), which states it as
+   one line: "body measure 65-75ch, display max 6rem, tracking floor -0.04em, balanced
+   headings, obvious scale and weight steps."
+
+   Carried as numbers rather than as advice, because this package had no craft numbers at
+   all: grep for line-height, leading, tracking or measure across the whole shipped skill
+   returned nothing, and five pages shipped with none of these ever measured. A number can
+   be checked; a paragraph about good typography cannot. */
+const MEASURE_MIN_CH = 45;
+const MEASURE_MAX_CH = 80;
+const TRACKING_FLOOR_EM = -0.045;
+const DISPLAY_MAX_REM = 6.5;
+/* Two type sizes that differ by less than this read as an accident rather than a step. */
+const STEP_RATIO_MIN = 1.15;
 /** Placement threshold: a transform or opacity transition longer than this survives the preference. */
 const REDUCED_MOTION_MAX_MS = 100;
 /** The reduced-motion pass renders at the desktop width so a lazy clip has room to be requested. */
@@ -271,7 +285,7 @@ async function installProbes(page) {
  */
 async function measureViewport(page) {
   return page.evaluate(
-    ({ TOUCH_MIN_PX, TOUCH_GAP_PX }) => {
+    ({ TOUCH_MIN_PX, TOUCH_GAP_PX, MEASURE_MIN_CH, MEASURE_MAX_CH, TRACKING_FLOOR_EM, DISPLAY_MAX_REM, STEP_RATIO_MIN }) => {
       const { INTERACTIVE, visible, sel, nameOf } = window.__ss;
       const controls = [...document.querySelectorAll(INTERACTIVE)].filter(visible).slice(0, 400);
 
@@ -370,7 +384,95 @@ async function measureViewport(page) {
 
       const namelessControls = controls.filter((el) => !nameOf(el)).map(describe);
 
+      /* The typographic floor. Measured on the rendered page rather than read out of the
+         stylesheet, because a measure is a function of the font, the container and the
+         viewport and none of those is in the CSS. */
+      const paras = [...document.querySelectorAll('p, li, dd, blockquote')]
+        .filter(visible)
+        .filter((el) => (el.textContent || '').trim().length > 80)
+        .slice(0, 60);
+
+      const chOf = (el) => {
+        const cs = getComputedStyle(el);
+        const probe = document.createElement('span');
+        probe.textContent = '0';
+        probe.style.cssText = `position:absolute;visibility:hidden;font:${cs.font}`;
+        el.appendChild(probe);
+        const w = probe.getBoundingClientRect().width || parseFloat(cs.fontSize) * 0.5;
+        probe.remove();
+        return el.getBoundingClientRect().width / w;
+      };
+
+      const measures = [];
+      for (const el of paras) {
+        const cs = getComputedStyle(el);
+        const ch = Math.round(chOf(el));
+        const fs = parseFloat(cs.fontSize) || 16;
+        const lh = parseFloat(cs.lineHeight) / fs;
+        /* The floor moves with the viewport. A phone cannot hold 45 characters at a
+           readable size, so applying the desktop band at 375px produces a finding on every
+           paragraph of every mobile render, and a measurement that fires on everything is
+           one nobody reads. */
+        const minCh = window.innerWidth < 600 ? 28 : MEASURE_MIN_CH;
+        if (ch < minCh || ch > MEASURE_MAX_CH) {
+          measures.push({ ...describe(el), measureCh: ch, kind: 'measure' });
+        }
+        /* Line height tuned to measure, not to a universal ratio: a wider line needs more
+           leading to find its way back. Only flagged when it is clearly on the wrong side. */
+        if (ch >= 70 && lh && lh < 1.45) {
+          measures.push({ ...describe(el), measureCh: ch, lineHeight: Number(lh.toFixed(2)), kind: 'leading-too-tight-for-measure' });
+        }
+        if (ch <= 50 && lh && lh > 1.8) {
+          measures.push({ ...describe(el), measureCh: ch, lineHeight: Number(lh.toFixed(2)), kind: 'leading-too-loose-for-measure' });
+        }
+      }
+
+      /* Tracking floor and display ceiling, on the headings. */
+      const rootPx = parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
+      const typeFaults = [];
+      const headings = [...document.querySelectorAll('h1,h2,h3,h4,h5,h6')].filter(visible);
+      for (const el of headings) {
+        const cs = getComputedStyle(el);
+        const fs = parseFloat(cs.fontSize) || 16;
+        const track = parseFloat(cs.letterSpacing);
+        if (Number.isFinite(track) && track / fs < TRACKING_FLOOR_EM) {
+          typeFaults.push({ ...describe(el), trackingEm: Number((track / fs).toFixed(3)), kind: 'tracking-below-floor' });
+        }
+        if (fs / rootPx > DISPLAY_MAX_REM) {
+          typeFaults.push({ ...describe(el), sizeRem: Number((fs / rootPx).toFixed(2)), kind: 'display-over-ceiling' });
+        }
+      }
+
+      /* Obvious scale steps. Two sizes that differ by less than the ratio are not a step,
+         they are two attempts at the same size, and a page full of them reads as flat. */
+      const sizes = [...new Set(headings.map((el) => Math.round(parseFloat(getComputedStyle(el).fontSize))))]
+        .filter(Boolean).sort((a, b) => b - a);
+      const weakSteps = [];
+      for (let i = 0; i + 1 < sizes.length; i++) {
+        const ratio = sizes[i] / sizes[i + 1];
+        if (ratio < STEP_RATIO_MIN) weakSteps.push({ from: sizes[i], to: sizes[i + 1], ratio: Number(ratio.toFixed(2)) });
+      }
+
+      /* Light text on a dark ground needs compensating on three axes, and the one that is
+         always forgotten is weight. Reported, never gated: the right answer depends on the
+         face, and a rule here would mandate the same move on every dark page. */
+      const bodyCs = getComputedStyle(document.body);
+      const lumOf = (c) => {
+        const n = (String(c).match(/[\d.]+/g) ?? []).slice(0, 3).map(Number);
+        return n.length < 3 ? null : (0.2126 * n[0] + 0.7152 * n[1] + 0.0722 * n[2]) / 255;
+      };
+      const groundLum = lumOf(bodyCs.backgroundColor);
+      const inkLum = lumOf(bodyCs.color);
+      const lightOnDark = groundLum !== null && inkLum !== null && groundLum < 0.25 && inkLum > 0.6;
+
       return {
+        typeFloor: {
+          measures: measures.slice(0, 24),
+          typeFaults: typeFaults.slice(0, 16),
+          weakSteps,
+          lightOnDark,
+          bodyWeight: bodyCs.fontWeight,
+        },
         controlCount: controls.length,
         wrappedLabels,
         duplicateIntents,
@@ -381,7 +483,7 @@ async function measureViewport(page) {
         namelessControls,
       };
     },
-    { TOUCH_MIN_PX, TOUCH_GAP_PX },
+    { TOUCH_MIN_PX, TOUCH_GAP_PX, MEASURE_MIN_CH, MEASURE_MAX_CH, TRACKING_FLOOR_EM, DISPLAY_MAX_REM, STEP_RATIO_MIN },
   );
 }
 
@@ -904,6 +1006,27 @@ function ranked() {
     for (const x of d.duplicateIntents) say(`    ${++m}. ${w}px  ${x.count} controls, ${x.kind} : "${x.key}" at ${x.elements.map((e) => e.selector).join(', ')}`);
     if (d.radii.length > 2) say(`    ${++m}. ${w}px  ${d.radii.length} distinct corner radii : ${d.radii.map((r) => `${r.value} (${r.example})`).join(', ')}`);
     if (d.families.length > 2) say(`    ${++m}. ${w}px  ${d.families.length} distinct type families : ${d.families.map((f) => `${f.value} (${f.example})`).join(', ')}`);
+
+    /* The typographic floor, reported and never gated. These are craft judgements with a
+       measurement behind them, not defects: a 90ch measure is wrong on a marketing page
+       and right in a data table, and a gate here would mandate one answer everywhere. The
+       number is the point. Somebody has to look at it. */
+    const tf = d.typeFloor;
+    if (tf) {
+      for (const x of tf.measures.slice(0, 6)) {
+        if (x.kind === 'measure') say(`    ${++m}. ${w}px  measure ${x.measureCh}ch, outside the 45 to 80 band : ${x.selector}`);
+        else say(`    ${++m}. ${w}px  ${x.kind.replace(/-/g, ' ')}, ${x.measureCh}ch at ${x.lineHeight} : ${x.selector}`);
+      }
+      if (tf.measures.length > 6) say(`       and ${tf.measures.length - 6} more measure findings at ${w}px, see report.json`);
+      for (const x of tf.typeFaults) {
+        if (x.kind === 'tracking-below-floor') say(`    ${++m}. ${w}px  tracking ${x.trackingEm}em, under the -0.045em floor : ${x.selector}`);
+        else say(`    ${++m}. ${w}px  display at ${x.sizeRem}rem, over the 6.5rem ceiling : ${x.selector}`);
+      }
+      for (const x of tf.weakSteps) say(`    ${++m}. ${w}px  ${x.from}px and ${x.to}px are ${x.ratio}x apart, which is not a step`);
+      if (tf.lightOnDark && Number(tf.bodyWeight) <= 400) {
+        say(`    ${++m}. ${w}px  light text on a dark ground at weight ${tf.bodyWeight} : compensate on leading, tracking and weight, not only on colour`);
+      }
+    }
     for (const x of d.smallTargets.slice(0, 8)) say(`    ${++m}. ${w}px  tap target ${x.smallestSidePx}px, under the ${TOUCH_MIN_PX}px floor : ${x.selector} "${x.name}"`);
     if (d.smallTargets.length > 8) say(`       and ${d.smallTargets.length - 8} more small targets at ${w}px, see report.json`);
     for (const x of d.tightPairs.slice(0, 6)) say(`    ${++m}. ${w}px  ${x.gapPx}px between targets, under the ${TOUCH_GAP_PX}px floor : ${x.a.selector} and ${x.b.selector}`);
