@@ -101,6 +101,93 @@ jobs:
           echo "::endgroup::"
           exit $fail
 
+  # The v3 package is what tools/install-sitesmith.mjs installs and what the rebuild
+  # produced, and until this job existed nothing in CI ran a single one of its checks.
+  # That was not a gap in coverage, it was a gap in portability: eight of seventeen gate
+  # cases failed on a fresh checkout because every fixture's direction record was matched
+  # by a blanket .sitesmith/ ignore rule and had never been committed. The suites were
+  # green only on the machine that wrote them. This job is what makes that impossible to
+  # repeat, and it runs from a clean checkout on purpose.
+  v3:
+    name: the v3 package proves itself from a clean checkout
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: install a browser for the checks that render
+        working-directory: benchmarks
+        run: |
+          npm install --no-audit --no-fund
+          npx playwright install --with-deps chromium
+
+      # Ordered cheapest first, so a broken script fails before a browser is spent on it.
+      - name: stack router
+        run: node skills/sitesmith-v3/scripts/test-stack.mjs
+
+      - name: the anti-repeat ledger and the direction record parser
+        run: node skills/sitesmith-v3/scripts/test-ledger.mjs
+
+      - name: the refusal gate, against work it must accept and work it must refuse
+        working-directory: benchmarks
+        run: node ../skills/sitesmith-v3/scripts/test-gate.mjs
+
+      - name: the render gate, including the fixtures that must keep failing
+        env:
+          SITESMITH_DEPS_DIR: ${{ github.workspace }}/benchmarks/node_modules
+        run: node skills/sitesmith-v3/scripts/test-verify.mjs
+
+      - name: every scenario stays inside its context ceiling
+        run: |
+          node tools/test-context-budget.mjs
+          node tools/context-budget.mjs skills/sitesmith-v3
+
+      - name: the floor files name renditions rather than an appearance
+        run: |
+          node tools/floor-lint.mjs skills/sitesmith-v3
+          node tools/floor-lint.mjs --self-test
+
+      - name: every extracted mechanism is accounted for, and provenance is measured
+        run: |
+          node tools/placement-coverage.mjs
+          node tools/provenance-overlap.mjs
+
+      # The pilot is the only build in this repository whose client exists, so it is the
+      # one place a real brief meets all three gates at once. It is committed with its
+      # direction record for exactly this reason.
+      - name: the Byens IT pilot passes all three gates
+        working-directory: benchmarks
+        run: |
+          node serve.mjs 4341 .. &
+          for i in $(seq 1 30); do curl -sf http://localhost:4341/pilots/04-byens-it/ >/dev/null && break; sleep 1; done
+          node ../skills/sitesmith-v3/scripts/ledger.mjs parse ../pilots/04-byens-it
+          node ../skills/sitesmith-v3/scripts/gate.mjs ../pilots/04-byens-it
+          node ../skills/sitesmith-v3/scripts/verify.mjs http://localhost:4341/pilots/04-byens-it/ --out /tmp/pilot-04
+
+      # Every benchmark under the v3 gate, and the control group still refused by it. This
+      # is what says the v3 verifier can replace the v2 one rather than merely coexist.
+      - name: every benchmark passes the v3 verifier, and the control still fails it
+        working-directory: benchmarks
+        run: |
+          node serve.mjs 4342 . &
+          for i in $(seq 1 30); do curl -sf http://localhost:4342/01-saas-landing/ >/dev/null && break; sleep 1; done
+          for b in 01-saas-landing 02-product-page 03-dashboard 04-local-service 05-editorial \
+                   06-redesign/after 07-multistep-form 08-documentation 09-data-entry blocks \
+                   10-tannery/site 11-seed-library/site 12-tideworks/site; do
+            echo "::group::$b"
+            node ../skills/sitesmith-v3/scripts/verify.mjs "http://localhost:4342/$b/" \
+              --out "/tmp/v3-$(echo $b | tr / -)"
+            echo "::endgroup::"
+          done
+          if node ../skills/sitesmith-v3/scripts/verify.mjs \
+               "http://localhost:4342/06-redesign/before/" --out /tmp/v3-control; then
+            echo "::error::The control page passed the v3 verifier. It is the baseline and must keep its intentional defects."
+            exit 1
+          fi
+          echo "control refused, as it must be"
+
   benchmarks:
     name: benchmarks render and pass
     runs-on: ubuntu-latest
