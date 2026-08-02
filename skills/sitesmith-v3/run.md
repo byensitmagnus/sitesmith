@@ -37,7 +37,8 @@ never in a question.
    names. Never assume a stack from the brief's wording or from category habit.
 5. Ask what the visitor is doing here and open the floor file for it. Buying or looking
    at a price: `floor/buy.md`. Operating a tool: `floor/operate.md`. Reading or deciding:
-   nothing, because sections 1 to 8 are the whole instruction. When one page is two
+   nothing, because sections 1 to 8 are the whole instruction. If the brief asks to be
+   carried through something, by scroll, animation or video, also open `motion.md`. When one page is two
    surfaces at once, open both and say which governs where. If a brief fits none, say so,
    pick the closest with a reason, and carry on. Do not invent a third floor.
 6. Build from the plan exactly. Every colour and type decision in the code comes from

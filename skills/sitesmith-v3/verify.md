@@ -28,7 +28,7 @@ Six questions, answered from the image alone:
 1. **Where does the eye land first, and is it the thing the brief said the page must
    do?** If it lands on the navigation or a decorative panel, the hierarchy is wrong
    whatever the heading levels say.
-2. **What reads as a template first?** Name it. There is always one.
+2. **What reads as a template first?** Name it.
 3. **Is the signature visible at 1440 and alive at 375?** One that exists only in the
    design record is not a signature.
 4. **Where is the page emptiest, and is that emptiness doing work?** Space nobody chose

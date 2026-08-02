@@ -9,10 +9,12 @@ context:
     buy: [run.md, floor/buy.md, stacks/*]
     operate: [run.md, floor/operate.md, stacks/*]
     redesign: [run.md, floor/buy.md, redesign.md, stacks/*]
+    experience: [run.md, motion.md, stacks/*]
     inspect: [verify.md]
   ceilings:
     always: 3100
     routine: 6200
+    experience: 6400
     redesign: 7200
     inspect: 4600
 ---
@@ -175,8 +177,7 @@ apologise. An empty state is an invitation, not an apology.
 
 Two hard rules.
 
-**No em dashes. Ever.** Rewrite the sentence. Softer wording failed repeatedly, which is
-why it is absolute. It applies to this file too.
+**No em dashes. Ever.** Softer wording failed repeatedly. It applies to this file too.
 
 **A claim needs a source, and this is a test, not a list.** If a reader could act on it,
 or hold the client to it, it is a claim. Ask that question of every sentence before it
