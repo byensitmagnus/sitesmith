@@ -783,6 +783,40 @@ if (!paletteWaiver) {
   }
 }
 
+/* Shared by every named-tell check below. Each keeps taste-skill's own override path:
+   the brief outranks this package, so a value the client pinned in their own words stands. */
+const tellWaiver = (name) => direction && new RegExp(`${name}-pinned-by-brief:`, 'i').test(direction.raw ?? '');
+
+/* ── 8a. drawings belong to the token system ─────────────────────── */
+
+/* Measured across six arms of one holdout: the two builds that hard-coded colours inside
+   their inline SVG were the two whose drawings floated off the page's own system, and one
+   of them was ours. Our previous version passed with seventeen var() attributes and beat
+   us on craft. A drawing is part of the design or it is a sticker.
+
+   fill and stroke may be none, currentColor or a var(). A per-shape stroke-width is a
+   value invented at point of use, which token drift already refuses everywhere else. */
+if (!tellWaiver('drawing')) {
+  const OK_PAINT = /^(none|currentcolor|inherit|transparent|url\(#|var\(--)/i;
+  for (const file of markupFiles) {
+    const src = textOf(file);
+    for (const svg of src.matchAll(/<svg\b[\s\S]*?<\/svg>/gi)) {
+      const at = svg.index;
+      for (const attr of svg[0].matchAll(/\b(fill|stroke)\s*=\s*["']([^"']+)["']/gi)) {
+        const value = attr[2].trim();
+        if (OK_PAINT.test(value)) continue;
+        refuse('drawing/untokenised-paint', file, lineOf(src, at + attr.index),
+          `${attr[1]}="${value}" is a value invented inside the drawing. Use a custom property from the design system, or currentColor, so the drawing moves when the system does.`);
+      }
+      for (const w of svg[0].matchAll(/\bstroke-width\s*=\s*["']([^"']+)["']/gi)) {
+        if (/^var\(--/i.test(w[1].trim())) continue;
+        refuse('drawing/untokenised-stroke-width', file, lineOf(src, at + w.index),
+          `stroke-width="${w[1]}" is a weight chosen at point of use. Declare the drawing's weights once and reference them, the way every other value on the page is declared.`);
+      }
+    }
+  }
+}
+
 /* ── 8b. the rest of taste-skill's named tells ────────────────────────── */
 
 /* Three more from the same section that carried the palette. Each is code-checkable from
@@ -790,7 +824,6 @@ if (!paletteWaiver) {
    the prose for the reason round two proved: an instruction every build reads becomes the
    next thing they all agree on. A check does not. */
 
-const tellWaiver = (name) => direction && new RegExp(`${name}-pinned-by-brief:`, 'i').test(direction.raw ?? '');
 
 /* taste-skill: "Specifically BANNED as defaults: Fraunces and Instrument_Serif (the two
    LLM-favorite display serifs)", and Inter is "discouraged as default". */

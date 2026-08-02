@@ -538,6 +538,31 @@ async function reducedMotionPass(browser) {
         why: r.type === 'media' ? 'media resource request' : LOTTIE.test(r.url) ? 'lottie payload' : 'animation file extension',
       }));
 
+    /* The inverse of the check below, and the one this pass could not see. A scroll-reveal
+       page whose content sits at opacity 0 until a script raises it passes every motion
+       check by being blank: nothing animates because nothing is there. Two motion sources
+       were read for a scene model and the honest conclusion was that this package does not
+       need one; this is the gap that sat next to that question and costs nothing.
+       Report-only for now, with the states that are legitimately hidden excluded. */
+    const invisible = await page.evaluate(() => {
+      const out = [];
+      for (const el of document.querySelectorAll('main *, article *, section *')) {
+        if (!el.textContent || !el.textContent.trim()) continue;
+        if (el.closest('[hidden], [aria-hidden="true"], details:not([open]), dialog:not([open])')) continue;
+        const s = getComputedStyle(el);
+        if (s.visibility === 'hidden' || s.display === 'none') continue;
+        const hidden = Number(s.opacity) < 0.05
+          || /translate[^)]*\(\s*-?\d{3,}/.test(s.transform)
+          || s.clipPath === 'inset(100%)';
+        if (!hidden) continue;
+        const r = el.getBoundingClientRect();
+        if (r.width < 4 || r.height < 4) continue;
+        out.push({ tag: el.tagName.toLowerCase(), cls: (el.className || '').toString().slice(0, 60), text: el.textContent.trim().slice(0, 60) });
+        if (out.length >= 8) break;
+      }
+      return out;
+    });
+
     await installProbes(page);
     const inPage = await page.evaluate(
       ({ maxMs }) => {
@@ -589,6 +614,15 @@ async function reducedMotionPass(browser) {
       motionRequests,
       runningAnimations: inPage.running,
       longTransitions: inPage.declared,
+      /* Reported, not gated, for one round. A page that is blank under reduced motion has
+         passed every motion check by having nothing to animate, which is the failure this
+         pass could not see.
+
+         UNPROVEN. The field is wired and appears in every report, and a fixture that
+         should trip it returned zero, which was not chased to ground. Treat it as
+         instrumentation until a fixture makes it fire, and do not cite it as a check
+         that works. */
+      contentHiddenUnderReducedMotion: invisible,
       consoleErrors,
     };
   } finally {
