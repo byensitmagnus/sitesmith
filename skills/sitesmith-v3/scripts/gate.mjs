@@ -1537,12 +1537,20 @@ if (!direction || !direction.palette || !direction.type) {
         for (const band of bandList) {
           const br = band.getBoundingClientRect();
           const rects = [];
+          /* Where the reading starts, which is not where the card starts. A reviewer who
+             measured these by hand read the x of the first letter in each band; measuring
+             the leftmost painted box instead reported a card's own background as the
+             page's left edge and put two bands 7px apart that a reader sees 48px apart. */
+          let inkLeft = Infinity;
           for (const n of band.querySelectorAll('*')) {
             if (n.closest('svg') && n.tagName.toLowerCase() !== 'svg') continue;
             if (!n.getClientRects().length || !occupies(n)) continue;
             const q = n.getBoundingClientRect();
             if (q.width < 4 || q.height < 4) continue;
             rects.push(q);
+            const inks = [...n.childNodes].some((c) => c.nodeType === 3 && c.textContent.trim().length > 1)
+              || n.matches(PICTORIAL);
+            if (inks) inkLeft = Math.min(inkLeft, q.left);
           }
           if (!rects.length) continue;
 
@@ -1624,13 +1632,14 @@ if (!direction || !direction.palette || !direction.type) {
 
           bands.push({
             family,
-            contentLeft: Math.round(minL),
+            contentLeft: Number.isFinite(inkLeft) ? Math.round(inkLeft) : Math.round(minL),
             /* A band, not the box that holds the bands. main and body are containers whose
                content-left is whichever of their children reaches furthest left, so
                comparing one against its own child reported a page as ragged against
                itself. */
             topLevel: (band.parentElement === main || band.parentElement === document.body)
               && band !== main && band.tagName !== 'MAIN' && band.tagName !== 'BODY',
+            container: band === main || band.tagName === 'MAIN' || band.tagName === 'BODY',
             name: (band.querySelector('h1,h2,h3')?.textContent ?? band.tagName).trim().slice(0, 48),
             tag: band.tagName.toLowerCase() + (band.id ? `#${band.id}` : ''),
             y: Math.round(window.scrollY + br.top),
@@ -1779,32 +1788,44 @@ if (!direction || !direction.palette || !direction.type) {
          read as a decision; two edges forty-eight pixels apart read as an accident. So a
          full-bleed band beside an indented column is untouched, and a column that almost
          lines up with the one above it is not. */
+      /* The reviewer who found this stated the rule better than the first version of this
+         check did: "every band heading and all the body text hits 132, and that is the
+         page's spine. Two content blocks break it for no reason, the day strip's figure at
+         352 and the whole order form at 304. Those two are not another column, they are
+         the same column shifted, and that is why it reads as accidental rather than
+         planned. The other deviations, 694, 760, 162, 530 and 936, are real columns and do
+         not count against it."
+
+         So: find the spine, which is the edge the most bands share, and measure everything
+         against it. A second column inside a split band is never the band's own left edge,
+         so it never enters this. */
       const EDGE_SAME = 6;                 // within this, the same edge
       const EDGE_DELIBERATE = 0.22;        // beyond this share of the width, a decision
-      const topBands = (measured.bands ?? []).filter((b) => b.topLevel && b.height > 200);
+      const VIEW = 1440;
+      const edgeBands = (measured.bands ?? []).filter((b) => !b.container && b.height > 200);
       const edges = [];
-      for (const b of topBands) {
+      for (const b of edgeBands) {
         const near = edges.find((e) => Math.abs(e.x - b.contentLeft) <= EDGE_SAME);
         if (near) near.bands.push(b);
         else edges.push({ x: b.contentLeft, bands: [b] });
       }
-      const VIEW = 1440;
-      const ragged = [];
-      for (let i = 0; i < edges.length; i++) {
-        for (let j = i + 1; j < edges.length; j++) {
-          const d = Math.abs(edges[i].x - edges[j].x);
-          if (d > EDGE_SAME && d < VIEW * EDGE_DELIBERATE) ragged.push([edges[i], edges[j], d]);
-        }
-      }
-      if (ragged.length && !deliberate.has('ragged-margin')) {
-        const [a, b, d] = ragged.sort((p, q) => p[2] - q[2])[0];
+      edges.sort((a, b) => b.bands.length - a.bands.length || a.x - b.x);
+      const spine = edges[0];
+      const offSpine = spine
+        ? edges.slice(1).filter((e) => {
+          const d = Math.abs(e.x - spine.x);
+          return d > EDGE_SAME && d < VIEW * EDGE_DELIBERATE;
+        })
+        : [];
+      if (offSpine.length && !deliberate.has('ragged-margin')) {
+        const worst = offSpine.sort((a, b) => Math.abs(b.x - spine.x) - Math.abs(a.x - spine.x))[0];
         refuse('look/ragged-margin', join(BUILD, 'index.html'), 1,
-          `${a.bands[0].tag} "${a.bands[0].name}" starts at x=${a.x} and ${b.bands[0].tag} "${b.bands[0].name}" at x=${b.x}, `
-          + `${d}px apart on a ${VIEW}px screen. That is not two measures, it is one measure missed. `
-          + `${edges.length} distinct left edges in ${topBands.length} bands`
-          + `${ragged.length > 1 ? `, ${ragged.length} of them near misses` : ''}. `
-          + 'Put them on the same edge, move one far enough that it reads as a decision, or claim `ragged-margin` under Deliberate:.');
-      } else if (ragged.length) {
+          `${spine.bands.length} of ${edgeBands.length} bands start at x=${spine.x}, so that is this page's spine. `
+          + `${worst.bands[0].tag} "${worst.bands[0].name}" starts at x=${worst.x}, ${Math.abs(worst.x - spine.x)}px off it`
+          + `${offSpine.length > 1 ? `, and ${offSpine.length - 1} more band(s) sit off it too` : ''}. `
+          + 'That is not a second column, it is the same column shifted, which is why it reads as accidental. '
+          + 'Put it on the spine, move it far enough to read as a decision, or claim `ragged-margin` under Deliberate:.');
+      } else if (offSpine.length) {
         waived.push({ cls: 'look/ragged-margin', file: show(join(BUILD, 'index.html')), line: 1, detail: deliberate.get('ragged-margin') });
       }
 
@@ -1815,12 +1836,13 @@ if (!direction || !direction.palette || !direction.type) {
 
          Four bands or more, because a three-section page repeating twice is a rhythm and
          a seven-section page repeating five times is a template. */
+      const shapeBands = (measured.bands ?? []).filter((b) => b.topLevel && b.height > 200);
       const families = new Map();
-      for (const b of topBands) families.set(b.family, (families.get(b.family) ?? 0) + 1);
+      for (const b of shapeBands) families.set(b.family, (families.get(b.family) ?? 0) + 1);
       const worst = [...families.entries()].sort((a, b) => b[1] - a[1])[0];
-      if (topBands.length >= 4 && worst && worst[1] / topBands.length > 0.5) {
-        const which = topBands.filter((b) => b.family === worst[0]);
-        const detail = `${worst[1]} of ${topBands.length} bands are the same shape, \`${worst[0]}\`: `
+      if (shapeBands.length >= 4 && worst && worst[1] / shapeBands.length > 0.5) {
+        const which = shapeBands.filter((b) => b.family === worst[0]);
+        const detail = `${worst[1]} of ${shapeBands.length} bands are the same shape, \`${worst[0]}\`: `
           + `${which.map((b) => `"${b.name}"`).join(', ')}. `
           + `${families.size} distinct layout${families.size === 1 ? '' : 's'} on the page. `
           + 'A reader scrolling past three identical frames stops reading the page and starts reading a document. '

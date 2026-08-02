@@ -223,7 +223,7 @@ const CASES = [
   {
     name: 'two bands that nearly line up',
     fixture: 'refuse-ragged', browser: true, expect: 2,
-    must: ['look/ragged-margin', '48px apart'],
+    must: ['look/ragged-margin', 'spine', '48px off it'],
     mustNot: ['look/lopsided-band'],
     // A reviewer paid to accept a read surface put this above everything else on the page:
     // four blocks straight above each other, three different left edges, 48px apart. Near
