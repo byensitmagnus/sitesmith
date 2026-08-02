@@ -38,3 +38,20 @@ about performance in a named wind, because the order sheet states none of them.
 - failure-path: confirmed, fixed. Sending without a measurement now refuses, names the missing thing, gives the phone number and moves focus to the control that fixes it
 
 Nothing on this list is still open.
+
+## Draft state
+
+draft: yes
+
+release: no
+
+This build is a draft for one reason, and it is named rather than hidden: **no photograph
+of the subject exists in the brief.** look.md section 3 puts a client photograph at the top
+of the asset ladder and a drawing at the bottom, and it says a page about a physical
+subject with no photograph of it is a draft. This is one.
+
+What is missing, precisely: one photograph of the Dacron 340 cloth at close range showing the triple zigzag, and one of a hand-sewn thimble at the clew.
+
+What happens next: ask for it. The drawings on this page are correct for what they are, a
+section and a diagram, and they are the wrong answer for a thing that could be
+photographed. Nothing here should be replaced by a generated image.

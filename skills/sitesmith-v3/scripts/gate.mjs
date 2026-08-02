@@ -1451,6 +1451,23 @@ if (!direction || !direction.palette || !direction.type) {
         }
       }
 
+      /* A page about a physical subject with no photograph of it is a draft. The rule is
+         ui-ux-pro-max's and it is stated there without hedging: a pure-text page is not
+         minimalism, it is incomplete work. This repository proved the point the hard way,
+         with five pages and zero <img> between them, every one of them drawing its way out
+         of an ask nobody made.
+
+         Downgraded by --draft rather than absolute, because a draft with the missing
+         photograph named is the honest state of a page waiting on the client. What it may
+         not be is a release. */
+      const photoRefusal = DRAFT ? warn : refuse;
+      const wantsPhoto = /\b(buy|experience|marketing|campaign|launch|editorial|redesign)\b/i.test(declaredSurface);
+      const hasPhoto = markupFiles.some((f) => /<img\b|<picture\b|background-image\s*:\s*url\(\s*['"]?[^'")]*\.(jpe?g|png|webp|avif)/i.test(textOf(f)));
+      if (wantsPhoto && !hasPhoto) {
+        photoRefusal('look/no-photograph', MANIFEST_PATH, 1,
+          'no photograph anywhere on a page about something that exists. look.md section 3: ask the client for one, source a licensed one, or ship as a draft with the missing asset named. A drawing is the right answer for a section and the wrong one for a thing you could photograph.');
+      }
+
       /* The answer to the risk has to be on the page. The model wrote the owner's review
          into the Risk field five times before building, and every one of those builds
          shipped green because nothing read the field. */

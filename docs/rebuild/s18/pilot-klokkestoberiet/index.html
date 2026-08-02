@@ -73,7 +73,7 @@ a{color:var(--gloed)}
 .stedet{font-size:var(--tx-lille);color:var(--skrift-2);margin:0 0 var(--r3)}
 h1{font-family:var(--display);font-weight:400;font-size:clamp(34px,4.4vw,58px);
    line-height:1.02;letter-spacing:-.022em;margin:0 0 var(--r3);text-wrap:balance}
-.klokkeslet{display:block;font-size:clamp(60px,8.5vw,116px);line-height:.88;
+.klokkeslet{display:block;font-size:clamp(72px,10.5vw,148px);line-height:.86;
             letter-spacing:-.05em;margin:0 0 var(--r3);color:var(--gloed);
             text-shadow:0 0 var(--r5) rgba(255,106,18,.42)}
 .undertid{margin:0;font-size:var(--tx-note);line-height:1.55;color:var(--skrift-2);max-width:34ch}
@@ -87,10 +87,10 @@ h1{font-family:var(--display);font-weight:400;font-size:clamp(34px,4.4vw,58px);
 .klokke{position:relative;z-index:1;justify-self:stretch;align-self:stretch;
         display:flex;align-items:center;justify-content:flex-end;overflow:hidden;
         margin:var(--r4) calc(var(--r4) * -1) calc(var(--r5) * -1) 0}
-@media (min-width:900px){.klokke{margin:0 -10% 0 0}}
+@media (min-width:900px){.klokke{margin:0 -12% -4% 0;align-items:flex-end}}
 .klokke svg{display:block;width:122%;max-width:none;height:auto;
             filter:drop-shadow(0 0 var(--r7) rgba(255,106,18,.28))}
-@media (min-width:900px){.klokke svg{width:106%;height:76svh}}
+@media (min-width:900px){.klokke svg{width:112%;height:88svh}}
 .metal-kold{fill:url(#metal)}
 .metal-bag{fill:url(#indre)}
 .midte{stroke:var(--ler);stroke-width:2;stroke-dasharray:10 8;fill:none;opacity:.5}
@@ -212,12 +212,13 @@ footer{position:relative;z-index:3;padding:var(--r5) var(--r4) var(--r6);
           C142 452 132 462 116 468 L116 496 L214 496 L214 468
           C200 460 194 450 197 430 L201 402
           C209 352 231 300 268 250 C298 210 320 172 330 128 Z"/>
+        <!-- Hoejre halvdel er hel, venstre er skaaret op. Et snit er interessant fordi
+             det er asymmetrisk: halvt udvendigt, halvt indvendigt. Spejlet blev det et
+             diagram i stedet for en tegning. -->
         <path transform="translate(660,0) scale(-1,1)" d="M330 66
           C300 66 288 84 285 112 C280 158 258 190 226 232
           C182 288 158 348 150 400 L146 430
-          C142 452 132 462 116 468 L116 496 L214 496 L214 468
-          C200 460 194 450 197 430 L201 402
-          C209 352 231 300 268 250 C298 210 320 172 330 128 Z"/>
+          C142 452 132 462 116 468 L116 496 L330 496 L330 66 Z"/>
       </g>
 
       <path class="midte" d="M330 86 V512"/>

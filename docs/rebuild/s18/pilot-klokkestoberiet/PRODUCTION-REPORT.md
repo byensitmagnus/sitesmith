@@ -74,3 +74,20 @@ only one round happened.
   generated image; it is asking the foundry for a photograph of the floor.
 - The page is one screen deep in argument and four sections long. It is a complete
   experience surface for this brief and it is not a large site.
+
+## Draft state
+
+draft: yes
+
+release: no
+
+This build is a draft for one reason, and it is named rather than hidden: **no photograph
+of the subject exists in the brief.** look.md section 3 puts a client photograph at the top
+of the asset ladder and a drawing at the bottom, and it says a page about a physical
+subject with no photograph of it is a draft. This is one.
+
+What is missing, precisely: one photograph of the foundry floor, ideally during a pour, and one of a finished bell in the tuning frame.
+
+What happens next: ask for it. The drawings on this page are correct for what they are, a
+section and a diagram, and they are the wrong answer for a thing that could be
+photographed. Nothing here should be replaced by a generated image.

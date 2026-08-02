@@ -36,20 +36,26 @@ An asset is not decoration; each row must say what the page loses without it.
 
 | what | contributes | source | licence | state |
 
-Sources, in order of preference:
+Sources, in this order, and the order is not a preference. It is a ladder and you climb
+it from the top.
 
-1. **Supplied by the client.** Use these first. A real photograph of the real thing beats
-   anything you can make.
-2. **Drawn here.** An SVG, a CSS composition, a canvas figure. Original work, so the
-   provenance is this repository and the licence is its licence. This is the honest answer
-   when the client supplied nothing, and it is a real answer rather than a fallback: a
-   drawn section, a diagram, a mark, a texture.
-3. **Licensed and sourced.** Only with the licence recorded and the source named. A
-   photograph with no traceable licence is not an option, whatever it looks like.
+1. **Supplied by the client.** A real photograph of the real thing beats anything you can
+   make. If the subject is a physical thing and no photograph was supplied, **ask for one**
+   as one of the run's blocking questions. Asking costs a sentence. Not asking costs the
+   page.
+2. **Licensed and sourced.** The licence recorded and the source named, in the manifest,
+   before the file is used. A photograph with no traceable licence is not an option
+   whatever it looks like.
+3. **Drawn here.** An SVG, a CSS composition, a canvas figure. Original work, so the
+   provenance is this repository. A drawing is the right answer for a thing that cannot be
+   photographed: a section, a schematic, a diagram, a mark, a texture. It is the wrong
+   answer for a thing that exists and could be photographed, and using it there is how a
+   page ends up describing its subject instead of showing it.
 
-If a required asset cannot be obtained, the build is a **draft** and says so. It does not
-proceed with an empty rectangle where the thing was going to be. It does not generate a
-photograph of a place that exists.
+**A page about a physical subject with no photograph of it is a draft.** Not a failure and
+not a style: a draft, with the missing asset named, and `--draft` on the gate so the report
+says so. Ship it that way and ask for the photograph. Do not draw your way out of the ask,
+and do not generate a picture of a place that exists.
 
 ## 4. The first viewport has to carry
 

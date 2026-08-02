@@ -88,3 +88,20 @@ Scenario: buy
 - reduced-motion-clean: confirmed as clean, because the timeline is switched off rather than slowed and the end state renders complete
 
 Nothing on this list is still open.
+
+## Draft state
+
+draft: yes
+
+release: no
+
+This build is a draft for one reason, and it is named rather than hidden: **no photograph
+of the subject exists in the brief.** look.md section 3 puts a client photograph at the top
+of the asset ladder and a drawing at the bottom, and it says a page about a physical
+subject with no photograph of it is a draft. This is one.
+
+What is missing, precisely: one photograph of the bench at Ternevej 7, and one of a finished machine before it leaves.
+
+What happens next: ask for it. The drawings on this page are correct for what they are, a
+section and a diagram, and they are the wrong answer for a thing that could be
+photographed. Nothing here should be replaced by a generated image.

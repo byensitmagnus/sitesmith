@@ -83,6 +83,16 @@ const CASES = [
     why: 'four tells, none of them claimed in the direction record',
   },
   {
+    name: 'a page about a real thing with no photograph of it',
+    fixture: 'no-photo', browser: true, expect: 2,
+    must: ['look/no-photograph'],
+    // ui-ux-pro-max states it without hedging: a pure-text page is not minimalism, it is
+    // incomplete work. This repository proved it the hard way, with five pages and zero
+    // <img> between them, every one drawing its way out of an ask nobody made. --draft
+    // downgrades it, because a draft waiting on the client is honest and a release is not.
+    why: 'a drawing is the right answer for a section and the wrong one for a thing you could photograph',
+  },
+  {
     name: 'a page with nowhere to go and nothing saying who it is',
     fixture: 'no-shell', browser: true, expect: 2,
     must: ['look/no-way-out', 'look/no-shell'],
