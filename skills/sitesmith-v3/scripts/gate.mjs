@@ -194,6 +194,13 @@ function parseDirection(md) {
     return rows;
   };
   return {
+    // The whole record, because three checks offer an escape hatch that is written as a
+    // free line rather than a named field: banned-palette-pinned-by-brief,
+    // purple-pinned-by-brief, typeface-pinned-by-brief. They all test `direction.raw`,
+    // and until this line existed that property was undefined, so every one of those
+    // waivers was unreachable. A refusal that names a way past and then ignores it is
+    // worse than one with no way past at all: it reads as arbitrary.
+    raw: md,
     palette: line('Palette'),
     type: line('Type'),
     signature: line('Signature'),

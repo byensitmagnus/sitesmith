@@ -83,6 +83,22 @@ const CASES = [
     why: 'four tells, none of them claimed in the direction record',
   },
   {
+    name: 'a banned ground and an AI purple, unclaimed',
+    fixture: 'unpinned', browser: true, expect: 2,
+    must: ['palette/premium-consumer-default', 'colour/ai-purple'],
+    why: 'the same build as the pinned fixture in every respect except the two lines that claim the colours',
+  },
+  {
+    name: 'the same colours, pinned by the brief',
+    fixture: 'pinned-by-brief', browser: true, expect: 0,
+    must: ['WAIVED', 'every check ran and none refused'],
+    mustNot: ['palette/premium-consumer-default', 'colour/ai-purple'],
+    // Both refusals name a way past and both tested direction.raw, which parseDirection
+    // never set, so the escape hatch was unreachable and nothing in this suite noticed.
+    // These two cases exist so it cannot go quiet again.
+    why: 'a refusal that offers a way past has to honour it, and a client whose actual colour sits in a banned band is a real case rather than a hypothetical',
+  },
+  {
     name: 'the round-8 recipe',
     fixture: 'refuse-round8', browser: true, expect: 2,
     must: ['antipattern/round-8-recipe'],
