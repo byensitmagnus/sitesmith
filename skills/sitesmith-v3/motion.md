@@ -26,6 +26,14 @@ progress through a monotone curve that holds near the middle and moves quicker a
 edges, keeping f(0)=0 and f(1)=1 so the seams stay put. Give the segment that carries the
 point more scroll length than the ones in transit.
 
+**The third dimension is available at this level, and it is CSS.** `perspective` on the
+scene, `translateZ`/`rotate3d` on its children, driven by the same 0-to-1 number: depth
+layers at depth-proportional rates, an object turning as the reader scrolls. Still
+transform-only, so the frame budget holds. The scene must read at progress 0 with no
+depth, because 3D here is pacing, not content. WebGL follows the same law as every
+dependency here: only when `three` or a peer is already in the manifest. The CSS scene
+is a finished answer, not a reduced one.
+
 ## 2. Scroll-scrubbed video
 
 You build the player. You never make the clips.
@@ -65,12 +73,10 @@ an element that must animate between two places in the DOM, a gesture that follo
 finger, or a list whose items reorder and must be followed by the eye.
 
 **Motion, formerly Framer Motion, only when it is already installed.** Run
-`node scripts/components.mjs detect` and read the `motion` line. If `motion` or
-`framer-motion` is a dependency, use it: layout animation and gesture handling are what it
-is for, and reimplementing them by hand is worse code with the same bundle already sitting
-in `node_modules`. If it is not installed, do not add it. A page whose only justification
-for a runtime dependency is one hover state has bought the dependency for the wrong reason,
-and the client maintains it forever.
+`node scripts/components.mjs detect` and read the `motion` line. Installed, use it: layout
+animation and gestures are what it is for. Absent, do not add it; a page whose only reason
+for a runtime dependency is one hover state bought it for the wrong reason, and the client
+maintains it forever.
 
 Two rules when it is in use, and both are checked by `verify.mjs` rather than trusted:
 
@@ -104,5 +110,4 @@ The rule about nothing moving between an intent and its result is section 6 of
 
 scroll-world's own engine ships a complete look along with the mechanism: a sky gradient
 with drifting particles and a pill nav. Anything that arrives with a look attached makes
-three unrelated briefs resemble each other, and this package has failed that test four
-times. Take the mechanism, never the scene.
+unrelated briefs resemble each other. Take the mechanism, never the scene.
