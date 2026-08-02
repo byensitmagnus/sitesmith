@@ -181,9 +181,10 @@ why it is absolute. It applies to this file too.
 **A claim needs a source, and this is a test, not a list.** If a reader could act on it,
 or hold the client to it, it is a claim. Ask that question of every sentence before it
 ships. Numbers, guarantees, delivery times, certifications and testimonials are the
-obvious cases, but the ones that get through are quieter: what the customer may do while
-they wait, what a document will contain, what information is enough to get started, what
-happens next. Those read as helpful and are not in the brief.
+obvious cases. The ones that get through are quieter: what the customer may do while they
+wait, what a document contains, what is enough to get started, **and how the trade itself
+works**, which a customer will hold the business to. Those read as helpful and are not in
+the brief.
 
 If it is not in the brief or the evidence it does not go on the page, not as a
 placeholder and not as a plausible example. When you need the sentence and lack the

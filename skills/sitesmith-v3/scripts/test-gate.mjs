@@ -16,9 +16,10 @@
 //   1  nothing refused and at least one verdict is missing
 
 import { spawnSync } from 'node:child_process';
-import { existsSync } from 'node:fs';
+import { existsSync, mkdtempSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
+import { tmpdir } from 'node:os';
 
 const SCRIPTS = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(SCRIPTS, '../../..');
@@ -33,6 +34,8 @@ const GATE = join(SCRIPTS, 'gate.mjs');
 const WITH_BROWSER = ['benchmarks', 'tests/gates', 'skills/sitesmith/scripts', '.']
   .map((d) => join(ROOT, d))
   .find((d) => existsSync(join(d, 'node_modules/playwright')));
+
+const NO_BROWSER = mkdtempSync(join(tmpdir(), 'sitesmith-gate-nobrowser-'));
 
 const CASES = [
   {
@@ -135,10 +138,18 @@ if (!WITH_BROWSER) {
 
 for (const c of CASES) {
   if (c.browser && !WITH_BROWSER) continue;
-  const cwd = c.browser ? WITH_BROWSER : ROOT;
+  /* A holdout run installed playwright at the repository root, and this case stopped
+     being able to simulate a missing browser because the gate simply found one. A test
+     that depends on a directory being absent is a test that passes until someone runs
+     npm install. The no-browser case now runs from a scratch directory that has no
+     node_modules by construction. */
+  const cwd = c.browser ? WITH_BROWSER : NO_BROWSER;
   const r = spawnSync(process.execPath,
     [GATE, join(FIX, c.fixture), '--skill', SKILL, ...(c.args ?? [])],
-    { cwd, encoding: 'utf8' });
+    /* SITESMITH_DEPS_DIR points the gate at a browser regardless of cwd, so the
+       no-browser case has to unset it as well as run from a bare directory. Leaving it
+       inherited made this case pass a build it was written to refuse. */
+    { cwd, encoding: 'utf8', env: c.browser ? process.env : { ...process.env, SITESMITH_DEPS_DIR: '' } });
   const out = `${r.stdout ?? ''}${r.stderr ?? ''}`;
 
   const problems = [];
