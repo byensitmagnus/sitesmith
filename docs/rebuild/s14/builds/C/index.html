@@ -1,0 +1,413 @@
+<!doctype html>
+<html lang="da">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Orgelværkstedet Hvidbjerg. Restaurering og intonation af kirkeorgler.</title>
+<meta name="description" content="Aase og Thorbjørn restaurerer og intonerer kirkeorgler. Fire eller fem instrumenter om året. Første besøg er gratis og tager en halv dag. Ring 97 87 12 06.">
+<meta name="color-scheme" content="light">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@600;700&family=Faustina:wght@400;600&display=swap">
+<style>
+/* Orgelværkstedet Hvidbjerg. Materialerne er orgelmetal, egetræ, filt og blæk.
+   Alt visuelt er CSS. Der findes ingen billeder, og ingen bliver opdigtet. */
+
+:root {
+  color-scheme: light;
+
+  /* Materialer, ikke roller. Navnene er værkstedets egne. */
+  --pibemetal: #b6bcba;   /* den støbte plade af tin og bly */
+  --spætning: #ced2ce;    /* krystalmønstret i det afkølede metal */
+  --rille: #8e9593;       /* det mørkere metal nede i en ridset rille */
+  --egetræ: #7d6a3f;      /* egen i vindladen */
+  --filt: #0d4a37;        /* filten i trakturen */
+  --blæk: #16212b;        /* blækket en tilstandsrapport skrives med */
+
+  /* Spætningen: tre lag krystalflager, hvert lag med sin egen skæve flisestørrelse,
+     så pletterne aldrig falder i takt og pladen ser støbt ud og ikke tegnet. */
+  --spæt:
+    radial-gradient(ellipse 54px 27px at 21% 33%, rgba(206, 210, 206, 0.34), rgba(182, 188, 186, 0) 70%),
+    radial-gradient(ellipse 31px 47px at 67% 61%, rgba(142, 149, 147, 0.22), rgba(182, 188, 186, 0) 70%),
+    radial-gradient(ellipse 71px 23px at 45% 86%, rgba(206, 210, 206, 0.24), rgba(182, 188, 186, 0) 74%);
+  --spætflade: 211px 173px, 157px 139px, 263px 197px;
+
+  /* Slaget: en mørk kant over bogstavet og en lys kant under, som i blødt metal. */
+  --hug: 0 2px 0 rgba(211, 215, 211, 0.95), 0 -1px 0 rgba(22, 33, 43, 0.38);
+  --pladekant: inset 0 3px 0 rgba(206, 210, 206, 0.55), inset 0 -3px 0 rgba(22, 33, 43, 0.16);
+  --hævet: inset 0 2px 0 rgba(206, 210, 206, 0.9), inset 0 -2px 0 rgba(22, 33, 43, 0.28);
+  --hak: inset 0 1px 0 rgba(22, 33, 43, 0.45), inset 0 -1px 0 rgba(206, 210, 206, 0.85);
+
+  --display: "Archivo Narrow", "Arial Narrow", "Helvetica Neue Condensed", sans-serif;
+  --brød: "Faustina", "Iowan Old Style", "Hoefler Text", serif;
+
+  --f-mærke: clamp(2.4rem, 9vw, 6rem);
+  --f-h1: clamp(1.9rem, 4.4vw, 3rem);
+  --f-h2: clamp(1.35rem, 2.6vw, 1.8rem);
+  --f-led: clamp(1.05rem, 2vw, 1.25rem);
+  --f-anslag: clamp(1.05rem, 1.5vw, 1.22rem);
+  --f-brød: 1.02rem;
+  --f-lille: 0.9rem;
+
+  --kant: max(1.3rem, 8vw);   /* pladens venstre kant */
+}
+
+* { box-sizing: border-box; }
+
+html { background-color: var(--pibemetal); }
+
+body {
+  margin: 0;
+  background-color: var(--pibemetal);
+  background-image: var(--spæt);
+  background-size: var(--spætflade);
+  color: var(--blæk);
+  font-family: var(--brød);
+  font-size: var(--f-brød);
+  font-weight: 400;
+  line-height: 1.55;
+}
+
+.kolonne {
+  width: min(100% - var(--kant) - 1.3rem, 64ch);
+  margin-right: auto;
+  margin-left: var(--kant);
+}
+
+/* Pladen: første skærm er ét stykke metal med mærket slået ned i. */
+
+.plade {
+  background-image: var(--spæt);
+  background-size: var(--spætflade);
+  background-position: 13px 29px, 41px 7px, 5px 53px;
+  box-shadow: var(--pladekant);
+  padding-top: clamp(2.6rem, 8vw, 5.5rem);
+  padding-bottom: clamp(2.4rem, 6vw, 4rem);
+}
+
+.plade > .kolonne { width: min(100% - var(--kant) - 1.3rem, 84ch); }
+
+.stempel {
+  margin: 0 0 clamp(1.6rem, 4vw, 2.6rem);
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: var(--f-mærke);
+  line-height: 1.05;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--blæk);
+  text-shadow: var(--hug);
+}
+
+h1 {
+  margin: 0 0 1.1rem;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: var(--f-h1);
+  line-height: 1.12;
+  letter-spacing: 0.005em;
+  max-width: 22ch;
+}
+
+.anslag {
+  margin: 0 0 clamp(1.8rem, 4vw, 2.4rem);
+  font-size: var(--f-anslag);
+  max-width: 48ch;
+}
+
+.handling {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem 1.5rem;
+  margin: 0;
+}
+
+.nummer {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0.55rem 1.15rem;
+  background-color: var(--spætning);
+  box-shadow: var(--hævet);
+  color: var(--blæk);
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: var(--f-led);
+  letter-spacing: 0.02em;
+  text-decoration-line: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+
+.nummer:hover {
+  background-color: var(--filt);
+  color: var(--spætning);
+}
+
+.nummer:active {
+  box-shadow: var(--hak);
+  color: var(--spætning);
+  background-color: var(--filt);
+}
+
+.nummer:focus-visible {
+  outline-width: 3px;
+  outline-style: solid;
+  outline-color: var(--blæk);
+  outline-offset: 3px;
+}
+
+.vilkår { max-width: 30ch; }
+
+/* Brødteksten: én spalte, ingen kort, ingen ikoner. */
+
+main { padding-top: clamp(2.4rem, 6vw, 4rem); }
+
+.afsnit { margin-bottom: clamp(2.6rem, 6vw, 4.2rem); }
+
+h2 {
+  margin: 0 0 0.9rem;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: var(--f-h2);
+  line-height: 1.15;
+}
+
+h2::before {
+  content: "";
+  display: block;
+  width: 2.6rem;
+  height: 6px;
+  margin-bottom: 0.7rem;
+  background-color: var(--egetræ);
+}
+
+p { margin: 0 0 1rem; max-width: 58ch; }
+
+.mærke { color: var(--filt); font-weight: 600; }
+
+/* Vejen: rillen løber ned langs listen, og hvert led er slået ned i den. */
+
+.vej {
+  position: relative;
+  list-style: none;
+  margin: 1.4rem 0 0;
+  padding: 0 0 0 2.2rem;
+}
+
+.vej::before {
+  content: "";
+  position: absolute;
+  left: 5px;
+  top: 0.5rem;
+  bottom: 1.4rem;
+  width: 2px;
+  background-color: var(--rille);
+}
+
+.vej li {
+  position: relative;
+  margin-bottom: 1.3rem;
+  max-width: 52ch;
+}
+
+.vej li::before {
+  content: "";
+  position: absolute;
+  left: -2.2rem;
+  top: 0.45em;
+  width: 12px;
+  height: 12px;
+  background-color: var(--pibemetal);
+  box-shadow: var(--hak);
+}
+
+.led {
+  display: block;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: var(--f-led);
+  line-height: 1.2;
+}
+
+.gerning { display: block; }
+
+/* Kontakten: en lysere plade, det eneste sted pladen skifter farve. */
+
+.kontaktplade {
+  background-color: var(--spætning);
+  box-shadow: var(--pladekant);
+  padding: clamp(1.6rem, 4vw, 2.4rem);
+  margin-top: 1.4rem;
+  max-width: 52ch;
+}
+
+.kontaktplade p { max-width: 46ch; }
+
+.post {
+  margin: 1.4rem 0 0;
+  font-style: normal;
+  line-height: 1.6;
+}
+
+.etiket {
+  display: block;
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: var(--f-lille);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--filt);
+  margin-bottom: 0.2rem;
+}
+
+.fod {
+  padding-top: clamp(2rem, 5vw, 3rem);
+  padding-bottom: clamp(2rem, 5vw, 3rem);
+  box-shadow: var(--pladekant);
+  font-size: var(--f-lille);
+}
+
+.fod p { margin: 0; max-width: 52ch; }
+
+/* Bred skærm: pladen deles i to, så første skærm er et helt stykke metal
+   og ikke en smal strimmel tekst i et tomt felt. */
+@media (min-width: 64rem) {
+  .plade > .kolonne {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+    column-gap: clamp(2.5rem, 5vw, 5rem);
+    align-items: end;
+  }
+
+  .stempel { grid-column: 1 / -1; grid-row: 1; }
+
+  .plade h1 { grid-column: 1; grid-row: 2; margin-bottom: 0; max-width: 18ch; }
+
+  .plade .anslag { grid-column: 2; grid-row: 2; margin-bottom: 0; }
+
+  .plade .handling { grid-column: 1 / -1; grid-row: 3; margin-top: clamp(2rem, 4vw, 3rem); }
+
+  /* Resten af arket deles på samme snit: overskriften står i venstre spalte,
+     teksten i højre, så siden er ét stykke metal og ikke to forskellige sider. */
+  main > .kolonne,
+  .fod > .kolonne { width: min(100% - var(--kant) - 1.3rem, 84ch); }
+
+  .afsnit {
+    display: grid;
+    grid-template-columns: minmax(0, 0.62fr) minmax(0, 1fr);
+    column-gap: clamp(2.5rem, 5vw, 5rem);
+  }
+
+  .afsnit > h2 { grid-column: 1; grid-row: 1; margin-bottom: 0; }
+
+  .afsnit > :not(h2) { grid-column: 2; }
+}
+
+/* Meget bred skærm: kanten rykker ind, så arket ikke klæber til venstre side. */
+@media (min-width: 84rem) {
+  :root { --kant: 14vw; }
+}
+
+@media (max-width: 30rem) {
+  .kolonne { margin-left: 1.3rem; }
+  .vej { padding-left: 1.9rem; }
+  .vej li::before { left: -1.9rem; }
+}
+</style>
+</head>
+<body>
+
+<header class="plade">
+  <div class="kolonne">
+    <p class="stempel">Orgelværkstedet Hvidbjerg</p>
+    <h1>Fire eller fem instrumenter om året</h1>
+    <p class="anslag">Vi er to. Aase og Thorbjørn. Vi har arbejdet sammen siden 1998, og vi
+      restaurerer og intonerer kirkeorgler. En fuld restaurering tager otte til atten måneder.</p>
+    <p class="handling">
+      <a class="nummer" href="tel:97871206">Ring 97 87 12 06</a>
+      <span class="vilkår">Første besøg er gratis og tager en halv dag.</span>
+    </p>
+  </div>
+</header>
+
+<main>
+  <div class="kolonne">
+
+    <section class="afsnit" aria-labelledby="arbejdet">
+      <h2 id="arbejdet">Fra bælg til pibe</h2>
+      <p>Rækkefølgen nedenfor er den vej, luften går gennem orglet.</p>
+      <ol class="vej">
+        <li>
+          <span class="led">Bælge og pneumatik</span>
+          <span class="gerning">Vi lægger nyt læder på.</span>
+        </li>
+        <li>
+          <span class="led">Vindlader</span>
+          <span class="gerning">Vi reparerer dem.</span>
+        </li>
+        <li>
+          <span class="led">Traktur</span>
+          <span class="gerning">Vi bygger mekanisk traktur op igen.</span>
+        </li>
+        <li>
+          <span class="led">Piberækker</span>
+          <span class="gerning">Vi udskifter dem.</span>
+        </li>
+        <li>
+          <span class="led">Intonation og stemning</span>
+          <span class="gerning">Vi intonerer og stemmer.</span>
+        </li>
+      </ol>
+    </section>
+
+    <section class="afsnit" aria-labelledby="elektroniske">
+      <h2 id="elektroniske">Elektroniske orgler laver vi ikke</h2>
+      <p>Vi installerer ikke elektroniske orgler. Det siger vi med det samme, så ingen bruger en
+        aften på et møde om noget, vi ikke laver.</p>
+    </section>
+
+    <section class="afsnit" aria-labelledby="besøget">
+      <h2 id="besøget">Det første besøg</h2>
+      <p>Første besøg koster ikke noget og tager en halv dag.</p>
+      <p>Bagefter skriver vi en tilstandsrapport. <span class="mærke">Den bliver skrevet, uanset om
+        arbejdet bliver til noget.</span></p>
+    </section>
+
+    <section class="afsnit" aria-labelledby="oss">
+      <h2 id="oss">Aase og Thorbjørn</h2>
+      <p>Vi har arbejdet sammen siden 1998. Vi tager fire eller fem instrumenter om året, og en fuld
+        restaurering tager otte til atten måneder. Det er de to tal, en aftale med et menighedsråd
+        skal passe ind i.</p>
+      <p>Værkstedet ligger i Hvidbjerg i Thy. Vi kører i hele Danmark.</p>
+    </section>
+
+    <section class="afsnit" aria-labelledby="kontakt">
+      <h2 id="kontakt">Sådan får I fat i os</h2>
+      <div class="kontaktplade">
+        <p>Telefonen er den korteste vej. Post kan også bruges.</p>
+        <p class="handling">
+          <a class="nummer" href="tel:97871206">Ring 97 87 12 06</a>
+        </p>
+        <address class="post">
+          <span class="etiket">Post</span>
+          Orgelværkstedet Hvidbjerg<br>
+          Kirkevej 4<br>
+          7790 Hvidbjerg
+        </address>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<footer class="fod">
+  <div class="kolonne">
+    <p>Orgelværkstedet Hvidbjerg. Kirkevej 4, 7790 Hvidbjerg. Telefon 97 87 12 06.
+      Aase og Thorbjørn, sammen siden 1998.</p>
+  </div>
+</footer>
+
+</body>
+</html>

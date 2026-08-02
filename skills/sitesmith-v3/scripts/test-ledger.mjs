@@ -170,7 +170,7 @@ results.push(`${templateParses ? '  ok  ' : '  FAIL'} an unfilled template is re
 /* A9 round two, real numbers. Three unrelated trades landed their grounds at 41, 42 and 38
    degrees after four separate rewrites of the instruction had already been applied. Prose
    could not stop that, so these pin the veto that replaced the fifth rewrite. */
-const { judge, hueOf, hueGap } = await import('./ledger.mjs')
+const { judge, hueOf, hueGap, colourDistance } = await import('./ledger.mjs')
 /* The other fingerprint axes are deliberately different in each pair, so these cases
    isolate hue. An earlier version of this block held them equal and the same-fingerprint
    veto fired instead, which the suite caught. */
@@ -187,6 +187,23 @@ for (const [name, got, want] of [
   ['two signature materials inside the arc are refused', judge({ fingerprint: { ...at(200), signatureHue: 39 }, ledger: [{ id: 'p', when: 'd', fingerprint: { ...at(300, 'dark', 'serif'), signatureHue: 40 } }], selfId: 'me' }).some((v) => /signature material/.test(v)), true],
   ['a ground far from the record is allowed', judge({ fingerprint: at(210), ledger: prior(42), selfId: 'me' }).length === 0, true],
   ['grey has no hue, so two greys are not a shared one', hueOf('rgb(128, 128, 128)') === null && hueGap(null, 40) === null, true],
+]) {
+  const ok = got === want
+  if (!ok) failed++
+  results.push(`${ok ? '  ok  ' : '  FAIL'} ${name}`)
+}
+
+/* Round four escaped every hue veto by going grey. These pin the distance check that
+   replaced the hole, against the real pair: two grounds 9 RGB units apart, one of which
+   the hue helper correctly reported as achromatic, so nothing compared them. */
+const dfp = (c, band = 'mid', display = 'sans') => ({ ground: band, groundColor: c, groundHue: null, accentColor: null, accentHue: null, signatureColor: null, signatureHue: null, display, imagery: 'imageless', devices: [] })
+for (const [name, got, want] of [
+  ['two greys nine units apart are refused, where hue saw nothing',
+    judge({ fingerprint: dfp('rgb(182, 188, 186)'), ledger: [{ id: 'p', when: 'd', fingerprint: dfp('rgb(183, 192, 194)', 'mid', 'serif') }], selfId: 'me' }).some((v) => /ground is 9 units/.test(v)), true],
+  ['two genuinely different greys are allowed',
+    judge({ fingerprint: dfp('rgb(120, 122, 118)'), ledger: [{ id: 'p', when: 'd', fingerprint: dfp('rgb(233, 236, 231)', 'light', 'serif') }], selfId: 'me' }).length === 0, true],
+  ['a missing colour yields no distance rather than a false zero',
+    colourDistance(null, 'rgb(1, 2, 3)') === null && colourDistance('rgb(0,0,0)', 'rgb(0,0,0)') === 0, true],
 ]) {
   const ok = got === want
   if (!ok) failed++

@@ -223,6 +223,21 @@ export function groundBand(lum) {
    here: this file never proposes a colour. It says not there, and the model chooses again
    from its own nouns. */
 
+const rgbTriple = (v) => {
+  const m = String(v ?? '').match(/(\d+(?:\.\d+)?)/g)
+  return m && m.length >= 3 ? m.slice(0, 3).map(Number) : null
+}
+
+/* Distance in RGB, rounded. Not a perceptual formula, and the header says so: it is the
+   same unit the palette ban uses, which matters more than being more correct in a way
+   that makes two numbers in the same report incomparable. */
+export function colourDistance(a, b) {
+  const x = rgbTriple(a)
+  const y = rgbTriple(b)
+  if (!x || !y) return null
+  return Math.round(Math.hypot(x[0] - y[0], x[1] - y[1], x[2] - y[2]))
+}
+
 export function hueOf(rgb) {
   const m = String(rgb).match(/(\d+(?:\.\d+)?)/g)
   if (!m || m.length < 3) return null
@@ -292,6 +307,9 @@ export function fingerprintOf(raw = {}) {
        lists with nothing in common, all resolved to one hue inside 0.8 degrees. In two of
        the three the material was not the ground, so nothing looked at it. */
     signatureHue: raw.signatureHue ?? null,
+    groundColor: raw.groundColor ?? null,
+    accentColor: raw.accentColor ?? null,
+    signatureColor: raw.signatureColor ?? null,
     display: displayClass(raw.displayFamily),
     imagery: imageryBand(Number(raw.assetShare)),
     devices: devicesOf(raw),
@@ -366,6 +384,12 @@ const ACCENT_ARC = 20
    degrees, and unlike a ground there is no reason two unrelated trades should cut their
    defining object from the same colour. */
 const SIGNATURE_ARC = 30
+/* Straight RGB distance, the same unit gate.mjs already uses for the palette ban, so a
+   number here means the same thing there. Round four's closest ground pair was 9 units
+   and read as two different sites. */
+const GROUND_DELTA = 14
+const ACCENT_DELTA = 14
+const SIGNATURE_DELTA = 16
 
 export function judge({ fingerprint, ledger, selfId }) {
   const vetoes = []
@@ -387,6 +411,20 @@ export function judge({ fingerprint, ledger, selfId }) {
   /* Hue proximity. Same band and a near hue is the same ground wearing a different name,
      and it is what two rounds of rewriting the instruction could not stop. */
   for (const entry of others) {
+    /* Round four escaped every hue veto by going grey. Three unrelated trades produced
+       three near-achromatic grounds at CIELAB chroma 8 or below, where hue is noise: a
+       two-unit change swung one of them 20 degrees. Two of the grounds were 9 RGB units
+       apart, inside this repository's own 12-unit "same colour" threshold, and the ledger
+       recorded one as hue 191 and the other as achromatic, so nothing compared them.
+       Perceptual distance does not have that hole. Hue still runs, because two saturated
+       colours can be far apart in RGB and obviously the same decision. */
+    for (const [field, arc, what] of [['groundColor', GROUND_DELTA, 'ground'], ['accentColor', ACCENT_DELTA, 'emphatic accent'], ['signatureColor', SIGNATURE_DELTA, 'signature material']]) {
+      const gap = colourDistance(fingerprint[field], entry.fingerprint?.[field])
+      if (gap === null || gap > arc) continue
+      vetoes.push(
+        `the ${what} is ${gap} units from a record from ${entry.when} (${fingerprint[field]} against ${entry.fingerprint[field]}); ${arc} units is the distance this ledger refuses`,
+      )
+    }
     for (const [field, arc, what] of [['groundHue', GROUND_ARC, 'ground'], ['accentHue', ACCENT_ARC, 'emphatic accent'], ['signatureHue', SIGNATURE_ARC, 'signature material']]) {
       const gap = hueGap(fingerprint[field], entry.fingerprint?.[field])
       if (gap === null || gap > arc) continue
@@ -684,6 +722,10 @@ if (!invokedDirectly) { /* imported for its parts; nothing runs */ } else {
     const { raw, source } = await obtainRaw(dir)
     raw.groundHue = hueOf(raw.groundColor)
     raw.accentHue = hueOf(raw.accentColor)
+    /* Round four recorded signatureHue as null on every build, because the veto was added
+       and the measurement never was. A check wired to nothing is worse than no check: it
+       appears in the report as having run. */
+    raw.signatureHue = hueOf(raw.signatureColor)
     const fingerprint = fingerprintOf(raw)
 
     let ledger
