@@ -208,6 +208,18 @@ const CASES = [
     must: ['honesty/release-claimed-on-a-draft-build'],
     why: 'no build claiming release may have used --draft',
   },
+  {
+    name: 'a band whose content stops against one edge',
+    fixture: 'refuse-lopsided', browser: true, expect: 2,
+    must: ['look/lopsided-band', 'section#terms', 'Terms of the pit ledger'],
+    why: 'three blind reviewers put this first on three unrelated pages, and every check for it until now stopped at the fold',
+  },
+  {
+    name: 'the same band, claimed on purpose',
+    fixture: 'lopsided-claimed', browser: true, expect: 0,
+    must: ['WAIVED', 'look/lopsided-band', 'every check ran and none refused'],
+    why: 'a page is allowed one wide margin and one narrow, and the cost of that answer is typing it into the record',
+  },
 ];
 
 let failed = 0;

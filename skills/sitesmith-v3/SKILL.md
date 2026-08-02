@@ -7,7 +7,7 @@ context:
   scenarios:
     read: [run.md, look.md, stacks/*]
     buy: [run.md, look.md, floor/buy.md, stacks/*]
-    operate: [run.md, floor/operate.md, stacks/*]
+    operate: [run.md, look.md, floor/operate.md, stacks/*]
     redesign: [run.md, look.md, floor/buy.md, redesign.md, stacks/*]
     experience: [run.md, look.md, motion.md, stacks/*]
     delegate: [run.md, delegation.md]
@@ -194,6 +194,14 @@ placeholder and not as a plausible example. When you need the sentence and lack 
 fact, ask for it or cut the sentence. The bottom rung is nothing at all: a page with no
 proof section is honest and an invented one is not. Voice is yours to invent. Facts are
 not.
+
+**Nothing at all means nothing, not a note saying nothing.** Four pages have now cut a
+fact and then written the cut onto the page: no reviews and none to show, nothing more is
+stated because nothing more was supplied, no address because the programme does not
+mention one. It reads as the studio's paperwork filed on the client's page, and a reader
+takes it as the answer: nobody has ever been happy here. The missing fact belongs in the
+report and in the asset manifest, where the client can go and get it. The page simply
+does not have that section.
 
 Before you defend a layout, strip the page to its text and read what is left. If the
 words alone do not persuade, the design was carrying an empty page, and the fix is the

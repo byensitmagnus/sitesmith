@@ -486,6 +486,37 @@ for (const file of markupFiles) {
       `${what} is still on the page: "${snip(m[0])}"`);
   }
 
+  /* The page telling the reader what the brief did not contain. This is the claim rule
+     in SKILL.md section 7 obeyed and then narrated, and it has now shipped four times:
+     "Der er ikke tilføjet besøgstal, priser, adresse eller parkeringsforhold, fordi
+     programmet ikke nævner dem" on a page advertising a casting at 11.14; "Ingen
+     anmeldelser og ingen udtalelser. Der er ingen at vise" and "Der står ikke mere, fordi
+     der ikke er oplyst mere" on a page selling insoles at 2.950 kroner.
+
+     A reviewer paid to buy the second one put it first: a customer in pain reads it as
+     nobody has ever been happy here. Cutting the sentence is honest. Printing the cut is
+     the studio's paperwork on the client's page.
+
+     Narrow on purpose. It fires on absence plus a word about supplying or stating, so a
+     real factual negative is untouched: "ingen klor, ingen blødgøring", "Overskridelser:
+     ingen", "Henvisning: ikke nødvendig" all pass. */
+  const NARRATED_ABSENCE = [
+    /\b(?:ikke|ingen)\b[^.!?]{0,80}\b(?:oplyst|opgivet|nævnt|angivet|udleveret|tilsendt|leveret af kunden)\b/gi,
+    /\bfordi\b[^.!?]{0,60}\b(?:ikke er oplyst|ikke nævner|ikke oplyser|ikke står i|ikke fremgår)\b/gi,
+    /\bder (?:er|står) ikke\b[^.!?]{0,40}\b(?:mere|flere|andet|noget)\b/gi,
+    /\b(?:er|der er) ingen at (?:vise|nævne)\b/gi,
+    /\b(?:not|none were|nothing was)\s+(?:supplied|provided|stated|given|shared)\b/gi,
+    /\bwe (?:do not|don't) (?:know|have)\b[^.!?]{0,50}\b(?:because|since)\b/gi,
+  ];
+  for (const re of NARRATED_ABSENCE) {
+    for (const m of text.matchAll(re)) {
+      const at = m.index ?? 0;
+      refuse('honesty/narrated-absence', file, lineOf(src, at),
+        `"${snip(text.slice(Math.max(0, at - 50), at + m[0].length + 50))}" tells the reader what the brief did not contain. `
+        + 'Section 7 says a page with no proof section is honest; it does not say to print the absence. Cut the sentence, not into it.');
+    }
+  }
+
   /* An element inside a brand link with no text, or whose only text is a filename, is a
      coloured box standing in for an identity. Three pages in the legacy set shipped one. */
   const mk = markup(src);
@@ -1378,11 +1409,137 @@ if (!direction || !direction.palette || !direction.type) {
           }
         }
 
+        /* The same emptiness, below the fold. deadShare above only sees the first screen,
+           and every page this repository has rejected for it was rejected for something
+           visible in the first 900px. The defect that keeps coming back is further down:
+           a column pinned to one edge while the ground it sits on runs the full width, so
+           the right half of the screen is bare for the length of a section.
+
+           Measured three times now on three unrelated briefs. `a-bellfoundry` set four
+           sections to max-width:70ch with no margin-inline, and the whole page sat in the
+           left half of a 1440 screen. Two builds from a later generation did it again in
+           a different costume. Nothing could see it, because the dead-field sweep stops
+           at the fold and the band starts at y=1130.
+
+           Per band, not per page: a page is allowed a narrow column, and a centred one
+           has equal gaps and never trips this. What trips it is one gap much larger than
+           the other, which is not a measure, it is a column somebody forgot to close. */
+        const bigEnough = (n) => {
+          const c = getComputedStyle(n);
+          const q = n.getBoundingClientRect();
+          return c.display !== 'none' && c.visibility !== 'hidden' && q.width > 400 && q.height > 200;
+        };
+        /* Sectioning elements as well as top-level children, because a page whose whole
+           body is one <main> has one band by that reading and the measure would be blind
+           to every section inside it. */
+        const main = document.querySelector('main') ?? document.body;
+        const bandList = [...new Set([
+          ...main.children,
+          ...document.body.children,
+          ...document.querySelectorAll('section, article, aside, header, footer, form'),
+        ])].filter((n) => n.nodeType === 1 && !n.closest('svg') && bigEnough(n));
+
+        /* The boxes inside a band count too, and one reviewer found five of them on a page
+           whose bands were all fine. A framed panel is a band to the eye: the reader sees a
+           rectangle with a ground, and half of it empty reads the same whether the ground
+           belongs to a <section> or to a <div> with a border. Only boxes that draw their
+           own surface, because an invisible wrapper is not a rectangle anybody sees. */
+        const seen = new Set(bandList);
+        for (const band of [...bandList]) {
+          for (const n of band.querySelectorAll('*')) {
+            if (seen.has(n) || n.closest('svg')) continue;
+            const c = getComputedStyle(n);
+            if (c.display === 'none' || c.visibility === 'hidden') continue;
+            if (!/^(block|flex|grid|flow-root|list-item)$/.test(c.display)) continue;
+            const q = n.getBoundingClientRect();
+            if (q.width <= 400 || q.height <= 200) continue;
+            const parentBg = n.parentElement ? getComputedStyle(n.parentElement).backgroundColor : '';
+            const paints = c.backgroundColor && !/rgba?\(\s*0,\s*0,\s*0,\s*0\)|transparent/.test(c.backgroundColor)
+              && c.backgroundColor !== parentBg;
+            const framed = parseFloat(c.borderTopWidth) > 0 && parseFloat(c.borderLeftWidth) > 0;
+            if (!paints && !framed) continue;
+            const p = n.parentElement?.getBoundingClientRect();
+            if (p && q.width > p.width - 8 && q.height > p.height - 8) continue; // same rectangle as its parent
+            seen.add(n);
+            bandList.push(n);
+          }
+        }
+
+        const occupies = (n) => {
+          const cs = getComputedStyle(n);
+          if (cs.display === 'none' || cs.visibility === 'hidden') return false;
+          const hasText = [...n.childNodes].some((c) => c.nodeType === 3 && c.textContent.trim().length > 1);
+          const ownBg = cs.backgroundColor;
+          const parentBg = n.parentElement ? getComputedStyle(n.parentElement).backgroundColor : '';
+          const paintsSurface = ownBg && !/rgba?\(\s*0,\s*0,\s*0,\s*0\)|transparent/.test(ownBg)
+            && ownBg !== parentBg && n !== document.body && n !== document.documentElement;
+          return hasText || n.matches(PICTORIAL) || paintsSurface;
+        };
+
+        /* Read in horizontal strips rather than as one bounding box. A bounding box says a
+           band is full width the moment one heading or one rule spans it, and the reviewer
+           who found five of these was looking at boxes whose heading ran the whole way and
+           whose every other line stopped at 57 per cent. The eye reads the majority of the
+           rows, so the measure does too. */
+        const STRIP = 16;
+        const bands = [];
+        for (const band of bandList) {
+          const br = band.getBoundingClientRect();
+          const rects = [];
+          for (const n of band.querySelectorAll('*')) {
+            if (n.closest('svg') && n.tagName.toLowerCase() !== 'svg') continue;
+            if (!n.getClientRects().length || !occupies(n)) continue;
+            const q = n.getBoundingClientRect();
+            if (q.width < 4 || q.height < 4) continue;
+            rects.push(q);
+          }
+          if (!rects.length) continue;
+
+          let strips = 0, lopsided = 0, worstLeft = 0, worstRight = 0, narrowest = 1;
+          for (let y = br.top; y < br.bottom; y += STRIP) {
+            let l = Infinity, r = -Infinity;
+            for (const q of rects) {
+              if (q.bottom <= y || q.top >= y + STRIP) continue;
+              l = Math.min(l, q.left);
+              r = Math.max(r, q.right);
+            }
+            if (!Number.isFinite(l)) continue;   // a strip with nothing in it is padding
+            strips++;
+            const used = (r - l) / br.width;
+            const lg = l - br.left, rg = br.right - r;
+            if (used < 0.62 && Math.abs(lg - rg) / br.width > 0.15) {
+              lopsided++;
+              if (used < narrowest) { narrowest = used; worstLeft = lg; worstRight = rg; }
+            }
+          }
+          if (!strips) continue;
+          /* A wrapper that is the same rectangle as a band inside it is not a second
+             finding. Report the innermost one, so the reason names an element somebody
+             can open rather than the container it happens to sit in. */
+          const swallowed = bandList.some((other) => {
+            if (other === band || !band.contains(other)) return false;
+            const o = other.getBoundingClientRect();
+            return o.height > br.height * 0.8;
+          });
+          if (swallowed) continue;
+          bands.push({
+            name: (band.querySelector('h1,h2,h3')?.textContent ?? band.tagName).trim().slice(0, 48),
+            tag: band.tagName.toLowerCase() + (band.id ? `#${band.id}` : ''),
+            y: Math.round(window.scrollY + br.top),
+            height: Math.round(br.height),
+            lopsidedRows: Number((lopsided / strips).toFixed(2)),
+            usedWidth: Number(narrowest.toFixed(2)),
+            leftGap: Math.round(worstLeft),
+            rightGap: Math.round(worstRight),
+          });
+        }
+
         return {
           ground,
           display: biggest ? first(getComputedStyle(biggest).fontFamily) : null,
           body: first(getComputedStyle(document.body).fontFamily),
           signature: !!el && (el.getClientRects().length > 0 || !!el.getBoundingClientRect().width),
+          bands,
           firstViewport: {
             paintedShare: Number(share(painted).toFixed(3)),
             deadShare: Number((best / (COLS * ROWS)).toFixed(3)),
@@ -1474,6 +1631,33 @@ if (!direction || !direction.palette || !direction.type) {
       if (riskAnswerSelector && measured.riskAnswerPresent === false) {
         refuse('look/risk-unanswered', DIRECTION_PATH, 1,
           `the record answers its own risk with "${riskAnswerSelector}", and that is not in the rendered page. A risk written down and not answered is the review, filed early.`);
+      }
+
+      /* Bands whose content sits against one edge while the ground runs the full width.
+         This is the one defect that has survived every rebuild, and it survives because
+         every check for it stops at the fold: the bands that fail are at y=1130 and
+         below, where deadShare has never looked.
+
+         Not scoped to looks surfaces. Two blind reviewers, given only the brief and the
+         render, put it first on two unrelated pages: "we are paying for a page, not for a
+         column", "on 1440 there is a vertical edge at about 590px where the page simply
+         stops". A read page did it in three bands out of five and a buy page in one.
+
+         A centred column has equal gaps and never trips this, so the cheapest way past is
+         also the right fix. The other ways past are to put something in the space that
+         earns it, or to type the claim into Deliberate: and own it. */
+      const LOPSIDED_ROWS = 0.6;    // most of the band's rows, not one of them
+      const lop = (measured.bands ?? []).filter((b) => b.lopsidedRows > LOPSIDED_ROWS);
+      for (const band of lop) {
+        const claimed = deliberate.has('lopsided-band') || deliberate.has(band.tag.toLowerCase());
+        const detail = `${band.tag} "${band.name}" at y=${band.y} is ${band.height}px tall and `
+          + `${Math.round(band.lopsidedRows * 100)}% of its rows stop against one edge, the narrowest spanning `
+          + `${Math.round(band.usedWidth * 100)}% of the width with ${band.leftGap}px of ground on the left and `
+          + `${band.rightGap}px on the right. The ground runs the whole way, so the flank reads as an `
+          + `unfinished column rather than as margin. Centre it, give the space something that earns it, or `
+          + `claim \`lopsided-band\` under Deliberate: with the reason.`;
+        if (claimed) waived.push({ cls: 'look/lopsided-band', file: show(join(BUILD, 'index.html')), line: 1, detail: deliberate.get('lopsided-band') ?? deliberate.get(band.tag.toLowerCase()) });
+        else refuse('look/lopsided-band', join(BUILD, 'index.html'), 1, detail);
       }
 
       if (looksSurface && fv) {
