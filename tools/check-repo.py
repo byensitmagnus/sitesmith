@@ -672,6 +672,12 @@ def _doc_counts() -> None:
         "skills/sitesmith/SKILL.md",
         "skills/sitesmith/references/11-search-engine.md",
         ".claude-plugin/plugin.json",
+        # marketplace.json is the public card a person reads before installing, and it
+        # was the one storefront claim in this repository with no checker behind it. Its
+        # description advertised "161 palettes" and "design-system selection" while every
+        # checked sibling was kept honest. A shop window is exactly where an unchecked
+        # number does the most damage.
+        ".claude-plugin/marketplace.json",
     ):
         text = (ROOT / rel).read_text(encoding="utf-8")
         for noun, n in actual.items():

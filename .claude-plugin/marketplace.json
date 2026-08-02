@@ -9,7 +9,7 @@
   "plugins": [
     {
       "name": "sitesmith",
-      "description": "Design, build, redesign, audit and polish websites and web apps. Brief inference, design-system selection, 161 palettes, anti-slop judgement, and a Playwright verification pass.",
+      "description": "Design, build, redesign, audit and polish websites and web apps. Names the page it would have made on autopilot and builds a different one, then refuses its own output in a browser: contrast in both colour schemes, reduced motion, and an anti-repeat ledger across builds.",
       "source": "./",
       "category": "design"
     }
