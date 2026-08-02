@@ -43,8 +43,8 @@ verified at both widths before this paragraph was written.
 
 ## Files
 
-- `index.html` — the page
-- `.sitesmith/direction.md` — the autopilot page that was not built, three theses, and the record
-- `PRODUCTION-REPORT.md` — sources for every claim, run notes, findings and their dispositions
-- `ASSET-MANIFEST.md` — one drawing, no image files
-- `shots/` — 375, 1440, the reduced-motion render, and the case with its panel off
+- `index.html`, the page
+- `.sitesmith/direction.md`, the autopilot page that was not built, three theses, and the record
+- `PRODUCTION-REPORT.md`, sources for every claim, run notes, findings and their dispositions
+- `ASSET-MANIFEST.md`, one drawing, no image files
+- `shots/`, 375, 1440, the reduced-motion render, and the case with its panel off

@@ -103,6 +103,13 @@ expect('a ledger that half-parses withholds its verdict rather than reporting ne
 expect('no built page and no measurement withholds the verdict',
   ['check', dir('complete'), '--ledger', absentLedger], 3, (o) => /withheld/.test(o))
 
+/* The other half of the shared contract. skills/sitesmith-v3/scripts/test-gate.mjs runs
+   gate.mjs over this same directory and requires exit 0. Both suites point at one file on
+   purpose: the record is written once by a builder and read by two scripts, and for a
+   while those two scripts wanted different things from it without either suite noticing. */
+expect('the record gate.mjs accepts is a record this parser accepts',
+  ['parse', join(root, 'docs', 'rebuild', 's10', 'fixtures', 'scripts', 'gate', 'canonical-record')], 0)
+
 expect('a directory with no direction record withholds the verdict',
   ['parse', join(tmp, 'nothing-here')], 3, (o) => /withheld/.test(o))
 
@@ -121,18 +128,36 @@ expect('committing the same shape for the same surface appends nothing',
   ['commit', commitDir, '--measurement', measurement('distinct.json'), '--ledger', commitLedger],
   0, (o) => /skipped_exists/.test(o))
 
-const lines = readFileSync(commitLedger, 'utf8').split('\n').filter(Boolean)
-const onlyOne = lines.length === 1
-if (!onlyOne) failed++
-results.push(`${onlyOne ? '  ok  ' : '  FAIL'} ledger holds ${lines.length} line(s) after two commits of one shape`)
+/* Read defensively. When the two commits above fail, this file does not exist, and an
+   unguarded readFileSync threw before a single result line was printed: the suite reported
+   nothing at all, for any case, including the thirty-odd that had already passed. A test
+   runner that cannot survive its own subject failing is not a test runner. Adding two
+   headings to REQUIRED is what surfaced it. */
+let lines = null;
+try {
+  lines = readFileSync(commitLedger, 'utf8').split('\n').filter(Boolean);
+} catch (e) {
+  failed++;
+  results.push(`  FAIL ledger file was never written: ${String(e.message).split('\n')[0]}`);
+}
+if (lines) {
+  const onlyOne = lines.length === 1;
+  if (!onlyOne) failed++;
+  results.push(`${onlyOne ? '  ok  ' : '  FAIL'} ledger holds ${lines.length} line(s) after two commits of one shape`);
+}
 
 // The rule the ledger exists to keep: it describes a design, not a client. A path, a name
 // or a URL in this file is the failure that would make the ledger unshippable.
-const entry = JSON.parse(lines[0])
-const clean = !/[\\/]|https?:|rigging|loft/i.test(JSON.stringify(entry))
-  && ['v', 'when', 'id', 'fingerprint', 'waived'].sort().join() === Object.keys(entry).sort().join()
-if (!clean) failed++
-results.push(`${clean ? '  ok  ' : '  FAIL'} the stored entry carries no path, name or URL: ${JSON.stringify(entry)}`)
+if (!lines?.length) {
+  failed++;
+  results.push('  FAIL the stored entry could not be inspected, because nothing was written');
+} else {
+  const entry = JSON.parse(lines[0])
+  const clean = !/[\\/]|https?:|rigging|loft/i.test(JSON.stringify(entry))
+    && ['v', 'when', 'id', 'fingerprint', 'waived'].sort().join() === Object.keys(entry).sort().join()
+  if (!clean) failed++
+  results.push(`${clean ? '  ok  ' : '  FAIL'} the stored entry carries no path, name or URL: ${JSON.stringify(entry)}`)
+}
 
 expect('a rerun of the same surface is not vetoed by its own committed entry',
   ['check', commitDir, '--measurement', measurement('distinct.json'), '--ledger', commitLedger], 0)

@@ -172,13 +172,48 @@ const sheetLine = (sheet, idx) => lineOf(sheet.source, sheet.base + idx);
    carried over: v3's direction record has no macro axes, so palette, type and signature
    are the only things declared and therefore the only things checkable. Inferring the
    rest would be the gate deciding the design. */
+/* Two forms are accepted for one reason: the record this gate reads is the record
+   `ledger.mjs new` writes, and it writes `## Colour` as a heading with the answer under
+   it, not `Colour:` on one line. Until this function read headings, a builder who
+   followed run.md to the letter produced a record that refused here with
+   direction/palette-not-declared, direction/type-not-declared and
+   direction/signature-not-declared, and no correct build could pass. Two parsers
+   disagreeing about the same file is the same defect as two skills in one repository,
+   only smaller and harder to see. `Colour` is the canonical heading and `Palette` is the
+   older line; both mean the ground. */
 function parseDirection(md) {
-  const line = (name) => {
+  const NAMES = { Palette: ['Palette', 'Colour', 'Color'] };
+  const alternatives = (name) => NAMES[name] ?? [name];
+
+  const oneLine = (name) => {
     const m = md.match(new RegExp(`^[ \\t]*(?:[-*]\\s*)?(?:\\*\\*)?${name}(?:\\*\\*)?:[ \\t]*(.*)$`, 'im'));
-    return m ? { value: m[1].trim(), line: lineOf(md, m.index) } : null;
+    return m && m[1].trim() ? { value: m[1].trim(), line: lineOf(md, m.index) } : null;
   };
+
+  /* A `## Name` heading whose value is the prose beneath it, up to the next heading. The
+     value is flattened to one line so every downstream check, all of which scan a string
+     for hex codes or quoted families, works on either form without knowing which it got. */
+  const heading = (name) => {
+    const m = md.match(new RegExp(`^[ \\t]*#{1,6}[ \\t]*${name}[ \\t]*$`, 'im'));
+    if (!m) return null;
+    const after = md.slice(m.index + m[0].length);
+    const body = after.split(/^[ \t]*#{1,6}[ \t]/m)[0];
+    const value = body.split('\n').map((l) => l.trim()).filter(Boolean).join(' ').trim();
+    return value ? { value, line: lineOf(md, m.index) } : null;
+  };
+
+  const line = (name) => {
+    for (const alt of alternatives(name)) {
+      const hit = oneLine(alt) ?? heading(alt);
+      if (hit) return hit;
+    }
+    return null;
+  };
+
   const block = (name) => {
-    const head = md.match(new RegExp(`^[ \\t]*(?:\\*\\*)?${name}(?:\\*\\*)?:[ \\t]*$`, 'im'));
+    const head =
+      md.match(new RegExp(`^[ \\t]*(?:\\*\\*)?${name}(?:\\*\\*)?:[ \\t]*$`, 'im')) ??
+      md.match(new RegExp(`^[ \\t]*#{1,6}[ \\t]*${name}[ \\t]*$`, 'im'));
     if (!head) return [];
     const rest = md.slice(head.index + head[0].length).split('\n').slice(1);
     const rows = [];

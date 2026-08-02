@@ -83,6 +83,19 @@ const CASES = [
     why: 'four tells, none of them claimed in the direction record',
   },
   {
+    name: 'the record ledger.mjs writes is a record gate.mjs can read',
+    fixture: 'canonical-record', browser: true, expect: 0,
+    must: ['every check ran and none refused'],
+    mustNot: ['direction/palette-not-declared', 'direction/type-not-declared', 'direction/signature-not-declared'],
+    // run.md tells a builder to run `ledger.mjs new` and fill every heading it writes.
+    // That template writes `## Colour`, `## Type` and `## Signature` as headings, and this
+    // gate only ever looked for `Palette:`, `Type:` and `Signature:` as one-line fields,
+    // so a build that followed the documented method refused here on three counts and no
+    // correct build could pass. test-ledger.mjs asserts the other half: that the same
+    // file parses. One artefact, two readers, one contract.
+    why: 'a builder who follows run.md exactly must end up with a record both scripts accept, and until this case existed neither suite checked that they agreed',
+  },
+  {
     name: 'a banned ground and an AI purple, unclaimed',
     fixture: 'unpinned', browser: true, expect: 2,
     must: ['palette/premium-consumer-default', 'colour/ai-purple'],

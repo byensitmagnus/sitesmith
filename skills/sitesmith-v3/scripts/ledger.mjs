@@ -60,6 +60,14 @@ export const REQUIRED = [
   'Risk',
   'Assumptions',
   'Originality pass',
+  /* The last two are here because gate.mjs needs them and this template is the only place
+     a builder is told what to write. Without them a build that followed run.md exactly had
+     no way to declare a literal length or to claim an antipattern on purpose, so the gate
+     refused with tokens/undeclared-literal and offered a section the record did not have.
+     Both accept "none" as an answer: an empty answer is allowed and carries a reason, an
+     absent one is not. */
+  'One-offs',
+  'Deliberate',
 ]
 
 const norm = (s) => String(s).toLowerCase().replace(/[^a-z0-9æøå]+/g, ' ').trim()
@@ -572,6 +580,8 @@ export function template(surface) {
     if (name === 'Theses') out.push('1.', '2.', '3.', '')
     if (name === 'Case for the runner-up') out.push('For:', '')
     if (name === 'Built') out.push('Built: <thesis number>, axis: <the axis>, because <reason in this subject\'s terms>', '')
+    if (name === 'One-offs') out.push('- `none` no literal length or shadow is written at a call site', '')
+    if (name === 'Deliberate') out.push('- `none` this build claims no antipattern on purpose', '')
   }
   return `${out.join('\n').trimEnd()}\n`
 }
