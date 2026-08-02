@@ -1,7 +1,7 @@
 ---
 title: Runde 4, hvor stopreglen blev opfyldt
 state: S19_COLD_LOOP
-status: 2 af 3 ACCEPT — gren 1 i stopreglen er indtruffet
+status: 3 af 3 ACCEPT — gren 1 i stopreglen er indtruffet med alle tre
 branch: rebuild/sitesmith-unified
 ai_generated: "(C)"
 ---
@@ -15,9 +15,9 @@ udvidede rubrik. Protokollen er `PLAN-TIL-FAERDIG.md`; stopreglen stod fast før
 |---|---|---|---|
 | J, Rold Savværk | buy | **ACCEPT** | "tallene stemmer indbyrdes overalt, og bestillingssedlen lyver ikke om hvad den kan" |
 | L, Hirtshals Fyr | read | **ACCEPT** | "alt på den er sandt, og tegningerne er vores fyr og ikke et museums" |
-| K, Kornmodtagelsen | operate | afventer dom | bygget færdigt, gate ren |
+| K, Kornmodtagelsen | operate | **ACCEPT** | "vognen på broen og de tre celler der kan tage lasten kan ses fra døren uden at læse en linje, og skærmen modsiger ikke sig selv ét eneste sted" |
 
-Historikken: runde 1–3 gav 0 accepts af 9. Runde 4 gav 2 af de første 2 dømte.
+Historikken: runde 1–3 gav 0 accepts af 9. Runde 4 gav 3 af 3.
 
 ## Hvad der ændrede sig mellem runde 3 og 4, og intet andet gjorde
 
