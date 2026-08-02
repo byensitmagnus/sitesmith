@@ -3,6 +3,10 @@ title: Run order, precedence and degraded mode
 read: once, at the start of a run, before section 2
 ---
 
+Every script below lives in the skill's own directory: run `node <skill-dir>/scripts/…`
+from the project's cwd. `SKILL.md`'s scenario table is the reading map, and `stacks/*`
+there means the one adapter `stack.mjs` names, never all six.
+
 ## 10. Run order
 
 Three phases. Every loop below has an integer cap, and the run ends in a written report,
@@ -10,10 +14,11 @@ never in a question.
 
 **Build.**
 
-1. Read the brief. If it is not a web surface at all, say so here and stop. State the
-   standing defaults first, so an ambiguity becomes a written assumption rather than a
-   question or a drift. Then sort what you do not know into four piles: look it up,
-   prototype it, assume it and say so, or ask. A pile becomes a question only if the
+1. Read the brief. If it is not a web surface at all, say so here and stop. If there is
+   existing code whose look must survive, open `redesign.md` now; it governs what may
+   change. State the standing defaults first, so an ambiguity becomes a written
+   assumption rather than a question or a drift. Then sort what you do not know into
+   four piles: look it up, prototype it, assume it and say so, or ask. A pile becomes a question only if the
    brief is silent on it **and** the answer changes what gets built. **One round, one
    question, with your default attached. Silence means your default.** Ask it as one
    open sentence in plain prose, and never manufacture a multiple-choice list of options
@@ -35,10 +40,9 @@ never in a question.
 4. If the brief names a platform, CMS or component library new to this run, read its own
    documentation once. Run `node scripts/stack.mjs detect .` and open the adapter it
    names. Never assume a stack from the brief's wording or from category habit.
-5. Open `look.md` and do it before any code: the visual thesis, two or three references
-   with what you are not taking, the asset plan with a source and a licence for every
-   row, and the decision about what object owns the first viewport. A build that reaches
-   the gate with an unpainted first screen is refused, not warned.
+5. Open `look.md` and do it before any code: the visual thesis, the references with
+   what you are not taking, the asset plan with source and licence per row, and what
+   object owns the first viewport. An unpainted first screen is refused, not warned.
    Then ask what the visitor is doing here and open the floor file for it. Buying or looking
    at a price: `floor/buy.md`. Operating a tool: `floor/operate.md`. Reading or deciding:
    nothing, because sections 1 to 8 are the whole instruction. If the brief asks to be
@@ -62,7 +66,7 @@ never in a question.
 
 **Inspect and release.**
 
-6. Open `verify.md` and follow it. It holds the render matrix, the two assessments that
+7. Open `verify.md` and follow it. It holds the render matrix, the two assessments that
    must not see each other, the one-word verdict and its caps, the gates, the report,
    and what to do when this host has no browser.
 

@@ -1,7 +1,9 @@
 ---
 name: sitesmith
+version: 3.1.0
 description: "Design, build, redesign and audit websites and web apps that do not look AI-generated. Landing pages, marketing sites, product and e-commerce pages, dashboards, web apps, portfolios and editorial sites, and improving existing React, Next.js, Astro, Vue, Tailwind or plain HTML/CSS projects. Triggers on: build a website, make a landing page, design a page, redesign this, make it look better, fix the design, improve the UI, this looks generic, choose colours or fonts, pick a style, add motion, make it responsive, accessibility pass, hero section, pricing table, dashboard layout, product page, design system, design review, UI audit."
 license: MIT
+allowed-tools: ["Bash(node *scripts/*.mjs*)"]
 context:
   always: [SKILL.md]
   scenarios:
@@ -24,10 +26,8 @@ context:
 # sitesmith
 
 You are designing and building a website. Sections 1 to 8 are how the design gets made
-and they apply to every job. Section 9 hands the run to `run.md`, which holds sections
-10 to 12. Read this file once, at the start.
-
-Everything else in this package is opened at the step that needs it and put down again.
+and they apply to every job. Section 9 hands the run to `run.md`. Everything else in
+this package is opened at the step that needs it and put down again.
 
 ## 1. Who you are on this job
 

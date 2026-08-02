@@ -1,10 +1,26 @@
 # SiteSmith
 
+[![verify](https://github.com/byensitmagnus/sitesmith/actions/workflows/verify.yml/badge.svg)](https://github.com/byensitmagnus/sitesmith/actions/workflows/verify.yml)
+[![licence: MIT](https://img.shields.io/badge/licence-MIT-green.svg)](THIRD-PARTY-NOTICES.md)
+
 **A browser release loop for coding agents that build websites.**
 
 SiteSmith is a website-building skill for coding agents. It chooses a visual direction, builds in
-the detected stack, and checks the result in a real browser before it calls the site done. The
-ordinary workflow is three commands: `init → build → audit`.
+the detected stack, and checks the result in a real browser before it calls the site done.
+
+> **What installs today.** The current skill is
+> [`skills/sitesmith-v3/`](skills/sitesmith-v3/README.md), installed with:
+>
+> ```bash
+> node tools/install-sitesmith.mjs
+> ```
+>
+> It refuses defects it can measure and locks a visual critique to the render it was
+> written against. Its own README carries the honest limits, including that every cold
+> build shown to a blind paying reviewer has so far been rejected.
+>
+> The `init → build → audit` plugin journey below describes the **v2** layer, which
+> remains on `main` as evidence and history while v3 is measured.
 
 **[Open the live project page](https://byensitmagnus.github.io/sitesmith/)** ·
 **[Install SiteSmith](#install)** ·
@@ -12,17 +28,16 @@ ordinary workflow is three commands: `init → build → audit`.
 
 ![SiteSmith project page showing its browser release rig and a deliberately blocked control page](gallery/sitesmith-home.png)
 
-> **Where this is.** The canonical layer is [`skills/sitesmith/v2/`](skills/sitesmith/v2/README.md):
-> a definition of done, sixty core rules, three mode files, a design-system contract and a block
-> library. It replaced a set of four vendored skills that carried 978 rules, 735 of them
-> prohibitions.
->
-> **Product status.** V2 is pre-release on `main`. The benchmark lab is separate and never runs
-> during a customer-site build.
+> **Repo map.** The product is `skills/sitesmith-v3/`. The proof is `docs/rebuild/`
+> (research, autopsies of 16 source repos, cold-build rounds) and `docs/v2/` (the prior
+> layer's benchmark evidence). The lab is `tools/`, `bench*/` and `tests/`; nothing in it
+> runs during a customer build. Everything else is history, kept because the numbers in
+> the docs point into it.
 >
 > **Evidence boundary.** SiteSmith's browser checks catch accessibility, links, console and
-> overflow defects. Round 8's three pages averaged 8.21 in individual review, but the set failed
-> portfolio diversity. SiteSmith does not claim that it measurably improves an arbitrary agent.
+> overflow defects, and its gate refuses named design defects with coordinates. It does not
+> claim the pages are good: that verdict belongs to a blind reviewer, and the README of the
+> skill says how that measurement is going.
 
 ## Showcase reset: 0/8
 

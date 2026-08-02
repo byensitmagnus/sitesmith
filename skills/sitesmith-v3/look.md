@@ -75,14 +75,11 @@ Three things it must have, and `verify.mjs` measures the first two:
 
 ## 4b. The second reading, and where the subject's unknown goes
 
-Nine cold builds have been shown to nine reviewers who saw only the brief and the render.
-Every one of them named one thing they liked, and all nine were the same move: **one of
-the subject's own measurements, made readable in a second.** The hatching density *is* the
-shore rating. The section *is* the 41 and 47 metres. The dotted edge *is* the 3,1 km.
-
-Four of the first six answered the "could this be anyone" question the same way: *no, but
-only because of that one drawing; cut it out and the page is generic.* The move was used
-once, on the signature, and the rest of the page was chrome around it.
+Nine cold builds, nine blind reviewers, and every one named one thing they liked: the
+same move all nine times, **one of the subject's own measurements made readable in a
+second**. The hatching density *is* the shore rating; the section *is* the 41 metres.
+Four of six also said the page was generic with that one drawing cut out: the move was
+used once, on the signature, and the rest was chrome around it.
 
 **So it happens at least twice, and the second one is not in the first screen.** Name it
 in the record beside the signature: which other measurement of this subject it renders,
