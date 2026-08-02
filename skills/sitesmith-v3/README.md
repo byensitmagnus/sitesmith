@@ -67,6 +67,22 @@ Every loop has an integer cap. There is no self-improvement loop.
 - em dashes, anywhere, absolutely
 - token drift, and reads outside the declared manifest
 
+Five more come from cold measurement rather than from principle. Three fresh agents built
+three pages from this package alone, and three reviewers who saw only the brief and the
+screenshots rejected all three; the round after that repeated it with new briefs. What the
+reviewers put first, in their own words, is now measured:
+
+- **a band whose content stops against one edge** while the ground runs the full width.
+  "We are paying for a page, not for a column."
+- **a page with no spine**: bands whose left edges nearly line up and miss. Near misses
+  only, because 300px apart is a decision and 48px is an accident.
+- **most of the page wearing one shape.** "The front has an idea; after that it is a
+  document on a green ground."
+- **a page that writes its own deletions**: no reviews and none to show, nothing more
+  because nothing more was supplied. A buyer reads it as the answer.
+- **an operate surface whose first screen has nothing to press.** A tool you can only read
+  is a report.
+
 Every one of those has an override path: write `<name>-pinned-by-brief:` with the
 client's own words in the direction record and the check stands down. **The brief
 outranks everything in this package.**
@@ -79,6 +95,14 @@ subject's own materials.
 `scripts/verify.mjs` renders and reports what is actually on screen. A check that could
 not run withholds its verdict.
 
+`scripts/critique.mjs` holds the one step that had never been enforced. `packet` prints
+the whole input a reviewer gets, the images and the brief and six questions, and nothing
+else; `lock` hashes the render the answers were written against. The gate refuses a
+rendered page with no critique locked to it, and refuses a critique of a page that has
+since moved without a correction round. Hand the packet to a fresh agent when one is
+available: a model reviewing its own fresh work in its own context missed, three times out
+of three, what a reader with no memory of writing it found immediately.
+
 ## Honest limits
 
 - **The creative method is re-expressed from Anthropic's `frontend-design` skill**, which
@@ -90,7 +114,14 @@ not run withholds its verdict.
   it rather than removing it, which is why the current defences are checks in code rather
   than more instruction. See `docs/rebuild/s13/`.
 - **No site built with this has shipped to a real customer.** Every number here comes
-  from two or three builds.
+  from a handful of builds.
+- **Every page a paying reviewer has been shown was rejected.** Six cold builds across two
+  rounds, six blind reviews, six rejections. The refusals above are what those reviews
+  found, and each of them is now measured on the page rather than asked for in prose, but
+  a measurement that reproduces a reviewer's complaint is not the same as a page they would
+  accept. The one thing that has changed a page before release is the locked critique.
+- **Nothing here can approve a design.** The gate refuses defects and refuses absences.
+  A green run means nobody found a named fault, not that the page is good.
 
 Full research trail, including everything that failed: `docs/rebuild/`.
 
