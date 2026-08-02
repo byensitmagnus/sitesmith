@@ -83,6 +83,22 @@ const CASES = [
     why: 'four tells, none of them claimed in the direction record',
   },
   {
+    name: 'an experience surface whose first screen is words on a flat ground',
+    fixture: 'look-unpainted', browser: true, expect: 2,
+    must: ['look/first-viewport-unpainted', 'look/dead-field'],
+    // The whole point of look.md, and the hole the S17 holdouts went through. Every other
+    // check in this gate refuses a defect; these two refuse an absence, and nothing here
+    // asked for anything to be present until they existed.
+    why: 'three holdouts shipped an unpainted first screen with every gate green, and a page that is words on a flat ground has not started',
+  },
+  {
+    name: 'the same page with something on it',
+    fixture: 'look-painted', browser: true, expect: 0,
+    must: ['every check ran and none refused'],
+    mustNot: ['look/first-viewport-unpainted', 'look/dead-field'],
+    why: 'the two fixtures differ by one drawn plate, so the refusal has to lift when the thing it asks for is there',
+  },
+  {
     name: 'a buy surface with nothing that drives it',
     fixture: 'buy-no-journeys', browser: true, expect: 2,
     must: ['journeys/none'],

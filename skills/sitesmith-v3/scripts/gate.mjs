@@ -1265,11 +1265,85 @@ if (!direction || !direction.palette || !direction.type) {
           parseFloat(getComputedStyle(b).fontSize) - parseFloat(getComputedStyle(a).fontSize))[0];
         const first = (v) => (v ?? '').split(',')[0].replace(/["']/g, '').trim();
         const el = s ? document.querySelector(s) : null;
+
+        /* The first viewport, measured rather than assumed. Two numbers, and they are the
+           only positive requirements this package makes: something is there, and there is
+           no large field where nothing is.
+
+           paintedShare: the share of the first screen covered by matter that is not
+           running text. An image, an inline drawing, a video, a canvas, or an element
+           carrying a background image or gradient. Overlapping boxes are unioned on a
+           coarse grid rather than summed, because summing rewards stacking.
+
+           deadShare: the largest single rectangle of first screen with nothing in it, as
+           a share of that screen. Whitespace is a decision and reads as one; a dead field
+           is an absence and reads as that. */
+        const VW = window.innerWidth, VH = window.innerHeight;
+        const COLS = 48, ROWS = 30;
+        const cw = VW / COLS, ch = VH / ROWS;
+        const painted = new Uint8Array(COLS * ROWS);
+        const occupied = new Uint8Array(COLS * ROWS);
+        const mark = (grid, r) => {
+          const x0 = Math.max(0, Math.floor(r.left / cw)), x1 = Math.min(COLS - 1, Math.ceil(r.right / cw) - 1);
+          const y0 = Math.max(0, Math.floor(r.top / ch)), y1 = Math.min(ROWS - 1, Math.ceil(r.bottom / ch) - 1);
+          for (let y = y0; y <= y1; y++) for (let x = x0; x <= x1; x++) grid[y * COLS + x] = 1;
+        };
+        const inFirst = (r) => r.width > 0 && r.height > 0 && r.top < VH && r.bottom > 0 && r.left < VW && r.right > 0;
+        const PICTORIAL = 'img,svg,video,canvas,picture,figure';
+        for (const n of document.querySelectorAll('*')) {
+          if (!n.getClientRects().length) continue;
+          const r = n.getBoundingClientRect();
+          if (!inFirst(r)) continue;
+          const cs = getComputedStyle(n);
+          /* Occupancy is what a reader can see, not what exists. Marking every element
+             with area marks the body, which covers the screen, which makes the dead-field
+             number zero on every page ever measured. Only three things occupy: text a
+             person can read, a pictorial element, and a surface whose own background
+             differs from the one behind it. */
+          const hasText = [...n.childNodes].some((c) => c.nodeType === 3 && c.textContent.trim().length > 1);
+          const ownBg = cs.backgroundColor;
+          const parentBg = n.parentElement ? getComputedStyle(n.parentElement).backgroundColor : '';
+          const paintsSurface = ownBg && !/rgba?\(\s*0,\s*0,\s*0,\s*0\)|transparent/.test(ownBg)
+            && ownBg !== parentBg && n !== document.body && n !== document.documentElement;
+          const borders = parseFloat(cs.borderTopWidth) + parseFloat(cs.borderBottomWidth) > 0;
+          if (hasText || n.matches(PICTORIAL) || paintsSurface || borders) mark(occupied, r);
+          const bg = cs.backgroundImage;
+          const pictorial = n.matches(PICTORIAL);
+          const painterly = bg && bg !== 'none';
+          const boxIsBig = r.width * r.height > (VW * VH) / 400;
+          if ((pictorial || painterly) && boxIsBig) mark(painted, r);
+        }
+        const share = (g) => g.reduce((n, v) => n + v, 0) / g.length;
+
+        /* Largest empty rectangle, by the standard histogram sweep over the occupancy
+           grid. Cheap, exact on the grid, and the grid is coarse on purpose: a one-cell
+           gap between two paragraphs is not a dead field and should not read as one. */
+        let best = 0;
+        const heights = new Array(COLS).fill(0);
+        for (let y = 0; y < ROWS; y++) {
+          for (let x = 0; x < COLS; x++) heights[x] = occupied[y * COLS + x] ? 0 : heights[x] + 1;
+          const stack = [];
+          for (let x = 0; x <= COLS; x++) {
+            const h = x === COLS ? 0 : heights[x];
+            let start = x;
+            while (stack.length && stack[stack.length - 1][1] >= h) {
+              const [i, hh] = stack.pop();
+              best = Math.max(best, hh * (x - i));
+              start = i;
+            }
+            stack.push([start, h]);
+          }
+        }
+
         return {
           ground,
           display: biggest ? first(getComputedStyle(biggest).fontFamily) : null,
           body: first(getComputedStyle(document.body).fontFamily),
           signature: !!el && (el.getClientRects().length > 0 || !!el.getBoundingClientRect().width),
+          firstViewport: {
+            paintedShare: Number(share(painted).toFixed(3)),
+            deadShare: Number((best / (COLS * ROWS)).toFixed(3)),
+          },
         };
       }, sel);
     } catch (e) {
@@ -1279,6 +1353,33 @@ if (!direction || !direction.palette || !direction.type) {
     }
 
     if (measured) {
+      /* The positive requirements, and the only ones in this package. Everything else
+         here refuses a defect; these two refuse an absence.
+
+         Scoped to the surfaces that are sold on how they look. A dashboard is dense with
+         its own data and a documentation page is text on purpose; demanding painted
+         matter there would produce decoration, which is the failure in the other
+         direction. An experience or marketing page whose first screen is words on a flat
+         ground has not started, and all three S17 holdouts shipped exactly that with
+         every gate green.
+
+         The floors are set from measurement rather than taste: the three rejected pages
+         scored 0.00 painted and 0.30 to 0.47 dead. */
+      const PAINT_FLOOR = 0.15;
+      const DEAD_CEILING = 0.28;
+      const fv = measured.firstViewport ?? null;
+      const looksSurface = /\b(experience|marketing|campaign|launch|editorial)\b/i.test(declaredSurface);
+      if (looksSurface && fv) {
+        if (fv.paintedShare < PAINT_FLOOR) {
+          refuse('look/first-viewport-unpainted', join(BUILD, 'index.html'), 1,
+            `${Math.round(fv.paintedShare * 100)}% of the first screen carries anything but running text, and this surface needs at least ${Math.round(PAINT_FLOOR * 100)}%. look.md section 4: decide what object owns the first screen.`);
+        }
+        if (fv.deadShare > DEAD_CEILING) {
+          refuse('look/dead-field', join(BUILD, 'index.html'), 1,
+            `the largest empty rectangle on the first screen is ${Math.round(fv.deadShare * 100)}% of it, over the ${Math.round(DEAD_CEILING * 100)}% ceiling. Whitespace is a decision and reads as one; this reads as an absence.`);
+        }
+      }
+
       const declared = [...direction.palette.value.matchAll(/#[0-9a-f]{3,8}\b|rgba?\([^)]*\)|hsla?\([^)]*\)/gi)]
         .map((m) => parseColour(m[0])).filter(Boolean).map(luminance);
       const unparsed = /oklch|oklab|\blch\(|\blab\(/i.test(direction.palette.value);

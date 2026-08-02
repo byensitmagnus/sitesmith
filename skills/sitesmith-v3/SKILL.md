@@ -5,20 +5,20 @@ license: MIT
 context:
   always: [SKILL.md]
   scenarios:
-    read: [run.md, stacks/*]
-    buy: [run.md, floor/buy.md, stacks/*]
+    read: [run.md, look.md, stacks/*]
+    buy: [run.md, look.md, floor/buy.md, stacks/*]
     operate: [run.md, floor/operate.md, stacks/*]
-    redesign: [run.md, floor/buy.md, redesign.md, stacks/*]
-    experience: [run.md, motion.md, stacks/*]
+    redesign: [run.md, look.md, floor/buy.md, redesign.md, stacks/*]
+    experience: [run.md, look.md, motion.md, stacks/*]
     delegate: [run.md, delegation.md]
     inspect: [verify.md]
   ceilings:
-    always: 3120
-    routine: 6600
-    experience: 6800
-    redesign: 7600
+    always: 3140
+    routine: 8600
+    experience: 8800
+    redesign: 9600
     delegate: 6000
-    inspect: 4600
+    inspect: 4800
 ---
 
 # sitesmith

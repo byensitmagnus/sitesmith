@@ -35,7 +35,11 @@ never in a question.
 4. If the brief names a platform, CMS or component library new to this run, read its own
    documentation once. Run `node scripts/stack.mjs detect .` and open the adapter it
    names. Never assume a stack from the brief's wording or from category habit.
-5. Ask what the visitor is doing here and open the floor file for it. Buying or looking
+5. Open `look.md` and do it before any code: the visual thesis, two or three references
+   with what you are not taking, the asset plan with a source and a licence for every
+   row, and the decision about what object owns the first viewport. A build that reaches
+   the gate with an unpainted first screen is refused, not warned.
+   Then ask what the visitor is doing here and open the floor file for it. Buying or looking
    at a price: `floor/buy.md`. Operating a tool: `floor/operate.md`. Reading or deciding:
    nothing, because sections 1 to 8 are the whole instruction. If the brief asks to be
    carried through something, by scroll, animation or video, also open `motion.md`. When one page is two

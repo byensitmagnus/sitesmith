@@ -58,6 +58,15 @@ One per surface. Run from where playwright is: `node scripts/journey.mjs <dir> -
 Buy, operate and redesign are refused without one. Read and experience are not asked: a page
 with no interactive path has no journey, and demanding one yields smoke tests wearing the name.
 
+## Look at the render before you call it done
+
+`verify.mjs` counts defects. It does not have an opinion about the page. After it passes,
+open the screenshots it wrote at 1440 and at 375 and do `look.md` section 6: five
+sentences of critique against the image, then exactly one correction round.
+
+Both answers belong in the production report. A run that says the critique found nothing
+is making a claim, and it is the claim a reader is most entitled to disbelieve.
+
 ## The state roster
 
 Every interactive element owes six states, and each one prevents a named failure. **Rest.**
