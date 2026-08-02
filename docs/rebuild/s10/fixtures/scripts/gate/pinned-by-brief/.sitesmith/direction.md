@@ -17,3 +17,9 @@ changing, it is the colour of the actual book" said in the first meeting.
 
 purple-pinned-by-brief: "the dye we are known for is that violet, it goes on the
 site or we are not doing the site".
+
+## Answer to the risk
+The risk above is answered by `.wetline`, the signature that runs under every heading and keeps the page reading as one object rather than as a document with sections.
+
+## The shell
+Who: `Trelfall & Son` in the header, on every screen. Where: Marstal, named in the footer. Do: the enquiry link in the footer, which is the one action this surface carries.

@@ -59,6 +59,12 @@ the wet line that runs under every heading (`.wetline`)
 ## Risk
 A page that looks like a document can read as unfinished to a buyer expecting a shop.
 
+## Answer to the risk
+The risk above is answered by `.wetline`, the signature that runs under every heading and keeps the page reading as one object rather than as a document with sections.
+
+## The shell
+Who: `Trelfall & Son` in the header, on every screen. Where: Marstal, named in the footer. Do: the enquiry link in the footer, which is the one action this surface carries.
+
 ## Assumptions
 Assumed the pit numbering is public. Written down because nobody confirmed it.
 

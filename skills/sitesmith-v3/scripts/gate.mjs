@@ -418,6 +418,19 @@ function parseManifest(md) {
    one the record declares. `buy` and `operate` are where a broken handler ships as a
    working page; `read` and `experience` are not. */
 const BEHAVIOURAL_SURFACES = /\b(buy|operate|redesign)\b/i;
+/* Two sections of the record the gate reads directly. The shell is what the page owes a
+   reader who wants to know who this is and how to act; the risk answer is the selector the
+   record itself nominated to answer the risk it wrote down. */
+const sectionOf = (name) => {
+  if (!directionRaw) return '';
+  const re = new RegExp(`^[ \t]*#{1,6}[ \t]*${name}[ \t]*$`, 'im');
+  const m = directionRaw.match(re);
+  if (!m) return '';
+  return directionRaw.slice(m.index + m[0].length).split(/^[ 	]*#{1,6}[ 	]/m)[0].trim();
+};
+const shellSection = sectionOf('The shell');
+const riskAnswerSelector = (sectionOf('Answer to the risk').match(/`([.#][\w-]+)`/) ?? [])[1] ?? null;
+
 const journeyDir = join(BUILD, 'journeys');
 const journeySpecs = (await readdir(journeyDir).catch(() => null))?.filter((f) => f.endsWith('.spec.mjs')) ?? null;
 const journeyRefusal = DRAFT ? warn : refuse;
@@ -1169,17 +1182,47 @@ for (const sheet of sheets) {
   for (const m of css.matchAll(/(?:^|[;{\s])background(?:-color)?\s*:\s*([^;{}]+)/gi)) {
     const literal = (deref(m[1]).match(/#[0-9a-f]{3,8}\b|rgba?\([^)]*\)|hsla?\([^)]*\)/i) ?? [])[0];
     const rgb = literal ? parseColour(literal) : null;
-    if (rgb && luminance(rgb) < 0.06) grounds.push({ index: m.index, value: literal });
+    if (rgb && luminance(rgb) < 0.06 && !insideDarkScheme(css, m.index)) grounds.push({ index: m.index, value: literal });
   }
   const accents = [...css.matchAll(/#[0-9a-f]{3,8}\b|rgba?\([^)]*\)|hsla?\([^)]*\)/gi)]
     .map((m) => parseColour(m[0])).filter(Boolean)
     .map(saturation).filter((x) => x.s >= 0.55 && x.l >= 0.3 && x.l <= 0.78);
   const tracked = css.match(/letter-spacing\s*:\s*(0?\.\d+em|[1-9][\d.]*px)/i);
-  const upper = /text-transform\s*:\s*uppercase/i.test(css);
+  /* Typed capitals count. This leg required the CSS property, and across the five pages
+     this repository has built the property appears zero times, because every one of them
+     typed JOB 01 and UNDEROKTAV into the markup instead. A detector that cannot fire on
+     the corpus it was written for is not a detector. */
+  const typedCaps = markupFiles.some((f) => {
+    const src = textOf(f);
+    return [...src.matchAll(/>([^<>{}]{2,40})</g)]
+      .map((m) => m[1].trim())
+      .some((t) => /^[A-ZÆØÅ0-9][A-ZÆØÅ0-9 .·|/-]{2,}$/.test(t) && /[A-ZÆØÅ]{3}/.test(t));
+  });
+  const upper = /text-transform\s*:\s*uppercase/i.test(css) || typedCaps;
   if (grounds.length && accents.length && tracked && upper) {
     tell('round-8-recipe', sheet.file, sheetLine(sheet, grounds[0].index),
       `near-black ground ${grounds[0].value}, a saturated accent and wide-tracked uppercase: the combination this studio already shipped three times`);
   }
+}
+
+
+/* A near-black declared inside a dark-scheme block is not "a near-black ground". Every
+   page with a dark mode has one, and reading it as an identity choice made the round-8
+   detector refuse the one page in this repository the owner accepted, whose default
+   ground is light. Counted by brace depth from the nearest preceding
+   prefers-color-scheme: dark at-rule. */
+function insideDarkScheme(css, index) {
+  const before = css.slice(0, index);
+  const at = before.lastIndexOf('prefers-color-scheme');
+  if (at < 0) return false;
+  if (!/dark/i.test(css.slice(at, at + 40))) return false;
+  const span = css.slice(at, index);
+  let depth = 0;
+  for (const ch of span) {
+    if (ch === '{') depth++;
+    else if (ch === '}') depth--;
+  }
+  return depth > 0;
 }
 
 /* An icon in a rounded square, repeated once per feature row. Matched on the wrapper class
@@ -1254,7 +1297,7 @@ if (!direction || !direction.palette || !direction.type) {
     let measured = null;
     try {
       await page.goto(entry, { waitUntil: 'load', timeout: 20000 });
-      measured = await page.evaluate((s) => {
+      measured = await page.evaluate(({ s, riskSel }) => {
         const paint = (el) => {
           const c = getComputedStyle(el).backgroundColor;
           return /rgba?\(\s*0,\s*0,\s*0,\s*0\)|transparent/.test(c) ? null : c;
@@ -1343,9 +1386,21 @@ if (!direction || !direction.palette || !direction.type) {
           firstViewport: {
             paintedShare: Number(share(painted).toFixed(3)),
             deadShare: Number((best / (COLS * ROWS)).toFixed(3)),
+            shell: {
+              /* Anywhere on the page, not only the first screen: a footer is a shell. The
+                 skip link does not count, because it is an accessibility affordance and
+                 not a way for a reader to act. */
+              actions: [...document.querySelectorAll('a[href],button')]
+                .filter((el) => !/^#(main|content|top)?$/i.test(el.getAttribute('href') ?? '')
+                  && !/skip|spring/i.test(el.textContent || ''))
+                .length,
+              nav: Boolean(document.querySelector('nav, [role="navigation"], header a[href]')),
+              footer: Boolean(document.querySelector('footer, [role="contentinfo"]')),
+            },
           },
+          riskAnswerPresent: riskSel ? Boolean(document.querySelector(riskSel)) : null,
         };
-      }, sel);
+      }, { s: sel, riskSel: riskAnswerSelector });
     } catch (e) {
       withhold('direction fidelity', `${entry} did not render: ${e.message.split('\n')[0]}`);
     } finally {
@@ -1369,6 +1424,41 @@ if (!direction || !direction.palette || !direction.type) {
       const DEAD_CEILING = 0.28;
       const fv = measured.firstViewport ?? null;
       const looksSurface = /\b(experience|marketing|campaign|launch|editorial)\b/i.test(declaredSurface);
+      /* The shell, and this is the cleanest correlation in the whole corpus. Four pages
+         this repository rejected have exactly one anchor each, the skip link, and no nav
+         and no footer between them. The one page the owner accepted has twelve anchors, a
+         nav and a footer. Nothing anywhere required it, so nobody built it.
+
+         Refused unless the record's "The shell" section says so on purpose: a surface can
+         genuinely have no way out, and that answer has to be typed rather than happen. */
+      const shellDeclaredNone = /^\s*none[.\s]*$/i.test(shellSection);
+      if (fv && shellDeclaredNone) {
+        waived.push({
+          cls: 'look/no-shell',
+          file: show(DIRECTION_PATH),
+          line: 1,
+          detail: 'the record answers "The shell" with none, so this page is allowed to have no way out. A reader arriving here cannot find out who this is.',
+        });
+      }
+      if (fv && !shellDeclaredNone) {
+        if (fv.shell.actions < 2) {
+          refuse('look/no-way-out', join(BUILD, 'index.html'), 1,
+            `the page carries ${fv.shell.actions} link or button that is not the skip link. A reader who wants to act, or to find out who this is, has nowhere to go. Declare "none" in "The shell" with a reason, or give them one.`);
+        }
+        if (!fv.shell.nav && !fv.shell.footer) {
+          refuse('look/no-shell', join(BUILD, 'index.html'), 1,
+            'no nav and no footer. Nothing on the page says who this is, where they are, or what else exists.');
+        }
+      }
+
+      /* The answer to the risk has to be on the page. The model wrote the owner's review
+         into the Risk field five times before building, and every one of those builds
+         shipped green because nothing read the field. */
+      if (riskAnswerSelector && measured.riskAnswerPresent === false) {
+        refuse('look/risk-unanswered', DIRECTION_PATH, 1,
+          `the record answers its own risk with "${riskAnswerSelector}", and that is not in the rendered page. A risk written down and not answered is the review, filed early.`);
+      }
+
       if (looksSurface && fv) {
         if (fv.paintedShare < PAINT_FLOOR) {
           refuse('look/first-viewport-unpainted', join(BUILD, 'index.html'), 1,

@@ -64,6 +64,12 @@ The certificate block itself, set the way the loft sets it on paper, ruled in --
 ## Risk
 The page leads with paperwork. The category leads with a photograph of a mast against a sky, and this one refuses to.
 
+## Answer to the risk
+The risk above is answered by `.wetline`, the signature that runs under every heading and keeps the page reading as one object rather than as a document with sections.
+
+## The shell
+Who: the loft name in the top bar, visible on every screen. Where: no physical visit is offered, so no address is claimed. Do: the enquiry link in the footer, which is the one action this surface carries.
+
 ## Assumptions
 Assumed the loft will let its certificate template be shown publicly. Written down here because nobody has confirmed it.
 

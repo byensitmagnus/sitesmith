@@ -64,6 +64,12 @@ the sticky sum panel with the two pixel rule above the total (`.sum`). Its kind 
 ## Risk
 A page with no image of the product asks a lot of a buyer who has not met this loft. Accepted, and mitigated by the specification table doing the work a photograph would.
 
+## Answer to the risk
+The risk above is answered by nothing. The record said the page asks a lot of a buyer who has not met this loft, and the build shipped with no image and no way to meet them.
+
+## The shell
+The loft name and the order number are in the top bar, and that is all. There is no way to reach the loft, no address, no second page and no footer. This is the defect this page is kept as evidence of.
+
 ## Assumptions
 Assumed the prices are current and exclude VAT, which the sheet states. Assumed the 8 to 11 week lead time is the high season figure.
 

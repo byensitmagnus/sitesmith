@@ -58,6 +58,21 @@ export const REQUIRED = [
   'Argument order',
   'Signature',
   'Risk',
+  /* The answer to the risk, and it exists because of a measurement rather than a theory.
+     Five direction records in this repository wrote the owner's review into Risk before a
+     single line of code was written: "may read as unfinished", "asks a lot of a visitor".
+     All five shipped green, because the only consumer of the field was the check below
+     that the heading is not empty. The model knew. Nothing asked it.
+
+     This heading has to name the selector that answers the risk, and gate.mjs looks for
+     that selector in the rendered DOM the same way it already looks for the signature. A
+     risk with no answer is now a refusal instead of a paragraph. */
+  'Answer to the risk',
+  /* The shell: who this is, where they are, and one thing the reader can do. The cleanest
+     correlation in the whole set is this one. The four rejected pages have exactly one
+     anchor each, the skip link, and no nav and no footer between them. The one accepted
+     page has twelve anchors, a nav and a footer. Nothing anywhere required it. */
+  'The shell',
   'Assumptions',
   'Originality pass',
   /* The last two are here because gate.mjs needs them and this template is the only place
@@ -209,6 +224,27 @@ export function directionProblems(record) {
   const named = (name) => (record.body(name).match(/^\s*[-*]?\s*(--)?[\wæøå][\wæøå -]*:/gm) ?? []).length
   if (named('Colour') < 2) problems.push('the "Colour" section names fewer than two values, written as "name: what it is for"')
   if (named('Type') < 2) problems.push('the "Type" section names fewer than two roles, written as "role: face and how it is used"')
+
+  /* Two roles carrying the same face is one face with two labels on it, and every record
+     in this repository did exactly that: Iowan Old Style twice, Segoe UI twice,
+     ui-sans-serif twice. All of them counted as two roles and passed. */
+  const faces = [...record.body('Type').matchAll(/["'`]([^"'`]{2,40})["'`]/g)].map((m) => m[1].trim().toLowerCase())
+  if (faces.length >= 2 && new Set(faces).size < 2) {
+    problems.push(`the "Type" section names ${faces.length} roles and they all carry the same face, "${faces[0]}". Two labels on one face is one face.`)
+  }
+
+  /* The shell, answered rather than acknowledged. "none" is a legitimate answer for a
+     surface that genuinely has no way out, and it has to be typed. */
+  const shell = record.body('The shell').trim()
+  if (shell && shell.length < 40 && !/^none\b/i.test(shell)) {
+    problems.push('the "The shell" section is too short to say who this is, where they are and what the reader can do')
+  }
+
+  /* The answer to the risk has to name something the gate can look for. */
+  const answer = record.body('Answer to the risk')
+  if (answer.trim() && !/`[^`]+`|\.[a-z][\w-]*|#[a-z][\w-]*|<[a-z]+>/i.test(answer)) {
+    problems.push('the "Answer to the risk" section names no selector or element, so nothing can check that the answer is on the page')
+  }
 
   return problems
 }
@@ -580,6 +616,8 @@ export function template(surface) {
     if (name === 'Theses') out.push('1.', '2.', '3.', '')
     if (name === 'Case for the runner-up') out.push('For:', '')
     if (name === 'Built') out.push('Built: <thesis number>, axis: <the axis>, because <reason in this subject\'s terms>', '')
+    if (name === 'Answer to the risk') out.push('The risk above is answered by <selector>, which <what it does about it>.', '')
+    if (name === 'The shell') out.push('Who: <name, visible where>. Where: <place or "no physical place">. Do: <the one action, and the element that carries it>.', '')
     if (name === 'One-offs') out.push('- `none` no literal length or shadow is written at a call site', '')
     if (name === 'Deliberate') out.push('- `none` this build claims no antipattern on purpose', '')
   }

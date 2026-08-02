@@ -83,6 +83,16 @@ const CASES = [
     why: 'four tells, none of them claimed in the direction record',
   },
   {
+    name: 'a page with nowhere to go and nothing saying who it is',
+    fixture: 'no-shell', browser: true, expect: 2,
+    must: ['look/no-way-out', 'look/no-shell'],
+    // The cleanest correlation in the corpus: the four pages the owner rejected have one
+    // anchor each, the skip link, and no nav and no footer between them. The one page he
+    // accepted has eleven anchors, a nav and a footer. Nothing required it, so nobody
+    // built it, and every gate was green four times.
+    why: 'a reader who wants to know who this is, or to do anything, has to have somewhere to go',
+  },
+  {
     name: 'an experience surface whose first screen is words on a flat ground',
     fixture: 'look-unpainted', browser: true, expect: 2,
     must: ['look/first-viewport-unpainted', 'look/dead-field'],

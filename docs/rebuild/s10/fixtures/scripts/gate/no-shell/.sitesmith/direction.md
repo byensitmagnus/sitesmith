@@ -16,4 +16,5 @@ Deliberate:
 The risk above is answered by `.wetline`, the signature that runs under every heading and keeps the page reading as one object rather than as a document with sections.
 
 ## The shell
-Who: `Trelfall & Son` in the header, on every screen. Where: Marstal, named in the footer. Do: the enquiry link in the footer, which is the one action this surface carries.
+The loft name is set as plain text and nothing else. There is no header link, no navigation and no footer, and no action a reader can take.
+

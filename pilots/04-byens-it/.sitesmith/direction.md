@@ -100,6 +100,12 @@ A page that looks like a document can read as unfinished to a buyer who expects 
 storefront. The mitigation is that the drawing and the signal colour carry the category,
 and the risk is accepted rather than designed away.
 
+## Answer to the risk
+The risk above is answered by `.stage`, the six-face case drawn on JOB 01. It is the one thing on the page that says gaming rather than paperwork, and without it a reader expecting a storefront has nothing to hold on to.
+
+## The shell
+Who: `Byens it ApS` in the top bar with the CVR beside it. Where: `Ternevej 7, 3300 Frederiksvaerk` in the same bar, and Vanloese named next to it. Do: `Se gaming-computere` and `IT-support til erhverv`, the two buttons that leave for the shop, plus the phone number as a tel: link for anyone who would rather ring.
+
 ## Assumptions
 Assumed the campaign price is current on the day this is read. It is not, for long. Assumed
 the Vanløse location is a place a customer may visit, which the site states without giving
