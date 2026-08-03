@@ -49,7 +49,10 @@ jobs:
           cp dist/SHA256SUMS /tmp/SHA256SUMS.first
           node tools/package-sitesmith-v3.mjs
           diff -u /tmp/SHA256SUMS.first dist/SHA256SUMS
-          sha256sum -c dist/SHA256SUMS
+          # From dist/, because SHA256SUMS lists bare filenames. Run from the repository
+          # root it reported "No such file or directory" for both archives and failed the
+          # job on a checksum mismatch that never happened.
+          cd dist && sha256sum -c SHA256SUMS
 
       - name: upload installable archives
         uses: actions/upload-artifact@v4

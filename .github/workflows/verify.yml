@@ -1,8 +1,14 @@
 name: verify
 
 on:
+  # The release contract has to run on the branch the release is prepared on, not only after
+  # it lands. Everything below was green on main and unrun here, which is how a branch gets
+  # ten commits deep before anyone finds out.
   push:
-    branches: [main]
+    branches:
+      - main
+      - rebuild/sitesmith-unified
+      - 'release/**'
   pull_request:
   workflow_dispatch:
 
