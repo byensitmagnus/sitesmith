@@ -1,0 +1,18 @@
+{
+ "v": 1,
+ "render": "2f379225573b656a",
+ "files": [
+  "1440.png",
+  "375.png",
+  "768.png",
+  "reduced-motion-1440.png"
+ ],
+ "answers": "# Kritik af renderingen\n\nSvarene er skrevet ud fra billederne ved 375, 768 og 1440 og briefen, med retningsprotokollen,\nkontrakten og kildekoden lukket.\n\n1. Øjet lander på \"Fem uger\" nede i sæsonbåndet, ikke på formiddagstegningen øverst. Det er\n   forkert: tegningen er sidens argument, og de fem uger er anden læsning. Tegningen er\n   sidens blegeste element, et lyst grønt felt på sand med tolv små prikker i, og de fem\n   uger er sat i mørk bogskrift på fyrre pixels. Rangordningen mellem første og anden\n   læsning er vendt om af kontrast alene.\n2. Formiddagsbåndet læses først som en tom flade med prikker i, ikke som en tegning af noget.\n   Målestokken over den første prik er to streger og en tværstreg på cirka fyrre pixels, uden\n   noget tal på selve tegningen, så den fire meter der er hele pointen, står kun i teksten\n   nedenunder. Det er ikke generisk, men det er heller ikke læst.\n3. Signaturen er synlig begge steder og anden læsning er tydeligt en anden ting: sæsonbåndet\n   har fyldte og tomme mærker, og forskellen mellem tolv aftalte og nitten uspurgte kan ses\n   uden at læse et eneste ord. Det er sidens stærkeste sted.\n4. Tommest er den øverste tredjedel af formiddagsfladen, over arbejdsfeltet, hvor der ikke er\n   andet end målestokken. Den tomhed arbejder ikke: den er ikke luft omkring en tegning, den\n   er plads tegningen ikke har brugt. Reglens to første termer brækker desuden over to linjer,\n   \"En femtedel\" og \"50 planter\", hvilket ligner et uheld ved siden af \"12 pletter\" der ikke gør.\n5. De seks største ord i rækkefølge er \"Fem uger\", \"Send en forespørgsel\", \"Reglen hele\n   metoden hviler på\", \"Hvad du får tilbage\", \"Én formiddag, og hvad der sker på den\" og\n   \"Vestkystens Frøbank\". En konkurrent kan sige de tre af dem. Men falsmålet i den her\n   branche er reglen: en femtedel, halvtreds planter, tolv pletter på fire meter er tal\n   ingen anden kan skrive uden at have den samme metode.\n6. Dæk den øverste tredjedel: resten siger stadig hvad det er. Reglen med sine tre tal,\n   sæsonens fyldte og tomme mærker og forespørgslen der beder om tre ting, kan tilsammen kun\n   være nogen der spørger om lov til at gå på fremmed jord.\n\nACCEPT. Det værste er at signaturen er sidens blegeste element: formiddagstegningen bærer\nargumentet og taber førstepladsen til de fem uger, som er anden læsning.",
+ "corrections": [
+  {
+   "note": "Signaturen var sidens blegeste element og tabte førstepladsen til de fem uger, som er anden læsning. Arbejdsfeltet er nu marehalm ved 34 procent med fuld kant, prikkerne er større, og målestokken har fået sit 4 m med på selve tegningen. Reglens to første termer brækkede desuden over to linjer og den tredje gjorde ikke; kolonnen er bredere.",
+   "fromRender": null,
+   "toRender": "2f379225573b656a"
+  }
+ ]
+}

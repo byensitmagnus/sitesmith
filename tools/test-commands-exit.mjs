@@ -24,6 +24,7 @@ import { join } from 'node:path';
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
 const CLI = join(ROOT, 'skills/sitesmith-v3/cli.mjs');
 const LEDGER = join(ROOT, 'skills/sitesmith-v3/scripts/ledger.mjs');
+const CONTRACT = join(ROOT, 'skills/sitesmith-v3/scripts/contract.mjs');
 
 let failed = 0;
 const check = (name, ok, detail = '') => {
@@ -55,8 +56,17 @@ try {
     '---\nstack: astro\n---\n\n# A workshop\n\nCuts replacement glass panes to measure and prices them from the two measurements the buyer already has.\n');
   spawnSync(process.execPath, [LEDGER, 'new', '.', 'buy'], { cwd: dir, encoding: 'utf8' });
 
+  /* The record exists and the contract does not, so build still blocks, and it blocks on
+     the next thing rather than on everything at once. Two unanswerable questions with no
+     order between them is what the manifest exists to prevent. */
+  const noContract = run(['build', '--surface', 'buy']);
+  check('build with a record and no design contract: exit 3', noContract.status === 3, `exit ${noContract.status}`);
+  check('and it names the contract as the next thing', /contract\.mjs new buy/.test(noContract.stdout),
+    noContract.stdout.slice(-300));
+
+  spawnSync(process.execPath, [CONTRACT, 'new', 'buy', '--to', dir], { cwd: dir, encoding: 'utf8' });
   const ok = run(['build', '--surface', 'buy']);
-  check('build with brief, surface and direction record: exit 0', ok.status === 0,
+  check('build with brief, surface, record and contract: exit 0', ok.status === 0,
     `exit ${ok.status}\n${ok.stdout.slice(-400)}`);
 
   /* A brief long enough that the old 1200-character cut would have decided what the index

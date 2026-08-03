@@ -9,6 +9,7 @@ on:
       - main
       - rebuild/sitesmith-unified
       - 'release/**'
+      - 'feat/**'
   pull_request:
   workflow_dispatch:
 
@@ -135,6 +136,18 @@ jobs:
 
       - name: the anti-repeat ledger and the direction record parser
         run: node skills/sitesmith-v3/scripts/test-ledger.mjs
+
+      # Colour maths and the design contract, against work it must accept and fifteen ways
+      # of being wrong. Three of the fifteen are ways the pilot's own contract was wrong on
+      # the first pass, which is why they are fixtures and not comments.
+      - name: the design contract, and the colour maths under it
+        run: node skills/sitesmith-v3/scripts/test-contract.mjs
+
+      # Every refusal class the engines emit is described, and every description belongs
+      # to a class that still exists. A new hard gate cannot ship without somebody saying
+      # what it is for and how it can be wrong.
+      - name: the rule registry describes what actually runs
+        run: node tools/build-rule-registry.mjs --check
 
       - name: durable run state and its typed graph
         run: node skills/sitesmith-v3/scripts/test-state.mjs
@@ -593,6 +606,39 @@ jobs:
       # The critique is only evidence while it is attached to the render that shipped. This
       # checks the record itself: a locked hash, an answer, and a correction round that says
       # which render it moved from and to.
+      # The design contract, against the build that ships. check measures every pair from
+      # the values; compare measures the page against them. A contract that only checks
+      # itself is a form.
+      - name: the design contract checks clean and matches the build
+        working-directory: evidence/pilot/site
+        run: |
+          mkdir -p .sitesmith
+          cp ../record/contract.json .sitesmith/contract.json
+          node ../../../skills/sitesmith-v3/scripts/contract.mjs check | tee /tmp/pilot-contract.log
+          grep -q "every pair clears its floor" /tmp/pilot-contract.log             || { echo "::error::the pilot contract did not check clean"; exit 1; }
+          node ../../../skills/sitesmith-v3/scripts/contract.mjs compare --url http://localhost:4351/             | tee /tmp/pilot-compare.log
+          grep -q "matches its contract" /tmp/pilot-compare.log             || { echo "::error::the pilot build does not match its contract"; exit 1; }
+
+      # The three stress cases a browser can decide, run against the same served build. It
+      # writes nothing: the committed contract stays as it is, and this proves the three
+      # still hold rather than recording a new verdict. The cases a browser cannot decide,
+      # such as whether a face carries the Danish alphabet, stay "not run" and are not
+      # converted into an artificial automatic test.
+      - name: the three browser stress cases hold
+        working-directory: evidence/pilot/site
+        run: |
+          node ../../../skills/sitesmith-v3/scripts/contract.mjs stress \
+            --url http://localhost:4351/ | tee /tmp/stress.log
+          held=$(grep -c "^  held  " /tmp/stress.log || true)
+          test "$held" = "3" \
+            || { echo "::error::expected three browser cases to hold, got $held"; exit 1; }
+          grep -q "^  FAILED" /tmp/stress.log \
+            && { echo "::error::a stress case failed"; exit 1; }
+          grep -qE "^  3 case\\(s\\) answered" /tmp/stress.log \
+            || { echo "::error::the run did not answer three cases"; exit 1; }
+          grep -q "not run" /tmp/stress.log \
+            || { echo "::error::no case was left as not run, which means something was invented"; exit 1; }
+
       - name: the locked critique is intact and attached to a render
         run: |
           node -e '
@@ -652,7 +698,7 @@ jobs:
                    evidence/pilot/record/ASSET-MANIFEST.md evidence/pilot/record/PRODUCTION-REPORT.md \
                    evidence/pilot/renders/375.png evidence/pilot/renders/768.png \
                    evidence/pilot/renders/1440.png evidence/pilot/renders/reduced-motion-1440.png \
-                   evidence/pilot/site/package-lock.json evidence/pilot/site/journeys/koeb.spec.mjs; do
+                   evidence/pilot/record/contract.json evidence/pilot/record/CONTRACT.md                    evidence/pilot/site/package-lock.json evidence/pilot/site/journeys/koeb.spec.mjs; do
             test -f "$f" || { echo "::error::$f is claimed and missing"; exit 1; }
           done
           # The committed manifest is the one the pilot produced, and it is not portable:
@@ -680,6 +726,145 @@ jobs:
           name: pilot-renders
           path: /tmp/pilot-shots/
           if-no-files-found: warn
+
+  # The two pilots the design contract was built against. Same flow, two more surfaces. The
+  # check that matters most for this round is the portfolio job below it: three contracts
+  # that agree on nothing, because three briefs did not.
+  pilots:
+    name: the operate and persuade pilots hold their contracts
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        pilot:
+          - { dir: '02-operate', port: '4372' }
+          - { dir: '03-persuade', port: '4382' }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: install from the committed lockfile
+        working-directory: evidence/pilots/${{ matrix.pilot.dir }}/site
+        run: |
+          npm ci --no-audit --no-fund
+          npx playwright install --with-deps chromium
+
+      - name: production build, then serve it
+        working-directory: evidence/pilots/${{ matrix.pilot.dir }}/site
+        run: |
+          npm run build
+          node -e '
+            const { createServer } = require("http");
+            const { readFileSync, existsSync, statSync } = require("fs");
+            const { join, extname } = require("path");
+            const TYPES = { ".html": "text/html", ".css": "text/css", ".js": "text/javascript",
+                            ".svg": "image/svg+xml", ".json": "application/json", ".woff2": "font/woff2" };
+            createServer((req, res) => {
+              let f = join("dist", decodeURIComponent(req.url.split("?")[0]));
+              if (existsSync(f) && statSync(f).isDirectory()) f = join(f, "index.html");
+              if (!existsSync(f)) { res.writeHead(404).end("not found"); return; }
+              res.writeHead(200, { "content-type": TYPES[extname(f)] ?? "application/octet-stream" });
+              res.end(readFileSync(f));
+            }).listen(${{ matrix.pilot.port }});
+          ' &
+          for i in $(seq 1 30); do curl -sf http://localhost:${{ matrix.pilot.port }}/ >/dev/null && break; sleep 1; done
+          curl -sf http://localhost:${{ matrix.pilot.port }}/ >/dev/null || { echo "::error::the pilot did not serve"; exit 1; }
+
+      - name: verify at three widths, axe in both schemes
+        working-directory: evidence/pilots/${{ matrix.pilot.dir }}/site
+        run: |
+          node ../../../../skills/sitesmith-v3/scripts/verify.mjs \
+            http://localhost:${{ matrix.pilot.port }}/ --out /tmp/shots | tee /tmp/verify.log
+          for w in 375 768 1440; do
+            test -f "/tmp/shots/$w.png" || { echo "::error::no render at ${w}px"; exit 1; }
+          done
+          grep -qE "axe both schemes +: ran, [0-9]+ violations" /tmp/verify.log \
+            || { echo "::error::axe did not run"; exit 1; }
+          grep -q "PASS, nothing blocking" /tmp/verify.log \
+            || { echo "::error::verify did not pass"; exit 1; }
+
+      - name: the design contract checks clean and matches the build
+        working-directory: evidence/pilots/${{ matrix.pilot.dir }}/site
+        run: |
+          mkdir -p .sitesmith
+          cp ../record/contract.json .sitesmith/contract.json
+          node ../../../../skills/sitesmith-v3/scripts/contract.mjs check | tee /tmp/contract.log
+          grep -q "every pair clears its floor" /tmp/contract.log \
+            || { echo "::error::the contract did not check clean"; exit 1; }
+          node ../../../../skills/sitesmith-v3/scripts/contract.mjs compare \
+            --url http://localhost:${{ matrix.pilot.port }}/ | tee /tmp/compare.log
+          grep -q "matches its contract" /tmp/compare.log \
+            || { echo "::error::the build does not match its contract"; exit 1; }
+
+      # The three stress cases a browser can decide, run against the same served build. It
+      # writes nothing: the committed contract stays as it is, and this proves the three
+      # still hold rather than recording a new verdict. The cases a browser cannot decide,
+      # such as whether a face carries the Danish alphabet, stay "not run" and are not
+      # converted into an artificial automatic test.
+      - name: the three browser stress cases hold
+        working-directory: evidence/pilots/${{ matrix.pilot.dir }}/site
+        run: |
+          node ../../../../skills/sitesmith-v3/scripts/contract.mjs stress \
+            --url http://localhost:${{ matrix.pilot.port }}/ | tee /tmp/stress.log
+          held=$(grep -c "^  held  " /tmp/stress.log || true)
+          test "$held" = "3" \
+            || { echo "::error::expected three browser cases to hold, got $held"; exit 1; }
+          grep -q "^  FAILED" /tmp/stress.log \
+            && { echo "::error::a stress case failed"; exit 1; }
+          grep -qE "^  3 case\\(s\\) answered" /tmp/stress.log \
+            || { echo "::error::the run did not answer three cases"; exit 1; }
+          grep -q "not run" /tmp/stress.log \
+            || { echo "::error::no case was left as not run, which means something was invented"; exit 1; }
+
+      - name: the journey
+        working-directory: evidence/pilots/${{ matrix.pilot.dir }}/site
+        run: |
+          node ../../../../skills/sitesmith-v3/scripts/journey.mjs journeys \
+            --base http://localhost:${{ matrix.pilot.port }} | tee /tmp/journey.log
+          grep -qE "^ +[1-9][0-9]* passed$" /tmp/journey.log \
+            || { echo "::error::the journey ran no spec, or one failed"; exit 1; }
+
+      - name: the gate, with the record put back beside the build
+        working-directory: evidence/pilots/${{ matrix.pilot.dir }}/site
+        run: |
+          cp ../record/ASSET-MANIFEST.md ../record/PRODUCTION-REPORT.md .
+          mkdir -p .sitesmith/shots
+          cp ../record/direction.md ../record/critique.json .sitesmith/
+          cp ../renders/*.png .sitesmith/shots/
+          echo "::group::gate"
+          node ../../../../skills/sitesmith-v3/scripts/gate.mjs \
+            --url http://localhost:${{ matrix.pilot.port }}/ | tee /tmp/gate.log || true
+          echo "::endgroup::"
+          if grep -q "stylesheets did not load\|VERDICT MISSING\|NO VERDICT" /tmp/gate.log; then
+            echo "::error::the gate could not measure the pilot"; exit 1
+          fi
+          grep -q "every check ran and none refused" /tmp/gate.log \
+            || { echo "::error::the gate refused something the pilot does not claim"; exit 1; }
+
+  portfolio:
+    name: the three pilots agree on nothing
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      # The check this whole round rests on. Three briefs, three contracts, and not one
+      # shared choice on the six dimensions the round named. If two pilots ever converge on
+      # the same ground or the same face, the contract has become a template with fields.
+      # The check's own contract first: a single shared value must report and never block,
+      # and a shared direction must block. A diversity quota is worse than the convergence it
+      # is meant to catch, because the next build satisfies it by choosing an artificial
+      # difference instead of the right answer.
+      - name: the check blocks a shared direction and reports a shared value
+        run: node tools/test-portfolio-contracts.mjs --fixtures
+
+      - name: no two pilots are the same direction
+        run: node tools/test-portfolio-contracts.mjs
+
 
   legacy-v2-install:
     name: the legacy v2 install still works behind its flag

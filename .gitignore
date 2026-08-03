@@ -70,3 +70,12 @@ tests/gates/node_modules/
 # A key an agent can read from the working tree is not a sealed key.
 docs/v2/preflight/*/KEY-MASTER.json
 .playwright-mcp/
+
+# dist/ holds one tracked file and three generated ones. The generated ones are ignored by
+# name rather than the directory being ignored or deleted, because dist/README.md is the
+# documentation for how they are made and it lived in the same directory as its own output.
+# It was deleted once by an `rm -rf dist` that was clearing artefacts before a commit, which
+# is what happens when the only way to keep generated files out of a commit is to remove the
+# directory they share with something tracked.
+dist/*.zip
+dist/SHA256SUMS
