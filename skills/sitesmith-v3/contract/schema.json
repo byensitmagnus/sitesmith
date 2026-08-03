@@ -1,0 +1,175 @@
+{
+  "$comment": [
+    "Design Contract v1. The implementable system state, written after the direction is",
+    "chosen and before implementation begins.",
+    "",
+    "It is not the direction record. The direction record explains the decision: the theses,",
+    "the runner-up, the risk, the signature. This describes what was decided, in values a",
+    "script can check and a build can be compared against. A field that only restates the",
+    "record does not belong here.",
+    "",
+    "Read as data by scripts/contract.mjs. `req` is required; `enum` closes the set; `of`",
+    "types the items of a list. `why` fields are prose and the validator checks only that",
+    "they are not empty, because a reason nobody can check is still better than none: it is",
+    "read by the person who is shown the page."
+  ],
+  "schemaVersion": 1,
+  "state": ".sitesmith/contract.json",
+  "readable": ".sitesmith/CONTRACT.md",
+
+  "roles": {
+    "$comment": [
+      "The role vocabulary is structural inspiration from ui-ux-pro-max (MIT), which names",
+      "primary, on_primary, secondary, accent, background, foreground, muted, border,",
+      "destructive and ring. What is NOT taken is where the values come from: that skill",
+      "matches a product category and reads a palette off a table, which gives every glazier",
+      "the same palette. Here every role points at a primitive, and every primitive comes",
+      "from a colour found in the subject's own materials."
+    ],
+    "required": ["background", "foreground", "action", "onAction", "focusRing", "border"],
+    "optional": ["muted", "accent", "selection", "destructive", "onDestructive", "success", "warning", "surface", "onSurface"]
+  },
+
+  "pairMinimums": {
+    "$comment": "WCAG 2.2 AA. largeText is 24px, or 18.66px at 700. nonText covers focus rings, borders that carry meaning, and icons.",
+    "text": 4.5,
+    "largeText": 3,
+    "nonText": 3
+  },
+
+  "fields": {
+    "v": { "req": true, "type": "number" },
+    "schemaVersion": { "req": true, "type": "number" },
+    "surface": { "req": true, "type": "string", "enum": ["buy", "operate", "read", "experience"] },
+    "subject": { "req": true, "type": "string", "why": "one line naming what this is, so a contract read on its own is not anonymous" },
+    "writtenAgainst": { "req": true, "type": "object", "note": "which direction record this was written from: its path and a hash, so a contract cannot outlive the direction it implements" },
+    "writtenAgainst.record": { "req": true, "type": "string" },
+    "writtenAgainst.hash": { "req": true, "type": "string" },
+
+    "colour": { "req": true, "type": "object" },
+    "colour.strategy": { "req": true, "type": "string", "enum": ["restrained", "committed", "full", "drenched"],
+      "note": "restrained: one accent on a neutral ground. committed: a ground that is a colour and means something. full: several colours doing separate jobs. drenched: colour is the surface, and type and structure live inside it." },
+    "colour.strategyWhy": { "req": true, "type": "string" },
+    "colour.sources": { "req": true, "type": "array", "min": 1, "of": "source",
+      "note": "Colours found in the subject's own world. Not a palette: the material they were taken from." },
+    "colour.primitives": { "req": true, "type": "array", "min": 2, "of": "primitive" },
+    "colour.roles": { "req": true, "type": "object", "note": "role name to primitive token" },
+    "colour.pairs": { "req": true, "type": "array", "min": 1, "of": "pair" },
+    "colour.schemes": { "req": true, "type": "object" },
+    "colour.schemes.light": { "req": true, "type": "boolean" },
+    "colour.schemes.dark": { "req": true, "type": "boolean" },
+    "colour.schemes.why": { "req": true, "type": "string",
+      "note": "from the use scene, not from habit. A page read on a workshop bench in daylight and a page read in a dark room at 02:00 do not owe the same answer." },
+    "colour.dataVisualisation": { "req": false, "type": "object", "of": "dataviz" },
+    "colour.genericnessRisk": { "req": true, "type": "string",
+      "note": "what about this palette a competitor could also arrive at, said plainly" },
+    "colour.departures": { "req": false, "type": "array", "of": "departure" },
+
+    "typography": { "req": true, "type": "object" },
+    "typography.roles": { "req": true, "type": "array", "min": 1, "of": "typeRole" },
+    "typography.scale": { "req": true, "type": "array", "min": 3, "of": "step" },
+    "typography.measure": { "req": true, "type": "object", "note": "the prose measure the page holds" },
+    "typography.measure.target": { "req": true, "type": "number", "note": "characters per line" },
+    "typography.measure.band": { "req": true, "type": "array", "note": "[min, max] in characters" },
+    "typography.stress": { "req": true, "type": "array", "min": 1, "of": "stressCase" },
+    "typography.genericnessRisk": { "req": true, "type": "string" },
+    "typography.departures": { "req": false, "type": "array", "of": "departure" },
+
+    "layout": { "req": true, "type": "object" },
+    "layout.path": { "req": true, "type": "string", "note": "the primary reading or task path, in one sentence, in order" },
+    "layout.leading": { "req": true, "type": "array", "min": 1, "note": "the elements that carry the argument, by selector" },
+    "layout.supporting": { "req": true, "type": "array", "note": "what is there to support them, by selector" },
+    "layout.grouping": { "req": true, "type": "string", "note": "what belongs with what, and what the grouping is doing" },
+    "layout.density": { "req": true, "type": "string", "enum": ["sparse", "measured", "packed"] },
+    "layout.densityWhy": { "req": true, "type": "string" },
+    "layout.rhythm": { "req": true, "type": "object", "note": "the spacing rhythm: a base and the steps that come off it" },
+    "layout.rhythm.base": { "req": true, "type": "string" },
+    "layout.rhythm.steps": { "req": true, "type": "array", "min": 2 },
+    "layout.topology": { "req": true, "type": "string",
+      "note": "the structural shape in the builder's own words. Deliberately not an enum: a closed list of topologies is a template library with a different name." },
+    "layout.firstViewportObject": { "req": true, "type": "object", "of": "namedThing",
+      "note": "the object that owns the first screen, and its selector. look.md section 4." },
+    "layout.signature": { "req": true, "type": "object", "of": "namedThing",
+      "note": "the same selector the direction record names. Repeated here so the contract can be checked without opening the record." },
+    "layout.responsive": { "req": true, "type": "array", "min": 3, "of": "breakpoint",
+      "note": "375, 768 and 1440. What the layout becomes, not what it keeps." },
+    "layout.container": { "req": true, "type": "string", "note": "how the container behaves as the viewport grows: what stops, what keeps going, and at what width" },
+    "layout.focusOrder": { "req": true, "type": "array", "min": 2,
+      "note": "the intended DOM and focus order, by selector, in order. The order the page is read in and the order the keyboard walks it are the same order or the difference is stated." },
+    "layout.stress": { "req": true, "type": "array", "min": 1, "of": "stressCase",
+      "note": "long content, empty, error and localization. At least one, and the surface's floor decides which are owed." },
+    "layout.squint": { "req": true, "type": "string",
+      "note": "the squint test, written down: with the page out of focus, what shape is left, and is that shape the argument. Not an enum and not a score." },
+    "layout.departures": { "req": false, "type": "array", "of": "departure" }
+  },
+
+  "shapes": {
+    "source": {
+      "name": { "req": true, "type": "string" },
+      "material": { "req": true, "type": "string", "note": "the thing in the subject's world this colour was taken from. 'The brand' is not a material. 'Linseed putty, two weeks old' is." },
+      "value": { "req": true, "type": "colour" },
+      "why": { "req": true, "type": "string" }
+    },
+    "primitive": {
+      "token": { "req": true, "type": "string", "note": "the custom property name, without the leading dashes" },
+      "value": { "req": true, "type": "colour", "note": "oklch preferred: equal steps in lightness look equal, which hex does not give you" },
+      "fallback": { "req": false, "type": "colour", "note": "the rendered sRGB stand-in. The validator checks it is the same colour." },
+      "from": { "req": true, "type": "string", "note": "the name of the source colour this came from, or 'derived' with a reason" }
+    },
+    "pair": {
+      "name": { "req": true, "type": "string" },
+      "foreground": { "req": true, "type": "string", "note": "a primitive token" },
+      "background": { "req": true, "type": "string", "note": "a primitive token" },
+      "use": { "req": true, "type": "string", "note": "where this pair appears, and in which state" },
+      "minimum": { "req": true, "type": "string", "enum": ["text", "largeText", "nonText"] },
+      "measured": { "req": false, "type": "number", "note": "written by contract.mjs check --write" },
+      "verdict": { "req": false, "type": "string", "note": "written by contract.mjs check --write" }
+    },
+    "dataviz": {
+      "series": { "req": true, "type": "number" },
+      "ordering": { "req": true, "type": "string", "enum": ["categorical", "sequential", "diverging"] },
+      "distinguishableWithoutColour": { "req": true, "type": "string", "note": "what carries the difference when colour does not: shape, position, hatch, label" }
+    },
+    "typeRole": {
+      "role": { "req": true, "type": "string", "enum": ["display", "body", "utility", "data", "code"] },
+      "family": { "req": true, "type": "string" },
+      "source": { "req": true, "type": "string", "note": "where the file comes from: self-hosted, a foundry, a system stack" },
+      "licence": { "req": true, "type": "string" },
+      "weights": { "req": true, "type": "array", "min": 1 },
+      "axes": { "req": false, "type": "array", "note": "variable axes actually used, with their range" },
+      "why": { "req": true, "type": "string", "note": "from the subject. 'It is clean' is not a reason; it is what every default says about itself." },
+      "fallback": { "req": true, "type": "array", "min": 1, "note": "the fallback stack, in order, ending in a generic family" },
+      "metricCompatible": { "req": true, "type": "boolean", "note": "does the first fallback have compatible metrics, so the page does not reflow when the webfont lands" },
+      "languages": { "req": true, "type": "array", "min": 1, "note": "the scripts and language coverage this page actually needs. A Danish page needs ae, oe and aa." },
+      "loading": { "req": true, "type": "string", "enum": ["swap", "optional", "block", "system", "preload-swap"] },
+      "lineHeight": { "req": true, "type": "number" },
+      "genericnessRisk": { "req": true, "type": "string" }
+    },
+    "step": {
+      "name": { "req": true, "type": "string" },
+      "size": { "req": true, "type": "string" },
+      "lineHeight": { "req": true, "type": "number" },
+      "role": { "req": true, "type": "string" }
+    },
+    "stressCase": {
+      "case": { "req": true, "type": "string" },
+      "expected": { "req": true, "type": "string", "note": "what should happen, written before it is run" },
+      "result": { "req": false, "type": "string", "note": "written after it is run. Absent is honest; wrong is not." },
+      "verdict": { "req": false, "type": "string", "enum": ["held", "departed", "failed", "not run"] }
+    },
+    "namedThing": {
+      "what": { "req": true, "type": "string" },
+      "selector": { "req": true, "type": "string", "note": "checked against the rendered DOM by contract.mjs compare" }
+    },
+    "breakpoint": {
+      "width": { "req": true, "type": "number", "enum": [375, 768, 1440] },
+      "becomes": { "req": true, "type": "string", "note": "what the layout is at this width. Not 'it stacks'." },
+      "departures": { "req": false, "type": "array", "note": "what is deliberately different here from the other widths, and why" }
+    },
+    "departure": {
+      "from": { "req": true, "type": "string", "note": "what in the direction record this departs from" },
+      "to": { "req": true, "type": "string" },
+      "why": { "req": true, "type": "string" }
+    }
+  }
+}
