@@ -174,10 +174,24 @@ function parseBuiltLine(line) {
   }
 }
 
+/* Headings added after the template already had users. A record written before a heading
+   existed is old, not incomplete, and demanding it retroactively would mean editing a
+   finished build's own account of itself to satisfy a rule it was never given. The pilot
+   in this repository is exactly that case: a real record, committed as evidence, written
+   when the list had twenty-four headings.
+
+   So a heading in here is required of a record that has any of the others added with it,
+   and reported as absent-by-age on a record that has none of them. New records get the
+   full list from `ledger.mjs new`, so this only ever forgives the past. */
+const ADDED_AFTER_FIRST_RECORDS = ['Second reading']
+
 export function directionProblems(record) {
   const problems = []
+  const olderTemplate = ADDED_AFTER_FIRST_RECORDS
+    .every((name) => !record.present.includes(norm(name)))
 
   for (const name of REQUIRED) {
+    if (olderTemplate && ADDED_AFTER_FIRST_RECORDS.includes(name)) continue
     if (!record.present.includes(norm(name))) problems.push(`the record has no "${name}" section`)
     else if (!record.body(name)) problems.push(`"${name}" is a blank heading`)
   }

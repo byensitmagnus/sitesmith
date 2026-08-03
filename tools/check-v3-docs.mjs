@@ -2922,6 +2922,14 @@ if (foundation) {
     ['not-ready-derivation-architecture-incomplete', 'NOT READY — DERIVATION ARCHITECTURE INCOMPLETE'],
     ['not-ready-licensing-blocked', 'NOT READY — LICENSING BLOCKED'],
     ['not-ready-quality-contract-incomplete', 'NOT READY — QUALITY CONTRACT INCOMPLETE'],
+    /* The decision cites the round-C reviews, both PASS with 0 blockers, and this file has
+       required a round-F pair since the groundwork snapshot. Neither F review was ever
+       written. The document said ready, the gate said not without F, and there was no
+       status a truthful document could carry in between, so the contradiction sat in CI as
+       two red lines nobody could close without either fabricating a review or quietly
+       lowering the letter. This value is the missing true statement, not a lowered bar: the
+       required review round is outstanding, so the decision is not ready. */
+    ['not-ready-review-round-outstanding', 'NOT READY — REVIEW ROUND OUTSTANDING'],
     ['ready-for-architecture-approval', 'READY FOR ARCHITECTURE APPROVAL'],
   ]);
   if (!statusToFinal.has(status)) fail(`FOUNDATION-DECISION.md: invalid decision status ${status}`);

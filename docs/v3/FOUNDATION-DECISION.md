@@ -1,6 +1,6 @@
 ---
 title: "SiteSmith v3 foundation decision"
-status: ready-for-architecture-approval
+status: not-ready-review-round-outstanding
 date: 2026-07-30
 baseline: 80d4030780a4cab18f3baa16dfd354269f83971c
 ai_generated: "(C)"
@@ -223,4 +223,4 @@ approval. This readiness status is not approval itself: a separate explicit appr
 before v3 implementation begins. Website builds, showcases, customer work, migration, benchmark
 execution, merge, push, release, and quality claims remain outside this decision.
 
-READY FOR ARCHITECTURE APPROVAL
+NOT READY — REVIEW ROUND OUTSTANDING
