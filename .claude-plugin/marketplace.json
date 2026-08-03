@@ -1,7 +1,7 @@
 {
   "$schema": "https://www.schemastore.org/claude-code-marketplace.json",
   "name": "sitesmith",
-  "description": "One skill for building websites that do not look AI-generated. Routes by mode and stack, then follows init, build and audit before making a release claim.",
+  "description": "One skill for building websites that do not look AI-generated. Routes by surface and stack, plans before it builds, and proves the result in a real browser before making a release claim.",
   "owner": {
     "name": "sitesmith contributors",
     "url": "https://github.com/byensitmagnus/sitesmith"
@@ -9,7 +9,7 @@
   "plugins": [
     {
       "name": "sitesmith",
-      "description": "Design, build, redesign, audit and polish websites and web apps. Names the page it would have made on autopilot and builds a different one, then refuses its own output in a browser: contrast in both colour schemes, reduced motion, and an anti-repeat ledger across builds.",
+      "description": "Design, build, redesign, audit and polish websites and web apps. Names the page it would have made on autopilot and builds a different one, then refuses its own output in a browser: contrast in both colour schemes, reduced motion, a critique hashed to the shipped render, and an anti-repeat ledger across builds.",
       "source": "./",
       "category": "design"
     }

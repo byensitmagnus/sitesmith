@@ -267,6 +267,22 @@ async function install(target, providers, { quiet = false } = {}) {
 /* ── run ──────────────────────────────────────────────────────────────────── */
 const target = flag('to', process.cwd() === ROOT ? homedir() : process.cwd());
 
+/* The current skill is v3, and it installs by a different route: it has no PIPELINE.json
+   and no provider packs, because its frontmatter carries its own reading map. This command
+   still owns the v2 journey, so it hands v3 over to the installer that knows it rather than
+   pretending one shape fits both. `--v2` keeps the old path, and CI uses it. */
+if ((cmd === 'install' || cmd === 'update') && !has('v2')) {
+  const { spawnSync } = await import('node:child_process');
+  const passthrough = args.slice(1).filter((a, i, all) =>
+    a === '--to' || all[i - 1] === '--to' || a === '--force' || a === '--dry-run');
+  say('\n  sitesmith is on v3. Installing it with tools/install-sitesmith.mjs.');
+  say('  The init/build/audit journey below belongs to v2; run with --v2 for that.\n');
+  const r = spawnSync(process.execPath,
+    [join(ROOT, 'tools/install-sitesmith.mjs'), ...passthrough, ...(cmd === 'update' ? ['--force'] : [])],
+    { stdio: 'inherit' });
+  process.exit(r.status ?? 1);
+}
+
 if (cmd === 'doctor') {
   process.exit(await doctor(target, { onlyTarget: args.includes('--to') }));
 } else if (cmd === 'install' || cmd === 'update') {

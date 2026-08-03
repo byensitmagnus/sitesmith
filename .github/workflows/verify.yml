@@ -428,7 +428,7 @@ jobs:
       - name: install into an empty directory
         run: |
           mkdir -p /tmp/fresh
-          node bin/sitesmith.mjs install --to /tmp/fresh --provider claude
+          node bin/sitesmith.mjs install --v2 --to /tmp/fresh --provider claude
           npx --yes --prefix /tmp/fresh playwright install --with-deps chromium
 
       # Read each package.json off disk rather than through require(). A package may decline
