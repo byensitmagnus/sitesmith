@@ -155,7 +155,13 @@ await check('generated provider packs expose the default journey but no lab step
 await check('installed provider bundles carry every manifested licence and notice hash', async () => {
   const out = await mkdtemp(join(tmpdir(), 'sitesmith-install-'));
   try {
-    const result = spawnSync(process.execPath, [CLI, 'install', '--provider', 'codex', '--to', out,
+    /* `--v2` names which installer this check drives, and it has to. This file tests the v2
+       product flow: PIPELINE.json, the generated provider packs, and the licence and notice
+       files those bundles carry. `install` without the flag now hands off to the v3
+       installer, which writes a different layout and ships no LICENSES directory, so the
+       bare command stopped producing the bundle this assertion is about. The contract here
+       is right; the command it drove was renamed under it. */
+    const result = spawnSync(process.execPath, [CLI, 'install', '--v2', '--provider', 'codex', '--to', out,
       '--no-deps', '--no-doctor'], { cwd: ROOT, encoding: 'utf8' });
     assert.equal(result.status, 0, (result.stderr || result.stdout).trim());
     const installedSkill = join(out, '.agents', 'skills', 'sitesmith');

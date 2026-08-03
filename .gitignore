@@ -24,6 +24,14 @@ benchmarks/results/**/raw.json
 !docs/rebuild/**/fixtures/**/.sitesmith/
 docs/rebuild/**/fixtures/**/.sitesmith/*
 !docs/rebuild/**/fixtures/**/.sitesmith/direction.md
+# A fixture's state IS the fixture. The critique cases turn on whether a render exists and
+# whether a critique is locked to it, so a fixture whose shots and critique.json are ignored
+# is a different fixture on a clean checkout than on the machine that wrote it: locally the
+# gate saw a rendered page and refused, in CI it saw none and passed. Committed on purpose.
+!docs/rebuild/**/fixtures/**/.sitesmith/critique.json
+!docs/rebuild/**/fixtures/**/.sitesmith/shots/
+docs/rebuild/**/fixtures/**/.sitesmith/shots/*
+!docs/rebuild/**/fixtures/**/.sitesmith/shots/*.png
 !docs/rebuild/**/holdouts/**/.sitesmith/
 docs/rebuild/**/holdouts/**/.sitesmith/*
 !docs/rebuild/**/holdouts/**/.sitesmith/direction.md
