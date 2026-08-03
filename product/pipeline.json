@@ -357,5 +357,13 @@
     "readable": ".sitesmith/CONTRACT.md",
     "hardGate": false,
     "whyNotAHardGate": "docs/GATE-POLICY.md asks for a user-affecting defect, two independent reproductions and a low-false-positive measurement before a new hard gate. The contract has one pilot behind it. It refuses on its own command and it does not yet stop the run."
+  },
+  "rules": {
+    "$comment": "Every refusal class the engines emit, with what it is for and how it can be wrong. Generated from the code; the judgement is hand-written in rule-notes.json, and a class with no note cannot ship.",
+    "registry": "product/rules.json",
+    "notes": "product/rule-notes.json",
+    "generator": "tools/build-rule-registry.mjs",
+    "policy": "docs/GATE-POLICY.md",
+    "note": "This changed no rule's semantics. It is a description of what already runs."
   }
 }
