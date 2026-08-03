@@ -574,16 +574,21 @@ jobs:
           for w in 375 768 1440; do
             test -f "/tmp/pilot-shots/$w.png" || { echo "::error::no render at ${w}px"; exit 1; }
           done
-          grep -qE "axe violations : [0-9]+ \(" /tmp/pilot-verify.log \
+          # v3's verify prints "axe both schemes   : ran, N violations, M serious or critical".
+          # This pattern was v2's line, so the first run of this job reported a passing pilot
+          # as a failure: 0 violations in both schemes, PASS, nothing blocking, exit 1.
+          grep -qE "axe both schemes +: ran, [0-9]+ violations" /tmp/pilot-verify.log \
             || { echo "::error::axe did not run against the pilot"; cat /tmp/pilot-verify.log; exit 1; }
+          grep -q "PASS, nothing blocking" /tmp/pilot-verify.log \
+            || { echo "::error::verify did not pass on the pilot"; exit 1; }
 
       - name: the journey, against the production build
         working-directory: evidence/pilot/site
         run: |
           node ../../../skills/sitesmith-v3/scripts/journey.mjs journeys \
             --base http://localhost:4351 | tee /tmp/pilot-journey.log
-          grep -qE "[0-9]+ assertion" /tmp/pilot-journey.log \
-            || { echo "::error::the journey asserted nothing"; exit 1; }
+          grep -qE "^ +[1-9][0-9]* passed$" /tmp/pilot-journey.log \
+            || { echo "::error::the journey ran no spec, or one of them failed"; exit 1; }
 
       # The critique is only evidence while it is attached to the render that shipped. This
       # checks the record itself: a locked hash, an answer, and a correction round that says
@@ -611,14 +616,32 @@ jobs:
       - name: the gate, with its draft status stated
         working-directory: evidence/pilot/site
         run: |
+          # Put the record back beside the build. evidence/pilot/ keeps site/ a clean
+          # buildable project and record/ the artefacts, which is right for reading and
+          # wrong for the gate: it looks for the asset manifest, the production report, the
+          # direction record and the critique next to the thing it is judging.
+          cp ../record/ASSET-MANIFEST.md ../record/PRODUCTION-REPORT.md .
+          mkdir -p .sitesmith/shots
+          cp ../record/direction.md ../record/critique.json .sitesmith/
+          cp ../renders/*.png .sitesmith/shots/
           echo "::group::gate against the served production build"
           node ../../../skills/sitesmith-v3/scripts/gate.mjs --url http://localhost:4351/ | tee /tmp/pilot-gate.log || true
           echo "::endgroup::"
-          if grep -q "stylesheets did not load\|direction fidelity" /tmp/pilot-gate.log; then
-            echo "::error::the gate could not load the pilot's stylesheets, so its verdict is withheld"; exit 1
+          # A withheld verdict is a hard failure here, because withholding is exactly what
+          # pilot defect nine made the gate do instead of judging an unstyled document.
+          if grep -q "stylesheets did not load\|VERDICT MISSING\|NO VERDICT" /tmp/pilot-gate.log; then
+            echo "::error::the gate could not measure the pilot, so it has no verdict"; exit 1
           fi
-          if grep -vq "look/no-photograph" /tmp/pilot-gate.log && grep -qE "^ *(REFUSE|refuse)" /tmp/pilot-gate.log; then
-            echo "note: refusals above other than look/no-photograph are new; see docs/GATE-POLICY.md"
+          # The one expected refusal is look/no-photograph, which the brief itself causes:
+          # it supplies no photography and forbids generating any. Anything else is new and
+          # is named rather than absorbed.
+          sed -n '/^  REFUSED$/,/^$/p' /tmp/pilot-gate.log \
+            | grep -oE '^    [a-z]+/[a-z-]+' | tr -d ' ' | sort -u > /tmp/pilot-classes.txt || true
+          echo "refusal classes:"; cat /tmp/pilot-classes.txt
+          if grep -qv '^look/no-photograph$' /tmp/pilot-classes.txt; then
+            echo "::error::the pilot gained a refusal class beyond look/no-photograph"
+            grep -v '^look/no-photograph$' /tmp/pilot-classes.txt
+            exit 1
           fi
 
       - name: every artefact the pilot claims is in the repository
