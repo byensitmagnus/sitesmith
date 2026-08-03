@@ -31,11 +31,22 @@
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import { createHash } from 'node:crypto';
-import { fileURLToPath } from 'node:url';
-import { join, dirname, resolve } from 'node:path';
-import { parse as parseColour, contrast, distance, hex, AA } from './colour.mjs';
+import { fileURLToPath, pathToFileURL } from 'node:url';
+import { createRequire } from 'node:module';
+import { join, dirname, resolve, relative, sep } from 'node:path';
+import { spawnSync } from 'node:child_process';
+import { parse as parseColour, contrast, distance, hex, flatten, AA } from './colour.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
+
+/* Resolve from the project, not from the skill. The skill is installed somewhere the
+   project's node_modules is not a parent of, so a bare import finds nothing and the run
+   withholds a verdict it could have earned. verify.mjs solves it the same way. */
+const requireFromCwd = createRequire(join(process.cwd(), 'package.json'));
+async function load(name) {
+  try { return await import(name); }
+  catch { return await import(pathToFileURL(requireFromCwd.resolve(name)).href); }
+}
 const SCHEMA_PATH = join(HERE, '../contract/schema.json');
 const STATE_DIR = '.sitesmith';
 
@@ -75,7 +86,11 @@ const TEMPLATE = (surface) => ({
       { token: '', value: '', fallback: '', from: '' },
     ],
     roles: Object.fromEntries(schema.roles.required.map((r) => [r, ''])),
-    pairs: [{ name: '', foreground: '', background: '', use: '', minimum: 'text' }],
+    pairs: [
+      { name: '', foreground: '', background: '', use: '', minimum: 'text', state: 'rest' },
+      { name: '', foreground: '', background: '', use: '', minimum: 'nonText', state: 'focus' },
+    ],
+    states: { rest: { changes: '', carriedBy: '' }, focus: { changes: '', carriedBy: '' } },
     schemes: { light: true, dark: false, why: '' },
     genericnessRisk: '',
   },
@@ -207,7 +222,37 @@ function validate(c) {
       pair.measured = null; pair.verdict = 'not measured';
       continue;
     }
-    const ratio = contrast(fg.value, bg.value);
+    /* A translucent background is not a colour until you know what is behind it. The pilot's
+       error message is red chalk on red chalk at nine per cent, on a white at fifty-five per
+       cent, on the page ground: measured as written it reads 1:1, and measured as painted it
+       is legible. The stack is the contract's to state, and unstated it is refused rather
+       than guessed. */
+    const bgAlpha = parseColour(bg.value)?.a ?? 1;
+    let bgValue = bg.value;
+    if (bgAlpha < 1) {
+      if (!pair.backdrop?.length) {
+        bad(`colour.pairs ${pair.name}`, `${pair.background} is ${Math.round(bgAlpha * 100)} per cent opaque and no backdrop is named`,
+          'add backdrop: [<opaque token>, ...] back to front. A colour at nine per cent has no contrast of its own.');
+        pair.measured = null; pair.verdict = 'not measured';
+        continue;
+      }
+      const stack = [...pair.backdrop, pair.background].map((t) => tokens.get(t)?.value);
+      if (stack.some((v) => v === undefined)) {
+        bad(`colour.pairs ${pair.name}`, 'the backdrop names a token that is not declared', '');
+        pair.measured = null; pair.verdict = 'not measured';
+        continue;
+      }
+      const flat = flatten(stack);
+      if (!flat) {
+        bad(`colour.pairs ${pair.name}`, 'the backdrop does not start from an opaque colour',
+          'the first entry is what is behind the page, so it cannot itself be translucent');
+        pair.measured = null; pair.verdict = 'not measured';
+        continue;
+      }
+      bgValue = hex(flat);
+      pair.backgroundPainted = bgValue;
+    }
+    const ratio = contrast(fg.value, bgValue);
     const floor = schema.pairMinimums[pair.minimum] ?? AA.text;
     pair.measured = ratio;
     if (ratio === null) {
@@ -230,6 +275,28 @@ function validate(c) {
     if (tok && !paired.has(tok)) {
       bad(`colour.pairs`, `${role} (${tok}) appears in no pair`,
         'a foreground with no stated background has no contrast result, and axe will only find it if the state renders');
+    }
+  }
+
+  /* State coverage. rest and focus are owed by every surface: a page a keyboard can reach
+     has a focus state whether or not anyone chose one, and the one nobody chose is the
+     browser's, on a ground it was not picked against. Every state that has a pair also owes
+     a line saying what carries it besides colour, because colour alone is not a state for
+     anyone who cannot see the difference. */
+  const statesWithPairs = new Set((c.colour?.pairs ?? []).map((p) => p.state).filter(Boolean));
+  for (const state of schema.stateCoverage.always) {
+    if (!statesWithPairs.has(state)) {
+      bad(`colour.pairs`, `no pair is painted in the ${state} state`,
+        `add one, with its own minimum. ${state === 'focus' ? 'A focus ring nobody chose is the browser default, on a ground it was never picked against.' : ''}`);
+    }
+    if (empty(c.colour?.states?.[state]?.changes)) {
+      bad(`colour.states.${state}`, 'empty', 'what visibly changes here. "Nothing, and here is why" is an answer.');
+    }
+  }
+  for (const [state, s] of Object.entries(c.colour?.states ?? {})) {
+    if (!empty(s?.changes) && empty(s?.carriedBy)) {
+      bad(`colour.states.${state}.carriedBy`, 'empty',
+        'name what carries this state besides colour: a border, a weight, a mark, a position');
     }
   }
 
@@ -307,9 +374,10 @@ function readable(c) {
   L.push('', '### Roles', '');
   for (const [role, tok] of Object.entries(c.colour?.roles ?? {})) L.push(`- **${role}**: \`--${tok}\``);
   L.push('', '### Pairs, measured', '');
-  L.push('| pair | foreground on background | floor | measured | verdict |', '| --- | --- | --- | --- | --- |');
+  L.push('| pair | state | foreground on background | floor | measured | verdict |', '| --- | --- | --- | --- | --- | --- |');
   for (const p of c.colour?.pairs ?? []) {
-    L.push(`| ${p.name} | \`--${p.foreground}\` on \`--${p.background}\` | ${p.minimum} | ${p.measured ?? '-'}:1 | ${p.verdict ?? '-'} |`);
+    const bgLabel = p.backgroundPainted ? `\`--${p.background}\` over ${(p.backdrop ?? []).map((t) => `\`--${t}\``).join(' over ')}, painted \`${p.backgroundPainted}\`` : `\`--${p.background}\``;
+    L.push(`| ${p.name} | ${p.state} | \`--${p.foreground}\` on ${bgLabel} | ${p.minimum} | ${p.measured ?? '-'}:1 | ${p.verdict ?? '-'} |`);
   }
   L.push('', `**Schemes.** light: ${c.colour?.schemes?.light ? 'yes' : 'no'}, dark: ${c.colour?.schemes?.dark ? 'yes' : 'no'}. ${c.colour?.schemes?.why}`, '');
   if (c.colour?.dataVisualisation) {
@@ -362,11 +430,55 @@ function readable(c) {
   return L.join('\n');
 }
 
+/* The contract carries its own proof, and only this function writes it. A validation block
+   filled in by hand is a claim that something ran; nothing about the file itself would say
+   otherwise, so nothing but the runner may write it. */
+function stamp(c, extra) {
+  const pairs = c.colour?.pairs ?? [];
+  return {
+    checkedAt: new Date().toISOString().slice(0, 19) + 'Z',
+    schemaVersion: schema.schemaVersion,
+    pairsMeasured: pairs.filter((p) => typeof p.measured === 'number').length,
+    pairsFailing: pairs.filter((p) => /^fails/.test(p.verdict ?? '')).length,
+    ...(c.validation?.comparedAgainst ? { comparedAgainst: c.validation.comparedAgainst, comparedVerdict: c.validation.comparedVerdict } : {}),
+    ...extra,
+  };
+}
+
+/* ── staleness ───────────────────────────────────────────────────────────────
+   Adapted from impeccable's checkDesignDrift (Apache-2.0), and adapted rather than copied
+   in one specific way: it reports and never rewrites. Counting commits is a proxy and it
+   says so. A document is not wrong because a number is large, and this has no opinion about
+   whether the contract or the code is the one that moved. */
+function staleness(root, file) {
+  const git = (args) => {
+    const r = spawnSync('git', args, { cwd: root, encoding: 'utf8' });
+    return r.status === 0 ? r.stdout.trim() : null;
+  };
+  if (!git(['rev-parse', '--is-inside-work-tree'])) return null;
+  const rel = relative(root, file).split(sep).join('/');
+  const last = git(['log', '-1', '--format=%H', '--', rel]);
+  if (!last) return null;
+  const dirs = ['src', 'app', 'pages', 'components', 'site', 'styles', 'public']
+    .filter((d) => existsSync(join(root, d)));
+  if (!dirs.length) return null;
+  const log = git(['log', '--oneline', `${last}..HEAD`, '--', ...dirs]);
+  if (log === null) return null;
+  const commits = log ? log.split('\n').filter(Boolean).length : 0;
+  return { commits, dirs, since: git(['log', '-1', '--format=%ad', '--date=short', '--', rel]) };
+}
+
 /* ── compare, against the rendered page ──────────────────────────────────── */
 
 async function compare(c, url) {
   let chromium;
-  try { ({ chromium } = await import('playwright')); } catch {
+  /* CommonJS resolved by file path exposes its exports under `default`, so a bare
+     destructure gets undefined and the next line reads .launch of undefined. */
+  try {
+    const pw = await load('playwright');
+    chromium = pw.chromium ?? pw.default?.chromium;
+    if (!chromium) throw new Error('no chromium export');
+  } catch {
     say('\n  contract compare needs playwright, and it is not installed here.');
     say('  npm i -D playwright && npx playwright install chromium');
     say('\n  VERDICT WITHHELD. Nothing was measured, so nothing is claimed.\n');
@@ -477,53 +589,95 @@ async function compare(c, url) {
           luminance measure, and a page can be right and fail it. */
     await page.setViewportSize({ width: 1440, height: 900 });
     await page.waitForTimeout(120);
-    const squint = await page.evaluate(async (sel) => {
-      const COLS = 12, ROWS = 8;
+    const squint = await page.evaluate((sel) => {
+      const COLS = 12, ROWS = 8, W = 1440, H = 900;
+      /* Squinting does not blur backgrounds, it blurs ink. The first version of this
+         measured background-colour only, and on a page whose sections are all one ground it
+         reported every cell identical and separation zero, which is a measurement of nothing.
+         So this counts ink: text, drawings, images and rules, weighted by how far each is
+         from the ground it sits on. What is left when you squint is where the ink is. */
+      const px = (v) => parseFloat(v) || 0;
+      const lum = (c) => {
+        const m = String(c).match(/[\d.]+/g);
+        if (!m || m.length < 3) return null;
+        if (m[3] !== undefined && Number(m[3]) === 0) return null;
+        const f = (x) => { const s = x / 255; return s <= 0.04045 ? s / 12.92 : ((s + 0.055) / 1.055) ** 2.4; };
+        return 0.2126 * f(+m[0]) + 0.7152 * f(+m[1]) + 0.0722 * f(+m[2]);
+      };
+      const groundOf = (node) => {
+        for (let n = node; n && n !== document.documentElement; n = n.parentElement) {
+          const l = lum(getComputedStyle(n).backgroundColor);
+          if (l !== null) return l;
+        }
+        return lum(getComputedStyle(document.body).backgroundColor) ?? 1;
+      };
+      const cells = new Float64Array(ROWS * COLS);
+      const add = (r, weight) => {
+        if (r.top > H || r.bottom < 0 || r.width < 2 || r.height < 2) return;
+        const c0 = Math.max(0, Math.floor(r.left / (W / COLS)));
+        const c1 = Math.min(COLS - 1, Math.floor((r.right - 0.01) / (W / COLS)));
+        const r0 = Math.max(0, Math.floor(Math.max(0, r.top) / (H / ROWS)));
+        const r1 = Math.min(ROWS - 1, Math.floor((Math.min(H, r.bottom) - 0.01) / (H / ROWS)));
+        const share = r.width * r.height / Math.max(1, (c1 - c0 + 1) * (r1 - r0 + 1));
+        for (let y = r0; y <= r1; y++) for (let x = c0; x <= c1; x++) cells[y * COLS + x] += share * weight;
+      };
+
+      /* Text, measured per text node so a paragraph contributes its lines and not its box. */
+      const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+      for (let n = walker.nextNode(); n; n = walker.nextNode()) {
+        if (!n.nodeValue.trim()) continue;
+        const parent = n.parentElement;
+        if (!parent || parent.offsetParent === null) continue;
+        const cs = getComputedStyle(parent);
+        const ink = lum(cs.color);
+        if (ink === null) continue;
+        const ground = groundOf(parent);
+        const weight = Math.abs(ink - ground) * Math.min(1, px(cs.fontWeight) / 400 || 1);
+        const range = document.createRange();
+        range.selectNodeContents(n);
+        for (const r of range.getClientRects()) add(r, weight);
+      }
+      /* Drawings, images and anything with a ground of its own. */
+      for (const node of document.querySelectorAll('svg, img, picture, canvas, video, hr, [style*="background-image"]')) {
+        const r = node.getBoundingClientRect();
+        const ground = groundOf(node.parentElement ?? document.body);
+        const own = lum(getComputedStyle(node).backgroundColor);
+        add(r, own === null ? 0.5 : Math.max(0.35, Math.abs(own - ground)));
+      }
+
+      const total = cells.reduce((a, b) => a + b, 0);
+      if (total <= 0) return { measured: false };
+      let bestI = 0;
+      for (let i = 1; i < cells.length; i++) if (cells[i] > cells[bestI]) bestI = i;
+      const bx = bestI % COLS, by = Math.floor(bestI / COLS);
+      const share = Math.round((cells[bestI] / total) * 1000) / 10;
       const el = sel ? document.querySelector(sel) : null;
       const box = el ? el.getBoundingClientRect() : null;
-      /* No canvas readback of the page is possible without a screenshot, so the proxy is
-         built from the elements themselves: every painted box contributes its own area's
-         luminance to the cells it covers. Coarse on purpose. */
-      const cells = Array.from({ length: ROWS * COLS }, () => []);
-      const lum = (c) => {
-        const m = c.match(/\d+(\.\d+)?/g);
-        if (!m || m.length < 3) return null;
-        const [r, g, b] = m.map(Number);
-        if (m[3] !== undefined && Number(m[3]) === 0) return null;
-        return (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255;
-      };
-      for (const node of document.querySelectorAll('body *')) {
-        const r = node.getBoundingClientRect();
-        if (r.top > 900 || r.bottom < 0 || r.width < 12 || r.height < 12) continue;
-        const cs = getComputedStyle(node);
-        const l = lum(cs.backgroundColor);
-        if (l === null) continue;
-        const c0 = Math.max(0, Math.floor(r.left / (1440 / COLS)));
-        const c1 = Math.min(COLS - 1, Math.floor(r.right / (1440 / COLS)));
-        const r0 = Math.max(0, Math.floor(Math.max(0, r.top) / (900 / ROWS)));
-        const r1 = Math.min(ROWS - 1, Math.floor(Math.min(900, r.bottom) / (900 / ROWS)));
-        for (let y = r0; y <= r1; y++) for (let x = c0; x <= c1; x++) cells[y * COLS + x].push(l);
-      }
-      const grid = cells.map((xs) => (xs.length ? xs.at(-1) : null));
-      const known = grid.filter((v) => v !== null);
-      if (known.length < 8) return { measured: false };
-      const mean = known.reduce((a, b) => a + b, 0) / known.length;
-      let best = -1, bestI = -1;
-      grid.forEach((v, i) => { if (v === null) return; const d = Math.abs(v - mean); if (d > best) { best = d; bestI = i; } });
-      const bx = bestI % COLS, by = Math.floor(bestI / COLS);
       const inObject = box
-        ? bx >= Math.floor(box.left / (1440 / COLS)) && bx <= Math.floor(box.right / (1440 / COLS))
-          && by >= Math.floor(Math.max(0, box.top) / (900 / ROWS)) && by <= Math.floor(Math.min(900, box.bottom) / (900 / ROWS))
+        ? bx >= Math.floor(box.left / (W / COLS)) && bx <= Math.floor((box.right - 0.01) / (W / COLS))
+          && by >= Math.floor(Math.max(0, box.top) / (H / ROWS)) && by <= Math.floor((Math.min(H, box.bottom) - 0.01) / (H / ROWS))
         : null;
-      return { measured: true, cell: [bx, by], separation: Math.round(best * 100) / 100, inObject };
+      /* How much of the first screen's ink the declared object holds, which is the number
+         look.md's "painted matter" asks about from the other side. */
+      let objectShare = null;
+      if (box) {
+        let inside = 0;
+        for (let y = 0; y < ROWS; y++) for (let x = 0; x < COLS; x++) {
+          const cx = (x + 0.5) * (W / COLS), cy = (y + 0.5) * (H / ROWS);
+          if (cx >= box.left && cx <= box.right && cy >= Math.max(0, box.top) && cy <= box.bottom) inside += cells[y * COLS + x];
+        }
+        objectShare = Math.round((inside / total) * 1000) / 10;
+      }
+      return { measured: true, cell: [bx, by], share, inObject, objectShare };
     }, c.layout?.firstViewportObject?.selector ?? null);
 
     say(`\n  contract compare ${url}\n`);
     say('  MEASURED, never gated');
     if (squint.measured) {
-      say(`    squint: the block that stands out most in the first screen is column ${squint.cell[0] + 1}, row ${squint.cell[1] + 1},`);
-      say(`    ${squint.separation} from the mean. The declared first viewport object ${squint.inObject === null ? 'was not named' : squint.inObject ? 'covers it' : 'does not cover it'}.`);
-      say('    This is a luminance proxy on painted boxes. A page can be right and fail it.');
+      say(`    squint: the heaviest block of ink in the first screen is column ${squint.cell[0] + 1} of 12, row ${squint.cell[1] + 1} of 8,`);
+      say(`    holding ${squint.share} per cent of it. The declared first viewport object ${squint.inObject === null ? 'was not named' : squint.inObject ? 'covers that block' : 'does not cover that block'}`);
+      if (squint.objectShare !== null) say(`    and holds ${squint.objectShare} per cent of the first screen's ink in total.`);
+      say('    This is an ink-density proxy, not a rendering. A page can be right and fail it.');
     } else say('    squint: too few painted boxes in the first screen to measure. Not a finding either way.');
     say('');
 
@@ -584,6 +738,13 @@ if (CMD === 'check' || CMD === 'compare') {
     }
   }
 
+  const drift = staleness(project, CONTRACT);
+  if (drift && drift.commits >= 25) {
+    note('staleness', `${drift.commits} commits have touched ${drift.dirs.join(', ')} since this contract was last written`
+      + `${drift.since ? ` (${drift.since})` : ''}. That counts commits, not contradictions: it says the contract is worth `
+      + 're-reading against the code, not that either is wrong. Nothing here rewrites either of them.');
+  }
+
   const { problems: probs, notes: ns } = validate(c);
 
   if (CMD === 'check') {
@@ -610,6 +771,7 @@ if (CMD === 'check' || CMD === 'compare') {
       process.exit(3);
     }
     if (has('write')) {
+      c.validation = stamp(c, {});
       await writeFile(CONTRACT, `${JSON.stringify(c, null, 2)}\n`, 'utf8');
       await writeFile(READABLE, readable(c), 'utf8');
       say(`  wrote ${join(STATE_DIR, 'CONTRACT.md')} and recorded every contrast result\n`);
@@ -625,7 +787,17 @@ if (CMD === 'check' || CMD === 'compare') {
     say('  against an incomplete contract measures nothing. Run `check` first.\n');
     process.exit(3);
   }
-  process.exit(await compare(c, url));
+  const code = await compare(c, url);
+  if (has('write')) {
+    c.validation = stamp(c, {
+      comparedAgainst: url,
+      comparedVerdict: code === 0 ? 'matches' : code === 1 ? 'differs' : 'withheld',
+    });
+    await writeFile(CONTRACT, `${JSON.stringify(c, null, 2)}
+`, 'utf8');
+    await writeFile(READABLE, readable(c), 'utf8');
+  }
+  process.exit(code);
 }
 
 die(2, `usage:

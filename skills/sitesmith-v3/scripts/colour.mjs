@@ -167,6 +167,25 @@ export function over(fg, bg) {
   };
 }
 
+/**
+ * Composite a stack of colours, back to front, into one opaque colour.
+ *
+ * This exists because the pilot found it. Its error message is red chalk on red chalk at
+ * nine per cent, and that ground is itself over a white at fifty-five per cent, which is
+ * over the page. Measured as written, the pair reads 1:1 and looks like a total failure.
+ * Measured as painted it is legible. Neither number is knowable without the stack, so the
+ * contract has to carry it and this has to be able to flatten it.
+ *
+ * The first entry must be opaque, or there is nothing behind the page.
+ * @returns the flattened colour, or null when a layer will not resolve or the base has alpha
+ */
+export function flatten(layers) {
+  const parsed = layers.map((l) => (typeof l === 'string' ? parse(l) : l));
+  if (!parsed.length || parsed.some((p) => !p)) return null;
+  if ((parsed[0].a ?? 1) < 1) return null;
+  return parsed.reduce((base, layer) => ((layer.a ?? 1) >= 1 ? layer : over(layer, base)));
+}
+
 /** The AA floor for a pair, given what it is. Large text is 24px, or 18.66px bold. */
 export const AA = { text: 4.5, largeText: 3, nonText: 3 };
 
