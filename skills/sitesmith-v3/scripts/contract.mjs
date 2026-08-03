@@ -300,14 +300,26 @@ function validate(c) {
     }
   }
 
-  /* Dark, if it is claimed. A scheme claimed and unpopulated is worse than one not claimed:
-     it reads as covered. */
-  if (c.colour?.schemes?.dark === true) {
-    const darkPairs = (c.colour.pairs ?? []).filter((p) => /dark/i.test(p.use ?? '') || /dark/i.test(p.name ?? ''));
+  /* Schemes. A scheme claimed and unpopulated is worse than one not claimed: it reads as
+     covered. But "populated" means something different depending on how many schemes there
+     are, and the first version of this check got that wrong on the first page it met.
+     It looked for the word dark in a pair, which is right when a light page adds a dark
+     scheme and wrong when the page IS dark: a console for a lock keeper at 02:00 has no
+     light scheme at all, every pair in it is a dark pair, and not one of them says so. */
+  const schemes = c.colour?.schemes ?? {};
+  if (schemes.light === false && schemes.dark === false) {
+    bad('colour.schemes', 'neither light nor dark is claimed', 'a page renders in something; say which');
+  } else if (schemes.light === true && schemes.dark === true) {
+    const darkPairs = (c.colour.pairs ?? []).filter((p) => /dark/i.test(`${p.use} ${p.name}`));
     if (!darkPairs.length) {
-      bad('colour.schemes.dark', 'claimed, and no pair names a dark state',
-        'add the pairs the dark scheme actually uses, or set dark to false and say why in schemes.why');
+      bad('colour.schemes.dark', 'both schemes are claimed and no pair names the dark one',
+        'a second scheme is a second set of pairs with their own measurements. Name them, or claim one scheme and say why in schemes.why');
     }
+  }
+  /* One scheme is a decision and it owes its reason, whichever one it is. */
+  if (schemes.light !== schemes.dark && String(schemes.why ?? '').length < 60) {
+    bad('colour.schemes.why', 'one scheme is claimed and the reason is thin',
+      'answer from the use scene: who reads this, where, and in what light');
   }
 
   /* Typography. The stress cases are required to exist; their results are not, because a

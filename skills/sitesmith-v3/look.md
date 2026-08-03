@@ -31,13 +31,14 @@ and writing the boundary down is what keeps you on the right side of it.
 
 ## 3. The asset plan, before the first line of code
 
-List every visual element the page needs, with what it contributes and where it comes from.
-An asset is not decoration; each row must say what the page loses without it.
+Every visual element, in `ASSET-MANIFEST.md`. Not decoration: each row says what the page
+loses without it, and the gate reads these six columns and refuses any other shape.
 
-| what | contributes | source | licence | state |
+| id | what | where | source | licence | state |
 
-Sources, in this order, and the order is not a preference. It is a ladder and you climb
-it from the top.
+Every inline drawing also carries `data-asset="<id>"`, or the gate cannot match it to a row.
+
+Sources in this order. It is a ladder, climbed from the top.
 
 1. **Supplied by the client.** A real photograph of the real thing beats anything you can
    make. If the subject is a physical thing and no photograph was supplied, **ask for one**
@@ -47,10 +48,9 @@ it from the top.
    before the file is used. A photograph with no traceable licence is not an option
    whatever it looks like.
 3. **Drawn here.** An SVG, a CSS composition, a canvas figure. Original work, so the
-   provenance is this repository. A drawing is the right answer for a thing that cannot be
-   photographed: a section, a schematic, a diagram, a mark, a texture. It is the wrong
-   answer for a thing that exists and could be photographed, and using it there is how a
-   page ends up describing its subject instead of showing it.
+   provenance is this repository. A drawing is the right answer for a section, a schematic,
+   a diagram, a mark, a texture. It is the wrong answer for a thing that exists and could be
+   photographed, and using it there is how a page describes its subject instead of showing it.
 
 **A page about a physical subject with no photograph of it is a draft.** Not a failure and
 not a style: a draft, with the missing asset named, and `--draft` on the gate so the report

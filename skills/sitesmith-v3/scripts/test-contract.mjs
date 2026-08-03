@@ -85,7 +85,7 @@ const base = () => ({
       rest: { changes: 'nothing moves', carriedBy: 'the rule under the field' },
       focus: { changes: 'a 3px outline', carriedBy: 'the outline thickness' },
     },
-    schemes: { light: true, dark: false, why: 'read once in daylight next to the thing' },
+    schemes: { light: true, dark: false, why: 'Read once, in daylight, next to the broken thing it is about. Nobody in that scene ever sees a dark scheme.' },
     genericnessRisk: 'a pale ground is arrivable at by anyone',
   },
   typography: {
@@ -166,8 +166,21 @@ await run((c) => { c.colour.pairs = c.colour.pairs.filter((p) => p.state !== 'fo
   'no pair painted in the focus state', 3, 'focus state');
 await run((c) => { c.colour.states.focus.carriedBy = ''; },
   'a state carried by colour alone', 3, 'besides colour');
+/* Both schemes claimed, and no pair says which one it belongs to. The check used to fire
+   on `dark: true` alone, which is right for a light page that adds a dark scheme and wrong
+   for a page that IS dark: the lock keeper's console has no light scheme at all, every pair
+   in it is a dark pair, and not one of them says so. It met that page and refused it. */
 await run((c) => { c.colour.schemes.dark = true; },
-  'a dark scheme claimed with no dark pairs', 3, 'no pair names a dark state');
+  'both schemes claimed and no pair names the dark one', 3, 'no pair names the dark one');
+await run((c) => {
+  c.colour.schemes.light = false;
+  c.colour.schemes.dark = true;
+  c.colour.schemes.why = 'Read at 02:00 in a room with the lights down, by someone about to walk out into the dark. A light screen would cost them their night vision.';
+}, 'a page that is entirely dark, with no light scheme, is not refused for it', 0);
+await run((c) => { c.colour.schemes.light = false; c.colour.schemes.dark = false; },
+  'neither scheme claimed', 3, 'neither light nor dark');
+await run((c) => { c.colour.schemes.why = 'it looks better'; },
+  'one scheme claimed with a thin reason', 3, 'reason is thin');
 await run((c) => { c.typography.roles[0].fallback = ['Georgia']; },
   'a fallback stack that does not end in a generic family', 3, 'generic family');
 await run((c) => { c.typography.roles[0].role = 'display'; },
