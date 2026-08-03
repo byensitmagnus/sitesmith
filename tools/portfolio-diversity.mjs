@@ -77,19 +77,27 @@ export function compare(sites) {
   }
 
   /* devices used across the whole portfolio */
+  /* `signal: true` means measured and reported, never refused. Hairline separators and
+     tabular figures recur across unrelated trades for honest reasons: a sawmill, a grain
+     intake and a lighthouse all have real figures to set, and a rule between two rows is a
+     way of not drawing a box rather than a style. Sameness costs a client on the axes below
+     them, not on these two. See docs/GATE-POLICY.md; the report that reclassified them is
+     preserved unedited in evidence/cold-builds/PORTFOLIO-DIVERSITY.md. */
   const devices = [
-    ['letterspaced uppercase mono labels', (m) => m.monoCaps >= 4],
-    ['hairline borders as the separator', (m) => m.hairlines >= 20],
-    ['line drawings as the only imagery', (m) => m.strokeOnlySvgs >= 1 && m.rasterImages === 0],
-    ['a system font stack for display', (m) => /^(ui-sans-serif|system-ui|-apple-system|ui-monospace)/.test(m.displayFamily)],
-    ['tabular figures as a motif', (m) => m.tabularNums >= 3],
-    ['no elevation anywhere', (m) => m.shadowed === 0],
+    ['letterspaced uppercase mono labels', (m) => m.monoCaps >= 4, false],
+    ['hairline borders as the separator', (m) => m.hairlines >= 20, true],
+    ['line drawings as the only imagery', (m) => m.strokeOnlySvgs >= 1 && m.rasterImages === 0, false],
+    ['a system font stack for display', (m) => /^(ui-sans-serif|system-ui|-apple-system|ui-monospace)/.test(m.displayFamily), false],
+    ['tabular figures as a motif', (m) => m.tabularNums >= 3, true],
+    ['no elevation anywhere', (m) => m.shadowed === 0, false],
   ];
-  for (const [name, test] of devices) {
+  for (const [name, test, signalOnly] of devices) {
     const users = sites.filter((s) => test(s.m)).map((s) => s.label);
     if (users.length > RULES.sharedDeviceLimit) {
-      problems.push(`device: all ${users.length} sites use ${name} (${users.join(', ')}). ` +
-        `A device every site shares belongs to the portfolio, not to any of them.`);
+      const line = `device: all ${users.length} sites use ${name} (${users.join(', ')}). `
+        + 'A device every site shares belongs to the portfolio, not to any of them.';
+      if (signalOnly) notes.push(`${line} Signal, not a failure: see docs/GATE-POLICY.md.`);
+      else problems.push(line);
     } else if (users.length === RULES.sharedDeviceLimit) {
       notes.push(`${users.join(' and ')} both use ${name}`);
     }

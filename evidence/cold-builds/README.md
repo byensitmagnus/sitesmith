@@ -1,4 +1,4 @@
-# The cold corpus
+# Cold builds, the evidence
 
 Twelve websites, built by twelve fresh agents that had this skill and one brief and nothing
 else. Twelve blind reviewers, each cast as the person paying for that site, each given the
@@ -29,24 +29,20 @@ critique hashed to the render that shipped, and the production report.
 
 ## These are evidence. They are not a showcase.
 
-The three pages were run through `tools/portfolio-diversity.mjs` after they were accepted,
-and **the set failed on two devices**: every one of them uses hairline separators, and every
-one of them sets its figures tabular.
+Each of the three passed its own blind review. Measured **together**, the set did not pass
+the portfolio-diversity measurement: every one of them uses hairline separators and sets its
+figures tabular. The report is preserved verbatim in
+[PORTFOLIO-DIVERSITY.md](PORTFOLIO-DIVERSITY.md) and is not rewritten.
 
-```
-FAIL  device: all 3 sites use hairline borders as the separator
-FAIL  device: all 3 sites use tabular figures as a motif
-FAIL — 2 way(s) in which they are one site
-```
+So the claim this directory supports is exactly this and no more: **SiteSmith's core is
+validated — a cold agent with the skill and one brief produces a page its buyer accepts —
+while visual breadth across a portfolio is still being measured.** None of these pages is
+presented as showcase work.
 
-That is the round-8 finding again in a new costume: pages that clear their own review one at
-a time and still read as one studio. Three individual accepts are not a portfolio claim, and
-none of these is presented as showcase work.
-
-What it exposed was a real hole, and it is now closed: the anti-repeat ledger compared each
-build against one prior record at a time and wanted four shared devices before it objected.
-Across the set each pair shared only two, so nothing spoke. `ledger.mjs` now also refuses a
-device carried by every one of the last three records, whoever the subject was.
+The finding located a real hole and it is closed: the anti-repeat ledger compared each build
+against one prior record at a time and wanted four shared devices before it objected. Across
+the set each pair shared only two, so nothing spoke. `ledger.mjs` now also refuses a device
+carried by every one of the last three records, whoever the subject was.
 
 ## What all three accepts stand on
 

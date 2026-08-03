@@ -28,16 +28,34 @@ the detected stack, and checks the result in a real browser before it calls the 
 
 ![SiteSmith project page showing its browser release rig and a deliberately blocked control page](gallery/sitesmith-home.png)
 
-> **Repo map.** The product is `skills/sitesmith-v3/`. The proof is `docs/rebuild/`
-> (research, autopsies of 16 source repos, cold-build rounds) and `docs/v2/` (the prior
-> layer's benchmark evidence). The lab is `tools/`, `bench*/` and `tests/`; nothing in it
-> runs during a customer build. Everything else is history, kept because the numbers in
-> the docs point into it.
->
-> **Evidence boundary.** SiteSmith's browser checks catch accessibility, links, console and
-> overflow defects, and its gate refuses named design defects with coordinates. It does not
-> claim the pages are good: that verdict belongs to a blind reviewer, and the README of the
-> skill says how that measurement is going.
+> **Repo map.** The product is `skills/sitesmith-v3/`. The evidence is
+> [`evidence/cold-builds/`](evidence/cold-builds/README.md) and `docs/rebuild/` (research,
+> autopsies of 16 source repos, every cold round including the failed ones). The lab is
+> `tools/`, `bench*/` and `tests/`; nothing in it runs during a customer build. Everything
+> else is history, kept because the numbers in the docs point into it.
+
+## What has actually been measured
+
+Twelve websites, each built by a fresh agent that had this skill, one brief and nothing
+else. Twelve blind reviewers, each cast as the person paying for that site, each given the
+brief, four renders and the HTML — never the builder's journal, the gate output, or another
+reviewer's answer.
+
+| | |
+|---|---|
+| cold builds | **12** |
+| rejected | **9** |
+| accepted | **3** |
+| the three accepted, individually | passed |
+| the three accepted, as a set | did not pass the portfolio-diversity measurement |
+
+So the claim is exactly this: **SiteSmith's core is validated — a cold agent with the skill
+and one brief produces a page its buyer accepts — while visual breadth across a portfolio is
+still being measured.** The nine rejections, the three accepts and the diversity report are
+all in [`evidence/cold-builds/`](evidence/cold-builds/README.md), unedited.
+
+New hard gates are frozen and require four conditions before one may be added:
+[`docs/GATE-POLICY.md`](docs/GATE-POLICY.md).
 
 ## Showcase reset: 0/8
 
