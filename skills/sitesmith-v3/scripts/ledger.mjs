@@ -511,6 +511,30 @@ export function judge({ fingerprint, ledger, selfId }) {
     }
   }
 
+  /* One device on every page in a row, which the pairwise check above cannot see.
+     Three builds accepted individually by three blind reviewers still failed the portfolio
+     measure on two devices: every one of them used hairline separators and tabular
+     figures. Compared in pairs they shared two devices each, well under the four the loop
+     above wants, so nothing objected. Compared across the set they were one studio.
+
+     A device carried by the last SATURATION_RUN records and by this one is the studio's
+     device, not the subject's. The number is 3 because that is the size of a portfolio
+     here, and because two in a row is a coincidence a trade can genuinely produce: a
+     workshop and a waterworks both have real numbers to set in tabular figures. */
+  const SATURATION_RUN = 3
+  const recent = others.slice(-SATURATION_RUN)
+  if (recent.length === SATURATION_RUN) {
+    for (const name of mine) {
+      if (recent.every((e) => (e.fingerprint?.devices ?? []).includes(name))) {
+        vetoes.push(
+          `\`${name}\` is on this render and on every one of the last ${SATURATION_RUN} records. `
+          + 'A device every page in a row carries belongs to this studio, not to any of its subjects. '
+          + 'Three pages accepted one by one still read as one portfolio for exactly this reason.',
+        )
+      }
+    }
+  }
+
   return vetoes
 }
 

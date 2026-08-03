@@ -1,0 +1,763 @@
+<!doctype html>
+<html lang="da">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hirtshals Fyr, Fl(3) W 30s</title>
+<meta name="description" content="Hvad Hirtshals Fyrs blink betyder, hvor langt lyset rækker, og om man kan komme op i tårnet.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500&family=Marcellus&display=swap" rel="stylesheet">
+<style>
+/* ── materialerne, navngivet efter det fyret er lavet af ───────────── */
+:root{
+  color-scheme: light;
+
+  --kalk:#dee6e0;          /* kalket murværk, sidens bund */
+  --mørke:#0b1a16;         /* det uoplyste inde i lanternen */
+  --blik:#ffffff;          /* lyset selv. Fl(3) W */
+  --kviksølv:#9aa3a6;      /* kviksølvbadet, kun på det mørke */
+  --glas:#4a6b63;          /* tykt linseglas set på kanten */
+  --blæk:#1d2624;          /* tekst */
+  --dæmp:#4d5b57;          /* sekundær tekst */
+  --linje:#b6c1bb;         /* stille streger */
+  --felt:#d5dfd8;          /* minuttets flade under strimlen */
+  --mål:#6f7f79;           /* mållinjer og betydende streger */
+  --korn:rgba(29,38,36,0.055);   /* trykrasteret */
+
+  --skrift-plade:"Marcellus", "Hoefler Text", Georgia, serif;
+  --skrift-brød:"Archivo", "Helvetica Neue", Arial, sans-serif;
+
+  --str-brød:clamp(1.0625rem, 1.02rem + 0.2vw, 1.125rem);
+  --str-mærkat:clamp(0.8125rem, 0.79rem + 0.1vw, 0.875rem);
+  --str-h1:clamp(2.5rem, 1.55rem + 4vw, 4rem);
+  --str-h2:clamp(1.75rem, 1.28rem + 2vw, 2.5rem);
+  --str-kending:clamp(2.75rem, 1.4rem + 5.7vw, 5.5rem);
+  --str-tal:clamp(2rem, 1.1rem + 3.8vw, 3.5rem);
+  --str-plade-lille:1.375rem;
+
+  --luft-1:0.5rem;
+  --luft-2:1rem;
+  --luft-3:1.75rem;
+  --luft-4:3rem;
+  --luft-5:5rem;
+  --spalte:76rem;
+  --rand:clamp(1.25rem, 0.6rem + 2.8vw, 3.5rem);
+  --ramme:2.75rem;         /* mindste mål på et klikbart felt */
+
+  --svg-tekst:108;
+  --svg-tekst-2:30;
+  --svg-hår:5;
+  --svg-streg:9;
+  --svg-hår-2:1.1;
+  --svg-streg-2:1.9;
+}
+@media (min-width: 640px){
+  :root{ --svg-tekst:90; --svg-tekst-2:24; }
+}
+
+*,*::before,*::after{ box-sizing:border-box }
+
+html{ background:var(--kalk) }
+
+body{
+  margin:0;
+  background:var(--kalk);
+  /* trykrasteret: siden er et ark, ikke en skærm */
+  background-image:repeating-radial-gradient(circle at 0 0, var(--korn) 0 1px, rgba(0,0,0,0) 1px 3px);
+  color:var(--blæk);
+  font-family:var(--skrift-brød);
+  font-size:var(--str-brød);
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
+
+h1,h2{ font-family:var(--skrift-plade); font-weight:400; line-height:1.05; margin:0 }
+h1{ font-size:var(--str-h1) }
+h2{ font-size:var(--str-h2) }
+p{ margin:0 0 var(--luft-2) }
+p:last-child{ margin-bottom:0 }
+
+a{ color:var(--blæk); text-underline-offset:0.22em; text-decoration-thickness:1px }
+a:hover{ text-decoration-thickness:2px }
+a:active{ color:var(--dæmp) }
+a:focus-visible{
+  outline:3px solid var(--blæk);
+  outline-offset:3px;
+  text-decoration:none;
+}
+
+/* ── skallen ───────────────────────────────────────────────────────── */
+
+.spring{
+  position:absolute; left:var(--rand); top:-4rem;
+  background:var(--kalk); color:var(--blæk);
+  padding:var(--luft-1) var(--luft-2);
+  border:1px solid var(--blæk);
+  z-index:2;
+}
+.spring:focus{ top:var(--luft-1) }
+
+.baand{ padding-left:var(--rand); padding-right:var(--rand) }
+.midte{ max-width:var(--spalte); margin:0 auto }
+
+.top{ border-bottom:1px solid var(--mål); padding-top:var(--luft-2); padding-bottom:var(--luft-2) }
+.top .midte{
+  display:flex; flex-wrap:wrap; align-items:baseline;
+  gap:var(--luft-2) var(--luft-3);
+}
+.navn{ font-family:var(--skrift-plade); font-size:var(--str-plade-lille); letter-spacing:0.01em }
+.sted{ color:var(--dæmp); font-size:var(--str-mærkat) }
+.top nav{ margin-left:auto }
+.top nav ul{ display:flex; flex-wrap:wrap; gap:var(--luft-3); list-style:none; margin:0; padding:0 }
+.top nav a{
+  display:inline-flex; align-items:center; justify-content:center;
+  min-height:var(--ramme); min-width:var(--ramme);
+  font-size:var(--str-mærkat);
+  color:var(--dæmp);
+}
+.top nav a:hover{ color:var(--blæk) }
+
+/* ── båndhoved: overskrift til venstre, enheden til højre ─────────── */
+
+.hoved{
+  display:flex; flex-wrap:wrap; align-items:baseline; justify-content:space-between;
+  gap:var(--luft-2);
+  border-bottom:1px solid var(--mål);
+  padding-bottom:var(--luft-2);
+  margin-bottom:var(--luft-4);
+}
+.enhed{ color:var(--dæmp); font-size:var(--str-mærkat); letter-spacing:0.04em }
+
+section{ padding-top:var(--luft-5); padding-bottom:var(--luft-5) }
+section + section{ border-top:1px solid var(--linje) }
+
+/* ── lyset ─────────────────────────────────────────────────────────── */
+
+figure{ margin:0 }
+.figur{ max-width:30rem; margin-inline:auto }
+.figur img,.figur svg{ display:block; width:100%; height:auto }
+
+.par{ display:grid; gap:var(--luft-4) }
+@media (min-width: 62rem){
+  .figur{ max-width:none; margin-inline:0 }
+  .lys .par{ grid-template-columns:38fr 62fr; align-items:start }
+  .besøg .par{ grid-template-columns:62fr 38fr; align-items:start }
+}
+.plade{ background:var(--mørke) }
+figcaption{
+  color:var(--dæmp);
+  font-size:var(--str-mærkat);
+  margin-top:var(--luft-2);
+  max-width:44ch;
+}
+
+.optik .kant{ fill:none; stroke:var(--kviksølv); stroke-width:var(--svg-hår) }
+.optik .prisme{ fill:var(--glas); stroke:var(--kviksølv); stroke-width:var(--svg-hår) }
+.optik .krop{ fill:var(--glas); stroke:var(--kviksølv); stroke-width:var(--svg-hår) }
+.optik .metal{ fill:var(--kviksølv); stroke:none }
+.optik .kvik{ fill:var(--kviksølv); stroke:none; opacity:0.55 }
+.optik .akse{ fill:none; stroke:var(--kviksølv); stroke-width:var(--svg-hår); stroke-dasharray:34 16 6 16 }
+.optik .stråle{ fill:none; stroke:var(--kviksølv); stroke-width:var(--svg-hår); stroke-dasharray:16 14; opacity:0.5 }
+.optik .lampe{ fill:var(--blik); stroke:none }
+.optik .måls{ fill:none; stroke:var(--kviksølv); stroke-width:var(--svg-hår) }
+.optik text{
+  fill:var(--kviksølv);
+  font-family:var(--skrift-brød);
+  font-size:calc(var(--svg-tekst) * 1px);
+  letter-spacing:0.02em;
+}
+.optik .tal{ fill:var(--blik) }
+
+.kending{
+  display:flex; flex-wrap:wrap; align-items:flex-end;
+  gap:var(--luft-2) var(--luft-3);
+  margin:0 0 var(--luft-3);
+}
+.kending div{ display:flex; flex-direction:column }
+.kending dt{
+  font-family:var(--skrift-plade);
+  font-size:var(--str-kending);
+  line-height:0.92;
+}
+.kending dd{
+  margin:var(--luft-1) 0 0;
+  color:var(--dæmp);
+  font-size:var(--str-mærkat);
+  letter-spacing:0.04em;
+}
+
+.værdier{ margin:0 0 var(--luft-3) }
+.værdier .række{
+  display:flex; flex-wrap:wrap; align-items:baseline; justify-content:space-between;
+  gap:var(--luft-2);
+  padding:var(--luft-1) 0;
+  border-bottom:1px solid var(--linje);
+}
+.besøg .værdier .række{ padding:var(--luft-2) 0 }
+.værdier dt{ color:var(--dæmp) }
+.værdier dd{
+  margin:0;
+  font-variant-numeric:tabular-nums;
+  text-align:right;
+}
+.værdier .stor dd{ font-family:var(--skrift-plade); font-size:var(--str-plade-lille) }
+
+.note{ color:var(--dæmp); font-size:var(--str-mærkat); max-width:52ch }
+
+/* ── tågesignalet ─────────────────────────────────────────────────── */
+
+.lyd{ display:grid; gap:var(--luft-3) }
+@media (min-width: 20rem){
+  .lyd{ grid-template-columns:auto auto; justify-content:start; align-items:start; gap:var(--luft-3) var(--luft-4) }
+  .lyd p{ grid-column:1 / -1 }
+}
+@media (min-width: 62rem){
+  .lyd{ grid-template-columns:auto auto 1fr; gap:var(--luft-5) }
+  /* saetningen i den anden ende af raekken, saa baandet naar fra kant til kant
+     ligesom strimlen under det */
+  .lyd p{ grid-column:auto; justify-self:end }
+}
+.tal-blok dt{
+  font-family:var(--skrift-plade);
+  font-size:var(--str-tal);
+  line-height:1;
+  font-variant-numeric:tabular-nums;
+}
+.tal-blok dd{
+  margin:var(--luft-1) 0 0;
+  color:var(--dæmp);
+  font-size:var(--str-mærkat);
+  letter-spacing:0.04em;
+}
+.lyd p{ max-width:46ch }
+
+/* minuttet i samme skala: blokken er stødet, resten er det der ikke lyder */
+.periode{ margin-top:var(--luft-4) }
+.strimmel{
+  height:5rem;
+  background-color:var(--felt);
+  border-bottom:1px solid var(--mål);
+  background-image:
+    repeating-linear-gradient(to right, var(--mål) 0 1px, rgba(0,0,0,0) 1px 16.6667%),
+    linear-gradient(to right, var(--mål) 0 1px, rgba(0,0,0,0) 1px);
+  background-repeat:no-repeat, no-repeat;
+  background-position:left bottom, right bottom;
+  background-size:100% 0.75rem, 1px 0.75rem;
+}
+.stød{ width:5%; height:100%; background:var(--mørke) }
+.strimmel-tekst{
+  display:flex; flex-wrap:wrap; justify-content:space-between; gap:var(--luft-2);
+  margin-top:var(--luft-1);
+  color:var(--dæmp); font-size:var(--str-mærkat); letter-spacing:0.04em;
+}
+
+/* ── besøget ───────────────────────────────────────────────────────── */
+
+.rejsning .linje2{ fill:none; stroke:var(--mål); stroke-width:var(--svg-streg-2) }
+.rejsning .flade{ fill:none; stroke:var(--blæk); stroke-width:var(--svg-streg-2) }
+.rejsning .lanterne{ fill:var(--mørke); stroke:var(--blæk); stroke-width:var(--svg-streg-2) }
+.rejsning .rude{ fill:none; stroke:var(--kviksølv); stroke-width:var(--svg-hår-2) }
+.rejsning .lys{ fill:var(--blik); stroke:var(--blæk); stroke-width:var(--svg-hår-2) }
+.rejsning .måls2{ fill:none; stroke:var(--mål); stroke-width:var(--svg-hår-2) }
+.rejsning .grund{ fill:var(--mål); stroke:none }
+.trappen line{ stroke:var(--glas); stroke-width:var(--svg-hår-2) }
+.rejsning text,.trappen text{
+  fill:var(--dæmp);
+  font-family:var(--skrift-brød);
+  font-size:calc(var(--svg-tekst-2) * 1px);
+  letter-spacing:0.02em;
+}
+.trappen .antal{ fill:var(--blæk) }
+
+.uvished{ margin-top:var(--luft-3) }
+.ring{
+  display:inline-flex; align-items:center;
+  min-height:var(--ramme);
+  font-variant-numeric:tabular-nums;
+}
+
+/* ── foden ─────────────────────────────────────────────────────────── */
+
+.fod{
+  border-top:1px solid var(--mål);
+  padding-top:var(--luft-4);
+  padding-bottom:var(--luft-4);
+  color:var(--dæmp);
+  font-size:var(--str-mærkat);
+}
+.fod .midte{ display:grid; gap:var(--luft-3) }
+@media (min-width: 48rem){
+  .fod .midte{ grid-template-columns:repeat(4, 1fr) }
+}
+.fod h2{ font-size:var(--str-mærkat); font-family:var(--skrift-brød); letter-spacing:0.04em; margin-bottom:var(--luft-1) }
+.fod p{ margin:0 }
+.fod .navn2{ color:var(--blæk) }
+
+@media (prefers-reduced-motion: reduce){
+  *{ animation:none; transition:none }
+}
+</style>
+</head>
+<body>
+
+<a class="spring" href="#indhold">Spring til indholdet</a>
+
+<header class="top baand">
+  <div class="midte">
+    <span class="navn">Hirtshals Fyr</span>
+    <span class="sted">Fyrvej 27, 9850 Hirtshals</span>
+    <nav aria-label="Sidens afsnit">
+      <ul>
+        <li><a href="#lyset">Lyset</a></li>
+        <li><a href="#tagesignalet">Tågesignalet</a></li>
+        <li><a href="#besoeg">Besøg</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="indhold">
+
+  <section id="lyset" class="lys baand">
+    <div class="midte">
+
+      <div class="hoved">
+        <h1>Hirtshals Fyr</h1>
+        <span class="enhed">lyset, målt i sekunder</span>
+      </div>
+
+      <div class="par">
+
+        <figure class="figur">
+          <div class="plade">
+            <svg class="optik" viewBox="0 0 2400 3100" role="img" aria-labelledby="optik-titel" data-asset="optik-snit">
+<title id="optik-titel">Snit gennem fyrets optik: en 1. ordens Fresnellinse med lampen på den optiske akse, brændvidden målsat til 920 mm, og kviksølvbadet som linsen drejer på.</title>
+<text x="1200" y="150" text-anchor="middle">1. ordens Fresnellinse</text>
+
+<line class="akse" x1="1200" y1="190" x2="1200" y2="2540"/>
+<line class="akse" x1="1200" y1="2560" x2="1200" y2="2860"/>
+<text x="1248" y="700">den optiske akse</text>
+
+<polygon class="prisme" points="2120,1180 2270,1180 2270,1077.8"/>
+<polygon class="prisme" points="280,1180 130,1180 130,1077.8"/>
+<polygon class="prisme" points="2120,1620 2270,1620 2270,1722.2"/>
+<polygon class="prisme" points="280,1620 130,1620 130,1722.2"/>
+<polygon class="prisme" points="2120,1077.8 2270,1077.8 2270,975.6"/>
+<polygon class="prisme" points="280,1077.8 130,1077.8 130,975.6"/>
+<polygon class="prisme" points="2120,1722.2 2270,1722.2 2270,1824.4"/>
+<polygon class="prisme" points="280,1722.2 130,1722.2 130,1824.4"/>
+<polygon class="prisme" points="2120,975.6 2270,975.6 2270,873.3"/>
+<polygon class="prisme" points="280,975.6 130,975.6 130,873.3"/>
+<polygon class="prisme" points="2120,1824.4 2270,1824.4 2270,1926.7"/>
+<polygon class="prisme" points="280,1824.4 130,1824.4 130,1926.7"/>
+<polygon class="prisme" points="2120,873.3 2270,873.3 2270,771.1"/>
+<polygon class="prisme" points="280,873.3 130,873.3 130,771.1"/>
+<polygon class="prisme" points="2120,1926.7 2270,1926.7 2270,2028.9"/>
+<polygon class="prisme" points="280,1926.7 130,1926.7 130,2028.9"/>
+<polygon class="prisme" points="2120,771.1 2270,771.1 2270,668.9"/>
+<polygon class="prisme" points="280,771.1 130,771.1 130,668.9"/>
+<polygon class="prisme" points="2120,2028.9 2270,2028.9 2270,2131.1"/>
+<polygon class="prisme" points="280,2028.9 130,2028.9 130,2131.1"/>
+<polygon class="prisme" points="2120,668.9 2270,668.9 2270,566.7"/>
+<polygon class="prisme" points="280,668.9 130,668.9 130,566.7"/>
+<polygon class="prisme" points="2120,2131.1 2270,2131.1 2270,2233.3"/>
+<polygon class="prisme" points="280,2131.1 130,2131.1 130,2233.3"/>
+<polygon class="prisme" points="2120,566.7 2270,566.7 2270,464.4"/>
+<polygon class="prisme" points="280,566.7 130,566.7 130,464.4"/>
+<polygon class="prisme" points="2120,2233.3 2270,2233.3 2270,2335.6"/>
+<polygon class="prisme" points="280,2233.3 130,2233.3 130,2335.6"/>
+<polygon class="prisme" points="2120,464.4 2270,464.4 2270,362.2"/>
+<polygon class="prisme" points="280,464.4 130,464.4 130,362.2"/>
+<polygon class="prisme" points="2120,2335.6 2270,2335.6 2270,2437.8"/>
+<polygon class="prisme" points="280,2335.6 130,2335.6 130,2437.8"/>
+<polygon class="prisme" points="2120,362.2 2270,362.2 2270,260"/>
+<polygon class="prisme" points="280,362.2 130,362.2 130,260"/>
+<polygon class="prisme" points="2120,2437.8 2270,2437.8 2270,2540"/>
+<polygon class="prisme" points="280,2437.8 130,2437.8 130,2540"/>
+<path class="krop" d="M 2120 1180 L 2270 1180 L 2270 1620 L 2120 1620 Q 2046 1400 2120 1180 Z"/>
+<path class="krop" d="M 280 1180 L 130 1180 L 130 1620 L 280 1620 Q 354 1400 280 1180 Z"/>
+
+<line class="kant" x1="130" y1="260" x2="130" y2="2540"/>
+<line class="kant" x1="2270" y1="260" x2="2270" y2="2540"/>
+<line class="kant" x1="130" y1="260" x2="280" y2="260"/>
+<line class="kant" x1="2270" y1="260" x2="2120" y2="260"/>
+<line class="kant" x1="130" y1="2540" x2="280" y2="2540"/>
+<line class="kant" x1="2270" y1="2540" x2="2120" y2="2540"/>
+
+<path class="stråle" d="M 1258 1350 L 2120 1030 L 2270 1030"/>
+<path class="stråle" d="M 1258 1450 L 2120 1770 L 2270 1770"/>
+<path class="stråle" d="M 1142 1350 L 280 1030 L 130 1030"/>
+<path class="stråle" d="M 1142 1450 L 280 1770 L 130 1770"/>
+<path class="stråle" d="M 1268 1400 L 2270 1400"/>
+<path class="stråle" d="M 1132 1400 L 130 1400"/>
+
+<circle class="lampe" cx="1200" cy="1400" r="64"/>
+<line class="måls" x1="1292" y1="1244" x2="1248" y2="1348"/>
+<text x="1278" y="1216">lampen</text>
+
+<line class="måls" x1="280" y1="2120" x2="280" y2="2282"/>
+<line class="måls" x1="1200" y1="2120" x2="1200" y2="2282"/>
+<line class="måls" x1="280" y1="2200" x2="1200" y2="2200"/>
+<polygon class="metal" points="280,2200 342,2178 342,2222"/>
+<polygon class="metal" points="1200,2200 1138,2178 1138,2222"/>
+<text class="tal" x="740" y="2154" text-anchor="middle">920 mm</text>
+<text x="740" y="2300" text-anchor="middle">brændvidde</text>
+
+<rect class="metal" x="420" y="2560" width="1560" height="60"/>
+<rect class="metal" x="430" y="2620" width="270" height="180"/>
+<rect class="metal" x="1700" y="2620" width="270" height="180"/>
+
+<rect class="kvik" x="352" y="2740" width="366" height="140"/>
+<rect class="kvik" x="1682" y="2740" width="366" height="140"/>
+<path class="kant" d="M 350 2700 L 350 2880 L 720 2880 L 720 2700"/>
+<path class="kant" d="M 1680 2700 L 1680 2880 L 2050 2880 L 2050 2700"/>
+<line class="kant" x1="352" y1="2740" x2="718" y2="2740"/>
+<line class="kant" x1="1682" y1="2740" x2="2048" y2="2740"/>
+<text x="1200" y="3020" text-anchor="middle">kviksølvbad</text>
+</svg>
+          </div>
+          <figcaption>Snit gennem optikken. Kun brændvidden er målsat.</figcaption>
+        </figure>
+
+        <div>
+          <p>Fl(3) W 30s er fyrets kending. Det er den, du har set fra stranden eller fra
+          søen. Sådan læses den:</p>
+
+          <dl class="kending">
+            <div><dt>Fl</dt><dd>blink</dd></div>
+            <div><dt>(3)</dt><dd>tre af dem</dd></div>
+            <div><dt>W</dt><dd>hvidt</dd></div>
+            <div><dt>30s</dt><dd>perioden</dd></div>
+          </dl>
+
+          <dl class="værdier">
+            <div class="række"><dt>Blinket</dt><dd>0,3 sekund</dd></div>
+            <div class="række"><dt>Mellem blinkene</dt><dd>3 sekunder</dd></div>
+            <div class="række"><dt>Mørket efter</dt><dd>21,1 sekunder</dd></div>
+            <div class="række"><dt>Perioden</dt><dd>30 sekunder</dd></div>
+            <div class="række stor"><dt>Nominel lysvidde</dt><dd>18 sømil</dd></div>
+            <div class="række"><dt>Tændt</dt><dd>1863</dd></div>
+          </dl>
+
+          <p class="note">Linsen er en 1. ordens Fresnel med 920 mm brændvidde. Den drejer
+          på et kviksølvbad.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section id="tagesignalet" class="baand">
+    <div class="midte">
+
+      <div class="hoved">
+        <h2>Tågesignalet</h2>
+        <span class="enhed">lyden, målt i sekunder</span>
+      </div>
+
+      <div class="lyd">
+        <dl class="tal-blok"><dt>3 s</dt><dd>stødets længde</dd></dl>
+        <dl class="tal-blok"><dt>60 s</dt><dd>fra stød til stød</dd></dl>
+        <p>Tågesignalet er ét stød på 3 sekunder, hvert 60. sekund. Det lyder, når
+        sigtbarheden falder under 2 sømil. Hvornår det sker, afgør vejret.</p>
+      </div>
+
+      <div class="periode">
+        <div class="strimmel"><div class="stød"></div></div>
+        <div class="strimmel-tekst">
+          <span>stødet, 3 sekunder</span>
+          <span>ét minut i samme skala, mærket for hvert 10. sekund</span>
+          <span>perioden, 60 sekunder</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="besoeg" class="besøg baand">
+    <div class="midte">
+
+      <div class="hoved">
+        <h2>Besøg</h2>
+        <span class="enhed">turen op, målt i meter og trin</span>
+      </div>
+
+      <div class="par">
+
+        <div>
+          <dl class="værdier">
+            <div class="række"><dt>Åbent</dt><dd>Tirsdag til søndag, 10:00 til 16:00</dd></div>
+            <div class="række"><dt>Sæson</dt><dd>April til oktober</dd></div>
+            <div class="række"><dt>November til marts</dt><dd>Kun efter aftale</dd></div>
+            <div class="række stor"><dt>Op til galleriet</dt><dd>154 trin</dd></div>
+            <div class="række"><dt>Elevator</dt><dd>Ingen</dd></div>
+            <div class="række"><dt>Galleriet lukker ved</dt><dd>Vind over 15 m/s</dd></div>
+            <div class="række"><dt>Vinden i dag</dt><dd>Den kender siden her ikke</dd></div>
+          </dl>
+
+          <p class="uvished">Vinden på stedet afgør det fra dag til dag. Ring, hvis du vil
+          være sikker på at komme op.
+          <a class="ring" href="tel:+4598942271">98 94 22 71</a></p>
+        </div>
+
+        <figure class="figur">
+          <svg viewBox="-20 165 700 795" role="img" aria-labelledby="taarn-titel" data-asset="taarn-opstalt">
+<title id="taarn-titel">Hirtshals Fyr i opstalt: tårnet med galleri og lanterne, højden målsat til 35 m, lyset koteret til 57 m over havet, og de 154 trin tegnet op gennem skakten.</title>
+<g class="rejsning">
+  <line class="linje2" x1="110" y1="900" x2="400" y2="900"/>
+  <line class="måls2" x1="116" y1="900" x2="104" y2="916"/>
+  <line class="måls2" x1="132" y1="900" x2="120" y2="916"/>
+  <line class="måls2" x1="148" y1="900" x2="136" y2="916"/>
+  <line class="måls2" x1="164" y1="900" x2="152" y2="916"/>
+  <line class="måls2" x1="180" y1="900" x2="168" y2="916"/>
+  <line class="måls2" x1="196" y1="900" x2="184" y2="916"/>
+  <line class="måls2" x1="212" y1="900" x2="200" y2="916"/>
+  <line class="måls2" x1="228" y1="900" x2="216" y2="916"/>
+  <line class="måls2" x1="244" y1="900" x2="232" y2="916"/>
+  <line class="måls2" x1="260" y1="900" x2="248" y2="916"/>
+  <line class="måls2" x1="276" y1="900" x2="264" y2="916"/>
+  <line class="måls2" x1="292" y1="900" x2="280" y2="916"/>
+  <line class="måls2" x1="308" y1="900" x2="296" y2="916"/>
+  <line class="måls2" x1="324" y1="900" x2="312" y2="916"/>
+  <line class="måls2" x1="340" y1="900" x2="328" y2="916"/>
+  <line class="måls2" x1="356" y1="900" x2="344" y2="916"/>
+  <line class="måls2" x1="372" y1="900" x2="360" y2="916"/>
+  <line class="måls2" x1="388" y1="900" x2="376" y2="916"/>
+
+  <polygon class="flade" points="195,900 305,900 287,364 213,364"/>
+
+  <rect class="flade" x="194" y="354" width="112" height="10"/>
+  <line class="flade" x1="194" y1="318" x2="306" y2="318"/>
+  <line class="måls2" x1="199" y1="318" x2="199" y2="354"/>
+  <line class="måls2" x1="207.5" y1="318" x2="207.5" y2="354"/>
+  <line class="måls2" x1="216" y1="318" x2="216" y2="354"/>
+  <line class="måls2" x1="224.5" y1="318" x2="224.5" y2="354"/>
+  <line class="måls2" x1="233" y1="318" x2="233" y2="354"/>
+  <line class="måls2" x1="241.5" y1="318" x2="241.5" y2="354"/>
+  <line class="måls2" x1="250" y1="318" x2="250" y2="354"/>
+  <line class="måls2" x1="258.5" y1="318" x2="258.5" y2="354"/>
+  <line class="måls2" x1="267" y1="318" x2="267" y2="354"/>
+  <line class="måls2" x1="275.5" y1="318" x2="275.5" y2="354"/>
+  <line class="måls2" x1="284" y1="318" x2="284" y2="354"/>
+  <line class="måls2" x1="292.5" y1="318" x2="292.5" y2="354"/>
+  <line class="måls2" x1="301" y1="318" x2="301" y2="354"/>
+
+  <rect class="lanterne" x="220" y="252" width="60" height="66"/>
+  <line class="rude" x1="230" y1="254" x2="230" y2="316"/>
+  <line class="rude" x1="240" y1="254" x2="240" y2="316"/>
+  <line class="rude" x1="250" y1="254" x2="250" y2="316"/>
+  <line class="rude" x1="260" y1="254" x2="260" y2="316"/>
+  <line class="rude" x1="270" y1="254" x2="270" y2="316"/>
+  <polygon class="lanterne" points="214,252 286,252 250,214"/>
+  <line class="flade" x1="250" y1="214" x2="250" y2="203"/>
+  <circle class="flade" cx="250" cy="197" r="5"/>
+  <circle class="lys" cx="250" cy="285" r="7"/>
+
+  <line class="måls2" x1="195" y1="900" x2="131" y2="900"/>
+  <line class="måls2" x1="214" y1="214" x2="131" y2="214"/>
+  <line class="måls2" x1="140" y1="900" x2="140" y2="600"/>
+  <line class="måls2" x1="140" y1="514" x2="140" y2="214"/>
+  <polygon class="grund" points="140,900 134,878 146,878"/>
+  <polygon class="grund" points="140,214 134,236 146,236"/>
+  <text transform="rotate(-90 140 557)" x="140" y="557" text-anchor="middle" dy="6">35 m</text>
+
+  <line class="måls2" x1="286" y1="285" x2="430" y2="285"/>
+  <polygon class="grund" points="286,285 298,277 298,293"/>
+  <text x="442" y="291">57 m over havet</text>
+
+  <g class="trappen">
+    <line x1="203.4" y1="888" x2="296.6" y2="888"/>
+    <line x1="203.5" y1="884.6" x2="296.5" y2="884.6"/>
+    <line x1="203.6" y1="881.3" x2="296.4" y2="881.3"/>
+    <line x1="203.7" y1="877.9" x2="296.3" y2="877.9"/>
+    <line x1="203.9" y1="874.5" x2="296.1" y2="874.5"/>
+    <line x1="204" y1="871.1" x2="296" y2="871.1"/>
+    <line x1="204.1" y1="867.8" x2="295.9" y2="867.8"/>
+    <line x1="204.2" y1="864.4" x2="295.8" y2="864.4"/>
+    <line x1="204.3" y1="861" x2="295.7" y2="861"/>
+    <line x1="204.4" y1="857.6" x2="295.6" y2="857.6"/>
+    <line x1="204.5" y1="854.3" x2="295.5" y2="854.3"/>
+    <line x1="204.6" y1="850.9" x2="295.4" y2="850.9"/>
+    <line x1="204.8" y1="847.5" x2="295.2" y2="847.5"/>
+    <line x1="204.9" y1="844.2" x2="295.1" y2="844.2"/>
+    <line x1="205" y1="840.8" x2="295" y2="840.8"/>
+    <line x1="205.1" y1="837.4" x2="294.9" y2="837.4"/>
+    <line x1="205.2" y1="834" x2="294.8" y2="834"/>
+    <line x1="205.3" y1="830.7" x2="294.7" y2="830.7"/>
+    <line x1="205.4" y1="827.3" x2="294.6" y2="827.3"/>
+    <line x1="205.6" y1="823.9" x2="294.4" y2="823.9"/>
+    <line x1="205.7" y1="820.5" x2="294.3" y2="820.5"/>
+    <line x1="205.8" y1="817.2" x2="294.2" y2="817.2"/>
+    <line x1="205.9" y1="813.8" x2="294.1" y2="813.8"/>
+    <line x1="206" y1="810.4" x2="294" y2="810.4"/>
+    <line x1="206.1" y1="807.1" x2="293.9" y2="807.1"/>
+    <line x1="206.2" y1="803.7" x2="293.8" y2="803.7"/>
+    <line x1="206.3" y1="800.3" x2="293.7" y2="800.3"/>
+    <line x1="206.5" y1="796.9" x2="293.5" y2="796.9"/>
+    <line x1="206.6" y1="793.6" x2="293.4" y2="793.6"/>
+    <line x1="206.7" y1="790.2" x2="293.3" y2="790.2"/>
+    <line x1="206.8" y1="786.8" x2="293.2" y2="786.8"/>
+    <line x1="206.9" y1="783.5" x2="293.1" y2="783.5"/>
+    <line x1="207" y1="780.1" x2="293" y2="780.1"/>
+    <line x1="207.1" y1="776.7" x2="292.9" y2="776.7"/>
+    <line x1="207.3" y1="773.3" x2="292.7" y2="773.3"/>
+    <line x1="207.4" y1="770" x2="292.6" y2="770"/>
+    <line x1="207.5" y1="766.6" x2="292.5" y2="766.6"/>
+    <line x1="207.6" y1="763.2" x2="292.4" y2="763.2"/>
+    <line x1="207.7" y1="759.8" x2="292.3" y2="759.8"/>
+    <line x1="207.8" y1="756.5" x2="292.2" y2="756.5"/>
+    <line x1="207.9" y1="753.1" x2="292.1" y2="753.1"/>
+    <line x1="208" y1="749.7" x2="292" y2="749.7"/>
+    <line x1="208.2" y1="746.4" x2="291.8" y2="746.4"/>
+    <line x1="208.3" y1="743" x2="291.7" y2="743"/>
+    <line x1="208.4" y1="739.6" x2="291.6" y2="739.6"/>
+    <line x1="208.5" y1="736.2" x2="291.5" y2="736.2"/>
+    <line x1="208.6" y1="732.9" x2="291.4" y2="732.9"/>
+    <line x1="208.7" y1="729.5" x2="291.3" y2="729.5"/>
+    <line x1="208.8" y1="726.1" x2="291.2" y2="726.1"/>
+    <line x1="209" y1="722.7" x2="291" y2="722.7"/>
+    <line x1="209.1" y1="719.4" x2="290.9" y2="719.4"/>
+    <line x1="209.2" y1="716" x2="290.8" y2="716"/>
+    <line x1="209.3" y1="712.6" x2="290.7" y2="712.6"/>
+    <line x1="209.4" y1="709.3" x2="290.6" y2="709.3"/>
+    <line x1="209.5" y1="705.9" x2="290.5" y2="705.9"/>
+    <line x1="209.6" y1="702.5" x2="290.4" y2="702.5"/>
+    <line x1="209.7" y1="699.1" x2="290.3" y2="699.1"/>
+    <line x1="209.9" y1="695.8" x2="290.1" y2="695.8"/>
+    <line x1="210" y1="692.4" x2="290" y2="692.4"/>
+    <line x1="210.1" y1="689" x2="289.9" y2="689"/>
+    <line x1="210.2" y1="685.6" x2="289.8" y2="685.6"/>
+    <line x1="210.3" y1="682.3" x2="289.7" y2="682.3"/>
+    <line x1="210.4" y1="678.9" x2="289.6" y2="678.9"/>
+    <line x1="210.5" y1="675.5" x2="289.5" y2="675.5"/>
+    <line x1="210.7" y1="672.2" x2="289.3" y2="672.2"/>
+    <line x1="210.8" y1="668.8" x2="289.2" y2="668.8"/>
+    <line x1="210.9" y1="665.4" x2="289.1" y2="665.4"/>
+    <line x1="211" y1="662" x2="289" y2="662"/>
+    <line x1="211.1" y1="658.7" x2="288.9" y2="658.7"/>
+    <line x1="211.2" y1="655.3" x2="288.8" y2="655.3"/>
+    <line x1="211.3" y1="651.9" x2="288.7" y2="651.9"/>
+    <line x1="211.4" y1="648.5" x2="288.6" y2="648.5"/>
+    <line x1="211.6" y1="645.2" x2="288.4" y2="645.2"/>
+    <line x1="211.7" y1="641.8" x2="288.3" y2="641.8"/>
+    <line x1="211.8" y1="638.4" x2="288.2" y2="638.4"/>
+    <line x1="211.9" y1="635.1" x2="288.1" y2="635.1"/>
+    <line x1="212" y1="631.7" x2="288" y2="631.7"/>
+    <line x1="212.1" y1="628.3" x2="287.9" y2="628.3"/>
+    <line x1="212.2" y1="624.9" x2="287.8" y2="624.9"/>
+    <line x1="212.4" y1="621.6" x2="287.6" y2="621.6"/>
+    <line x1="212.5" y1="618.2" x2="287.5" y2="618.2"/>
+    <line x1="212.6" y1="614.8" x2="287.4" y2="614.8"/>
+    <line x1="212.7" y1="611.5" x2="287.3" y2="611.5"/>
+    <line x1="212.8" y1="608.1" x2="287.2" y2="608.1"/>
+    <line x1="212.9" y1="604.7" x2="287.1" y2="604.7"/>
+    <line x1="213" y1="601.3" x2="287" y2="601.3"/>
+    <line x1="213.1" y1="598" x2="286.9" y2="598"/>
+    <line x1="213.3" y1="594.6" x2="286.7" y2="594.6"/>
+    <line x1="213.4" y1="591.2" x2="286.6" y2="591.2"/>
+    <line x1="213.5" y1="587.8" x2="286.5" y2="587.8"/>
+    <line x1="213.6" y1="584.5" x2="286.4" y2="584.5"/>
+    <line x1="213.7" y1="581.1" x2="286.3" y2="581.1"/>
+    <line x1="213.8" y1="577.7" x2="286.2" y2="577.7"/>
+    <line x1="213.9" y1="574.4" x2="286.1" y2="574.4"/>
+    <line x1="214" y1="571" x2="286" y2="571"/>
+    <line x1="214.2" y1="567.6" x2="285.8" y2="567.6"/>
+    <line x1="214.3" y1="564.2" x2="285.7" y2="564.2"/>
+    <line x1="214.4" y1="560.9" x2="285.6" y2="560.9"/>
+    <line x1="214.5" y1="557.5" x2="285.5" y2="557.5"/>
+    <line x1="214.6" y1="554.1" x2="285.4" y2="554.1"/>
+    <line x1="214.7" y1="550.7" x2="285.3" y2="550.7"/>
+    <line x1="214.8" y1="547.4" x2="285.2" y2="547.4"/>
+    <line x1="215" y1="544" x2="285" y2="544"/>
+    <line x1="215.1" y1="540.6" x2="284.9" y2="540.6"/>
+    <line x1="215.2" y1="537.3" x2="284.8" y2="537.3"/>
+    <line x1="215.3" y1="533.9" x2="284.7" y2="533.9"/>
+    <line x1="215.4" y1="530.5" x2="284.6" y2="530.5"/>
+    <line x1="215.5" y1="527.1" x2="284.5" y2="527.1"/>
+    <line x1="215.6" y1="523.8" x2="284.4" y2="523.8"/>
+    <line x1="215.7" y1="520.4" x2="284.3" y2="520.4"/>
+    <line x1="215.9" y1="517" x2="284.1" y2="517"/>
+    <line x1="216" y1="513.6" x2="284" y2="513.6"/>
+    <line x1="216.1" y1="510.3" x2="283.9" y2="510.3"/>
+    <line x1="216.2" y1="506.9" x2="283.8" y2="506.9"/>
+    <line x1="216.3" y1="503.5" x2="283.7" y2="503.5"/>
+    <line x1="216.4" y1="500.2" x2="283.6" y2="500.2"/>
+    <line x1="216.5" y1="496.8" x2="283.5" y2="496.8"/>
+    <line x1="216.7" y1="493.4" x2="283.3" y2="493.4"/>
+    <line x1="216.8" y1="490" x2="283.2" y2="490"/>
+    <line x1="216.9" y1="486.7" x2="283.1" y2="486.7"/>
+    <line x1="217" y1="483.3" x2="283" y2="483.3"/>
+    <line x1="217.1" y1="479.9" x2="282.9" y2="479.9"/>
+    <line x1="217.2" y1="476.5" x2="282.8" y2="476.5"/>
+    <line x1="217.3" y1="473.2" x2="282.7" y2="473.2"/>
+    <line x1="217.4" y1="469.8" x2="282.6" y2="469.8"/>
+    <line x1="217.6" y1="466.4" x2="282.4" y2="466.4"/>
+    <line x1="217.7" y1="463.1" x2="282.3" y2="463.1"/>
+    <line x1="217.8" y1="459.7" x2="282.2" y2="459.7"/>
+    <line x1="217.9" y1="456.3" x2="282.1" y2="456.3"/>
+    <line x1="218" y1="452.9" x2="282" y2="452.9"/>
+    <line x1="218.1" y1="449.6" x2="281.9" y2="449.6"/>
+    <line x1="218.2" y1="446.2" x2="281.8" y2="446.2"/>
+    <line x1="218.4" y1="442.8" x2="281.6" y2="442.8"/>
+    <line x1="218.5" y1="439.5" x2="281.5" y2="439.5"/>
+    <line x1="218.6" y1="436.1" x2="281.4" y2="436.1"/>
+    <line x1="218.7" y1="432.7" x2="281.3" y2="432.7"/>
+    <line x1="218.8" y1="429.3" x2="281.2" y2="429.3"/>
+    <line x1="218.9" y1="426" x2="281.1" y2="426"/>
+    <line x1="219" y1="422.6" x2="281" y2="422.6"/>
+    <line x1="219.1" y1="419.2" x2="280.9" y2="419.2"/>
+    <line x1="219.3" y1="415.8" x2="280.7" y2="415.8"/>
+    <line x1="219.4" y1="412.5" x2="280.6" y2="412.5"/>
+    <line x1="219.5" y1="409.1" x2="280.5" y2="409.1"/>
+    <line x1="219.6" y1="405.7" x2="280.4" y2="405.7"/>
+    <line x1="219.7" y1="402.4" x2="280.3" y2="402.4"/>
+    <line x1="219.8" y1="399" x2="280.2" y2="399"/>
+    <line x1="219.9" y1="395.6" x2="280.1" y2="395.6"/>
+    <line x1="220.1" y1="392.2" x2="279.9" y2="392.2"/>
+    <line x1="220.2" y1="388.9" x2="279.8" y2="388.9"/>
+    <line x1="220.3" y1="385.5" x2="279.7" y2="385.5"/>
+    <line x1="220.4" y1="382.1" x2="279.6" y2="382.1"/>
+    <line x1="220.5" y1="378.7" x2="279.5" y2="378.7"/>
+    <line x1="220.6" y1="375.4" x2="279.4" y2="375.4"/>
+    <line x1="220.7" y1="372" x2="279.3" y2="372"/>
+    <line class="måls2" x1="298" y1="634" x2="430" y2="634"/>
+    <text class="antal" x="442" y="640">154 trin</text>
+  </g>
+</g>
+</svg>
+          <figcaption>Tårnet i opstalt. De 154 trin er tegnet ét for ét op gennem skakten.
+          Kun højderne er målsat.</figcaption>
+        </figure>
+
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="fod baand">
+  <div class="midte">
+    <div>
+      <h2>Fyret passes af</h2>
+      <p class="navn2">Sonja Kvist</p>
+      <p class="navn2">Aage Thomsen</p>
+    </div>
+    <div>
+      <h2>Adresse</h2>
+      <p class="navn2">Fyrvej 27</p>
+      <p class="navn2">9850 Hirtshals</p>
+    </div>
+    <div>
+      <h2>Telefon</h2>
+      <p><a class="ring" href="tel:+4598942271">98 94 22 71</a></p>
+    </div>
+    <div>
+      <h2>Drift</h2>
+      <p>Hirtshals Fyr er i drift under søfartsmyndigheden.</p>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

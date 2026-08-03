@@ -86,6 +86,15 @@ expect('four devices shared with one prior record is a veto',
 expect('three shared devices is not',
   ['check', dir('complete'), '--measurement', measurement('three-shared.json'), '--ledger', priorCopy('three')], 0)
 
+/* Three pages accepted one by one by three blind reviewers still failed the portfolio
+   measure on two devices every one of them carried. Compared in pairs they shared two each,
+   under the four the pairwise check wants, so nothing objected. Compared across the set they
+   were one studio. */
+expect('a device on every one of the last three records is vetoed even though no pair shares four',
+  ['check', dir('complete'), '--measurement', measurement('saturated-device.json'),
+   '--ledger', (() => { const to = join(tmp, 'saturated.jsonl'); copyFileSync(join(FIX, 'ledgers', 'saturated.jsonl'), to); return to })()],
+  1, (o) => /every one of the last 3 records/.test(o) && /hairline-separators/.test(o))
+
 expect('a verbatim Brief-pinned quote waives the veto and prints the waiver',
   ['check', dir('waived'), '--measurement', measurement('seed-recipe.json'), '--ledger', join(tmp, 'waive.jsonl')],
   0, (o) => /WAIVED/.test(o) && /PRODUCTION-REPORT\.md/.test(o))

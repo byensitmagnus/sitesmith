@@ -1,0 +1,18 @@
+{
+ "v": 1,
+ "render": "ba4cace0d8b7a346",
+ "files": [
+  "1440.png",
+  "375.png",
+  "768.png",
+  "reduced-motion-1440.png"
+ ],
+ "answers": "1. Øjet lander på h1'ens lyse antikva øverst til venstre, ikke på stakken, så sidens argument ankommer som en sætning om fire træsorter, før det ankommer som den ting man køber fra; briefen bad om hvad der er på lager i hvilken tykkelse, og det er det andet man ser.\n2. Bestillingsafsnittet læses først som skabelon: fire stablede etiketterede felter til venstre og et panel til højre, og panelet er tomt, så sidens mest konventionelle blok er også dens tommeste.\n3. Signaturen lever ved 1440, hvor de fire stakke står på ét gulv og eg er synligt dobbelt så høj som elm; ved 375 overlever den, men er klemt, elmens gule \"3,4 m³ tilbage\" ligger oven på dens egen planke, og etiketterne inde i 27 mm planken rører næsten hinanden.\n4. Tommest er `.slip`, et 400 px højt panel med én overskrift og én sætning i; dernæst den øverste højre del af første skærm, hvor bunden løber omkring 500 px til højre for manchetten uden noget i sig.\n5. De seks største ord er Bøg, eg, ask, elm, Specifikationen og Bestillingssedlen, plus priserne; træsortsnavnene deler enhver dansk løvtræshandel, og kun priserne, de 8 procent og Røverstuevej gør det til denne plads frem for en hvilken som helst plads.\n6. Dækker man den øverste tredjedel, står specifikationen, dagestregerne og sedlen tilbage, og ja, det siger stadig hvad det er: fire sorter i fire tykkelser, alle på 8 %, med en optælling af tørredage og en bestilling.\n\nACCEPT med rettelser. Det værste enkelte: `.maaling` er et fladt lysebrunt kvadrat med to 5 px mærker i, som intet siger på et blik, og det er tegnet som en 31 mm bred pind i stedet for som enden af en planke, hvilket stiltiende påstår en bredde ingen har oplyst.",
+ "corrections": [
+  {
+   "note": "Rettelsesrunden efter kritikken, fire ting: 1) .maaling var et fladt kvadrat, der stiltiende paastod en bredde, og er nu tegnet som enden af en planke med brudt hoejre kant, en stiplet midterlinje og to spidser, der gaar ned fra fladen og standser paa midten. 2) .slip stod tom i 400 px og baerer nu de fire linjer, der staar paa hver eneste seddel, som en invitation frem for et tomt panel. 3) Den oeverste hoejre del af foerste skaerm var bar og baerer nu pladsens adresse, aabningstid, hjemtransport og reservation af groent trae. 4) Stakkens hoveder havde for stram skydning, saa elmens restlinje laa paa sin egen planke, og etiketterne i pladsens faktaliste er flyttet fra kridtgul til damp, saa den ene kridtgule flade paa siden bliver ved med at vaere knappen, der forpligter.",
+   "fromRender": "bd7d3b1914e4d7db",
+   "toRender": "ba4cace0d8b7a346"
+  }
+ ]
+}
