@@ -111,9 +111,9 @@ implementation. The record explains the decision; this is the decision as values
 
 | case | expected | result | verdict |
 | --- | --- | --- | --- |
-| a reading name three times its expected length, in Danish | It wraps within its column and the reading and its age stay on the same line as each other. The ribbon does not move. | - | not run |
-| the console at 200 per cent zoom at 1440 | The ranked list becomes the 375 arrangement: one column, the ribbon full width above it, the readings stacked under their names. Nothing is clipped, and the ribbon's hour labels drop to every second hour rather than shrinking. | - | not run |
-| the fallback stack, with Cascadia Mono and Segoe UI Variable Text both unavailable | Consolas and Segoe UI take over. Both are metrically close, so the columns stay in line; the case to check is that the 44px figure still fits its line and that the ribbon's time labels do not collide. | - | not run |
+| a reading name three times its expected length, in Danish | It wraps within its column and the reading and its age stay on the same line as each other. The ribbon does not move. | no overflow, nothing clipped, the page grew 2 per cent taller | held |
+| the console at 200 per cent zoom at 1440 | The ranked list becomes the 375 arrangement: one column, the ribbon full width above it, the readings stacked under their names. Nothing is clipped, and the ribbon's hour labels drop to every second hour rather than shrinking. | no overflow, nothing clipped, the page grew 3 per cent taller | held |
+| the fallback stack, with Cascadia Mono and Segoe UI Variable Text both unavailable | Consolas and Segoe UI take over. Both are metrically close, so the columns stay in line; the case to check is that the 44px figure still fits its line and that the ribbon's time labels do not collide. | no overflow, nothing clipped, the page grew 1 per cent taller | held |
 | aeoeaa and the degree sign, in both faces and every fallback | 71 grader renders with its degree sign in the monospace, and slusevagt, portmotor and maaling render their ae, oe and aa in both faces. | - | not run |
 
 ## Layout

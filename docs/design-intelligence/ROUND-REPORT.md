@@ -96,7 +96,9 @@ floor, measured; what changes in each state and what carries it besides colour; 
 answered from the use scene; data-visualisation requirements; genericness risk; and departures
 from the record. Typography carries family, source, licence, weights, axes, fallback stack,
 metric compatibility, language coverage, loading strategy, scale, line height and prose
-measure, plus stress cases written before they are run. Layout carries the reading path,
+measure, plus stress cases written before they are run and then run:
+`contract.mjs stress --url <url> --write` answers the three a browser can decide, and every
+other case keeps the words **not run**. Layout carries the reading path,
 leading and supporting elements, grouping, density, rhythm, topology, the first viewport
 object, the signature, what the layout **becomes** at 375, 768 and 1440, container behaviour,
 focus order and the squint test.
@@ -236,6 +238,10 @@ registry check, two pilot jobs on a matrix, and the portfolio check.
 - **43 of 59 rules have never fired in this repository.** They are enforced and unmeasured.
 - **Three pilots is three.** They were built by one agent reading the skill, not by three cold
   agents with empty context windows. The cold loop is the harder test and this was not it.
+- **Five of the eight stress cases per pilot are still `not run`.** A browser can decide a
+  long heading, 200 per cent zoom and a blocked face; it cannot decide whether a face carries
+  the Danish alphabet, or what an empty console looks like at the start of a shift. Those are
+  written down with what is expected and no result, which is the honest value.
 - **The squint test is an ink-density proxy on painted boxes**, not a rendering. It is
   reported and never gated, and a page can be right and fail it.
 - **`verify.mjs` measures prose measure on the element that carries the text**, which is the

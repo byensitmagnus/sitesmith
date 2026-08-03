@@ -108,9 +108,9 @@ implementation. The record explains the decision; this is the decision as values
 
 | case | expected | result | verdict |
 | --- | --- | --- | --- |
-| a heading three times its expected length, in Danish | It wraps to three lines and the drawing below it moves down. Nothing is clipped and the bench drawing does not shrink, because the drawing's height is set from its own aspect ratio and not from the space left over. | - | not run |
-| the page at 200 per cent zoom at 1440 | The two columns become one, the same way they do at 375, because the layout switches on available width rather than on device. The bench drawing stays legible and its measuring numbers stay on their lines. | - | not run |
-| the fallback stack, with Bahnschrift and Sitka Text both unavailable | Roboto Condensed and Georgia take over. The measuring numbers get wider, so the numbers sitting on the bench drawing's measuring lines are the case to check: they must stay on their lines and not overlap. | - | not run |
+| a heading three times its expected length, in Danish | It wraps to three lines and the drawing below it moves down. Nothing is clipped and the bench drawing does not shrink, because the drawing's height is set from its own aspect ratio and not from the space left over. | no overflow, nothing clipped, the page is the same height | held |
+| the page at 200 per cent zoom at 1440 | The two columns become one, the same way they do at 375, because the layout switches on available width rather than on device. The bench drawing stays legible and its measuring numbers stay on their lines. | no overflow, nothing clipped, the page grew 50 per cent taller | held |
+| the fallback stack, with Bahnschrift and Sitka Text both unavailable | Roboto Condensed and Georgia take over. The measuring numbers get wider, so the numbers sitting on the bench drawing's measuring lines are the case to check: they must stay on their lines and not overlap. | no overflow, nothing clipped, the page grew 3 per cent taller | held |
 | aeoeaa and the Danish thousands separator, a full stop, in every face and size | 2.200 mm reads as two thousand two hundred and not as two point two, and ae, oe and aa render in both faces and in every fallback. | - | not run |
 
 ## Layout

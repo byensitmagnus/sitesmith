@@ -375,12 +375,14 @@
       {
         "case": "a heading three times its expected length, in Danish",
         "expected": "It wraps to three lines in the display face and the drawing under it moves down. Nothing is clipped.",
-        "verdict": "not run"
+        "verdict": "held",
+        "result": "no overflow, nothing clipped, the page is the same height"
       },
       {
         "case": "the page at 200 per cent zoom at 1440",
         "expected": "One column throughout, which it already is, so the only change is that the drawings take their narrow annotation. The form stays usable and the labels stay above their fields.",
-        "verdict": "not run"
+        "verdict": "held",
+        "result": "no overflow, nothing clipped, the page grew 3 per cent taller"
       },
       {
         "case": "aeoeaa in both faces and every fallback, and the place names",
@@ -390,7 +392,8 @@
       {
         "case": "the fallback stack, with Palatino Linotype and Corbel both unavailable",
         "expected": "Georgia and Optima or the system face take over. The old-style figures go with Corbel, so the case to check is that the counts still sit in their sentences and that the season band's week labels do not collide.",
-        "verdict": "not run"
+        "verdict": "held",
+        "result": "no overflow, nothing clipped, the page grew 4 per cent taller"
       }
     ],
     "genericnessRisk": "Two system faces, no webfont, and neither is the one every website uses. On a machine with neither, the page falls to Georgia and the system sans, and the argument then rests entirely on what the page says rather than on how it is set.",

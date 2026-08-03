@@ -363,17 +363,20 @@
       {
         "case": "a heading three times its expected length, in Danish",
         "expected": "It wraps to three lines and the drawing below it moves down. Nothing is clipped and the bench drawing does not shrink, because the drawing's height is set from its own aspect ratio and not from the space left over.",
-        "verdict": "not run"
+        "verdict": "held",
+        "result": "no overflow, nothing clipped, the page is the same height"
       },
       {
         "case": "the page at 200 per cent zoom at 1440",
         "expected": "The two columns become one, the same way they do at 375, because the layout switches on available width rather than on device. The bench drawing stays legible and its measuring numbers stay on their lines.",
-        "verdict": "not run"
+        "verdict": "held",
+        "result": "no overflow, nothing clipped, the page grew 50 per cent taller"
       },
       {
         "case": "the fallback stack, with Bahnschrift and Sitka Text both unavailable",
         "expected": "Roboto Condensed and Georgia take over. The measuring numbers get wider, so the numbers sitting on the bench drawing's measuring lines are the case to check: they must stay on their lines and not overlap.",
-        "verdict": "not run"
+        "verdict": "held",
+        "result": "no overflow, nothing clipped, the page grew 3 per cent taller"
       },
       {
         "case": "aeoeaa and the Danish thousands separator, a full stop, in every face and size",

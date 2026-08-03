@@ -106,10 +106,10 @@ implementation. The record explains the decision; this is the decision as values
 
 | case | expected | result | verdict |
 | --- | --- | --- | --- |
-| a heading three times its expected length, in Danish | It wraps to three lines in the display face and the drawing under it moves down. Nothing is clipped. | - | not run |
-| the page at 200 per cent zoom at 1440 | One column throughout, which it already is, so the only change is that the drawings take their narrow annotation. The form stays usable and the labels stay above their fields. | - | not run |
+| a heading three times its expected length, in Danish | It wraps to three lines in the display face and the drawing under it moves down. Nothing is clipped. | no overflow, nothing clipped, the page is the same height | held |
+| the page at 200 per cent zoom at 1440 | One column throughout, which it already is, so the only change is that the drawings take their narrow annotation. The form stays usable and the labels stay above their fields. | no overflow, nothing clipped, the page grew 3 per cent taller | held |
 | aeoeaa in both faces and every fallback, and the place names | Nymindegab, Thyboroen and Hvide Sande render with their ae, oe and aa in both faces and in every fallback. | - | not run |
-| the fallback stack, with Palatino Linotype and Corbel both unavailable | Georgia and Optima or the system face take over. The old-style figures go with Corbel, so the case to check is that the counts still sit in their sentences and that the season band's week labels do not collide. | - | not run |
+| the fallback stack, with Palatino Linotype and Corbel both unavailable | Georgia and Optima or the system face take over. The old-style figures go with Corbel, so the case to check is that the counts still sit in their sentences and that the season band's week labels do not collide. | no overflow, nothing clipped, the page grew 4 per cent taller | held |
 
 ## Layout
 

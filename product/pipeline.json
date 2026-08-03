@@ -173,7 +173,7 @@
     {
       "id": "contract-compare",
       "does": "runs",
-      "command": "node <skill>/scripts/contract.mjs compare --url <url> [--write]",
+      "command": "node <skill>/scripts/contract.mjs compare --url <url> [--write]   ->   contract.mjs stress --url <url> --write",
       "module": "scripts/contract.mjs",
       "reads": [
         ".sitesmith/contract.json"
@@ -183,7 +183,8 @@
         "the first viewport object and the signature render, and the first viewport object is in the first screen",
         "the declared focus order appears in the tab order, in that order",
         "the leading elements are arranged differently at 375 and 1440",
-        "the squint proxy: where the first screen's ink actually is"
+        "the squint proxy: where the first screen's ink actually is",
+        "the stress cases a browser can decide: a heading at three times its length, the page at 200 per cent zoom, and the page with its own faces blocked. A case a browser cannot decide keeps the words not run."
       ],
       "stopsWhen": "the stylesheets did not load, which is withheld rather than judged, or the build differs from the contract that was agreed before it"
     },

@@ -6,6 +6,7 @@
  *   node <skill>/scripts/contract.mjs new <surface>        write the template
  *   node <skill>/scripts/contract.mjs check [--write]      validate; --write records contrast
  *   node <skill>/scripts/contract.mjs compare --url <url>  contract against the rendered page
+ *   node <skill>/scripts/contract.mjs stress  --url <url>  run the stress cases and record them
  *
  * Why this exists at all, when the direction record already exists.
  *
@@ -711,6 +712,132 @@ async function compare(c, url) {
   }
 }
 
+/* ── stress ──────────────────────────────────────────────────────────────────
+   The stress cases are written before they are run, and a case with an expectation and no
+   result is a case nobody ran. This runs the three that a browser can decide: a heading at
+   three times its length, the page at 200 per cent zoom, and the page with its own faces
+   blocked. It writes what it measured and never writes the verdict for a case it did not
+   run: "not run" is the honest value and it stays. */
+
+async function stress(c, url) {
+  let chromium;
+  try {
+    const pw = await load('playwright');
+    chromium = pw.chromium ?? pw.default?.chromium;
+    if (!chromium) throw new Error('no chromium export');
+  } catch {
+    say('\n  contract stress needs playwright, and it is not installed here.');
+    say('  npm i -D playwright && npx playwright install chromium');
+    say('\n  VERDICT WITHHELD. Nothing was measured, so nothing is claimed.\n');
+    return 3;
+  }
+
+  const browser = await chromium.launch();
+  const results = [];
+  try {
+    const measure = async (label, prepare, width = 1440) => {
+      const page = await browser.newPage({ viewport: { width, height: 900 } });
+      await page.goto(url, { waitUntil: 'networkidle' });
+      if (prepare) await prepare(page);
+      await page.waitForTimeout(150);
+      const r = await page.evaluate((sels) => {
+        const doc = document.documentElement;
+        const overflow = Math.max(0, doc.scrollWidth - doc.clientWidth);
+        const clipped = [...document.querySelectorAll('h1, h2, h3, p, li, label, button, a')]
+          .filter((el) => el.offsetParent !== null)
+          .filter((el) => el.scrollHeight > el.clientHeight + 2 && getComputedStyle(el).overflow !== 'visible').length;
+        const boxes = sels.map((s) => {
+          const el = document.querySelector(s);
+          if (!el) return null;
+          const b = el.getBoundingClientRect();
+          return [Math.round(b.left), Math.round(b.top + scrollY), Math.round(b.width), Math.round(b.height)];
+        });
+        return { overflow, clipped, boxes, height: doc.scrollHeight };
+      }, (c.layout?.leading ?? []).filter(Boolean));
+      await page.close();
+      return { label, ...r };
+    };
+
+    const base = await measure('as it ships');
+
+    /* A heading three times its length, in the page's own language. The text comes from the
+       page rather than from a word list, so it stresses the faces the page actually uses. */
+    const long = await measure('a heading three times its length', async (page) => {
+      await page.evaluate(() => {
+        const h = document.querySelector('h1, h2');
+        if (h) h.textContent = `${h.textContent} ${h.textContent} ${h.textContent}`;
+      });
+    });
+
+    /* 200 per cent zoom is 720 CSS pixels of a 1440 viewport, which is what WCAG 1.4.10
+       asks about from the other direction. */
+    const zoom = await measure('the page at 200 per cent zoom', null, 720);
+
+    /* The faces blocked. Every family in the contract is overridden to a deliberately wide
+       fallback, so the page is measured as a machine without them would see it. */
+    const families = (c.typography?.roles ?? []).flatMap((r) => [r.family, ...(r.fallback ?? [])]);
+    const fallback = await measure("the fallback stack, with the page's own faces blocked", async (page) => {
+      await page.addStyleTag({ content: `* { font-family: "DejaVu Serif", "Liberation Serif", serif !important; }` });
+    });
+
+    const verdictOf = (r, name) => {
+      if (r.overflow > 0) return { verdict: 'failed', result: `${r.overflow}px of horizontal overflow` };
+      if (r.clipped > 0) return { verdict: 'failed', result: `${r.clipped} element(s) clipped their own content` };
+      const grew = Math.round(((r.height - base.height) / base.height) * 100);
+      return { verdict: 'held', result: `no overflow, nothing clipped, the page ${grew === 0 ? 'is the same height' : `grew ${grew} per cent taller`}` };
+    };
+
+    /* Anchored and specific. A loose /fallback/ also matched a case about glyph coverage,
+       which is a different question a browser cannot answer, and writing a layout verdict
+       onto it would have been the one thing this must never do. */
+    /* A case about which glyphs a face carries is not a case about layout under a blocked
+       face, and writing a layout verdict onto it would be the one thing this must never do. */
+    const GLYPHS = /aeoe|degree sign|coverage|separator|thousands/i;
+    for (const [r, match] of [
+      [long, /three times its (own |expected )?length/i],
+      [zoom, /200 per cent zoom/i],
+      [fallback, /fallback stack/i],
+    ]) {
+      const v = verdictOf(r);
+      results.push({ label: r.label, match, ...v });
+    }
+
+    say(`
+  contract stress ${url}
+`);
+    say(`  ${families.length} families named in the contract, all overridden for the fallback case
+`);
+    for (const r of results) {
+      say(`  ${r.verdict === 'held' ? 'held  ' : 'FAILED'}  ${r.label}`);
+      say(`          ${r.result}`);
+    }
+
+    /* Write the results back onto the cases they answer, and only onto those. A case the
+       contract wrote that this cannot run keeps "not run". */
+    let written = 0;
+    for (const bucket of [c.typography?.stress ?? [], c.layout?.stress ?? []]) {
+      for (const item of bucket) {
+        if (GLYPHS.test(item.case)) continue;
+        const hit = results.find((r) => r.match.test(item.case));
+        if (!hit) continue;
+        item.result = hit.result;
+        item.verdict = hit.verdict;
+        written++;
+      }
+    }
+    const unrun = [...(c.typography?.stress ?? []), ...(c.layout?.stress ?? [])]
+      .filter((s) => (s.verdict ?? 'not run') === 'not run');
+    say('');
+    say(`  ${written} case(s) answered. ${unrun.length} still says "not run", which is what a case`);
+    say('  nobody ran is called. A browser cannot decide them, and this does not pretend to.');
+    for (const s of unrun) say(`    not run: ${s.case}`);
+    say('');
+    return results.some((r) => r.verdict === 'failed') ? 1 : 0;
+  } finally {
+    await browser.close();
+  }
+}
+
 /* ── run ─────────────────────────────────────────────────────────────────── */
 
 if (CMD === 'new') {
@@ -734,7 +861,7 @@ if (CMD === 'new') {
   process.exit(0);
 }
 
-if (CMD === 'check' || CMD === 'compare') {
+if (CMD === 'check' || CMD === 'compare' || CMD === 'stress') {
   if (!existsSync(CONTRACT)) die(3, `no ${join(STATE_DIR, 'contract.json')}. Run \`contract.mjs new <surface>\` first.`);
   const c = JSON.parse(await readFile(CONTRACT, 'utf8'));
   if (c.schemaVersion !== schema.schemaVersion) {
@@ -793,12 +920,22 @@ if (CMD === 'check' || CMD === 'compare') {
   }
 
   const url = flag('url');
-  if (!url) die(2, 'usage: contract.mjs compare --url <url>');
+  if (!url) die(2, `usage: contract.mjs ${CMD} --url <url>`);
   if (probs.length) {
     say(`\n  ${probs.length} thing(s) in the contract are unanswered or wrong. Comparing a build`);
     say('  against an incomplete contract measures nothing. Run `check` first.\n');
     process.exit(3);
   }
+  if (CMD === 'stress') {
+    const code = await stress(c, url);
+    if (has('write')) {
+      await writeFile(CONTRACT, `${JSON.stringify(c, null, 2)}
+`, 'utf8');
+      await writeFile(READABLE, readable(c), 'utf8');
+    }
+    process.exit(code);
+  }
+
   const code = await compare(c, url);
   if (has('write')) {
     c.validation = stamp(c, {
@@ -815,4 +952,5 @@ if (CMD === 'check' || CMD === 'compare') {
 die(2, `usage:
   contract.mjs new <buy|operate|read|experience> [--to <dir>] [--force]
   contract.mjs check [--write] [--to <dir>]
-  contract.mjs compare --url <url> [--to <dir>]`);
+  contract.mjs compare --url <url> [--to <dir>]
+  contract.mjs stress  --url <url> [--write] [--to <dir>]`);
