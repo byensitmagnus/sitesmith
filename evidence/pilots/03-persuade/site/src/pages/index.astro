@@ -1,0 +1,339 @@
+---
+import '../styles/klit.css';
+
+/* Formiddagen: 07:00 til 12:00, med de tre til fire timers arbejde sat af som ét felt.
+   Tallene er briefens og ingen andres. */
+const START = 7 * 60;
+const SLUT = 12 * 60;
+const LAENGDE = SLUT - START;
+const x = (t) => {
+  const [h, m] = t.split(':').map(Number);
+  return ((h * 60 + m - START) / LAENGDE) * 1000;
+};
+
+const timer = ['07:00', '08:00', '09:00', '10:00', '11:00', '12:00'];
+const arbejde = { fra: '07:40', til: '11:20' };
+
+/* Tolv pletter fordelt over arbejdstiden. Fordelingen er jævn, fordi briefen ikke siger
+   andet, og en opdigtet ujævnhed ville være et tal der ikke står i briefen. */
+const pletter = Array.from({ length: 12 }, (_, i) => {
+  const fra = x(arbejde.fra);
+  const til = x(arbejde.til);
+  return fra + ((til - fra) / 11) * i;
+});
+
+/* Sæsonen: fem uger fra sidste uge af august til første uge af oktober.
+   31 huller tilbage, 19 af dem på jord ingen har spurgt om. */
+const uger = ['25. aug', '1. sep', '8. sep', '15. sep', '22. sep'];
+const HULLER = 31;
+const USPURGT = 19;
+---
+
+<html lang="da">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Vestkystens Frøbank, én formiddag på din klit i september</title>
+    <meta
+      name="description"
+      content="To mennesker, til fods, tre til fire timer, tolv pletter på fire meter. Hvad der sker på din klit den formiddag, og hvad du får tilbage."
+    />
+  </head>
+  <body>
+    <a class="spring" href="#forespoerg">Spring til forespørgslen</a>
+
+    <div class="spalte">
+      <header class="hoved">
+        <h1>Vestkystens Frøbank</h1>
+        <p class="sted">Hvide Sande</p>
+        <ul class="menu">
+          <li><a href="#formiddagen">Formiddagen</a></li>
+          <li><a href="#reglen">Reglen</a></li>
+          <li><a href="#tilbage">Hvad du får</a></li>
+          <li><a href="#forespoerg">Forespørg</a></li>
+        </ul>
+      </header>
+    </div>
+
+    <div class="flade">
+      <svg
+        data-asset="tegning-formiddag"
+        class="formiddag"
+        viewBox="0 0 1000 200"
+        preserveAspectRatio="none"
+        role="img"
+        aria-labelledby="f-titel f-desc"
+      >
+        <title id="f-titel">Én formiddag på klitten, fra 07:00 til 12:00</title>
+        <desc id="f-desc">
+          Tidslinjen løber fra 07:00 til 12:00. Arbejdet er sat af som ét sammenhængende
+          felt fra omkring 07:40 til omkring 11:20, altså tre til fire timer. Tolv prikker
+          langs feltet er de højst tolv pletter der samles fra. Ved den første prik er fire
+          meter sat af som en målestok, så det kan ses hvor lidt fire meter er.
+        </desc>
+
+        <line class="f-akse" x1="0" y1="150" x2="1000" y2="150" />
+        {timer.map((t) => (
+          <line class="f-tik" x1={x(t)} y1="150" x2={x(t)} y2="162" />
+        ))}
+
+        <rect class="f-arbejde" x={x(arbejde.fra)} y="60" width={x(arbejde.til) - x(arbejde.fra)} height="90" />
+
+        {pletter.map((px) => (
+          <circle class="f-prik" cx={px} cy="105" r="9" />
+        ))}
+
+        <line class="f-maalestok" x1={pletter[0] - 20} y1="40" x2={pletter[0] + 20} y2="40" />
+        <line class="f-maalestok" x1={pletter[0] - 20} y1="34" x2={pletter[0] - 20} y2="46" />
+        <line class="f-maalestok" x1={pletter[0] + 20} y1="34" x2={pletter[0] + 20} y2="46" />
+        <text class="f-maal-tekst" x={pletter[0] + 30} y="45">4 m</text>
+      </svg>
+
+      <div class="formiddag-skala" aria-hidden="true">
+        {timer.map((t, i) => (
+          <span class={i % 2 && i !== timer.length - 1 ? 'f-time f-time--skjul' : 'f-time'} style={`left:${(x(t) / 1000) * 100}%`}>{t}</span>
+        ))}
+      </div>
+
+      <p class="f-note">
+        Målestokken over den første prik er <b>fire meter</b>. Hver plet er cirka så stor,
+        og der er højst <b>tolv</b> af dem. Det grønne felt er de <b>tre til fire timer</b>
+        arbejdet varer, et sted mellem 07:00 og 12:00 på én dato aftalt i forvejen.
+      </p>
+    </div>
+
+    <main class="spalte">
+      <section class="afsnit" id="formiddagen">
+        <h2>Én formiddag, og hvad der sker på den</h2>
+        <p class="lead">
+          To mennesker går ind ad lågen til fods, arbejder tre til fire timer og går ud
+          igen. Der graves ikke noget op. Frøet tages med hånden fra planter der står.
+        </p>
+        <p>
+          De har papirsposer, en GPS, en notesbog og en klapstol med. Ingen køretøjer forbi
+          den sidste låge, ingen hunde, ingen droner. Lågen bliver fotograferet ved ankomst
+          og efterladt præcis som den blev fundet.
+        </p>
+      </section>
+
+      <section class="afsnit folk" id="folk">
+        <h2>Hvem der kommer</h2>
+        <p>
+          <b>Aase Kirkeby</b> og <b>Halim Osman</b>. De samler sammen, og de er de to
+          mennesker der ville komme. Frøbanken er ikke en myndighed og har ingen adgangsret:
+          hver eneste indsamling sker fordi en lodsejer har sagt ja.
+        </p>
+      </section>
+    </main>
+
+    <div class="flade regel" id="reglen">
+      <div class="spalte" style="padding-inline:0">
+        <h2>Reglen hele metoden hviler på</h2>
+        <dl>
+          <dt>En femtedel</dt>
+          <dd>Aldrig mere end en femtedel af frøet på nogen enkelt plante.</dd>
+          <dt>50 planter</dt>
+          <dd>Aldrig fra en bestand på færre end halvtreds planter.</dd>
+          <dt>12 pletter</dt>
+          <dd>Højst tolv markerede pletter, hver på cirka fire meter, valgt på dagen.</dd>
+        </dl>
+      </div>
+    </div>
+
+    <main class="spalte">
+      <section class="afsnit tilbage" id="tilbage">
+        <h2>Hvad du får tilbage</h2>
+        <p>
+          Et kort på én side over hvad der vokser hvor på din jord, ved navn, inden for seks
+          uger.
+        </p>
+        <p>
+          Du vælger selv om du står som kilde i frøbankens offentlige optegnelse. Vælger du
+          at stå udenfor, holdes du udenfor i enhver udgivelse, altid.
+        </p>
+        <p>
+          Ingen betaling nogen af vejene. Frøbanken betaler ikke for adgang og tager ikke
+          betaling for kortet.
+        </p>
+      </section>
+    </main>
+
+    <div class="flade saeson-baand" id="saesonen">
+      <p class="femuger">Fem uger</p>
+      <svg
+        data-asset="tegning-saeson"
+        class="saeson"
+        viewBox="0 0 1000 150"
+        preserveAspectRatio="none"
+        role="img"
+        aria-labelledby="s-titel s-desc"
+      >
+        <title id="s-titel">Sæsonens fem uger og de enogtredive huller</title>
+        <desc id="s-desc">
+          Fem uger fra sidste uge af august til første uge af oktober. Enogtredive huller er
+          tilbage i årets indsamling, tegnet som mærker fordelt over ugerne. De nitten der
+          står på jord ingen har spurgt om endnu, er tegnet som tomme mærker; de tolv der er
+          aftalt, er fyldte.
+        </desc>
+
+        <line class="s-akse" x1="0" y1="120" x2="1000" y2="120" />
+        {uger.map((_, i) => (
+          <line class="s-uge" x1={(i / 5) * 1000} y1="20" x2={(i / 5) * 1000} y2="120" />
+        ))}
+        {Array.from({ length: HULLER }, (_, i) => {
+          const px = 14 + (i * (972 / (HULLER - 1)));
+          const uspurgt = i >= HULLER - USPURGT;
+          return (
+            <rect
+              class={uspurgt ? 's-hul s-hul--uspurgt' : 's-hul'}
+              x={px - 6}
+              y="70"
+              width="12"
+              height="34"
+            />
+          );
+        })}
+      </svg>
+      <div class="saeson-skala" aria-hidden="true">
+        {uger.map((u, i) => (
+          <span class="s-uge-navn" style={`left:${(i / 5) * 100}%`}>{u}</span>
+        ))}
+      </div>
+      <p class="f-note">
+        Frøet er modent i omkring fem uger. <b>31</b> huller er tilbage i år, og
+        <b> 19</b> af dem står på jord ingen har spurgt om endnu; det er de tomme mærker.
+      </p>
+      <p class="sidste">
+        Springes et hul over, venter det et helt år. Det er alt hvad der sker. Er en bestand
+        på din jord en af de sidste tre kendte i Danmark, får du et brev om det, og hvad det
+        betyder for dig, som i lov er ingenting.
+      </p>
+    </div>
+
+    <main class="spalte">
+      <section class="afsnit" id="forespoerg">
+        <h2>Send en forespørgsel</h2>
+        <p>
+          Tre ting: cirka hvor din jord ligger, cirka hvornår der passer dig, og hvordan
+          Aase eller Halim får fat i dig. De svarer inden for fem arbejdsdage, per telefon
+          hvis du giver et nummer.
+        </p>
+
+        <form class="forespoergsel" id="form" novalidate>
+          <div class="felt">
+            <label for="sted">Hvor ligger jorden, cirka</label>
+            <p class="hint" id="hint-sted">Et sognenavn, en vej eller et sted på kysten er nok.</p>
+            <input id="sted" name="sted" type="text" autocomplete="off" aria-describedby="hint-sted fejl-sted" />
+            <p class="fejl" id="fejl-sted" role="status" aria-live="polite"></p>
+          </div>
+
+          <div class="felt">
+            <label for="maaned">Hvornår passer det cirka</label>
+            <p class="hint" id="hint-maaned">Sæsonen er de fem uger fra 25. august til 5. oktober.</p>
+            <select id="maaned" name="maaned" aria-describedby="hint-maaned fejl-maaned">
+              <option value="">Vælg en uge</option>
+              <option value="25-aug">Ugen fra 25. august</option>
+              <option value="1-sep">Ugen fra 1. september</option>
+              <option value="8-sep">Ugen fra 8. september</option>
+              <option value="15-sep">Ugen fra 15. september</option>
+              <option value="22-sep">Ugen fra 22. september</option>
+              <option value="juli">Juli</option>
+              <option value="november">November</option>
+            </select>
+            <p class="fejl" id="fejl-maaned" role="status" aria-live="polite"></p>
+          </div>
+
+          <div class="felt">
+            <label for="kontakt">Hvordan får de fat i dig</label>
+            <p class="hint" id="hint-kontakt">Et telefonnummer eller en e-mail. Giver du et nummer, ringer de.</p>
+            <input id="kontakt" name="kontakt" type="text" autocomplete="off" aria-describedby="hint-kontakt fejl-kontakt" />
+            <p class="fejl" id="fejl-kontakt" role="status" aria-live="polite"></p>
+          </div>
+
+          <button class="send" id="send" type="submit">Send forespørgslen</button>
+
+          <p class="demonstration">
+            Forespørgslen sendes ingen steder. Siden er en demonstration af SiteSmith, og
+            der er ingen frøbank at sende den til.
+          </p>
+        </form>
+
+        <div class="sendt" id="sendt" hidden></div>
+      </section>
+    </main>
+
+    <div class="spalte">
+      <footer class="fod">
+        <p><b>Vestkystens Frøbank</b>, Havnegade 4, 6960 Hvide Sande. Telefon 97 31 44 08.</p>
+        <p>214 vilde plantebestande langs 180 km kyst, siden 2009. To indsamlere.</p>
+        <p class="fiktiv">
+          <b>Vestkystens Frøbank findes ikke.</b> Frøbanken, menneskene, tallene og adressen
+          er opdigtet til at vise SiteSmith frem. Ingenting her er en oplysning om en
+          virkelig institution. Der findes heller intet fotografi af kysten, og et fotografi
+          af netop denne strækning er præcis det en lodsejer ville kigge efter; det står som
+          manglende i aktivmanifestet.
+        </p>
+      </footer>
+    </div>
+
+    <script is:inline>
+      (function () {
+        var form = document.getElementById('form');
+        var sendt = document.getElementById('sendt');
+        var knap = document.getElementById('send');
+        if (!form || !sendt || !knap) return;
+
+        var SAESON = ['25-aug', '1-sep', '8-sep', '15-sep', '22-sep'];
+
+        function fejl(felt, besked) {
+          var input = document.getElementById(felt);
+          var ud = document.getElementById('fejl-' + felt);
+          input.setAttribute('aria-invalid', besked ? 'true' : 'false');
+          ud.textContent = besked || '';
+          return !besked;
+        }
+
+        form.addEventListener('submit', function (e) {
+          e.preventDefault();
+          var sted = document.getElementById('sted').value.trim();
+          var maaned = document.getElementById('maaned').value;
+          var kontakt = document.getElementById('kontakt').value.trim();
+
+          /* Hver besked siger hvad der ville blive taget imod, ikke at feltet er
+             påkrævet. Beskeden sidder på det felt der forårsagede den. */
+          var ok = true;
+          ok = fejl('sted', sted.length >= 2 ? '' : 'Skriv et sognenavn, en vej eller et sted på kysten. Et enkelt ord er nok.') && ok;
+          ok = fejl('maaned', !maaned
+            ? 'Vælg en af de fem uger.'
+            : (SAESON.indexOf(maaned) === -1
+              ? 'Frøet er kun modent i de fem uger fra 25. august til 5. oktober. Vælg en af dem.'
+              : '')) && ok;
+          var telefon = /^[+\d][\d\s]{7,}$/.test(kontakt);
+          var epost = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(kontakt);
+          ok = fejl('kontakt', telefon || epost ? '' : 'Et telefonnummer med mindst otte cifre, eller en e-mail med et snabel-a i.') && ok;
+          if (!ok) return;
+
+          knap.disabled = true;
+          knap.setAttribute('data-tilstand', 'flyver');
+          knap.textContent = 'Skriver ned';
+
+          window.setTimeout(function () {
+            var valgt = document.getElementById('maaned');
+            form.hidden = true;
+            sendt.hidden = false;
+            sendt.innerHTML =
+              '<h3>Det her ville Aase og Halim læse</h3>'
+              + '<dl><dt>Jorden</dt><dd>' + sted.replace(/</g, '&lt;') + '</dd>'
+              + '<dt>Ugen</dt><dd>' + valgt.options[valgt.selectedIndex].text + '</dd>'
+              + '<dt>Kontakt</dt><dd>' + kontakt.replace(/</g, '&lt;') + '</dd></dl>'
+              + '<p>De svarer inden for fem arbejdsdage, per telefon hvis du har givet et nummer. '
+              + 'Der bliver ikke sat noget i gang før du har skrevet under.</p>'
+              + '<p class="demonstration">Ingenting er sendt. Siden er en demonstration, og der er ingen frøbank at sende den til.</p>';
+            sendt.setAttribute('tabindex', '-1');
+            sendt.focus();
+          }, 120);
+        });
+      })();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,505 @@
+{
+  "v": 1,
+  "schemaVersion": 1,
+  "surface": "read",
+  "subject": "Vestkystens Froebank, a fictional seed bank in Hvide Sande. One page whose whole job is to get a landowner to say yes to two people walking their dune for one morning in September.",
+  "writtenAgainst": {
+    "record": ".sitesmith/direction.md",
+    "hash": "set-by-check"
+  },
+  "colour": {
+    "strategy": "restrained",
+    "strategyWhy": "The page asks a stranger for something and has to leave room to say no. One colour works and it is the marram grass; everything else is the ground it grows out of and the ink a fieldworker writes in.",
+    "sources": [
+      {
+        "name": "graaklit",
+        "material": "lichen and moss on old grey dune, the landscape type the brief names, which is a cool grey-green and never white",
+        "value": "#dfe3d6",
+        "why": "The page ground. It is the thing the landowner owns, and it is what the two collectors will be standing on. Unbleached paper was here first and is the exact warm off-white every generated page lands on; the grey dune is as true to the subject and is nobody else's colour."
+      },
+      {
+        "name": "blaek",
+        "material": "ink in a notebook out of doors",
+        "value": "#23272b",
+        "why": "Every line of text and every drawing. The whole method ends in a written record, so the page is written in the same thing."
+      },
+      {
+        "name": "marehalm",
+        "material": "marram grass in August, dry and greyish",
+        "value": "#4a5535",
+        "why": "The one colour that works. It carries the season, the one action, and every mark that means something."
+      },
+      {
+        "name": "sand",
+        "material": "dry dune sand",
+        "value": "#d3d2be",
+        "why": "The surface the three measured things lie on: the morning, the rule and the season. A landowner can tell what is measured from what is written by what it is lying on."
+      },
+      {
+        "name": "rev",
+        "material": "the red in a rusted hinge on a dune gate",
+        "value": "#8f2f20",
+        "why": "Only errors. A rusted hinge is the thing a landowner notices when somebody has been through their gate."
+      }
+    ],
+    "primitives": [
+      {
+        "token": "graaklit",
+        "value": "#dfe3d6",
+        "from": "graaklit"
+      },
+      {
+        "token": "blaek",
+        "value": "#23272b",
+        "from": "blaek"
+      },
+      {
+        "token": "marehalm",
+        "value": "#4a5535",
+        "from": "marehalm"
+      },
+      {
+        "token": "sand",
+        "value": "#d3d2be",
+        "from": "sand"
+      },
+      {
+        "token": "rev",
+        "value": "#8f2f20",
+        "from": "rev"
+      },
+      {
+        "token": "streg",
+        "value": "rgba(35, 39, 43, 0.55)",
+        "from": "derived: blaek at 55 per cent, for the rules that separate the page's own sections"
+      },
+      {
+        "token": "streg-svag",
+        "value": "rgba(35, 39, 43, 0.12)",
+        "from": "derived: blaek at 12 per cent, for surfaces that carry nothing"
+      }
+    ],
+    "roles": {
+      "background": "graaklit",
+      "foreground": "blaek",
+      "action": "marehalm",
+      "onAction": "graaklit",
+      "focusRing": "blaek",
+      "border": "streg",
+      "surface": "sand",
+      "onSurface": "blaek",
+      "destructive": "rev",
+      "accent": "marehalm",
+      "muted": "streg"
+    },
+    "pairs": [
+      {
+        "name": "body on the dune",
+        "foreground": "blaek",
+        "background": "graaklit",
+        "use": "every paragraph and heading on the page ground",
+        "minimum": "text",
+        "state": "rest",
+        "measured": 11.53,
+        "verdict": "passes text"
+      },
+      {
+        "name": "body on the sand",
+        "foreground": "blaek",
+        "background": "sand",
+        "use": "the morning, the rule and the season, which are laid on the sand surface",
+        "minimum": "text",
+        "state": "rest",
+        "measured": 9.83,
+        "verdict": "passes text"
+      },
+      {
+        "name": "the one action",
+        "foreground": "graaklit",
+        "background": "marehalm",
+        "use": "the send button, the one control on the page",
+        "minimum": "text",
+        "state": "rest",
+        "measured": 6.09,
+        "verdict": "passes text"
+      },
+      {
+        "name": "the season's own figure",
+        "foreground": "marehalm",
+        "background": "sand",
+        "use": "the five weeks and the marks on the season band",
+        "minimum": "text",
+        "state": "rest",
+        "measured": 5.2,
+        "verdict": "passes text"
+      },
+      {
+        "name": "the focus ring",
+        "foreground": "blaek",
+        "background": "graaklit",
+        "use": "focus-visible, a 3px outline at 2px offset on the page ground",
+        "minimum": "nonText",
+        "state": "focus",
+        "measured": 11.53,
+        "verdict": "passes nonText"
+      },
+      {
+        "name": "the focus ring on the form",
+        "foreground": "blaek",
+        "background": "sand",
+        "use": "focus-visible on a field, where the ring is painted on the sand surface",
+        "minimum": "nonText",
+        "state": "focus",
+        "measured": 9.83,
+        "verdict": "passes nonText"
+      },
+      {
+        "name": "a section rule",
+        "foreground": "streg",
+        "background": "graaklit",
+        "use": "the rule between the page's own sections, which carries where one argument ends",
+        "minimum": "nonText",
+        "state": "rest",
+        "measured": 3.25,
+        "verdict": "passes nonText"
+      },
+      {
+        "name": "a field's edge at rest",
+        "foreground": "blaek",
+        "background": "sand",
+        "use": "the bottom rule under every field, which is the field's only boundary",
+        "minimum": "nonText",
+        "state": "rest",
+        "measured": 9.83,
+        "verdict": "passes nonText"
+      },
+      {
+        "name": "the error message",
+        "foreground": "rev",
+        "background": "sand",
+        "use": "the message under the field that caused it",
+        "minimum": "text",
+        "state": "error",
+        "measured": 5.29,
+        "verdict": "passes text"
+      },
+      {
+        "name": "the invalid field's edge",
+        "foreground": "rev",
+        "background": "sand",
+        "use": "the 3px bottom rule on a field that was not accepted",
+        "minimum": "nonText",
+        "state": "error",
+        "measured": 5.29,
+        "verdict": "passes nonText"
+      },
+      {
+        "name": "the button in flight",
+        "foreground": "blaek",
+        "background": "sand",
+        "use": "the send button while the enquiry is being written down, which is not the action colour any more and is not an error",
+        "minimum": "text",
+        "state": "active",
+        "measured": 9.83,
+        "verdict": "passes text"
+      },
+      {
+        "name": "what was sent",
+        "foreground": "blaek",
+        "background": "sand",
+        "use": "the success state, which is the enquiry the seed bank will read, on the same sand as the form",
+        "minimum": "text",
+        "state": "success",
+        "measured": 9.83,
+        "verdict": "passes text"
+      },
+      {
+        "name": "a field that cannot be used yet",
+        "foreground": "blaek",
+        "background": "sand",
+        "use": "the sentence in a field that is not usable yet, saying what would make it usable. It is set in full ink and not in the muted rule colour: a sentence a reader is meant to act on is a message and not a disabled label.",
+        "minimum": "text",
+        "state": "disabled",
+        "measured": 9.83,
+        "verdict": "passes text"
+      }
+    ],
+    "states": {
+      "rest": {
+        "changes": "Nothing moves. A field is a rule under a line of writing, because the whole method is a notebook and a notebook has ruled lines and not boxes.",
+        "carriedBy": "the rule itself at full ink weight, and the label above it set in the display face"
+      },
+      "focus": {
+        "changes": "A 3px ink outline at 2px offset, on the ground or on the sand depending on where the control sits.",
+        "carriedBy": "the outline thickness and its offset, which are visible with no colour perception at all"
+      },
+      "hover": {
+        "changes": "The one button darkens by a step. Nothing else on the page has a hover state, because nothing else on the page is a control.",
+        "carriedBy": "the change in lightness and the cursor. Nothing depends on having seen it."
+      },
+      "active": {
+        "changes": "The button says skriver ned and stops being the action colour, within a tenth of a second, locally.",
+        "carriedBy": "the words replacing the label, and the button becoming unavailable, both without moving anything"
+      },
+      "disabled": {
+        "changes": "A field that is not usable yet says what would make it usable rather than sitting there greyed out.",
+        "carriedBy": "the field's own rule going flat and its control being unavailable, while the sentence stays in full ink, because the thing that says what to do next is the one thing that must stay readable"
+      },
+      "error": {
+        "changes": "The field's bottom rule goes to rust at 3px and a message appears under that field, naming what would be acceptable rather than that something is wrong.",
+        "carriedBy": "the rule going from 1px to 3px, and the message's own words"
+      },
+      "success": {
+        "changes": "The form is replaced by what was actually written down: the location, the month and how to reach them, followed by who will read it and that they answer within five working days.",
+        "carriedBy": "the content itself, which is the thing the visitor came to send, rather than a confirmation that a form was submitted"
+      }
+    },
+    "schemes": {
+      "light": true,
+      "dark": false,
+      "why": "A landowner reads this once, on a telephone in a farmyard or at a kitchen table, in daylight, after somebody mentioned it. A second unmeasured appearance would be two palettes where the page needs one, and the ground is a landscape rather than a neutral: there is no dark version of a grey dune that is still a grey dune."
+    },
+    "genericnessRisk": "A pale natural ground with one green accent and a serif for headings is what every conservation body on the internet looks like, and this page will be mistaken for one at a glance. What a competitor cannot arrive at is that the ground is the grey dune rather than paper, that the green is marram in August rather than a brand green, and that the only red on the page is a rusted gate hinge, because a gate left open is the landowner's actual fear.",
+    "departures": [
+      {
+        "from": "the record's first ground, unbleached paper #f2efe6",
+        "to": "the grey dune #dfe3d6",
+        "why": "The gate refuses a colour within twelve units of the anti-tell palette's warm off-whites, and unbleached paper is five units from one of them. It was right to: a warm off-white ground is the single most reproduced choice there is. The brief names the grey dune as one of its two landscape types, so the material was changed rather than the check waived."
+      },
+      {
+        "from": "the muted rule colour on the disabled field's sentence",
+        "to": "full ink",
+        "why": "It measured 3.1 to 1 and failed the 4.5 floor. WCAG exempts a disabled control, and it does not exempt the sentence telling a reader what would make the control usable: that is a message. The contract caught it before implementation."
+      }
+    ]
+  },
+  "typography": {
+    "roles": [
+      {
+        "role": "display",
+        "family": "Palatino Linotype",
+        "source": "system, ships with Windows; the fallback stack carries the rest",
+        "licence": "system font, not redistributed",
+        "weights": [
+          400,
+          700
+        ],
+        "why": "A book face with a calligraphic root, because the seed bank's own work is a record: a population, a date, a spot on a map. It sets the headings and every number that is a count.",
+        "fallback": [
+          "Book Antiqua",
+          "Palatino",
+          "Georgia",
+          "serif"
+        ],
+        "metricCompatible": true,
+        "languages": [
+          "da",
+          "en"
+        ],
+        "loading": "system",
+        "lineHeight": 1.25,
+        "genericnessRisk": "A serif for headings on a natural ground is the conservation-body default. It is chosen anyway, because the counts are the argument and a book face is what a count belongs in; the difference is that it is used on the numbers and not only on the headlines."
+      },
+      {
+        "role": "body",
+        "family": "Corbel",
+        "source": "system, ships with Windows since Vista; the fallback stack carries the rest",
+        "licence": "system font, not redistributed",
+        "weights": [
+          400,
+          600
+        ],
+        "why": "A humanist sans with old-style figures by default, so 214, 31, 19 and 50 sit in the line like words rather than like data. The page is an approach to a stranger and has to read as one: a publication face would make it a leaflet and an interface face would make it a form.",
+        "fallback": [
+          "Candara",
+          "Optima",
+          "system-ui",
+          "sans-serif"
+        ],
+        "metricCompatible": true,
+        "languages": [
+          "da",
+          "en"
+        ],
+        "loading": "system",
+        "lineHeight": 1.6,
+        "genericnessRisk": "Corbel is on every Windows machine and on almost no website, which is the opposite of the usual risk: the page will look slightly unfamiliar rather than slightly generic. On a machine without it the stack falls to Optima or the system face, and the old-style figures go with it, which is the one thing the choice was for."
+      }
+    ],
+    "scale": [
+      {
+        "name": "t0",
+        "size": "13px",
+        "lineHeight": 1.4,
+        "role": "labels on a drawing, and the field hints"
+      },
+      {
+        "name": "t1",
+        "size": "15px",
+        "lineHeight": 1.5,
+        "role": "captions and the error messages"
+      },
+      {
+        "name": "t2",
+        "size": "17px",
+        "lineHeight": 1.6,
+        "role": "body"
+      },
+      {
+        "name": "t3",
+        "size": "21px",
+        "lineHeight": 1.4,
+        "role": "the lead paragraph and the counts inside a sentence"
+      },
+      {
+        "name": "t4",
+        "size": "27px",
+        "lineHeight": 1.25,
+        "role": "section headings"
+      },
+      {
+        "name": "t5",
+        "size": "40px",
+        "lineHeight": 1.1,
+        "role": "the five weeks, and nothing else on the page"
+      }
+    ],
+    "measure": {
+      "target": 66,
+      "band": [
+        45,
+        80
+      ]
+    },
+    "stress": [
+      {
+        "case": "a heading three times its expected length, in Danish",
+        "expected": "It wraps to three lines in the display face and the drawing under it moves down. Nothing is clipped.",
+        "verdict": "not run"
+      },
+      {
+        "case": "the page at 200 per cent zoom at 1440",
+        "expected": "One column throughout, which it already is, so the only change is that the drawings take their narrow annotation. The form stays usable and the labels stay above their fields.",
+        "verdict": "not run"
+      },
+      {
+        "case": "aeoeaa in both faces and every fallback, and the place names",
+        "expected": "Nymindegab, Thyboroen and Hvide Sande render with their ae, oe and aa in both faces and in every fallback.",
+        "verdict": "not run"
+      },
+      {
+        "case": "the fallback stack, with Palatino Linotype and Corbel both unavailable",
+        "expected": "Georgia and Optima or the system face take over. The old-style figures go with Corbel, so the case to check is that the counts still sit in their sentences and that the season band's week labels do not collide.",
+        "verdict": "not run"
+      }
+    ],
+    "genericnessRisk": "Two system faces, no webfont, and neither is the one every website uses. On a machine with neither, the page falls to Georgia and the system sans, and the argument then rests entirely on what the page says rather than on how it is set.",
+    "departures": [
+      {
+        "from": "Segoe UI Variable Text as the body face",
+        "to": "Corbel",
+        "why": "The lock keeper's console already uses Segoe UI Variable Text for its prose. Two pilots sharing a face makes the difference between them a matter of colour rather than of voice, and Corbel's old-style figures are a better answer for a page whose argument is a handful of counts inside sentences."
+      }
+    ]
+  },
+  "layout": {
+    "path": "See the morning drawn as five hours with the work marked on it, read who comes and what they do, meet the rule that answers the fear, see what comes back, see the season, then send the enquiry.",
+    "leading": [
+      ".formiddag",
+      ".regel",
+      ".forespoergsel"
+    ],
+    "supporting": [
+      ".folk",
+      ".tilbage",
+      ".saeson",
+      ".sidste",
+      ".fod"
+    ],
+    "grouping": "The three measured things lie on the sand: the morning, the rule and the season. Everything the seed bank says in its own words lies on the dune ground with nothing under it. The form is the only thing on the page with an edge around it, because it is the only thing the visitor is asked to do.",
+    "density": "sparse",
+    "densityWhy": "A page that asks a stranger for access has to leave room to say no. Crowding the argument is how a request starts to read as a campaign.",
+    "rhythm": {
+      "base": "8px, the ruling of the notebook the whole method ends in",
+      "steps": [
+        "8px",
+        "16px",
+        "24px",
+        "40px",
+        "64px",
+        "96px"
+      ]
+    },
+    "topology": "One column at every width, held at 720px and centred, with the three sand surfaces breaking out wider so a drawing has room to be a drawing. The morning is drawn first and its heading sits under it. The form closes the page and is the only bordered thing on it.",
+    "firstViewportObject": {
+      "what": "The morning drawn as a timeline from 07:00 to 12:00 with the three to four hours of work marked as one continuous field, twelve dots for the twelve spots along it, and four metres set off as a scale bar at the first dot so a landowner can see how little four metres is.",
+      "selector": ".formiddag"
+    },
+    "signature": {
+      "what": "The same timeline. Not a chart: a drawing of one morning, where width is time and the scale bar is four metres.",
+      "selector": ".formiddag"
+    },
+    "responsive": [
+      {
+        "width": 375,
+        "becomes": "One column at full width. The morning keeps its full width and drops its hour labels to 07, 09 and 12, and the twelve dots stay, because the dots are the argument and the hours are the frame. The sand surfaces stop breaking out and sit flush with the text.",
+        "departures": [
+          "the 40px figure drops to 30px, because at 375 a 40px number is a quarter of the screen and the season is a fact and not a shout"
+        ]
+      },
+      {
+        "width": 768,
+        "becomes": "One column at 720px, centred, and the sand surfaces begin to break out past it. The morning gains every hour label and the four-metre scale bar gains its own caption.",
+        "departures": []
+      },
+      {
+        "width": 1440,
+        "becomes": "The same one column at 720px, and the sand surfaces break out to 940px. The season band gains a marker per week rather than per fortnight, and the morning's twelve dots gain their own numbers.",
+        "departures": [
+          "the text column does not widen past 720px at any width, which is the departure from what a page with this much space usually does: a request is read once, and a long line is read once badly"
+        ]
+      }
+    ],
+    "container": "The text column stops at 720px and centres. The three sand surfaces break out to 940px. Nothing goes edge to edge, because a page asking permission should not behave as if it owns the screen. Past 940px the page gains margin and nothing grows.",
+    "focusOrder": [
+      ".spring",
+      "a",
+      "#sted",
+      "#maaned",
+      "#kontakt",
+      ".send"
+    ],
+    "stress": [
+      {
+        "case": "empty, before anything is typed",
+        "expected": "The form says what it will ask for and what happens after, so a landowner can decide before they start typing. No field shows a zero or a placeholder pretending to be a value.",
+        "verdict": "not run"
+      },
+      {
+        "case": "a missing location and an unreadable telephone number",
+        "expected": "Each message sits under the field that caused it and names what would be acceptable, not that the field is required.",
+        "verdict": "not run"
+      },
+      {
+        "case": "a month outside the five-week season",
+        "expected": "The field says which weeks exist and why, and the enquiry is not sent.",
+        "verdict": "not run"
+      },
+      {
+        "case": "the longest Danish place name on the coast at 375",
+        "expected": "It wraps inside its field and the field's rule stays under the whole of it.",
+        "verdict": "not run"
+      }
+    ],
+    "squint": "Out of focus the page is a pale field with three darker horizontal bands in it, evenly spaced, and one small green mark near the bottom. The bands are the morning, the rule and the season, which are the three things a landowner has to believe; the green mark is the one thing they can do. That shape is the argument. If the green mark were as large as the bands, the page would be a campaign asking for a conversion rather than a request that can be refused.",
+    "departures": []
+  },
+  "validation": {
+    "checkedAt": "2026-08-03T21:00:26Z",
+    "schemaVersion": 1,
+    "pairsMeasured": 13,
+    "pairsFailing": 0,
+    "comparedAgainst": "http://localhost:4381/",
+    "comparedVerdict": "matches"
+  }
+}
