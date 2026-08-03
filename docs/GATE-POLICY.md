@@ -55,6 +55,14 @@ Portfolio diversity is judged first on the axes where sameness costs a client so
 - material world
 - signature device
 
-Historical reports are not rewritten when a reclassification changes later verdicts.
-`evidence/cold-builds/PORTFOLIO-DIVERSITY.md` is what the tool printed on 2026-08-02 and it
-stays that way.
+## A rubric change takes effect forward only
+
+Historical reports are not rewritten when a reclassification changes later verdicts, and a
+subject measured under the old rubric is never re-reported as passing under the new one.
+Round 4's portfolio verdict is FAIL and stays FAIL;
+`evidence/cold-builds/PORTFOLIO-DIVERSITY.md` is what the tool printed on 2026-08-02.
+
+A revised rubric is **unvalidated** until it has been applied to work produced after it
+existed. Applying it to the set that motivated the change proves nothing: that is the
+weakest evidence a measurement can have, and reporting it as a pass is how a benchmark stops
+meaning anything.

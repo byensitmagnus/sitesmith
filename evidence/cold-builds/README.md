@@ -29,10 +29,13 @@ critique hashed to the render that shipped, and the production report.
 
 ## These are evidence. They are not a showcase.
 
-Each of the three passed its own blind review. Measured **together**, the set did not pass
-the portfolio-diversity measurement: every one of them uses hairline separators and sets its
-figures tabular. The report is preserved verbatim in
-[PORTFOLIO-DIVERSITY.md](PORTFOLIO-DIVERSITY.md) and is not rewritten.
+Each of the three passed its own blind review. Measured **together**, the set FAILED the
+portfolio-diversity measurement: every one of them uses hairline separators and sets its
+figures tabular. That verdict stands. The gate policy adopted afterwards makes those two
+devices signals rather than release blockers, but a rubric change takes effect forward only:
+round 4's set is not reported as passing, and the revised rubric is unvalidated until it has
+been applied to builds made after it existed. The report is preserved verbatim in
+[PORTFOLIO-DIVERSITY.md](PORTFOLIO-DIVERSITY.md).
 
 So the claim this directory supports is exactly this and no more: **SiteSmith's core is
 validated — a cold agent with the skill and one brief produces a page its buyer accepts —

@@ -54,5 +54,24 @@ Portfolio diversity is judged first on the axes where sameness actually costs a 
 layout topology, visual metaphor, typographic voice, information hierarchy, interaction
 model, material world, and signature device.
 
-This document is not rewritten when that reclassification changes later verdicts. The report
-above is what the tool printed on 2026-08-02, and it stays that way.
+## The verdict on round 4 is FAIL, and it stays FAIL
+
+Re-running the changed tool over the same three pages prints PASS. **That is not a pass on
+this benchmark, and it is not recorded as one.**
+
+- **The historical result stands: round 4's set FAILED under the rubric in force when it was
+  measured.** Nothing above is rewritten, and no later re-run replaces it.
+- Under the gate policy adopted afterwards, the two devices that caused that failure are no
+  longer standalone release blockers. That is a change to what blocks a release, not a
+  retroactive change to what was measured.
+- **The revised rubric is unvalidated.** It has been applied once, to the set that motivated
+  it, which is the weakest possible evidence for a measurement. It has to be validated
+  **prospectively**, on builds made after it existed, before any diversity claim rests on
+  it.
+
+Changing a measure after seeing its result and then reporting the old subject as passing is
+how a benchmark stops meaning anything. The rule here: a rubric change takes effect forward
+only, and the record of what failed under the old one is not edited.
+
+Status: `ROUND_4_PORTFOLIO: FAIL (rubric of 2026-08-02)` ·
+`REVISED_RUBRIC: NOT_PROSPECTIVELY_VALIDATED`

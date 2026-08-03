@@ -250,21 +250,33 @@ export async function verify(root, project, { target }) {
 
 /* ── the router ──────────────────────────────────────────────────────────── */
 
+/* `does` is the honest half of this table. A command either performs the work itself or it
+   sets up state and hands the work to the agent reading the skill. Both are legitimate;
+   printing them as one list without saying which is which is how a command surface gets
+   described as a finished engine when two of its seven commands orchestrate rather than
+   execute. */
 export const COMMANDS = {
-  init: { args: '[--to <dir>] [--name <name>]', what: 'create .sitesmith/ and its four files' },
-  recommend: { args: '"<brief>" [--surface <s>] [--stack <s>]', what: 'search the knowledge index, at most three results' },
-  build: { args: '[--surface <s>] [--to <dir>]', what: 'name what the agent opens, and record the surface' },
-  inspect: { args: '<url-or-dir> [--out <dir>]', what: 'stack, routes, screenshots, components, tokens, assets, audit, baseline' },
-  redesign: { args: '<url-or-dir> [--to <dir>]', what: 'inspect first, then the file that governs what may change' },
-  audit: { args: '[<url-or-dir>] [--out <dir>]', what: 'inspect the result, then run the gate' },
-  verify: { args: '[<target>]', what: 'render matrix, axe in both schemes, floor measures' },
+  init: { does: 'runs', args: '[--to <dir>] [--name <name>]', what: 'create .sitesmith/ and its four files' },
+  recommend: { does: 'runs', args: '"<brief>" [--surface <s>] [--stack <s>]', what: 'search the knowledge index, at most three results' },
+  build: { does: 'orchestrates', args: '[--surface <s>] [--to <dir>]', what: 'prepare state, name the file the agent opens, record the surface' },
+  inspect: { does: 'runs', args: '<url-or-dir> [--out <dir>]', what: 'stack, routes, screenshots, components, tokens, assets, audit, baseline' },
+  redesign: { does: 'both', args: '<url-or-dir> [--to <dir>]', what: 'runs inspect, then hands the change itself to the agent' },
+  audit: { does: 'runs', args: '[<url-or-dir>] [--out <dir>]', what: 'inspect the result, then run the gate' },
+  verify: { does: 'runs', args: '[<target>]', what: 'render matrix, axe in both schemes, floor measures' },
 };
 
 export function usage() {
-  const lines = ['', '  sitesmith — build websites that do not look AI-generated', ''];
+  const lines = [
+    '',
+    '  sitesmith — build websites that do not look AI-generated',
+    '',
+    '  This is one command surface, not one engine. `runs` does the work itself.',
+    '  `orchestrates` prepares state and hands the work to an agent reading the skill.',
+    '',
+  ];
   for (const [name, c] of Object.entries(COMMANDS)) {
     lines.push(`    sitesmith ${name.padEnd(10)} ${c.args}`);
-    lines.push(`      ${' '.repeat(10)} ${c.what}`);
+    lines.push(`      ${c.does.padEnd(13)} ${c.what}`);
   }
   lines.push('');
   lines.push('    sitesmith install | update | doctor | pack     put the skill on this machine');
