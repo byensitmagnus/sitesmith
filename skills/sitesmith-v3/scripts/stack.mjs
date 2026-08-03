@@ -45,6 +45,22 @@ const PRIMARY = [
 // and the config only ever appears as supporting evidence.
 const REACT = { stack: 'react', deps: ['react'], configs: [/^vite\.config\.(js|mjs|cjs|ts)$/] }
 
+// Shopify is the first stack here that no package.json can prove. Liquid is compiled by
+// the platform, so a theme's evidence is the directory shape Shopify itself requires and
+// the files its CLI writes; the manifest, when there is one at all, describes tooling
+// around the theme rather than the theme. That is why this candidate is checked as paths
+// instead of going through matched(), which only ever sees deps and root files.
+const SHOPIFY = {
+  stack: 'shopify',
+  // Any one of these names a theme on its own: the layout Shopify requires, the settings
+  // file the customiser reads, and the two files the CLI writes beside them.
+  files: ['layout/theme.liquid', 'config/settings_schema.json', 'shopify.theme.toml', '.shopifyignore'],
+  // Or the whole shape, for a theme handed over without its config. All three, never one:
+  // `templates/` alone belongs to half the ecosystems on disk, and `assets/` belongs to
+  // nearly all of them, which is why `assets/` is not evidence here at any count.
+  dirs: ['sections', 'templates', 'snippets'],
+}
+
 // Frameworks this package can recognise and has no adapter for. Without this list they
 // fall through to "nothing detected", which reads as an empty project and invites the
 // plain-HTML degraded path on top of a Nuxt app. Recognised and unsupported is a
@@ -137,6 +153,7 @@ try {
   process.exit(2)
 }
 const rootFiles = entries.filter((e) => e.isFile()).map((e) => e.name)
+const rootDirs = entries.filter((e) => e.isDirectory()).map((e) => e.name)
 
 const depHit = (names) => names.find((name) => deps.has(name)) ?? null
 const configHit = (patterns) => rootFiles.find((file) => patterns.some((p) => p.test(file))) ?? null
@@ -149,6 +166,17 @@ function matched(candidate) {
   if (dep) found.push(`package.json declares ${dep}@${deps.get(dep)}`)
   if (config) found.push(`${config} is present at the project root`)
   return found
+}
+
+function matchedShopify() {
+  const found = []
+  for (const rel of SHOPIFY.files) {
+    if (existsSync(join(project, rel))) found.push(`${rel} is present`)
+  }
+  if (SHOPIFY.dirs.every((dir) => rootDirs.includes(dir))) {
+    found.push(`${SHOPIFY.dirs.map((d) => `${d}/`).join(', ')} are all present at the project root`)
+  }
+  return found.length ? found : null
 }
 
 const primaries = PRIMARY.map((c) => ({ ...c, found: matched(c) })).filter((c) => c.found)
@@ -177,10 +205,22 @@ if (primaries.length === 1) {
     )
   }
 
-  const react = matched(REACT)
-  if (react && deps.has('react')) {
-    stack = 'react'
-    evidence.push(...react)
+  // Before react, because a theme that also builds a script bundle is still a theme: the
+  // Liquid is what Shopify renders, and a bundler in devDependencies is how one asset in
+  // it gets built.
+  const shopify = matchedShopify()
+  if (shopify) {
+    stack = 'shopify'
+    evidence.push(...shopify)
+    if (deps.size) {
+      evidence.push(`package.json declares ${deps.size} dependencies and does not govern; Shopify compiles the theme`)
+    }
+  } else {
+    const react = matched(REACT)
+    if (react && deps.has('react')) {
+      stack = 'react'
+      evidence.push(...react)
+    }
   }
 }
 

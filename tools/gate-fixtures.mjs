@@ -268,7 +268,11 @@ expect('visual', 'text baked into the pixels', rec('fail-baked-text'), 1,
 
 /* ══ critique ═══════════════════════════════════════════════════════════ */
 
-const crit = (f) => run(join(S, 'critique-gate.mjs'), [join(FIX, 'critique', f)]);
+/* critique-gate.mjs is the one gate in this list that lives in tools/ rather than beside
+   the v2 scripts, because it is repo ceremony for portfolio claims and never ships inside a
+   skill. This runner pointed at the v2 directory, found nothing, and read fourteen missing
+   modules as fourteen gates that failed for the wrong reason. */
+const crit = (f) => run(join(ROOT, 'tools/critique-gate.mjs'), [join(FIX, 'critique', f)]);
 expect('critique', 'two locked reviews and a key opened afterwards', crit('pass'), 0);
 expect('critique', 'only one reviewer', crit('fail-one-reviewer'), 1, /needs two independent/);
 expect('critique', 'the key opened before both reviews were locked', crit('fail-key-opened-early'), 1,

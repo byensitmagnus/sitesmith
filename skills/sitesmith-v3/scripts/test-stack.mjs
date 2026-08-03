@@ -57,6 +57,18 @@ const CASES = [
     why: 'react without a primary framework is a stack in its own right, and its index.html must not read as static',
   },
 
+  // Must pass against the shipped adapters, because the file it names has to be the one a
+  // run will open. Shopify is the case no manifest can answer, so this is also the proof
+  // that detection reads the disk shape rather than package.json.
+  {
+    name: 'shopify-theme',
+    args: ['detect', join(FIX, 'shopify-theme')],
+    expect: 0,
+    stack: 'shopify',
+    adapter: 'stacks/shopify.md',
+    why: 'a Liquid theme has no dependency to declare it, so layout/theme.liquid and the sections/templates/snippets shape are the evidence, and the adapter named must be the shipped one',
+  },
+
   // Must keep failing.
   {
     name: 'bare',
@@ -81,6 +93,12 @@ const CASES = [
     args: ['detect', join(FIX, 'html-with-unknown-deps'), '--stacks', ADAPTERS],
     expect: 1,
     why: 'index.html beside unrecognised dependencies could be source or output, and static is a claim about which',
+  },
+  {
+    name: 'assets-only',
+    args: ['detect', join(FIX, 'assets-only'), '--stacks', ADAPTERS],
+    expect: 1,
+    why: 'an assets/ directory is the one folder nearly every stack has, so on its own it must never buy a shopify verdict',
   },
   {
     name: 'broken-manifest',
@@ -115,6 +133,11 @@ for (const c of CASES) {
   if (r.status !== c.expect) problems.push(`exit ${r.status}, expected ${c.expect}`)
   if (c.stack && !new RegExp(`^stack: ${c.stack}$`, 'm').test(r.stdout ?? '')) {
     problems.push(`stdout did not name stack ${c.stack}`)
+  }
+  // Naming the stack is half the job: the run opens the adapter, so a case may pin that
+  // path too, and a detection that resolves to the wrong file is not a pass.
+  if (c.adapter && !new RegExp(`^adapter: ${c.adapter.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`, 'm').test(r.stdout ?? '')) {
+    problems.push(`stdout did not name adapter ${c.adapter}`)
   }
   if (problems.length) failed++
   console.log(`${problems.length ? '  FAIL' : '  ok  '} ${c.name} (${c.why})`)
