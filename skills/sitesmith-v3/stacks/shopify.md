@@ -9,7 +9,7 @@ one strands that behaviour where the merchant cannot reorder or reuse it. Move i
 section owning the markup, or a snippet.
 
 **A section with a `{% schema %}` is editable and hardcoded markup is not.** Anything the
-merchant plausibly changes — heading, image, link, colour — is a setting with a default;
+merchant plausibly changes, a heading, an image, a link, a colour, is a setting with a default;
 content they repeat is `blocks`, looped over `section.blocks` and carrying
 `{{ block.shopify_attributes }}` so the editor can select and drag it. Ship the brief's
 copy as schema defaults; a literal in the markup becomes a support ticket.

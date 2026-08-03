@@ -1,0 +1,164 @@
+{
+  "$comment": [
+    "The canonical SiteSmith flow. This file describes the journey that was actually run",
+    "end to end during the Glarmester Nordlys pilot, not a future architecture. Every module",
+    "reference points at a file that exists in the shipped package, and every command here",
+    "was executed. Steps are marked `runs` when a script does the work and `agent` when a",
+    "coding agent does it from the artefacts the previous step wrote.",
+    "",
+    "Folders are not moved to match this file. The contract comes first; layout follows only",
+    "when the contract has held for more than one flow."
+  ],
+  "v": 1,
+  "name": "sitesmith",
+  "provedBy": "evidence/pilot/",
+  "packageRoot": "skills/sitesmith-v3",
+  "entrypoints": {
+    "installed": "cli.mjs",
+    "repository": "bin/sitesmith.mjs",
+    "router": "commands.mjs"
+  },
+  "install": {
+    "command": "node tools/install-sitesmith.mjs --to <dir>",
+    "installs": "the whole of skills/sitesmith-v3, including scripts/ and knowledge/",
+    "needs": ["node >= 20"],
+    "needsForVerification": ["playwright", "@axe-core/playwright"],
+    "degraded": "without the two browser packages every rendering check withholds its verdict and says so; it never prints a pass it did not earn"
+  },
+  "state": {
+    "dir": ".sitesmith",
+    "files": {
+      "PROJECT.md": "the subject, its nouns and its facts, written by a person or an agent",
+      "DESIGN.md": "what survives across surfaces in one project",
+      "direction.md": "the plan for one surface, written from the template ledger.mjs writes",
+      "RUN.json": "the machine-readable order of work",
+      "RUN.md": "the same order of work, readable",
+      "critique.json": "the six answers, hashed to the render they were written against",
+      "decisions.jsonl": "append-only, one line per decision",
+      "state.json": "surfaces seen, project name",
+      "evidence/": "inspections, audits, baselines"
+    }
+  },
+  "steps": [
+    {
+      "id": "init",
+      "does": "runs",
+      "command": "sitesmith init [--name <name>]",
+      "module": "commands.mjs#init",
+      "reads": [],
+      "writes": [".sitesmith/PROJECT.md", ".sitesmith/DESIGN.md", ".sitesmith/decisions.jsonl", ".sitesmith/state.json", ".sitesmith/evidence/"],
+      "stopsWhen": "never; it is idempotent and refreshes what is missing"
+    },
+    {
+      "id": "recommend",
+      "does": "runs",
+      "command": "sitesmith recommend \"<brief>\" [--surface <s>] [--stack <s>]",
+      "module": "knowledge/retrieve.mjs#search",
+      "reads": ["knowledge/*.jsonl", "knowledge/stacks/*.jsonl"],
+      "writes": [],
+      "returns": "at most three posts, each with why it matched, its risks and its avoidWhen",
+      "hardRule": "never a complete visual template or a finished look; the results are building blocks and still go through the subject, thesis, autopilot, swap and originality flow",
+      "stopsWhen": "the best score is below the no-match threshold, and it says so rather than returning the least bad post"
+    },
+    {
+      "id": "build",
+      "does": "runs, then agent",
+      "command": "sitesmith build --surface <s>",
+      "module": "commands.mjs#build",
+      "reads": ["BRIEF.md or .sitesmith/PROJECT.md", "scripts/stack.mjs", "knowledge/retrieve.mjs"],
+      "writes": [".sitesmith/RUN.json", ".sitesmith/RUN.md"],
+      "resolves": ["surface", "stack and where the stack came from", "knowledge results", "files to read in order", "artefacts to write", "every command", "blockers", "the one next step"],
+      "agentThenDoes": "reads RUN.md, fills the direction record, and writes the site in the named stack",
+      "stopsWhen": "a blocker is listed; the manifest names it and the agent resolves it before building"
+    },
+    {
+      "id": "direction",
+      "does": "runs, then agent",
+      "command": "node <skill>/scripts/ledger.mjs new <surface>",
+      "module": "scripts/ledger.mjs",
+      "writes": [".sitesmith/direction.md"],
+      "agentThenDoes": "fills every heading; a blank heading fails the check",
+      "gate": "node <skill>/scripts/ledger.mjs check <build>",
+      "stopsWhen": "the render's fingerprint repeats a recent one, or a device appears on every one of the last three records"
+    },
+    {
+      "id": "implement",
+      "does": "agent",
+      "reads": ["SKILL.md", "run.md", "look.md", "floor/<surface>.md", "stacks/<detected>.md"],
+      "writes": ["the site itself", "ASSET-MANIFEST.md", "journeys/*.spec.mjs where the surface has a path"],
+      "stopsWhen": "two edit attempts on one defect; it is then written down as unresolved"
+    },
+    {
+      "id": "verify",
+      "does": "runs",
+      "command": "sitesmith verify <url-or-dir>",
+      "module": "scripts/verify.mjs",
+      "measures": ["375/768/1440 render", "axe in both colour schemes", "console errors", "dead links", "horizontal overflow", "keyboard focus indicators", "type floor", "reduced motion"],
+      "writes": [".sitesmith/shots/*.png", ".sitesmith/shots/report.json"],
+      "stopsWhen": "a browser is missing; the verdict is withheld and named, never passed"
+    },
+    {
+      "id": "critique",
+      "does": "runs, then agent",
+      "command": "node <skill>/scripts/critique.mjs packet   →   critique.mjs lock --file <answers>",
+      "module": "scripts/critique.mjs",
+      "reads": [".sitesmith/shots/*.png", "the brief"],
+      "writes": [".sitesmith/critique-packet.md", ".sitesmith/critique.json"],
+      "agentThenDoes": "answers the six questions from the images alone, with the record closed; hand the packet to a fresh agent where one is available",
+      "stopsWhen": "a second correction round is asked for; one is allowed and the second is refused"
+    },
+    {
+      "id": "journey",
+      "does": "runs",
+      "command": "node <skill>/scripts/journey.mjs journeys --base <url>",
+      "module": "scripts/journey.mjs",
+      "asserts": ["something observably changed", "it was announced", "the failure path ran and its message sat on its own field", "the path completed on the keyboard alone"],
+      "requiredFor": ["buy", "operate", "redesign"]
+    },
+    {
+      "id": "gate",
+      "does": "runs",
+      "command": "sitesmith audit  |  node <skill>/scripts/gate.mjs",
+      "module": "scripts/gate.mjs",
+      "refuses": ["honesty", "copy", "tokens", "antipattern", "look", "operate", "critique", "journeys", "direction", "reads", "report", "reconciliation"],
+      "policy": "docs/GATE-POLICY.md — new hard gates need a user-affecting defect, two independent reproductions, a low-false-positive measurement, and proof no existing gate covers it",
+      "stopsWhen": "it refuses; the way past every refusal is named in the refusal itself"
+    },
+    {
+      "id": "inspect",
+      "does": "runs",
+      "command": "sitesmith inspect <url-or-dir> [--out <dir>]",
+      "module": "scripts/inspect.mjs",
+      "usedBy": ["audit", "redesign"],
+      "measures": ["stack and routes", "screenshots at 375/768/1440", "components and their six states", "design tokens", "brand assets", "what must be preserved"],
+      "writes": ["<out>/AUDIT.md", "<out>/inspection.json", "<out>/baseline/*.png", "<out>/baseline/manifest.json"],
+      "stopsWhen": "never; it reports and does not refuse. A route it could not read gets no record and is listed as not measured"
+    },
+    {
+      "id": "redesign",
+      "does": "runs, then agent",
+      "command": "sitesmith redesign <url-or-dir>",
+      "module": "commands.mjs#redesign",
+      "reads": ["redesign.md"],
+      "writes": [".sitesmith/evidence/inspection/"],
+      "agentThenDoes": "changes only what redesign.md permits, against the baseline inspect wrote"
+    }
+  ],
+  "release": {
+    "requires": [
+      "verify passes or names every verdict it withheld",
+      "a critique locked to the render that ships",
+      "a journey for buy, operate and redesign",
+      "gate clean, or every refusal claimed in the direction record with a reason",
+      "a production build where the stack has one"
+    ],
+    "neverClaims": "that the page is good. The gate refuses named defects; the verdict on the design belongs to a person who is shown it."
+  },
+  "providers": {
+    "$comment": "Generated packs come from the v2 layer and are unchanged by this file. They expose the same journey under each agent's own entry filename.",
+    "command": "node bin/sitesmith.mjs pack --provider <claude|codex|cursor> --out <dir>",
+    "claude": ".claude/skills/sitesmith/SKILL.md",
+    "codex": ".agents/skills/sitesmith/AGENTS.md",
+    "cursor": ".cursor/rules/sitesmith/sitesmith.mdc"
+  }
+}

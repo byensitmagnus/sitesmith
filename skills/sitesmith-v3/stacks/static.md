@@ -20,7 +20,7 @@ design system (Fluent, Material, Carbon, GOV.UK, Bootstrap), install the officia
 package and use its own components rather than approximating one by hand, and never mix
 two in one project. Confirm the package name and current version against the registry at
 build time rather than trusting a name written here. If the brief names an aesthetic
-instead (bento, brutalism, glassmorphism, Liquid Glass), there is no package to install
+instead, there is no package to install
 and none to claim: build it natively.
 
 **Anything generated or vendored is restyled from the direction's own token layer before

@@ -1,5 +1,5 @@
 ---
-title: "Pilot brief — Glarmester Nordlys"
+title: "Pilot brief: Glarmester Nordlys"
 fictional: true
 surface: buy
 stack: astro

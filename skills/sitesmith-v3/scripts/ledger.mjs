@@ -666,8 +666,16 @@ export const slugify = (s) => String(s).toLowerCase().normalize('NFC')
 
 export function template(surface) {
   const out = ['# Direction record', '']
+  /* One-offs and Deliberate are row lists, and gate.mjs reads a row list as the run of lines
+     that starts immediately under the heading: the first blank line ends the block. This
+     template used to put a blank line there, so every record it wrote had two headings the
+     gate parsed as empty, and a build that declared a literal or claimed an antipattern on
+     purpose was refused for not declaring it. Two scripts in one package disagreeing about
+     their own file format. */
+  const ROW_LISTS = new Set(['One-offs', 'Deliberate'])
   for (const name of REQUIRED) {
-    out.push(`## ${name}`, '')
+    out.push(`## ${name}`)
+    if (!ROW_LISTS.has(name)) out.push('')
     if (name === 'Surface') out.push(surface, '')
     if (name === 'Theses') out.push('1.', '2.', '3.', '')
     if (name === 'Case for the runner-up') out.push('For:', '')

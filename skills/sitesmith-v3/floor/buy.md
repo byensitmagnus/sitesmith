@@ -76,6 +76,11 @@ explicitly. Where the real photograph does not exist, a labelled placeholder nam
 subject, crop and ground is a finished answer and a generated one is not. Treatment is
 free.
 
+A brief that supplies no photograph and forbids generating one leaves exactly one route,
+and it is written down here so nobody has to infer it: build the drawn answer `look.md`
+section 3 describes, name the missing photograph in the manifest, and ship the run with
+`--draft`. That is a complete answer to this obligation, not a way around it.
+
 Three ways:
 - Studio shots treated alike, dimensions written on each frame.
 - Objects held, worn or in use, so a body carries the scale.

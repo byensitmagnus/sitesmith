@@ -8,12 +8,16 @@ read: at step 6 of run.md, the inspect and release step
 Run these in order. Each produces an artifact, and the artifact is the only thing that
 entitles you to say the check ran.
 
+Every one of these lives in the skill's own directory, never the project's. Run them from
+the project as `node <skill-dir>/scripts/<name>.mjs`, where `<skill-dir>` is wherever this
+package is installed.
+
 ```text
-node scripts/verify.mjs <target>   render matrix, axe in both colour schemes, floor measures
-node scripts/critique.mjs packet   the six questions and the images, and nothing else
-node scripts/critique.mjs lock --file <answers>   the answers, hashed to this render
-node scripts/journey.mjs           every journey in journeys/
-node scripts/gate.mjs              honesty, anti-pattern and contract refusals
+node <skill-dir>/scripts/verify.mjs <target>   render matrix, axe in both colour schemes, floor measures
+node <skill-dir>/scripts/critique.mjs packet   the six questions and the images, and nothing else
+node <skill-dir>/scripts/critique.mjs lock --file <answers>   the answers, hashed to this render
+node <skill-dir>/scripts/journey.mjs           every journey in journeys/
+node <skill-dir>/scripts/gate.mjs              honesty, anti-pattern and contract refusals
 ```
 
 The critique runs second, before any report is read. `packet` prints the whole input a
@@ -47,7 +51,7 @@ four is a smoke test.
 3. The failure path ran, and its message sits on the field that caused it.
 4. The path completed on the keyboard alone, with an indicator visible at every stop.
 
-One per surface. Run from where playwright is: `node scripts/journey.mjs <dir> --base <url>`.
+One per surface. Run from where playwright is: `node <skill-dir>/scripts/journey.mjs <dir> --base <url>`.
 Buy, operate and redesign are refused without one. Read and experience are not asked: a page
 with no interactive path has no journey, and demanding one yields smoke tests wearing the name.
 

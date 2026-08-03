@@ -1,0 +1,972 @@
+/* Glarmester Nordlys.
+   Ét stylesheet, importeret fra siden, som stacks/astro.md beder om: en :root i en
+   scoped <style> findes kun på de ruter der renderer komponenten.
+   Hver værdi på et kaldested går gennem var(). Literaler bor her og kun her. */
+
+:root {
+  color-scheme: light;
+
+  /* Værkstedets materialer. Ikke roller. */
+  --glasflade: #dbe3dd;
+  --skaerebaenk: #c3cec6;
+  --blyant: #1c2426;
+  --rudekant: #16584a;
+  --linoliekit: #cbb684;
+  --roedkridt: #a33a1e;
+  --friskkant: #ffffff;
+
+  /* De samme materialer med luft i, til streger og flader der ikke må råbe. */
+  --streg: rgba(28, 36, 38, 0.34);
+  --streg-svag: rgba(28, 36, 38, 0.16);
+  --filt-streg: rgba(28, 36, 38, 0.09);
+  --kit-flade: rgba(203, 182, 132, 0.42);
+  --kant-flade: rgba(22, 88, 74, 0.10);
+  --kridt-flade: rgba(255, 255, 255, 0.55);
+  --roedkridt-flade: rgba(163, 58, 30, 0.09);
+  --baenk-flade: rgba(195, 206, 198, 0.55);
+
+  /* Snit. To roller, to snit. */
+  --snit-maal: Bahnschrift, "DIN Alternate", "Roboto Condensed", "Segoe UI", sans-serif;
+  --snit-sprog: "Sitka Text", Sitka, Charter, "Iowan Old Style", Georgia, serif;
+
+  /* Skala, i px fordi et mål er et mål. */
+  --t0: 13px;
+  --t1: 15px;
+  --t2: 17px;
+  --t3: 21px;
+  --t4: 27px;
+  --t5: 32px;
+  --t6: 38px;
+
+  /* Rytme: 8 på sedlen, 4 i tabellen. */
+  --r1: 4px;
+  --r2: 8px;
+  --r3: 16px;
+  --r4: 24px;
+  --r5: 40px;
+  --r6: 64px;
+  --r7: 88px;
+
+  --ramme: 1240px;
+  --hairline: 1px;
+  --maalstreg: 4;
+  --tyk: 9;
+}
+
+@media (min-width: 900px) {
+  :root {
+    --t6: 54px;
+    --t5: 38px;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  background-color: var(--glasflade);
+  color: var(--blyant);
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--snit-sprog);
+  font-size: var(--t2);
+  line-height: 1.55;
+  background-image: repeating-linear-gradient(
+    90deg,
+    var(--streg-svag) 0 1px,
+    transparent 1px 34px
+  );
+  background-color: transparent;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--snit-maal);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+  margin: 0;
+  text-wrap: balance;
+}
+
+h1 {
+  font-size: var(--t6);
+}
+
+h2 {
+  font-size: var(--t4);
+}
+
+h3 {
+  font-size: var(--t3);
+}
+
+p {
+  margin: 0;
+  max-width: 62ch;
+}
+
+a {
+  color: var(--rudekant);
+  text-underline-offset: 3px;
+}
+
+a:hover {
+  color: var(--blyant);
+}
+
+:focus-visible {
+  outline-style: solid;
+  outline-width: 3px;
+  outline-color: var(--rudekant);
+  outline-offset: 3px;
+}
+
+.ramme {
+  width: min(100% - var(--r5), var(--ramme));
+  margin-inline: auto;
+}
+
+.spring {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  padding-inline: var(--r3);
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  background-color: var(--friskkant);
+  color: var(--blyant);
+  z-index: 2;
+}
+
+.spring:focus {
+  left: var(--r3);
+  top: var(--r3);
+}
+
+/* ── toppen ─────────────────────────────────────────────────────────── */
+
+.top {
+  border-bottom-width: var(--hairline);
+  border-bottom-style: solid;
+  border-bottom-color: var(--streg);
+  padding-block: var(--r3);
+  background-color: var(--kridt-flade);
+}
+
+.top > .ramme {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--r2) var(--r5);
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.mark {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--r1) var(--r3);
+  align-items: baseline;
+  max-width: none;
+}
+
+.mark-navn {
+  font-family: var(--snit-maal);
+  font-size: var(--t3);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.mark-sted {
+  font-size: var(--t1);
+}
+
+.top nav ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--r4) var(--r4);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.top nav a {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  font-family: var(--snit-maal);
+  font-size: var(--t2);
+}
+
+/* Smal skærm: to gange to med samme afstand begge veje. Ombrudt til tre og en læses
+   som et menupunkt der mangler, og det var det kritikken fangede. */
+@media (max-width: 620px) {
+  .top nav ul {
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    justify-content: start;
+  }
+}
+
+/* ── sedlen: førsteskærmen ──────────────────────────────────────────── */
+
+.sedlen {
+  padding-block: var(--r6) var(--r7);
+}
+
+.sedlen > .ramme {
+  display: grid;
+  gap: var(--r6) var(--r6);
+  align-items: start;
+}
+
+@media (min-width: 1000px) {
+  .sedlen > .ramme {
+    grid-template-columns: 1.12fr 1fr;
+  }
+}
+
+.venstre {
+  min-width: 0;
+  display: grid;
+  gap: var(--r4);
+}
+
+.ingress {
+  line-height: 1.45;
+}
+
+@media (min-width: 760px) {
+  .ingress {
+    font-size: var(--t3);
+  }
+}
+
+/* Stregtykkelser og teksthøjder er i tegningens egne enheder, så de sættes pr. tegning
+   og arves ned. Ellers bliver en 9-enheders streg til en bjælke i en lille viewBox. */
+.baenk {
+  display: block;
+  width: 100%;
+  height: auto;
+  --maalstreg: 4.5;
+  --tyk: 9;
+  --tegnetal: 72px;
+  --tegnetekst: 76px;
+}
+
+.uge {
+  --maalstreg: 1.2;
+  --tyk: 2.4;
+  --tegnetal: 19px;
+  --tegnetekst: 17px;
+}
+
+.falsmaal {
+  --maalstreg: 2.2;
+  --tyk: 4.4;
+  --tegnetal: 34px;
+  --tegnetekst: 30px;
+}
+
+.baenk-tekst {
+  font-size: var(--t1);
+  max-width: 54ch;
+}
+
+/* stregen, pilespidsen og tallet: hele tegnesproget står her én gang */
+
+.linje-tyk {
+  fill: none;
+  stroke: var(--blyant);
+  stroke-width: var(--tyk);
+  stroke-linecap: square;
+}
+
+.linje-maal {
+  fill: none;
+  stroke: var(--blyant);
+  stroke-width: var(--maalstreg);
+}
+
+.linje-graense {
+  fill: none;
+  stroke: var(--roedkridt);
+  stroke-width: var(--maalstreg);
+  stroke-dasharray: 22 16;
+}
+
+.flade-rude {
+  fill: var(--kant-flade);
+  stroke: var(--rudekant);
+  stroke-width: var(--tyk);
+}
+
+.flade-kit {
+  fill: var(--kit-flade);
+  stroke: none;
+}
+
+.flade-trae {
+  fill: var(--baenk-flade);
+  stroke: var(--blyant);
+  stroke-width: var(--maalstreg);
+}
+
+/* Bænkens flade. Den er ubegrænset med vilje: dybden er ikke oplyst noget sted, så
+   den bliver ikke tegnet, kun kanten og grænsen bliver målsat. */
+.flade-baenk {
+  fill: var(--skaerebaenk);
+  stroke: none;
+}
+
+.flade-filt {
+  fill: url(#filt);
+  stroke: none;
+}
+
+.linje-filt {
+  fill: none;
+  stroke: var(--filt-streg);
+  stroke-width: var(--maalstreg);
+}
+
+.flade-aaben {
+  fill: var(--kant-flade);
+  stroke: var(--rudekant);
+  stroke-width: var(--maalstreg);
+}
+
+.flade-lukket {
+  fill: none;
+  stroke: var(--streg);
+  stroke-width: var(--maalstreg);
+  stroke-dasharray: 6 5;
+}
+
+.flade-tom {
+  fill: none;
+  stroke: var(--streg-svag);
+  stroke-width: var(--maalstreg);
+}
+
+.flade-skaer {
+  fill: var(--rudekant);
+  stroke: none;
+}
+
+.flade-fragt {
+  fill: var(--linoliekit);
+  stroke: var(--blyant);
+  stroke-width: var(--maalstreg);
+}
+
+.skjult {
+  display: none;
+}
+
+.pil {
+  fill: var(--blyant);
+  stroke: none;
+}
+
+.tal-tegning {
+  font-family: var(--snit-maal);
+  font-weight: 600;
+  font-size: var(--tegnetal);
+  fill: var(--blyant);
+  stroke: none;
+}
+
+.tal-tegning-graense {
+  font-family: var(--snit-maal);
+  font-weight: 600;
+  font-size: var(--tegnetal);
+  fill: var(--roedkridt);
+  stroke: none;
+}
+
+.tal-tegning-svag {
+  font-family: var(--snit-sprog);
+  font-size: var(--tegnetekst);
+  fill: var(--blyant);
+  stroke: none;
+}
+
+/* ── formularen, som er sedlens linjer ──────────────────────────────── */
+
+.seddel {
+  min-width: 0;
+  background-color: var(--kridt-flade);
+  border-width: var(--hairline);
+  border-style: solid;
+  border-color: var(--streg);
+  padding: var(--r4);
+  display: grid;
+  gap: var(--r4);
+}
+
+.seddel-hoved {
+  font-family: var(--snit-maal);
+  font-size: var(--t1);
+  border-bottom-width: var(--hairline);
+  border-bottom-style: solid;
+  border-bottom-color: var(--streg);
+  padding-bottom: var(--r2);
+  display: flex;
+  justify-content: space-between;
+  gap: var(--r3);
+  max-width: none;
+}
+
+fieldset {
+  margin: 0;
+  padding: 0;
+  border-width: 0;
+  border-style: none;
+  min-width: 0;
+}
+
+legend {
+  padding: 0;
+  font-family: var(--snit-maal);
+  font-size: var(--t2);
+  font-weight: 600;
+}
+
+.hjaelp {
+  font-size: var(--t1);
+  margin-top: var(--r1);
+}
+
+.maalfelter {
+  display: grid;
+  gap: var(--r2);
+  margin-top: var(--r3);
+}
+
+.felt {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--r2) var(--r3);
+  border-bottom-width: var(--hairline);
+  border-bottom-style: solid;
+  border-bottom-color: var(--streg);
+  padding-block: var(--r2);
+  min-height: 48px;
+}
+
+.felt label {
+  font-size: var(--t2);
+}
+
+.felt-tal {
+  display: flex;
+  align-items: baseline;
+  gap: var(--r2);
+}
+
+input[type="number"] {
+  font-family: var(--snit-maal);
+  font-size: var(--t3);
+  font-weight: 600;
+  width: 7ch;
+  text-align: right;
+  padding: var(--r1) var(--r2);
+  min-height: 44px;
+  color: var(--blyant);
+  background-color: var(--friskkant);
+  border-width: var(--hairline);
+  border-style: solid;
+  border-color: var(--blyant);
+  border-radius: 0;
+  caret-color: var(--rudekant);
+}
+
+input[type="number"][aria-invalid="true"] {
+  border-color: var(--roedkridt);
+  border-bottom-width: 3px;
+}
+
+.enhed {
+  font-family: var(--snit-maal);
+  font-size: var(--t2);
+}
+
+.fejl {
+  font-size: var(--t1);
+  color: var(--roedkridt);
+  background-color: var(--roedkridt-flade);
+  border-left-width: 3px;
+  border-left-style: solid;
+  border-left-color: var(--roedkridt);
+  padding: var(--r2) var(--r3);
+  margin-top: var(--r2);
+  max-width: none;
+}
+
+.fejl:empty {
+  display: none;
+}
+
+.valg {
+  display: grid;
+  gap: 0;
+  margin-top: var(--r3);
+  border-top-width: var(--hairline);
+  border-top-style: solid;
+  border-top-color: var(--streg);
+}
+
+.valg label {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: var(--r3);
+  padding-block: var(--r2);
+  border-bottom-width: var(--hairline);
+  border-bottom-style: solid;
+  border-bottom-color: var(--streg-svag);
+  min-height: 48px;
+  cursor: pointer;
+}
+
+.valg input[type="radio"] {
+  width: 24px;
+  height: 24px;
+  margin: 0;
+  accent-color: var(--rudekant);
+}
+
+.valg-navn {
+  font-size: var(--t2);
+}
+
+.valg-brug {
+  display: block;
+  font-size: var(--t0);
+}
+
+.valg-pris {
+  font-family: var(--snit-maal);
+  font-size: var(--t2);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.lager {
+  font-size: var(--t1);
+  margin-top: var(--r2);
+  border-left-width: 3px;
+  border-left-style: solid;
+  border-left-color: var(--linoliekit);
+  padding-left: var(--r3);
+  max-width: none;
+}
+
+/* ── tallene ────────────────────────────────────────────────────────── */
+
+.tal {
+  border-top-width: 3px;
+  border-top-style: solid;
+  border-top-color: var(--blyant);
+  padding-top: var(--r3);
+}
+
+.tal-besked {
+  font-size: var(--t1);
+  margin-bottom: var(--r3);
+  max-width: none;
+}
+
+.linje {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--r3);
+  padding-block: var(--r2);
+  border-bottom-width: var(--hairline);
+  border-bottom-style: solid;
+  border-bottom-color: var(--streg-svag);
+  min-height: 40px;
+}
+
+.linje-navn {
+  font-size: var(--t1);
+}
+
+.linje-vaerdi {
+  font-family: var(--snit-maal);
+  font-size: var(--t3);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.linje-pris .linje-vaerdi {
+  font-size: var(--t5);
+  color: var(--rudekant);
+}
+
+.linje-pris {
+  border-bottom-width: 0;
+  border-bottom-style: none;
+}
+
+.venter {
+  display: inline-block;
+  width: 6ch;
+  border-bottom-width: 3px;
+  border-bottom-style: solid;
+  border-bottom-color: var(--streg-svag);
+  margin-right: var(--r2);
+}
+
+.linje-pris .venter {
+  width: 5ch;
+}
+
+.enhed-tal {
+  font-family: var(--snit-maal);
+  font-size: var(--t2);
+  font-weight: 400;
+}
+
+.skriv {
+  font-family: var(--snit-maal);
+  font-size: var(--t3);
+  font-weight: 600;
+  color: var(--friskkant);
+  background-color: var(--rudekant);
+  border-width: 0;
+  border-style: none;
+  border-radius: 0;
+  padding: var(--r3) var(--r4);
+  min-height: 52px;
+  width: 100%;
+  cursor: pointer;
+}
+
+.skriv:hover {
+  background-color: var(--blyant);
+}
+
+.skriv:disabled {
+  background-color: transparent;
+  color: var(--blyant);
+  border-width: var(--hairline);
+  border-style: solid;
+  border-color: var(--streg);
+  cursor: not-allowed;
+}
+
+.skriv:focus-visible {
+  outline-color: var(--blyant);
+}
+
+.betaling {
+  font-size: var(--t1);
+  margin-top: var(--r2);
+  max-width: none;
+}
+
+.kvittering {
+  background-color: var(--friskkant);
+  border-width: var(--hairline);
+  border-style: solid;
+  border-color: var(--blyant);
+  border-top-width: 6px;
+  padding: var(--r4);
+}
+
+/* Feltet står i DOM'en hele tiden, så role="status" har noget at annoncere ind i.
+   Tomt tegner det ingenting. */
+.kvittering:empty {
+  border-width: 0;
+  border-style: none;
+  padding: 0;
+  background-color: transparent;
+}
+
+.kvittering h3 {
+  margin-bottom: var(--r3);
+}
+
+.kvittering dl {
+  margin: 0 0 var(--r3) 0;
+}
+
+.kvittering .linje:last-of-type {
+  border-bottom-width: 0;
+  border-bottom-style: none;
+}
+
+.kvittering-slut {
+  font-size: var(--t1);
+  border-top-width: var(--hairline);
+  border-top-style: solid;
+  border-top-color: var(--streg);
+  padding-top: var(--r3);
+  max-width: none;
+}
+
+/* ── glasset ────────────────────────────────────────────────────────── */
+
+.glasset {
+  padding-block: var(--r7);
+  border-top-width: var(--hairline);
+  border-top-style: solid;
+  border-top-color: var(--streg);
+}
+
+.afsnit-hoved {
+  display: grid;
+  gap: var(--r4);
+  margin-bottom: var(--r5);
+}
+
+@media (min-width: 900px) {
+  .afsnit-hoved {
+    grid-template-columns: 1fr 1.5fr;
+    align-items: start;
+  }
+}
+
+.glasliste {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top-width: 3px;
+  border-top-style: solid;
+  border-top-color: var(--blyant);
+}
+
+.glasliste > li {
+  display: grid;
+  gap: var(--r1) var(--r4);
+  grid-template-columns: 1fr;
+  padding-block: var(--r3);
+  border-bottom-width: var(--hairline);
+  border-bottom-style: solid;
+  border-bottom-color: var(--streg);
+}
+
+@media (min-width: 760px) {
+  .glasliste > li {
+    grid-template-columns: 15rem 5rem 1fr 8rem;
+    align-items: baseline;
+  }
+}
+
+.glas-navn {
+  font-family: var(--snit-maal);
+  font-size: var(--t3);
+  font-weight: 600;
+}
+
+.glas-tyk,
+.glas-pris {
+  font-family: var(--snit-maal);
+  font-size: var(--t2);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.glas-pris {
+  text-align: right;
+}
+
+.glas-brug {
+  font-size: var(--t1);
+}
+
+.glas-noter {
+  display: grid;
+  gap: var(--r4);
+  margin-top: var(--r5);
+}
+
+@media (min-width: 900px) {
+  .glas-noter {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.note h3 {
+  margin-bottom: var(--r2);
+}
+
+.note p {
+  font-size: var(--t1);
+}
+
+/* ── leveringen ─────────────────────────────────────────────────────── */
+
+.levering {
+  padding-block: var(--r7);
+  background-color: var(--baenk-flade);
+  border-top-width: var(--hairline);
+  border-top-style: solid;
+  border-top-color: var(--streg);
+}
+
+.uge {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin-block: var(--r5);
+}
+
+.uge-tekst {
+  display: grid;
+  gap: var(--r4);
+}
+
+@media (min-width: 900px) {
+  .uge-tekst {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* ── værkstedet ─────────────────────────────────────────────────────── */
+
+.vaerkstedet {
+  padding-block: var(--r7);
+  border-top-width: var(--hairline);
+  border-top-style: solid;
+  border-top-color: var(--streg);
+}
+
+.vaerksted-kolonner {
+  display: grid;
+  gap: var(--r5);
+  align-items: start;
+}
+
+@media (min-width: 900px) {
+  .vaerksted-kolonner {
+    grid-template-columns: 1.25fr 1fr 1fr;
+  }
+}
+
+.falsmaal {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.falsmaal-tekst {
+  font-size: var(--t1);
+  margin-top: var(--r3);
+}
+
+.folk {
+  list-style: none;
+  margin: var(--r3) 0 0 0;
+  padding: 0;
+}
+
+.folk li {
+  padding-block: var(--r2);
+  border-bottom-width: var(--hairline);
+  border-bottom-style: solid;
+  border-bottom-color: var(--streg-svag);
+  font-size: var(--t1);
+}
+
+.ikke {
+  list-style: none;
+  margin: var(--r3) 0 0 0;
+  padding: 0;
+}
+
+.ikke li {
+  padding-block: var(--r2);
+  padding-left: var(--r4);
+  border-bottom-width: var(--hairline);
+  border-bottom-style: solid;
+  border-bottom-color: var(--streg-svag);
+  font-size: var(--t1);
+  position: relative;
+}
+
+.ikke li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 1.1em;
+  width: var(--r3);
+  border-top-width: 3px;
+  border-top-style: solid;
+  border-top-color: var(--roedkridt);
+}
+
+/* ── foden ──────────────────────────────────────────────────────────── */
+
+.fod {
+  padding-block: var(--r6);
+  border-top-width: 3px;
+  border-top-style: solid;
+  border-top-color: var(--blyant);
+  background-color: var(--kridt-flade);
+}
+
+.fod > .ramme {
+  display: grid;
+  gap: var(--r4) var(--r5);
+}
+
+@media (min-width: 900px) {
+  .fod > .ramme {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.fod h2 {
+  font-size: var(--t3);
+}
+
+.fod p {
+  font-size: var(--t1);
+  margin-top: var(--r2);
+}
+
+.fod a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+
+.opdigtet {
+  grid-column: 1 / -1;
+  border-top-width: var(--hairline);
+  border-top-style: solid;
+  border-top-color: var(--streg);
+  padding-top: var(--r3);
+  font-size: var(--t1);
+  max-width: 74ch;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Der er ingen animation og ingen transition på siden, så der er intet at standse.
+     Reglen står her fordi den er en del af kontrakten og skal kunne ses.
+     Den siger none og ikke 1ms: en varighed på 1ms tænder transitionen på alle
+     egenskaber i stedet for at slukke den, og verify.mjs fangede præcis det. */
+  *,
+  *::before,
+  *::after {
+    animation: none;
+    transition: none;
+    scroll-behavior: auto;
+  }
+}

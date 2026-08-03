@@ -208,7 +208,18 @@ async function resolveKnowledge(root, { brief, surface, stack }) {
     const parsed = JSON.parse(r.stdout);
     const results = parsed.results ?? [];
     return {
-      used: results.map((x) => ({ id: x.id, score: x.score, userJob: x.userJob ?? null })),
+      /* The whole post, not its id. A manifest that names three ids sends the agent to a
+         corpus that is deliberately not in the read manifest, so it could either open files
+         the gate refuses or work from the wording of an identifier. Neither is a third
+         option, so the text comes here instead and the corpus stays out of the hot path. */
+      used: results.map((x) => ({
+        id: x.id, score: x.score, file: x.file ?? null,
+        userJob: x.userJob ?? null, problem: x.problem ?? null,
+        worksWhen: x.worksWhen ?? null, avoidWhen: x.avoidWhen ?? null,
+        mechanism: x.mechanism ?? null, risks: x.risks ?? [],
+        mobileRules: x.mobileRules ?? [], accessibilityRules: x.accessibilityRules ?? [],
+        genericnessRisk: x.genericnessRisk ?? null,
+      })),
       note: parsed.noGoodMatch ? (parsed.message ?? "no good match; go to the subject's own world") : null,
     };
   } catch {
@@ -255,7 +266,7 @@ export async function build(root, project, { surface, brief }) {
   const blockers = [];
   if (!surface) blockers.push('no surface given: pass --surface buy|operate|read|experience');
   if (!briefPath) blockers.push('no BRIEF.md and no filled PROJECT.md, so nothing states the facts the page may use');
-  if (!existsSync(directionPath)) blockers.push(`no direction record: run \`${scriptOf('ledger.mjs')} new ${surface ?? '<surface>'}\``);
+  if (!existsSync(directionPath)) blockers.push(`no direction record: run \`${scriptOf('ledger.mjs')} new . ${surface ?? '<surface>'}\``);
 
   const manifest = {
     v: 1,
@@ -280,7 +291,7 @@ export async function build(root, project, { surface, brief }) {
       surface === 'buy' || surface === 'operate' ? 'journeys/*.spec.mjs' : null,
     ].filter(Boolean),
     commands: {
-      direction: `${scriptOf('ledger.mjs')} new ${surface ?? '<surface>'}`,
+      direction: `${scriptOf('ledger.mjs')} new . ${surface ?? '<surface>'}`,
       verify: `${scriptOf('verify.mjs')} <url-or-dir>`,
       critiquePacket: `${scriptOf('critique.mjs')} packet`,
       critiqueLock: `${scriptOf('critique.mjs')} lock --file <answers.md>`,
@@ -317,20 +328,33 @@ function runMarkdown(m) {
   L.push('Written by `sitesmith build`. It resolves what a command can resolve and names what');
   L.push('the agent does next. It is not a plan: the plan is the direction record.', '');
   L.push(`- surface: **${m.surface ?? 'not given'}**`);
-  L.push(`- stack: **${m.stack.name ?? 'none detected'}**${m.stack.adapter ? ` — adapter \`${m.stack.adapter}\`` : ''}${m.stack.source ? ` (${m.stack.source})` : ''}${m.stack.note ? ` (${m.stack.note})` : ''}`);
+  L.push(`- stack: **${m.stack.name ?? 'none detected'}**${m.stack.adapter ? `, adapter \`${m.stack.adapter}\`` : ''}${m.stack.source ? ` (${m.stack.source})` : ''}${m.stack.note ? ` (${m.stack.note})` : ''}`);
   L.push(`- brief: ${m.brief ? `\`${m.brief}\`` : 'none found'}`, '');
   L.push('## Knowledge Index', '');
   if (m.knowledge.used.length) {
-    for (const k of m.knowledge.used) L.push(`- \`${k.id}\` (${k.score})`);
-    L.push('', 'These are building blocks, not a template. They go through the subject, thesis,');
-    L.push('autopilot, swap and originality flow before anything is built.');
+    L.push('Building blocks, not a template. They go through the subject, thesis, autopilot,');
+    L.push('swap and originality flow before anything is built. The full text is here so the');
+    L.push('corpus itself stays outside the read manifest.', '');
+    for (const k of m.knowledge.used) {
+      L.push(`### \`${k.id}\`  (${k.score})`, '');
+      if (k.userJob) L.push(`- **job**: ${k.userJob}`);
+      if (k.problem) L.push(`- **problem**: ${k.problem}`);
+      if (k.worksWhen) L.push(`- **works when**: ${k.worksWhen}`);
+      if (k.avoidWhen) L.push(`- **avoid when**: ${k.avoidWhen}`);
+      if (k.mechanism) L.push(`- **mechanism**: ${k.mechanism}`);
+      for (const r of k.risks ?? []) L.push(`- risk: ${r}`);
+      for (const r of k.mobileRules ?? []) L.push(`- mobile: ${r}`);
+      for (const r of k.accessibilityRules ?? []) L.push(`- accessibility: ${r}`);
+      if (k.genericnessRisk) L.push(`- genericness risk: ${k.genericnessRisk}`);
+      L.push('');
+    }
   } else L.push(`- ${m.knowledge.note}`);
   L.push('', '## Read, in this order', '');
   for (const f of m.read) L.push(`- \`${f}\``);
   L.push('', '## Write', '');
   for (const f of m.write) L.push(`- \`${f}\``);
   L.push('', '## Commands', '');
-  for (const [k, v] of Object.entries(m.commands)) L.push(`- **${k}** — \`${v}\``);
+  for (const [k, v] of Object.entries(m.commands)) L.push(`- **${k}**: \`${v}\``);
   L.push('', '## Blockers', '');
   if (m.blockers.length) for (const b of m.blockers) L.push(`- ${b}`);
   else L.push('- none');
@@ -405,7 +429,7 @@ export const COMMANDS = {
 export function usage() {
   const lines = [
     '',
-    '  sitesmith — build websites that do not look AI-generated',
+    '  sitesmith, and what each command does',
     '',
     '  This is one command surface, not one engine. `runs` does the work itself.',
     '  `orchestrates` prepares state and hands the work to an agent reading the skill.',

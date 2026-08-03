@@ -1018,7 +1018,7 @@ if (!tellWaiver('typeface')) {
       for (const face of BANNED_FACES) {
         if (!face.re.test(line[0])) continue;
         refuse('typeface/named-default', file, lineOf(src, line.index),
-          `${line[0].trim().slice(0, 90)} — ${face.why}. Choose another, or write "typeface-pinned-by-brief: <the client's words>" in the direction record.`);
+          `${line[0].trim().slice(0, 90)}: ${face.why}. Choose another, or write "typeface-pinned-by-brief: <the client's words>" in the direction record.`);
       }
     }
   }
@@ -1388,8 +1388,41 @@ if (!direction || !direction.palette || !direction.type) {
     const context = await browser.newContext({ viewport: { width: 1440, height: 900 }, colorScheme: null });
     const page = await context.newPage();
     let measured = null;
+    /* A stylesheet that did not load makes every measurement below a measurement of an
+       unstyled document, and the report reads exactly like a design verdict. A production
+       build served from the filesystem is the ordinary way in: Astro, Next and Vite all
+       emit `/_astro/…`, `/_next/…`, `/assets/…`, and an absolute path under file:// resolves
+       to the root of the disk. This gate once reported a lopsided form, one layout worn
+       three times, a fieldset 397px wider than its content and a white ground on a page
+       that has none of those, because the CSS was never there.
+
+       So the load is watched, and a page whose own stylesheets failed is not judged. The
+       fix belongs to whoever ran it, and it is one line: serve the directory and pass
+       --url. */
+    const missedStyles = [];
+    page.on('requestfailed', (r) => {
+      if (r.resourceType() === 'stylesheet') missedStyles.push(r.url());
+    });
+    page.on('response', (r) => {
+      if (r.request().resourceType() === 'stylesheet' && r.status() >= 400) missedStyles.push(r.url());
+    });
     try {
       await page.goto(entry, { waitUntil: 'load', timeout: 20000 });
+      const linked = await page.evaluate(() => document.querySelectorAll('link[rel~="stylesheet"]').length);
+      const applied = await page.evaluate(() => {
+        let n = 0;
+        for (const s of document.styleSheets) { try { n += s.cssRules.length; } catch { n += 1; } }
+        return n;
+      });
+      if (missedStyles.length || (linked > 0 && applied === 0)) {
+        const how = entry.startsWith('file:')
+          ? 'This is a file:// load of a build whose asset paths are absolute, so they resolve to the root of the disk. Serve the directory and pass --url <address>.'
+          : 'The stylesheet requests failed against this server.';
+        withhold('direction fidelity',
+          `${linked} stylesheet(s) are linked and ${missedStyles.length ? `${missedStyles.length} failed to load` : 'none applied any rule'}. `
+          + `Nothing below is measured, because an unstyled document measures as a design. ${how}`);
+        throw new Error('stylesheets did not load');
+      }
       measured = await page.evaluate(({ s, riskSel, secondSel }) => {
         const paint = (el) => {
           const c = getComputedStyle(el).backgroundColor;
@@ -1802,7 +1835,11 @@ if (!direction || !direction.palette || !direction.type) {
         };
       }, { s: sel, riskSel: riskAnswerSelector, secondSel: secondReadingSelector });
     } catch (e) {
-      withhold('direction fidelity', `${entry} did not render: ${e.message.split('\n')[0]}`);
+      /* The stylesheet check above already withheld with its own reason; a second line
+         about a thrown error would report one problem twice. */
+      if (e.message !== 'stylesheets did not load') {
+        withhold('direction fidelity', `${entry} did not render: ${e.message.split('\n')[0]}`);
+      }
     } finally {
       await browser.close();
     }

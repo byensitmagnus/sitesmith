@@ -1,0 +1,1051 @@
+---
+import '../styles/vaerksted.css';
+
+// De fire glas står ét sted. Markup'en skriver dem, og klientkoden læser priserne
+// tilbage af data-attributterne, så der ikke findes to lister der kan gå fra hinanden.
+const glas = [
+  {
+    id: 'float4',
+    navn: 'Klart float',
+    tykkelse: '4 mm',
+    pris: 640,
+    dage: 2,
+    brug: 'almindelig udskiftning, enkeltlags vinduer og rammer',
+  },
+  {
+    id: 'float6',
+    navn: 'Klart float',
+    tykkelse: '6 mm',
+    pris: 890,
+    dage: 2,
+    brug: 'alt over 0,7 m², og drivhustage',
+  },
+  {
+    id: 'katedral',
+    navn: 'Valset katedral',
+    tykkelse: '4 mm',
+    pris: 1150,
+    dage: 2,
+    brug: 'struktur, til bad og døre, den ene side glat',
+  },
+  {
+    id: 'antik',
+    navn: 'Trukket antikglas',
+    tykkelse: '3 mm',
+    pris: 2480,
+    dage: 5,
+    brug: 'trukket glas med bevægelse i, til fredede vinduer',
+  },
+];
+
+const kr = (n) => new Intl.NumberFormat('da-DK').format(n);
+const dage = ['man', 'tir', 'ons', 'tor', 'fre', 'lør', 'søn'];
+const uge = { x0: 140, bredde: 150, mellemrum: 20 };
+const kol = (i) => uge.x0 + i * (uge.bredde + uge.mellemrum);
+// Målestokken under bænkekanten: streg for hver 100 mm, længere streg og tal for hver 500.
+const skala = [];
+for (let mm = 0; mm <= 2400; mm += 100) skala.push({ mm, stor: mm % 500 === 0 });
+// Klokkeslæt til y i tegningen: 07:00 øverst, 16:00 nederst.
+const ur = (t) => 60 + (t - 7) * (280 / 9);
+---
+
+<!doctype html>
+<html lang="da">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Glarmester Nordlys, Horsens: pris på en ny rude ud fra dine egne mål</title>
+    <meta
+      name="description"
+      content="Skriv skæresedlen selv. To mål fra fals til fals, en glastype, afhentning eller trækasse, og prisen står der. Opdigtet eksempel bygget for at vise SiteSmith."
+    />
+  </head>
+  <body>
+    <a class="spring" href="#sedlen">Spring til skæresedlen</a>
+
+    <header class="top">
+      <div class="ramme">
+        <p class="mark">
+          <span class="mark-navn">Glarmester Nordlys</span>
+          <span class="mark-sted">Glarmestervej 8, 8700 Horsens</span>
+        </p>
+        <nav aria-label="Sidens afsnit">
+          <ul>
+            <li><a href="#sedlen">Skæresedlen</a></li>
+            <li><a href="#glasset">Glasset</a></li>
+            <li><a href="#levering">Levering</a></li>
+            <li><a href="#vaerkstedet">Værkstedet</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <!-- ── sedlen ─────────────────────────────────────────────────── -->
+      <section id="sedlen" class="sedlen">
+        <div class="ramme">
+          <div class="venstre">
+            <h1>Skriv skæresedlen selv, mens du måler</h1>
+            <p class="ingress">
+              Mål fra fals til fals i millimeter og vælg glasset. Så står falsmålet, arealet
+              og prisen på sedlen, og det er de samme tal Rikke eller Tobias skærer efter.
+            </p>
+
+            <svg
+              class="baenk"
+              data-asset="tegning-baenk"
+              viewBox="0 0 2680 2160"
+              role="img"
+              aria-labelledby="baenk-titel"
+            >
+              <title id="baenk-titel"
+                >Målt tegning af skærebænken på 2,4 meter med grænsen ved 2.200 millimeter
+                sat af med rødt, og din rude tegnet ind på bænken i samme forhold så snart
+                begge mål står der.</title
+              >
+              <defs>
+                <marker
+                  id="pilspids"
+                  viewBox="0 0 12 12"
+                  refX="11"
+                  refY="6"
+                  markerWidth="6"
+                  markerHeight="6"
+                  markerUnits="strokeWidth"
+                  orient="auto-start-reverse"
+                >
+                  <path class="pil" d="M0 0 L12 6 L0 12 Z" />
+                </marker>
+                <pattern
+                  id="filt"
+                  width="96"
+                  height="96"
+                  patternUnits="userSpaceOnUse"
+                  patternTransform="rotate(38)"
+                >
+                  <path class="linje-filt" d="M0 48 H96" />
+                </pattern>
+              </defs>
+
+              <g id="baenk-skala">
+                <rect class="flade-baenk" x="-3000" y="-4000" width="14000" height="5900" />
+                <rect class="flade-filt" x="-3000" y="-4000" width="14000" height="5900" />
+
+                <path class="linje-tyk" d="M150 1900 H2550" />
+
+                <!-- Målestokken. Den er tegningens egen linial, og den er det den besøgende
+                     er ved at bruge i den anden ende af telefonen. -->
+                {
+                  skala.map((s) => (
+                    <path
+                      class="linje-maal"
+                      d={`M${150 + s.mm} 1912 V${s.stor ? 1972 : 1948}`}
+                    />
+                  ))
+                }
+                {
+                  skala
+                    .filter((s) => s.stor && s.mm > 0 && s.mm < 2400)
+                    .map((s) => (
+                      <text
+                        class="tal-tegning-svag"
+                        x={150 + s.mm}
+                        y="2012"
+                        text-anchor="middle">{new Intl.NumberFormat('da-DK').format(s.mm)}</text
+                      >
+                    ))
+                }
+                <path
+                  class="linje-maal"
+                  d="M150 2068 H2550"
+                  marker-start="url(#pilspids)"
+                  marker-end="url(#pilspids)"
+                />
+                <path class="linje-maal" d="M150 2046 V2090 M2550 2046 V2090" />
+                <text class="tal-tegning" x="1350" y="2140" text-anchor="middle"
+                  >2,4 m skærebænk</text
+                >
+
+                <path class="linje-graense" d="M2350 1912 V-3000" />
+                <path class="linje-graense" d="M2350 1912 V1972" />
+                <text class="tal-tegning-graense" x="2330" y="1855" text-anchor="end"
+                  >2.200 mm</text
+                >
+
+                <text id="baenk-tom" class="tal-tegning-svag" x="180" y="1060"
+                  >Ruden tegnes her, når begge mål står der.</text
+                >
+
+                <g id="baenk-rude" class="skjult">
+                  <rect
+                    id="rude-flade"
+                    class="flade-rude"
+                    x="150"
+                    y="1300"
+                    width="900"
+                    height="400"
+                  />
+                  <path id="rude-udv-b1" class="linje-maal" d="M150 1290 V1160" />
+                  <path id="rude-udv-b2" class="linje-maal" d="M1050 1290 V1160" />
+                  <path
+                    id="rude-dim-b"
+                    class="linje-maal"
+                    d="M150 1180 H1050"
+                    marker-start="url(#pilspids)"
+                    marker-end="url(#pilspids)"
+                  />
+                  <text
+                    id="rude-tal-b"
+                    class="tal-tegning"
+                    x="600"
+                    y="1140"
+                    text-anchor="middle">900 mm</text
+                  >
+                  <path id="rude-udv-h1" class="linje-maal" d="M1060 1700 H1190" />
+                  <path id="rude-udv-h2" class="linje-maal" d="M1060 1300 H1190" />
+                  <path
+                    id="rude-dim-h"
+                    class="linje-maal"
+                    d="M1170 1700 V1300"
+                    marker-start="url(#pilspids)"
+                    marker-end="url(#pilspids)"
+                  />
+                  <text id="rude-tal-h" class="tal-tegning" x="1215" y="1520" text-anchor="start"
+                    >400 mm</text
+                  >
+                </g>
+              </g>
+            </svg>
+
+            <p class="baenk-tekst">
+              Skærebænken er 2,4 m lang, og derfor forlader ingen rude over 2.200 mm den.
+              Tegningen viser din rude lagt på bænken i samme forhold som den bliver skåret,
+              med den længste side langs bænken.
+            </p>
+          </div>
+
+          <form class="seddel" id="seddel-form" novalidate>
+            <p class="seddel-hoved">
+              <span>Skæreseddel</span>
+              <span>Glarmestervej 8</span>
+            </p>
+
+            <fieldset>
+              <legend>Mål</legend>
+              <p class="hjaelp">
+                Mål åbningen mellem falsene i millimeter. Ruden skæres 3 mm mindre i hver
+                side, så den kan arbejde med træet, og det er falsmålet sedlen skriver.
+              </p>
+              <div class="maalfelter">
+                <div class="felt">
+                  <label for="bredde">Bredde, fals til fals</label>
+                  <span class="felt-tal">
+                    <input
+                      id="bredde"
+                      name="bredde"
+                      type="number"
+                      inputmode="numeric"
+                      step="1"
+                      min="36"
+                      max="2206"
+                      autocomplete="off"
+                      aria-describedby="fejl-bredde"
+                    />
+                    <span class="enhed">mm</span>
+                  </span>
+                </div>
+                <div class="felt">
+                  <label for="hoejde">Højde, fals til fals</label>
+                  <span class="felt-tal">
+                    <input
+                      id="hoejde"
+                      name="hoejde"
+                      type="number"
+                      inputmode="numeric"
+                      step="1"
+                      min="36"
+                      max="2206"
+                      autocomplete="off"
+                      aria-describedby="fejl-hoejde"
+                    />
+                    <span class="enhed">mm</span>
+                  </span>
+                </div>
+                <div class="felt">
+                  <label for="antal">Antal ruder i samme mål</label>
+                  <span class="felt-tal">
+                    <input
+                      id="antal"
+                      name="antal"
+                      type="number"
+                      inputmode="numeric"
+                      step="1"
+                      min="1"
+                      value="1"
+                      autocomplete="off"
+                      aria-describedby="fejl-antal"
+                    />
+                    <span class="enhed">stk</span>
+                  </span>
+                </div>
+              </div>
+              <p class="fejl" id="fejl-bredde" role="alert"></p>
+              <p class="fejl" id="fejl-hoejde" role="alert"></p>
+              <p class="fejl" id="fejl-antal" role="alert"></p>
+            </fieldset>
+
+            <fieldset id="glas-felt" aria-describedby="fejl-glas">
+              <legend>Glas</legend>
+              <div class="valg">
+                {
+                  glas.map((g, i) => (
+                    <label>
+                      <input
+                        type="radio"
+                        name="glas"
+                        value={g.id}
+                        data-pris={g.pris}
+                        data-dage={g.dage}
+                        data-navn={`${g.navn} ${g.tykkelse}`}
+                        checked={i === 0}
+                      />
+                      <span class="valg-navn">
+                        {g.navn} {g.tykkelse}
+                        <span class="valg-brug">{g.brug}</span>
+                      </span>
+                      <span class="valg-pris">{kr(g.pris)} kr/m²</span>
+                    </label>
+                  ))
+                }
+              </div>
+              <p class="lager">
+                Der er 11 m² trukket antikglas tilbage. Når det er brugt, er det brugt, og
+                der er ingen genbestillingsdato.
+              </p>
+              <p class="fejl" id="fejl-glas" role="alert"></p>
+            </fieldset>
+
+            <fieldset id="udlevering-felt" aria-describedby="fejl-udlevering">
+              <legend>Udlevering</legend>
+              <div class="valg">
+                <label>
+                  <input type="radio" name="udlevering" value="afhentning" checked />
+                  <span class="valg-navn">
+                    Afhentning på Glarmestervej 8
+                    <span class="valg-brug">i åbningstiden, uden fragt</span>
+                  </span>
+                  <span class="valg-pris">ingen fragt</span>
+                </label>
+                <label>
+                  <input type="radio" name="udlevering" value="kasse" />
+                  <span class="valg-navn">
+                    Trækasse med posten
+                    <span class="valg-brug"
+                      >op til 1.000 x 700 mm, 3 arbejdsdage fra skæringen</span
+                    >
+                  </span>
+                  <span class="valg-pris">285 kr</span>
+                </label>
+              </div>
+              <p class="fejl" id="fejl-udlevering" role="alert"></p>
+            </fieldset>
+
+            <div class="tal" id="tal" aria-live="polite">
+              <p class="tal-besked" id="tal-besked">
+                Tast begge mål, så skriver sedlen falsmålet, arealet, prisen og hvor længe
+                der går, her.
+              </p>
+              <div class="linje">
+                <span class="linje-navn">Falsmål</span>
+                <span class="linje-vaerdi" id="v-falsmaal"
+                  ><span class="venter"></span><span class="enhed-tal">mm</span></span
+                >
+              </div>
+              <div class="linje">
+                <span class="linje-navn">Areal</span>
+                <span class="linje-vaerdi" id="v-areal"
+                  ><span class="venter"></span><span class="enhed-tal">m²</span></span
+                >
+              </div>
+              <div class="linje">
+                <span class="linje-navn">Glas</span>
+                <span class="linje-vaerdi" id="v-glas">Klart float 4 mm</span>
+              </div>
+              <div class="linje">
+                <span class="linje-navn">Udlevering</span>
+                <span class="linje-vaerdi" id="v-udlevering">Afhentning</span>
+              </div>
+              <div class="linje">
+                <span class="linje-navn">Klar om</span>
+                <span class="linje-vaerdi" id="v-klar">2 arbejdsdage</span>
+              </div>
+              <div class="linje linje-pris">
+                <span class="linje-navn">Pris i alt</span>
+                <span class="linje-vaerdi" id="v-pris"
+                  ><span class="venter"></span><span class="enhed-tal">kr</span></span
+                >
+              </div>
+            </div>
+
+            <div>
+              <button class="skriv" id="skriv" type="submit" disabled>
+                Skriv skæresedlen
+              </button>
+              <p class="betaling">
+                Der betales ved afhentning eller på faktura sammen med kassen. Der er ingen
+                kortbetaling her på siden.
+              </p>
+            </div>
+
+            <div class="kvittering" id="kvittering" role="status" tabindex="-1"></div>
+          </form>
+        </div>
+      </section>
+
+      <!-- ── glasset ────────────────────────────────────────────────── -->
+      <section id="glasset" class="glasset">
+        <div class="ramme">
+          <div class="afsnit-hoved">
+            <h2>Fire glas, og hvad de koster</h2>
+            <p>
+              Prisen er pr. kvadratmeter færdig rude. Der regnes mindst 0,15 m² pr. rude,
+              uanset målene, og hver rude skæres til millimeteren efter de mål der er givet.
+            </p>
+          </div>
+
+          <ul class="glasliste">
+            {
+              glas.map((g) => (
+                <li>
+                  <span class="glas-navn">{g.navn}</span>
+                  <span class="glas-tyk">{g.tykkelse}</span>
+                  <span class="glas-brug">{g.brug}</span>
+                  <span class="glas-pris">{kr(g.pris)} kr/m²</span>
+                </li>
+              ))
+            }
+          </ul>
+
+          <div class="glas-noter">
+            <div class="note">
+              <h3>Mindst 0,15 m²</h3>
+              <p>
+                En lille rude bliver regnet som 0,15 m². Det er det mindste stykke der
+                bliver regnet, uanset hvad målene siger.
+              </p>
+            </div>
+            <div class="note">
+              <h3>Kan ikke tages retur</h3>
+              <p>
+                En skåret rude passer i ét vindue, og derfor kan den ikke tages retur. Tjek
+                dine to mål inden du skriver sedlen.
+              </p>
+            </div>
+            <div class="note">
+              <h3>11 m² antikglas</h3>
+              <p>
+                Trukket antikglas skæres af lagerplader, og værkstedet har 11 m² af det. Når
+                det er brugt, er det brugt, og der er ingen genbestillingsdato.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── leveringen ─────────────────────────────────────────────── -->
+      <section id="levering" class="levering">
+        <div class="ramme">
+          <div class="afsnit-hoved">
+            <h2>Værkstedets uge</h2>
+            <p>
+              Der er åbent mandag til torsdag fra 07:30 til 15:30 og fredag fra 07:30 til
+              12:00. Weekenden er lukket, og de dage tæller ikke med når der står
+              arbejdsdage. Stregerne herunder er dagene i din ordre lagt ind i ugen, regnet
+              fra en mandag.
+            </p>
+          </div>
+
+          <svg
+            class="uge"
+            data-asset="tegning-uge"
+            viewBox="0 0 1400 560"
+            role="img"
+            aria-labelledby="uge-titel"
+          >
+            <title id="uge-titel"
+              >Værkstedets uge tegnet som åbningstid pr. dag, mandag til torsdag fra 07:30
+              til 15:30 og fredag fra 07:30 til 12:00, med de arbejdsdage din ordre bruger
+              lagt ind under, regnet fra en mandag.</title
+            >
+            <g>
+              {
+                [7.5, 12, 15.5].map((t) => (
+                  <path class="linje-maal" d={`M140 ${ur(t)} H1310`} />
+                ))
+              }
+              {
+                [
+                  { t: 7.5, s: '07:30' },
+                  { t: 12, s: '12:00' },
+                  { t: 15.5, s: '15:30' },
+                ].map((r) => (
+                  <text class="tal-tegning" x="120" y={ur(r.t) + 7} text-anchor="end">
+                    {r.s}
+                  </text>
+                ))
+              }
+
+              {
+                dage.map((d, i) =>
+                  i < 5 ? (
+                    <rect
+                      class="flade-aaben"
+                      x={kol(i)}
+                      y={ur(7.5)}
+                      width={uge.bredde}
+                      height={ur(i === 4 ? 12 : 15.5) - ur(7.5)}
+                    />
+                  ) : (
+                    <text
+                      class="tal-tegning-svag"
+                      x={kol(i) + uge.bredde / 2}
+                      y={ur(11.5)}
+                      text-anchor="middle">lukket</text
+                    >
+                  )
+                )
+              }
+              {
+                dage.map((d, i) => (
+                  <text
+                    class="tal-tegning-svag"
+                    x={kol(i) + uge.bredde / 2}
+                    y="378"
+                    text-anchor="middle">{d}</text
+                  >
+                ))
+              }
+
+              <text class="tal-tegning-svag" x="120" y="428" text-anchor="end">uge 1</text>
+              {
+                dage.map((d, i) => (
+                  <rect
+                    id={`d1-${i}`}
+                    class={i < 5 ? 'flade-tom' : 'skjult'}
+                    x={kol(i)}
+                    y="404"
+                    width={uge.bredde}
+                    height="28"
+                  />
+                ))
+              }
+              <g id="uge2" class="skjult">
+                <text class="tal-tegning-svag" x="120" y="472" text-anchor="end">uge 2</text>
+                {
+                  dage.map((d, i) => (
+                    <rect
+                      id={`d2-${i}`}
+                      class={i < 5 ? 'flade-tom' : 'skjult'}
+                      x={kol(i)}
+                      y="448"
+                      width={uge.bredde}
+                      height="28"
+                    />
+                  ))
+                }
+              </g>
+
+              <rect class="flade-skaer" x="140" y="512" width="34" height="20" />
+              <text class="tal-tegning-svag" x="188" y="529" text-anchor="start">skæring</text>
+              <rect class="flade-fragt" x="360" y="512" width="34" height="20" />
+              <text class="tal-tegning-svag" x="408" y="529" text-anchor="start"
+                >fragt i kasse</text
+              >
+            </g>
+          </svg>
+
+          <div class="uge-tekst">
+            <div>
+              <h3>Skæringen</h3>
+              <p>
+                Klart float og valset katedral tager 2 arbejdsdage. Trukket antikglas tager
+                5, og det skæres af lagerplader.
+              </p>
+            </div>
+            <div>
+              <h3>Kassen eller bænken</h3>
+              <p>
+                Ruder op til 1.000 x 700 mm sendes i trækasse for 285 kr overalt i Danmark,
+                3 arbejdsdage fra skæringen. Alt derover hentes på værkstedet, fordi en
+                kasse i den størrelse ikke overlever en fragtmand.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── værkstedet ─────────────────────────────────────────────── -->
+      <section id="vaerkstedet" class="vaerkstedet">
+        <div class="ramme">
+          <div class="afsnit-hoved">
+            <h2>Værkstedet</h2>
+            <p>
+              Glarmester Nordlys blev grundlagt i 1954 af Verner Nordlys. I dag driver hans
+              barnebarn Solvej Nordlys værkstedet sammen med to glarmestre.
+            </p>
+          </div>
+
+          <div class="vaerksted-kolonner">
+            <div>
+              <h3>Hvor målebåndet sættes</h3>
+              <svg
+                class="falsmaal"
+                data-asset="tegning-falsmaal"
+                viewBox="0 0 900 600"
+                role="img"
+                aria-labelledby="falsmaal-titel"
+              >
+                <title id="falsmaal-titel"
+                  >Snit gennem to falser med ruden imellem. Fals til fals er det mål du
+                  tager, og falsmålet er den skårne rude, som er 3 millimeter smallere i
+                  hver side.</title
+                >
+                <path class="flade-trae" d="M60 140 H250 V180 H190 V360 H250 V460 H60 Z" />
+                <path class="flade-trae" d="M840 140 H650 V180 H710 V360 H650 V460 H840 Z" />
+                <rect class="flade-rude" x="215" y="250" width="470" height="40" />
+                <text class="tal-tegning-svag" x="450" y="232" text-anchor="middle">rude</text>
+                <text class="tal-tegning-svag" x="155" y="430" text-anchor="middle">fals</text>
+                <text class="tal-tegning-svag" x="745" y="430" text-anchor="middle">fals</text>
+
+                <path class="linje-maal" d="M190 310 V330 M215 310 V330 M190 320 H215" />
+                <text class="tal-tegning" x="202" y="360" text-anchor="middle">3</text>
+                <path class="linje-maal" d="M685 310 V330 M710 310 V330 M685 320 H710" />
+                <text class="tal-tegning" x="697" y="360" text-anchor="middle">3</text>
+
+                <path class="linje-maal" d="M215 250 V95 M685 250 V95" />
+                <path
+                  class="linje-maal"
+                  d="M215 110 H685"
+                  marker-start="url(#pilspids)"
+                  marker-end="url(#pilspids)"
+                />
+                <text class="tal-tegning" x="450" y="80" text-anchor="middle">falsmål</text>
+
+                <path class="linje-maal" d="M190 360 V525 M710 360 V525" />
+                <path
+                  class="linje-maal"
+                  d="M190 510 H710"
+                  marker-start="url(#pilspids)"
+                  marker-end="url(#pilspids)"
+                />
+                <text class="tal-tegning" x="450" y="570" text-anchor="middle"
+                  >fals til fals</text
+                >
+              </svg>
+              <p class="falsmaal-tekst">
+                Du taster fals til fals, altså åbningen mellem falsene. Sedlen trækker 3 mm
+                fra i hver side og skriver falsmålet, som er den rude der bliver skåret.
+              </p>
+            </div>
+
+            <div>
+              <h3>De tre på værkstedet</h3>
+              <ul class="folk">
+                <li>Solvej Nordlys</li>
+                <li>Rikke Damm, glarmester</li>
+                <li>Tobias Bjerg, glarmester</li>
+              </ul>
+              <p class="falsmaal-tekst">
+                Glarmestervej 8, 8700 Horsens. Åbent mandag til torsdag 07:30 til 15:30 og
+                fredag 07:30 til 12:00. Lukket i weekenden.
+              </p>
+            </div>
+
+            <div>
+              <h3>Det laver værkstedet ikke</h3>
+              <ul class="ikke">
+                <li>Sætter ikke glasset i. Det gør du eller din tømrer.</li>
+                <li>Laver ikke termoruder.</li>
+                <li>Laver ikke sikkerhedsglas.</li>
+                <li>Laver ikke spejle.</li>
+                <li>Giver ikke pris efter et fotografi.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="fod">
+      <div class="ramme">
+        <div>
+          <h2>Glarmester Nordlys</h2>
+          <p>Glarmestervej 8, 8700 Horsens</p>
+          <p><a href="tel:+4575621109">75 62 11 09</a></p>
+          <p>
+            Mandag til torsdag 07:30 til 15:30. Fredag 07:30 til 12:00. Lukket lørdag og
+            søndag.
+          </p>
+        </div>
+        <div>
+          <h2>Sådan bliver sedlen til en ordre</h2>
+          <p>
+            Skriv skæresedlen her på siden. Læs den op i telefonen på 75 62 11 09 i
+            åbningstiden, eller tag den med på Glarmestervej 8. Der betales ved afhentning
+            eller på faktura sammen med kassen.
+          </p>
+        </div>
+        <p class="opdigtet">
+          Glarmester Nordlys er et opdigtet eksempel, bygget for at vise SiteSmith.
+          Værkstedet, personerne, priserne, adressen og telefonnummeret er fundet på til
+          dette formål, og ingen af tallene på siden gælder en rigtig glarmester.
+        </p>
+      </div>
+    </footer>
+
+    <script>
+      const LUFT = 3;
+      const MIN_MM = 30;
+      const MAX_MM = 2200;
+      const MIN_AREAL = 0.15;
+      const LAGER_ANTIK = 11;
+      const KASSE_PRIS = 285;
+      const KASSE_DAGE = 3;
+      const KASSE_LANG = 1000;
+      const KASSE_KORT = 700;
+
+      const heltal = new Intl.NumberFormat('da-DK');
+      const areal = new Intl.NumberFormat('da-DK', {
+        minimumFractionDigits: 3,
+        maximumFractionDigits: 3,
+      });
+
+      const form = document.getElementById('seddel-form');
+      const felt = {
+        bredde: document.getElementById('bredde'),
+        hoejde: document.getElementById('hoejde'),
+        antal: document.getElementById('antal'),
+      };
+      const fejlfelt = {
+        bredde: document.getElementById('fejl-bredde'),
+        hoejde: document.getElementById('fejl-hoejde'),
+        antal: document.getElementById('fejl-antal'),
+        glas: document.getElementById('fejl-glas'),
+        udlevering: document.getElementById('fejl-udlevering'),
+      };
+      const vis = {
+        falsmaal: document.getElementById('v-falsmaal'),
+        areal: document.getElementById('v-areal'),
+        glas: document.getElementById('v-glas'),
+        udlevering: document.getElementById('v-udlevering'),
+        klar: document.getElementById('v-klar'),
+        pris: document.getElementById('v-pris'),
+      };
+      const talblok = document.getElementById('tal');
+      const besked = document.getElementById('tal-besked');
+      const knap = document.getElementById('skriv');
+      const kvittering = document.getElementById('kvittering');
+
+      const baenkRude = document.getElementById('baenk-rude');
+      const baenkTom = document.getElementById('baenk-tom');
+      const baenkSkala = document.getElementById('baenk-skala');
+      const uge2 = document.getElementById('uge2');
+
+      const BAENK_Y = 1900;
+      const BAENK_X = 150;
+      const HOEJDE_TIL_RAADIGHED = 1700;
+
+      function valgtGlas() {
+        return form.querySelector('input[name="glas"]:checked');
+      }
+
+      function valgtUdlevering() {
+        return form.querySelector('input[name="udlevering"]:checked').value;
+      }
+
+      // Ét mål ind, falsmålet ud, eller en besked der siger hvad der er galt med feltet.
+      function laesMaal(el) {
+        if (el.validity.badInput) {
+          return { fejl: 'Feltet kan kun læse tal. Skriv målet i hele millimeter, for eksempel 604.' };
+        }
+        const raa = el.value.trim();
+        if (raa === '') return { tom: true };
+        const n = Number(raa);
+        if (!Number.isFinite(n) || !Number.isInteger(n)) {
+          return { fejl: 'Skriv målet som et helt tal i millimeter, for eksempel 604.' };
+        }
+        const fals = n - 2 * LUFT;
+        if (fals < MIN_MM) {
+          return {
+            fejl:
+              heltal.format(n) +
+              ' mm fals til fals giver et falsmål på ' +
+              heltal.format(fals) +
+              ' mm. Værkstedet skærer ikke under ' +
+              MIN_MM +
+              ' mm.',
+          };
+        }
+        if (fals > MAX_MM) {
+          return {
+            fejl:
+              heltal.format(n) +
+              ' mm fals til fals giver et falsmål på ' +
+              heltal.format(fals) +
+              ' mm. Skærebænken er 2,4 m, og intet over ' +
+              heltal.format(MAX_MM) +
+              ' mm forlader den.',
+          };
+        }
+        return { fals: fals };
+      }
+
+      function laesAntal(el) {
+        if (el.validity.badInput) return { fejl: 'Antal kan kun læse tal. Skriv et helt antal ruder.' };
+        const raa = el.value.trim();
+        if (raa === '') return { tom: true };
+        const n = Number(raa);
+        if (!Number.isInteger(n) || n < 1) return { fejl: 'Skriv mindst 1 rude.' };
+        return { antal: n };
+      }
+
+      function saetFejl(navn, tekst, el) {
+        fejlfelt[navn].textContent = tekst || '';
+        if (el) el.setAttribute('aria-invalid', tekst ? 'true' : 'false');
+      }
+
+      // Ventepladsen har samme form som svaret og bærer enheden, så rækken siger hvad der
+      // kommer til at stå der i stedet for at være en streg der peger på ingenting.
+      function tomtFelt(el, enhed) {
+        const streg = document.createElement('span');
+        streg.className = 'venter';
+        const e = document.createElement('span');
+        e.className = 'enhed-tal';
+        e.textContent = enhed;
+        el.replaceChildren(streg, e);
+      }
+
+      function tegnBaenk(b, h) {
+        if (b == null || h == null) {
+          baenkRude.classList.add('skjult');
+          baenkTom.classList.remove('skjult');
+          baenkSkala.removeAttribute('transform');
+          return;
+        }
+        baenkTom.classList.add('skjult');
+        baenkRude.classList.remove('skjult');
+
+        // Den længste side ligger langs bænken, som den gør på en rigtig bænk.
+        const lang = Math.max(b, h);
+        const kort = Math.min(b, h);
+        const s = Math.min(1, HOEJDE_TIL_RAADIGHED / (kort + 240));
+        baenkSkala.setAttribute('transform', 'translate(0 ' + BAENK_Y * (1 - s) + ') scale(' + s + ')');
+
+        const top = BAENK_Y - kort;
+        document.getElementById('rude-flade').setAttribute('x', BAENK_X);
+        document.getElementById('rude-flade').setAttribute('y', top);
+        document.getElementById('rude-flade').setAttribute('width', lang);
+        document.getElementById('rude-flade').setAttribute('height', kort);
+
+        const dimY = top - 120;
+        document.getElementById('rude-udv-b1').setAttribute('d', 'M' + BAENK_X + ' ' + (top - 10) + ' V' + (dimY - 20));
+        document.getElementById('rude-udv-b2').setAttribute('d', 'M' + (BAENK_X + lang) + ' ' + (top - 10) + ' V' + (dimY - 20));
+        document.getElementById('rude-dim-b').setAttribute('d', 'M' + BAENK_X + ' ' + dimY + ' H' + (BAENK_X + lang));
+        const talB = document.getElementById('rude-tal-b');
+        talB.setAttribute('x', BAENK_X + lang / 2);
+        talB.setAttribute('y', dimY - 40);
+        talB.textContent = heltal.format(lang) + ' mm';
+
+        const dimX = BAENK_X + lang + 120;
+        document.getElementById('rude-udv-h1').setAttribute('d', 'M' + (BAENK_X + lang + 10) + ' ' + BAENK_Y + ' H' + (dimX + 20));
+        document.getElementById('rude-udv-h2').setAttribute('d', 'M' + (BAENK_X + lang + 10) + ' ' + top + ' H' + (dimX + 20));
+        document.getElementById('rude-dim-h').setAttribute('d', 'M' + dimX + ' ' + BAENK_Y + ' V' + top);
+        const talH = document.getElementById('rude-tal-h');
+        talH.setAttribute('x', dimX + 45);
+        talH.setAttribute('y', BAENK_Y - kort / 2 + 25);
+        talH.textContent = heltal.format(kort) + ' mm';
+      }
+
+      function tegnUge(skaeredage, fragtdage) {
+        const felter = [];
+        for (let u = 1; u <= 2; u++) {
+          for (let d = 0; d < 5; d++) felter.push(document.getElementById('d' + u + '-' + d));
+        }
+        felter.forEach((r, i) => {
+          r.setAttribute('class', i < skaeredage ? 'flade-skaer' : i < skaeredage + fragtdage ? 'flade-fragt' : 'flade-tom');
+        });
+        uge2.classList.toggle('skjult', skaeredage + fragtdage <= 5);
+      }
+
+      function regn() {
+        const b = laesMaal(felt.bredde);
+        const h = laesMaal(felt.hoejde);
+        const a = laesAntal(felt.antal);
+        const g = valgtGlas();
+        const udlevering = valgtUdlevering();
+
+        saetFejl('bredde', b.fejl, felt.bredde);
+        saetFejl('hoejde', h.fejl, felt.hoejde);
+        saetFejl('antal', a.fejl, felt.antal);
+        saetFejl('glas', '');
+        saetFejl('udlevering', '');
+
+        const prisPrM2 = Number(g.dataset.pris);
+        const skaeredage = Number(g.dataset.dage);
+
+        tegnBaenk(b.fals ?? null, h.fals ?? null);
+
+        // Glas, udlevering og leveringstid afhænger ikke af målene, så de står altid
+        // udfyldt. Kun de tre linjer der kommer af målene venter.
+        vis.glas.textContent = g.dataset.navn;
+
+        if (!b.fals || !h.fals || !a.antal) {
+          const mangler = [];
+          if (!b.fals && !b.fejl) mangler.push('bredden');
+          if (!h.fals && !h.fejl) mangler.push('højden');
+          if (!a.antal && !a.fejl) mangler.push('antallet');
+          besked.textContent =
+            b.fejl || h.fejl || a.fejl
+              ? 'Sedlen står stille indtil feltet ovenfor er rettet.'
+              : mangler.length === 3
+                ? 'Tast begge mål, så skriver sedlen falsmålet, arealet, prisen og hvor længe der går, her.'
+                : 'Mangler ' + mangler.join(' og ') + '.';
+          talblok.setAttribute('aria-busy', 'true');
+          tomtFelt(vis.falsmaal, 'mm');
+          tomtFelt(vis.areal, 'm²');
+          tomtFelt(vis.pris, 'kr');
+          vis.udlevering.textContent = udlevering === 'kasse' ? 'Trækasse, 285 kr' : 'Afhentning';
+          vis.klar.textContent =
+            skaeredage + ' arbejdsdage' + (udlevering === 'kasse' ? ' plus 3 på vejen' : '');
+          knap.disabled = true;
+          tegnUge(skaeredage, udlevering === 'kasse' ? KASSE_DAGE : 0);
+          return;
+        }
+
+        const prRude = Math.max(Math.round((b.fals / 1000) * (h.fals / 1000) * 1000) / 1000, MIN_AREAL);
+        const iAlt = Math.round(prRude * a.antal * 1000) / 1000;
+
+        const lang = Math.max(b.fals, h.fals);
+        const kort = Math.min(b.fals, h.fals);
+        const kassePasser = lang <= KASSE_LANG && kort <= KASSE_KORT;
+
+        let spaerret = false;
+
+        if (g.value === 'antik' && iAlt > LAGER_ANTIK) {
+          saetFejl(
+            'antal',
+            'Der er ' + LAGER_ANTIK + ' m² trukket antikglas tilbage. ' + a.antal + ' ruder á ' +
+              areal.format(prRude) + ' m² er ' + areal.format(iAlt) + ' m². Der er glas til ' +
+              Math.floor(LAGER_ANTIK / prRude) + ' ruder i det mål.',
+            felt.antal,
+          );
+          spaerret = true;
+        }
+
+        if (udlevering === 'kasse' && !kassePasser) {
+          saetFejl(
+            'udlevering',
+            'Falsmålet er ' + heltal.format(b.fals) + ' x ' + heltal.format(h.fals) +
+              ' mm. En trækasse i den størrelse overlever ikke en fragtmand, så ruden hentes på Glarmestervej 8.',
+          );
+          spaerret = true;
+        }
+
+        const fragtdage = udlevering === 'kasse' && kassePasser ? KASSE_DAGE : 0;
+        const glaspris = Math.round(prRude * a.antal * prisPrM2);
+        const total = glaspris + (fragtdage ? KASSE_PRIS : 0);
+
+        talblok.removeAttribute('aria-busy');
+        vis.falsmaal.textContent =
+          heltal.format(b.fals) + ' x ' + heltal.format(h.fals) + ' mm' + (a.antal > 1 ? ', ' + a.antal + ' stk' : '');
+        vis.areal.textContent =
+          areal.format(prRude) + ' m²' + (a.antal > 1 ? ', i alt ' + areal.format(iAlt) + ' m²' : '');
+        vis.udlevering.textContent = fragtdage
+          ? 'Trækasse, ' + heltal.format(KASSE_PRIS) + ' kr'
+          : udlevering === 'kasse'
+            ? 'Ikke afgjort'
+            : 'Afhentning';
+        vis.klar.textContent =
+          skaeredage + ' arbejdsdage' + (fragtdage ? ' plus ' + fragtdage + ' på vejen' : '');
+        vis.pris.textContent = spaerret ? 'Ikke afgjort' : heltal.format(total) + ' kr';
+
+        tegnUge(skaeredage, fragtdage);
+
+        besked.textContent = spaerret
+          ? 'Sedlen kan ikke skrives, før feltet ovenfor er rettet.'
+          : 'Prisen er regnet af falsmålet. Intet betales før afhentning eller faktura.';
+        knap.disabled = spaerret;
+
+        form.dataset.total = String(total);
+        form.dataset.glaspris = String(glaspris);
+        form.dataset.fragt = String(fragtdage ? KASSE_PRIS : 0);
+        form.dataset.falsb = String(b.fals);
+        form.dataset.falsh = String(h.fals);
+        form.dataset.prrude = areal.format(prRude);
+        form.dataset.ialt = areal.format(iAlt);
+        form.dataset.antal = String(a.antal);
+        form.dataset.skaeredage = String(skaeredage);
+        form.dataset.fragtdage = String(fragtdage);
+      }
+
+      function linje(navn, vaerdi) {
+        const rad = document.createElement('div');
+        rad.className = 'linje';
+        const a = document.createElement('span');
+        a.className = 'linje-navn';
+        a.textContent = navn;
+        const b = document.createElement('span');
+        b.className = 'linje-vaerdi';
+        b.textContent = vaerdi;
+        rad.append(a, b);
+        return rad;
+      }
+
+      function skrivSedlen() {
+        const d = form.dataset;
+        const g = valgtGlas();
+        const rubrik = document.createElement('h3');
+        rubrik.textContent = 'Skæreseddel, Glarmester Nordlys';
+
+        const blok = document.createElement('div');
+        blok.append(
+          linje('Falsmål', d.falsb + ' x ' + d.falsh + ' mm'),
+          linje('Antal', d.antal + ' stk'),
+          linje('Areal pr. rude', d.prrude + ' m²'),
+          linje('Areal i alt', d.ialt + ' m²'),
+          linje('Glas', g.dataset.navn + ', ' + heltal.format(Number(g.dataset.pris)) + ' kr/m²'),
+          linje('Glas i alt', heltal.format(Number(d.glaspris)) + ' kr'),
+          linje(
+            'Udlevering',
+            Number(d.fragt) ? 'Trækasse, ' + heltal.format(Number(d.fragt)) + ' kr' : 'Afhentning, Glarmestervej 8',
+          ),
+          linje(
+            'Klar om',
+            d.skaeredage + ' arbejdsdage' + (Number(d.fragtdage) ? ' plus ' + d.fragtdage + ' på vejen' : ''),
+          ),
+          linje('Pris i alt', heltal.format(Number(d.total)) + ' kr'),
+        );
+
+        const slut = document.createElement('p');
+        slut.className = 'kvittering-slut';
+        slut.textContent =
+          'Læs sedlen op på 75 62 11 09 i åbningstiden, eller tag den med på Glarmestervej 8. ' +
+          'Ruden skæres til millimeteren efter falsmålet ovenfor og kan ikke tages retur. ' +
+          'Der betales ved afhentning eller på faktura sammen med kassen.';
+
+        kvittering.replaceChildren(rubrik, blok, slut);
+        kvittering.focus();
+      }
+
+      form.addEventListener('input', regn);
+      form.addEventListener('change', regn);
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        regn();
+        if (!knap.disabled) skrivSedlen();
+      });
+
+      regn();
+    </script>
+  </body>
+</html>

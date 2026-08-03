@@ -275,7 +275,10 @@ check('original posts do not claim an upstream licence', () => {
 check('no post carries a long dash in any visible text', () => {
   for (const post of corpus.posts) {
     const text = JSON.stringify(post);
-    assert(!text.includes('—'), `${post.id} contains an em dash`);
+    /* The character is written as an escape on purpose: this repository forbids em dashes in
+       its own output, and a literal one here would make the file that enforces the rule the
+       only file that breaks it. */
+    assert(!text.includes(String.fromCharCode(0x2014)), `${post.id} contains an em dash`);
     assert(!text.includes('–'), `${post.id} contains an en dash`);
   }
 });
