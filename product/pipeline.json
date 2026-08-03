@@ -21,8 +21,13 @@
   "install": {
     "command": "node tools/install-sitesmith.mjs --to <dir>",
     "installs": "the whole of skills/sitesmith-v3, including scripts/ and knowledge/",
-    "needs": ["node >= 20"],
-    "needsForVerification": ["playwright", "@axe-core/playwright"],
+    "needs": [
+      "node >= 20"
+    ],
+    "needsForVerification": [
+      "playwright",
+      "@axe-core/playwright"
+    ],
     "degraded": "without the two browser packages every rendering check withholds its verdict and says so; it never prints a pass it did not earn"
   },
   "state": {
@@ -46,7 +51,13 @@
       "command": "sitesmith init [--name <name>]",
       "module": "commands.mjs#init",
       "reads": [],
-      "writes": [".sitesmith/PROJECT.md", ".sitesmith/DESIGN.md", ".sitesmith/decisions.jsonl", ".sitesmith/state.json", ".sitesmith/evidence/"],
+      "writes": [
+        ".sitesmith/PROJECT.md",
+        ".sitesmith/DESIGN.md",
+        ".sitesmith/decisions.jsonl",
+        ".sitesmith/state.json",
+        ".sitesmith/evidence/"
+      ],
       "stopsWhen": "never; it is idempotent and refreshes what is missing"
     },
     {
@@ -54,7 +65,10 @@
       "does": "runs",
       "command": "sitesmith recommend \"<brief>\" [--surface <s>] [--stack <s>]",
       "module": "knowledge/retrieve.mjs#search",
-      "reads": ["knowledge/*.jsonl", "knowledge/stacks/*.jsonl"],
+      "reads": [
+        "knowledge/*.jsonl",
+        "knowledge/stacks/*.jsonl"
+      ],
       "writes": [],
       "returns": "at most three posts, each with why it matched, its risks and its avoidWhen",
       "hardRule": "never a complete visual template or a finished look; the results are building blocks and still go through the subject, thesis, autopilot, swap and originality flow",
@@ -65,9 +79,25 @@
       "does": "runs, then agent",
       "command": "sitesmith build --surface <s>",
       "module": "commands.mjs#build",
-      "reads": ["BRIEF.md or .sitesmith/PROJECT.md", "scripts/stack.mjs", "knowledge/retrieve.mjs"],
-      "writes": [".sitesmith/RUN.json", ".sitesmith/RUN.md"],
-      "resolves": ["surface", "stack and where the stack came from", "knowledge results", "files to read in order", "artefacts to write", "every command", "blockers", "the one next step"],
+      "reads": [
+        "BRIEF.md or .sitesmith/PROJECT.md",
+        "scripts/stack.mjs",
+        "knowledge/retrieve.mjs"
+      ],
+      "writes": [
+        ".sitesmith/RUN.json",
+        ".sitesmith/RUN.md"
+      ],
+      "resolves": [
+        "surface",
+        "stack and where the stack came from",
+        "knowledge results",
+        "files to read in order",
+        "artefacts to write",
+        "every command",
+        "blockers",
+        "the one next step"
+      ],
       "agentThenDoes": "reads RUN.md, fills the direction record, and writes the site in the named stack",
       "stopsWhen": "a blocker is listed; the manifest names it and the agent resolves it before building"
     },
@@ -76,7 +106,9 @@
       "does": "runs, then agent",
       "command": "node <skill>/scripts/ledger.mjs new <surface>",
       "module": "scripts/ledger.mjs",
-      "writes": [".sitesmith/direction.md"],
+      "writes": [
+        ".sitesmith/direction.md"
+      ],
       "agentThenDoes": "fills every heading; a blank heading fails the check",
       "gate": "node <skill>/scripts/ledger.mjs check <build>",
       "stopsWhen": "the render's fingerprint repeats a recent one, or a device appears on every one of the last three records"
@@ -84,8 +116,18 @@
     {
       "id": "implement",
       "does": "agent",
-      "reads": ["SKILL.md", "run.md", "look.md", "floor/<surface>.md", "stacks/<detected>.md"],
-      "writes": ["the site itself", "ASSET-MANIFEST.md", "journeys/*.spec.mjs where the surface has a path"],
+      "reads": [
+        "SKILL.md",
+        "run.md",
+        "look.md",
+        "floor/<surface>.md",
+        "stacks/<detected>.md"
+      ],
+      "writes": [
+        "the site itself",
+        "ASSET-MANIFEST.md",
+        "journeys/*.spec.mjs where the surface has a path"
+      ],
       "stopsWhen": "two edit attempts on one defect; it is then written down as unresolved"
     },
     {
@@ -93,8 +135,20 @@
       "does": "runs",
       "command": "sitesmith verify <url-or-dir>",
       "module": "scripts/verify.mjs",
-      "measures": ["375/768/1440 render", "axe in both colour schemes", "console errors", "dead links", "horizontal overflow", "keyboard focus indicators", "type floor", "reduced motion"],
-      "writes": [".sitesmith/shots/*.png", ".sitesmith/shots/report.json"],
+      "measures": [
+        "375/768/1440 render",
+        "axe in both colour schemes",
+        "console errors",
+        "dead links",
+        "horizontal overflow",
+        "keyboard focus indicators",
+        "type floor",
+        "reduced motion"
+      ],
+      "writes": [
+        ".sitesmith/shots/*.png",
+        ".sitesmith/shots/report.json"
+      ],
       "stopsWhen": "a browser is missing; the verdict is withheld and named, never passed"
     },
     {
@@ -102,8 +156,14 @@
       "does": "runs, then agent",
       "command": "node <skill>/scripts/critique.mjs packet   →   critique.mjs lock --file <answers>",
       "module": "scripts/critique.mjs",
-      "reads": [".sitesmith/shots/*.png", "the brief"],
-      "writes": [".sitesmith/critique-packet.md", ".sitesmith/critique.json"],
+      "reads": [
+        ".sitesmith/shots/*.png",
+        "the brief"
+      ],
+      "writes": [
+        ".sitesmith/critique-packet.md",
+        ".sitesmith/critique.json"
+      ],
       "agentThenDoes": "answers the six questions from the images alone, with the record closed; hand the packet to a fresh agent where one is available",
       "stopsWhen": "a second correction round is asked for; one is allowed and the second is refused"
     },
@@ -112,15 +172,37 @@
       "does": "runs",
       "command": "node <skill>/scripts/journey.mjs journeys --base <url>",
       "module": "scripts/journey.mjs",
-      "asserts": ["something observably changed", "it was announced", "the failure path ran and its message sat on its own field", "the path completed on the keyboard alone"],
-      "requiredFor": ["buy", "operate", "redesign"]
+      "asserts": [
+        "something observably changed",
+        "it was announced",
+        "the failure path ran and its message sat on its own field",
+        "the path completed on the keyboard alone"
+      ],
+      "requiredFor": [
+        "buy",
+        "operate",
+        "redesign"
+      ]
     },
     {
       "id": "gate",
       "does": "runs",
       "command": "sitesmith audit  |  node <skill>/scripts/gate.mjs",
       "module": "scripts/gate.mjs",
-      "refuses": ["honesty", "copy", "tokens", "antipattern", "look", "operate", "critique", "journeys", "direction", "reads", "report", "reconciliation"],
+      "refuses": [
+        "honesty",
+        "copy",
+        "tokens",
+        "antipattern",
+        "look",
+        "operate",
+        "critique",
+        "journeys",
+        "direction",
+        "reads",
+        "report",
+        "reconciliation"
+      ],
       "policy": "docs/GATE-POLICY.md — new hard gates need a user-affecting defect, two independent reproductions, a low-false-positive measurement, and proof no existing gate covers it",
       "stopsWhen": "it refuses; the way past every refusal is named in the refusal itself"
     },
@@ -129,9 +211,24 @@
       "does": "runs",
       "command": "sitesmith inspect <url-or-dir> [--out <dir>]",
       "module": "scripts/inspect.mjs",
-      "usedBy": ["audit", "redesign"],
-      "measures": ["stack and routes", "screenshots at 375/768/1440", "components and their six states", "design tokens", "brand assets", "what must be preserved"],
-      "writes": ["<out>/AUDIT.md", "<out>/inspection.json", "<out>/baseline/*.png", "<out>/baseline/manifest.json"],
+      "usedBy": [
+        "audit",
+        "redesign"
+      ],
+      "measures": [
+        "stack and routes",
+        "screenshots at 375/768/1440",
+        "components and their six states",
+        "design tokens",
+        "brand assets",
+        "what must be preserved"
+      ],
+      "writes": [
+        "<out>/AUDIT.md",
+        "<out>/inspection.json",
+        "<out>/baseline/*.png",
+        "<out>/baseline/manifest.json"
+      ],
       "stopsWhen": "never; it reports and does not refuse. A route it could not read gets no record and is listed as not measured"
     },
     {
@@ -139,8 +236,12 @@
       "does": "runs, then agent",
       "command": "sitesmith redesign <url-or-dir>",
       "module": "commands.mjs#redesign",
-      "reads": ["redesign.md"],
-      "writes": [".sitesmith/evidence/inspection/"],
+      "reads": [
+        "redesign.md"
+      ],
+      "writes": [
+        ".sitesmith/evidence/inspection/"
+      ],
       "agentThenDoes": "changes only what redesign.md permits, against the baseline inspect wrote"
     }
   ],
@@ -155,10 +256,59 @@
     "neverClaims": "that the page is good. The gate refuses named defects; the verdict on the design belongs to a person who is shown it."
   },
   "providers": {
-    "$comment": "Generated packs come from the v2 layer and are unchanged by this file. They expose the same journey under each agent's own entry filename.",
-    "command": "node bin/sitesmith.mjs pack --provider <claude|codex|cursor> --out <dir>",
-    "claude": ".claude/skills/sitesmith/SKILL.md",
-    "codex": ".agents/skills/sitesmith/AGENTS.md",
-    "cursor": ".cursor/rules/sitesmith/sitesmith.mdc"
+    "$comment": "Every normal pack is generated from this file. Status is a claim about what has been proved, not about whether a file with that name exists.",
+    "command": "node bin/sitesmith.mjs install --to <dir> --provider <name>",
+    "claude": {
+      "status": "supported",
+      "entry": ".claude/skills/sitesmith/SKILL.md",
+      "proof": "installed and driven end to end in evidence/pilot"
+    },
+    "codex": {
+      "status": "experimental",
+      "entry": ".agents/skills/sitesmith/AGENTS.md",
+      "proof": "the pack generates and its entry parses; no end-to-end run on Codex"
+    },
+    "cursor": {
+      "status": "experimental",
+      "entry": ".cursor/rules/sitesmith/sitesmith.mdc",
+      "proof": "the pack generates and its frontmatter parses; no end-to-end run in Cursor"
+    },
+    "openai": {
+      "status": "experimental",
+      "entry": ".openai/skills/sitesmith/SKILL.md",
+      "proof": "the pack generates, its SKILL.md frontmatter parses and openai.yaml is emitted and checked for shape; the official OpenAI skill validator has not been run here, so no portability claim is made"
+    }
+  },
+  "quickstart": [
+    "node bin/sitesmith.mjs install --to <dir> --provider claude",
+    "cd <dir>",
+    "npm i -D playwright @axe-core/playwright && npx playwright install chromium",
+    "node .claude/skills/sitesmith/cli.mjs init --name \"<name>\"",
+    "node .claude/skills/sitesmith/cli.mjs recommend \"<one sentence about the job>\" --surface buy",
+    "node .claude/skills/sitesmith/cli.mjs build --surface buy",
+    "node .claude/skills/sitesmith/scripts/verify.mjs <url>",
+    "node .claude/skills/sitesmith/scripts/gate.mjs --url <url>"
+  ],
+  "commands": {
+    "$comment": "The seven the CLI exposes, and who does the work. These names and these words must match COMMANDS in skills/sitesmith-v3/commands.mjs exactly; tools/test-pipeline-drift.mjs compares them.",
+    "init": "runs",
+    "recommend": "runs",
+    "build": "orchestrates",
+    "inspect": "runs",
+    "redesign": "both",
+    "audit": "runs",
+    "verify": "runs"
+  },
+  "exitContract": {
+    "0": "the step completed and the next step may begin",
+    "1": "a product or content defect: something measured is wrong",
+    "2": "usage or setup: the invocation or the environment is wrong",
+    "3": "not ready, or a verdict withheld: blockers are listed and nothing was faked",
+    "$comment": "Stable across every command, so an automated caller can branch on it. A blocker is never reported as success."
+  },
+  "legacy": {
+    "v2Pipeline": "skills/sitesmith/PIPELINE.json",
+    "reachableBy": "node bin/sitesmith.mjs install --legacy-v2",
+    "note": "History and explicit legacy support. It defines no normal user journey and no normal pack."
   }
 }

@@ -76,21 +76,40 @@ Number nine is the one worth remembering. A gate that reports nothing is annoyin
 that reports four specific, confident, false design defects is worse than no gate, and it
 took a real build on a real stack to see it.
 
-## Reproducing this
+## Rebuilding this exact site
+
+`npm ci`, not `npm install`. The numbers above are only evidence if the tree they were
+measured on is the tree that comes back: `astro: ^5.14.1` resolved to 5.18.2 between the
+build and the commit, and `package-lock.json` is committed so it keeps resolving to 5.18.2.
 
 ```bash
-node tools/install-sitesmith.mjs --to <empty dir>
-cd <empty dir>
-npm i -D playwright @axe-core/playwright
-node sitesmith/cli.mjs init --name "<name>"
-node sitesmith/cli.mjs recommend "<one sentence about the job>" --surface buy
-node sitesmith/cli.mjs build --surface buy      # writes .sitesmith/RUN.md
-# the coding agent reads RUN.md and builds from it
-node sitesmith/scripts/verify.mjs <url>
-node sitesmith/scripts/critique.mjs packet      # answer from the images alone, then lock
-node sitesmith/scripts/journey.mjs journeys --base <url>
-node sitesmith/scripts/gate.mjs --url <url>
+cd evidence/pilot/site
+npm ci
+npm run build
 ```
+
+CI does this on every push, then serves the production build, verifies at 375/768/1440 with
+axe in both colour schemes, runs the journey against it and checks that the locked critique
+still points at the render that shipped.
+
+## Running the flow yourself, on a new brief
+
+```bash
+node bin/sitesmith.mjs install --to <empty dir> --provider claude
+cd <empty dir>
+npm i -D playwright @axe-core/playwright && npx playwright install chromium
+node .claude/skills/sitesmith/cli.mjs init --name "<name>"
+node .claude/skills/sitesmith/cli.mjs recommend "<one sentence about the job>" --surface buy
+node .claude/skills/sitesmith/cli.mjs build --surface buy      # writes .sitesmith/RUN.md
+# the coding agent reads RUN.md and builds from it
+node .claude/skills/sitesmith/scripts/verify.mjs <url>
+node .claude/skills/sitesmith/scripts/critique.mjs packet      # answer from the images alone, then lock
+node .claude/skills/sitesmith/scripts/journey.mjs journeys --base <url>
+node .claude/skills/sitesmith/scripts/gate.mjs --url <url>
+```
+
+`build` exits 3 while it has a blocker, and 0 once the brief, the surface and the direction
+record are all there. It never reports success over a blocked run.
 
 The last line matters: pass `--url` against a served build. A production build read from
 the filesystem cannot load its own stylesheets, and since defect nine the gate says so

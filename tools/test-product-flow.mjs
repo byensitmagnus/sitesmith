@@ -138,7 +138,7 @@ try {
 await check('generated provider packs expose the default journey but no lab step', async () => {
   const out = await mkdtemp(join(tmpdir(), 'sitesmith-pack-'));
   try {
-    const result = spawnSync(process.execPath, [CLI, 'pack', '--provider', 'codex', '--out', out], {
+    const result = spawnSync(process.execPath, [CLI, 'pack', '--legacy-v2', '--provider', 'codex', '--out', out], {
       cwd: ROOT,
       encoding: 'utf8',
     });
@@ -155,13 +155,13 @@ await check('generated provider packs expose the default journey but no lab step
 await check('installed provider bundles carry every manifested licence and notice hash', async () => {
   const out = await mkdtemp(join(tmpdir(), 'sitesmith-install-'));
   try {
-    /* `--v2` names which installer this check drives, and it has to. This file tests the v2
-       product flow: PIPELINE.json, the generated provider packs, and the licence and notice
-       files those bundles carry. `install` without the flag now hands off to the v3
-       installer, which writes a different layout and ships no LICENSES directory, so the
-       bare command stopped producing the bundle this assertion is about. The contract here
-       is right; the command it drove was renamed under it. */
-    const result = spawnSync(process.execPath, [CLI, 'install', '--v2', '--provider', 'codex', '--to', out,
+    /* `--legacy-v2` names which installer this check drives, and it has to. This file tests
+       the v2 product flow: PIPELINE.json, the generated provider packs, and the licence and
+       notice files those bundles carry. `install` without the flag installs the current v3
+       product, which writes a different layout and ships no LICENSES directory, so the bare
+       command stopped producing the bundle this assertion is about. The contract here is
+       right; the command it drove was renamed under it, twice. */
+    const result = spawnSync(process.execPath, [CLI, 'install', '--legacy-v2', '--provider', 'codex', '--to', out,
       '--no-deps', '--no-doctor'], { cwd: ROOT, encoding: 'utf8' });
     assert.equal(result.status, 0, (result.stderr || result.stdout).trim());
     const installedSkill = join(out, '.agents', 'skills', 'sitesmith');
@@ -202,15 +202,19 @@ await check('installed provider bundles carry every manifested licence and notic
   }
 });
 
-await check('public product documents agree on the compact journey', async () => {
-  const [skill, readme, state, plugin, marketplace] = await Promise.all([
+/* The root README used to be asserted here too. It now documents v3, whose journey is
+   product/pipeline.json and is checked by tools/test-pipeline-drift.mjs. Asserting the v2
+   journey against it would force the current front page to advertise the legacy one, which
+   is the drift this round exists to end. The v2 journey is still required of v2's own
+   documents. */
+await check('the v2 documents agree on the compact v2 journey', async () => {
+  const [skill, state, plugin, marketplace] = await Promise.all([
     readFile(join(ROOT, 'skills/sitesmith/SKILL.md'), 'utf8'),
-    readFile(join(ROOT, 'README.md'), 'utf8'),
     readFile(join(ROOT, 'docs/v2/STATE.md'), 'utf8'),
     readFile(join(ROOT, '.claude-plugin/plugin.json'), 'utf8'),
     readFile(join(ROOT, '.claude-plugin/marketplace.json'), 'utf8'),
   ]);
-  for (const [name, text] of Object.entries({ skill, readme, state })) {
+  for (const [name, text] of Object.entries({ skill, state })) {
     assert.match(text, /init\s*(?:→|->)\s*build\s*(?:→|->)\s*audit/i, `${name} has no journey`);
   }
   assert.doesNotMatch(`${plugin}\n${marketplace}`, /12-step/i);

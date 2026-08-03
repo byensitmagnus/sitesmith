@@ -18,7 +18,7 @@
 import { mkdir, writeFile, readFile } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
-import { join, resolve } from 'node:path';
+import { join, resolve, relative, dirname, sep } from 'node:path';
 
 const say = (s = '') => console.log(s);
 
@@ -235,7 +235,16 @@ function knowledgeEngine(root) {
   ].find(existsSync) ?? null;
 }
 
+export const SURFACES = ['buy', 'operate', 'read', 'experience'];
+
 export async function build(root, project, { surface, brief }) {
+  /* Usage is exit 2, and it is checked before anything is written. A surface nobody
+     recognises used to run the whole command, resolve a floor file that does not exist and
+     write a manifest naming it, which is a wrong answer rather than a refusal. */
+  if (surface && !SURFACES.includes(surface)) {
+    say(`\n  unknown surface: ${surface}. One of: ${SURFACES.join(', ')}\n`);
+    return 2;
+  }
   const p = statePaths(project);
   if (!existsSync(p.state)) await init(project, {});
 
@@ -254,14 +263,24 @@ export async function build(root, project, { surface, brief }) {
     adapter = `stacks/${declared}.md`;
     why = null;
   }
-  const knowledge = await resolveKnowledge(root, { brief: briefText.slice(0, 1200), surface, stack });
+  /* The whole brief, not the first 1200 characters of it.
+     Truncating was a workaround for a scorer that punished long queries: the same question
+     scored 0.295 typed as a sentence and 0.092 pasted as its brief. That is fixed where it
+     was broken, in the normaliser's QUERY_TERM_CAP, so the cut here is no longer load-bearing
+     and a fact 1300 characters into a brief can now reach the index. */
+  const knowledge = await resolveKnowledge(root, { brief: briefText, surface, stack });
 
   const directionPath = join(p.dir, 'direction.md');
   const skill = skillEntry(root);
-  const scriptOf = (n) => {
-    const s = skillScript(root, n);
-    return s ? `node ${s}` : `node <skill>/scripts/${n}`;
-  };
+  /* Portable, and portable by construction rather than by find-and-replace.
+     RUN.json used to carry absolute paths, so a manifest written on one machine named a
+     home directory that did not exist on the next, and the file could not be committed
+     without putting a person's name in the repository. Everything the manifest points at is
+     now either relative to the project or written against `skillRoot`, which is stated once. */
+  const skillRoot = skill ? dirname(skill) : null;
+  const rel = (abs) => (abs ? `./${relative(project, abs).split(sep).join('/')}` : null);
+  const inSkill = (abs) => (skillRoot && abs ? `<skill>/${relative(skillRoot, abs).split(sep).join('/')}` : null);
+  const scriptOf = (n) => `node ${inSkill(skillScript(root, n)) ?? `<skill>/scripts/${n}`}`;
 
   const blockers = [];
   if (!surface) blockers.push('no surface given: pass --surface buy|operate|read|experience');
@@ -270,13 +289,16 @@ export async function build(root, project, { surface, brief }) {
 
   const manifest = {
     v: 1,
-    project,
+    /* `<skill>` in every path below expands to this. It is the one absolute path in the
+       file, it is stated rather than pasted into forty strings, and a manifest moved to
+       another machine needs this line changed and nothing else. */
+    skillRoot: skillRoot ?? null,
     surface: surface ?? null,
-    brief: briefPath ? briefPath.replace(project, '.') : null,
+    brief: rel(briefPath),
     stack: { name: stack, source: stackSource, adapter, note: why },
     knowledge,
     read: [
-      skill ? `<skill>/${skill.slice(root.length).split(/[\/]+/).filter(Boolean).join('/')}` : 'SKILL.md',
+      inSkill(skill) ?? 'SKILL.md',
       '<skill>/run.md',
       '<skill>/look.md',
       surface === 'buy' ? '<skill>/floor/buy.md' : surface === 'operate' ? '<skill>/floor/operate.md' : null,
@@ -319,7 +341,12 @@ export async function build(root, project, { surface, brief }) {
   say(`  brief   : ${manifest.brief ?? 'none found'}`);
   say(`  patterns: ${knowledge.used.length ? knowledge.used.map((k) => k.id).join(', ') : knowledge.note}`);
   say(`\n  next    : ${manifest.next}\n`);
-  return blockers.length ? 0 : 0;
+  /* 3, not 0. A blocked build is not a finished build, and an automated caller that reads
+     exit 0 goes on to the next step with no direction record and no brief. This returned 0
+     either way, with a ternary that had the same value on both sides, which is what a
+     contract looks like when it was meant and never written. */
+  if (blockers.length) say(`  ${blockers.length} blocker(s): exit 3, nothing was faked.\n`);
+  return blockers.length ? 3 : 0;
 }
 
 function runMarkdown(m) {

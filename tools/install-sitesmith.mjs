@@ -21,6 +21,7 @@ import { fileURLToPath } from 'node:url'
 import { createRequire } from 'node:module'
 import { dirname, join, relative } from 'node:path'
 import { homedir } from 'node:os'
+import { PROVIDERS, providerNames, loadPipeline, packFiles } from './provider-pack.mjs'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 const SOURCE = join(root, 'skills/sitesmith-v3')
@@ -31,23 +32,43 @@ const FORCE = args.includes('--force')
 const DRY = args.includes('--dry-run')
 const toIndex = args.indexOf('--to')
 const explicit = toIndex > -1 ? args[toIndex + 1] : null
+const provIndex = args.indexOf('--provider')
+const wantProviders = provIndex > -1 ? (args[provIndex + 1] ?? '') : null
 
 if (!existsSync(join(SOURCE, 'SKILL.md'))) {
   console.error(`no SKILL.md under ${SOURCE}. Run this from the repository root.`)
   process.exit(2)
 }
 
+// --provider puts the skill where that agent looks, and writes the generated journey next
+// to it. Without it the skill goes in a plain `sitesmith/` directory, which is what the
+// pilot used and what someone driving the CLI by hand wants.
+let providers = []
+if (wantProviders !== null) {
+  providers = wantProviders === 'all' ? providerNames() : wantProviders.split(',').map((s) => s.trim()).filter(Boolean)
+  const bad = providers.filter((p) => !PROVIDERS[p])
+  if (!providers.length || bad.length) {
+    console.error(`usage: --provider ${providerNames().join('|')}|all`)
+    if (bad.length) console.error(`unknown provider: ${bad.join(', ')}`)
+    process.exit(2)
+  }
+}
+
 // Both roots are installed when both exist, because this machine keeps them as a pair and
 // updating one leaves the other stale, which is worse than not installing at all.
-const targets = explicit
-  ? [join(explicit, NAME)]
-  : [join(homedir(), '.claude', 'skills', NAME), join(homedir(), '.agents', 'skills', NAME)]
-      .filter((p) => existsSync(dirname(dirname(p))))
+const targets = providers.length
+  ? providers.map((p) => join(explicit ?? process.cwd(), PROVIDERS[p].dir))
+  : explicit
+    ? [join(explicit, NAME)]
+    : [join(homedir(), '.claude', 'skills', NAME), join(homedir(), '.agents', 'skills', NAME)]
+        .filter((p) => existsSync(dirname(dirname(p))))
 
 if (!targets.length) {
   console.error('found no skills directory. Pass --to <path> to say where it goes.')
   process.exit(2)
 }
+
+const pipeline = await loadPipeline()
 
 // Working files and test doubles are not part of the skill. .sitesmith is a run's own
 // scratch directory and would ship one project's state to every later project.
@@ -73,16 +94,18 @@ console.log(`sitesmith: ${files.length} files, ${(bytes / 1024).toFixed(0)} KB\n
 
 let wrote = 0
 let refused = 0
-for (const target of targets) {
+targets.forEach((target, i) => {
+  const provider = providers[i] ?? null
+  const generated = provider ? packFiles(provider, pipeline) : { 'JOURNEY.md': packFiles('claude', pipeline)['JOURNEY.md'] }
   if (existsSync(target) && !FORCE) {
     console.log(`  refused  ${target}`)
     console.log(`           already exists. Pass --force to replace it, after checking you have no local edits there.`)
     refused++
-    continue
+    return
   }
   if (DRY) {
-    console.log(`  would write  ${target}  (${files.length} files)`)
-    continue
+    console.log(`  would write  ${target}  (${files.length + Object.keys(generated).length} files)`)
+    return
   }
   if (existsSync(target) && FORCE) rmSync(target, { recursive: true, force: true })
   for (const f of files) {
@@ -90,10 +113,15 @@ for (const target of targets) {
     mkdirSync(dirname(dest), { recursive: true })
     writeFileSync(dest, readFileSync(join(SOURCE, f)))
   }
-  console.log(`  installed  ${target}`)
-  for (const f of files.sort()) console.log(`             ${f}`)
+  for (const [f, body] of Object.entries(generated)) {
+    const dest = join(target, f)
+    mkdirSync(dirname(dest), { recursive: true })
+    writeFileSync(dest, body)
+  }
+  console.log(`  installed  ${target}${provider ? `  (${provider}, entry ${PROVIDERS[provider].entry})` : ''}`)
+  for (const f of [...files, ...Object.keys(generated)].sort()) console.log(`             ${f}`)
   wrote++
-}
+})
 
 if (refused && !wrote) {
   console.error('\nnothing installed.')
