@@ -126,7 +126,9 @@
         "background": "glasflade",
         "use": "every paragraph, heading and measurement on the page ground",
         "minimum": "text",
-        "state": "rest"
+        "state": "rest",
+        "measured": 12.07,
+        "verdict": "passes text"
       },
       {
         "name": "body on the bench",
@@ -134,7 +136,9 @@
         "background": "skaerebaenk",
         "use": "the price list and the written specification, which are laid on the felt",
         "minimum": "text",
-        "state": "rest"
+        "state": "rest",
+        "measured": 9.75,
+        "verdict": "passes text"
       },
       {
         "name": "the button",
@@ -142,7 +146,9 @@
         "background": "rudekant",
         "use": ".skriv, the one action on the page",
         "minimum": "text",
-        "state": "rest"
+        "state": "rest",
+        "measured": 8.3,
+        "verdict": "passes text"
       },
       {
         "name": "the button, hovered",
@@ -150,7 +156,9 @@
         "background": "blyant",
         "use": ".skriv:hover, which goes to pencil rather than lightening the green",
         "minimum": "text",
-        "state": "hover"
+        "state": "hover",
+        "measured": 15.79,
+        "verdict": "passes text"
       },
       {
         "name": "the focus ring",
@@ -158,7 +166,9 @@
         "background": "glasflade",
         "use": ":focus-visible, a 3px solid outline at 3px offset on the page ground",
         "minimum": "nonText",
-        "state": "focus"
+        "state": "focus",
+        "measured": 6.34,
+        "verdict": "passes nonText"
       },
       {
         "name": "the focus ring on the button",
@@ -169,7 +179,10 @@
         "state": "focus",
         "backdrop": [
           "glasflade"
-        ]
+        ],
+        "backgroundPainted": "#eff2f0",
+        "measured": 14.01,
+        "verdict": "passes nonText"
       },
       {
         "name": "the error message",
@@ -181,7 +194,10 @@
         "backdrop": [
           "glasflade",
           "kridt-flade"
-        ]
+        ],
+        "backgroundPainted": "#e8e1dd",
+        "measured": 5.11,
+        "verdict": "passes text"
       },
       {
         "name": "the invalid field's edge",
@@ -189,7 +205,9 @@
         "background": "glasflade",
         "use": "input[aria-invalid=true], a 3px bottom border in red chalk",
         "minimum": "nonText",
-        "state": "error"
+        "state": "error",
+        "measured": 5.04,
+        "verdict": "passes nonText"
       },
       {
         "name": "a field's edge at rest",
@@ -197,7 +215,9 @@
         "background": "glasflade",
         "use": "the bottom border of every number field, which is the field's only boundary",
         "minimum": "nonText",
-        "state": "rest"
+        "state": "rest",
+        "measured": 12.07,
+        "verdict": "passes nonText"
       }
     ],
     "states": {
@@ -448,5 +468,11 @@
     ],
     "squint": "Out of focus the page is one large pale rectangle with a darker horizontal band across it, which is the bench, and a lighter block to its right, which is the form. That shape is the argument: the bench is the thing, and the form is what you do to it. If the form were the darker block the page would be a calculator with a picture of a bench next to it, which is a different and worse page.",
     "departures": []
+  },
+  "validation": {
+    "checkedAt": "2026-08-03T20:07:14Z",
+    "schemaVersion": 1,
+    "pairsMeasured": 9,
+    "pairsFailing": 0
   }
 }

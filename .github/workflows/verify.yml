@@ -9,6 +9,7 @@ on:
       - main
       - rebuild/sitesmith-unified
       - 'release/**'
+      - 'feat/**'
   pull_request:
   workflow_dispatch:
 
@@ -135,6 +136,12 @@ jobs:
 
       - name: the anti-repeat ledger and the direction record parser
         run: node skills/sitesmith-v3/scripts/test-ledger.mjs
+
+      # Colour maths and the design contract, against work it must accept and fifteen ways
+      # of being wrong. Three of the fifteen are ways the pilot's own contract was wrong on
+      # the first pass, which is why they are fixtures and not comments.
+      - name: the design contract, and the colour maths under it
+        run: node skills/sitesmith-v3/scripts/test-contract.mjs
 
       - name: durable run state and its typed graph
         run: node skills/sitesmith-v3/scripts/test-state.mjs
@@ -593,6 +600,19 @@ jobs:
       # The critique is only evidence while it is attached to the render that shipped. This
       # checks the record itself: a locked hash, an answer, and a correction round that says
       # which render it moved from and to.
+      # The design contract, against the build that ships. check measures every pair from
+      # the values; compare measures the page against them. A contract that only checks
+      # itself is a form.
+      - name: the design contract checks clean and matches the build
+        working-directory: evidence/pilot/site
+        run: |
+          mkdir -p .sitesmith
+          cp ../record/contract.json .sitesmith/contract.json
+          node ../../../skills/sitesmith-v3/scripts/contract.mjs check | tee /tmp/pilot-contract.log
+          grep -q "every pair clears its floor" /tmp/pilot-contract.log             || { echo "::error::the pilot contract did not check clean"; exit 1; }
+          node ../../../skills/sitesmith-v3/scripts/contract.mjs compare --url http://localhost:4351/             | tee /tmp/pilot-compare.log
+          grep -q "matches its contract" /tmp/pilot-compare.log             || { echo "::error::the pilot build does not match its contract"; exit 1; }
+
       - name: the locked critique is intact and attached to a render
         run: |
           node -e '
@@ -652,7 +672,7 @@ jobs:
                    evidence/pilot/record/ASSET-MANIFEST.md evidence/pilot/record/PRODUCTION-REPORT.md \
                    evidence/pilot/renders/375.png evidence/pilot/renders/768.png \
                    evidence/pilot/renders/1440.png evidence/pilot/renders/reduced-motion-1440.png \
-                   evidence/pilot/site/package-lock.json evidence/pilot/site/journeys/koeb.spec.mjs; do
+                   evidence/pilot/record/contract.json evidence/pilot/record/CONTRACT.md                    evidence/pilot/site/package-lock.json evidence/pilot/site/journeys/koeb.spec.mjs; do
             test -f "$f" || { echo "::error::$f is claimed and missing"; exit 1; }
           done
           # The committed manifest is the one the pilot produced, and it is not portable:
