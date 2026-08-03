@@ -127,6 +127,11 @@ const MAX_WEIGHT = 5;
 /** Below this normalised score the engine says "no good match" instead of guessing. */
 export const NO_MATCH_THRESHOLD = 0.12;
 
+/* How many of a query's terms the denominator counts, taken from the most informative end.
+   Twelve is roughly one sentence of real content words, which is what a person types into
+   `recommend`; a whole brief is normalised against the same budget so both routes agree. */
+export const QUERY_TERM_CAP = 12;
+
 export const MAX_RESULTS = 3;
 
 const STOPWORDS = new Set([
@@ -334,14 +339,18 @@ function scorePost(post, queryTerms, idf) {
  * denominator then only contained the two terms that happened to exist.
  */
 function normaliser(queryTerms, idf, unknownIdf) {
-  let best = 0;
-  const counted = new Set();
-  for (const term of queryTerms) {
-    if (counted.has(term)) continue;
-    counted.add(term);
-    best += MAX_WEIGHT * (idf.get(term) ?? unknownIdf);
-  }
-  return best;
+  /* Capped at the most informative terms, because the query is sometimes a whole brief.
+     `sitesmith build` passes the brief file itself, and a brief is mostly the subject's own
+     nouns, which the index does not hold and must not hold: the index carries patterns, not
+     subjects. Uncapped, the same question scored 0.295 typed as a sentence and 0.092 pasted
+     as its brief, so the command that reads a file found nothing while the command that
+     read a summary found the right post first. Unknown terms still count inside the cap, so
+     a brief about baking bread cannot reach the threshold off one incidental hit. */
+  const weights = [...new Set(queryTerms)]
+    .map((term) => MAX_WEIGHT * (idf.get(term) ?? unknownIdf))
+    .sort((a, b) => b - a)
+    .slice(0, QUERY_TERM_CAP);
+  return weights.reduce((sum, w) => sum + w, 0);
 }
 
 function round(n) {

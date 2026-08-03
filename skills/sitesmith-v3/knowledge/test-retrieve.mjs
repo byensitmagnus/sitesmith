@@ -36,7 +36,20 @@ import {
 } from './retrieve.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
-const REPO_ROOT = dirname(HERE);
+/* The corpus ships inside the skill, so `..` is the skill directory, not the repository.
+   Verbatim citations point at reference files that only exist in the development repo, so
+   walk up until one is found. An installed copy has no repo above it; the two citation
+   checks below say they were skipped rather than passing on a path they never opened. */
+const REPO_ROOT = (() => {
+  let dir = dirname(HERE);
+  for (let i = 0; i < 6; i++) {
+    if (existsSync(join(dir, 'skills/sitesmith/references'))) return dir;
+    const up = dirname(dir);
+    if (up === dir) break;
+    dir = up;
+  }
+  return null;
+})();
 
 const EXPECTED_FILES = {
   'surfaces.jsonl': 8,
@@ -216,6 +229,7 @@ check('verbatim posts name a source file with line numbers', () => {
 });
 
 check('verbatim sources point at files that exist in this repo', () => {
+  if (!REPO_ROOT) return 'skipped: no development repository above this copy, so the cited reference files are not here';
   for (const post of corpus.posts) {
     if (post.provenance !== 'verbatim') continue;
     for (const ref of post.source.split(';')) {
@@ -231,6 +245,7 @@ check('verbatim mechanisms appear word for word at the cited lines', () => {
   // Markdown emphasis markers and whitespace are normalised away on both
   // sides, which is exactly the licence the provenance note claims. Anything
   // else, a swapped character or a spliced sentence, fails here.
+  if (!REPO_ROOT) return 'skipped: no development repository above this copy, so the cited lines cannot be read';
   const norm = (s) => s.replace(/[*`_]/g, '').replace(/\s+/g, ' ').trim().toLowerCase();
   for (const post of corpus.posts) {
     if (post.provenance !== 'verbatim') continue;

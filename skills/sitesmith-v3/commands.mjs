@@ -155,6 +155,7 @@ export async function recommend(root, { brief, surface, stack }) {
   const engine = [
     join(root, 'knowledge/retrieve.mjs'),
     join(root, 'skills/sitesmith-v3/knowledge/retrieve.mjs'),
+    join(root, '../knowledge/retrieve.mjs'),
   ].find(existsSync);
   if (!engine) {
     say('  the knowledge index is not in this installation, so there is nothing to search.');
@@ -180,25 +181,161 @@ function skillEntry(root) {
   ].find(existsSync);
 }
 
-export async function build(root, project, { surface }) {
-  const entry = skillEntry(root);
-  if (!existsSync(statePaths(project).state)) await init(project, {});
+/* The run manifest, and why it exists rather than a printed list of steps.
+   The first version of `build` printed three lines of advice. A coding agent given that has
+   to open five documents and guess the order, which is the gap this command was supposed to
+   close. So it resolves what can be resolved, writes it down as one machine-readable order
+   of work, and names the one step that is actually next. Nothing here builds a website: the
+   agent does that, from this manifest. */
+async function resolveStack(root, project) {
+  const script = skillScript(root, 'stack.mjs');
+  if (!script) return { stack: null, adapter: null, why: 'stack.mjs is not in this installation' };
+  const r = spawnSync(process.execPath, [script, 'detect', project], { encoding: 'utf8' });
+  const out = `${r.stdout ?? ''}`;
+  const stack = (out.match(/stack:\s*(\S+)/) ?? [])[1] ?? null;
+  const adapter = (out.match(/adapter:\s*(\S+)/) ?? [])[1] ?? null;
+  return { stack, adapter, why: stack ? null : 'nothing detected; plain HTML and CSS with no build step' };
+}
 
-  say('\n  build is the skill, read by a coding agent. This command does not write a website.\n');
-  say(`    1. open   ${entry ?? 'SKILL.md (not found in this installation)'}`);
-  say('    2. fill   .sitesmith/PROJECT.md, then run the direction record:');
-  say(`       node <skill>/scripts/ledger.mjs new ${surface ?? '<surface>'}`);
-  say('    3. build  from the plan, then: verify, critique packet, journey, gate\n');
-
-  if (surface) {
-    const s = await readState(project);
-    const surfaces = new Set(s?.surfaces ?? []);
-    surfaces.add(surface);
-    await writeState(project, { surfaces: [...surfaces] });
-    await note(project, { at: 'build', surface, by: 'sitesmith build' });
-    say(`  recorded surface: ${surface}\n`);
+async function resolveKnowledge(root, { brief, surface, stack }) {
+  const engine = knowledgeEngine(root);
+  if (!engine || !brief) return { used: [], note: engine ? 'no brief text given' : 'knowledge index not installed' };
+  const argv = [brief, '--json'];
+  if (surface) argv.push('--surface', surface);
+  if (stack) argv.push('--stack', stack);
+  const r = spawnSync(process.execPath, [engine, ...argv], { encoding: 'utf8' });
+  try {
+    const parsed = JSON.parse(r.stdout);
+    const results = parsed.results ?? [];
+    return {
+      used: results.map((x) => ({ id: x.id, score: x.score, userJob: x.userJob ?? null })),
+      note: parsed.noGoodMatch ? (parsed.message ?? "no good match; go to the subject's own world") : null,
+    };
+  } catch {
+    return { used: [], note: 'retrieval produced no machine-readable result; run `sitesmith recommend` and read it' };
   }
-  return 0;
+}
+
+function knowledgeEngine(root) {
+  return [
+    join(root, 'knowledge/retrieve.mjs'),
+    join(root, 'skills/sitesmith-v3/knowledge/retrieve.mjs'),
+    join(root, '../knowledge/retrieve.mjs'),
+  ].find(existsSync) ?? null;
+}
+
+export async function build(root, project, { surface, brief }) {
+  const p = statePaths(project);
+  if (!existsSync(p.state)) await init(project, {});
+
+  const briefPath = ['BRIEF.md', 'brief.md', join(STATE_DIR, 'PROJECT.md')]
+    .map((f) => join(project, f)).find(existsSync) ?? null;
+  const briefText = brief ?? (briefPath ? await readFile(briefPath, 'utf8') : '');
+  let { stack, adapter, why } = await resolveStack(root, project);
+  /* An empty project detects nothing, and at `build` time the project is always empty. The
+     brief's own frontmatter is the only thing that knows what is about to be built, so it
+     is the fallback and the manifest says which of the two it used. */
+  const declared = (briefText.match(/^stack:\s*(\S+)/mi) ?? [])[1] ?? null;
+  let stackSource = stack ? 'detected' : null;
+  if (!stack && declared) {
+    stack = declared;
+    stackSource = 'declared in the brief; nothing is built yet to detect';
+    adapter = `stacks/${declared}.md`;
+    why = null;
+  }
+  const knowledge = await resolveKnowledge(root, { brief: briefText.slice(0, 1200), surface, stack });
+
+  const directionPath = join(p.dir, 'direction.md');
+  const skill = skillEntry(root);
+  const scriptOf = (n) => {
+    const s = skillScript(root, n);
+    return s ? `node ${s}` : `node <skill>/scripts/${n}`;
+  };
+
+  const blockers = [];
+  if (!surface) blockers.push('no surface given: pass --surface buy|operate|read|experience');
+  if (!briefPath) blockers.push('no BRIEF.md and no filled PROJECT.md, so nothing states the facts the page may use');
+  if (!existsSync(directionPath)) blockers.push(`no direction record: run \`${scriptOf('ledger.mjs')} new ${surface ?? '<surface>'}\``);
+
+  const manifest = {
+    v: 1,
+    project,
+    surface: surface ?? null,
+    brief: briefPath ? briefPath.replace(project, '.') : null,
+    stack: { name: stack, source: stackSource, adapter, note: why },
+    knowledge,
+    read: [
+      skill ? `<skill>/${skill.slice(root.length).split(/[\/]+/).filter(Boolean).join('/')}` : 'SKILL.md',
+      '<skill>/run.md',
+      '<skill>/look.md',
+      surface === 'buy' ? '<skill>/floor/buy.md' : surface === 'operate' ? '<skill>/floor/operate.md' : null,
+      adapter ? `<skill>/${adapter}` : null,
+      '<skill>/verify.md',
+    ].filter(Boolean),
+    write: [
+      `${STATE_DIR}/direction.md`,
+      'the site itself, in the detected stack',
+      'ASSET-MANIFEST.md',
+      'PRODUCTION-REPORT.md',
+      surface === 'buy' || surface === 'operate' ? 'journeys/*.spec.mjs' : null,
+    ].filter(Boolean),
+    commands: {
+      direction: `${scriptOf('ledger.mjs')} new ${surface ?? '<surface>'}`,
+      verify: `${scriptOf('verify.mjs')} <url-or-dir>`,
+      critiquePacket: `${scriptOf('critique.mjs')} packet`,
+      critiqueLock: `${scriptOf('critique.mjs')} lock --file <answers.md>`,
+      journey: `${scriptOf('journey.mjs')} journeys --base <url>`,
+      gate: `${scriptOf('gate.mjs')}`,
+    },
+    blockers,
+    next: blockers[0] ?? 'build from the direction record, then verify, critique, journey, gate',
+  };
+
+  await writeFile(join(p.dir, 'RUN.json'), `${JSON.stringify(manifest, null, 2)}\n`, 'utf8');
+  await writeFile(join(p.dir, 'RUN.md'), runMarkdown(manifest), 'utf8');
+
+  const s = await readState(project);
+  const surfaces = new Set(s?.surfaces ?? []);
+  if (surface) surfaces.add(surface);
+  await writeState(project, { surfaces: [...surfaces] });
+  await note(project, { at: 'build', surface: surface ?? null, stack, blockers: blockers.length });
+
+  say('\n  build does not write a website. It writes the order of work the agent builds from.\n');
+  say(`    ${join(STATE_DIR, 'RUN.json')}   machine-readable`);
+  say(`    ${join(STATE_DIR, 'RUN.md')}     the same thing, readable\n`);
+  say(`  surface : ${surface ?? 'not given'}`);
+  say(`  stack   : ${stack ?? 'none detected'}${stackSource ? ` (${stackSource})` : ''}`);
+  say(`  brief   : ${manifest.brief ?? 'none found'}`);
+  say(`  patterns: ${knowledge.used.length ? knowledge.used.map((k) => k.id).join(', ') : knowledge.note}`);
+  say(`\n  next    : ${manifest.next}\n`);
+  return blockers.length ? 0 : 0;
+}
+
+function runMarkdown(m) {
+  const L = [];
+  L.push('# Run manifest', '');
+  L.push('Written by `sitesmith build`. It resolves what a command can resolve and names what');
+  L.push('the agent does next. It is not a plan: the plan is the direction record.', '');
+  L.push(`- surface: **${m.surface ?? 'not given'}**`);
+  L.push(`- stack: **${m.stack.name ?? 'none detected'}**${m.stack.adapter ? ` — adapter \`${m.stack.adapter}\`` : ''}${m.stack.source ? ` (${m.stack.source})` : ''}${m.stack.note ? ` (${m.stack.note})` : ''}`);
+  L.push(`- brief: ${m.brief ? `\`${m.brief}\`` : 'none found'}`, '');
+  L.push('## Knowledge Index', '');
+  if (m.knowledge.used.length) {
+    for (const k of m.knowledge.used) L.push(`- \`${k.id}\` (${k.score})`);
+    L.push('', 'These are building blocks, not a template. They go through the subject, thesis,');
+    L.push('autopilot, swap and originality flow before anything is built.');
+  } else L.push(`- ${m.knowledge.note}`);
+  L.push('', '## Read, in this order', '');
+  for (const f of m.read) L.push(`- \`${f}\``);
+  L.push('', '## Write', '');
+  for (const f of m.write) L.push(`- \`${f}\``);
+  L.push('', '## Commands', '');
+  for (const [k, v] of Object.entries(m.commands)) L.push(`- **${k}** — \`${v}\``);
+  L.push('', '## Blockers', '');
+  if (m.blockers.length) for (const b of m.blockers) L.push(`- ${b}`);
+  else L.push('- none');
+  L.push('', `## Next`, '', m.next, '');
+  return L.join('\n');
 }
 
 export async function redesign(root, project, { target }) {
@@ -298,7 +435,7 @@ export async function route(cmd, { root, argv }) {
   switch (cmd) {
     case 'init': return init(project, { name: flag('name') });
     case 'recommend': return recommend(root, { brief: first, surface: flag('surface'), stack: flag('stack') });
-    case 'build': return build(root, project, { surface: flag('surface') });
+    case 'build': return build(root, project, { surface: flag('surface'), brief: flag('brief') });
     case 'inspect': return inspect(root, project, { target: first, out: flag('out') });
     case 'redesign': return redesign(root, project, { target: first });
     case 'audit': return audit(root, project, { target: first, out: flag('out') });

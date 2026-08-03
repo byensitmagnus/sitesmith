@@ -271,7 +271,7 @@ const target = flag('to', process.cwd() === ROOT ? homedir() : process.cwd());
    keeps the four that put the skill on a machine. One entry point, so there is one command
    to learn. */
 {
-  const { route, usage } = await import('./commands.mjs');
+  const { route, usage } = await import('../skills/sitesmith-v3/commands.mjs');
   const code = await route(cmd, { root: ROOT, argv: args.slice(1) });
   if (code !== null) process.exit(code);
   if (cmd === undefined || cmd === '--help' || cmd === '-h' || cmd === 'help') {
