@@ -76,6 +76,22 @@ Number nine is the one worth remembering. A gate that reports nothing is annoyin
 that reports four specific, confident, false design defects is worse than no gate, and it
 took a real build on a real stack to see it.
 
+## A tenth, found afterwards in the pilot's own artefact
+
+`RUN.json` was not portable. It carried `project` as an absolute path and wrote every
+command out from a home directory, so the manifest named a machine rather than a project
+and could not be committed as evidence without carrying somebody's name into a public
+repository. It is fixed in `commands.mjs`: the manifest now states `skillRoot` once,
+relative when the installation lives inside the project as the documented layout puts it,
+and everything else is written against `<skill>/` or `./`.
+
+**The artefact in `record/` is kept as produced.** Regenerating it would make it portable
+and would also give it today's knowledge results, which are not the three posts the site
+was actually built from: the index has gained two posts since, and the brief is no longer
+truncated at 1200 characters. A manifest that says it is what the site was built from has
+to be that. CI asserts it is still the pre-fix artefact, and proves the fix on a manifest
+written today instead, in `tools/test-commands-exit.mjs`.
+
 ## Rebuilding this exact site
 
 `npm ci`, not `npm install`. The numbers above are only evidence if the tree they were

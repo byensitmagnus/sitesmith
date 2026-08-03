@@ -279,6 +279,12 @@ export async function build(root, project, { surface, brief }) {
      now either relative to the project or written against `skillRoot`, which is stated once. */
   const skillRoot = skill ? dirname(skill) : null;
   const rel = (abs) => (abs ? `./${relative(project, abs).split(sep).join('/')}` : null);
+  /* The documented layout puts the installation inside the project, at
+     `<project>/.claude/skills/sitesmith/`. When it is there, even this line is written
+     relative, and the manifest contains no absolute path at all: it can be committed as
+     evidence without carrying somebody's home directory into a public repository. */
+  const skillRootField = skillRoot && !relative(project, skillRoot).startsWith('..')
+    ? rel(skillRoot) : skillRoot;
   const inSkill = (abs) => (skillRoot && abs ? `<skill>/${relative(skillRoot, abs).split(sep).join('/')}` : null);
   const scriptOf = (n) => `node ${inSkill(skillScript(root, n)) ?? `<skill>/scripts/${n}`}`;
 
@@ -292,7 +298,7 @@ export async function build(root, project, { surface, brief }) {
     /* `<skill>` in every path below expands to this. It is the one absolute path in the
        file, it is stated rather than pasted into forty strings, and a manifest moved to
        another machine needs this line changed and nothing else. */
-    skillRoot: skillRoot ?? null,
+    skillRoot: skillRootField ?? null,
     surface: surface ?? null,
     brief: rel(briefPath),
     stack: { name: stack, source: stackSource, adapter, note: why },

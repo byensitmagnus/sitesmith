@@ -655,12 +655,23 @@ jobs:
                    evidence/pilot/site/package-lock.json evidence/pilot/site/journeys/koeb.spec.mjs; do
             test -f "$f" || { echo "::error::$f is claimed and missing"; exit 1; }
           done
+          # The committed manifest is the one the pilot produced, and it is not portable:
+          # it carries `project` as an absolute path and every command spelled out from a
+          # home directory. That is the tenth defect the pilot found, it was fixed in
+          # commands.mjs afterwards, and the artefact is kept as produced rather than
+          # regenerated, because a regenerated one would also carry today's knowledge
+          # results and would no longer be what the site was built from.
+          #
+          # So this asserts the artefact is still the historical one. That a manifest
+          # written today is portable is proved by tools/test-commands-exit.mjs, on a run
+          # that happens now rather than on evidence from July.
           node -e '
             const m = require("./evidence/pilot/record/RUN.json");
-            const { skillRoot, ...rest } = m;
-            if (/\/(Users|home)\//.test(JSON.stringify(rest)) || /[A-Za-z]:\\\\/.test(JSON.stringify(rest))) {
-              console.error("::error::the committed pilot manifest carries an absolute path"); process.exit(1);
+            if (!m.project || m.skillRoot) {
+              console.error("::error::the pilot manifest has been regenerated; it is evidence and is kept as produced");
+              process.exit(1);
             }
+            console.log(`ok  the pilot manifest is the pre-portability artefact, as produced`);
           '
 
       - uses: actions/upload-artifact@v4
