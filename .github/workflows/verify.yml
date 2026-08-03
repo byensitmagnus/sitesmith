@@ -815,7 +815,14 @@ jobs:
       # The check this whole round rests on. Three briefs, three contracts, and not one
       # shared choice on the six dimensions the round named. If two pilots ever converge on
       # the same ground or the same face, the contract has become a template with fields.
-      - name: no two contracts share a strategy, a ground, a face, a signature or a density
+      # The check's own contract first: a single shared value must report and never block,
+      # and a shared direction must block. A diversity quota is worse than the convergence it
+      # is meant to catch, because the next build satisfies it by choosing an artificial
+      # difference instead of the right answer.
+      - name: the check blocks a shared direction and reports a shared value
+        run: node tools/test-portfolio-contracts.mjs --fixtures
+
+      - name: no two pilots are the same direction
         run: node tools/test-portfolio-contracts.mjs
 
 

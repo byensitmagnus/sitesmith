@@ -139,9 +139,31 @@ finished page, or not found at all.
 | scheme | light | dark, from the use scene | light |
 | gate | one refusal, `look/no-photograph`, claimed | clean | clean, one waiver claimed |
 
-`tools/test-portfolio-contracts.mjs` fails if any two ever converge on any of those, and it
-runs in CI. Round 8 of the cold builds failed on exactly this while passing every individual
-check, which is why the check exists rather than the intention.
+`tools/test-portfolio-contracts.mjs` runs in CI and blocks on a **shared direction**, not on a
+shared value. Its first version failed as soon as any two pilots shared any single value, which
+is a diversity quota: the next build satisfies a quota by choosing an artificial difference
+rather than the right answer, and two subjects can honestly land on the same density or the
+same body face.
+
+What it does now:
+
+- Six central axes, weighted as a combination: palette system and typography system and
+  signature and first viewport at 2, closing structure at 1.5, density at 1.
+- A **fingerprint** over all six. Identical fingerprint blocks.
+- **One shared axis is advisory**, always. So is a shared font family.
+- Several shared axes block **only when the two contracts also give the same reason for the
+  sharing**, measured as content-word overlap on the reason fields. Two contracts that share a
+  strategy and a density and say why in their own subjects' terms are two designs; two that
+  share the values and the reasoning are one design with two names.
+- The threshold is 0.6 of the central weight, which needs four of six axes.
+
+Four fixtures hold that contract, run in CI as `--fixtures`: two projects legitimately sharing
+a body font pass with an advisory, a near-identical direction fails, several shared choices
+with different briefs and different structures pass, and an identical fingerprint fails.
+
+**It still cannot tell whether the differences come from the briefs.** That is why the briefs
+are committed next to the contracts, and it stays a person's judgement. Round 8 of the cold
+builds passed every individual check and was one studio using one recipe.
 
 **The differences come from the briefs.** The lock console is dark because one keeper walks
 out into the rain with a torch every hour and a bright screen costs them their night vision.
@@ -149,6 +171,37 @@ The seed bank is sparse because a page asking a stranger for access to their lan
 room to say no. The glazier is committed because the ground is the material every order is
 made of. All three briefs are committed next to their contracts so a reader can check that
 claim rather than take it.
+
+## What was measured and not blocked
+
+A green gate is not a person saying the page is good. It says the named defects are not
+present. These are the findings the three pilots produced that no gate stopped, and what
+happened to each.
+
+**Fixed, because the finding was right**
+
+| finding | where | what changed |
+|---|---|---|
+| 38 tap targets under 44px and gaps under 24px | lock console, all three widths | menu links given 44px and 56px apart; the two controls 32px apart |
+| a skip link at 40px | lock console | 44px |
+| log text at 142 characters at 1440 | lock console | the row holds its own text at 52 characters and the elapsed time to its right |
+| 27px against 26px, three widths | seed bank | one heading was on the browser's own 1.5em; every h2 is now the scale's 27 |
+| 8px between menu items at 375 | seed bank | 24px both ways |
+
+**Accepted, with the reason written down**
+
+| finding | why it was not changed |
+|---|---|
+| `verify.mjs`: light text on a dark ground at weight 400, all three widths on the lock console | compensated on leading and tracking, 1.6 and 0.008em. The weight was deliberately not touched: 350 is a variable axis Segoe UI Variable Text has and Segoe UI does not, so a machine without the first would render 300, which is the wrong direction. The answer is in the contract's `typography`. |
+| `verify.mjs`: log rows measured at 100 characters at 768 and 1440 | a false positive, declared with its reason in the production report. The measurement is taken on the row, which spans the surface, and not on the text column inside it, which is capped at 52. The price of satisfying it was measured twice: a narrower row left 430px of flank and `look/lopsided-band` refused it, and a centred block sat 214px off the spine and `look/ragged-margin` refused that. Both refusals were right. |
+| `look/ragged-margin` on the seed bank | claimed under `Deliberate:` with its reason. The sand surfaces break out 110px past the text column so a drawing has room to be a drawing, which is stated in the contract's `layout.container`. |
+| `look/no-photograph` on all three | claimed on all three, and named as a missing asset in each manifest. The seed bank's page says it in its own footer, because a photograph of that coast is the asset that would move a landowner most and there is not one. |
+
+**Still limits**
+
+- The seed bank's season caption measures 43 characters at 1440, under the 45 floor. Widening
+  it past 46 traded the finding for `look/lopsided-band`. It is left as it is and stated here.
+- Five of eight stress cases per pilot are `not run`, because a browser cannot decide them.
 
 ## Eleven product defects, found by using the product
 
@@ -221,11 +274,37 @@ so every build scenario is within a few tokens of where it started.
 ## Tests and CI
 
 New: `skills/sitesmith-v3/scripts/test-contract.mjs` (10 colour checks, 16 validator fixtures),
-`tools/test-portfolio-contracts.mjs`, `tools/build-rule-registry.mjs --check`.
+`tools/test-portfolio-contracts.mjs` (plus four fixtures for the check's own contract),
+`tools/build-rule-registry.mjs --check`.
 Extended: `tools/test-pipeline-drift.mjs` and `tools/test-commands-exit.mjs`.
 
-CI now runs eleven jobs: the five from the alpha release plus the contract fixtures, the
-registry check, two pilot jobs on a matrix, and the portfolio check.
+CI runs nine jobs, twelve including the matrix legs: the five from the alpha release, plus the
+contract fixtures and the registry check inside the v3 job, two pilot jobs on a matrix, and the
+portfolio job.
+
+### Reproducing the stress run
+
+The typography and layout stress cases were run by this command, once per pilot, against the
+served production build:
+
+```bash
+node <skill>/scripts/contract.mjs stress --url <url> --write
+```
+
+| pilot | url in the run | held | not run |
+|---|---|---|---|
+| 01 glazier | `http://localhost:4361/` | 3 | 4 |
+| 02 lock keeper | `http://localhost:4371/` | 3 | 5 |
+| 03 seed bank | `http://localhost:4381/` | 3 | 5 |
+
+The three that held are the three a browser can decide: a heading at three times its length,
+the page at 200 per cent zoom, and the page with its own faces overridden to a deliberately
+wide fallback. The results are written into each `record/contract.json` under
+`typography.stress` and `layout.stress`, so they can be read without re-running anything.
+
+**This step is not yet in CI.** The pilot jobs run `contract.mjs check` and `compare`, and not
+`stress`. The recorded verdicts are from the local runs above, on the same production builds CI
+rebuilds from the committed lockfiles.
 
 ## Known limits
 
