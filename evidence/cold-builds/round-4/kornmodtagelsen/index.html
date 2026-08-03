@@ -1,0 +1,996 @@
+<!doctype html>
+<html lang="da">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kornmodtagelsen, Hobro Andel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&amp;family=Big+Shoulders+Display:wght@500;700&amp;display=swap">
+<style>
+:root{
+  --zink:#b2b6b7;
+  --dis:#d0d5d6;
+  --tryk:#1b2428;
+  --beton:#364042;
+  --rille:#98a0a2;
+  --hvede:#c9a227;
+  --byg:#c3bd82;
+  --rug:#7d6a55;
+  --havre:#9aa06d;
+  --lampe:#0f6a2a;
+  --stop:#98291f;
+  --damp:#1f5763;
+  --fnug:rgba(54,64,66,0.14);
+  --plade:0 1px 0 rgba(27,36,40,0.20);
+  --skrift-display:"Big Shoulders Display","Arial Narrow",sans-serif;
+  --skrift-brod:"Atkinson Hyperlegible",Verdana,sans-serif;
+  --sats-mikro:12px;
+  --sats-brod:16px;
+  --sats-mellem:21px;
+  --sats-titel:27px;
+  --sats-tal:34px;
+  --sats-bro:40px;
+  --gutter:40px;
+  --kant:2px;
+}
+*{box-sizing:border-box}
+html{background-color:var(--zink)}
+body{
+  margin:0;
+  background-color:var(--zink);
+  background-image:radial-gradient(var(--fnug) 0.5px,transparent 0.6px);
+  background-size:7px 7px;
+  color:var(--tryk);
+  font-family:var(--skrift-brod);
+  font-size:var(--sats-brod);
+  line-height:1.45;
+}
+h1,h2,h3{margin:0;font-family:var(--skrift-display);font-weight:700;line-height:1.05}
+h1{font-size:var(--sats-titel)}
+h2{font-size:var(--sats-mellem)}
+h3{font-size:var(--sats-brod)}
+p,ul,ol,dl{margin:0}
+ul,ol{list-style:none;padding:0}
+a{color:var(--tryk)}
+.tal{font-variant-numeric:tabular-nums}
+
+.spring{position:absolute;left:-9999px;top:0;padding:12px 16px;background-color:var(--tryk);color:var(--dis)}
+.spring:focus{left:0;z-index:9}
+
+:focus-visible{outline:3px solid var(--tryk);outline-offset:2px}
+.topstrimmel :focus-visible,footer :focus-visible{outline-color:var(--dis)}
+
+.topstrimmel{
+  display:flex;align-items:baseline;gap:32px;flex-wrap:wrap;
+  padding:14px var(--gutter);
+  background-color:var(--tryk);color:var(--dis);
+}
+.topstrimmel a{color:var(--dis)}
+.huset{display:flex;align-items:baseline;gap:10px}
+.huset h1{color:var(--dis)}
+.huset span{font-size:var(--sats-mikro);color:var(--rille)}
+.genveje{display:flex;gap:26px;flex-wrap:wrap}
+.genveje a{text-decoration:underline;text-underline-offset:4px;display:inline-flex;align-items:center;min-height:44px;min-width:44px}
+.vagten{margin-left:auto;font-size:var(--sats-mikro);color:var(--rille)}
+
+.strimmel{padding:22px var(--gutter) 26px}
+.strimmel-dis{background-color:var(--dis);box-shadow:var(--plade)}
+.hoved{
+  display:flex;align-items:baseline;justify-content:space-between;gap:24px;flex-wrap:wrap;
+  border-bottom:1px solid var(--rille);padding-bottom:8px;margin-bottom:18px;
+}
+.hoved p{font-size:var(--sats-mikro);color:var(--beton);text-align:right}
+
+/* strimmel 1, vognen på broen og prøven fra den */
+.brorum{display:flex;gap:40px;align-items:flex-start;flex-wrap:wrap}
+.vognerum{flex:55 1 420px;min-width:0;display:flex;gap:32px;flex-wrap:wrap}
+.vognen{flex:1 1 220px;min-width:0}
+.plade-nr{font-family:var(--skrift-display);font-size:var(--sats-tal);font-weight:700;line-height:1}
+.leverandor{font-size:var(--sats-brod);color:var(--beton);margin-top:2px}
+.brotal{font-family:var(--skrift-display);font-weight:500;font-size:var(--sats-bro);line-height:1;margin-top:14px}
+.bronote{font-size:var(--sats-mikro);color:var(--beton);margin-top:2px}
+.vejeseddel{flex:1 1 200px;min-width:0;border-top:1px solid var(--rille);padding-top:10px}
+.vejerad{display:flex;justify-content:space-between;gap:24px;padding:5px 0}
+.vejerad dt{color:var(--beton);font-size:var(--sats-mikro)}
+.vejerad dd{margin:0;text-align:right}
+.vejerad dd.ukendt{color:var(--beton);text-align:left}
+
+.provekort{flex:45 1 340px;min-width:0;border-left:1px solid var(--rille);padding-left:36px}
+.felter{display:flex;gap:20px;margin-top:12px;flex-wrap:wrap}
+.felt{flex:1 1 150px;min-width:0}
+.felt label{display:block;font-size:var(--sats-mikro);color:var(--beton)}
+.felt-rad{display:flex;flex-direction:column;align-items:flex-start;gap:4px;margin-top:3px}
+.felt input{
+  width:100%;max-width:130px;height:48px;padding:0 10px;
+  font-family:var(--skrift-brod);font-size:var(--sats-brod);font-variant-numeric:tabular-nums;
+  background-color:var(--zink);color:var(--tryk);border:1px solid var(--beton);border-radius:var(--kant);
+}
+.felt .graense{font-size:var(--sats-mikro);color:var(--beton)}
+.felt-fejl{display:block;font-size:var(--sats-mikro);color:var(--stop);margin-top:3px}
+.fejlsamling{
+  border-left:4px solid var(--stop);padding:8px 12px;margin-top:12px;font-size:var(--sats-mikro);
+}
+.fejlsamling a{color:var(--stop)}
+.knap{
+  min-height:48px;padding:0 18px;border:1px solid var(--tryk);border-radius:var(--kant);
+  background-color:var(--tryk);color:var(--dis);
+  font-family:var(--skrift-brod);font-size:var(--sats-brod);font-weight:700;cursor:pointer;
+}
+.knap:hover{background-color:var(--beton);border-color:var(--beton)}
+.knap:active{background-color:var(--tryk)}
+.knap[disabled]{background-color:var(--zink);border-color:var(--rille);color:var(--beton);cursor:default}
+.knap-let{background-color:transparent;color:var(--tryk);border-color:var(--beton);font-weight:400}
+.knap-let:hover{background-color:var(--rille);border-color:var(--tryk);color:var(--tryk)}
+.knap-gron{background-color:var(--lampe);border-color:var(--lampe);color:var(--dis)}
+.knap-gron:hover{background-color:var(--tryk);border-color:var(--tryk)}
+.knaprad{display:flex;gap:24px;flex-wrap:wrap;align-items:center;margin-top:26px}
+.smaanote{font-size:var(--sats-mikro);color:var(--beton)}
+
+/* strimmel 2, cellerne */
+.melding{
+  border-left:5px solid var(--beton);padding:4px 0 4px 14px;margin-bottom:14px;
+  font-family:var(--skrift-display);font-weight:500;font-size:var(--sats-titel);line-height:1.3;
+  max-width:62ch;
+}
+.melding-gron{border-left-color:var(--lampe)}
+.melding-rod{border-left-color:var(--stop)}
+.melding-damp{border-left-color:var(--damp)}
+.cellerum{display:flex;gap:40px;align-items:flex-start;flex-wrap:wrap}
+.siloer{flex:75 1 620px;min-width:0;display:flex;gap:24px;align-items:flex-end;flex-wrap:wrap}
+.skala{flex:25 1 240px;min-width:0;border-left:1px solid var(--rille);padding-left:36px}
+.skala p{font-size:var(--sats-mikro);color:var(--beton);margin-bottom:14px;max-width:60ch}
+.lasten{font-family:var(--skrift-display);font-weight:700;font-size:var(--sats-tal);line-height:1;color:var(--tryk)}
+.lasten-note{font-size:var(--sats-mikro);color:var(--beton);max-width:60ch}
+.torreriet{margin-left:16px}
+.celle{display:flex;flex-direction:column;align-items:flex-start}
+/* Faste højder på de tre blokke, så alle otte beholdere står på samme gulvlinje.
+   Uden dem trapper væggen ned ad siden, fordi en toliniers begrundelse skubber. */
+.celle-top{height:42px;width:100%}
+.celle-fig{height:183px;width:100%;display:flex;align-items:flex-end}
+.celle-cifre{height:58px;width:100%;padding-top:8px}
+.celle-navn{font-family:var(--skrift-display);font-weight:700;font-size:var(--sats-mellem);line-height:1}
+.celle-korn{font-size:var(--sats-mikro);color:var(--beton)}
+.celle svg{display:block;max-width:100%;height:auto}
+.celle-tal{font-size:var(--sats-mikro);font-variant-numeric:tabular-nums}
+.celle-plads{font-size:var(--sats-mikro);color:var(--beton);font-variant-numeric:tabular-nums}
+.celle-slut{height:56px;width:100%}
+.celle-nej{font-size:var(--sats-mikro);color:var(--beton);border-top:1px solid var(--rille);padding-top:8px}
+.celle-daempet svg{opacity:0.42}
+.celle-daempet .celle-navn,.celle-daempet .celle-korn,.celle-daempet .celle-tal{color:var(--beton)}
+.knap-anvis{width:100%}
+.karkasse{fill:var(--zink);stroke:var(--beton)}
+.karlinje{fill:none;stroke:var(--beton)}
+.fyldelinje{fill:none;stroke:var(--tryk)}
+.baandlinje{fill:none;stroke:var(--tryk)}
+.korn-streg{fill:none;stroke-width:2.4}
+.korn-hvede{stroke:var(--hvede)}
+.korn-byg{stroke:var(--byg)}
+.korn-rug{stroke:var(--rug)}
+.korn-havre{stroke:var(--havre)}
+.korn-baand{stroke:var(--beton);stroke-width:1.6}
+.karkasse,.karlinje{stroke-width:1.5}
+.fyldelinje{stroke-width:2}
+.baandlinje{stroke-width:1.2}
+.damptromle{fill:var(--zink);stroke:var(--damp);stroke-width:1.5}
+.dampsky{fill:none;stroke:var(--damp);stroke-width:1.5}
+
+/* strimmel 3, koen */
+.korad{
+  display:grid;grid-template-columns:230px 1fr auto;gap:24px;align-items:baseline;
+  border-top:1px solid var(--rille);padding:11px 0;
+}
+.korad:last-child{border-bottom:1px solid var(--rille)}
+.ko-nr{font-variant-numeric:tabular-nums}
+.ko-hvem{color:var(--beton)}
+.ko-ventet{text-align:right;color:var(--beton);font-variant-numeric:tabular-nums;font-size:var(--sats-mikro)}
+
+/* strimmel 4, dagen */
+.dagsrum{display:flex;gap:40px;flex-wrap:wrap}
+.dagsfigur{flex:50 1 420px;min-width:0;margin:0}
+.dagsvand{display:block;width:100%;height:auto}
+.dv-akse{fill:none;stroke:var(--rille);stroke-width:1.5}
+.dv-graense{fill:none;stroke:var(--stop);stroke-width:1.5;stroke-dasharray:7 5}
+.dv-streg{fill:none;stroke:var(--damp);stroke-width:7}
+.dv-over{stroke:var(--stop)}
+.dv-tal{fill:var(--beton);font-family:var(--skrift-brod);font-size:var(--sats-mikro)}
+.dv-maerke{fill:var(--stop);font-family:var(--skrift-brod);font-size:var(--sats-mikro)}
+figcaption{font-size:var(--sats-mikro);color:var(--beton);margin-top:10px;max-width:62ch}
+.anvisninger{flex:50 1 420px;min-width:0}
+.lograd{
+  display:grid;grid-template-columns:1fr 1fr auto;gap:20px;align-items:baseline;
+  border-top:1px solid var(--rille);padding:11px 0;
+}
+.lograd:last-child{border-bottom:1px solid var(--rille)}
+.log-hvem{font-variant-numeric:tabular-nums}
+.log-hvor{font-weight:700}
+.log-hvor-stop{color:var(--stop)}
+.log-hvor-damp{color:var(--damp)}
+.log-hvad{text-align:right;color:var(--beton);font-size:var(--sats-mikro);font-variant-numeric:tabular-nums}
+.log-laas{display:block;color:var(--beton);font-size:var(--sats-mikro)}
+.log-fortryd{margin-top:8px}
+
+footer{
+  padding:20px var(--gutter) 26px;background-color:var(--tryk);color:var(--dis);
+  display:flex;gap:40px;flex-wrap:wrap;align-items:baseline;font-size:var(--sats-mikro);
+}
+footer a{color:var(--dis);text-decoration:underline;text-underline-offset:4px;display:inline-flex;align-items:center;min-height:44px;min-width:44px}
+footer p{max-width:52ch}
+.bundgenveje{display:flex;gap:26px;flex-wrap:wrap;margin-left:auto}
+
+.moenstre{position:absolute;width:0;height:0;overflow:hidden}
+
+@media (max-width:1180px){
+  .siloer{gap:20px}
+}
+@media (max-width:900px){
+  :root{--gutter:28px;--sats-bro:44px;--sats-tal:28px}
+  .provekort,.skala{border-left:0;padding-left:0;border-top:1px solid var(--rille);padding-top:22px}
+  .vognerum{display:block}
+  .vejeseddel{margin-top:18px}
+  .brorum,.cellerum,.dagsrum{gap:26px}
+  .siloer{gap:24px}
+}
+@media (max-width:560px){
+  :root{--gutter:16px;--sats-bro:38px;--sats-titel:23px;--sats-mellem:19px}
+  .topstrimmel{gap:14px}
+  .vagten{margin-left:0}
+  .genveje{gap:24px}
+  .korad,.lograd{grid-template-columns:1fr;gap:2px}
+  .ko-ventet,.log-hvad{text-align:left}
+  .siloer{gap:24px}
+  .celle{flex:1 1 96px;min-width:92px}
+  .bundgenveje{margin-left:0}
+}
+</style>
+</head>
+<body>
+<a class="spring" href="#hovedindhold">Spring til skærmen</a>
+
+<header class="topstrimmel">
+  <div class="huset">
+    <h1>Kornmodtagelsen</h1>
+    <span>Hobro Andel</span>
+  </div>
+  <nav class="genveje" aria-label="Skærmens afsnit">
+    <a href="#broen">På broen</a>
+    <a href="#cellerne">Cellerne</a>
+    <a href="#koen">Køen</a>
+    <a href="#dagen">Dagen</a>
+  </nav>
+  <p class="vagten">Vagt fra 06.00 til sidste vogn <span class="tal">12.04</span></p>
+</header>
+
+<main id="hovedindhold">
+
+<section id="broen" class="strimmel strimmel-dis">
+  <div class="hoved">
+    <h2>På broen</h2>
+    <p>Broen læser hvert sekund. Mellem to vogne læser den 0 kg.</p>
+  </div>
+  <div class="brorum">
+    <div class="vognerum">
+    <div class="vognen">
+      <p class="plade-nr tal" id="bro-plade">CV 41 872</p>
+      <p class="leverandor" id="bro-hvem">Bramslev Hede, hvede</p>
+      <p class="brotal tal" id="bro-vaegt">47.862 kg</p>
+      <p class="bronote" id="bro-note">Broen lige nu, aflæst <span class="tal">12.04.31</span></p>
+      <div class="knaprad">
+        <button type="button" class="knap knap-let" id="hold-knap" aria-pressed="false">Hold aflæsningen</button>
+        <button type="button" class="knap knap-gron" id="broknap" hidden>Luk vognen af broen</button>
+      </div>
+    </div>
+      <dl class="vejeseddel" id="vejeseddel">
+        <div class="vejerad">
+          <dt>Vejet ind</dt>
+          <dd class="tal">47.860 kg, klokken 12.01</dd>
+        </div>
+        <div class="vejerad">
+          <dt>Netto</dt>
+          <dd class="ukendt">Vejes først når vognen kører af broen. Indtil da regnes plads i cellen på bruttovægten.</dd>
+        </div>
+      </dl>
+    </div>
+
+    <form class="provekort" id="provekort" novalidate>
+      <h3>Spydprøve</h3>
+      <p class="smaanote">Delprøve fra spyddet, aflæst <span class="tal">12.03</span>.</p>
+      <div class="fejlsamling" id="fejlsamling" role="alert" tabindex="-1" hidden></div>
+      <div class="felter">
+        <div class="felt">
+          <label for="vand">Vand, procent</label>
+          <div class="felt-rad">
+            <input id="vand" name="vand" type="text" inputmode="decimal" autocomplete="off" value="13,8" aria-describedby="vand-graense">
+            <span class="graense" id="vand-graense">Over 15,0 går på tørreri</span>
+          </div>
+        </div>
+        <div class="felt">
+          <label for="protein">Protein, procent</label>
+          <div class="felt-rad">
+            <input id="protein" name="protein" type="text" inputmode="decimal" autocomplete="off" value="11,4">
+          </div>
+        </div>
+        <div class="felt">
+          <label for="fremmed">Fremmedlegemer, procent</label>
+          <div class="felt-rad">
+            <input id="fremmed" name="fremmed" type="text" inputmode="decimal" autocomplete="off" value="0,7" aria-describedby="fremmed-graense">
+            <span class="graense" id="fremmed-graense">Over 2,0 afvises</span>
+          </div>
+        </div>
+      </div>
+      <div class="knaprad">
+        <button type="submit" class="knap" id="godkend">Godkend prøve</button>
+      </div>
+    </form>
+  </div>
+</section>
+
+<section id="cellerne" class="strimmel">
+  <div class="hoved">
+    <h2>Cellerne</h2>
+    <p>Otte celler, hver med én afgrøde, og tørreriet ved siden af.</p>
+  </div>
+  <p class="melding melding-gron" id="melding" role="status">Hvede, 13,8 % vand og 0,7 % fremmedlegemer. Celle 1, 2 og 3 kan tage op til 47,9 t.</p>
+  <div class="cellerum">
+  <ul class="siloer" id="siloer">
+    <li class="celle">Celle 1, hvede, 1.118 af 1.400 t, 282 t plads.</li>
+    <li class="celle">Celle 2, hvede, 642 af 1.400 t, 758 t plads.</li>
+    <li class="celle">Celle 3, hvede, 155 af 900 t, 745 t plads.</li>
+    <li class="celle">Celle 4, hvede, 878 af 900 t, 22 t plads.</li>
+    <li class="celle">Celle 5, byg, 730 af 1.200 t, 470 t plads.</li>
+    <li class="celle">Celle 6, byg, 1.194 af 1.200 t, 6 t plads.</li>
+    <li class="celle">Celle 7, rug, 210 af 600 t, 390 t plads.</li>
+    <li class="celle">Celle 8, havre, 96 af 600 t, 504 t plads.</li>
+    <li class="celle">Tørreriet, tager last over 15,0 % vand.</li>
+  </ul>
+  <div class="skala">
+    <p class="lasten tal" id="lasten">47,9 t</p>
+    <p class="lasten-note" id="lasten-note">er det mest lasten kan veje, regnet på bruttovægten. Cellen skal have plads til det tal, indtil vognen er vejet ud.</p>
+    <p>Cellerne er tegnet i skala. Bredde og højde vokser med kapaciteten, så arealet af kornet i tegningen er tonnagen: en fuld celle 1 er lige så meget korn som to fulde celle 7.</p>
+    <p>Båndet øverst i en celle er den plads, lasten optager. På 1.400 tons er den en stribe.</p>
+  </div>
+  </div>
+</section>
+
+<section id="koen" class="strimmel">
+  <div class="hoved">
+    <h2>Køen</h2>
+    <p>Fire vogne holder på pladsen. Køen er længst mellem 11 og 15.</p>
+  </div>
+  <ol id="koliste">
+    <li class="korad">
+      <span class="ko-nr tal">11.42 XL 28 306</span>
+      <span class="ko-hvem">Døstrup Mølle, hvede</span>
+      <span class="ko-ventet">har holdt 22 min</span>
+    </li>
+    <li class="korad">
+      <span class="ko-nr tal">11.47 BS 63 118</span>
+      <span class="ko-hvem">Glenstrup Søgård, byg</span>
+      <span class="ko-ventet">har holdt 17 min</span>
+    </li>
+    <li class="korad">
+      <span class="ko-nr tal">11.51 JN 70 425</span>
+      <span class="ko-hvem">Handest Hedegård, hvede</span>
+      <span class="ko-ventet">har holdt 13 min</span>
+    </li>
+    <li class="korad">
+      <span class="ko-nr tal">11.58 PK 19 640</span>
+      <span class="ko-hvem">Sønder Onsild Kær, rug</span>
+      <span class="ko-ventet">har holdt 6 min</span>
+    </li>
+  </ol>
+</section>
+
+<section id="dagen" class="strimmel strimmel-dis">
+  <div class="hoved">
+    <h2>Dagen indtil nu</h2>
+    <p>Fjorten prøver siden 06.00. Én lå over 15,0.</p>
+  </div>
+  <div class="dagsrum">
+    <figure class="dagsfigur">
+      <svg class="dagsvand" viewBox="0 0 640 232" role="img" data-asset="dagsvand"
+           aria-label="Vandprocenten i dagens fjorten prøver, fra 12,1 procent klokken 06.22 til 14,1 procent klokken 11.31. Én prøve, klokken 10.52, lå på 16,2 procent og dermed over grænsen på 15,0.">
+        <line class="dv-akse" x1="40" y1="180" x2="620" y2="180"></line>
+        <line class="dv-graense" x1="40" y1="73" x2="620" y2="73"></line>
+        <text class="dv-maerke" x="40" y="66">15,0 %</text>
+        <line class="dv-streg" x1="40" y1="180" x2="40" y2="151"></line>
+        <line class="dv-streg" x1="85" y1="180" x2="85" y2="145"></line>
+        <line class="dv-streg" x1="129" y1="180" x2="129" y2="137"></line>
+        <line class="dv-streg" x1="174" y1="180" x2="174" y2="143"></line>
+        <line class="dv-streg" x1="218" y1="180" x2="218" y2="135"></line>
+        <line class="dv-streg" x1="263" y1="180" x2="263" y2="127"></line>
+        <line class="dv-streg" x1="308" y1="180" x2="308" y2="129"></line>
+        <line class="dv-streg" x1="352" y1="180" x2="352" y2="121"></line>
+        <line class="dv-streg" x1="397" y1="180" x2="397" y2="103"></line>
+        <line class="dv-streg" x1="441" y1="180" x2="441" y2="113"></line>
+        <line class="dv-streg" x1="486" y1="180" x2="486" y2="132"></line>
+        <line class="dv-streg dv-over" x1="531" y1="180" x2="531" y2="41"></line>
+        <line class="dv-streg" x1="575" y1="180" x2="575" y2="116"></line>
+        <line class="dv-streg" x1="620" y1="180" x2="620" y2="97"></line>
+        <text class="dv-tal" x="24" y="204">06.22</text>
+        <text class="dv-maerke" x="500" y="34">16,2 % 10.52</text>
+        <text class="dv-tal" x="580" y="204">11.31</text>
+        <text class="dv-tal" x="24" y="224">tørt</text>
+        <text class="dv-tal" x="560" y="224">vådt</text>
+      </svg>
+      <figcaption>Vandprocenten i hver prøve i dag, i den rækkefølge de blev taget. Den stiplede linje er 15,0. Prøven klokken 10.52 lå over og kørte på tørreri.</figcaption>
+    </figure>
+
+    <div class="anvisninger">
+      <h3>Anvisninger i dag</h3>
+      <ol id="logliste">
+        <li class="lograd" data-fast>
+          <span class="log-hvem tal">11.31 TR 55 214</span>
+          <span class="log-hvor">celle 2<span class="log-laas">Låst, vognen har forladt broen</span></span>
+          <span class="log-hvad">14,1 % vand<br>26.940 kg</span>
+        </li>
+        <li class="lograd" data-fast>
+          <span class="log-hvem tal">11.09 JN 70 424</span>
+          <span class="log-hvor">celle 5<span class="log-laas">Låst, vognen har forladt broen</span></span>
+          <span class="log-hvad">13,4 % vand<br>28.120 kg</span>
+        </li>
+        <li class="lograd" data-fast>
+          <span class="log-hvem tal">10.52 PK 19 638</span>
+          <span class="log-hvor log-hvor-damp">tørreriet<span class="log-laas">Låst, vognen har forladt broen</span></span>
+          <span class="log-hvad">16,2 % vand<br>24.480 kg</span>
+        </li>
+        <li class="lograd" data-fast>
+          <span class="log-hvem tal">10.34 BS 63 117</span>
+          <span class="log-hvor">celle 8<span class="log-laas">Låst, vognen har forladt broen</span></span>
+          <span class="log-hvad">12,8 % vand<br>21.660 kg</span>
+        </li>
+        <li class="lograd" data-fast>
+          <span class="log-hvem tal">10.05 VM 44 902</span>
+          <span class="log-hvor log-hvor-stop">afvist, kørte læsset<span class="log-laas">Låst, vognen har forladt broen</span></span>
+          <span class="log-hvad">2,4 % fremmed<br>29.310 kg</span>
+        </li>
+        <li class="lograd" data-fast>
+          <span class="log-hvem tal">09.41 TR 55 213</span>
+          <span class="log-hvor">celle 7<span class="log-laas">Låst, vognen har forladt broen</span></span>
+          <span class="log-hvad">13,9 % vand<br>27.500 kg</span>
+        </li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <p>Hobro Andel, Kornmodtagelsen. Skærmen står i vægthuset ved broen og passes af én modtagemand ad gangen, fra 06.00 til sidste vogn.</p>
+  <p>Vogne, vægte, prøver, kapaciteter og fyldninger på denne skærm er demodata.</p>
+  <nav class="bundgenveje" aria-label="Skærmens afsnit, gentaget">
+    <a href="#broen">På broen</a>
+    <a href="#cellerne">Cellerne</a>
+    <a href="#koen">Køen</a>
+    <a href="#dagen">Dagen</a>
+  </nav>
+</footer>
+
+<svg class="moenstre" aria-hidden="true" focusable="false" width="0" height="0">
+  <defs>
+    <pattern id="korn-hvede-m" width="8" height="7" patternUnits="userSpaceOnUse">
+      <path class="korn-streg korn-hvede" d="M0 6 H8"></path>
+      <path class="korn-streg korn-hvede" d="M4 2.5 H8"></path>
+    </pattern>
+    <pattern id="korn-byg-m" width="8" height="7" patternUnits="userSpaceOnUse">
+      <path class="korn-streg korn-byg" d="M0 6 H8"></path>
+      <path class="korn-streg korn-byg" d="M0 2.5 H4"></path>
+    </pattern>
+    <pattern id="korn-rug-m" width="8" height="7" patternUnits="userSpaceOnUse">
+      <path class="korn-streg korn-rug" d="M0 6 H8"></path>
+      <path class="korn-streg korn-rug" d="M4 2.5 H8"></path>
+    </pattern>
+    <pattern id="korn-havre-m" width="8" height="7" patternUnits="userSpaceOnUse">
+      <path class="korn-streg korn-havre" d="M0 6 H8"></path>
+      <path class="korn-streg korn-havre" d="M0 2.5 H4"></path>
+    </pattern>
+    <pattern id="korn-baand-m" width="6" height="6" patternUnits="userSpaceOnUse">
+      <path class="korn-streg korn-baand" d="M-1 5 L5 -1"></path>
+      <path class="korn-streg korn-baand" d="M2 8 L8 2"></path>
+    </pattern>
+  </defs>
+</svg>
+
+<script>
+"use strict";
+(function () {
+  var CELLER = [
+    { n: 1, afgrode: "hvede", kap: 1400, fyld: 1118 },
+    { n: 2, afgrode: "hvede", kap: 1400, fyld: 642 },
+    { n: 3, afgrode: "hvede", kap: 900, fyld: 155 },
+    { n: 4, afgrode: "hvede", kap: 900, fyld: 878 },
+    { n: 5, afgrode: "byg", kap: 1200, fyld: 730 },
+    { n: 6, afgrode: "byg", kap: 1200, fyld: 1194 },
+    { n: 7, afgrode: "rug", kap: 600, fyld: 210 },
+    { n: 8, afgrode: "havre", kap: 600, fyld: 96 }
+  ];
+
+  var KOEN = [
+    { tid: "11.42", plade: "XL 28 306", hvem: "Døstrup Mølle", afgrode: "hvede", ventet: 22, ind: 44120 },
+    { tid: "11.47", plade: "BS 63 118", hvem: "Glenstrup Søgård", afgrode: "byg", ventet: 17, ind: 46980 },
+    { tid: "11.51", plade: "JN 70 425", hvem: "Handest Hedegård", afgrode: "hvede", ventet: 13, ind: 43650 },
+    { tid: "11.58", plade: "PK 19 640", hvem: "Sønder Onsild Kær", afgrode: "rug", ventet: 6, ind: 45310 }
+  ];
+
+  var stat = {
+    ur: { t: 12, m: 4, s: 31 },
+    bro: { plade: "CV 41 872", hvem: "Bramslev Hede", afgrode: "hvede", ind: 47860, tid: "12.01" },
+    prove: { vand: 13.8, protein: 11.4, fremmed: 0.7, godkendt: true },
+    anvist: null,
+    holdt: false,
+    log: []
+  };
+
+  var el = function (id) { return document.getElementById(id); };
+  var melding = el("melding");
+  var siloer = el("siloer");
+  var logliste = el("logliste");
+  var koliste = el("koliste");
+  var form = el("provekort");
+  var fejlsamling = el("fejlsamling");
+  var broknap = el("broknap");
+  var holdknap = el("hold-knap");
+
+  var FELTER = [
+    { id: "vand", navn: "Vand", graense: 15.0, over: "tørreri" },
+    { id: "protein", navn: "Protein", graense: null, over: null },
+    { id: "fremmed", navn: "Fremmedlegemer", graense: 2.0, over: "afvist" }
+  ];
+
+  function tal(n, dec) {
+    return n.toLocaleString("da-DK", { minimumFractionDigits: dec, maximumFractionDigits: dec });
+  }
+  function kg(n) { return tal(n, 0) + " kg"; }
+  function ton(n, dec) { return tal(n, dec === undefined ? 0 : dec) + " t"; }
+  function ur() {
+    var u = stat.ur;
+    var to = function (v) { return (v < 10 ? "0" : "") + v; };
+    return to(u.t) + "." + to(u.m);
+  }
+  function urSek() {
+    var u = stat.ur;
+    var to = function (v) { return (v < 10 ? "0" : "") + v; };
+    return to(u.t) + "." + to(u.m) + "." + to(u.s);
+  }
+
+  /* Lasten kendes ikke som netto, før vognen er vejet ud. Indtil da er bruttovægten
+     det eneste sande loft over, hvor meget der skal være plads til i cellen. */
+  function lastTon() { return stat.bro ? stat.bro.ind / 1000 : 0; }
+  function plads(c) { return c.kap - c.fyld - (c.reserveret || 0); }
+
+  function rute() {
+    if (!stat.bro) return "tom";
+    if (stat.anvist) return "anvist";
+    var p = stat.prove;
+    if (!p.godkendt) return "uaflaest";
+    if (p.fremmed > 2.0) return "afvist";
+    if (p.vand > 15.0) return "torreri";
+    return "celler";
+  }
+
+  function kanTage(c) {
+    return c.afgrode === stat.bro.afgrode && plads(c) >= lastTon();
+  }
+
+  /* ---------- cellevæggen ---------- */
+
+  /* Bredde og højde vokser med kvadratroden af kapaciteten, så det tegnede kornareal
+     er tonnagen: cirka 12 kvadratpunkter pr. ton i alle fire størrelser. */
+  var GEO = { 1400: [96, 150, 27], 1200: [89, 139, 25], 900: [77, 120, 22], 600: [63, 98, 18] };
+
+  function siloSvg(c, aktiv) {
+    var g = GEO[c.kap];
+    var w = g[0], krop = g[1], tragt = g[2], rim = 6;
+    var h = rim + krop + tragt;
+    var bund = rim + krop;
+    var kornH = krop * (c.fyld / c.kap);
+    var kornY = bund - kornH;
+    var s = [];
+    s.push('<svg viewBox="0 0 ' + w + ' ' + h + '" width="' + w + '" height="' + h + '" aria-hidden="true" focusable="false" data-asset="celle-' + c.n + '">');
+    s.push('<rect class="karkasse" x="0.75" y="' + rim + '" width="' + (w - 1.5) + '" height="' + krop + '"></rect>');
+    if (kornH > 0.5) {
+      s.push('<rect x="1.5" y="' + kornY.toFixed(1) + '" width="' + (w - 3) + '" height="' + kornH.toFixed(1) + '" fill="url(#korn-' + c.afgrode + '-m)"></rect>');
+      s.push('<line class="fyldelinje" x1="0.75" y1="' + kornY.toFixed(1) + '" x2="' + (w - 0.75) + '" y2="' + kornY.toFixed(1) + '"></line>');
+    }
+    if (aktiv) {
+      var baandH = Math.max(3, krop * (lastTon() / c.kap));
+      var baandY = Math.max(rim + 1, kornY - baandH);
+      s.push('<rect x="1.5" y="' + baandY.toFixed(1) + '" width="' + (w - 3) + '" height="' + baandH.toFixed(1) + '" fill="url(#korn-baand-m)"></rect>');
+      s.push('<line class="baandlinje" x1="0.75" y1="' + baandY.toFixed(1) + '" x2="' + (w - 0.75) + '" y2="' + baandY.toFixed(1) + '"></line>');
+    }
+    s.push('<path class="karlinje" d="M0.75 ' + bund + ' L' + (w / 2 - 5) + ' ' + (h - 0.75) + ' L' + (w / 2 + 5) + ' ' + (h - 0.75) + ' L' + (w - 0.75) + ' ' + bund + '"></path>');
+    s.push('<line class="karlinje" x1="0.75" y1="' + (rim + 0.75) + '" x2="' + (w - 0.75) + '" y2="' + (rim + 0.75) + '"></line>');
+    s.push('</svg>');
+    return s.join("");
+  }
+
+  function torreriSvg() {
+    var w = 63, h = 122;
+    var s = [];
+    s.push('<svg viewBox="0 0 ' + w + ' ' + h + '" width="' + w + '" height="' + h + '" aria-hidden="true" focusable="false" data-asset="torreriet">');
+    s.push('<line class="dampsky" x1="31.5" y1="42" x2="31.5" y2="27"></line>');
+    s.push('<path class="dampsky" d="M23 23 C23 15, 32 19, 32 11"></path>');
+    s.push('<path class="dampsky" d="M37 25 C37 19, 44 22, 44 15"></path>');
+    s.push('<rect class="damptromle" x="6.75" y="42" width="' + (w - 13.5) + '" height="62"></rect>');
+    s.push('<line class="dampsky" x1="6.75" y1="58" x2="' + (w - 6.75) + '" y2="58"></line>');
+    s.push('<line class="dampsky" x1="6.75" y1="74" x2="' + (w - 6.75) + '" y2="74"></line>');
+    s.push('<line class="dampsky" x1="6.75" y1="90" x2="' + (w - 6.75) + '" y2="90"></line>');
+    s.push('<path class="dampsky" d="M6.75 104 L' + (w / 2 - 5) + ' ' + (h - 0.75) + ' L' + (w / 2 + 5) + ' ' + (h - 0.75) + ' L' + (w - 6.75) + ' 104"></path>');
+    return s.join("") + "</svg>";
+  }
+
+  function tegnCeller() {
+    var r = rute();
+    var ud = [];
+    CELLER.forEach(function (c) {
+      var aktiv = r === "celler" && kanTage(c);
+      var mine = stat.anvist && stat.anvist.celle === c.n;
+      var klasser = "celle" + (aktiv || mine ? "" : " celle-daempet");
+      var b = [];
+      b.push('<li class="' + klasser + '" style="flex:0 1 ' + GEO[c.kap][0] + 'px">');
+      b.push('<div class="celle-top"><p class="celle-navn">Celle ' + c.n + "</p>");
+      b.push('<p class="celle-korn">' + c.afgrode + "</p></div>");
+      b.push('<div class="celle-fig">' + siloSvg(c, aktiv || mine) + "</div>");
+      b.push('<div class="celle-cifre"><p class="celle-tal">' + tal(c.fyld, 0) + " af " + tal(c.kap, 0) + " t</p>");
+      b.push('<p class="celle-plads">' + ton(plads(c)) + " plads</p></div>");
+      b.push('<div class="celle-slut">');
+      if (mine) {
+        b.push('<p class="celle-nej">Anvist ' + stat.anvist.tid + ", " + stat.bro.plade + "</p>");
+      } else if (aktiv) {
+        b.push('<button type="button" class="knap knap-gron knap-anvis" data-celle="' + c.n +
+          '" aria-label="Anvis lasten til celle ' + c.n + '">Anvis</button>');
+      } else if (r === "uaflaest") {
+        b.push('<p class="celle-nej">Venter på prøven</p>');
+      } else if (r === "afvist") {
+        b.push('<p class="celle-nej">Lasten er afvist ved broen</p>');
+      } else if (r === "torreri") {
+        b.push('<p class="celle-nej">Lasten skal tørres først</p>');
+      } else if (r === "tom") {
+        b.push('<p class="celle-nej">Broen er tom</p>');
+      } else if (r === "anvist") {
+        b.push('<p class="celle-nej">Vognen er anvist</p>');
+      } else if (c.afgrode !== stat.bro.afgrode) {
+        b.push('<p class="celle-nej">Kun ' + c.afgrode + "</p>");
+      } else {
+        b.push('<p class="celle-nej">Kun ' + ton(plads(c)) + " tilbage</p>");
+      }
+      b.push("</div></li>");
+      ud.push(b.join(""));
+    });
+
+    var damp = r === "torreri";
+    var t = [];
+    t.push('<li class="celle torreriet' + (damp ? "" : " celle-daempet") + '" style="flex:0 1 96px">');
+    t.push('<div class="celle-top"><p class="celle-navn">Tørreriet</p>');
+    t.push('<p class="celle-korn">varmluft</p></div>');
+    t.push('<div class="celle-fig">' + torreriSvg() + "</div>");
+    t.push('<div class="celle-cifre"><p class="celle-tal">over 15,0 % vand</p>');
+    t.push('<p class="celle-plads">kapaciteten står ikke her</p></div>');
+    t.push('<div class="celle-slut">');
+    if (damp) {
+      t.push('<button type="button" class="knap knap-gron knap-anvis" data-celle="torreri" aria-label="Anvis lasten til tørreriet">Anvis</button>');
+    } else if (r === "afvist") {
+      t.push('<p class="celle-nej">Lasten er afvist ved broen</p>');
+    } else {
+      t.push('<p class="celle-nej">Kun våd last</p>');
+    }
+    t.push("</div></li>");
+    ud.push(t.join(""));
+
+    siloer.innerHTML = ud.join("");
+  }
+
+  /* ---------- meldingen ---------- */
+
+  function tegnMelding() {
+    var r = rute();
+    var kl = "melding";
+    var t = "";
+    if (r === "tom") {
+      kl += "";
+      t = "Broen er tom og læser 0 kg. Næste i køen er " + KOEN[0].plade + ", " + KOEN[0].hvem + ", " + KOEN[0].afgrode + ".";
+    } else if (r === "uaflaest") {
+      t = "Prøven mangler. Tast vand, protein og fremmedlegemer, så viser væggen hvor lasten kan gå.";
+    } else if (r === "afvist") {
+      kl += " melding-rod";
+      t = tal(stat.prove.fremmed, 1) + " % fremmedlegemer, over 2,0. Vognen kører læsset fra broen.";
+    } else if (r === "torreri") {
+      kl += " melding-damp";
+      t = tal(stat.prove.vand, 1) + " % vand, over 15,0. Lasten skal på tørreriet, ikke i en celle.";
+    } else if (r === "anvist") {
+      kl += " melding-gron";
+      t = "Anvist til " + stat.anvist.navn + " klokken " + stat.anvist.tid +
+        ". Kan fortrydes indtil vognen kører af broen.";
+    } else {
+      var kan = CELLER.filter(kanTage).map(function (c) { return c.n; });
+      kl += " melding-gron";
+      if (kan.length === 0) {
+        kl = "melding melding-rod";
+        t = stat.bro.afgrode.charAt(0).toUpperCase() + stat.bro.afgrode.slice(1) +
+          ", " + tal(stat.prove.vand, 1) + " % vand. Ingen celle har plads til " + ton(lastTon(), 1) + ".";
+      } else {
+        t = stat.bro.afgrode.charAt(0).toUpperCase() + stat.bro.afgrode.slice(1) + ", " +
+          tal(stat.prove.vand, 1) + " % vand og " + tal(stat.prove.fremmed, 1) + " % fremmedlegemer. Celle " +
+          listeDK(kan) + " kan tage op til " + ton(lastTon(), 1) + ".";
+      }
+    }
+    melding.className = kl;
+    melding.textContent = t;
+  }
+
+  function listeDK(a) {
+    if (a.length === 1) return String(a[0]);
+    return a.slice(0, -1).join(", ") + " og " + a[a.length - 1];
+  }
+
+  /* ---------- broen ---------- */
+
+  function tegnBro() {
+    el("lasten").textContent = stat.bro ? ton(lastTon(), 1) : "0 t";
+    el("lasten-note").textContent = stat.bro
+      ? "er det mest lasten kan veje, regnet på bruttovægten. Cellen skal have plads til det tal, indtil vognen er vejet ud."
+      : "står der på broen, indtil næste vogn kører op.";
+    if (!stat.bro) {
+      el("bro-plade").textContent = "Ingen vogn";
+      el("bro-hvem").textContent = "Broen er tom";
+      el("bro-vaegt").textContent = "0 kg";
+      el("bro-note").textContent = "Broen lige nu, aflæst " + urSek();
+      el("vejeseddel").hidden = true;
+      broknap.hidden = false;
+      broknap.textContent = "Giv grønt til " + KOEN[0].plade;
+      broknap.setAttribute("data-handling", "kald");
+      holdknap.disabled = true;
+      form.querySelectorAll("input, #godkend").forEach(function (n) { n.disabled = true; });
+      return;
+    }
+    el("bro-plade").textContent = stat.bro.plade;
+    el("bro-hvem").textContent = stat.bro.hvem + ", " + stat.bro.afgrode;
+    el("vejeseddel").hidden = false;
+    el("vejeseddel").querySelector("dd").textContent = kg(stat.bro.ind) + ", klokken " + stat.bro.tid;
+    holdknap.disabled = false;
+    form.querySelectorAll("input, #godkend").forEach(function (n) { n.disabled = false; });
+    if (stat.anvist) {
+      broknap.hidden = false;
+      broknap.textContent = "Luk vognen af broen";
+      broknap.setAttribute("data-handling", "luk");
+    } else {
+      broknap.hidden = true;
+    }
+    visVaegt();
+  }
+
+  function visVaegt() {
+    if (!stat.bro) { el("bro-vaegt").textContent = "0 kg"; return; }
+    var stoj = stat.holdt ? 0 : Math.round(Math.sin(stat.ur.s * 1.7) * 3);
+    el("bro-vaegt").textContent = kg(stat.bro.ind + stoj);
+    el("bro-note").textContent = stat.holdt
+      ? "Aflæsningen holdes, senest læst " + urSek()
+      : "Broen lige nu, aflæst " + urSek();
+  }
+
+  /* ---------- loggen ---------- */
+
+  function tegnLog() {
+    var faste = Array.prototype.slice.call(logliste.querySelectorAll("li[data-fast]"));
+    var ud = stat.log.map(function (r, i) {
+      var klasse = r.slags === "afvist" ? " log-hvor-stop" : r.slags === "torreri" ? " log-hvor-damp" : "";
+      var laas = r.laast
+        ? '<span class="log-laas">Låst, vognen har forladt broen</span>'
+        : '<span class="log-laas">Vognen står stadig på broen</span>';
+      var fortryd = r.laast || i !== 0
+        ? ""
+        : '<button type="button" class="knap knap-let log-fortryd" id="fortryd">Fortryd anvisningen</button>';
+      return '<li class="lograd">' +
+        '<span class="log-hvem tal">' + r.tid + " " + r.plade + "</span>" +
+        '<span class="log-hvor' + klasse + '">' + r.navn + laas + fortryd + "</span>" +
+        '<span class="log-hvad">' + tal(r.vand, 1) + " % vand<br>" + kg(r.ind) + ", brutto</span>" +
+        "</li>";
+    }).join("");
+    logliste.innerHTML = ud + faste.map(function (n) { return n.outerHTML; }).join("");
+  }
+
+  /* ---------- køen ---------- */
+
+  function tegnKo() {
+    koliste.innerHTML = KOEN.map(function (v) {
+      return '<li class="korad">' +
+        '<span class="ko-nr tal">' + v.tid + " " + v.plade + "</span>" +
+        '<span class="ko-hvem">' + v.hvem + ", " + v.afgrode + "</span>" +
+        '<span class="ko-ventet">har holdt ' + v.ventet + " min</span></li>";
+    }).join("");
+  }
+
+  /* ---------- prøven ---------- */
+
+  function laesTal(v) {
+    var s = String(v).trim().replace(",", ".");
+    if (s === "") return { fejl: "mangler" };
+    if (!/^\d{1,3}(\.\d{1,2})?$/.test(s)) return { fejl: "format" };
+    var n = parseFloat(s);
+    if (n > 100) return { fejl: "over" };
+    return { vaerdi: n };
+  }
+
+  function ryd(f) {
+    var input = el(f.id);
+    var fejl = el(f.id + "-fejl");
+    if (fejl) fejl.remove();
+    input.removeAttribute("aria-invalid");
+    var b = (input.getAttribute("aria-describedby") || "").split(" ")
+      .filter(function (x) { return x && x !== f.id + "-fejl"; });
+    if (b.length) input.setAttribute("aria-describedby", b.join(" "));
+    else input.removeAttribute("aria-describedby");
+  }
+
+  function saetFejl(f, tekst) {
+    var input = el(f.id);
+    var s = document.createElement("span");
+    s.className = "felt-fejl";
+    s.id = f.id + "-fejl";
+    s.textContent = tekst;
+    input.parentNode.parentNode.appendChild(s);
+    input.setAttribute("aria-invalid", "true");
+    var b = (input.getAttribute("aria-describedby") || "").split(" ")
+      .filter(function (x) { return x; });
+    b.unshift(f.id + "-fejl");
+    input.setAttribute("aria-describedby", b.join(" "));
+  }
+
+  function godkendProve(e) {
+    if (e) e.preventDefault();
+    var fejl = [];
+    var vaerdier = {};
+    FELTER.forEach(function (f) {
+      ryd(f);
+      var r = laesTal(el(f.id).value);
+      if (r.fejl === "mangler") {
+        fejl.push({ f: f, tekst: f.navn + " er ikke aflæst. Tast tallet fra prøvebakken." });
+      } else if (r.fejl === "format") {
+        fejl.push({ f: f, tekst: f.navn + " skal skrives som tal med komma, for eksempel 13,8." });
+      } else if (r.fejl === "over") {
+        fejl.push({ f: f, tekst: f.navn + " kan ikke være over 100 procent. Læs prøven om." });
+      } else {
+        vaerdier[f.id] = r.vaerdi;
+      }
+    });
+
+    if (fejl.length) {
+      fejl.forEach(function (x) { saetFejl(x.f, x.tekst); });
+      fejlsamling.innerHTML = "<p>Prøven er ikke godkendt. " + fejl.length +
+        (fejl.length === 1 ? " aflæsning" : " aflæsninger") + " skal rettes:</p><ul>" +
+        fejl.map(function (x) {
+          return '<li><a href="#' + x.f.id + '">' + x.tekst + "</a></li>";
+        }).join("") + "</ul>";
+      fejlsamling.hidden = false;
+      fejlsamling.focus();
+      stat.prove.godkendt = false;
+      tegnAlt();
+      return;
+    }
+
+    fejlsamling.hidden = true;
+    fejlsamling.innerHTML = "";
+    stat.prove = { vand: vaerdier.vand, protein: vaerdier.protein, fremmed: vaerdier.fremmed, godkendt: true };
+    stat.anvist = null;
+    tegnAlt();
+  }
+
+  /* ---------- anvisningen ---------- */
+
+  function anvis(maal) {
+    if (!stat.bro || stat.anvist) return;
+    var navn, slags;
+    if (maal === "torreri") {
+      navn = "tørreriet";
+      slags = "torreri";
+    } else {
+      var c = CELLER.filter(function (x) { return x.n === Number(maal); })[0];
+      if (!c || !kanTage(c)) return;
+      navn = "celle " + c.n;
+      slags = "celle";
+      c.reserveret = lastTon();
+    }
+    stat.anvist = { celle: maal === "torreri" ? null : Number(maal), navn: navn, tid: ur(), slags: slags };
+    stat.log.unshift({
+      tid: ur(), plade: stat.bro.plade, navn: navn, slags: slags,
+      vand: stat.prove.vand, ind: stat.bro.ind, laast: false
+    });
+    tegnAlt();
+  }
+
+  function fortryd() {
+    if (!stat.anvist || !stat.log.length || stat.log[0].laast) return;
+    if (stat.anvist.celle) {
+      CELLER.forEach(function (c) { if (c.n === stat.anvist.celle) { c.reserveret = 0; } });
+    }
+    stat.log.shift();
+    stat.anvist = null;
+    tegnAlt();
+    melding.textContent = "Anvisningen er fortrudt. " + stat.bro.plade + " står stadig på broen.";
+  }
+
+  function lukAfBroen() {
+    if (!stat.anvist) return;
+    if (stat.log.length) stat.log[0].laast = true;
+    if (stat.anvist.celle) {
+      CELLER.forEach(function (c) {
+        if (c.n === stat.anvist.celle) { c.fyld = Math.min(c.kap, c.fyld + (c.reserveret || 0)); c.reserveret = 0; }
+      });
+    }
+    stat.bro = null;
+    stat.anvist = null;
+    stat.prove = { vand: null, protein: null, fremmed: null, godkendt: false };
+    FELTER.forEach(function (f) { ryd(f); el(f.id).value = ""; });
+    tegnAlt();
+  }
+
+  function kaldNaeste() {
+    var v = KOEN.shift();
+    if (!v) return;
+    stat.bro = { plade: v.plade, hvem: v.hvem, afgrode: v.afgrode, ind: v.ind, tid: ur() };
+    stat.prove = { vand: null, protein: null, fremmed: null, godkendt: false };
+    tegnAlt();
+  }
+
+  /* ---------- samlet tegning ---------- */
+
+  function tegnAlt() {
+    tegnBro();
+    tegnMelding();
+    tegnCeller();
+    tegnLog();
+    tegnKo();
+  }
+
+  /* ---------- hændelser ---------- */
+
+  form.addEventListener("submit", godkendProve);
+
+  siloer.addEventListener("click", function (e) {
+    var k = e.target.closest("button[data-celle]");
+    if (k) anvis(k.getAttribute("data-celle"));
+  });
+
+  logliste.addEventListener("click", function (e) {
+    if (e.target.id === "fortryd") fortryd();
+  });
+
+  broknap.addEventListener("click", function () {
+    if (broknap.getAttribute("data-handling") === "kald") kaldNaeste();
+    else lukAfBroen();
+  });
+
+  holdknap.addEventListener("click", function () {
+    stat.holdt = !stat.holdt;
+    holdknap.setAttribute("aria-pressed", stat.holdt ? "true" : "false");
+    holdknap.textContent = stat.holdt ? "Slip aflæsningen" : "Hold aflæsningen";
+    visVaegt();
+  });
+
+  /* Broen læser hvert sekund. Den holder stille mens en hånd taster eller tæller,
+     og den er holdt fra start, hvis brugeren har slået bevægelse fra. */
+  var taster = false;
+  form.addEventListener("focusin", function () { taster = true; });
+  form.addEventListener("focusout", function () { taster = false; });
+
+  var roligt = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (roligt) {
+    stat.holdt = true;
+    holdknap.setAttribute("aria-pressed", "true");
+    holdknap.textContent = "Slip aflæsningen";
+  }
+
+  window.setInterval(function () {
+    stat.ur.s += 1;
+    if (stat.ur.s > 59) { stat.ur.s = 0; stat.ur.m += 1; }
+    if (stat.ur.m > 59) { stat.ur.m = 0; stat.ur.t += 1; }
+    if (stat.holdt || taster) return;
+    visVaegt();
+  }, 1000);
+
+  tegnAlt();
+})();
+</script>
+</body>
+</html>

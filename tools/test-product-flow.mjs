@@ -8,17 +8,29 @@
  */
 
 import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
 import { mkdtemp, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { spawnSync } from 'node:child_process';
 import { tmpdir } from 'node:os';
-import { dirname, join } from 'node:path';
+import { dirname, isAbsolute, join, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
 const PIPELINE = join(ROOT, 'skills/sitesmith/PIPELINE.json');
 const ROUTER = join(ROOT, 'skills/sitesmith/scripts/stack-router.mjs');
 const CLI = join(ROOT, 'bin/sitesmith.mjs');
+const APACHE_LICENSE_SHA256 = 'cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30';
 const failures = [];
+
+function canonicalText(buffer) {
+  let text = buffer.toString('utf8');
+  if (text.charCodeAt(0) === 0xfeff) text = text.slice(1);
+  return text.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+}
+
+function sha256(text) {
+  return createHash('sha256').update(text, 'utf8').digest('hex');
+}
 
 async function check(name, fn) {
   try {
@@ -126,7 +138,7 @@ try {
 await check('generated provider packs expose the default journey but no lab step', async () => {
   const out = await mkdtemp(join(tmpdir(), 'sitesmith-pack-'));
   try {
-    const result = spawnSync(process.execPath, [CLI, 'pack', '--provider', 'codex', '--out', out], {
+    const result = spawnSync(process.execPath, [CLI, 'pack', '--legacy-v2', '--provider', 'codex', '--out', out], {
       cwd: ROOT,
       encoding: 'utf8',
     });
@@ -140,15 +152,69 @@ await check('generated provider packs expose the default journey but no lab step
   }
 });
 
-await check('public product documents agree on the compact journey', async () => {
-  const [skill, readme, state, plugin, marketplace] = await Promise.all([
+await check('installed provider bundles carry every manifested licence and notice hash', async () => {
+  const out = await mkdtemp(join(tmpdir(), 'sitesmith-install-'));
+  try {
+    /* `--legacy-v2` names which installer this check drives, and it has to. This file tests
+       the v2 product flow: PIPELINE.json, the generated provider packs, and the licence and
+       notice files those bundles carry. `install` without the flag installs the current v3
+       product, which writes a different layout and ships no LICENSES directory, so the bare
+       command stopped producing the bundle this assertion is about. The contract here is
+       right; the command it drove was renamed under it, twice. */
+    const result = spawnSync(process.execPath, [CLI, 'install', '--legacy-v2', '--provider', 'codex', '--to', out,
+      '--no-deps', '--no-doctor'], { cwd: ROOT, encoding: 'utf8' });
+    assert.equal(result.status, 0, (result.stderr || result.stdout).trim());
+    const installedSkill = join(out, '.agents', 'skills', 'sitesmith');
+    const licence = await readFile(join(installedSkill, 'LICENSES', 'Apache-2.0.txt'), 'utf8');
+    assert.equal(sha256(canonicalText(licence)), APACHE_LICENSE_SHA256,
+      'installed Apache-2.0.txt must exactly match the complete apache.org text');
+    const notices = await readFile(join(installedSkill, 'THIRD-PARTY-NOTICES.md'), 'utf8');
+    for (const owner of ['Leonxlnx', 'Next Level Builder', 'Anthropic PBC', 'Paul Bakaus']) {
+      assert.match(notices, new RegExp(owner));
+    }
+    const manifestPath = join(installedSkill, 'THIRD-PARTY-PROVENANCE.json');
+    const manifestText = canonicalText(await readFile(manifestPath));
+    const manifest = JSON.parse(manifestText);
+    assert.equal(manifest.schemaVersion, 1);
+    const shipping = manifest.carriage.filter((item) => item.shipsWithInstall);
+    assert.deepEqual(shipping.map((item) => item.id).sort(),
+      ['apache-2.0-license', 'provenance-manifest', 'third-party-notices']);
+    for (const item of shipping) {
+      assert.equal(item.scope, 'skill', `${item.id} must install inside the skill root`);
+      assert.ok(!isAbsolute(item.path) && !item.path.includes('\\') &&
+        !item.path.split('/').includes('..'), `${item.id} has an unsafe install path`);
+      const installedPath = resolve(installedSkill, ...item.path.split('/'));
+      const fromRoot = relative(resolve(installedSkill), installedPath);
+      assert.ok(fromRoot && !fromRoot.startsWith('..') && !isAbsolute(fromRoot),
+        `${item.id} escapes the installed skill root`);
+      let installedText = canonicalText(await readFile(installedPath));
+      if (item.hashMode === manifest.selfHashMode) {
+        assert.equal(item.id, 'provenance-manifest');
+        assert.equal(installedText.split(item.canonicalFileSha256).length - 1, 1,
+          'manifest self hash must occur exactly once');
+        installedText = installedText.replace(item.canonicalFileSha256, '0'.repeat(64));
+      }
+      assert.equal(sha256(installedText), item.canonicalFileSha256,
+        `${item.id} installed canonical hash drifted`);
+    }
+  } finally {
+    await rm(out, { recursive: true, force: true });
+  }
+});
+
+/* The root README used to be asserted here too. It now documents v3, whose journey is
+   product/pipeline.json and is checked by tools/test-pipeline-drift.mjs. Asserting the v2
+   journey against it would force the current front page to advertise the legacy one, which
+   is the drift this round exists to end. The v2 journey is still required of v2's own
+   documents. */
+await check('the v2 documents agree on the compact v2 journey', async () => {
+  const [skill, state, plugin, marketplace] = await Promise.all([
     readFile(join(ROOT, 'skills/sitesmith/SKILL.md'), 'utf8'),
-    readFile(join(ROOT, 'README.md'), 'utf8'),
     readFile(join(ROOT, 'docs/v2/STATE.md'), 'utf8'),
     readFile(join(ROOT, '.claude-plugin/plugin.json'), 'utf8'),
     readFile(join(ROOT, '.claude-plugin/marketplace.json'), 'utf8'),
   ]);
-  for (const [name, text] of Object.entries({ skill, readme, state })) {
+  for (const [name, text] of Object.entries({ skill, state })) {
     assert.match(text, /init\s*(?:→|->)\s*build\s*(?:→|->)\s*audit/i, `${name} has no journey`);
   }
   assert.doesNotMatch(`${plugin}\n${marketplace}`, /12-step/i);

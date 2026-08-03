@@ -1,0 +1,8 @@
+1. Øjet lander på h1'ens lyse antikva øverst til venstre, ikke på stakken, så sidens argument ankommer som en sætning om fire træsorter, før det ankommer som den ting man køber fra; briefen bad om hvad der er på lager i hvilken tykkelse, og det er det andet man ser.
+2. Bestillingsafsnittet læses først som skabelon: fire stablede etiketterede felter til venstre og et panel til højre, og panelet er tomt, så sidens mest konventionelle blok er også dens tommeste.
+3. Signaturen lever ved 1440, hvor de fire stakke står på ét gulv og eg er synligt dobbelt så høj som elm; ved 375 overlever den, men er klemt, elmens gule "3,4 m³ tilbage" ligger oven på dens egen planke, og etiketterne inde i 27 mm planken rører næsten hinanden.
+4. Tommest er `.slip`, et 400 px højt panel med én overskrift og én sætning i; dernæst den øverste højre del af første skærm, hvor bunden løber omkring 500 px til højre for manchetten uden noget i sig.
+5. De seks største ord er Bøg, eg, ask, elm, Specifikationen og Bestillingssedlen, plus priserne; træsortsnavnene deler enhver dansk løvtræshandel, og kun priserne, de 8 procent og Røverstuevej gør det til denne plads frem for en hvilken som helst plads.
+6. Dækker man den øverste tredjedel, står specifikationen, dagestregerne og sedlen tilbage, og ja, det siger stadig hvad det er: fire sorter i fire tykkelser, alle på 8 %, med en optælling af tørredage og en bestilling.
+
+ACCEPT med rettelser. Det værste enkelte: `.maaling` er et fladt lysebrunt kvadrat med to 5 px mærker i, som intet siger på et blik, og det er tegnet som en 31 mm bred pind i stedet for som enden af en planke, hvilket stiltiende påstår en bredde ingen har oplyst.

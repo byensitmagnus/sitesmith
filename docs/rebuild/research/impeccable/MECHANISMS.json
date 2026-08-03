@@ -1,0 +1,225 @@
+[
+  {
+    "id": "forced-index-direction-roll",
+    "source": "impeccable",
+    "sourcePath": "skill/scripts/concept-seed.mjs:1-73,257-303,350-369",
+    "problemSolved": "A single model's resonance ranking over its own grounded concept list is deterministic — the repo's own measurement found 30/35 identical concepts across 16 prompt framings, i.e. the model always builds its #1-ranked (safest) idea.",
+    "mechanism": "The model first derives its own 5-7 grounded candidate directions from cultural/product research (pure model reasoning, no script involvement). Only then does a script (concept-seed.mjs) SHA-256-hash a session key to deterministically pick an index 3..7 into THAT list — i.e. it forces the model away from its own top 1-2 ranked picks, never substituting a script-authored idea. Re-rolls exclude every prior round's candidates (grounded and challenger alike) from the same base key so the chain never repeats. Separately it deals up to 6 external 'challenger' concepts from a catalog/API, weighted by human-approval ratings, which must be fused with product facts and judged against the assigned direction on two axes before they can win.",
+    "whyItWorks": "It attacks the argmax/mode-collapse failure at the selection step, not the generation step: the model still does 100% of the creative derivation and fusion work, the external mechanism only vetoes the convergent choice. This is the precise shape the brief's C-no-mechanical-creativity constraint asks for — decision-forcing, not idea-generating.",
+    "requiredContext": ["PRODUCT.md must exist (hard-gated: script exits 1 with NO_PRODUCT_MD otherwise, concept-seed.mjs:526-538)", "a mode (persuade/operate/read/experience)", "optional external catalog or impeccable.style API for challengers (degrades gracefully to assignment-only without either)"],
+    "contextCost": "low",
+    "outputImpact": "Directly targets C-no-house-style: this is the single mechanism in the repo aimed at preventing convergent 'three sites, same five moves' outcomes.",
+    "failureModes": [
+      "Depends on an external paid/private catalog service (impeccable.style) for the richest version; the challenger catalog 'does not ship with the skill' (concept-seed.mjs:97), so an offline rebuild only gets the degraded assignment-only seed",
+      "The hash-forced index is still bounded to the model's own list — if the model's grounded-candidate derivation itself is weak or narrow, forcing index 4 of 5 doesn't fix that",
+      "Adds real workflow overhead (a whole ask-round + roll + card UI) that is disproportionate for small/local changes; the source itself gates this off for 'a local extension or a precisely specified narrow request'"
+    ],
+    "conflicts": ["Needs a hard gate on PRODUCT.md existing, which conflicts with any lightweight/no-init workflow", "The rendered instructions explicitly forbid presenting a ranked lineup to the user — conflicts with UIs that want to show all options"],
+    "testMethod": "Not independently tested by us; asserted by the repo's own comment (30/35 identical concepts across 16 framings) with no linked methodology file in this checkout.",
+    "decision": "adapt",
+    "sitesmithForm": "Re-express as a lightweight decision-forcing step in SiteSmith's direction-selection stage: have the model produce its own ranked shortlist, then apply a simple non-LLM tie-breaker (e.g. a hash of session/timestamp) to force a non-top-1 pick before committing, without depending on any external catalog or API call.",
+    "confidence": 0.85
+  },
+  {
+    "id": "craft-floor-ban-list",
+    "source": "impeccable",
+    "sourcePath": "skill/reference/craft-floor.md:18-48",
+    "problemSolved": "LLMs default to a recognizable handful of 'AI slop' surface habits (gradient text, eyebrow labels, hero-metric template, same-size icon+heading+text cards, glassmorphism, side-stripe borders) regardless of brief.",
+    "mechanism": "A short (55-line) reference file loaded once, right before any UI edit, listing: (a) a Verify checklist of measurable floor properties (contrast ratios, spacing rhythm, type scale, motion easing) and (b) a Refuse list of named category-default patterns that are framed as defaults earning override 'by the brief's own words', not absolute bans — except a few true bans (eyebrow-over-heading, gradient text as emphasis). Tool/model-specific addenda exist (`<codex>`, `<gemini>` blocks) calling out that model's specific known failure tendencies.",
+    "whyItWorks": "It is a narrow, mechanically-checkable blocklist, not a style prescription — it removes convergent defaults without dictating what to do instead, which keeps outputs diverse while still killing the most recognizable AI tells. It's cheap (one file, loaded once) and testable (a linter can check most of it, see mechanical-antipattern-detector).",
+    "requiredContext": ["Direction/brief already decided (loaded 'after the direction is settled')"],
+    "contextCost": "low",
+    "outputImpact": "Directly reduces C-no-house-style risk by removing shared convergent habits, while leaving the actual creative direction entirely to the model.",
+    "failureModes": [
+      "A ban framed as a 'default, not a ban' relies on the model correctly judging when the brief earns an exception — no mechanical check enforces that nuance",
+      "Model-specific addenda (`<codex>`, `<gemini>`) suggest the authors found each model has different recurring tells; a single generic list may under- or over-fire for whichever model SiteSmith runs on"
+    ],
+    "conflicts": ["None material; this is additive guidance, not a competing procedure"],
+    "testMethod": "Enforced partly by the mechanical detector (registry/antipatterns.mjs) which encodes several of the same bans as automated rules (gradient-text, nested-cards, side-tab, ai-color-palette, cream-palette); no evidence of a controlled before/after study on the ban list itself in this checkout.",
+    "decision": "adopt",
+    "sitesmithForm": "Adopt as a short, model-agnostic 'refuse list' section loaded right before implementation, re-written in our own words, paired with (not duplicating) the mechanical detector so the same bans are both prompted and checked.",
+    "confidence": 0.8
+  },
+  {
+    "id": "mechanical-antipattern-detector",
+    "source": "impeccable",
+    "sourcePath": "cli/engine/registry/antipatterns.mjs:1-140, cli/engine/rules/checks.mjs (5580 lines), skill/scripts/detect.mjs:1-21",
+    "problemSolved": "Design critique and floor rules are useless if nothing ever actually checks the shipped HTML/CSS against them; relying on the model to self-audit is unreliable and expensive to repeat.",
+    "mechanism": "A 59-rule deterministic registry (`antipatterns.mjs`) of named, described AI-tell patterns (gradient text, AI color palette, cream/beige palette, nested cards, monotonous spacing, bounce easing, pulsing dots, glowing shadows, radial halo, overused fonts, flat type hierarchy, etc.), each mapped to an implementation check in `checks.mjs` that parses static HTML/CSS (a `static-html` engine with its own CSS-cascade resolver) or a rendered page via a headless-browser engine. `skill/scripts/detect.mjs` is a 21-line shim the skill's Bash tool calls; it locates and delegates to the real engine in `cli/engine/`. Runs standalone (`detect.mjs --json <targets>`), inside `critique.md` Assessment B, inside `audit.md` dimension 5, and as an editor hook (`hook-before-edit.mjs`).",
+    "whyItWorks": "It is pure static analysis over markup/CSS strings and computed styles — no model call, no creative decision, 100% reproducible. This sits cleanly on the deterministic-linter side of the axis: it never proposes a design, it only flags known-bad patterns, so it cannot itself cause C-no-house-style convergence; it can only reduce a different failure mode (recognizable slop).",
+    "requiredContext": ["HTML/CSS/JSX-rendered markup on disk or via a live URL", "no network required for the local static-html path"],
+    "contextCost": "medium",
+    "outputImpact": "High leverage for near-zero context cost per run (it is a Bash call, not prompt content) — the 59 rule descriptions themselves are useful prompt material in small doses (a handful of named patterns), but the 5,580-line implementation never needs to enter the model's context at all.",
+    "failureModes": [
+      "Static-HTML-only for the CLI path — cannot see runtime-computed color values in framework-rendered apps without the browser engine, which needs a live dev server",
+      "A clean scan is asserted, in the skill's own words, not to be proof of quality ('a detector result is defect evidence, not proof of quality', polish.md:5) — the repo itself flags this limitation",
+      "59 rules encode one team's idea of 'AI slop' circa this snapshot; visual/aesthetic trends shift and a frozen rule list ages"
+    ],
+    "conflicts": ["None — designed to be reused identically by critique, audit, and hooks rather than three divergent implementations"],
+    "testMethod": "Exit code 0 = clean, 2 = findings, used as a gate in multiple flows; no accuracy/precision study found in this checkout (false positives are explicitly expected and must be judged in context, audit.md:59-61).",
+    "decision": "adopt",
+    "sitesmithForm": "Build a small (10-20 rule) equivalent static-HTML/CSS linter for our own known slop patterns, invoked as a deterministic Bash tool step rather than a prompt instruction — keep it separate from and complementary to any model-driven critique, never a replacement for it.",
+    "confidence": 0.8
+  },
+  {
+    "id": "dual-isolated-critique-subagents",
+    "source": "impeccable",
+    "sourcePath": "skill/reference/critique.md:5-46",
+    "problemSolved": "A single context doing both subjective design review and mechanical detector review anchors on whichever ran first (detector findings priming/narrowing the design judgment, or vice versa).",
+    "mechanism": "Two isolated sub-agents ('Assessment A': unanchored design review against Nielsen heuristics/cognitive load/personas; 'Assessment B': the deterministic detector + browser overlay evidence) run in parallel with no visibility into each other's output. Only after both return does the parent synthesize a single report that explicitly calls out agreement, detector-catches-what-LLM-missed, and detector false positives. Isolation is enforced as a hard invariant: running both inline in one context is explicitly declared 'not permitted' except when no sub-agent tool exists, and a degraded run must print a `⚠️ DEGRADED` banner as literally the first line of the report — never silent.",
+    "whyItWorks": "Keeps a genuinely model-driven qualitative judgment ('design specificity... before seeing detector output', critique.md:57) separate from a deterministic mechanical pass, so neither can bias the other, and forces disclosure whenever the isolation guarantee is broken (an anti-cheating mechanism for degraded runs).",
+    "requiredContext": ["a sub-agent/Task tool exposed in the harness", "the resolved target + detector output shape"],
+    "contextCost": "medium",
+    "outputImpact": "Improves critique quality via structural anti-bias, not via any generative mechanism — orthogonal to the two hard constraints, but valuable for our own audit/critique command.",
+    "failureModes": [
+      "Doubles the token/run cost of a critique versus a single-pass review",
+      "On harnesses without sub-agents it silently degrades to sequential unless the model remembers to print the exact banner text — a prose-only guarantee, not a code-enforced one",
+      "Codex-specific carve-out requires an explicit user permission ask before spawning, adding a conversational round-trip most other paths don't need (critique.md:39-48)"
+    ],
+    "conflicts": ["Requires a harness capability (isolated sub-agent spawning) that not every runtime offers — must degrade gracefully, and the degraded banner rule is the load-bearing part"],
+    "testMethod": "No automated test of isolation quality found; the mandatory banner is the only enforcement mechanism, and it is a prose instruction, not a code assertion.",
+    "decision": "adapt",
+    "sitesmithForm": "Adopt the isolation principle and the mandatory disclosure-on-degrade banner for our own critique/audit command, but scope it to when it's actually worth the 2x cost (larger builds), and make the degraded-banner rule explicit and impossible to silently skip in our own SKILL.md wording.",
+    "confidence": 0.75
+  },
+  {
+    "id": "bounded-finish-review-loop",
+    "source": "impeccable",
+    "sourcePath": "skill/reference/new-work.md:107, skill/agents/impeccable-finish-reviewer.md:1-49",
+    "problemSolved": "Open-ended self-QA loops burn budget re-litigating the same issues without a clear stop condition, and a build thread reviewing its own work inherits its own blind spots and optimism.",
+    "mechanism": "Finish is capped at exactly two inspection rounds. After the second round, the build thread's own polishing ends unconditionally ('no further defect hunts, micro-edit scripts, or rebuilds here'). A fresh, non-forked sub-agent (`impeccable-finish-reviewer`, explicitly spawned with `fork_turns: 0` / no inherited conversation) reviews screenshots + the direction contract + the approved comp + craft-floor against a fixed 6-check order (persistence, fidelity, ceiling, contract, truth, floor) and must open with a derived (not felt) one-word disposition: `rebuild` / `fix` / `ship`. `material_fixes` is capped at 8 items, ordered most-material-first. A `rebuild` disposition skips the fix-batch entirely and hands the choice back to the user rather than patching a wholesale failure. After one fix batch + recapture, the SAME reviewer scores each fix `resolved/partial/unresolved`; any open item after round 2 goes to the user as a table, never silently shipped or silently re-looped.",
+    "whyItWorks": "The loop's stop condition is structural (round count + a reviewer with no self-interest in continuing) rather than a vague 'iterate until good' instruction, and the reviewer explicitly cannot be swayed by 'the effort visible in the build' (finish-reviewer.md:40) — it's calibrated against evidence (comp, quality-bar card), not vibes.",
+    "requiredContext": ["screenshots (desktop+mobile)", "the direction contract (THESIS/OWN-WORLD/STORY/FIRST-VIEWPORT/FORM)", "approved comp + quality-bar card paths, when they exist", "craft-floor.md path", "a sub-agent tool with a no-fork/fresh-context spawn option"],
+    "contextCost": "medium",
+    "outputImpact": "This is the repo's core answer to 'how does it verify anything, and when does the loop stop' — directly maps to the brief's 'bounded polish' focus area.",
+    "failureModes": [
+      "Depends on the harness supporting a genuinely fresh, non-forked sub-agent spawn; on harnesses without that, the fallback is 'a fresh in-thread pass after stepping fully out of the build context' — much weaker isolation, self-reported as a disclosed degradation",
+      "The reviewer has no browser and cannot verify anything the screenshots don't show (finish-reviewer.md:19) — a screenshot omission is a blind spot by construction",
+      "Two rounds is asserted as correct for unattended runs; an attended user can always fund a third round, so the 'ceiling' is really a default, not a hard limit — could be gamed by always choosing to continue"
+    ],
+    "conflicts": ["None internal; this is the same bounded-verification principle the top-level SKILL.md states generally ('Verify in bounded passes, not a loop', SKILL.src.md:17)"],
+    "testMethod": "No automated test found for reviewer calibration; enforcement is entirely prose ('the parent reports your disposition word verbatim and has no authority to soften it', finish-reviewer.md:40).",
+    "decision": "adopt",
+    "sitesmithForm": "Adopt the two-round cap + fresh-eyes reviewer + derived disposition pattern directly for SiteSmith's own build-verification step; keep the reviewer's disposition word un-softenable in our own prompt wording, and require a screenshot-based fidelity check against whatever comp/brief exists.",
+    "confidence": 0.85
+  },
+  {
+    "id": "document-after-build-not-before",
+    "source": "impeccable",
+    "sourcePath": "skill/reference/new-work.md:75, skill/agents/impeccable-documenter.md:1-35",
+    "problemSolved": "A design-system rulebook (DESIGN.md) written before the build describes intentions, gets 'defended against reality instead of describing it' — and worse, a single violation shipped during the build (e.g. an invented eyebrow label) can get canonized into the system doc as if it were a rule, silently turning one mistake into the house style for every future surface.",
+    "mechanism": "On a new/replacement visual world, DESIGN.md is written only at finish, by a separate fresh sub-agent (`impeccable-documenter`) whose only input is the shipped artifact plus the direction contract — never plans. The documenter is explicitly instructed to cross-check every rule it's about to record against the craft-floor's ban list and to record (not silently drop) anything it deliberately excluded as a known defect rather than a system rule, citing a real failure ('a live session shipped five invented kickers and the documenter wrote their style into DESIGN.md').",
+    "whyItWorks": "Ground-truthing documentation against the artifact rather than intent prevents drift between the doc and the code, and the explicit anti-canonization check is a second line of defense against the craft-floor bans being silently defeated by 'well it's in the docs now.'",
+    "requiredContext": ["the built artifact's stylesheets/components", "the direction contract", "PRODUCT.md", "craft-floor.md's ban list (for the anti-canonization check)"],
+    "contextCost": "low",
+    "outputImpact": "Prevents exactly the mechanism the brief's C-no-house-style constraint warns about: a single AI misstep becoming institutionalized 'style' because it got written down as a rule.",
+    "failureModes": [
+      "Only guards against canonizing an already-known-banned pattern; a novel bad pattern the craft floor doesn't yet ban would sail through undetected",
+      "Depends on a fresh sub-agent budget existing per build; degraded fallback is 'the pass runs from degraded/documenter.md' (unread in this pass) with presumably weaker isolation"
+    ],
+    "conflicts": ["None — complements bounded-finish-review-loop; runs after it"],
+    "testMethod": "Anecdotal ('the last two live sessions shipped five kickers past a reviewer that never looked', craft-floor.md context) rather than a formal test.",
+    "decision": "adopt",
+    "sitesmithForm": "Adopt: write our own equivalent design-system-of-record only after a build ships, from the artifact, and explicitly cross-check anything about to be documented as a 'rule' against our own anti-slop list before writing it.",
+    "confidence": 0.75
+  },
+  {
+    "id": "mode-based-visitor-registers",
+    "source": "impeccable",
+    "sourcePath": "skill/SKILL.src.md:31-40",
+    "problemSolved": "Applying one aesthetic/behavior register to every surface (e.g. marketing energy on a settings page, or scanability-first restraint on a portfolio) produces surfaces that fight their own purpose.",
+    "mechanism": "Four named modes — Persuade (visitor decides and acts), Operate (visitor completes a task), Read (visitor understands something), Experience (visitor is inside the work) — chosen from the requested SURFACE, not the product category (explicit example: 'a tool's landing page is still Persuade; a fashion house's documentation is still Read'). The mode is persisted only in that surface's own brief, not globally, so one product can rightly contain surfaces in different modes.",
+    "whyItWorks": "It's a classification the model applies via judgment (which surface, which audience action) rather than a script decision — squarely a 'make the model think better' mechanism, not a mechanical one. It also directly supports per-surface craft calibration (critique.md's heuristic-applicability rule keys off mode; new-work.md's color-strategy default keys off mode too).",
+    "requiredContext": ["identification of which surface is being worked on, independent of overall product type"],
+    "contextCost": "low",
+    "outputImpact": "Improves fit-for-purpose per surface; does not by itself fight sameness across surfaces of the same mode (a Persuade page still needs the direction-roll mechanism to avoid convergence).",
+    "failureModes": [
+      "Four buckets is a coarse taxonomy — a surface can genuinely blend modes (e.g. a pricing page is Persuade but has Operate-like comparison-table tasks) and the framework doesn't give guidance for blends",
+      "Relies entirely on the model correctly classifying the surface; no check exists to catch a wrong classification"
+    ],
+    "conflicts": ["None; this is foundational vocabulary other mechanisms (critique scoring, color-strategy defaults) build on"],
+    "testMethod": "None found; a taxonomy, not a testable procedure.",
+    "decision": "adopt",
+    "sitesmithForm": "Adopt directly as vocabulary for SiteSmith's own routing/brief-writing step — cheap, clear, and it's the kind of judgment call that belongs to the model rather than a script.",
+    "confidence": 0.8
+  },
+  {
+    "id": "preserve-vs-redesign-semantics",
+    "source": "impeccable",
+    "sourcePath": "skill/SKILL.src.md:27-29, skill/reference/new-work.md:5-14",
+    "problemSolved": "Ambiguity about whether an edit request should keep the existing look (refinement) or replace it (redesign) leads to either over-timid polish of a broken direction, or unrequested wholesale visual rewrites of a working product.",
+    "mechanism": "A named, binary distinction: Refinement keeps identity/behavior/copy/everything outside scope and asks before touching factual copy. Redesign keeps product truth/content/function/constraints but treats the OLD LOOK ITSELF as evidence-and-anti-reference, explicitly banning 'splitting the difference into polish on the discarded look.' Missing DESIGN.md is explicitly NOT sufficient evidence of a greenfield project — 'visual authority is evidence, not a filename' (SKILL.src.md:29); an established look already present in code is inherited and documented, never treated as absent just because no DESIGN.md exists.",
+    "whyItWorks": "It closes a common failure mode (an LLM treating 'no design doc' as license to invent a new look on an already-branded product) by making the code itself, not a metadata file, the source of truth for whether a visual world already exists.",
+    "requiredContext": ["representative existing code/tokens/components to read as evidence before deciding"],
+    "contextCost": "low",
+    "outputImpact": "Directly load-bearing for the brief's 'preserve vs redesign' focus area; a clean, reusable distinction independent of any tooling.",
+    "failureModes": [
+      "Judgment call with no mechanical check — an LLM could still misjudge 'coherent identity already present' from a messy or partial codebase",
+      "The 'incomplete brand' bucket (preserve confirmed assets, help expand the rest) requires a nuanced blend of preserve+invent that's harder to get right than the two clean-cut buckets"
+    ],
+    "conflicts": ["None"],
+    "testMethod": "None found; a definitional/procedural rule, not a tested mechanism.",
+    "decision": "adopt",
+    "sitesmithForm": "Adopt the vocabulary and the 'evidence not filename' rule directly; make it one of the first questions our own routing step answers before any edit.",
+    "confidence": 0.85
+  },
+  {
+    "id": "context-aware-no-argument-routing",
+    "source": "impeccable",
+    "sourcePath": "skill/reference/routing.md:1-19, skill/scripts/context-signals.mjs",
+    "problemSolved": "A static command menu forces the user to already know which of 20 commands they want; an agent that auto-picks one on ambiguous input removes user control and can run the wrong flow unattended.",
+    "mechanism": "On a bare invocation, a script (`context-signals.mjs`) gathers cheap real signals — has DESIGN.md but not code (or vice versa), whether a critique snapshot exists and its score/P0 count, which files are dirty in git, whether a dev server is running, and a `detect.mjs` scan of the changed files — and the model reasons over these signals (no scoring formula) to lead with 2-3 concrete command recommendations, each with a one-line reason tied to a specific signal, followed by the full menu. The rule is explicit and repeated: 'Never auto-run a command; the recommendation is a suggestion the user confirms.'",
+    "whyItWorks": "It's a genuinely cheap, deterministic signal-gathering step (git status, file existence, a fast local scan) feeding a model judgment call about priority — again squarely on the 'helps the model think better' side, and it preserves user agency by construction (recommend, never execute).",
+    "requiredContext": ["a git-aware working tree", "prior critique snapshots if any", "dev-server process detection"],
+    "contextCost": "low",
+    "outputImpact": "Improves relevance of the first suggestion without removing user choice; doesn't touch the two hard constraints directly but is a clean UX pattern worth reusing.",
+    "failureModes": [
+      "Reasoning over ad-hoc signals with no fallback ranking means two different runs could reasonably recommend different top picks from the same signals — acceptable for a suggestion, not for anything treated as authoritative",
+      "`scan.targets`/`detect.mjs` explicitly skipped for native (ios/android/adaptive) projects — the mechanism is web-only by construction"
+    ],
+    "conflicts": ["None"],
+    "testMethod": "None found; UX judgment call, not a tested mechanism.",
+    "decision": "adopt",
+    "sitesmithForm": "Adopt the shape (cheap signal gathering → model-reasoned, non-executing recommendation) for SiteSmith's own no-argument entry point, dropping the native-platform special-casing unless SiteSmith itself targets native.",
+    "confidence": 0.7
+  },
+  {
+    "id": "surface-brief-scoping",
+    "source": "impeccable",
+    "sourcePath": "skill/reference/new-work.md:77-83",
+    "problemSolved": "Global product/design docs (PRODUCT.md, DESIGN.md) get bloated with one-off, route-specific strategy that belongs to a single page, or conversely a route's specific strategy gets lost between sessions because it was never written down anywhere.",
+    "mechanism": "A third, narrower artifact — a per-route/per-artifact 'surface brief' — stores only what's local to that one surface (scope/visitor mode, audience/job/action/proof/constraints, chosen direction and memorable moment, unresolved decisions) via `surface-brief.mjs read/write`. Explicit instruction: 'Do not copy global product truth or DESIGN.md tokens into it.'",
+    "whyItWorks": "Keeps three tiers of durable memory cleanly separated by scope (global product truth / global visual system / one-surface strategy), which avoids both context bloat (re-reading global docs for one-page facts) and the alternative failure of losing route-specific decisions entirely.",
+    "requiredContext": ["an existing surface brief to read before writing, when one exists"],
+    "contextCost": "low",
+    "outputImpact": "A context-management pattern, not an output-quality mechanism directly, but relevant to keeping our own progressive-loading design lean.",
+    "failureModes": [
+      "A third document type is one more thing that can drift stale relative to the code, same risk class as DESIGN.md itself"
+    ],
+    "conflicts": ["None"],
+    "testMethod": "None found.",
+    "decision": "adapt",
+    "sitesmithForm": "Adapt the three-tier scoping idea (global product / global visual system / per-surface strategy) into SiteSmith's own context files, sized to our own actual number of documents rather than copying impeccable's exact file names.",
+    "confidence": 0.6
+  },
+  {
+    "id": "model-specific-rendition-prior-correction",
+    "source": "impeccable",
+    "sourcePath": "skill/reference/new-work.md:67-69",
+    "problemSolved": "A specific model (here, explicitly Claude) has a measured, named default rendering bias for certain subjects (warm/bookish/child-facing → cream ground, serif display, italic accents, lamplight) that the general 'calibration' warning doesn't stop because the model doesn't recognize its own output as an instance of the pattern it just wrote.",
+    "mechanism": "A `<claude>`-tagged block (rendered only when running under Claude) names the exact bias in second person ('Your measured rendition prior...'), instructs the model to treat that first palette as 'already spent,' and to reread its own just-written OWN-WORLD block before coding, specifically checking for the named trigger words (cream, paper, parchment, ivory, lamplight) on any Persuade surface the brief didn't pin there — with a comparison claim that other models render the same subject differently (bookcloth, thread, jacket, endpaper color).",
+    "whyItWorks": "This is a self-critique-prompt technique targeted at a documented, model-specific failure mode rather than a generic 'be original' instruction — specificity plus a self-check step (reread your own output for named trigger words) is more likely to catch the bias than a general exhortation.",
+    "requiredContext": ["knowledge of which model is running (harness-conditional block)", "the model's own just-generated OWN-WORLD text to reread"],
+    "contextCost": "low",
+    "outputImpact": "Directly targets C-no-house-style at its most concrete: a documented convergent output for one specific model.",
+    "failureModes": [
+      "Model-specific and will rot: today's Claude bias may differ from tomorrow's model version, and the block would need re-measuring/rewriting per model release",
+      "Only covers one named subject cluster (warm/bookish/child-facing); the same technique would need separate blocks for every other convergent subject×model pairing, which doesn't scale without ongoing measurement"
+    ],
+    "conflicts": ["None"],
+    "testMethod": "Asserted, not demonstrated in this checkout ('measured rendition prior' — no linked study file found here).",
+    "decision": "adapt",
+    "sitesmithForm": "Adapt the TECHNIQUE (name the specific convergent output in second person, instruct a targeted reread-and-check of the model's own just-written text) for whichever concrete convergent patterns SiteSmith's own evaluators actually observe for the models it runs on, rather than porting this exact cream/lamplight example blind.",
+    "confidence": 0.55
+  }
+]

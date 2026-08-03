@@ -1,0 +1,660 @@
+<!doctype html>
+<html lang="da">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sømkraft, istandsatte industrisymaskiner fra værkstedet i Herning</title>
+<meta name="description" content="Tre istandsatte industrisymaskiner er til salg fra Sømkraft i Herning. Stingtype, pris, garanti og levering står på siden.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@500;600;700&family=Literata:opsz,wght@7..72,400;7..72,600&display=swap">
+<style>
+:root {
+  color-scheme: light;
+
+  /* Farverne er taget af det værkstedet er malet og snavset i. */
+  --maskinlak: #9fa89b;
+  --slidt-lak: #b3bbae;
+  --støbejern: #0a1f22;
+  --kridt: #d7e0d5;
+  --kontrasttråd: #cf3b1f;
+  --olie: #d69a26;
+  --bordplade: #6b5333;
+
+  --display: "Familjen Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --brødtekst: "Literata", Georgia, "Times New Roman", serif;
+
+  --t-mikro: 0.8125rem;
+  --t-lille: 0.9375rem;
+  --t-brød: 1.0625rem;
+  --t-mellem: 1.1875rem;
+  --t-pris: 1.75rem;
+  --t-h3: 1.3125rem;
+  --t-h2: clamp(1.45rem, 3.4vw, 2.05rem);
+  --t-h1: clamp(2.05rem, 6vw, 3.55rem);
+  --t-knap: 1.1875rem;
+
+  --streg: 2px;
+  --kant: clamp(1rem, 4vw, 3rem);
+  --sømkant: clamp(1.25rem, 3vw, 2.5rem);
+  --spalte: 64ch;
+  --luft: clamp(2.25rem, 5vw, 3.75rem);
+
+  /* Sømmene. Én stingrække pr. maskintype, samme deling. */
+  --sting-enkelt: repeating-linear-gradient(to right, var(--støbejern) 0 14px, transparent 14px 22px);
+  --sting-fod: repeating-linear-gradient(to right, var(--støbejern) 0 4px, transparent 4px 22px);
+  --søm-lodret: repeating-linear-gradient(to bottom, var(--støbejern) 0 14px, transparent 14px 22px);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { background: var(--maskinlak); }
+
+body {
+  margin: 0;
+  padding-bottom: 5.5rem;
+  background: var(--maskinlak);
+  color: var(--støbejern);
+  font-family: var(--brødtekst);
+  font-size: var(--t-brød);
+  line-height: 1.55;
+  -webkit-text-size-adjust: 100%;
+}
+
+h1, h2, h3 {
+  font-family: var(--display);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: 1.08;
+  margin: 0;
+}
+
+p { margin: 0; }
+ul, ol, dl { margin: 0; padding: 0; }
+li { list-style: none; }
+
+a { color: var(--støbejern); }
+
+:focus-visible {
+  outline: 3px solid var(--støbejern);
+  outline-offset: 3px;
+}
+
+.mørk :focus-visible,
+.ringbjælke :focus-visible {
+  outline-color: var(--kridt);
+}
+
+.indhold {
+  max-width: 78rem;
+  margin: 0 auto;
+  padding-left: var(--kant);
+  padding-right: var(--kant);
+}
+
+.laes-op {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* Spring over, synlig når den får fokus */
+.spring {
+  position: absolute;
+  left: var(--kant);
+  top: 0;
+  transform: translateY(-140%);
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  background: var(--støbejern);
+  color: var(--kridt);
+  font-family: var(--display);
+  font-size: var(--t-lille);
+  text-decoration: none;
+}
+.spring:focus { transform: translateY(0); }
+
+/* Toplinje */
+.top {
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35rem 1.25rem;
+}
+.navn {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: var(--t-h3);
+  letter-spacing: -0.02em;
+}
+.sted { font-size: var(--t-lille); }
+.top-streg {
+  height: var(--streg);
+  background-image: var(--sting-enkelt);
+}
+
+/* Anslag */
+.anslag { padding-top: var(--luft); padding-bottom: var(--luft); }
+.anslag h1 {
+  font-size: var(--t-h1);
+  font-weight: 700;
+  max-width: 20ch;
+  text-wrap: balance;
+}
+.manchet {
+  margin-top: 1.15rem;
+  max-width: var(--spalte);
+  font-size: var(--t-mellem);
+}
+
+/* Lageret, den skrevne oversigt */
+.lager { margin-top: 2.5rem; }
+.lager h2 { font-size: var(--t-h2); }
+.lager-note { margin-top: 0.5rem; font-size: var(--t-lille); max-width: var(--spalte); }
+.lager-liste {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.lager-liste a {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.25rem 1rem;
+  min-height: 44px;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  padding-left: 0.9rem;
+  background: var(--slidt-lak);
+  border-left: 6px solid var(--støbejern);
+  text-decoration-thickness: var(--streg);
+  text-underline-offset: 3px;
+}
+.lager-liste a:hover { background: var(--maskinlak); }
+.lager-type { font-size: var(--t-lille); flex: 1 1 11rem; }
+.lager-navn { font-family: var(--display); font-weight: 600; font-size: var(--t-mellem); }
+.lager-pris {
+  margin-left: auto;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  padding-right: 0.9rem;
+}
+
+/* Sømmen ned gennem maskinerne */
+.søm { position: relative; padding-left: var(--sømkant); }
+.søm::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: var(--streg);
+  background-image: var(--søm-lodret);
+}
+
+.maskine { position: relative; padding-top: 1.75rem; padding-bottom: 2.25rem; }
+.maskine + .maskine { margin-top: var(--luft); }
+
+.knude {
+  position: absolute;
+  top: 1.6rem;
+  left: calc(-1 * var(--sømkant) - 5px);
+  width: 12px;
+  height: 12px;
+  background: var(--kontrasttråd);
+  transform: rotate(45deg);
+}
+.knude--slut { position: relative; top: 0; left: 0; margin-left: -5px; display: block; }
+
+/* Signaturen: hver maskineblok er indrammet af den stingrække maskinen selv syr */
+.sting::before, .sting::after {
+  content: "";
+  display: block;
+  background-repeat: repeat-x;
+}
+.sting::before { margin-bottom: 1.5rem; }
+.sting::after { margin-top: 2rem; }
+
+.sting--enkelt::before, .sting--enkelt::after {
+  height: var(--streg);
+  background-image: var(--sting-enkelt);
+}
+
+.sting--transportfod::before, .sting--transportfod::after {
+  height: 7px;
+  background-image: var(--sting-enkelt), var(--sting-fod);
+  background-size: 100% 2px, 100% 2px;
+  background-position: 0 0, 0 5px;
+}
+
+.sting--tvilling::before, .sting--tvilling::after {
+  height: 8px;
+  background-image: var(--sting-enkelt), var(--sting-enkelt);
+  background-size: 100% 2px, 100% 2px;
+  background-position: 0 0, 0 6px;
+}
+
+.maskine-krop { display: grid; gap: 1.75rem; }
+.maskine-navn { font-size: var(--t-h2); }
+.maskine-type { margin-top: 0.35rem; font-size: var(--t-mellem); }
+
+/* Første række er købslinjen */
+.køb {
+  margin-top: 1.4rem;
+  padding-top: 1.1rem;
+  padding-bottom: 1.1rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  background: var(--slidt-lak);
+  border-top: 3px solid var(--kontrasttråd);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem 1.75rem;
+}
+.pris {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: var(--t-pris);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+.pris-note { flex-basis: 100%; font-size: var(--t-mikro); }
+
+.ring {
+  display: inline-flex;
+  align-items: center;
+  min-height: 48px;
+  padding-left: 1.1rem;
+  padding-right: 1.1rem;
+  background: var(--støbejern);
+  color: var(--kridt);
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: var(--t-knap);
+  text-decoration: none;
+  border-bottom: 3px solid var(--kontrasttråd);
+}
+.ring:hover { background: var(--bordplade); }
+.ring:active { background: var(--kontrasttråd); color: var(--støbejern); }
+
+.ring--top { margin-left: auto; }
+
+/* Specifikationen */
+.spec { margin-top: 1.5rem; max-width: var(--spalte); }
+.spec-rk {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.15rem 1rem;
+  padding-top: 0.7rem;
+  padding-bottom: 0.7rem;
+  border-top: var(--streg) solid var(--slidt-lak);
+}
+.spec-rk dt { flex: 0 0 9.5rem; font-weight: 600; font-size: var(--t-lille); }
+.spec-rk dd { margin: 0; flex: 1 1 16rem; }
+
+/* Tegningerne */
+.tegninger {
+  margin-top: 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+.tegninger figure { margin: 0; flex: 1 1 17rem; max-width: 28rem; }
+.tegning {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: var(--maskinlak);
+  border: var(--streg) solid var(--støbejern);
+  color: var(--støbejern);
+}
+.tegninger figcaption { margin-top: 0.6rem; font-size: var(--t-mikro); }
+
+/* Den mørke bane: istandsættelsen */
+.mørk {
+  margin-top: var(--luft);
+  padding-top: var(--luft);
+  padding-bottom: var(--luft);
+  background: var(--støbejern);
+  color: var(--kridt);
+}
+.mørk h2 { font-size: var(--t-h2); }
+.mørk a { color: var(--kridt); }
+.trin {
+  margin-top: 1.75rem;
+  max-width: var(--spalte);
+  counter-reset: trin;
+}
+.trin li {
+  counter-increment: trin;
+  display: flex;
+  gap: 1rem;
+  padding-top: 0.85rem;
+  padding-bottom: 0.85rem;
+  border-top: var(--streg) solid var(--bordplade);
+}
+.trin li::before {
+  content: counter(trin);
+  font-family: var(--display);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--olie);
+  flex: 0 0 1.75rem;
+}
+.belastning { color: var(--olie); font-weight: 600; }
+.mørk-slut { margin-top: 1.5rem; max-width: var(--spalte); }
+
+/* Det siden ikke viser */
+.mangler { padding-top: var(--luft); padding-bottom: var(--luft); }
+.mangler h2 { font-size: var(--t-h2); }
+.mangler p { margin-top: 1rem; max-width: var(--spalte); }
+
+/* Værkstedet */
+.værksted {
+  background: var(--bordplade);
+  color: var(--kridt);
+  padding-top: var(--luft);
+  padding-bottom: var(--luft);
+}
+.værksted h2 { font-size: var(--t-h3); }
+.værksted p { margin-top: 0.85rem; max-width: var(--spalte); }
+.værksted a { color: var(--kridt); }
+
+/* Opkaldsbjælken, altid inden for rækkevidde */
+.ringbjælke {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  background: var(--støbejern);
+  color: var(--kridt);
+  border-top: 3px solid var(--kontrasttråd);
+}
+.ringbjælke-rk {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.25rem 1.25rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+.ringbjælke a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: var(--t-knap);
+  color: var(--kridt);
+  text-decoration-thickness: var(--streg);
+  text-underline-offset: 4px;
+}
+.ringbjælke .aabent { font-size: var(--t-mikro); }
+
+@media (min-width: 48rem) {
+  .spec-rk dt { flex: 0 0 11rem; }
+}
+
+@media (min-width: 64rem) {
+  .maskine-krop {
+    grid-template-columns: minmax(0, 1.12fr) minmax(0, 1fr);
+    gap: 2.75rem;
+    align-items: start;
+  }
+  .tegninger { margin-top: 0; }
+}
+</style>
+</head>
+<body>
+
+<a class="spring" href="#hoved">Spring til maskinerne</a>
+
+<header>
+  <div class="indhold top">
+    <p class="navn">Sømkraft</p>
+    <p class="sted">Istandsatte industrisymaskiner. Værksted i Herning. Åbent tirsdag til fredag, 08:00 til 15:00.</p>
+    <a class="ring ring--top" href="tel:+4597220841">Ring 97 22 08 41</a>
+  </div>
+  <div class="indhold"><div class="top-streg"></div></div>
+</header>
+
+<main id="hoved">
+
+  <section class="indhold anslag" aria-labelledby="anslag-titel">
+    <h1 id="anslag-titel">Tre maskiner er sat til salg.</h1>
+    <p class="manchet">Hver af dem er skilt ned til stellet, har fået nye lejer, er lakeret om og kørt otte timer under belastning, før den blev sat til salg. Du ved selv hvad du syr i. Herunder står hvad de tre maskiner er, og hvad de koster.</p>
+
+    <nav class="lager" aria-labelledby="lager-titel">
+      <h2 id="lager-titel">Tre maskiner, én af hver slags</h2>
+      <p class="lager-note">Vælg efter stingtypen. Alle tre står i fuld længde længere nede på siden, og der er ikke andre på siden end de tre.</p>
+      <ul class="lager-liste">
+        <li><a href="#juki"><span class="lager-type">Enkeltnål, ligesøm</span><span class="lager-navn">Juki DDL-8700</span><span class="lager-pris">9.400 kr.</span></a></li>
+        <li><a href="#pfaff"><span class="lager-type">Transportfod, kombineret transport</span><span class="lager-navn">Pfaff 1245</span><span class="lager-pris">14.900 kr.</span></a></li>
+        <li><a href="#brother"><span class="lager-type">Tvillingnål, delt nålestang</span><span class="lager-navn">Brother B845</span><span class="lager-pris">18.500 kr.</span></a></li>
+      </ul>
+    </nav>
+  </section>
+
+  <div class="indhold">
+    <div class="søm">
+
+      <article class="maskine sting sting--enkelt" id="juki" aria-labelledby="juki-navn">
+        <span class="knude" aria-hidden="true"></span>
+        <h2 class="maskine-navn" id="juki-navn">Juki DDL-8700</h2>
+        <p class="maskine-type">Enkeltnål, ligesøm. Servomotor monteret.</p>
+
+        <div class="køb">
+          <p class="pris">9.400 kr.</p>
+          <a class="ring" href="tel:+4597220841">Ring om Juki DDL-8700</a>
+          <p class="pris-note">Prisen er for maskinen. Levering og indbytning står i rækkerne herunder.</p>
+        </div>
+
+        <div class="maskine-krop">
+        <dl class="spec">
+          <div class="spec-rk"><dt>Stingtype</dt><dd>Ligesøm på enkeltnål.</dd></div>
+          <div class="spec-rk"><dt>Motor</dt><dd>Servomotor monteret.</dd></div>
+          <div class="spec-rk"><dt>Istandsat</dt><dd>Skilt ned til stellet, nye lejer, lakeret om og kørt otte timer under belastning.</dd></div>
+          <div class="spec-rk"><dt>Garanti</dt><dd>Tolv måneder på den mekaniske istandsættelse. Motor og elektronik er ikke omfattet.</dd></div>
+          <div class="spec-rk"><dt>Levering</dt><dd>Med vores egen bil til Jylland og Fyn, 900 kr. Til Sjælland med fragtmand, pris oplyses ved henvendelse.</dd></div>
+          <div class="spec-rk"><dt>Indbytning</dt><dd>Vi tager den gamle maskine i bytte. Den bliver vurderet ved gennemsyn.</dd></div>
+        </dl>
+
+        <div class="tegninger">
+          <figure>
+            <svg class="tegning" data-asset="juki-stingbillede" role="img" aria-labelledby="juki-sting-titel" viewBox="0 0 260 88" fill="none" stroke="currentColor" stroke-width="2">
+              <title id="juki-sting-titel">Stingbillede set fra oven: en prøvelap med én række jævne sting.</title>
+              <path d="M22 14 H210 L238 42 V74 H22 Z"></path>
+              <path d="M210 14 V42 H238"></path>
+              <path d="M40 44 H220" stroke-dasharray="16 9" stroke-width="5"></path>
+              <path d="M40 32 V56"></path>
+              <path d="M220 32 V56"></path>
+            </svg>
+            <figcaption>Tegning, ikke foto. Motiv: stingbilledet set fra oven, én række. Udsnit: et stykke af sømmen mellem to sting. Bund: maskinlak. Der er ikke oplyst mål på maskinen, så tegningen viser mønstret og ikke størrelsen.</figcaption>
+          </figure>
+          <figure>
+            <svg class="tegning" data-asset="juki-nålestang" role="img" aria-labelledby="juki-nål-titel" viewBox="0 0 260 88" fill="none" stroke="currentColor" stroke-width="2">
+              <title id="juki-nål-titel">Nålestang set forfra: én nål i stangen og én trykfod over stingpladen.</title>
+              <path d="M20 12 H240"></path>
+              <path d="M124 12 H136 V42 H124 Z"></path>
+              <path d="M130 42 V70"></path>
+              <path d="M172 12 V50 H156"></path>
+              <path d="M104 50 H124 V64 H104 Z"></path>
+              <path d="M136 50 H156 V64 H136 Z"></path>
+              <path d="M20 76 H240"></path>
+              <path d="M124 76 H136" stroke-width="5"></path>
+            </svg>
+            <figcaption>Tegning, ikke foto. Motiv: nålestang og trykfod set forfra, én nål. Udsnit: fra nåleholder til stingplade. Bund: maskinlak. Tegningen viser opstillingen og ikke målene.</figcaption>
+          </figure>
+        </div>
+        </div>
+      </article>
+
+      <article class="maskine sting sting--transportfod" id="pfaff" aria-labelledby="pfaff-navn">
+        <span class="knude" aria-hidden="true"></span>
+        <h2 class="maskine-navn" id="pfaff-navn">Pfaff 1245</h2>
+        <p class="maskine-type">Transportfod og kombineret transport.</p>
+
+        <div class="køb">
+          <p class="pris">14.900 kr.</p>
+          <a class="ring" href="tel:+4597220841">Ring om Pfaff 1245</a>
+          <p class="pris-note">Prisen er for maskinen. Levering og indbytning står i rækkerne herunder.</p>
+        </div>
+
+        <div class="maskine-krop">
+        <dl class="spec">
+          <div class="spec-rk"><dt>Stingtype</dt><dd>Ligesøm med transportfod og kombineret transport.</dd></div>
+          <div class="spec-rk"><dt>Motor</dt><dd>Ikke oplyst for denne maskine.</dd></div>
+          <div class="spec-rk"><dt>Istandsat</dt><dd>Skilt ned til stellet, nye lejer, lakeret om og kørt otte timer under belastning.</dd></div>
+          <div class="spec-rk"><dt>Garanti</dt><dd>Tolv måneder på den mekaniske istandsættelse. Motor og elektronik er ikke omfattet.</dd></div>
+          <div class="spec-rk"><dt>Levering</dt><dd>Med vores egen bil til Jylland og Fyn, 900 kr. Til Sjælland med fragtmand, pris oplyses ved henvendelse.</dd></div>
+          <div class="spec-rk"><dt>Indbytning</dt><dd>Vi tager den gamle maskine i bytte. Den bliver vurderet ved gennemsyn.</dd></div>
+        </dl>
+
+        <div class="tegninger">
+          <figure>
+            <svg class="tegning" data-asset="pfaff-stingbillede" role="img" aria-labelledby="pfaff-sting-titel" viewBox="0 0 260 88" fill="none" stroke="currentColor" stroke-width="2">
+              <title id="pfaff-sting-titel">Stingbillede set fra oven: én række sting der holder samme længde hen over kanten hvor det øverste lag begynder.</title>
+              <path d="M22 14 H210 L238 42 V74 H22 Z"></path>
+              <path d="M210 14 V42 H238"></path>
+              <path d="M126 14 V74"></path>
+              <path d="M40 44 H220" stroke-dasharray="16 9" stroke-width="5"></path>
+              <path d="M40 32 V56"></path>
+              <path d="M220 32 V56"></path>
+              <path d="M56 62 V68 M90 62 V68 M124 62 V68 M158 62 V68 M192 62 V68"></path>
+            </svg>
+            <figcaption>Tegning, ikke foto. Motiv: stingbilledet set fra oven, én række, med kanten hvor det øverste lag begynder og mærkerne fra transporten under sømmen. Udsnit: et stykke af sømmen på tværs af kanten. Bund: maskinlak. Der er ikke oplyst mål på maskinen, så tegningen viser mønstret og ikke størrelsen.</figcaption>
+          </figure>
+          <figure>
+            <svg class="tegning" data-asset="pfaff-nålestang" role="img" aria-labelledby="pfaff-nål-titel" viewBox="0 0 260 88" fill="none" stroke="currentColor" stroke-width="2">
+              <title id="pfaff-nål-titel">Nålestang set forfra: én nål, en indre trykfod og en ydre transportfod med sin egen stang.</title>
+              <path d="M20 12 H240"></path>
+              <path d="M124 12 H136 V42 H124 Z"></path>
+              <path d="M130 42 V70"></path>
+              <path d="M172 12 V50 H156"></path>
+              <path d="M104 50 H124 V64 H104 Z"></path>
+              <path d="M136 50 H156 V64 H136 Z"></path>
+              <path d="M88 12 V56 H100"></path>
+              <path d="M80 56 H100 V70 H80 Z"></path>
+              <path d="M160 56 H180 V70 H160 Z"></path>
+              <path d="M192 12 V56 H180"></path>
+              <path d="M20 76 H240"></path>
+              <path d="M124 76 H136" stroke-width="5"></path>
+            </svg>
+            <figcaption>Tegning, ikke foto. Motiv: nålestang, indre fod og ydre transportfod set forfra. Udsnit: fra nåleholder til stingplade. Bund: maskinlak. Tegningen viser opstillingen og ikke målene.</figcaption>
+          </figure>
+        </div>
+        </div>
+      </article>
+
+      <article class="maskine sting sting--tvilling" id="brother" aria-labelledby="brother-navn">
+        <span class="knude" aria-hidden="true"></span>
+        <h2 class="maskine-navn" id="brother-navn">Brother B845</h2>
+        <p class="maskine-type">Tvillingnål og delt nålestang.</p>
+
+        <div class="køb">
+          <p class="pris">18.500 kr.</p>
+          <a class="ring" href="tel:+4597220841">Ring om Brother B845</a>
+          <p class="pris-note">Prisen er for maskinen. Levering og indbytning står i rækkerne herunder.</p>
+        </div>
+
+        <div class="maskine-krop">
+        <dl class="spec">
+          <div class="spec-rk"><dt>Stingtype</dt><dd>To parallelle rækker fra tvillingnål.</dd></div>
+          <div class="spec-rk"><dt>Nålestang</dt><dd>Delt nålestang.</dd></div>
+          <div class="spec-rk"><dt>Motor</dt><dd>Ikke oplyst for denne maskine.</dd></div>
+          <div class="spec-rk"><dt>Istandsat</dt><dd>Skilt ned til stellet, nye lejer, lakeret om og kørt otte timer under belastning.</dd></div>
+          <div class="spec-rk"><dt>Garanti</dt><dd>Tolv måneder på den mekaniske istandsættelse. Motor og elektronik er ikke omfattet.</dd></div>
+          <div class="spec-rk"><dt>Levering</dt><dd>Med vores egen bil til Jylland og Fyn, 900 kr. Til Sjælland med fragtmand, pris oplyses ved henvendelse.</dd></div>
+          <div class="spec-rk"><dt>Indbytning</dt><dd>Vi tager den gamle maskine i bytte. Den bliver vurderet ved gennemsyn.</dd></div>
+        </dl>
+
+        <div class="tegninger">
+          <figure>
+            <svg class="tegning" data-asset="brother-stingbillede" role="img" aria-labelledby="brother-sting-titel" viewBox="0 0 260 88" fill="none" stroke="currentColor" stroke-width="2">
+              <title id="brother-sting-titel">Stingbillede set fra oven: to parallelle rækker sting med fast afstand.</title>
+              <path d="M22 14 H210 L238 42 V74 H22 Z"></path>
+              <path d="M210 14 V42 H238"></path>
+              <path d="M40 38 H220" stroke-dasharray="16 9" stroke-width="5"></path>
+              <path d="M40 58 H220" stroke-dasharray="16 9" stroke-width="5"></path>
+              <path d="M40 28 V68"></path>
+              <path d="M220 28 V68"></path>
+            </svg>
+            <figcaption>Tegning, ikke foto. Motiv: stingbilledet set fra oven, to parallelle rækker. Udsnit: et stykke af sømmen mellem to sting. Bund: maskinlak. Der er ikke oplyst mål på maskinen, så tegningen viser mønstret og ikke afstanden mellem rækkerne.</figcaption>
+          </figure>
+          <figure>
+            <svg class="tegning" data-asset="brother-nålestang" role="img" aria-labelledby="brother-nål-titel" viewBox="0 0 260 88" fill="none" stroke="currentColor" stroke-width="2">
+              <title id="brother-nål-titel">Nålestang set forfra: to nåle i en stang der er delt på midten.</title>
+              <path d="M20 12 H240"></path>
+              <path d="M108 12 H124 V42 H108 Z"></path>
+              <path d="M136 12 H152 V42 H136 Z"></path>
+              <path d="M130 8 V46" stroke-dasharray="4 4"></path>
+              <path d="M116 42 V70"></path>
+              <path d="M144 42 V70"></path>
+              <path d="M172 12 V50 H160"></path>
+              <path d="M88 50 H108 V64 H88 Z"></path>
+              <path d="M152 50 H172 V64 H152 Z"></path>
+              <path d="M20 76 H240"></path>
+              <path d="M110 76 H150" stroke-width="5"></path>
+            </svg>
+            <figcaption>Tegning, ikke foto. Motiv: delt nålestang med to nåle og trykfod set forfra. Udsnit: fra nåleholder til stingplade. Bund: maskinlak. Tegningen viser opstillingen og ikke målene.</figcaption>
+          </figure>
+        </div>
+        </div>
+      </article>
+
+      <span class="knude knude--slut" aria-hidden="true"></span>
+    </div>
+  </div>
+
+  <section class="mørk" aria-labelledby="istand-titel">
+    <div class="indhold">
+      <h2 id="istand-titel">Sådan bliver en maskine gjort klar</h2>
+      <ol class="trin">
+        <li><span class="trin-tekst">Maskinen skilles ned til stellet.</span></li>
+        <li><span class="trin-tekst">Der sættes nye lejer i.</span></li>
+        <li><span class="trin-tekst">Den bliver lakeret om.</span></li>
+        <li><span class="trin-tekst">Den køres <span class="belastning">otte timer under belastning</span>.</span></li>
+      </ol>
+      <p class="mørk-slut">Først derefter bliver den sat til salg. De fire trin er de samme på alle tre maskiner, og garantien på tolv måneder dækker netop dette arbejde. Motor og elektronik er ikke omfattet.</p>
+    </div>
+  </section>
+
+  <section class="indhold mangler" aria-labelledby="mangler-titel">
+    <h2 id="mangler-titel">Det du ikke finder her</h2>
+    <p>Der står ingen anmeldelser, ingen kundenavne og ingen tal for hvor mange maskiner der er solgt. Vi har ikke fået noget af det oplyst til denne side, og så bliver det ikke skrevet.</p>
+    <p>Det der kan efterprøves, står ved hver maskine: stingtypen, hvad der er lavet ved den, hvad den koster, hvad garantien dækker, og hvad den ikke dækker.</p>
+    <p>Tegningerne er tegninger. Der er ikke oplyst mål på maskinerne, så de viser mønster og opstilling og ikke størrelser. Der findes ingen fotografier af de tre maskiner på siden.</p>
+  </section>
+
+</main>
+
+<footer class="værksted" aria-labelledby="værksted-titel">
+  <div class="indhold">
+    <h2 id="værksted-titel">Værkstedet</h2>
+    <p>Sømkraft blev grundlagt i 2014. Vi er tre: Ida, Karsten og Rune. Vi istandsætter industrisymaskiner og sælger dem til systuer, sejlmagere og små møbelpolstrere.</p>
+    <p>Værksted i Herning. Åbent tirsdag til fredag, 08:00 til 15:00.</p>
+    <p>Telefon 97 22 08 41.</p>
+  </div>
+</footer>
+
+<aside class="ringbjælke" aria-label="Ring til Sømkraft">
+  <div class="indhold ringbjælke-rk">
+    <a href="tel:+4597220841">Ring 97 22 08 41</a>
+    <span class="aabent">Tirsdag til fredag, 08:00 til 15:00</span>
+  </div>
+</aside>
+
+</body>
+</html>

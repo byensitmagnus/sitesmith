@@ -42,7 +42,7 @@ read and adjudicated by hand. Thirteen of fourteen subjects came back split.
 | Side | Source |
 | --- | --- |
 | One scale, everywhere | `03-design-engineering.md:81` — "SHAPE CONSISTENCY LOCK (mandatory): Pick ONE corner-radius scale for the page and stick to it." |
-| One scale everywhere is a defect | `06-redesign-audit.md:89` — "Identical border-radius on every element → Tighter inside, softer outside." |
+| One scale everywhere is a defect | `v2/tasks/redesign-audit.md:89` — "Identical border-radius on every element → Tighter inside, softer outside." |
 
 Both are shipped. `SKILL.md`'s precedence list puts them at the same level, so it cannot
 settle this. **Resolution:** one radius *system*, not one radius *value* — a scale with a

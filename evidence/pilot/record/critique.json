@@ -1,0 +1,18 @@
+{
+ "v": 1,
+ "render": "d4a3dbccd412bc07",
+ "files": [
+  "1440.png",
+  "375.png",
+  "768.png",
+  "reduced-motion-1440.png"
+ ],
+ "answers": "# Kritik af renderingen\n\nSvarene er skrevet ud fra de fire billeder i pakken og briefen, med retningsprotokollen,\nproduktionsrapporten og kildekoden lukket.\n\n1. Øjet lander på den næsten hvide formularflade til højre, ikke på rubrikken og ikke på\n   tegningen: den er det eneste lyse rektangel på en grøn side og den holder alle felterne,\n   og det er så vidt rigtigt, fordi briefen siger at siden skal give en pris ud fra kundens\n   egne mål, men det billede der skal bære argumentet, er kun det næste øjet finder.\n2. Formularpanelet læses først som skabelon: et indrammet kort med legend, label, felt,\n   radioliste, en totalblok og en knap i fuld bredde er formen på enhver kasse på nettet, og\n   det eneste glarmesterspecifikke i det er ordene; derefter de tre lige brede noter under\n   prislisten, som er en tre-kolonners funktionsrække uden ikoner.\n3. Signaturen er synlig begge steder: bænketegningen fylder det meste af venstre spalte på\n   1440 og hele bredden på 375, og den røde stiplede 2.200-grænse kan læses i begge, men i\n   tom tilstand er den et gråt rektangel med vandrette streger i og én sætning, så den ligner\n   et billede der ikke er hentet, snarere end en tegning der venter.\n4. Tommest er højre halvdel af ugetegningen, lørdag og søndag, som holder to ord og ellers\n   ingenting, og den tomhed arbejder, fordi den tomhed er selve oplysningen; den tomhed der\n   ikke arbejder, er hullet i navigationen på 375, hvor Værkstedet står alene på anden linje\n   med et bredt spring op til de tre andre, hvilket ligner et menupunkt der mangler.\n5. De seks største ord i rækkefølge er \"Skriv skæresedlen selv, mens du måler\", \"Fire glas,\n   og hvad de koster\", \"Værkstedets uge\", \"Værkstedet\" og \"Glarmester Nordlys\"; en\n   konkurrent kan sagtens sige \"Fire glas, og hvad de koster\", men skæreseddel, falsmål og\n   Værkstedets uge hører til dette fag og til et værksted med faste tider, så sættet som\n   helhed kan ikke flyttes.\n6. Dæk den øverste tredjedel: resten siger stadig hvad det er, fordi prislisten med kr/m²,\n   ugen med 07:30 til 15:30 og lukket weekend, snittet gennem falsen med de 3 mm, og linjen\n   \"Giver ikke pris efter et fotografi\" tilsammen kun kan være et glarmesterværksted.\n\nACCEPT. Det værste er bænketegningens tomme tilstand: et stort fladt gråt rektangel med\nsvage vandrette linjer læses som en skeleton loader, så sidens stærkeste element bruger hele\nførsteskærmen på at ligne noget der er gået i stykker.",
+ "corrections": [
+  {
+   "note": "Bænketegningens tomme tilstand læste som en skeleton loader: de vandrette streger er skiftet til en skrå snitskravering, og under bænkekanten er der nu en rigtig målestok med streger for hver 100 mm og tal ved 500, 1.000, 1.500 og 2.000, plus 2,4 m som overordnet mål med pilespidser. Samtidig er navigationen på smal skærm sat i to gange to med samme afstand begge veje, fordi den ombrudte tre og en læste som et menupunkt der manglede.",
+   "fromRender": "b3d115c2024bafb5",
+   "toRender": "d4a3dbccd412bc07"
+  }
+ ]
+}

@@ -1,0 +1,206 @@
+/* FIXTURE stylesheet for skills/sitesmith-v3/scripts/inspect.mjs.
+   Not a design sample and nothing here is a recommendation. It carries, on purpose:
+     - six custom properties on :root, so the token extraction has something to find
+     - two min-width media queries, so the breakpoint read has two answers
+     - rules for :hover, :focus-visible, :active, :disabled and [aria-busy="true"],
+       so all six states in the state map have evidence available
+   test-inspect.mjs pins those counts. */
+
+:root {
+  --paper: #fbf9f4;
+  --ink: #1d2321;
+  --accent: #14524a;
+  --rule: #8d8676;
+  --radius: 4px;
+  --gutter: 20px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+.masthead,
+main,
+.foot {
+  max-width: 68ch;
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+.masthead {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px var(--gutter);
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--rule);
+}
+
+.brand { display: inline-flex; padding: 6px 0; }
+.logo { display: block; width: 132px; height: 36px; max-width: 100%; }
+
+.nav ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.nav a {
+  display: inline-block;
+  min-height: 44px;
+  padding: 11px 2px;
+  color: var(--ink);
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 15px;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+}
+.nav a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+
+main { padding-bottom: 64px; }
+
+h1 {
+  font-size: 34px;
+  line-height: 1.15;
+  margin: 32px 0 12px;
+}
+h2 {
+  font-size: 24px;
+  line-height: 1.25;
+  margin: 40px 0 12px;
+}
+h3 {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 17px;
+  font-weight: 600;
+  margin: 0 0 8px;
+}
+
+.standfirst { font-size: 19px; margin: 0 0 24px; }
+
+.plate { margin: 32px 0; padding: 0; }
+.plate img { display: block; width: 100%; height: auto; border-radius: var(--radius); }
+.plate figcaption {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 14px;
+  color: #4a534f;
+  padding-top: 8px;
+}
+
+.cards {
+  display: grid;
+  gap: var(--gutter);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.card {
+  background: #ffffff;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  padding: 16px;
+}
+.card p { margin: 0 0 12px; }
+.card a { color: var(--accent); }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 15px;
+}
+caption {
+  text-align: left;
+  padding-bottom: 8px;
+  color: #4a534f;
+}
+th, td {
+  text-align: left;
+  padding: 10px 12px 10px 0;
+  border-bottom: 1px solid var(--rule);
+}
+th { font-weight: 600; }
+
+.field { margin: 0 0 20px; }
+.field label {
+  display: block;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 15px;
+  padding-bottom: 6px;
+}
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+  min-height: 44px;
+  padding: 10px 12px;
+  font: inherit;
+  color: var(--ink);
+  background: #ffffff;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+}
+
+.actions { display: flex; flex-wrap: wrap; gap: var(--gutter); margin: 24px 0 0; }
+
+.button {
+  display: inline-block;
+  min-height: 44px;
+  padding: 12px 20px;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 15px;
+  color: var(--ink);
+  background: #ffffff;
+  border: 1px solid var(--accent);
+  border-radius: var(--radius);
+  text-decoration: none;
+  cursor: pointer;
+}
+.button.primary { background: var(--accent); color: var(--paper); }
+.button:hover { background: #0f3f39; color: var(--paper); }
+.button:active { border-color: var(--ink); }
+.button:disabled { opacity: 0.55; cursor: not-allowed; }
+.button[aria-busy="true"] { color: #4a534f; cursor: progress; }
+
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+
+.foot {
+  border-top: 1px solid var(--rule);
+  padding-top: 20px;
+  padding-bottom: 40px;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 14px;
+}
+.foot ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.foot a { display: inline-block; min-height: 44px; padding: 11px 0; color: var(--accent); }
+
+@media (min-width: 768px) {
+  body { font-size: 18px; }
+  .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  h1 { font-size: 44px; }
+}
+
+@media (min-width: 1200px) {
+  .cards { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  h1 { font-size: 52px; }
+}

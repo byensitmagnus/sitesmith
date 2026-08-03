@@ -1,0 +1,28 @@
+# Direction record
+
+Surfaces: shop
+Subject: a two-person vegetable tannery that runs six pits on a ninety day cycle
+Palette: `#f5f1ea` the paper the ledger is kept on, `#dccfb8` the sizing drum, `#b9a487` bark before it is ground
+Type: display "Courier New" for the pit labels, body "Georgia" for the ledger
+Signature: the wet line that runs under every heading (`.wetline`)
+
+One-offs:
+- `0.5px` the wet line is a hairline and a hairline is not a scale step
+
+Deliberate:
+- `gradient-text` the drum label bleeds like liquor into leather, and the bleed is the mark
+
+banned-palette-pinned-by-brief: "the ledger paper is the one thing we are not
+changing, it is the colour of the actual book" said in the first meeting.
+
+purple-pinned-by-brief: "the dye we are known for is that violet, it goes on the
+site or we are not doing the site".
+
+## Answer to the risk
+The risk above is answered by `.wetline`, the signature that runs under every heading and keeps the page reading as one object rather than as a document with sections.
+
+## Second reading
+`.ledgerpage` renders the pit book itself, hides in pit one and the oldest entry, below the first screen and from facts the signature does not carry.
+
+## The shell
+Who: `Trelfall & Son` in the header, on every screen. Where: Marstal, named in the footer. Do: the enquiry link in the footer, which is the one action this surface carries.

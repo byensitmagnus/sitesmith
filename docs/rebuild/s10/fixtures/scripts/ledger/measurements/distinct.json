@@ -1,0 +1,15 @@
+{
+  "note": "no measured devices at all; light ground, serif display, photography-led",
+  "raw": {
+    "luminance": 0.9,
+    "displayFamily": "Georgia",
+    "assetShare": 25.4,
+    "rasterImages": 4,
+    "strokeOnlySvgs": 0,
+    "monoCaps": 0,
+    "hairlines": 2,
+    "tabularNums": 0,
+    "shadowed": 5,
+    "cards": 1
+  }
+}

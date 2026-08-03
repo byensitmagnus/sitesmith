@@ -8,7 +8,36 @@ Thumbs.db
 benchmarks/results/**/raw.json
 
 # local scratch
+# Run scratch. `.sitesmith/` is where a build keeps its own state, and that state is per
+# run and per machine.
+#
+# Two places are exceptions, and the exception is not cosmetic. A direction record under
+# docs/rebuild/**/fixtures/ or under pilots/ is not state, it is the evidence the artefact
+# exists to show, and gate.mjs refuses any build that has none. With the blanket rule in
+# place, eight of the seventeen cases in test-gate.mjs failed on a fresh checkout while
+# passing on the machine that wrote them, because every fixture's record was ignored and
+# never committed. A suite that is green only where it was written is not a suite.
+#
+# Git will not look inside an excluded directory to find a negation, so the directory has
+# to be re-included first and its contents re-excluded after.
 .sitesmith/
+!docs/rebuild/**/fixtures/**/.sitesmith/
+docs/rebuild/**/fixtures/**/.sitesmith/*
+!docs/rebuild/**/fixtures/**/.sitesmith/direction.md
+# A fixture's state IS the fixture. The critique cases turn on whether a render exists and
+# whether a critique is locked to it, so a fixture whose shots and critique.json are ignored
+# is a different fixture on a clean checkout than on the machine that wrote it: locally the
+# gate saw a rendered page and refused, in CI it saw none and passed. Committed on purpose.
+!docs/rebuild/**/fixtures/**/.sitesmith/critique.json
+!docs/rebuild/**/fixtures/**/.sitesmith/shots/
+docs/rebuild/**/fixtures/**/.sitesmith/shots/*
+!docs/rebuild/**/fixtures/**/.sitesmith/shots/*.png
+!docs/rebuild/**/holdouts/**/.sitesmith/
+docs/rebuild/**/holdouts/**/.sitesmith/*
+!docs/rebuild/**/holdouts/**/.sitesmith/direction.md
+!pilots/*/.sitesmith/
+pilots/*/.sitesmith/*
+!pilots/*/.sitesmith/direction.md
 
 # verify.mjs output for the gallery page itself — reproduced, not committed
 gallery/verify/
@@ -18,7 +47,7 @@ gallery/verify-live/
 # committed sites with one command. The sites, prompts, manifests and reports are
 # the evidence and are committed; the pictures of them are not.
 benchmarks/v2/runs/**/shots/
-.sitesmith/
+
 
 # Dry-run benchmark artefacts. The runs were workspace-isolated, not process-isolated,
 # so they are not evidence and are not carried in the repository. The harness, the
@@ -32,9 +61,7 @@ benchmarks/v2/measurements-*.json
 # They pin the measurement dependencies transitively, so the image is built from a fixed
 # tree rather than whatever the registry serves that day. The key never lives here.
 
-# Pilot working directories: playwright is installed per pilot so the journeys can run.
 pilots/*/node_modules/
-pilots/*/.sitesmith/
 
 # Fixture working directory: playwright is installed here so the journey fixtures can run.
 tests/gates/node_modules/
@@ -42,3 +69,4 @@ tests/gates/node_modules/
 # The blind-review key never enters the repository until both reviews are locked.
 # A key an agent can read from the working tree is not a sealed key.
 docs/v2/preflight/*/KEY-MASTER.json
+.playwright-mcp/

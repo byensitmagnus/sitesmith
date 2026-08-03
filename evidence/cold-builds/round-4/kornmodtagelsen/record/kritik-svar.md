@@ -1,0 +1,8 @@
+1. Øjet lander på "47.857 kg", det 58 px store tal øverst til venstre, og ikke på cellevæggen: brevet siger, at både vognen og hvor lasten kan gå skal være åbenlyst uden at læses, så halvdelen er ramt, men det er den halvdel modtagemanden ikke skal tænke over, og det modsiger det direction-record selv siger om hvad der skal være størst.
+2. Køen læser som skabelon først: fire rækker med klokkeslæt og nummerplade, navn i midten og ventetid til højre, adskilt af hårstreger, er en almindelig administrationstabel, og anvisningslisten under "Dagen indtil nu" gentager præcis samme rækkeform.
+3. Ja, signaturen bærer: de otte beholdere med hatch og fælles gulvlinje er det største objekt på 1440, og på 375 brydes de i rækker af tre og beholder deres indbyrdes størrelse, så celle 1 stadig er synligt dobbelt så stor som celle 7.
+4. Tommest er midterblokken i "På broen", hvor "Vejet ind" og "Netto" står med luft omkring en sætning der fylder tre linjer; luften gør ikke noget arbejde, den er bare det der blev til overs mellem vægten og prøvekortet.
+5. De seks største ord: Kornmodtagelsen, CV 41 872, 47.857 kg, Cellerne, Celle 1, Tørreriet. De siger kornmodtagelse, en vogn, en vægt, celler og et tørreri; en anden kornmodtagelse kunne sige dem, men ingen uden for faget kunne, og det er den rigtige side af grænsen.
+6. Ja: dæk den øverste tredjedel, og der står stadig otte beholdere med tons og fyldning, et tørreri, en kø af vogne med gårdnavne og en vandkurve mod 15,0. Det er umisforståeligt en kornmodtagelse.
+
+ACCEPT. Det værste er, at den levende vægt råber højere end væggen, så første blik går til det ene tal manden allerede kender.

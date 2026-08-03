@@ -1,0 +1,644 @@
+<!doctype html>
+<html lang="da">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Driftskonsol, Nordbo Fjernvarme</title>
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600&family=Zilla+Slab:wght@700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --skum:#e9e3d5;
+  --kappe:#191713;
+  --stål:#656156;
+  --fremløb:#b3221c;
+  --retur:#1d4f8f;
+  --skrift-display:"Zilla Slab",Georgia,serif;
+  --skrift-brød:"Archivo","Segoe UI",sans-serif;
+  --t-h1:30px;
+  --t-h2:17px;
+  --t-retur:20px;
+  --t-frem:16px;
+  --t-felt:16px;
+  --t-brød:15px;
+  --t-små:13px;
+  --t-etiket:12px;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{background:var(--skum)}
+body{
+  margin:0;
+  background:var(--skum);
+  color:var(--kappe);
+  font-family:var(--skrift-brød);
+  font-size:var(--t-brød);
+  line-height:1.45;
+  font-variant-numeric:tabular-nums;
+}
+h1,h2,h3,p,dl,dd,dt,ul,ol,figure{margin:0}
+ul,ol{list-style:none;padding:0}
+
+.spring{position:absolute;left:-9999px;top:0;z-index:5;padding:10px 14px;
+  background:var(--kappe);color:var(--skum);font-weight:600}
+.spring:focus{left:8px;top:8px}
+
+a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
+[tabindex]:focus-visible{outline:3px solid var(--kappe);outline-offset:2px}
+.baand:focus-visible{outline-color:var(--skum)}
+
+.hoved{display:flex;flex-wrap:wrap;align-items:flex-end;gap:12px 40px;
+  padding:14px 20px 12px;border-bottom:2px solid var(--kappe)}
+.hoved h1{font-family:var(--skrift-display);font-size:var(--t-h1);font-weight:700;line-height:1}
+.ejer{font-size:var(--t-små);color:var(--stål)}
+.vagt{display:flex;flex-wrap:wrap;gap:4px 28px;font-size:var(--t-små)}
+.vagt div{max-width:280px}
+.vagt dt{font-size:var(--t-etiket);color:var(--stål)}
+.vagt dd{margin:0}
+.folk{font-size:var(--t-små)}
+.folk h2{font-family:var(--skrift-display);font-size:var(--t-h2);font-weight:700}
+.folk li{display:flex;gap:8px}
+.folk b{font-weight:600;min-width:52px}
+
+main{padding:10px 20px 0}
+.styring{display:flex;flex-wrap:wrap;align-items:center;gap:4px 28px}
+.antal{font-size:var(--t-h2);font-weight:600}
+.filter{display:flex;align-items:center;gap:10px;min-height:44px;font-size:var(--t-små)}
+input[type=checkbox],input[type=radio]{width:20px;height:20px;margin:0;accent-color:var(--kappe)}
+
+.besked{border:2px solid var(--kappe);padding:8px 12px;font-weight:600;
+  font-size:var(--t-små);margin-bottom:8px}
+.besked:empty{display:none}
+
+.forklaring{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 16px;
+  border-top:1px solid var(--stål);border-bottom:1px solid var(--stål);
+  padding:5px 0;margin-bottom:10px}
+.forklaring h2{font-family:var(--skrift-display);font-size:var(--t-h2);font-weight:700}
+.forklaring ul{display:flex;flex-wrap:wrap;gap:2px 24px}
+.forklaring li{display:flex;align-items:center;gap:8px;font-size:var(--t-små)}
+.proeve{position:relative;width:36px;height:24px;flex:none;
+  border:1px solid var(--stål);background:var(--skum)}
+.proeve--kasse::after{content:"";position:absolute;inset:5px;border:2px solid var(--kappe)}
+.proeve--kile::after{content:"";position:absolute;top:4px;right:4px;width:0;height:0;
+  border-left:7px solid transparent;border-right:7px solid transparent;
+  border-bottom:11px solid var(--kappe)}
+.proeve--skrav{background-image:repeating-linear-gradient(45deg,transparent 0 5px,var(--stål) 5px 6px)}
+
+.tavle-titel{font-family:var(--skrift-display);font-size:var(--t-h2);font-weight:700}
+.tavle{display:grid;grid-template-columns:repeat(auto-fill,minmax(134px,1fr));gap:8px;
+  align-items:start;padding-bottom:16px}
+.tavle[data-filter="afvig"] .plade:not([data-afviger="ja"]){display:none}
+
+.plade{position:relative;display:flex;flex-direction:column;gap:4px;
+  padding:5px 6px;border:1px solid var(--stål);overflow-wrap:break-word}
+.plade[data-afviger="ja"]{border:2px solid var(--kappe);padding:4px 5px}
+.plade__nr{font-size:var(--t-etiket);font-weight:400;line-height:1.2;
+  color:var(--stål);background:var(--skum)}
+.par{background:var(--skum)}
+.frem,.retur{display:flex;align-items:baseline;justify-content:space-between;gap:8px}
+.frem{color:var(--fremløb);font-size:var(--t-frem)}
+.retur{color:var(--retur)}
+.etiket{font-size:var(--t-etiket);flex:none}
+.tal{font-weight:600}
+.retur .tal{font-size:var(--t-retur);line-height:1.15}
+.enhed{font-size:var(--t-etiket)}
+.smaa{display:flex;justify-content:space-between;gap:8px;font-size:var(--t-små);
+  border-top:1px solid var(--stål);padding-top:3px;background:var(--skum)}
+.afvig-ord{font-size:var(--t-etiket);font-weight:600;background:var(--skum)}
+
+.markering--kasse{border:2px solid var(--kappe);padding:1px 4px;margin:0 -2px}
+.markering--kile{position:absolute;top:6px;right:6px;width:0;height:0;
+  border-left:7px solid transparent;border-right:7px solid transparent}
+.plade[data-tryk="over"] .markering--kile{border-bottom:11px solid var(--kappe)}
+.plade[data-tryk="under"] .markering--kile{border-top:11px solid var(--kappe)}
+.plade.markering--skravering{
+  background-image:repeating-linear-gradient(45deg,transparent 0 5px,var(--stål) 5px 6px)}
+
+.udkald{background:var(--skum)}
+/* En åben formular lægger sig ned over tavlen i stedet for at skubbe den.
+   Faste pladser er hele pointen, så ingen station må flytte sig mens der udfyldes. */
+.plade--aaben{z-index:2}
+.panel{position:absolute;left:-2px;right:-2px;top:100%;
+  border:2px solid var(--kappe);padding:6px;background:var(--skum)}
+.udkald-info{display:flex;flex-direction:column;gap:5px;font-size:var(--t-etiket)}
+.baand{background:var(--kappe);color:var(--skum);padding:3px 6px;font-weight:600;
+  font-size:var(--t-små)}
+.rk{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+
+.knap{font:inherit;font-size:var(--t-små);font-weight:600;width:100%;min-height:44px;
+  padding:4px 6px;background:var(--skum);color:var(--kappe);
+  border:2px solid var(--kappe);cursor:pointer}
+.knap:hover{background:var(--kappe);color:var(--skum)}
+.knap:active{background:var(--stål);color:var(--skum)}
+
+.udkaldsform{display:flex;flex-direction:column;gap:8px}
+.udkaldsform fieldset{border:1px solid var(--stål);margin:0;padding:4px 8px 6px}
+.udkaldsform legend{font-size:var(--t-etiket);font-weight:600;padding:0 4px}
+.valg{display:flex;align-items:center;gap:8px;min-height:44px;font-size:var(--t-små)}
+.felt{font-size:var(--t-etiket);font-weight:600;display:block}
+.udkaldsform textarea{font:inherit;font-size:var(--t-felt);width:100%;
+  background:var(--skum);color:var(--kappe);border:2px solid var(--kappe);
+  padding:6px;resize:vertical}
+.hjaelp{font-size:var(--t-etiket);color:var(--stål)}
+.fejl{border:2px solid var(--kappe);padding:6px 8px;font-size:var(--t-små);font-weight:600}
+.fejl a{color:var(--kappe)}
+.fejl-felt{font-size:var(--t-små);font-weight:600}
+
+.fod{border-top:2px solid var(--kappe);padding:8px 20px 16px;font-size:var(--t-små);
+  display:flex;flex-wrap:wrap;gap:2px 28px}
+.fod p{max-width:560px}
+
+@media (max-width:700px){
+  .hoved{gap:10px 20px;padding:12px 14px}
+  main{padding:12px 14px 0}
+  .fod{padding:12px 14px 24px}
+}
+</style>
+</head>
+<body>
+<a class="spring" id="spring" href="#tavle">Gå til tavlen</a>
+
+<header class="hoved">
+  <div>
+    <h1>Driftskonsol</h1>
+    <p class="ejer">Nordbo Fjernvarme</p>
+  </div>
+  <dl class="vagt">
+    <div>
+      <dt>Vagt</dt>
+      <dd>14:00 til 22:00. Vagtskifte 06:00, 14:00 og 22:00.</dd>
+    </div>
+    <div>
+      <dt>Aflæsning</dt>
+      <dd>Sættet på skærmen er fra 17:35. Nye aflæsninger hvert 5. minut.</dd>
+    </div>
+  </dl>
+  <div class="folk">
+    <h2 id="folk-titel">Montører</h2>
+    <ul id="folkliste" aria-labelledby="folk-titel"></ul>
+  </div>
+</header>
+
+<main>
+  <p class="besked" id="besked" role="status" aria-live="polite"></p>
+
+  <section class="forklaring" aria-labelledby="forklaring-titel">
+    <h2 id="forklaring-titel">Mærker</h2>
+    <ul>
+      <li><span class="proeve proeve--kasse" aria-hidden="true"></span>
+        Kasse om returtallet: retur over 45 °C.</li>
+      <li><span class="proeve proeve--kile" aria-hidden="true"></span>
+        Kile i hjørnet: tryk uden for 0,3 til 0,9 bar, opad over og nedad under.</li>
+      <li><span class="proeve proeve--skrav" aria-hidden="true"></span>
+        Skravering: aflæsningen er over 20 minutter gammel.</li>
+    </ul>
+  </section>
+
+  <section aria-labelledby="tavle-titel">
+    <div class="styring">
+      <h2 class="tavle-titel" id="tavle-titel">Tavlen, 61 faste pladser</h2>
+      <p class="antal" id="antal"></p>
+      <label class="filter" for="kun-afvig">
+        <input type="checkbox" id="kun-afvig">
+        Vis kun stationer der afviger
+      </label>
+    </div>
+    <noscript>
+      <p>Tavlen tegnes i browseren. Slå JavaScript til for at se de 61 stationer.</p>
+    </noscript>
+    <ul class="tavle" id="tavle" data-filter="alle" aria-labelledby="tavle-titel"></ul>
+  </section>
+</main>
+
+<footer class="fod">
+  <p>Konsollen styrer ikke noget. Den ser og kalder ud.</p>
+  <p>Tallene på tavlen er ét aflæsningssæt fra 17:35. Et udkald kan ikke trækkes tilbage,
+    når det er accepteret. Det kan afsluttes eller omfordeles.</p>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  /* nr, fremløb i grader, retur i grader, differenstryk i bar, aflæsningens alder i minutter */
+  var STATIONER = [
+    [1,79.1,39.4,0.62,2],  [2,78.3,41.0,0.58,1],  [3,80.4,37.8,0.71,4],
+    [4,76.5,42.6,0.45,3],  [5,81.2,38.9,0.66,2],  [6,74.8,43.1,0.39,5],
+    [7,78.4,51.2,0.96,3],  [8,77.9,40.2,0.54,1],  [9,82.0,36.7,0.74,2],
+    [10,75.6,44.0,0.41,6], [11,79.8,39.9,0.63,3], [12,81.0,47.8,0.55,2],
+    [13,73.4,42.2,0.36,4], [14,80.1,38.4,0.69,1], [15,78.7,41.6,0.57,2],
+    [16,76.2,43.5,0.43,7], [17,83.1,37.2,0.79,3], [18,77.4,40.8,0.52,2],
+    [19,79.6,39.1,0.64,1], [20,74.9,44.3,0.38,9], [21,81.7,38.0,0.72,2],
+    [22,78.0,41.9,0.56,3], [23,76.8,42.9,0.47,4], [24,80.9,37.5,0.75,1],
+    [25,75.1,43.8,0.40,5], [26,79.3,40.5,0.61,2], [27,82.4,36.9,0.77,3],
+    [28,77.1,42.0,0.50,2], [29,78.9,39.6,0.65,1], [30,74.3,44.5,0.35,11],
+    [31,80.6,38.2,0.70,2], [32,77.7,41.4,0.53,4], [33,79.0,40.0,0.60,1],
+    [34,76.9,41.3,0.24,4], [35,81.4,37.9,0.73,2], [36,75.8,43.3,0.42,6],
+    [37,78.2,40.7,0.59,3], [38,83.4,36.4,0.81,1], [39,77.3,42.4,0.49,2],
+    [40,79.9,39.2,0.67,4], [41,74.6,44.1,0.37,8], [42,80.3,38.6,0.68,2],
+    [43,78.6,41.1,0.55,1], [44,76.4,43.0,0.46,3], [45,79.2,40.1,0.61,25],
+    [46,82.1,37.0,0.76,2], [47,77.6,41.8,0.51,5], [48,79.4,39.8,0.62,1],
+    [49,75.3,43.6,0.44,4], [50,80.8,38.1,0.71,2], [51,78.1,40.9,0.57,3],
+    [52,76.6,42.7,0.48,1], [53,81.9,37.6,0.78,2], [54,77.8,41.5,0.54,6],
+    [55,79.5,39.3,0.66,1], [56,74.1,44.2,0.33,10],[57,80.2,38.8,0.69,3],
+    [58,77.5,46.1,0.48,1], [59,78.8,40.4,0.58,2], [60,76.1,42.8,0.45,4],
+    [61,82.7,36.2,0.80,1]
+  ];
+
+  var FOLK = [
+    {navn:"Palle", tilstand:"fri",      station:null},
+    {navn:"Sanne", tilstand:"kører",    station:34},
+    {navn:"Vagn",  tilstand:"på stedet", station:12}
+  ];
+
+  var UDKALD = {
+    12:{montor:"Vagn",  grund:"Retur 47,8 °C, over grænsen på 45.", tid:"16:52"},
+    34:{montor:"Sanne", grund:"Differenstryk 0,24 bar, under 0,3.", tid:"17:21"}
+  };
+
+  var ur = 17 * 60 + 35;
+
+  function naeste(){
+    ur += 1;
+    var t = Math.floor(ur / 60), m = ur % 60;
+    return (t < 10 ? "0" : "") + t + ":" + (m < 10 ? "0" : "") + m;
+  }
+
+  function to(n){ return (n < 10 ? "0" : "") + n; }
+  function tal(n, d){ return n.toFixed(d).replace(".", ","); }
+  function el(tag, cls, txt){
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (txt != null) e.textContent = txt;
+    return e;
+  }
+  function station(nr){
+    for (var i = 0; i < STATIONER.length; i++) if (STATIONER[i][0] === nr) return STATIONER[i];
+    return null;
+  }
+  function person(navn){
+    for (var i = 0; i < FOLK.length; i++) if (FOLK[i].navn === navn) return FOLK[i];
+    return null;
+  }
+
+  /* Brieffens tre regler, skrevet ét sted. */
+  function afvig(s){
+    return {
+      retur: s[2] > 45,
+      tryk:  s[3] > 0.9 ? "over" : (s[3] < 0.3 ? "under" : null),
+      alder: s[4] > 20
+    };
+  }
+  function afviger(a){ return !!(a.retur || a.tryk || a.alder); }
+  function ord(a){
+    var d = [];
+    if (a.retur) d.push("retur");
+    if (a.tryk) d.push("tryk");
+    if (a.alder) d.push("aflæsning");
+    return "Afviger: " + d.join(", ") + ".";
+  }
+
+  var besked = document.getElementById("besked");
+  function sig(txt){ besked.textContent = txt; }
+
+  function tegnFolk(){
+    var liste = document.getElementById("folkliste");
+    liste.textContent = "";
+    FOLK.forEach(function(m){
+      var li = document.createElement("li");
+      li.appendChild(el("b", null, m.navn));
+      li.appendChild(document.createTextNode(" "));
+      var hale = m.station ? m.tilstand + ", station " + to(m.station) : m.tilstand;
+      li.appendChild(el("span", null, hale));
+      liste.appendChild(li);
+    });
+  }
+
+  function saet(navn, tilstand, nr){
+    var m = person(navn);
+    if (!m) return;
+    m.tilstand = tilstand;
+    m.station = nr;
+  }
+
+  function tegnUdkald(nr){
+    var plade = document.getElementById("station-" + to(nr));
+    var boks = plade.querySelector(".udkald");
+    var s = station(nr);
+    var a = afvig(s);
+    lukPanel(nr);
+    boks.textContent = "";
+    var u = UDKALD[nr];
+
+    if (u){
+      plade.setAttribute("data-udkaldt", "ja");
+      var m = person(u.montor);
+      var info = el("div", "udkald-info");
+      info.tabIndex = -1;
+      info.appendChild(el("p", "baand", u.montor + ", " + m.tilstand));
+      info.appendChild(el("p", null, "Udkaldt " + u.tid + ". " + u.grund));
+      var rk = el("div", "rk");
+      var omfordel = el("button", "knap", "Omfordel");
+      omfordel.type = "button";
+      omfordel.setAttribute("aria-expanded", "false");
+      omfordel.addEventListener("click", function(){ skift(nr, u.montor); });
+      var slut = el("button", "knap", "Afslut");
+      slut.type = "button";
+      slut.addEventListener("click", function(){ afslut(nr); });
+      rk.appendChild(omfordel);
+      rk.appendChild(slut);
+      info.appendChild(rk);
+      boks.appendChild(info);
+      return;
+    }
+
+    plade.removeAttribute("data-udkaldt");
+    if (!afviger(a)) return;
+    var knap = el("button", "knap", "Opret udkald");
+    knap.type = "button";
+    knap.setAttribute("aria-expanded", "false");
+    knap.addEventListener("click", function(){ skift(nr, null); });
+    boks.appendChild(knap);
+  }
+
+  function bygPlade(s){
+    var nr = s[0], a = afvig(s), ja = afviger(a);
+    var li = el("li", "plade");
+    li.id = "station-" + to(nr);
+    if (ja){
+      li.setAttribute("data-afviger", "ja");
+      li.tabIndex = -1;
+    }
+    if (a.tryk) li.setAttribute("data-tryk", a.tryk);
+    if (a.alder) li.className = "plade markering markering--skravering";
+
+    li.appendChild(el("h3", "plade__nr", "Station " + to(nr)));
+
+    if (a.tryk){
+      var kile = el("span", "markering markering--kile");
+      kile.setAttribute("aria-hidden", "true");
+      li.appendChild(kile);
+    }
+
+    var par = el("div", "par");
+    var frem = el("p", "frem");
+    frem.appendChild(el("span", "etiket", "Frem"));
+    var fv = el("span");
+    fv.appendChild(el("span", "tal", tal(s[1], 1)));
+    fv.appendChild(document.createTextNode(" "));
+    fv.appendChild(el("span", "enhed", "°C"));
+    frem.appendChild(fv);
+    var retur = el("p", a.retur ? "retur markering markering--kasse" : "retur");
+    retur.appendChild(el("span", "etiket", "Retur"));
+    var rv = el("span");
+    rv.appendChild(el("span", "tal", tal(s[2], 1)));
+    rv.appendChild(document.createTextNode(" "));
+    rv.appendChild(el("span", "enhed", "°C"));
+    retur.appendChild(rv);
+    par.appendChild(frem);
+    par.appendChild(retur);
+    li.appendChild(par);
+
+    var smaa = el("div", "smaa");
+    smaa.appendChild(el("span", null, tal(s[3], 2) + " bar"));
+    smaa.appendChild(el("span", null, s[4] + " min"));
+    li.appendChild(smaa);
+
+    if (ja) li.appendChild(el("p", "afvig-ord", ord(a)));
+    li.appendChild(el("div", "udkald"));
+    return li;
+  }
+
+  /* Panelet ligger uden for flowet, så hverken pladen eller nogen nabo flytter sig
+     mens der udfyldes. En station står det samme sted hele vagten. */
+  function lukPanel(nr){
+    var plade = document.getElementById("station-" + to(nr));
+    if (!plade) return;
+    var panel = plade.querySelector(".panel");
+    if (panel) panel.parentNode.removeChild(panel);
+    plade.classList.remove("plade--aaben");
+    var knap = plade.querySelector(".knap[aria-expanded]");
+    if (knap) knap.setAttribute("aria-expanded", "false");
+  }
+
+  function lukAlle(){
+    var aabne = document.querySelectorAll(".plade--aaben");
+    for (var i = 0; i < aabne.length; i++){
+      lukPanel(Number(aabne[i].id.slice(-2)));
+    }
+  }
+
+  function skift(nr, forvalgt){
+    var plade = document.getElementById("station-" + to(nr));
+    if (plade.classList.contains("plade--aaben")){
+      lukPanel(nr);
+      var knap = plade.querySelector(".knap[aria-expanded]");
+      if (knap) knap.focus();
+      return;
+    }
+    aabn(nr, forvalgt);
+  }
+
+  function aabn(nr, forvalgt){
+    lukAlle();
+    var plade = document.getElementById("station-" + to(nr));
+    plade.classList.add("plade--aaben");
+    var knap = plade.querySelector(".knap[aria-expanded]");
+    if (knap) knap.setAttribute("aria-expanded", "true");
+    var panel = el("div", "panel");
+    var form = bygForm(nr, forvalgt);
+    panel.appendChild(form);
+    plade.appendChild(panel);
+    var foerste = form.querySelector("input[type=radio]");
+    if (foerste) foerste.focus();
+  }
+
+  function bygForm(nr, forvalgt){
+    var form = el("form", "udkaldsform");
+    form.setAttribute("data-nr", String(nr));
+    form.noValidate = true;
+
+    var fejl = el("div", "fejl");
+    fejl.setAttribute("role", "alert");
+    fejl.tabIndex = -1;
+    fejl.hidden = true;
+    form.appendChild(fejl);
+
+    var fs = document.createElement("fieldset");
+    var lg = document.createElement("legend");
+    lg.textContent = "Montør";
+    fs.appendChild(lg);
+    FOLK.forEach(function(m, i){
+      var lab = el("label", "valg");
+      var r = document.createElement("input");
+      r.type = "radio";
+      r.name = "montor-" + to(nr);
+      r.value = m.navn;
+      r.id = "montor-" + to(nr) + "-" + i;
+      if (forvalgt === m.navn) r.checked = true;
+      lab.htmlFor = r.id;
+      lab.appendChild(r);
+      lab.appendChild(el("span", null, m.navn + ", " + m.tilstand +
+        (m.station ? ", station " + to(m.station) : "")));
+      fs.appendChild(lab);
+    });
+    form.appendChild(fs);
+
+    var gid = "grund-" + to(nr);
+    var hid = "hjaelp-" + to(nr);
+    var eid = "fejl-" + to(nr);
+    var lab2 = el("label", "felt", "Begrundelse");
+    lab2.htmlFor = gid;
+    form.appendChild(lab2);
+    var hj = el("p", "hjaelp", "Én linje. Den vises på udkaldet.");
+    hj.id = hid;
+    form.appendChild(hj);
+    var ta = document.createElement("textarea");
+    ta.id = gid;
+    ta.rows = 2;
+    ta.setAttribute("aria-describedby", hid);
+    form.appendChild(ta);
+    var ff = el("p", "fejl-felt");
+    ff.id = eid;
+    ff.hidden = true;
+    form.appendChild(ff);
+
+    var ok = el("button", "knap", "Accepter udkald");
+    ok.type = "submit";
+    form.appendChild(ok);
+    var annuller = el("button", "knap", "Luk uden at sende");
+    annuller.type = "button";
+    annuller.addEventListener("click", function(){
+      lukPanel(nr);
+      var igen = document.getElementById("station-" + to(nr)).querySelector(".knap[aria-expanded]");
+      if (igen) igen.focus();
+      sig("Udkaldet på station " + to(nr) + " blev ikke sendt.");
+    });
+    form.appendChild(annuller);
+
+    form.addEventListener("submit", function(ev){
+      ev.preventDefault();
+      indsend(nr, form);
+    });
+    return form;
+  }
+
+  function indsend(nr, form){
+    var valgt = form.querySelector("input[type=radio]:checked");
+    var ta = form.querySelector("textarea");
+    var fejl = form.querySelector(".fejl");
+    var ff = form.querySelector(".fejl-felt");
+    var grund = ta.value.replace(/\s+/g, " ").trim();
+    var mangler = [];
+
+    fejl.textContent = "";
+    fejl.hidden = true;
+    ff.hidden = true;
+    ff.textContent = "";
+    ta.removeAttribute("aria-invalid");
+    ta.setAttribute("aria-describedby", "hjaelp-" + to(nr));
+
+    if (!valgt){
+      mangler.push(["Vælg en montør: Palle, Sanne eller Vagn.",
+        form.querySelector("input[type=radio]").id]);
+    } else {
+      /* Tre montører, ét udkald ad gangen. Den anden vej ville give én mand to stationer. */
+      var optaget = null;
+      for (var k in UDKALD){
+        if (UDKALD.hasOwnProperty(k) && Number(k) !== nr && UDKALD[k].montor === valgt.value){
+          optaget = Number(k);
+          break;
+        }
+      }
+      if (optaget !== null){
+        mangler.push([valgt.value + " har allerede et udkald på station " + to(optaget) +
+          ". Afslut eller omfordel det først.", valgt.id]);
+      }
+    }
+    if (!grund){
+      mangler.push(["Skriv en begrundelse på én linje.", ta.id]);
+      ff.textContent = "Skriv en begrundelse på én linje. Uden den sendes udkaldet ikke.";
+      ff.hidden = false;
+      ta.setAttribute("aria-invalid", "true");
+      ta.setAttribute("aria-describedby", "hjaelp-" + to(nr) + " fejl-" + to(nr));
+    }
+
+    if (mangler.length){
+      fejl.appendChild(el("p", null, "Udkaldet blev ikke sendt. Ret det her:"));
+      var ul = document.createElement("ul");
+      mangler.forEach(function(m){
+        var li = document.createElement("li");
+        var a = document.createElement("a");
+        a.href = "#" + m[1];
+        a.textContent = m[0];
+        a.addEventListener("click", function(ev){
+          ev.preventDefault();
+          document.getElementById(m[1]).focus();
+        });
+        li.appendChild(a);
+        ul.appendChild(li);
+      });
+      fejl.appendChild(ul);
+      fejl.hidden = false;
+      fejl.focus();
+      return;
+    }
+
+    var tidligere = UDKALD[nr];
+    if (tidligere && tidligere.montor !== valgt.value) saet(tidligere.montor, "fri", null);
+    UDKALD[nr] = {montor: valgt.value, grund: grund, tid: naeste()};
+    saet(valgt.value, "kører", nr);
+
+    tegnUdkald(nr);
+    tegnFolk();
+    sig("Udkaldet er accepteret. Station " + to(nr) + ", " + valgt.value + ", kører. " +
+      "Det kan ikke trækkes tilbage, kun afsluttes eller omfordeles.");
+    var info = document.getElementById("station-" + to(nr)).querySelector(".udkald-info");
+    if (info) info.focus();
+  }
+
+  function afslut(nr){
+    var u = UDKALD[nr];
+    if (!u) return;
+    saet(u.montor, "fri", null);
+    delete UDKALD[nr];
+    tegnUdkald(nr);
+    tegnFolk();
+    sig("Udkaldet på station " + to(nr) + " er afsluttet. " + u.montor + " er fri.");
+    var knap = document.getElementById("station-" + to(nr)).querySelector(".knap");
+    if (knap) knap.focus();
+  }
+
+  var tavle = document.getElementById("tavle");
+  var antalAfvig = 0;
+  var foersteAfvig = null;
+  STATIONER.forEach(function(s){
+    tavle.appendChild(bygPlade(s));
+    if (afviger(afvig(s))){
+      antalAfvig++;
+      if (foersteAfvig === null) foersteAfvig = s[0];
+    }
+  });
+  STATIONER.forEach(function(s){ tegnUdkald(s[0]); });
+  tegnFolk();
+
+  document.getElementById("antal").textContent =
+    antalAfvig + " af " + STATIONER.length + " stationer afviger nu.";
+
+  if (foersteAfvig !== null){
+    var spring = document.getElementById("spring");
+    spring.href = "#station-" + to(foersteAfvig);
+    spring.textContent = "Gå til første afvigende station, " + to(foersteAfvig);
+  }
+
+  document.getElementById("kun-afvig").addEventListener("change", function(){
+    tavle.setAttribute("data-filter", this.checked ? "afvig" : "alle");
+    sig(this.checked
+      ? "Tavlen viser nu kun de " + antalAfvig + " stationer der afviger."
+      : "Tavlen viser alle " + STATIONER.length + " stationer igen.");
+  });
+})();
+</script>
+</body>
+</html>

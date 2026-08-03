@@ -1,0 +1,623 @@
+{
+  "$comment": "Canonical register of what each analysed source actually contributes to the shipped product. tools/source-coverage.mjs refuses a release when a required source has no mechanism, no path, no proof, no licence or no attribution. Generated skeleton from docs/rebuild/SOURCE-REGISTRY.json and docs/rebuild/PLACEMENT.json; the judgement fields are written by hand.",
+  "generatedFrom": [
+    "docs/rebuild/SOURCE-REGISTRY.json",
+    "docs/rebuild/PLACEMENT.json"
+  ],
+  "sources": [
+    {
+      "source": "frontend-design",
+      "name": "Anthropic frontend-design",
+      "canonicalCommit": "b29e7cf65e5cb78a5ac33d582270551bc74a14eb",
+      "license": "Apache-2.0",
+      "redistribution": "allowed-with-notice",
+      "integration": "ADAPTED",
+      "mechanismsUsed": [
+        "css-specificity-caution",
+        "deliberate-motion",
+        "hero-as-thesis",
+        "structure-as-information",
+        "typography-as-personality"
+      ],
+      "sitesmithPaths": [
+        "skills/sitesmith-v3/SKILL.md",
+        "skills/sitesmith-v3/run.md",
+        "skills/sitesmith-v3/stacks/static.md"
+      ],
+      "loadedWhen": [
+        "always, SKILL.md sections 1 to 8"
+      ],
+      "proof": [
+        "docs/rebuild/s15/HOLDOUT-RESULT.md",
+        "tools/provenance-overlap.mjs"
+      ],
+      "attributionPath": "skills/sitesmith-v3/THIRD-PARTY-NOTICES.md"
+    },
+    {
+      "source": "taste-skill",
+      "name": "taste-skill",
+      "canonicalCommit": "e988add20dab0fa97d7a76781c48961c8184288e",
+      "license": "MIT",
+      "redistribution": "allowed-with-notice",
+      "integration": "CLEAN_ROOM",
+      "mechanismsUsed": [
+        "brief-to-design-system-router",
+        "em-dash-absolute-ban",
+        "full-output-enforcement",
+        "official-design-system-honesty-rule",
+        "redesign-mode-detection-and-audit-first",
+        "self-administered-preflight-checklist",
+        "single-clarifying-question-cap",
+        "three-dial-system"
+      ],
+      "sitesmithPaths": [
+        "skills/sitesmith-v3/redesign.md",
+        "skills/sitesmith-v3/run.md",
+        "skills/sitesmith-v3/scripts/gate.mjs",
+        "skills/sitesmith-v3/scripts/verify.mjs",
+        "skills/sitesmith-v3/stacks/static.md",
+        "tools/check-v3-docs.mjs"
+      ],
+      "loadedWhen": [
+        "always",
+        "at release, gate.mjs palette and typeface checks"
+      ],
+      "proof": [
+        "docs/rebuild/s10/fixtures/scripts/gate/unpinned",
+        "docs/rebuild/s10/fixtures/scripts/gate/pinned-by-brief"
+      ],
+      "attributionPath": "skills/sitesmith-v3/THIRD-PARTY-NOTICES.md"
+    },
+    {
+      "source": "ui-ux-pro-max",
+      "name": "UI/UX Pro Max",
+      "canonicalCommit": "4857a2c5ef989794751a0f66b8545a4a49566286",
+      "license": "MIT",
+      "redistribution": "allowed-with-notice",
+      "integration": "CLEAN_ROOM",
+      "mechanismsUsed": [
+        "design-review-subagent-and-heuristic-audit",
+        "master-overrides-persistence",
+        "stack-never-assume",
+        "static-ux-knowledge-tables",
+        "zero-result-honesty"
+      ],
+      "sitesmithPaths": [
+        "skills/sitesmith-v3/floor/operate.md",
+        "skills/sitesmith-v3/run.md",
+        "skills/sitesmith-v3/scripts/ledger.mjs",
+        "skills/sitesmith-v3/scripts/verify.mjs"
+      ],
+      "loadedWhen": [
+        "operate",
+        "every render, verify.mjs floor measures"
+      ],
+      "proof": [
+        "skills/sitesmith-v3/scripts/test-verify.mjs",
+        "tools/floor-lint.mjs"
+      ],
+      "attributionPath": "skills/sitesmith-v3/THIRD-PARTY-NOTICES.md"
+    },
+    {
+      "source": "impeccable",
+      "name": "impeccable",
+      "canonicalCommit": "6b342244e915d64b0d6e84d5eec448fd196ce6bb",
+      "license": "Apache-2.0",
+      "redistribution": "allowed-with-notice",
+      "integration": "ADAPTED",
+      "mechanismsUsed": [
+        "bounded-finish-review-loop",
+        "document-after-build-not-before",
+        "dual-isolated-critique-subagents",
+        "forced-index-direction-roll",
+        "mechanical-antipattern-detector",
+        "mode-based-visitor-registers",
+        "model-specific-rendition-prior-correction",
+        "preserve-vs-redesign-semantics",
+        "surface-brief-scoping"
+      ],
+      "sitesmithPaths": [
+        "skills/sitesmith-v3/redesign.md",
+        "skills/sitesmith-v3/run.md",
+        "skills/sitesmith-v3/scripts/gate.mjs",
+        "skills/sitesmith-v3/scripts/ledger.mjs",
+        "skills/sitesmith-v3/verify.md"
+      ],
+      "loadedWhen": [
+        "redesign",
+        "at release, gate.mjs"
+      ],
+      "proof": [
+        "skills/sitesmith-v3/scripts/test-gate.mjs",
+        "tools/provenance-overlap.mjs"
+      ],
+      "attributionPath": "skills/sitesmith-v3/THIRD-PARTY-NOTICES.md"
+    },
+    {
+      "source": "scroll-world",
+      "name": "scroll-world",
+      "canonicalCommit": "71cc36d3bb150248ae36a2c552f9cbf88802a79c",
+      "license": "MIT",
+      "redistribution": "allowed-with-notice",
+      "integration": "CLEAN_ROOM",
+      "mechanismsUsed": [
+        "capability-gate-before-commit",
+        "css-layer-theme-override",
+        "open-subject-question-not-fabricated-menu",
+        "reduced-motion-full-degrade"
+      ],
+      "sitesmithPaths": [
+        "skills/sitesmith-v3/redesign.md",
+        "skills/sitesmith-v3/run.md",
+        "skills/sitesmith-v3/scripts/verify.mjs"
+      ],
+      "loadedWhen": [
+        "experience, motion.md",
+        "every render, the reduced-motion pass"
+      ],
+      "proof": [
+        "docs/rebuild/s10/fixtures/scripts/verify/fail-motion",
+        "pilots/04-byens-it/journeys/jobs.spec.mjs"
+      ],
+      "attributionPath": "skills/sitesmith-v3/THIRD-PARTY-NOTICES.md"
+    },
+    {
+      "source": "remotion-skills",
+      "name": "remotion-dev/skills",
+      "canonicalCommit": "4951f6aca2a236f2f2a2bff4734566963fe12707",
+      "license": "none declared; upstream monorepo is NOASSERTION with commercial restrictions",
+      "redistribution": "forbidden",
+      "integration": "CLEAN_ROOM",
+      "mechanismsUsed": [
+        "remotion-technique-independence"
+      ],
+      "sitesmithPaths": [
+        "skills/sitesmith-v3/stacks/remotion.md",
+        "tools/floor-lint.mjs"
+      ],
+      "loadedWhen": [
+        "experience, and only when remotion is already a dependency"
+      ],
+      "proof": [
+        "skills/sitesmith-v3/stacks/remotion.md",
+        "tools/provenance-overlap.mjs"
+      ],
+      "attributionPath": "skills/sitesmith-v3/THIRD-PARTY-NOTICES.md"
+    },
+    {
+      "source": "ponytail",
+      "name": "ponytail",
+      "canonicalCommit": "16f29800fd2681bdf24f3eb4ccffe38be3baec6b",
+      "license": "MIT",
+      "redistribution": "allowed-with-notice",
+      "integration": "CLEAN_ROOM",
+      "mechanismsUsed": [
+        "explicit-never-simplify-carveouts",
+        "self-validating-llm-judge",
+        "seven-rung-simplicity-ladder"
+      ],
+      "sitesmithPaths": [
+        "skills/sitesmith-v3/SKILL.md",
+        "skills/sitesmith-v3/run.md",
+        "tools/genericness-judge.mjs"
+      ],
+      "loadedWhen": [
+        "always, SKILL.md restraint",
+        "run.md loop caps"
+      ],
+      "proof": [
+        "tools/genericness-judge.mjs --selftest",
+        "tools/context-budget.mjs",
+        "tools/test-context-budget.mjs"
+      ],
+      "attributionPath": "skills/sitesmith-v3/THIRD-PARTY-NOTICES.md"
+    },
+    {
+      "source": "ai-website-cloner-template",
+      "name": "ai-website-cloner-template",
+      "canonicalCommit": "a9b35751b756dd8e9c3951afec86d2cb869c4e0f",
+      "license": "MIT",
+      "redistribution": "allowed-with-notice",
+      "integration": "CLEAN_ROOM",
+      "mechanismsUsed": [
+        "asset-enumeration-and-batched-download",
+        "exhaustive-state-capture",
+        "interaction-model-identification-first",
+        "layered-asset-vigilance",
+        "no-guessing-completeness-mandate",
+        "scope-defaults-block",
+        "spec-file-inline-only-contract",
+        "tool-agnostic-preflight-detection"
+      ],
+      "sitesmithPaths": [
+        "skills/sitesmith-v3/redesign.md",
+        "skills/sitesmith-v3/run.md"
+      ],
+      "loadedWhen": [
+        "redesign"
+      ],
+      "proof": [
+        "skills/sitesmith-v3/redesign.md",
+        "docs/rebuild/PLACEMENT.json"
+      ],
+      "attributionPath": "skills/sitesmith-v3/THIRD-PARTY-NOTICES.md"
+    },
+    {
+      "source": "agency-agents",
+      "name": "msitarzewski/agency-agents",
+      "canonicalCommit": "c89557f78509868c6d4cc08e5cbc79bc8625fe1c",
+      "license": "MIT",
+      "redistribution": "allowed-with-notice",
+      "integration": "CLEAN_ROOM",
+      "mechanismsUsed": [
+        "orch-02-persona-walkthrough"
+      ],
+      "sitesmithPaths": [
+        "skills/sitesmith-v3/run.md"
+      ],
+      "loadedWhen": [
+        "always, run.md argument order"
+      ],
+      "proof": [
+        "docs/rebuild/PLACEMENT.json"
+      ],
+      "attributionPath": "skills/sitesmith-v3/THIRD-PARTY-NOTICES.md"
+    },
+    {
+      "source": "ruflo",
+      "name": "ruvnet/ruflo",
+      "canonicalCommit": "913f9eaedee92627950544424e50339feaf98271",
+      "license": "MIT",
+      "redistribution": "allowed-with-notice",
+      "integration": "CLEAN_ROOM",
+      "mechanismsUsed": [
+        "durable run state that outlives the process",
+        "resume tells the next session what was happening rather than making it re-derive"
+      ],
+      "sitesmithPaths": [
+        "skills/sitesmith-v3/scripts/state.mjs",
+        "skills/sitesmith-v3/scripts/test-state.mjs"
+      ],
+      "loadedWhen": [
+        "every run, whenever a phase opens or closes",
+        "on resume, when a session picks up an interrupted build"
+      ],
+      "proof": [
+        "skills/sitesmith-v3/scripts/test-state.mjs"
+      ],
+      "attributionPath": "skills/sitesmith-v3/THIRD-PARTY-NOTICES.md"
+    },
+    {
+      "source": "awesome-claude-code-subagents",
+      "name": "VoltAgent/awesome-claude-code-subagents",
+      "canonicalCommit": "91810b33c707111e05e0988b12e7385d7b5cfe9d",
+      "license": "MIT",
+      "redistribution": "allowed-with-notice",
+      "integration": "CLEAN_ROOM",
+      "mechanismsUsed": [
+        "a role carries an explicit output contract rather than a job title",
+        "the noun-list antipattern, applied against itself: four roles with contracts instead of two hundred with adjectives"
+      ],
+      "sitesmithPaths": [
+        "skills/sitesmith-v3/delegation.md"
+      ],
+      "loadedWhen": [
+        "delegate, and only when the work splits into independent parts"
+      ],
+      "proof": [
+        "tools/context-budget.mjs",
+        "skills/sitesmith-v3/delegation.md"
+      ],
+      "attributionPath": "skills/sitesmith-v3/THIRD-PARTY-NOTICES.md"
+    },
+    {
+      "source": "ai-dev-tasks",
+      "name": "snarktank/ai-dev-tasks",
+      "canonicalCommit": "efbffaac10e68c94e14aaa587c79b7d5015b5ebd",
+      "license": "Apache-2.0",
+      "redistribution": "allowed-with-notice",
+      "integration": "CLEAN_ROOM",
+      "mechanismsUsed": [
+        "clarifying-questions-before-spec",
+        "two-phase-approval-gate"
+      ],
+      "sitesmithPaths": [
+        "skills/sitesmith-v3/run.md"
+      ],
+      "loadedWhen": [
+        "always, run.md phase 1"
+      ],
+      "proof": [
+        "docs/rebuild/PLACEMENT.json"
+      ],
+      "attributionPath": "skills/sitesmith-v3/THIRD-PARTY-NOTICES.md"
+    },
+    {
+      "source": "before-implementing",
+      "name": "grill-for-unknowns",
+      "canonicalCommit": "d8d5f4b422b8be1301dd4a515d96589eaddc5f3c",
+      "license": "MIT",
+      "redistribution": "allowed-with-notice",
+      "integration": "CLEAN_ROOM",
+      "mechanismsUsed": [
+        "blindspot-pass",
+        "deviation-policy",
+        "launch-packet-role-split",
+        "map-vs-territory-framing",
+        "self-contained-packaging-lesson",
+        "unknown-knowns-prototypes"
+      ],
+      "sitesmithPaths": [
+        "skills/sitesmith-v3/run.md",
+        "tools/self-contained-lint.mjs"
+      ],
+      "loadedWhen": [
+        "always, run.md phase 1 blocking questions"
+      ],
+      "proof": [
+        "tools/self-contained-lint.mjs --self-test"
+      ],
+      "attributionPath": "skills/sitesmith-v3/THIRD-PARTY-NOTICES.md"
+    },
+    {
+      "source": "graph-engineering",
+      "name": "graph-engineering",
+      "canonicalCommit": "cfacb56a05a31ba69bf84d0b8b00f5ce463127ef",
+      "license": "MIT",
+      "redistribution": "allowed-with-notice",
+      "integration": "CLEAN_ROOM",
+      "mechanismsUsed": [
+        "typed nodes and typed edges instead of a log",
+        "causation separated from sequence",
+        "blockers and proofs as edges, so \"why\" is a traversal",
+        "a hard cap on live nodes"
+      ],
+      "sitesmithPaths": [
+        "skills/sitesmith-v3/scripts/state.mjs",
+        "skills/sitesmith-v3/scripts/test-state.mjs"
+      ],
+      "loadedWhen": [
+        "every run, as the shape the state is written in",
+        "on check, when the graph is validated"
+      ],
+      "proof": [
+        "skills/sitesmith-v3/scripts/test-state.mjs"
+      ],
+      "attributionPath": "skills/sitesmith-v3/THIRD-PARTY-NOTICES.md"
+    },
+    {
+      "source": "agent-elements-21st",
+      "name": "21st-dev/agent-elements",
+      "canonicalCommit": "b04b36cb6381a1dd1a0e86cc7c90564ddcd56d37",
+      "license": "MIT",
+      "redistribution": "allowed-with-notice",
+      "integration": "CLEAN_ROOM",
+      "mechanismsUsed": [
+        "an agent interface has a component vocabulary of its own",
+        "that vocabulary is conditional on the brief, never on the stack"
+      ],
+      "sitesmithPaths": [
+        "skills/sitesmith-v3/scripts/components.mjs",
+        "skills/sitesmith-v3/scripts/test-components.mjs"
+      ],
+      "loadedWhen": [
+        "only when the brief names an agent, chat, assistant or transcript surface"
+      ],
+      "proof": [
+        "skills/sitesmith-v3/scripts/test-components.mjs"
+      ],
+      "attributionPath": "skills/sitesmith-v3/THIRD-PARTY-NOTICES.md"
+    },
+    {
+      "source": "magic-21st",
+      "name": "21st-dev/magic-mcp",
+      "canonicalCommit": "dfba16c1b9baa63ed4efd0c69121ed08ba697b1a",
+      "license": "ISC",
+      "redistribution": "forbidden",
+      "integration": "CLEAN_ROOM",
+      "mechanismsUsed": [
+        "look for a component that exists before writing one",
+        "reuse before invention, bounded by licence"
+      ],
+      "sitesmithPaths": [
+        "skills/sitesmith-v3/scripts/components.mjs",
+        "skills/sitesmith-v3/scripts/test-components.mjs"
+      ],
+      "loadedWhen": [
+        "before writing any component, in every build"
+      ],
+      "proof": [
+        "skills/sitesmith-v3/scripts/test-components.mjs"
+      ],
+      "attributionPath": "skills/sitesmith-v3/THIRD-PARTY-NOTICES.md"
+    },
+    {
+      "source": "website-builder-setup",
+      "name": "tenfoldmarc/website-builder-setup",
+      "canonicalCommit": "83d94dac66b90b1da37152084ac671989379b692",
+      "license": "none declared; two files and no LICENSE of any kind, so all rights reserved by default",
+      "redistribution": "forbidden",
+      "integration": "CLEAN_ROOM",
+      "mechanismsUsed": [
+        "walk the environment one step at a time",
+        "on a failure, give the manual command and keep going rather than stopping"
+      ],
+      "sitesmithPaths": [
+        "tools/install-sitesmith.mjs"
+      ],
+      "loadedWhen": [
+        "install, once, when the skill is put where an agent will find it"
+      ],
+      "proof": [
+        "tools/install-sitesmith.mjs",
+        ".github/workflows/verify.yml"
+      ],
+      "attributionPath": "skills/sitesmith-v3/THIRD-PARTY-NOTICES.md"
+    },
+    {
+      "source": "sitesmith-v2",
+      "name": "Existing SiteSmith v2.3",
+      "canonicalCommit": "dc00598cce2af92435a749856393e287506753bc",
+      "license": "MIT",
+      "redistribution": null,
+      "integration": "ADOPTED",
+      "mechanismsUsed": [
+        "animation-interruptible-and-never-blocking",
+        "applicability-scope-notice-on-rule-blocks",
+        "argument-shape-six-beats",
+        "assignment-blinded-critique-gate",
+        "buy-absent-proof-is-declared",
+        "buy-availability-is-stated-in-words",
+        "buy-committed-actions-answer-immediately",
+        "buy-comparison-is-a-glance",
+        "buy-decision-and-control-together",
+        "buy-every-claim-maps-to-a-spec-line",
+        "buy-helping-or-in-the-way",
+        "buy-image-set-is-consistent",
+        "buy-missing-image-names-itself",
+        "buy-name-the-free-axis",
+        "buy-nothing-moves-near-money",
+        "buy-one-unmistakable-purchase-control",
+        "buy-price-is-found-not-hunted",
+        "buy-proof-shows-its-shape",
+        "buy-purchase-control-is-always-in-reach",
+        "buy-reference-price-is-real",
+        "buy-related-states-the-relation",
+        "buy-result-set-is-navigable",
+        "buy-scale-is-stated",
+        "buy-specification-is-complete",
+        "buy-structure-follows-the-buyer",
+        "buy-the-basket-is-never-out-of-reach",
+        "buy-the-way-back-to-the-set",
+        "buy-total-commitment-legible",
+        "comparison-axis-alignment",
+        "content-variance-check",
+        "contract-after-direction-plus-token-drift",
+        "counter-rows-inside-the-rule-table",
+        "cross-project-anti-repeat-ledger",
+        "delete-the-design-argument-test",
+        "dependency-declared-optional-with-named-prose-fallback",
+        "direction-fidelity-render-check",
+        "evidence-before-direction",
+        "first-screen-from-strongest-material",
+        "forgotten-surfaces-checklist",
+        "form-error-recovery-and-announcement-contract",
+        "icon-coherence",
+        "imagery-provenance-ladder",
+        "impeccable/adversarial-persona-walkthrough",
+        "impeccable/countable-cognitive-load-checks",
+        "impeccable/cross-run-score-trend",
+        "impeccable/findings-grounded-followup-questions",
+        "impeccable/issue-to-remedy-command-mapping",
+        "impeccable/licensed-empty-slot",
+        "impeccable/na-renormalized-scoring",
+        "impeccable/run-notes-skip-accounting",
+        "impeccable/score-inflation-calibration-anchor",
+        "impeccable/severity-tiebreak-question",
+        "impeccable/three-way-evidence-reconciliation",
+        "impeccable/user-owned-ignore-list",
+        "interaction-journeys",
+        "modal-foreground-must-be-isolated",
+        "mode-based-routing-not-defaults",
+        "model-facing-vs-machine-facing-declaration",
+        "named-z-index-scale",
+        "native-first-justified-by-checkable-accessibility",
+        "never-default-styled-generated-components",
+        "no-key-gated-service-in-setup",
+        "no-motion-between-intent-and-result",
+        "one-imagery-treatment-per-site",
+        "one-intent-one-label",
+        "operate-action-at-the-object",
+        "operate-arrangement-from-work-shape",
+        "operate-blocked-control-says-why",
+        "operate-compared-figures-do-not-shift",
+        "operate-destructive-separated-by-position",
+        "operate-entry-is-quiet",
+        "operate-exceptions-before-inventory",
+        "operate-image-earns-identification",
+        "operate-keyboard-reach-complete-and-discoverable",
+        "operate-latency-is-narrated",
+        "operate-listing-reconciles",
+        "operate-motion-reports-state-only",
+        "operate-multi-step-form-contract",
+        "operate-navigation-shallow-invariant-persistent",
+        "operate-no-editorial-subsetting",
+        "operate-orientation-before-work",
+        "operate-partial-is-a-state",
+        "operate-shape-promises-only-what-it-delivers",
+        "operate-signal-colour-is-reserved",
+        "operate-signal-verified-in-every-context",
+        "operate-state-legible-over-time",
+        "operate-unit-of-work-density",
+        "orientation-and-text-scale-as-verification-axes",
+        "phone-navigation-obligations",
+        "portfolio-diversity-gate",
+        "preservation-contract",
+        "production-gate-honesty-checks",
+        "progressive-disclosure-manifest",
+        "proof-strength-ladder-with-nothing-as-a-rung",
+        "read-score-repair-phasing",
+        "scoring-rubric-with-resumption",
+        "signature-swap-falsifier",
+        "six-states-enumerated",
+        "skill-applicability-self-gate-with-skip-list",
+        "stack-decision-gate",
+        "structurally-different-direction-gate",
+        "sufficient-stack-definition",
+        "transitions-on-transform-and-opacity-only",
+        "two-gate-separation-technical-vs-visual",
+        "verify-fail-closed-gates",
+        "verify-imports-against-manifest"
+      ],
+      "sitesmithPaths": [
+        "skills/sitesmith-v3/SKILL.md",
+        "skills/sitesmith-v3/floor/buy.md",
+        "skills/sitesmith-v3/floor/operate.md",
+        "skills/sitesmith-v3/redesign.md",
+        "skills/sitesmith-v3/run.md",
+        "skills/sitesmith-v3/scripts/gate.mjs",
+        "skills/sitesmith-v3/scripts/journey.mjs",
+        "skills/sitesmith-v3/scripts/ledger.mjs",
+        "skills/sitesmith-v3/scripts/verify.mjs",
+        "skills/sitesmith-v3/stacks/static.md",
+        "skills/sitesmith-v3/verify.md"
+      ],
+      "loadedWhen": [
+        "every build, at release",
+        "inspect"
+      ],
+      "proof": [
+        "skills/sitesmith-v3/scripts/test-verify.mjs",
+        "skills/sitesmith-v3/scripts/test-gate.mjs",
+        "skills/sitesmith-v3/scripts/test-ledger.mjs",
+        ".github/workflows/verify.yml#v3"
+      ],
+      "attributionPath": "skills/sitesmith-v3/THIRD-PARTY-NOTICES.md"
+    },
+    {
+      "source": "framer-motion",
+      "name": "Framer Motion patterns",
+      "canonicalCommit": "a4e4b3ab73dd64fbab2574fae27d28c0418f25cb",
+      "license": "MIT",
+      "redistribution": "allowed-with-notice",
+      "integration": "CLEAN_ROOM",
+      "mechanismsUsed": [
+        "layout animation and gesture handling are what a motion library is for",
+        "use it only where it is already a dependency",
+        "animate from a visible resting state, never into one"
+      ],
+      "sitesmithPaths": [
+        "skills/sitesmith-v3/motion.md",
+        "skills/sitesmith-v3/scripts/components.mjs"
+      ],
+      "loadedWhen": [
+        "experience, and only when the brief asks to be carried through something"
+      ],
+      "proof": [
+        "skills/sitesmith-v3/scripts/test-components.mjs",
+        "skills/sitesmith-v3/scripts/test-verify.mjs"
+      ],
+      "attributionPath": "skills/sitesmith-v3/THIRD-PARTY-NOTICES.md"
+    }
+  ]
+}

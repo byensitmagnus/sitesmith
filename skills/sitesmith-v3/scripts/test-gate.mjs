@@ -1,0 +1,328 @@
+#!/usr/bin/env node
+// The test of the release gate.
+//
+//   node skills/sitesmith-v3/scripts/test-gate.mjs
+//
+// A gate that cannot fail is decoration, and a gate that cannot pass is noise. Every case
+// below fixes its exit code before the gate runs, and most of them also fix the defect
+// classes that must appear by name, because an exit code alone would let one check's
+// refusal stand in for another's silence. Two cases exist only to pin the shape of the
+// thing rather than a defect: `pass` must reach 0, and `pass` with no browser must reach 1
+// and say a verdict is missing rather than reporting a pass it did not earn.
+//
+// Exit codes under test:
+//   0  every check ran and none refused
+//   2  refused
+//   1  nothing refused and at least one verdict is missing
+
+import { spawnSync } from 'node:child_process';
+import { existsSync, mkdtempSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
+import { dirname, join } from 'node:path';
+import { tmpdir } from 'node:os';
+
+const SCRIPTS = dirname(fileURLToPath(import.meta.url));
+const ROOT = join(SCRIPTS, '../../..');
+const SKILL = join(SCRIPTS, '..');
+const FIX = join(ROOT, 'docs/rebuild/s10/fixtures/scripts/gate');
+const GATE = join(SCRIPTS, 'gate.mjs');
+
+/* The render check needs a browser, and the browser has to be resolvable from the working
+   directory the gate runs in, which is where `sitesmith install` puts it on a real project.
+   If no installed copy can be found the render cases cannot run, and this suite says so and
+   fails rather than reporting green on the cases it skipped. */
+const WITH_BROWSER = ['benchmarks', 'tests/gates', 'skills/sitesmith/scripts', '.']
+  .map((d) => join(ROOT, d))
+  .find((d) => existsSync(join(d, 'node_modules/playwright')));
+
+const NO_BROWSER = mkdtempSync(join(tmpdir(), 'sitesmith-gate-nobrowser-'));
+
+const CASES = [
+  {
+    name: 'pass',
+    fixture: 'pass', browser: true, expect: 0,
+    must: ['WAIVED', 'antipattern/gradient-text', 'every check ran and none refused'],
+    why: 'a build that keeps its word, with its one antipattern claimed on purpose in the direction record',
+  },
+  {
+    name: 'pass, no browser',
+    fixture: 'pass', browser: false, expect: 1,
+    must: ['VERDICT MISSING', 'direction fidelity', 'This is not a pass'],
+    mustNot: ['every check ran'],
+    why: 'with nothing to render the direction verdict is missing, and a missing verdict is not a pass',
+  },
+  {
+    name: 'dishonest page',
+    fixture: 'refuse-dishonest', browser: true, expect: 2,
+    must: ['honesty/placeholder-language', 'honesty/dummy-identifier', 'honesty/empty-brand-mark', 'honesty/unmanifested-asset'],
+    mustNot: ['tokens/undeclared-literal'],
+    why: 'honesty runs first and stops the gate, so the undeclared literal in the same stylesheet is named as a missing verdict rather than measured',
+  },
+  {
+    name: 'em dash, elision, an uninstalled design system',
+    fixture: 'refuse-source', browser: true, expect: 2,
+    must: ['copy/em-dash', 'output/elision-placeholder', 'honesty/design-system-not-installed'],
+    why: 'three source refusals that no flag and no allowlist can turn off',
+  },
+  {
+    name: 'report accounting',
+    fixture: 'refuse-report', browser: true, expect: 2,
+    must: ['reads/outside-manifest', 'run-notes/no-reason-on-a-step-that-did-not-run', 'reconciliation/unreconciled-finding'],
+    why: 'a read outside the declared scenario, a step that did not run and never said why, and a mechanical finding nobody dispositioned',
+  },
+  {
+    name: 'token drift in emitted CSS',
+    fixture: 'refuse-drift', browser: true, expect: 2,
+    must: ['tokens/undeclared-literal'],
+    why: 'literals at call sites in a stylesheet the build emitted, which is the blindness the v2.3 scanner had',
+  },
+  {
+    name: 'the named tells',
+    fixture: 'refuse-tells', browser: true, expect: 2,
+    must: ['antipattern/gradient-text', 'antipattern/three-card-grid', 'antipattern/framework-default-scale', 'antipattern/icon-tile-row'],
+    why: 'four tells, none of them claimed in the direction record',
+  },
+  {
+    name: 'a page about a real thing with no photograph of it',
+    fixture: 'no-photo', browser: true, expect: 2,
+    must: ['look/no-photograph'],
+    // ui-ux-pro-max states it without hedging: a pure-text page is not minimalism, it is
+    // incomplete work. This repository proved it the hard way, with five pages and zero
+    // <img> between them, every one drawing its way out of an ask nobody made. --draft
+    // downgrades it, because a draft waiting on the client is honest and a release is not.
+    why: 'a drawing is the right answer for a section and the wrong one for a thing you could photograph',
+  },
+  {
+    name: 'a page with nowhere to go and nothing saying who it is',
+    fixture: 'no-shell', browser: true, expect: 2,
+    must: ['look/no-way-out', 'look/no-shell'],
+    // The cleanest correlation in the corpus: the four pages the owner rejected have one
+    // anchor each, the skip link, and no nav and no footer between them. The one page he
+    // accepted has eleven anchors, a nav and a footer. Nothing required it, so nobody
+    // built it, and every gate was green four times.
+    why: 'a reader who wants to know who this is, or to do anything, has to have somewhere to go',
+  },
+  {
+    name: 'an experience surface whose first screen is words on a flat ground',
+    fixture: 'look-unpainted', browser: true, expect: 2,
+    must: ['look/first-viewport-unpainted', 'look/dead-field'],
+    // The whole point of look.md, and the hole the S17 holdouts went through. Every other
+    // check in this gate refuses a defect; these two refuse an absence, and nothing here
+    // asked for anything to be present until they existed.
+    why: 'three holdouts shipped an unpainted first screen with every gate green, and a page that is words on a flat ground has not started',
+  },
+  {
+    name: 'the same page with something on it',
+    fixture: 'look-painted', browser: true, expect: 0,
+    must: ['every check ran and none refused'],
+    mustNot: ['look/first-viewport-unpainted', 'look/dead-field'],
+    why: 'the two fixtures differ by one drawn plate, so the refusal has to lift when the thing it asks for is there',
+  },
+  {
+    name: 'a buy surface with nothing that drives it',
+    fixture: 'buy-no-journeys', browser: true, expect: 2,
+    must: ['journeys/none'],
+    // verify.md promised this gate long before anything implemented it. Nothing here
+    // clicks: verify.mjs renders and measures, its keyboard pass presses Tab and reads
+    // computed style, and gate.mjs contained no occurrence of the word journey at all. A
+    // product page whose add-to-cart handler never hydrates cleared every check.
+    why: 'a page that sells has to be driven, and the two fixtures differ only by the presence of one spec file',
+  },
+  {
+    name: 'the same surface with a journey beside it',
+    fixture: 'buy-with-journey', browser: true, expect: 0,
+    must: ['every check ran and none refused'],
+    mustNot: ['journeys/none', 'journeys/empty'],
+    why: 'the refusal has to lift when the thing it asks for is there, or it is not a gate, it is a wall',
+  },
+  {
+    name: 'the record ledger.mjs writes is a record gate.mjs can read',
+    fixture: 'canonical-record', browser: true, expect: 0,
+    must: ['every check ran and none refused'],
+    mustNot: ['direction/palette-not-declared', 'direction/type-not-declared', 'direction/signature-not-declared'],
+    // run.md tells a builder to run `ledger.mjs new` and fill every heading it writes.
+    // That template writes `## Colour`, `## Type` and `## Signature` as headings, and this
+    // gate only ever looked for `Palette:`, `Type:` and `Signature:` as one-line fields,
+    // so a build that followed the documented method refused here on three counts and no
+    // correct build could pass. test-ledger.mjs asserts the other half: that the same
+    // file parses. One artefact, two readers, one contract.
+    why: 'a builder who follows run.md exactly must end up with a record both scripts accept, and until this case existed neither suite checked that they agreed',
+  },
+  {
+    name: 'a banned ground and an AI purple, unclaimed',
+    fixture: 'unpinned', browser: true, expect: 2,
+    must: ['palette/premium-consumer-default', 'colour/ai-purple'],
+    why: 'the same build as the pinned fixture in every respect except the two lines that claim the colours',
+  },
+  {
+    name: 'the same colours, pinned by the brief',
+    fixture: 'pinned-by-brief', browser: true, expect: 0,
+    must: ['WAIVED', 'every check ran and none refused'],
+    mustNot: ['palette/premium-consumer-default', 'colour/ai-purple'],
+    // Both refusals name a way past and both tested direction.raw, which parseDirection
+    // never set, so the escape hatch was unreachable and nothing in this suite noticed.
+    // These two cases exist so it cannot go quiet again.
+    why: 'a refusal that offers a way past has to honour it, and a client whose actual colour sits in a banned band is a real case rather than a hypothetical',
+  },
+  {
+    name: 'the round-8 recipe',
+    fixture: 'refuse-round8', browser: true, expect: 2,
+    must: ['antipattern/round-8-recipe'],
+    why: 'this studio shipped this exact combination three times and the portfolio failed on sameness',
+  },
+  {
+    name: 'the render is not the direction',
+    fixture: 'refuse-render', browser: true, expect: 2,
+    must: ['direction/ground-outside-declared-band', 'direction/display-face-not-the-declared-one', 'direction/signature-does-not-render'],
+    why: 'measured at 1440 in the default colour scheme, which is the view anyone was actually shown',
+  },
+  {
+    name: 'a palette this gate cannot convert',
+    fixture: 'withhold-oklch', browser: true, expect: 1,
+    must: ['VERDICT MISSING', 'colour space this gate cannot convert'],
+    mustNot: ['every check ran'],
+    why: 'the ground verdict is withheld and named, and nothing is guessed from a colour space the gate has no conversion for',
+  },
+  {
+    name: 'draft downgrades the manifest refusal',
+    fixture: 'draft-build', args: ['--draft'], browser: true, expect: 0,
+    must: ['WARNED', 'honesty/unmanifested-asset'],
+    why: 'the same defect is a warning in a draft, and the report carries the flag',
+  },
+  {
+    name: 'the same build without the flag',
+    fixture: 'draft-build', browser: true, expect: 2,
+    must: ['honesty/unmanifested-asset'],
+    why: 'the downgrade is the flag, not the build',
+  },
+  {
+    name: 'a record and a report that do not answer',
+    fixture: 'refuse-record', browser: true, expect: 2,
+    must: ['report/no-files-opened-list', 'run-notes/missing-field', 'reconciliation/false-positive-without-reason',
+      'direction/one-off-without-a-reason', 'direction/palette-not-declared', 'direction/signature-not-declared'],
+    why: 'the record declares no palette, type or signature, the one-off carries no reason, a run note is absent rather than answered, and a finding is dismissed as a false positive without saying why',
+  },
+  {
+    name: 'a draft claiming release',
+    fixture: 'refuse-draft-release', args: ['--draft'], browser: true, expect: 2,
+    must: ['honesty/release-claimed-on-a-draft-build'],
+    why: 'no build claiming release may have used --draft',
+  },
+  {
+    name: 'a band whose content stops against one edge',
+    fixture: 'refuse-lopsided', browser: true, expect: 2,
+    must: ['look/lopsided-band', 'section#terms', 'Terms of the pit ledger'],
+    why: 'three blind reviewers put this first on three unrelated pages, and every check for it until now stopped at the fold',
+  },
+  {
+    name: 'the same band, claimed on purpose',
+    fixture: 'lopsided-claimed', browser: true, expect: 0,
+    must: ['WAIVED', 'look/lopsided-band', 'every check ran and none refused'],
+    why: 'a page is allowed one wide margin and one narrow, and the cost of that answer is typing it into the record',
+  },
+  {
+    name: 'two bands that nearly line up',
+    fixture: 'refuse-ragged', browser: true, expect: 2,
+    must: ['look/ragged-margin', 'spine', '48px off it'],
+    mustNot: ['look/lopsided-band'],
+    // A reviewer paid to accept a read surface put this above everything else on the page:
+    // four blocks straight above each other, three different left edges, 48px apart. Near
+    // misses only: three hundred pixels apart is a decision, forty-eight is an accident.
+    why: 'a page has one left edge or it has a reason, and two edges 48px apart on a 1440px screen are one measure missed',
+  },
+  {
+    name: 'most of the page wearing one shape',
+    fixture: 'refuse-one-layout', browser: true, expect: 2,
+    must: ['look/one-layout', '4 of 4 bands are the same shape', '1col-full'],
+    // Three reviewers on three unrelated pages across two rounds wrote the same sentence
+    // in their own words. The console that got six distinct layouts, one per section, is
+    // the control: it must not trip this.
+    why: 'a reader scrolling past three identical frames stops reading the page and starts reading a document',
+  },
+  {
+    name: 'a rule that points at nothing for most of its length',
+    fixture: 'refuse-overdrawn', browser: true, expect: 2,
+    must: ['look/wider-than-its-content'],
+    // Three reviewers, three rounds, three unrelated pages: "a line that points at nothing
+    // for three quarters of its length"; "1368px wide holding two dots and a chip, about
+    // 80 per cent bare, it looks like a component that has not finished loading"; "the
+    // lines run to x=1050 but the numbers stop at x=690".
+    why: 'a drawn element whose ink stops far short of its own edge reads as something that failed to load',
+  },
+  {
+    name: 'a console whose first screen has nothing to press',
+    fixture: 'operate-no-action', browser: true, expect: 2,
+    must: ['operate/nothing-to-do-on-the-first-screen'],
+    // Two reviewers, two rounds, two unrelated consoles, neither seeing the other's page:
+    // "the top 200px go on vehicle inventory, not on routes"; "there is no button on the
+    // first screen, and the call that is waiting is 1250px further down". Both pages
+    // passed every other check in this file.
+    why: 'an operator opens a tool to do something, and a first screen that can only be read is a report',
+  },
+  {
+    name: 'the same console with the work on the first screen',
+    fixture: 'operate-with-action', browser: true, expect: 0,
+    must: ['every check ran and none refused'],
+    mustNot: ['operate/nothing-to-do-on-the-first-screen'],
+    why: 'the two fixtures differ by where one form sits, so the refusal has to lift when the work comes up to the fold',
+  },
+  {
+    name: 'a rendered page with no critique locked against it',
+    fixture: 'critique-missing', browser: true, expect: 2,
+    must: ['critique/not-taken'],
+    // look.md section 6 and verify.md both ask for a critique and nothing has ever read
+    // one. Three builds wrote theirs, cleared their own gates, and were rejected by three
+    // reviewers who saw only the brief and the images. Two builders also reported reading
+    // the verify PASS before opening the screenshots, which is the ordering verify.md
+    // tells them not to use.
+    why: 'verify rendered the page, so the critique is owed, and a critique nothing reads is the field the risk was written in for five builds running',
+  },
+  {
+    name: 'the same page with the critique locked to its render',
+    fixture: 'critique-locked', browser: true, expect: 0,
+    must: ['every check ran and none refused'],
+    mustNot: ['critique/not-taken', 'critique/stale'],
+    why: 'the refusal lifts when the six answers exist and hash to the images that were actually shown',
+  },
+];
+
+let failed = 0;
+const fail = (name, why) => { failed++; console.log(`  FAIL  ${name}\n          ${why}`); };
+
+if (!WITH_BROWSER) {
+  fail('browser discovery',
+    'no installed playwright under benchmarks/, tests/gates/ or skills/sitesmith/scripts/. The render cases cannot run, so this suite has no verdict on them.');
+}
+
+for (const c of CASES) {
+  if (c.browser && !WITH_BROWSER) continue;
+  /* A holdout run installed playwright at the repository root, and this case stopped
+     being able to simulate a missing browser because the gate simply found one. A test
+     that depends on a directory being absent is a test that passes until someone runs
+     npm install. The no-browser case now runs from a scratch directory that has no
+     node_modules by construction. */
+  const cwd = c.browser ? WITH_BROWSER : NO_BROWSER;
+  const r = spawnSync(process.execPath,
+    [GATE, join(FIX, c.fixture), '--skill', SKILL, ...(c.args ?? [])],
+    /* SITESMITH_DEPS_DIR points the gate at a browser regardless of cwd, so the
+       no-browser case has to unset it as well as run from a bare directory. Leaving it
+       inherited made this case pass a build it was written to refuse. */
+    { cwd, encoding: 'utf8', env: c.browser ? process.env : { ...process.env, SITESMITH_DEPS_DIR: '' } });
+  const out = `${r.stdout ?? ''}${r.stderr ?? ''}`;
+
+  const problems = [];
+  if (r.status !== c.expect) problems.push(`exit ${r.status}, expected ${c.expect}`);
+  for (const m of c.must ?? []) if (!out.includes(m)) problems.push(`stdout never names "${m}"`);
+  for (const m of c.mustNot ?? []) if (out.includes(m)) problems.push(`stdout names "${m}" and should not`);
+
+  /* The one number the gate prints and is not allowed to gate on. Every run must show it,
+     and no run may ever turn it into a refusal. */
+  if (!out.includes('world-derived token vocabulary')) problems.push('the world-derived token vocabulary measurement was not printed');
+  if (/REFUSED[\s\S]*world-derived token vocabulary share/.test(out)) problems.push('the vocabulary measurement was reported as a refusal');
+
+  if (problems.length) fail(`${c.name} (${c.fixture})`, `${problems.join('; ')}\n          expected because: ${c.why}`);
+  else console.log(`  ok    ${c.name} -> exit ${r.status}  (${c.why})`);
+}
+
+console.log(failed ? `\n${failed} case(s) failed` : `\nall clear, ${CASES.length} case(s)`);
+process.exit(failed ? 1 : 0);

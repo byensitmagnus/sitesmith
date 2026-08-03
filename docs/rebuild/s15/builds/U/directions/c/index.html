@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="da">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Comp C — Opslaget · Klinke &amp; Datter</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Petrona:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--ground:#7d8672;--ink:#14170f;--soft:#2c3323;--pale:#e8ead9}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--ink);font:400 18px/1.55 Petrona,serif}
+.sheet{max-width:1240px;margin:0 auto;padding:clamp(24px,4vw,56px);
+  display:grid;grid-template-columns:minmax(0,1.55fr) 1px minmax(0,.85fr);gap:0}
+.left{padding-right:clamp(20px,4vw,56px)}
+.rule{background:var(--ink)}
+.right{padding-left:clamp(20px,4vw,56px)}
+.mark{font:600 20px/1 Petrona,serif;margin:0 0 clamp(40px,9vh,96px)}
+h1{font:400 clamp(38px,6.6vw,86px)/1.02 Petrona,serif;margin:0;letter-spacing:-.015em}
+h1 em{font-style:italic;color:var(--soft)}
+.after{margin-top:34px;max-width:44ch;color:var(--soft)}
+.num{float:left;width:2.2em;font:400 14px/1.9 Petrona,serif;color:var(--soft)}
+.item{overflow:hidden;padding:14px 0}
+.right h2{font:600 15px/1.4 Petrona,serif;margin:0 0 18px}
+.right p{margin:0 0 22px;font-size:17px}
+.big{font:400 44px/1 Petrona,serif;display:block;margin-bottom:4px}
+.cta{display:inline-block;background:var(--ink);color:var(--pale);padding:15px 24px;
+  text-decoration:none;font:600 17px/1 Petrona,serif;border-radius:0;
+  box-shadow:10px 10px 0 rgba(20,23,15,.22)}
+@media(max-width:800px){.sheet{grid-template-columns:1fr}.rule{height:1px;margin:36px 0}
+  .left{padding-right:0}.right{padding-left:0}}
+</style>
+</head>
+<body>
+<div class="sheet">
+  <div class="left">
+    <p class="mark">Klinke &amp; Datter</p>
+    <h1>Vi siger ikke <em>hvad</em> det koster, før vi har set det.</h1>
+    <p class="after">Et selvspillende klaver er en pneumatisk maskine, og hvad der er galt med
+      din kan ikke ses fra en telefon. Derfor er der én pris på forsiden af det her: den halve
+      dag, hvor vi kommer hjem til dig og skriver ned, hvad der faktisk fejler.</p>
+    <div class="item"><span class="num">01</span>Pouchlæder, der er blevet hårdt</div>
+    <div class="item"><span class="num">02</span>Revnede slanger fra trackerbaren</div>
+    <div class="item"><span class="num">03</span>Slidte slagbælge</div>
+    <div class="item"><span class="num">04</span>En sprukken vindkanal</div>
+    <div class="item"><span class="num">05</span>Drivremme, der er blevet stive</div>
+  </div>
+  <div class="rule"></div>
+  <div class="right">
+    <h2>Tilstandsvurdering</h2>
+    <p><span class="big">1.850 kr.</span>En halv dag hjemme hos dig. Ender i en skriftlig
+      tilstandsrapport, uanset om vi går videre med arbejdet.</p>
+    <h2>Restaurering</h2>
+    <p>Fire til ni måneder. Pris efter vurderingen. Vi har fire instrumenter ad gangen, så der
+      er som regel ventetid.</p>
+    <h2>Værkstedet</h2>
+    <p>Havnegade 22, 5000 Odense C.<br>Tirsdag til torsdag, 09:00–16:00.</p>
+    <a class="cta" href="tel:+4566124709">Ring 66 12 47 09</a>
+  </div>
+</div>
+</body>
+</html>

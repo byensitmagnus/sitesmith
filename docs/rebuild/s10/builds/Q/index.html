@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vægtkontrol Nord · kalibrering og verifikation af vægte i Nordjylland</title>
+<meta name="description" content="Vægtkontrol Nord kalibrerer og verificerer industrivægte i Nordjylland. DANAK-akkrediteret, fast pris pr. instrument, tilkald typisk inden for tre arbejdsdage.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Martian+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Farverne har navn efter faget, ikke efter frameworket. */
+  --vejeplade:#E9E7E2;   /* vejepladen: sidens bund */
+  --lod:#1B1E20;         /* støbejern: al brødtekst og overskrift */
+  --nulpunkt:#46555C;    /* nulstregen: alle linjer, ticks og mono-labels */
+  --plombe:#8E2B1B;      /* seglets lak: kun tegnsætning, aldrig på det sorte panel */
+  --display:#0F1416;     /* vægtens sorte glas: ét panel */
+  --tolerance:#A9B4B8;   /* tolerancebåndet: fyld og sekundær tekst inde i panelet */
+
+  --gut:clamp(20px,5vw,64px);
+  --sans:"Atkinson Hyperlegible",system-ui,sans-serif;
+  --disp:"Bricolage Grotesque","Atkinson Hyperlegible",system-ui,sans-serif;
+  --mono:"Martian Mono",ui-monospace,"Courier New",monospace;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--vejeplade);color:var(--lod);
+  font:400 1.0625rem/1.62 var(--sans);
+  overflow-x:hidden;
+}
+@media (min-width:760px){body{font-size:1.1rem}}
+h1,h2,h3{font-family:var(--disp);font-weight:700;margin:0;letter-spacing:-.02em}
+p{margin:0}
+a{color:inherit}
+
+.skip{
+  position:absolute;left:-9999px;top:0;z-index:20;
+  background:var(--lod);color:var(--vejeplade);padding:16px 18px;
+  font:600 .8rem/1 var(--mono);text-decoration:none;
+}
+.skip:focus{left:8px;top:8px}
+
+:where(a,button):focus-visible{
+  outline:2px solid var(--plombe);outline-offset:3px;border-radius:2px;
+}
+
+/* ---------- rammen: datumlinjen ---------- */
+.wrap{
+  max-width:1240px;margin:0 auto;
+  padding-left:var(--gut);padding-right:var(--gut);
+}
+.sec .wrap{display:grid;grid-template-columns:minmax(0,1fr);gap:0}
+.sec-label{
+  font:400 .68rem/1.5 var(--mono);letter-spacing:.09em;text-transform:uppercase;
+  color:var(--nulpunkt);margin:0 0 .55rem;padding-left:18px;
+}
+.sec-label b{color:var(--plombe);font-weight:600}
+.sec-body{
+  border-left:1px solid var(--nulpunkt);
+  padding:0 0 clamp(46px,7vw,86px) 18px;
+}
+.sec:first-of-type .sec-body{padding-top:clamp(22px,4vw,40px)}
+@media (min-width:760px){
+  .sec .wrap{grid-template-columns:minmax(126px,190px) minmax(0,1fr)}
+  .sec-label{padding-left:0;text-align:right;padding-right:26px;margin:0}
+  .sec-body{padding-left:clamp(24px,3.2vw,44px)}
+}
+
+/* ---------- toppen ---------- */
+.top{
+  position:sticky;top:0;z-index:10;background:var(--vejeplade);
+  border-bottom:1px solid rgba(70,85,92,.32);
+}
+.top .wrap{
+  display:flex;align-items:center;justify-content:space-between;gap:14px;
+  min-height:64px;padding-top:8px;padding-bottom:8px;
+}
+.mark{font-family:var(--disp);font-weight:700;font-size:1.06rem;letter-spacing:-.015em;line-height:1.1}
+.mark span{display:none;font:400 .68rem/1.4 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--nulpunkt)}
+@media (min-width:560px){.mark span{display:block}}
+.ring{
+  display:inline-flex;align-items:center;min-height:48px;padding:0 16px;
+  background:var(--lod);color:var(--vejeplade);text-decoration:none;
+  font:600 .72rem/1 var(--mono);letter-spacing:.04em;white-space:nowrap;
+}
+.ring:hover{background:var(--plombe)}
+.ring:active{transform:translateY(1px)}
+
+/* ---------- hero ---------- */
+h1{font-size:clamp(2.1rem,6.2vw,4.15rem);line-height:.98;max-width:15ch}
+.lead{margin-top:1.1rem;max-width:46ch;font-size:1.08em}
+.hero-cta{display:flex;flex-wrap:wrap;gap:24px;margin-top:1.7rem}
+.knap{
+  display:inline-flex;align-items:center;justify-content:center;
+  min-height:52px;padding:0 20px;text-decoration:none;
+  font:600 .76rem/1 var(--mono);letter-spacing:.03em;
+  border:1px solid var(--lod);
+}
+.knap-1{background:var(--lod);color:var(--vejeplade)}
+.knap-1:hover{background:var(--plombe);border-color:var(--plombe)}
+.knap-2{background:transparent;color:var(--lod);overflow-wrap:anywhere;text-align:center}
+.knap-2:hover{background:var(--lod);color:var(--vejeplade)}
+.knap:active{transform:translateY(1px)}
+
+/* ---------- signaturen: aflæsningen ---------- */
+.readout{
+  margin:clamp(28px,5vw,44px) 0 0;padding:clamp(20px,3.4vw,34px);
+  background:var(--display);color:var(--vejeplade);
+}
+.ro-cap{
+  font:400 .66rem/1.5 var(--mono);letter-spacing:.16em;text-transform:uppercase;
+  color:var(--tolerance);margin:0 0 clamp(26px,4vw,38px);
+}
+.ro-track{position:relative;height:72px;border-bottom:1px solid rgba(169,180,184,.5)}
+.ro-band{
+  position:absolute;left:38%;width:24%;top:14px;bottom:0;
+  border-left:1px dashed rgba(169,180,184,.6);border-right:1px dashed rgba(169,180,184,.6);
+}
+.ro-band::after{
+  content:"";position:absolute;left:0;right:0;bottom:0;height:14px;background:rgba(169,180,184,.3);
+}
+.ro-zero{position:absolute;left:50%;top:0;bottom:0;width:1px;background:var(--tolerance)}
+.ro-zero::after{
+  content:"0";position:absolute;left:50%;transform:translateX(-50%);top:-1.5rem;
+  font:600 .7rem/1 var(--mono);color:var(--tolerance);
+}
+.ro-ghost{
+  position:absolute;left:12%;top:18px;bottom:0;width:0;
+  border-left:2px dashed rgba(169,180,184,.75);
+}
+.ro-ghost::after{
+  content:"før";position:absolute;left:-2px;top:-1.5rem;
+  font:400 .64rem/1 var(--mono);color:var(--tolerance);letter-spacing:.08em;
+}
+.ro-mark{
+  position:absolute;left:50%;top:10px;bottom:-4px;width:3px;
+  background:var(--vejeplade);margin-left:-1.5px;
+}
+.ro-mark::before{
+  content:"";position:absolute;left:50%;top:-9px;transform:translateX(-50%);
+  border-left:7px solid transparent;border-right:7px solid transparent;
+  border-top:9px solid var(--vejeplade);
+}
+@media (prefers-reduced-motion:no-preference){
+  .ro-mark{animation:juster 2.3s cubic-bezier(.16,.84,.24,1) .45s both}
+  @keyframes juster{from{left:12%}to{left:50%}}
+}
+.ro-scale{
+  display:flex;justify-content:space-between;margin-top:.7rem;
+  font:400 .64rem/1.4 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--tolerance);
+}
+.ro-scale span:nth-child(2){color:var(--vejeplade)}
+.ro-note{
+  margin-top:clamp(20px,3vw,28px);max-width:52ch;font-size:.98rem;color:var(--vejeplade);
+}
+.ro-note b{font-weight:700}
+
+/* ---------- indhold ---------- */
+h2{font-size:clamp(1.5rem,3.4vw,2.3rem);line-height:1.05;max-width:20ch}
+.brod{margin-top:1rem;max-width:56ch}
+.brod + .brod{margin-top:.8rem}
+
+.trin{list-style:none;margin:1.7rem 0 0;padding:0;counter-reset:t}
+.trin li{
+  counter-increment:t;position:relative;padding:1.05rem 0 1.05rem 3.1rem;
+  border-top:1px solid rgba(70,85,92,.3);max-width:62ch;
+}
+.trin li:last-child{border-bottom:1px solid rgba(70,85,92,.3)}
+.trin li::before{
+  content:counter(t,decimal-leading-zero);position:absolute;left:0;top:1.15rem;
+  font:600 .74rem/1 var(--mono);color:var(--plombe);letter-spacing:.02em;
+}
+.trin h3{font-family:var(--sans);font-weight:700;font-size:1.02em;letter-spacing:0;line-height:1.35}
+.trin p{margin-top:.3rem;color:#2C3236}
+
+.par{display:grid;gap:18px;margin-top:1.7rem}
+@media (min-width:680px){.par{grid-template-columns:1fr 1fr}}
+.kort{border-top:2px solid var(--nulpunkt);padding-top:1rem}
+.kort.akut{border-top-color:var(--plombe)}
+.kort h3{
+  font:400 .68rem/1.5 var(--mono);letter-spacing:.11em;text-transform:uppercase;
+  color:var(--nulpunkt);
+}
+.kort.akut h3{color:var(--plombe)}
+.kort .stor{font-family:var(--disp);font-weight:700;font-size:clamp(1.35rem,3.6vw,1.85rem);line-height:1.1;margin-top:.45rem;letter-spacing:-.02em}
+.kort p.tekst{margin-top:.6rem;max-width:38ch}
+
+.fakta{list-style:none;margin:1.6rem 0 0;padding:0;max-width:58ch}
+.fakta li{position:relative;padding:.72rem 0 .72rem 1.5rem;border-bottom:1px solid rgba(70,85,92,.3)}
+.fakta li::before{content:"";position:absolute;left:0;top:1.35rem;width:9px;height:1px;background:var(--plombe)}
+.fakta li:first-child{border-top:1px solid rgba(70,85,92,.3)}
+
+.tegn{display:flex;flex-wrap:wrap;align-items:flex-end;gap:clamp(20px,4vw,44px);margin-top:2rem}
+.tegn figure{margin:0}
+.tegn figcaption{
+  margin-top:.7rem;font:400 .64rem/1.5 var(--mono);letter-spacing:.09em;text-transform:uppercase;color:var(--nulpunkt);
+}
+.tegn svg{display:block;height:auto;max-width:100%}
+
+.kontakt{display:grid;gap:1.7rem;margin-top:1.7rem}
+@media (min-width:680px){.kontakt{grid-template-columns:1fr 1fr;gap:1.6rem 2.2rem}}
+.kontakt dt{font:400 .66rem/1.5 var(--mono);letter-spacing:.11em;text-transform:uppercase;color:var(--nulpunkt)}
+.kontakt dd{margin:.35rem 0 0}
+.kontakt a{
+  display:inline-block;min-height:44px;padding:6px 0 10px;
+  font-family:var(--disp);font-weight:700;font-size:clamp(1.2rem,3.2vw,1.6rem);
+  letter-spacing:-.01em;overflow-wrap:anywhere;
+  text-decoration:underline;text-decoration-color:var(--plombe);
+  text-decoration-thickness:2px;text-underline-offset:6px;
+}
+.kontakt a:hover{color:var(--plombe)}
+.kontakt .tid{font-family:var(--mono);font-size:.86rem;line-height:1.7;letter-spacing:.02em}
+
+footer{border-top:1px solid var(--nulpunkt);margin-top:clamp(10px,3vw,26px)}
+footer .wrap{
+  display:flex;flex-wrap:wrap;gap:10px 26px;justify-content:space-between;
+  padding-top:22px;padding-bottom:36px;
+  font:400 .66rem/1.7 var(--mono);letter-spacing:.06em;color:var(--nulpunkt);text-transform:uppercase;
+}
+section{scroll-margin-top:5rem}
+</style>
+</head>
+<body>
+
+<a class="skip" href="#hoved">Gå til indhold</a>
+
+<header class="top">
+  <div class="wrap">
+    <p class="mark">Vægtkontrol Nord<span>Aalborg · Nordjylland</span></p>
+    <a class="ring" href="tel:+4598124430">Ring 98 12 44 30</a>
+  </div>
+</header>
+
+<main id="hoved">
+
+  <section class="sec" id="afvigelse" aria-labelledby="t1">
+    <div class="wrap">
+      <p class="sec-label"><b>01</b> Afvigelse</p>
+      <div class="sec-body">
+        <h1 id="t1">Ude af verifikation? Vi fører vægten tilbage til nulpunktet.</h1>
+        <p class="lead">Vægtkontrol Nord kalibrerer og verificerer vægte hos bagere, fiskehandlere, mindre fødevareproducenter og et par apoteker i hele Nordjylland. Fast pris pr. instrument, oplyst før vi kører.</p>
+
+        <div class="hero-cta">
+          <a class="knap knap-1" href="tel:+4598124430">Ring 98 12 44 30</a>
+          <a class="knap knap-2" href="mailto:kontakt@vaegtkontrol-nord.example">Skriv til os</a>
+        </div>
+
+        <figure class="readout">
+          <figcaption class="ro-cap">Afvigelse fra nulpunkt</figcaption>
+          <div class="ro-track" role="img" aria-label="Skala med et tolerancebånd om nulpunktet. En stiplet markør står uden for båndet til venstre, og en massiv markør står på nulpunktet.">
+            <span class="ro-band"></span>
+            <span class="ro-zero"></span>
+            <span class="ro-ghost"></span>
+            <span class="ro-mark"></span>
+          </div>
+          <p class="ro-scale" aria-hidden="true"><span>for lidt</span><span>tolerance</span><span>for meget</span></p>
+          <p class="ro-note"><b>Det er det, et besøg går ud på.</b> En vægt, der viser uden for tolerance, bliver justeret tilbage til nulpunktet, og afvigelsen bliver skrevet ned i kalibreringsbeviset, du får med.</p>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="besoeget" aria-labelledby="t2">
+    <div class="wrap">
+      <p class="sec-label"><b>02</b> Besøget</p>
+      <div class="sec-body">
+        <h2 id="t2">Fem trin, fra du ringer til seglet sidder</h2>
+        <p class="brod">Du behøver ikke vide, hvilken klasse din vægt er i, eller hvad inspektøren skrev. Fortæl, hvad der står på vægten, så tager vi resten.</p>
+        <ol class="trin">
+          <li>
+            <h3>Du ringer eller skriver</h3>
+            <p>Du fortæller, hvilke instrumenter du har stående, og hvor i Nordjylland de står.</p>
+          </li>
+          <li>
+            <h3>Du får en fast pris</h3>
+            <p>Prisen er pr. instrument og bliver oplyst, før vi kører. Der er ingen timeafregning.</p>
+          </li>
+          <li>
+            <h3>Vi kører ud</h3>
+            <p>Tilkald i hele Nordjylland, typisk inden for tre arbejdsdage. Haster det, kører vi inden for 24 timer mod et tillæg.</p>
+          </li>
+          <li>
+            <h3>Vi kalibrerer med egne lodder</h3>
+            <p>Vi har vores egne referencelodder med i bilen, klasse F1, som bliver recertificeret hvert år.</p>
+          </li>
+          <li>
+            <h3>Du får bevis og mærke</h3>
+            <p>Hver opgave slutter med et kalibreringsbevis og et verifikationsmærke på selve instrumentet.</p>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="tid-og-pris" aria-labelledby="t3">
+    <div class="wrap">
+      <p class="sec-label"><b>03</b> Tid og pris</p>
+      <div class="sec-body">
+        <h2 id="t3">To hastigheder, og en pris du kender på forhånd</h2>
+        <div class="par">
+          <div class="kort">
+            <h3>Almindeligt tilkald</h3>
+            <p class="stor">Typisk inden for tre arbejdsdage</p>
+            <p class="tekst">Gælder i hele Nordjylland. Vi lægger besøget, så du kan have vægten i drift indtil da.</p>
+          </div>
+          <div class="kort akut">
+            <h3>Akut tilkald</h3>
+            <p class="stor">Inden for 24 timer</p>
+            <p class="tekst">Når vægten skal være i orden i morgen tidlig. Akut tilkald koster et tillæg, som du får oplyst, når du ringer.</p>
+          </div>
+        </div>
+        <p class="brod">Prisen er fast pr. instrument og bliver oplyst, før besøget. Vi afregner ikke pr. time, så en vægt, der driller, koster det samme som en, der ikke gør.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="akkreditering" aria-labelledby="t4">
+    <div class="wrap">
+      <p class="sec-label"><b>04</b> Akkreditering</p>
+      <div class="sec-body">
+        <h2 id="t4">Det, vi må skrive under på</h2>
+        <ul class="fakta">
+          <li>Akkrediteret under DANAK til ikke-automatiske vægte i klasse III og IIII.</li>
+          <li>Egne referencelodder i klasse F1, recertificeret hvert år.</li>
+          <li>Hver opgave slutter med et kalibreringsbevis og et verifikationsmærke på instrumentet.</li>
+          <li>Grundlagt i 2009. To teknikere, Kirsten og Bo, og én varevogn.</li>
+        </ul>
+
+        <div class="tegn">
+          <figure>
+            <svg width="260" height="104" viewBox="0 0 260 104" role="img" aria-labelledby="svg1t">
+              <title id="svg1t">Tegning af fem referencelodder i faldende størrelse, hvert med greb i toppen</title>
+              <g fill="none" stroke="#46555C" stroke-width="2">
+                <path d="M8 100 h48 v-56 h-48 z"/><path d="M24 44 v-9 a8 8 0 0 1 16 0 v9"/>
+                <path d="M68 100 h40 v-46 h-40 z"/><path d="M81 54 v-8 a7 7 0 0 1 14 0 v8"/>
+                <path d="M120 100 h33 v-37 h-33 z"/><path d="M130 63 v-7 a6.5 6.5 0 0 1 13 0 v7"/>
+                <path d="M165 100 h27 v-29 h-27 z"/><path d="M173 71 v-6 a5.5 5.5 0 0 1 11 0 v6"/>
+                <path d="M204 100 h22 v-22 h-22 z"/><path d="M210 78 v-5 a5 5 0 0 1 10 0 v5"/>
+                <path d="M0 101 h248" stroke="#8E2B1B"/>
+              </g>
+            </svg>
+            <figcaption>Loddesæt, klasse F1</figcaption>
+          </figure>
+          <figure>
+            <svg width="104" height="104" viewBox="0 0 104 104" role="img" aria-labelledby="svg2t">
+              <title id="svg2t">Tegning af et verifikationsmærke: en rund plombe med takket kant og to streger til dato og underskrift</title>
+              <g fill="none" stroke="#46555C" stroke-width="2">
+                <circle cx="52" cy="50" r="34" stroke-dasharray="5 4"/>
+                <circle cx="52" cy="50" r="25"/>
+                <path d="M40 46 h24 M40 55 h16" stroke="#8E2B1B"/>
+                <path d="M52 84 v14 M44 98 h16" stroke-width="2"/>
+              </g>
+            </svg>
+            <figcaption>Verifikationsmærke</figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="kontakt" aria-labelledby="t5">
+    <div class="wrap">
+      <p class="sec-label"><b>05</b> Kontakt</p>
+      <div class="sec-body">
+        <h2 id="t5">Ring, så aftaler vi et besøg</h2>
+        <p class="brod">Har du et brev fra inspektøren liggende, så hav det ved hånden. Ellers er mærkatet på vægten nok til, at vi kan komme videre.</p>
+        <dl class="kontakt">
+          <div>
+            <dt>Telefon</dt>
+            <dd><a href="tel:+4598124430">98 12 44 30</a></dd>
+          </div>
+          <div>
+            <dt>E-mail</dt>
+            <dd><a href="mailto:kontakt@vaegtkontrol-nord.example">kontakt@vaegtkontrol-nord.example</a></dd>
+          </div>
+          <div>
+            <dt>Åbningstider</dt>
+            <dd class="tid">Mandag til fredag<br>07:00 til 15:30</dd>
+          </div>
+          <div>
+            <dt>Dækning</dt>
+            <dd class="tid">Hele Nordjylland<br>Base i Aalborg</dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>Vægtkontrol Nord · Aalborg</p>
+    <p>Kalibrering og verifikation af vægte siden 2009</p>
+  </div>
+</footer>
+
+</body>
+</html>

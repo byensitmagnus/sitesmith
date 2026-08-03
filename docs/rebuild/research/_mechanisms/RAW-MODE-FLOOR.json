@@ -1,0 +1,1521 @@
+{
+  "producedBy": "workflow wf_1fd789bc-17c — 3 agents over the 919 lines of v2/modes and v2/tasks the first autopsy skipped",
+  "agentCount": 3,
+  "subagentTokens": 352213,
+  "at": "2026-08-01",
+  "result": [
+    {
+      "key": "sitesmith-modes/ecommerce",
+      "mechanisms": [
+        {
+          "id": "buy-decision-and-control-together",
+          "source": "sitesmith-v2/modes/ecommerce.md",
+          "sourcePath": "skills/sitesmith/v2/modes/ecommerce.md:46-47",
+          "problemSolved": "A marketing hero above a product inserts a screen of scrolling between wanting the object and being able to buy it; a category band above the fold costs the first row of products.",
+          "mechanism": "States the requirement as an outcome, not an arrangement: on a product surface the object and the means of acquiring it are apprehensible together; on a listing the products start on the first screen.",
+          "whyItWorks": "Stated as an outcome it constrains nothing visual, so the arrangement stays a direction decision while the buyer never pays a scroll to reach the control.",
+          "contextCost": "low",
+          "decision": "adopt",
+          "sitesmithForm": "floor/buy.md, opening obligation. Keep lines 46-47; drop the 49-52 rationale, which argues by contrast with a deleted marketing mode and pins a 200px band.",
+          "isAppearance": false,
+          "threeRenditions": [
+            "A single full-bleed photograph with price and one control set into its lower corner",
+            "A two-column drawing-sheet layout, object left, spec-and-buy panel right",
+            "A dense tabular catalogue row whose price cell and buy cell are in the same row, with no product page at all"
+          ],
+          "confidence": 0.9
+        },
+        {
+          "id": "buy-price-is-found-not-hunted",
+          "source": "sitesmith-v2/modes/ecommerce.md",
+          "sourcePath": "skills/sitesmith/v2/modes/ecommerce.md:62-63",
+          "problemSolved": "A price the buyer has to search for is read as a price being hidden.",
+          "mechanism": "The price is locatable without search on every surface the object appears on. Stated as an outcome; the file's own type-rank answer (second-largest type) is the appearance form and is discarded.",
+          "whyItWorks": "Findability is a perceptual property with many solutions, so it can be met by position, by weight, by repetition or by language, none of which imply the others.",
+          "contextCost": "low",
+          "decision": "adapt",
+          "sitesmithForm": "floor/buy.md. Replace 'price is the second-largest type on the page' with the outcome.",
+          "isAppearance": false,
+          "threeRenditions": [
+            "Price stamped as a mark on the image itself",
+            "Price in a fixed column position in a table, identical on every row",
+            "Price spoken in a configurator's running sentence: 'this configuration, 14 200 kr'"
+          ],
+          "confidence": 0.85
+        },
+        {
+          "id": "buy-total-commitment-legible",
+          "source": "sitesmith-v2/modes/ecommerce.md",
+          "sourcePath": "skills/sitesmith/v2/modes/ecommerce.md:38,162-164",
+          "problemSolved": "Delivery cost, delivery time and return terms discovered inside checkout are the classic abandonment cause; the buyer commits to a number and then finds the real number.",
+          "mechanism": "Everything the buyer will actually pay and wait for is legible at the moment of commitment without navigating away. Logistics stated before checkout, never inside it.",
+          "whyItWorks": "It ties disclosure to a moment rather than to a container, so any layout that reaches the moment satisfies it. 'A buyer should never scroll to check what they are about to pay' is the strongest line in the source file.",
+          "contextCost": "low",
+          "decision": "adopt",
+          "sitesmithForm": "floor/buy.md, purchase obligations. Keep line 164's sentence; drop 'inside the panel' from 162-163.",
+          "isAppearance": false,
+          "threeRenditions": [
+            "One panel holding price, variant, delivery cost and time beside the control",
+            "A running summary bar that restates the total as choices are made",
+            "A confirm step that restates the whole commitment on its own page before anything is charged"
+          ],
+          "confidence": 0.9
+        },
+        {
+          "id": "buy-one-unmistakable-purchase-control",
+          "source": "sitesmith-v2/modes/ecommerce.md",
+          "sourcePath": "skills/sitesmith/v2/modes/ecommerce.md:115-116,158-159,181-183",
+          "problemSolved": "When the acquire control has the same weight as three other controls, the buyer hesitates over which one commits them.",
+          "mechanism": "Exactly one control on the surface acquires the object and it cannot be confused with any other control. Secondary actions are secondary and look it.",
+          "whyItWorks": "The obligation is distinguishability, which is achievable by fill, by isolation, by size, by position or by containment. The source file spent it on colour reservation, which is one rendition and the one that made three shops identical.",
+          "contextCost": "low",
+          "decision": "adapt",
+          "sitesmithForm": "floor/buy.md. State as distinguishability and explicitly forbid colour reservation as the default answer, naming it as one option among several.",
+          "isAppearance": false,
+          "threeRenditions": [
+            "It is the only filled control among outlines",
+            "It is the only control inside the purchase panel; everything else on the page is a text link",
+            "It is set apart by a rule with nothing else in its band, at any weight"
+          ],
+          "confidence": 0.9
+        },
+        {
+          "id": "buy-purchase-control-is-always-in-reach",
+          "source": "sitesmith-v2/modes/ecommerce.md",
+          "sourcePath": "skills/sitesmith/v2/modes/ecommerce.md:155-157",
+          "problemSolved": "A buyer who decides while reading the specification has to scroll back up to act, and some do not.",
+          "mechanism": "From any point where the buyer might decide, the purchase control is reachable without hunting.",
+          "whyItWorks": "Reachability is the obligation; stickiness is one implementation. NORDRIG-AB-FORENSICS.md:37-38 shows 'sticky buy panel, mobile bottom bar' listed as a line item in build B's method, which is precisely how a floor rule became a visual signature.",
+          "contextCost": "low",
+          "decision": "adapt",
+          "sitesmithForm": "floor/buy.md. Drop 'sticky through the specification on desktop and pinned to the bottom of the viewport on a phone' entirely; keep reachability.",
+          "isAppearance": false,
+          "threeRenditions": [
+            "One control that follows the viewport",
+            "The control repeated at the end of each argument block so one is always below the fold-line",
+            "A configurator whose footer is the control and never leaves the screen"
+          ],
+          "confidence": 0.85
+        },
+        {
+          "id": "buy-specification-is-complete",
+          "source": "sitesmith-v2/modes/ecommerce.md",
+          "sourcePath": "skills/sitesmith/v2/modes/ecommerce.md:35-36,176-178",
+          "problemSolved": "Six specs shown when twelve exist: the buyer who cares finds out and reads the omission as concealment.",
+          "mechanism": "Every specification that exists is shown. Group them if there are many; never curate the set.",
+          "whyItWorks": "An omitted spec reads as a hidden one, and the buyer most likely to complete is the one who reads specs. Completeness is a content property, entirely independent of presentation.",
+          "contextCost": "low",
+          "decision": "adopt",
+          "sitesmithForm": "floor/buy.md, proof section. Cut the unsourced 'buyers who read specs are the ones who complete' at line 135-136; it is a claim without a source in a package whose SKILL.md:150-155 forbids exactly that.",
+          "isAppearance": false,
+          "threeRenditions": [
+            "One long grouped table, all of it visible",
+            "Progressive disclosure where every group is present and collapsed and none is omitted",
+            "A downloadable data sheet linked from a summary, where the sheet is the complete record"
+          ],
+          "confidence": 0.9
+        },
+        {
+          "id": "buy-every-claim-maps-to-a-spec-line",
+          "source": "sitesmith-v2/modes/ecommerce.md",
+          "sourcePath": "skills/sitesmith/v2/modes/ecommerce.md:171-172",
+          "problemSolved": "Product pages accumulate benefit copy that nothing on the page substantiates, which is marketing that wandered onto a commerce surface.",
+          "mechanism": "Every claim made about the object resolves to a specification line on the same surface. A benefit with no corresponding spec is cut.",
+          "whyItWorks": "It makes SKILL.md:150-155's abstract 'a claim needs a source' mechanically checkable on this one surface, because the source is named and it is on the same page. It is also decidable locally, so it survives the deletion of the marketing mode file.",
+          "contextCost": "low",
+          "decision": "adopt",
+          "sitesmithForm": "floor/buy.md, and cite it as the buy-surface instance of SKILL.md section 7's claim test.",
+          "isAppearance": false,
+          "threeRenditions": [
+            "Benefit prose with a reference mark into the specification table",
+            "Two columns: claim left, its measurement right",
+            "No prose at all — the spec rows carry captions and the captions are the argument"
+          ],
+          "confidence": 0.95
+        },
+        {
+          "id": "buy-proof-shows-its-shape",
+          "source": "sitesmith-v2/modes/ecommerce.md",
+          "sourcePath": "skills/sitesmith/v2/modes/ecommerce.md:37,130-134",
+          "problemSolved": "A mean rating with no count and no negatives is indistinguishable from a filtered one, and buyers correctly assume it is filtered.",
+          "mechanism": "Proof is presented with its size, its spread and its worst cases intact, attributed to a verified purchase where the platform supports it. 4.6 from 300 and 4.6 from three are different facts and must read as different facts.",
+          "whyItWorks": "It targets the information the buyer needs to weight the proof, not the shape of the proof block, so a histogram, a count and a raw list all satisfy it.",
+          "contextCost": "low",
+          "decision": "adopt",
+          "sitesmithForm": "floor/buy.md, proof obligations.",
+          "isAppearance": false,
+          "threeRenditions": [
+            "A distribution histogram beside the mean",
+            "The count set at the same weight as the score, with the lowest-rated review pinned first",
+            "No aggregate at all — the reviews in full, with dates"
+          ],
+          "confidence": 0.9
+        },
+        {
+          "id": "buy-absent-proof-is-declared",
+          "source": "sitesmith-v2/modes/ecommerce.md",
+          "sourcePath": "skills/sitesmith/v2/modes/ecommerce.md:138-139",
+          "problemSolved": "An empty proof slot invites fabrication, and a buyer is one search away from checking.",
+          "mechanism": "Where proof does not exist, its absence is stated plainly with the reason. It is never manufactured.",
+          "whyItWorks": "Naming the absence converts a suspicious gap into a disclosed fact, and it removes the pressure that produces invented reviews. It is the commerce instance of SKILL.md:157-159 ('when you need the sentence and lack the fact, ask for it or cut the sentence').",
+          "contextCost": "low",
+          "decision": "adopt",
+          "sitesmithForm": "floor/buy.md, proof obligations, cross-referenced to SKILL.md section 7.",
+          "isAppearance": false,
+          "threeRenditions": [
+            "A sentence in the proof slot saying so",
+            "The slot replaced by the date the object went on sale",
+            "The proof section absent entirely, its absence noted as a specification line"
+          ],
+          "confidence": 0.85
+        },
+        {
+          "id": "buy-availability-is-stated-in-words",
+          "source": "sitesmith-v2/modes/ecommerce.md",
+          "sourcePath": "skills/sitesmith/v2/modes/ecommerce.md:118-122",
+          "problemSolved": "Stock, offer and delivery state are the facts that decide whether the buyer acts now, and they are routinely encoded as a coloured dot with no text.",
+          "mechanism": "Stock, offer and delivery state are stated in words at the point of decision. They form an information group separate from any emphasis discipline, because they are information, not decoration.",
+          "whyItWorks": "Separating semantic state from emphasis means an accent budget cannot suppress a fact the buyer needs. The 'never colour alone' half is a universal accessibility floor and is lifted out (see universalRules).",
+          "contextCost": "low",
+          "decision": "adapt",
+          "sitesmithForm": "floor/buy.md. The word 'amber' at line 121 is a named-colour under floor-lint.mjs:31 and is a hard lint failure; rewrite the example without it.",
+          "isAppearance": false,
+          "threeRenditions": [
+            "A sentence under the price",
+            "A status column in a table",
+            "A dated line in the spec block: 'ships from stock, 3 to 7 working days'"
+          ],
+          "confidence": 0.85
+        },
+        {
+          "id": "buy-reference-price-is-real",
+          "source": "sitesmith-v2/modes/ecommerce.md",
+          "sourcePath": "skills/sitesmith/v2/modes/ecommerce.md:123-124",
+          "problemSolved": "Invented 'was' prices are the most common commerce lie and in several jurisdictions they are illegal.",
+          "mechanism": "A reduced price names the price it is reduced from, that reference is a price the object was actually sold at, and both numbers are readable.",
+          "whyItWorks": "It binds a visual convention to a factual obligation: the strikethrough is optional, the truth of the reference is not.",
+          "contextCost": "low",
+          "decision": "adapt",
+          "sitesmithForm": "floor/buy.md. Keep 'never invents a was price'; drop 'struck' as the mandated form.",
+          "isAppearance": false,
+          "threeRenditions": [
+            "Strikethrough plus a 'was' label",
+            "Two labelled rows: list price and your price",
+            "A percentage badge whose footnote states the reference price"
+          ],
+          "confidence": 0.9
+        },
+        {
+          "id": "buy-nothing-moves-near-money",
+          "source": "sitesmith-v2/modes/ecommerce.md",
+          "sourcePath": "skills/sitesmith/v2/modes/ecommerce.md:104,107-108",
+          "problemSolved": "A number that animates is a number the buyer re-checks; motion near a price reads as the price being manipulated.",
+          "mechanism": "Nothing animates on a price, in the basket, or at checkout.",
+          "whyItWorks": "It is a prohibition rather than a prescription, so it constrains no look at all while removing a specific trust failure.",
+          "contextCost": "low",
+          "decision": "adopt",
+          "sitesmithForm": "floor/buy.md. Drop the two-item allowlist and the '--motion-fast' token name at line 104 — a token from one design system has no business in a floor file.",
+          "isAppearance": false,
+          "threeRenditions": [
+            "Values swap instantly with no transition",
+            "The total is static and a separate text line states what changed",
+            "The page reloads and the new total is simply there"
+          ],
+          "confidence": 0.9
+        },
+        {
+          "id": "buy-committed-actions-answer-immediately",
+          "source": "sitesmith-v2/modes/ecommerce.md",
+          "sourcePath": "skills/sitesmith/v2/modes/ecommerce.md:110-112",
+          "problemSolved": "An add-to-basket that does not confirm makes the buyer press it twice, and a filter that does not acknowledge makes them assume it is broken.",
+          "mechanism": "Adding to the basket, applying a filter and recalculating delivery each produce visible feedback within 100ms, whatever the server takes.",
+          "whyItWorks": "100ms is a perception threshold, not an aesthetic value, so it pins nothing visual. It sharpens SKILL.md:167-169's 'every interactive state exists' into three named commerce actions with a deadline.",
+          "contextCost": "low",
+          "decision": "adopt",
+          "sitesmithForm": "floor/buy.md, states section.",
+          "isAppearance": false,
+          "threeRenditions": [
+            "The control itself changes state in place",
+            "The count increments optimistically and rolls back on failure",
+            "A full page transition carrying a determinate progress indicator"
+          ],
+          "confidence": 0.85
+        },
+        {
+          "id": "buy-the-way-back-to-the-set",
+          "source": "sitesmith-v2/modes/ecommerce.md",
+          "sourcePath": "skills/sitesmith/v2/modes/ecommerce.md:151-152",
+          "problemSolved": "The most common next action after rejecting a product is returning to the set it came from, and a lost filter state makes the buyer redo the work or leave.",
+          "mechanism": "The buyer can return to the set they were choosing from with their filters intact.",
+          "whyItWorks": "Stating it as return-with-state rather than as a component means it can be met by navigation, by a control, or by URL design with no control at all.",
+          "contextCost": "low",
+          "decision": "adapt",
+          "sitesmithForm": "floor/buy.md. Replace 'breadcrumbs on every product and category page' with the obligation; breadcrumbs become one of three named renditions.",
+          "isAppearance": false,
+          "threeRenditions": [
+            "A breadcrumb trail",
+            "A persistent chip reading back to the result count: 'back to 47 desks'",
+            "Filter state held in the URL so browser-back is sufficient and no control exists"
+          ],
+          "confidence": 0.85
+        },
+        {
+          "id": "buy-the-basket-is-never-out-of-reach",
+          "source": "sitesmith-v2/modes/ecommerce.md",
+          "sourcePath": "skills/sitesmith/v2/modes/ecommerce.md:148-149",
+          "problemSolved": "A buyer who cannot see what they have accumulated stops accumulating.",
+          "mechanism": "What the buyer has committed to so far, and how many, is visible and reachable from every surface including narrow viewports.",
+          "whyItWorks": "It states the fact that must be visible rather than the component that shows it, which is what lets a header icon, a side rail and a plain text line all count.",
+          "contextCost": "low",
+          "decision": "adapt",
+          "sitesmithForm": "floor/buy.md. Drop the search/basket/account triad and the phone-collapse pattern from line 148-149; both are one navigation shape.",
+          "isAppearance": false,
+          "threeRenditions": [
+            "A persistent header control with a count",
+            "A running list in a side rail on wide viewports, one line on narrow ones",
+            "A stated line at the top of every page — '3 items held, 4 210 kr' — with no icon at all"
+          ],
+          "confidence": 0.8
+        },
+        {
+          "id": "buy-result-set-is-navigable",
+          "source": "sitesmith-v2/modes/ecommerce.md",
+          "sourcePath": "skills/sitesmith/v2/modes/ecommerce.md:41-42",
+          "problemSolved": "Filters built from the warehouse's categories, an unstated result count, and an empty result that is a dead end.",
+          "mechanism": "The buyer can narrow the set on the terms they think in, always knows how many results they are looking at, and is never given a dead end: an empty result offers the nearest thing that exists.",
+          "whyItWorks": "Three content obligations with no layout implied. The empty-result clause is the sharpest of them and is the commerce case of SKILL.md:167-169's 'empty state is an invitation'.",
+          "contextCost": "low",
+          "decision": "adopt",
+          "sitesmithForm": "floor/buy.md, listing obligations. Drop 'a grid' (line 41) and 'sort is secondary to filter' (line 42) — a grid is one rendition and the sort ranking is not generally true.",
+          "isAppearance": false,
+          "threeRenditions": [
+            "A faceted rail with a live count and a nearest-match row when empty",
+            "A search field taking typed refinements, with a 'no matches, closest three' block",
+            "A map or index where narrowing is spatial and the empty case pans to the nearest cluster"
+          ],
+          "confidence": 0.85
+        },
+        {
+          "id": "buy-structure-follows-the-buyer",
+          "source": "sitesmith-v2/modes/ecommerce.md",
+          "sourcePath": "skills/sitesmith/v2/modes/ecommerce.md:143",
+          "problemSolved": "Category trees that mirror how stock is organised rather than how buyers ask for things.",
+          "mechanism": "Categories are named and grouped in the buyer's nouns, not the warehouse's.",
+          "whyItWorks": "It is a naming and grouping obligation, orthogonal to how the structure is exposed — which is why the mega-menu prescription that follows it (145-147) is a separate thing and is appearance.",
+          "contextCost": "low",
+          "decision": "adopt",
+          "sitesmithForm": "floor/buy.md, navigation obligations. This also connects to SKILL.md section 3: the category names should come from the subject's noun list.",
+          "isAppearance": false,
+          "threeRenditions": [
+            "A browsable hierarchy in the buyer's nouns",
+            "A search-first shell with no hierarchy exposed at all",
+            "A task-based index: 'replacing a broken one', 'buying a first one'"
+          ],
+          "confidence": 0.8
+        },
+        {
+          "id": "buy-the-object-is-the-subject",
+          "source": "sitesmith-v2/modes/ecommerce.md",
+          "sourcePath": "skills/sitesmith/v2/modes/ecommerce.md:77-78,90",
+          "problemSolved": "Card chrome, badges and framing that compete with the photograph of the thing being sold.",
+          "mechanism": "On any surface where the object appears it is the largest and most legible thing there; chrome does not compete with it. This is the mode where imagery cannot be substituted.",
+          "whyItWorks": "Relative dominance is achievable by scale, by isolation or by removal of the frame entirely.",
+          "contextCost": "low",
+          "decision": "investigate",
+          "sitesmithForm": "floor/buy.md, imagery obligations — but only if it can be written without implying a card. It is derived from a section about corner radius and is one careless restatement away from becoming a chrome prescription. If it cannot be stated cleanly, drop it: the other imagery obligations do most of its work.",
+          "isAppearance": false,
+          "threeRenditions": [
+            "A full-bleed image with all text outside its frame",
+            "A hairline frame with generous ground inside it",
+            "No frame at all — image and caption sitting on the page ground"
+          ],
+          "confidence": 0.55
+        },
+        {
+          "id": "buy-image-set-is-consistent",
+          "source": "sitesmith-v2/modes/ecommerce.md",
+          "sourcePath": "skills/sitesmith/v2/modes/ecommerce.md:92,95",
+          "problemSolved": "A catalogue photographed inconsistently reads as a reseller's scrape, and a single angle hides what the buyer needs to see.",
+          "mechanism": "The object is shown from more than one angle, treated identically across the whole catalogue, with detail views wherever the material is part of the purchase.",
+          "whyItWorks": "Consistency-of-treatment is the obligation; which treatment is a direction decision, and three catalogues can be internally consistent while looking nothing like each other.",
+          "contextCost": "low",
+          "decision": "adapt",
+          "sitesmithForm": "floor/buy.md. Keep consistency per context; drop the named ratios at line 93 (square in grid, 4:3 or 3:2 on page).",
+          "isAppearance": false,
+          "threeRenditions": [
+            "White-ground cutouts throughout, with a macro detail strip",
+            "Every object photographed on the same bench under the same light",
+            "Flatbed scans at a fixed resolution with a rule in frame"
+          ],
+          "confidence": 0.8
+        },
+        {
+          "id": "buy-scale-is-stated",
+          "source": "sitesmith-v2/modes/ecommerce.md",
+          "sourcePath": "skills/sitesmith/v2/modes/ecommerce.md:96",
+          "problemSolved": "A photograph cannot convey size, and size is the most common cause of a return.",
+          "mechanism": "Physical scale is established explicitly: dimensions, a hand, or a known object in frame.",
+          "whyItWorks": "The source sentence supplies its own three unrelated renditions, which is the clearest proof in the file that it is an obligation rather than a look.",
+          "contextCost": "low",
+          "decision": "adopt",
+          "sitesmithForm": "floor/buy.md, imagery obligations. Model floor-file sentence — it states the outcome and its alternatives in one line.",
+          "isAppearance": false,
+          "threeRenditions": [
+            "Dimensions in the specification block",
+            "A hand or a known object in one frame of the set",
+            "A scale bar or a drawn outline against a standard reference"
+          ],
+          "confidence": 0.9
+        },
+        {
+          "id": "buy-missing-image-names-itself",
+          "source": "sitesmith-v2/modes/ecommerce.md",
+          "sourcePath": "skills/sitesmith/v2/modes/ecommerce.md:98-100",
+          "problemSolved": "Generated product imagery that will not match the shipped catalogue, produced because an empty image slot looks unfinished.",
+          "mechanism": "Where the real photograph does not exist yet, a labelled placeholder states the shot required — subject, crop, ground — and that is a legitimate finished answer.",
+          "whyItWorks": "It gives the build a permitted way to be honestly incomplete, which is the only thing that reliably stops fabrication. It is the imagery instance of SKILL.md:157-159.",
+          "contextCost": "low",
+          "decision": "adopt",
+          "sitesmithForm": "floor/buy.md, imagery obligations, cross-referenced to SKILL.md section 7.",
+          "isAppearance": false,
+          "threeRenditions": [
+            "A ruled box with the shot specification set inside it",
+            "A specification-block row naming the missing asset",
+            "A caption-only slot where the caption is the brief"
+          ],
+          "confidence": 0.85
+        },
+        {
+          "id": "buy-related-states-the-relation",
+          "source": "sitesmith-v2/modes/ecommerce.md",
+          "sourcePath": "skills/sitesmith/v2/modes/ecommerce.md:39",
+          "problemSolved": "Undifferentiated 'you may also like' rails that serve neither the buyer who is in the wrong place nor the buyer who is in the right one.",
+          "mechanism": "Where other objects are shown, the page says what their relation is: an alternative if this one is wrong, a complement if it is right. Say which.",
+          "whyItWorks": "'Say which' is a labelling obligation with no layout attached, and it splits one rail into two distinct jobs that answer two different buyer states.",
+          "contextCost": "low",
+          "decision": "adopt",
+          "sitesmithForm": "floor/buy.md, argument obligations.",
+          "isAppearance": false,
+          "threeRenditions": [
+            "Two labelled bands, alternatives and complements",
+            "One band where each item carries its relation as a caption",
+            "A decision line in prose that links three named objects by their difference"
+          ],
+          "confidence": 0.8
+        },
+        {
+          "id": "buy-comparison-is-a-glance",
+          "source": "sitesmith-v2/modes/ecommerce.md",
+          "sourcePath": "skills/sitesmith/v2/modes/ecommerce.md:62-69,71",
+          "problemSolved": "Irregular repeated units read as a rendering bug, and figures that shift under their own digits force the buyer to compare arithmetically instead of visually.",
+          "mechanism": "Repeated units in a set are consistent enough, and compared figures aligned enough, that comparing two objects is a glance rather than a task.",
+          "whyItWorks": "The obligation is comparability. Tabular figures are one rendition of it; decimal alignment and a one-object-per-screen layout that carries figures forward are two others that share no visual language with it.",
+          "contextCost": "low",
+          "decision": "adapt",
+          "sitesmithForm": "floor/buy.md. This is what remains of section 3 after the spacing ramp (66-67), the type rank (67-68) and the scale ratio (71-73) are removed.",
+          "isAppearance": false,
+          "threeRenditions": [
+            "A table with figures in fixed columns",
+            "Identical repeated cards where every field is in the same place in each",
+            "One object per screen with a persistent compare strip carrying the figures forward"
+          ],
+          "confidence": 0.75
+        },
+        {
+          "id": "buy-name-the-free-axis",
+          "source": "sitesmith-v2/modes/ecommerce.md",
+          "sourcePath": "skills/sitesmith/v2/modes/ecommerce.md:53-57,80-82",
+          "problemSolved": "A craft floor that answers every question converges, because the answers it gives are the same answers on every project. gallery/showcase.json records the result as portfolioDiversity: fail.",
+          "mechanism": "The file names which decisions it does NOT make, sends them to the direction, and states which axis the three comps must differ on. Section 2: 'gallery left or right, panel sticky or in flow... they are the axis the three comps must differ on.' Section 4: 'the value comes from the direction and the photography, not from this file.'",
+          "whyItWorks": "An unnamed free axis gets spent on the nearest default (SKILL.md:96-98 says exactly this). Naming it converts a silent default into a required choice, and pointing the comps at it makes the choice observable.",
+          "contextCost": "low",
+          "decision": "adopt",
+          "sitesmithForm": "This should govern how floor/buy.md is WRITTEN, not just appear inside it. Every obligation in the file names what it leaves open. It is also the answer to the twelve-topic template defect: four of the twelve mode topics (Density, Radius, Colour emphasis, half of Imagery) are appearance slots by construction, and floor/buy.md must not inherit that shape.",
+          "isAppearance": false,
+          "threeRenditions": [
+            "Section 2 names the arrangement axis and refuses to set it",
+            "Section 4 answers the radius question with where the value comes from instead of with a value",
+            "The same discipline applied to every remaining obligation in floor/buy.md"
+          ],
+          "confidence": 0.9
+        },
+        {
+          "id": "buy-helping-or-in-the-way",
+          "source": "sitesmith-v2/modes/ecommerce.md",
+          "sourcePath": "skills/sitesmith/v2/modes/ecommerce.md:181-183",
+          "problemSolved": "Product pages accumulate elements that nobody can defend, and there is no test for removing them.",
+          "mechanism": "Every element on the surface is either helping the purchase or in its way, and the audit is to name which for each one.",
+          "whyItWorks": "It is a disposal test, not a construction rule, so it constrains nothing visual and produces a decision per element. It is the mode's actual thesis and it arrives on the last line of the file.",
+          "contextCost": "low",
+          "decision": "adopt",
+          "sitesmithForm": "floor/buy.md, closing test. Use it as the buy-surface audit criterion in the verification phase.",
+          "isAppearance": false,
+          "threeRenditions": [
+            "An annotated screenshot with each block marked helping or in the way",
+            "A list of elements with a one-word verdict each",
+            "A build note naming what was removed and why"
+          ],
+          "confidence": 0.85
+        }
+      ],
+      "appearanceRules": [
+        "line 33 — 'Sticky on desktop' for the purchase panel. One layout for the panel; the obligation underneath is reachability, not stickiness.",
+        "line 41 — 'a grid' as the listing's form. A grid is one rendition; a table, a map and a compare-view are three others.",
+        "line 42 — 'Sort is secondary to filter'. A prominence ranking, and not generally true: a nine-item catalogue sorted by price has no filters worth building.",
+        "lines 49-52 — the no-hero rationale argued by contrast with mode M, including 'A category band above roughly 200px costs the first row of products'. 200px is a pinned dimension, not an accessibility minimum, and floor-lint's ALLOWED_NUMBERS cannot see it.",
+        "lines 66-67 — 'the card interior sits at the tight end of the contract's ramp while the gaps between sections sit at the open end'. A spacing signature; two sites obeying it share a spatial rhythm.",
+        "lines 67-68 — 'Price is the second-largest type on the page after the name'. A type-scale rank. In a configurator the running total is the largest thing on screen; in a parts table price is the same size as everything and legible by column.",
+        "line 68-69, 71 — 'prices are tabular' as the mandated form. Tabular figures are one rendition of comparability; decimal-aligned proportional figures and one-price-per-screen are two others.",
+        "lines 71-73 — 'the scale ratio is at the tight end of whatever the contract sets — a 1.5 ratio in a listing produces sizes with nothing between them'. Explicitly a type scale.",
+        "lines 84-86 — 'full-round is for badges and stock dots only. A pill-shaped Add to basket reads as a marketing button rather than a purchase control'. A radius prescription on the primary action, stated in words so no regex in floor-lint's BANNED list catches it.",
+        "line 93 — 'square in the grid, 4:3 or 3:2 on the page'. Named aspect ratios. The consistency per context is the obligation; the ratios are a direction choice.",
+        "line 104 — 'Gallery transitions and a variant swap, both under --motion-fast. Nothing else moves.' A two-item motion allowlist plus a token name from one design system.",
+        "lines 115-116 — 'One accent, reserved for the purchase path. Add to basket, checkout, and nothing else. Once Add to basket and Read more are the same colour, neither means anything.' The single line most responsible for three shops looking alike. What it protects is real and is extracted as buy-one-unmistakable-purchase-control; the colour allocation is not.",
+        "line 121 — 'low stock says the words as well as being amber'. 'amber' matches BANNED.named-colour at floor-lint.mjs:31 and is a hard lint failure. Rewrite the example without a colour.",
+        "line 123 — 'with the original struck'. Strikethrough is one rendition of naming a reference price.",
+        "lines 145-147 — 'A mega-menu is correct here above roughly twenty categories: two levels, grouped, with the groups labelled. Below that a plain menu is faster.' A named component at a pinned threshold. Forty categories are equally well served by a search-first shell or a browsable index.",
+        "lines 148-149 — 'Persistent: search, basket with a count, account. On a phone, search and basket stay visible; the category menu collapses.' One navigation pattern. The obligation underneath is that accumulated items stay visible and reachable.",
+        "lines 151-152 — 'Breadcrumbs on every product and category page.' One rendition of returning to the set; a back-to-count chip and URL-held filter state are two others.",
+        "lines 155-157 — 'sticky through the specification on desktop and pinned to the bottom of the viewport on a phone'. One layout, and NORDRIG-AB-FORENSICS.md:37-38 records it as a line item in the losing build's stated method — a floor rule that had become a signature.",
+        "lines 162-163 — 'Price, variant and delivery estimate are inside the panel with the action.' The panel is the container; the obligation is the legibility of the total commitment, stated in the next sentence.",
+        "line 168 — 'two or three sentences per benefit'. A pinned word count.",
+        "lines 30-39 — the fixed seven-step product page sequence, taken as a literal order. The information set is an obligation; the sequence is a page skeleton. Softest call in the extraction: it is not a look, but three shops following it share a skeleton, and that is half of what portfolioDiversity measures."
+      ],
+      "universalRules": [
+        "Colour is never the only carrier of information (line 121). True of every surface, a WCAG floor, and NOT currently in SKILL.md section 8 — lines 174-179 list 4.5:1, 3:1, 44px, 24px, 16px, 320px and the focus-indicator rule but never state this. Mode E is the only place in the package that says it. Move it up to section 8.",
+        "Alt text describes what the image shows, not the product name repeated (line 94). Already carried by SKILL.md:172 — do not re-extract.",
+        "A control states what happens when it is used, and keeps the same word all the way through (lines 159-160, 'Add to basket' not 'Buy now' unless it genuinely skips the basket). Already carried by SKILL.md:139-141. Worth one worked commerce example in floor/buy.md, not a separate mechanism.",
+        "Every interactive state exists and is reachable, including loading (lines 110-112 are the commerce sharpening of this). Already carried by SKILL.md:167-169; only the 100ms deadline on three named commerce actions is new and is extracted as a mechanism.",
+        "A claim needs a source, and if it is not in the brief or the evidence it does not go on the page (lines 138-139 and 98-100 are commerce instances). Already carried by SKILL.md:150-159. Note that line 135-136 of the source file, 'buyers who read specs are the ones who complete', violates this rule inside the file that teaches it, and must be cut."
+      ],
+      "verdict": "About 30% of the substantive body (lines 28-183, 156 lines) is pure appearance and must not cross into floor/buy.md. A further ~15% states a real obligation in exactly one visual form and has to be re-stated before use. Roughly 55% survives close to intact, and that 55% is the strongest commerce material in the repository — consistent with NORDRIG-AB-FORENSICS.md:130-134, which records that the build that lost on creative direction had the sounder commerce behaviour.\n\nSection-level: section 8 Proof (~95%) and section 12 Failure modes (~95%) survive almost whole; sections 2, 5, 6 and 11 survive at 80-85%; section 7 Colour emphasis at ~55%; sections 9 and 10 at ~45-60%; and sections 3 Density and 4 Radius (lines 60-87) are near-total losses at ~30% and ~10%.\n\nThe structural finding matters more than the percentage. Sections 3 and 4 do not fail because they were written badly. They fail because modes/README.md:29-34 obliges every mode file to answer twelve fixed topics, and four of those twelve — Density, Radius, Colour emphasis, and half of Imagery — are appearance slots by construction. A file required to answer 'Radius' will answer it. Three sites built from three mode files each filling the same four appearance slots converged, which is exactly what gallery/showcase.json records as portfolioDiversity: fail. The convergence has a mechanical cause, and it is not 'the rules were bad' — it is that the schema had appearance slots in it. floor/buy.md must not inherit the twelve-topic shape; it should be organised by what the buyer is doing and must have no slot that can only be filled with a value.\n\nOn deleting the marketing mode file: the deletion was right and nothing here argues against it. Line 58 ('Home page: this is mode M') resolves under SKILL.md:191-196 to 'open nothing, sections 1 to 8 are the whole instruction', which is a real destination, not a dangling pointer. Line 172 ('marketing that wandered into the wrong mode') is a local test, decidable on the product page alone, so it survives the deletion untouched. One edit follows: lines 49-52 argue the no-hero rule by contrast with mode M, so drop that rationale and keep lines 46-47, which already state the outcome on its own terms.\n\nTwo lint gaps found while checking against tools/floor-lint.mjs. First, appearance stated in words rather than values — 'pill-shaped', 'full-round', 'second-largest type', 'tight end of the ramp' — is invisible to every regex in BANNED, and that is where sections 3 and 4 live. Second, arbitrary pinned dimensions (200px at line 52, 4:3 and 3:2 at line 93, twenty categories at line 145, two or three sentences at line 168) all pass, because ALLOWED_NUMBERS at floor-lint.mjs:41 whitelists accessibility minima but nothing blacklists pinned values. floor-lint would currently pass a floor file that pins a 200px band and a 4:3 crop, and two sites built from it would match. Only one hard failure exists as written: 'amber' at line 121, matching BANNED.named-colour at floor-lint.mjs:31.\n\nTwenty-five mechanisms extracted, of which twenty-three are buy-surface obligations, one (buy-name-the-free-axis) is a format mechanism that should govern how the whole floor file is written, and one (buy-the-object-is-the-subject) is marked investigate because it is derived from the radius section and may not be statable without implying a card. Written to docs/rebuild/research/sitesmith-modes/ecommerce.md."
+    },
+    {
+      "key": "sitesmith-modes-product-ui",
+      "verdict": "189 lines read in full. ~34% appearance by line mass, but ~100% of the visual decisions: the appearance is concentrated in the slots that decide the look (2 top-of-screen arrangement, 3 type register, 4 radius end-to-end, 6 loading idiom, 7 one-accent colour system, 9 rail-or-topbar). A build following this file has ground, accent, type register, corner, navigation shape, top arrangement and loading treatment decided before it knows what the tool is for. That is a sharper account of the portfolioDiversity failure than \"the craft floor converged\" — the floor did not converge by accident, it shipped the answers. PROVEN, not asserted: product-ui.md copied verbatim to floor/operate.md with one sentence appended passes floor-lint with zero purity problems (exit 0); the lint's BANNED list matches CSS tokens only and is blind to appearance written in English, and RENDITION_HINT fires once per file so 25 rules plus one rendition paragraph is green. The twelve-slot template is the structural cause: five of twelve slots are named after appearance properties, the headings are byte-identical across marketing.md/ecommerce.md/product-ui.md, and on colour the two supposedly-opposed modes give the same answer (product-ui.md:111 \"One accent for the primary action and the current item\" vs marketing.md:133 \"The accent works hard and appears rarely... the primary action, the current nav item, and one deliberate accent moment\") — while marketing.md:98 says out loud \"There is no global radius rule in sitesmith\" eleven lines after installing a global accent rule. Twenty-two obligations survive and belong in floor/operate.md; three rules are universal and belong in SKILL.md section 8 (which currently lacks all three); two are dead paths (--motion-fast:102, blocks/feedback/empty-state:185). Deleting marketing.md was RIGHT and the proof is in this file: product-ui.md:180-182 names \"marketing governance applied to a working screen\" as failure mode one, which means marketing governance is the absence of these obligations, not a competing set — exactly how SKILL.md:193 routes it. Checked marketing.md directly: its slot 7 is the same one-accent appearance rule, its slot 4 is a radius budget, and its only genuine obligation (body measure 55-75 characters, marketing.md:84-86) is universal and belongs in section 8. Nothing in it is owed only by a marketing page.",
+      "mechanisms": [
+        {
+          "id": "twelve-slot-appearance-questionnaire",
+          "source": "sitesmith-v2.3 mode P (product UI)",
+          "sourcePath": "skills/sitesmith/v2/modes/product-ui.md:7,13-24; cross-checked marketing.md:10-25,88-98,131-141 and ecommerce.md:11-27",
+          "problemSolved": "Nothing. It was meant to make each surface kind answer the same design questions consistently.",
+          "mechanism": "Twelve numbered slots, byte-identical in heading across all three mode files, each supplying 'an answer, not a range' (line 7). Five of the twelve — Density, Radius, Imagery, Motion, Colour emphasis — are named after appearance properties.",
+          "whyItWorks": "It does not. It administers an appearance questionnaire and then supplies the answer, so every build inherits the same visual decisions before it has a thesis. The proof is that the two modes designed to be most unlike each other give the same answer on colour: product-ui.md:111 and marketing.md:133 are the same one-accent rule.",
+          "contextCost": "low",
+          "decision": "reject",
+          "sitesmithForm": "Do not carry the twelve headings. Order obligations by when the operator meets them — orientation, work surface, acting, state over time — and never ship a floor file where 'what colour' and 'what radius' are numbered questions a build must answer.",
+          "isAppearance": true,
+          "threeRenditions": [
+            "No three exist. A fixed slate of appearance questions has one shape by construction.",
+            "The only variation it permits is which answer fills the slot, and the answers are already written in.",
+            "This is the mechanism the three-renditions test is designed to catch."
+          ],
+          "confidence": 0.95
+        },
+        {
+          "id": "one-accent-colour-system",
+          "source": "sitesmith-v2.3 mode P (product UI)",
+          "sourcePath": "skills/sitesmith/v2/modes/product-ui.md:111-116,126; marketing.md:133-135",
+          "problemSolved": "Claimed: accent inflation, a screen where everything is emphasised. Actual: it pre-decides the colour system for every operated surface the skill will ever produce.",
+          "mechanism": "'One accent for the primary action and the current item', with semantic colour declared as a separate group so a three-state queue can be argued not to have broken the rule three times (112-116), and 'The rest of the screen is neutral' (126).",
+          "whyItWorks": "The accent-inflation concern is real. The rule is not a floor: it mandates one accent plus a neutral field, which is precisely the arrangement NORDRIG-AB-FORENSICS.md:84-91 records the losing build defaulting into and PALETTE-ANALYSIS.md finding 4 flags as the monoculture risk. Lines 112-116 exist only to reconcile line 111 with reality, which is the signature of a rule that does not fit.",
+          "contextCost": "low",
+          "decision": "reject",
+          "sitesmithForm": "Replace with the obligation underneath it — a colour that carries meaning is not spent on decoration (mech signal-colour-is-reserved) — which permits a colourful field and therefore does not converge.",
+          "isAppearance": true,
+          "threeRenditions": [
+            "A one-accent neutral field is one look, not three.",
+            "Its own exception clause (112-116) is an admission that real screens need more than it allows.",
+            "Any genuine second rendition — a polychrome field, an inverted field — violates line 126 directly."
+          ],
+          "confidence": 0.95
+        },
+        {
+          "id": "operate-unit-of-work-density",
+          "source": "sitesmith-v2.3 mode P (product UI)",
+          "sourcePath": "skills/sitesmith/v2/modes/product-ui.md:59-68",
+          "problemSolved": "Density picked as taste ('this feels tight enough') produces a screen where a real unit of the operator's job does not fit, so they scroll to complete one task and lose the reconciliation.",
+          "mechanism": "A working unit of the operator's actual job — a shift's rows, a round's stops, a consignment's lines — must be visible without scrolling, and every dimension downstream is a consequence of that unit rather than a preference. One shared ramp; density selects which end of it is in play, not a second system (67-68).",
+          "whyItWorks": "It converts a taste decision into a measurable one sourced from the subject's world, which is the same lever as SKILL.md section 3's nouns applied to spacing. Twelve lines fitting is checkable; 'dense' is not.",
+          "contextCost": "low",
+          "decision": "adopt",
+          "sitesmithForm": "State the unit of work in the plan, then let it force the numbers. Never carry the file's own numbers (30px row, 8px ramp, lines 62-64) — they are that derivation already run once, for someone else.",
+          "isAppearance": false,
+          "threeRenditions": [
+            "A consignment of twelve lines as twelve rows in one table screen.",
+            "A dispatch round as a horizontal time ruler, one shift = one band, no rows at all.",
+            "One record per screen, full bleed, paged by key — the unit is the record and the whole viewport is spent on it."
+          ],
+          "confidence": 0.9
+        },
+        {
+          "id": "operate-exceptions-before-inventory",
+          "source": "sitesmith-v2.3 mode P (product UI)",
+          "sourcePath": "skills/sitesmith/v2/modes/product-ui.md:33-34",
+          "problemSolved": "A screen that shows every record with equal weight has done none of the operator's sorting, so the operator does it by eye on every visit.",
+          "mechanism": "What needs deciding comes before what does not. 'A screen that shows everything equally has sorted nothing.'",
+          "whyItWorks": "It moves the ranking work from the operator to the surface, once, and it is checkable by asking what is above the fold on a busy day.",
+          "contextCost": "low",
+          "decision": "adopt",
+          "sitesmithForm": "Carry verbatim as an obligation. It names no arrangement and survives any visual language.",
+          "isAppearance": false,
+          "threeRenditions": [
+            "A table default-sorted by exception with a needs-action column first.",
+            "A triage queue rendering only exceptions, the compliant remainder reduced to one count behind a link.",
+            "A plan or map where only exception objects carry a marker and the field is otherwise empty."
+          ],
+          "confidence": 0.9
+        },
+        {
+          "id": "operate-listing-reconciles",
+          "source": "sitesmith-v2.3 mode P (product UI)",
+          "sourcePath": "skills/sitesmith/v2/modes/product-ui.md:36-37",
+          "problemSolved": "A grid with no total makes the user do arithmetic, and arithmetic done by hand on screen data is where operator errors come from.",
+          "mechanism": "The surface answers what the rows add up to — totals, counts, what remains.",
+          "whyItWorks": "It is a completeness obligation with an unambiguous failure test: if the operator reaches for a calculator, the screen is unfinished.",
+          "contextCost": "low",
+          "decision": "adopt",
+          "sitesmithForm": "Carry verbatim.",
+          "isAppearance": false,
+          "threeRenditions": [
+            "A sticky total row pinned to the foot of a table.",
+            "A headline figure printed above the list that the list sums to.",
+            "A remaining-count meter beside the filter that moves as the filter changes."
+          ],
+          "confidence": 0.9
+        },
+        {
+          "id": "operate-action-at-the-object",
+          "source": "sitesmith-v2.3 mode P (product UI)",
+          "sourcePath": "skills/sitesmith/v2/modes/product-ui.md:38,156",
+          "problemSolved": "Actions in a toolbar three sections away force the operator to hold the target in memory while travelling to the control, which is where wrong-row errors come from.",
+          "mechanism": "Row actions on the row, form actions at the end of the form. The control lives where the thing is.",
+          "whyItWorks": "Co-location removes the memory step entirely rather than mitigating it.",
+          "contextCost": "low",
+          "decision": "adopt",
+          "sitesmithForm": "Carry as co-location. Drop line 157's bulk-bar placement ('a bar that appears above the data... not floating over it') — that is one placement, not the obligation.",
+          "isAppearance": false,
+          "threeRenditions": [
+            "An inline control in the row it acts on.",
+            "A detail pane whose controls sit with the record, and no toolbar exists.",
+            "Direct manipulation — the object is dragged to a lane and there is no button anywhere."
+          ],
+          "confidence": 0.85
+        },
+        {
+          "id": "operate-multi-step-form-contract",
+          "source": "sitesmith-v2.3 mode P (product UI)",
+          "sourcePath": "skills/sitesmith/v2/modes/product-ui.md:40-42",
+          "problemSolved": "Long data entry where the operator cannot tell how far in they are, cannot find what is wrong, and cannot check their answers before committing.",
+          "mechanism": "One question group per step, a visible position in the sequence, an error summary before the fields, and a review step showing every answer with a route back to each.",
+          "whyItWorks": "Four separate failures each get a named remedy, and all four are structural rather than visual — position, summary placement, reversibility.",
+          "contextCost": "low",
+          "decision": "adopt",
+          "sitesmithForm": "Carry all four as one obligation. This is the densest per-line value in the file.",
+          "isAppearance": false,
+          "threeRenditions": [
+            "A numbered stepper across the top with an error block above the fieldset.",
+            "A single scrolling sheet where completed groups collapse to one summary line each and position reads '3 of 7' in running text.",
+            "A terminal-style prompt sequence where the transcript above is the review and any earlier answer is re-editable in place."
+          ],
+          "confidence": 0.9
+        },
+        {
+          "id": "operate-orientation-before-work",
+          "source": "sitesmith-v2.3 mode P (product UI)",
+          "sourcePath": "skills/sitesmith/v2/modes/product-ui.md:32,46-47",
+          "problemSolved": "An operator who must read a whole screen to learn whether it needs them pays that cost on every visit, a thousand times.",
+          "mechanism": "Within a second the operator knows the object, its state, and the one number that decides urgency.",
+          "whyItWorks": "It sets a time budget rather than a layout, and the three required facts are checkable.",
+          "contextCost": "low",
+          "decision": "adapt",
+          "sitesmithForm": "Carry the three facts and the one-second budget. Drop 'one line' (32) and drop 'a chrome bar... and under it the status line' (50-51) — that arrangement is the operate-mode equivalent of a hero.",
+          "isAppearance": false,
+          "threeRenditions": [
+            "A bar carrying identity and state with the deciding figure inline.",
+            "The deciding figure set as the largest thing on screen, object name subordinate to it.",
+            "Orientation carried by the listing itself — the first row is the exception and its state word is the first thing read."
+          ],
+          "confidence": 0.85
+        },
+        {
+          "id": "operate-arrangement-from-work-shape",
+          "source": "sitesmith-v2.3 mode P (product UI)",
+          "sourcePath": "skills/sitesmith/v2/modes/product-ui.md:52-55",
+          "problemSolved": "A layout picked from a menu of dashboard conventions rather than derived from how the work is actually done.",
+          "mechanism": "Rail and pane, master and detail, a single table, a board — the choice is argued from observed work. 'A dispatcher watching six things at once and a clerk working one record at a time do not get the same screen.'",
+          "whyItWorks": "It is the only rule in the file that supplies its own unrelated renditions and refuses to pick between them. It is the model for how every other obligation should have been written.",
+          "contextCost": "low",
+          "decision": "adopt",
+          "sitesmithForm": "Carry verbatim and cite it in the floor file as the pattern the other rules must match.",
+          "isAppearance": false,
+          "threeRenditions": [
+            "Rail and pane.",
+            "A single wide table with no chrome.",
+            "A board where position encodes state."
+          ],
+          "confidence": 0.95
+        },
+        {
+          "id": "operate-compared-figures-do-not-shift",
+          "source": "sitesmith-v2.3 mode P (product UI)",
+          "sourcePath": "skills/sitesmith/v2/modes/product-ui.md:71-72",
+          "problemSolved": "A column whose digits move under each other cannot be scanned, and at operate row heights it is the smallest text on the site.",
+          "mechanism": "Figures that are compared hold a fixed horizontal position between rows.",
+          "whyItWorks": "The obligation is alignment, which is verifiable by looking at two adjacent rows; it does not require any particular typeface feature.",
+          "contextCost": "low",
+          "decision": "adapt",
+          "sitesmithForm": "State as non-shifting comparison. Drop 'tabular everywhere' and drop the tabular-mono framing that NORDRIG-AB-FORENSICS.md:38 lists among B's production rules — the feature is one implementation of the obligation.",
+          "isAppearance": false,
+          "threeRenditions": [
+            "Proportional face with tabular figures enabled.",
+            "Figures right-aligned to a fixed decimal position.",
+            "Magnitude carried by a bar with the value in a fixed slot, so alignment is structural rather than typographic."
+          ],
+          "confidence": 0.85
+        },
+        {
+          "id": "operate-shape-promises-only-what-it-delivers",
+          "source": "sitesmith-v2.3 mode P (product UI)",
+          "sourcePath": "skills/sitesmith/v2/modes/product-ui.md:76-77,82-83",
+          "problemSolved": "A shape that reads as a control and is not one costs a click and a moment of doubt every time it is seen, which in this mode is constantly.",
+          "mechanism": "Anything that reads as operable is operable. 'A pill in a data grid reads as a control that can be clicked, so it must be one.'",
+          "whyItWorks": "Affordance honesty is a behavioural contract, not a look — it constrains the relationship between appearance and behaviour without constraining either alone.",
+          "contextCost": "low",
+          "decision": "adapt",
+          "sitesmithForm": "Carry the affordance contract. Discard the entire radius vocabulary around it (74-83) including 'full-round is for status dots' — that is a corner budget and it does not survive the test.",
+          "isAppearance": false,
+          "threeRenditions": [
+            "Status as a plain word with no control geometry; actions as explicit buttons.",
+            "The entire row operable, so every shape inside it honestly is.",
+            "Status as a gutter mark or leading edge carrying no button geometry at all."
+          ],
+          "confidence": 0.85
+        },
+        {
+          "id": "operate-image-earns-identification",
+          "source": "sitesmith-v2.3 mode P (product UI)",
+          "sourcePath": "skills/sitesmith/v2/modes/product-ui.md:87-90",
+          "problemSolved": "Decorative imagery on a surface the operator sees a thousand times costs them a little each time and identifies nothing.",
+          "mechanism": "An image is present because the image is the thing being identified or judged — a product row, an uploaded file, a photo attached to a report.",
+          "whyItWorks": "Reframed as a job test rather than a quantity, it permits a wholly image-led console and forbids a single decorative one, which a budget cannot do.",
+          "contextCost": "low",
+          "decision": "adapt",
+          "sitesmithForm": "State as the job test. Drop 'Almost none' (87) — a quantity is a look — and drop the 'small neutral glyph' empty-state illustration (92).",
+          "isAppearance": false,
+          "threeRenditions": [
+            "A text-only ledger with no images.",
+            "An asset manager where the thumbnail is the row and nothing else identifies the file.",
+            "A floor-plan console whose only image is the plan, full bleed, because the plan is the data."
+          ],
+          "confidence": 0.8
+        },
+        {
+          "id": "operate-entry-is-quiet",
+          "source": "sitesmith-v2.3 mode P (product UI)",
+          "sourcePath": "skills/sitesmith/v2/modes/product-ui.md:99,103",
+          "problemSolved": "Movement in peripheral vision while a person is typing figures or counting stock breaks the count. It is the one motion failure that costs data rather than polish.",
+          "mechanism": "'Nothing animates while the user is typing or counting. This is absolute in this mode.'",
+          "whyItWorks": "It is stated as absolute, names the exact condition, and is satisfiable in any visual language including one with no motion at all. SKILL.md:169 has 'one deliberate moment or none' but nothing about entry.",
+          "contextCost": "low",
+          "decision": "adopt",
+          "sitesmithForm": "Carry verbatim, keep it absolute. Highest-value single line in the file.",
+          "isAppearance": false,
+          "threeRenditions": [
+            "A form where the only change during typing is the character appearing.",
+            "A counting screen where the running total updates as a value swap with no transition.",
+            "A console with no animation in the product at all, satisfying the rule by construction."
+          ],
+          "confidence": 0.95
+        },
+        {
+          "id": "operate-motion-reports-state-only",
+          "source": "sitesmith-v2.3 mode P (product UI)",
+          "sourcePath": "skills/sitesmith/v2/modes/product-ui.md:101-102,107",
+          "problemSolved": "Motion used for character on a working surface is a cost with no return, and scroll-driven effects make a data surface unreadable while it moves.",
+          "mechanism": "Motion exists to report a state change — a row saving, a value committing, a panel opening — and for nothing else. No scroll-driven anything.",
+          "whyItWorks": "It ties every permitted animation to a system event, so 'is this motion allowed' has an answer that is not taste.",
+          "contextCost": "low",
+          "decision": "adapt",
+          "sitesmithForm": "Carry the event-tie and the scroll ban. Drop '--motion-fast' (102) — a dead token from a contract file that does not exist in v3 — and state the duration in words or extend floor-lint's ALLOWED_NUMBERS.",
+          "isAppearance": false,
+          "threeRenditions": [
+            "A row that settles on commit.",
+            "A status word that swaps and nothing else in the frame reacts.",
+            "No motion at all, and a written timestamp appears instead — 'Saved 12:04' — reporting the same state change with zero movement."
+          ],
+          "confidence": 0.85
+        },
+        {
+          "id": "operate-latency-is-narrated",
+          "source": "sitesmith-v2.3 mode P (product UI)",
+          "sourcePath": "skills/sitesmith/v2/modes/product-ui.md:104-106",
+          "problemSolved": "An action that takes longer than perception with no acknowledgement gets clicked twice, and a whole-screen spinner destroys the operator's place in the data.",
+          "mechanism": "Above a latency threshold the wait is acknowledged, specifically and locally, rather than by blanking the surface.",
+          "whyItWorks": "The threshold makes it testable and the locality requirement preserves context, which is the actual harm a global spinner does.",
+          "contextCost": "low",
+          "decision": "adapt",
+          "sitesmithForm": "Carry the threshold and the locality. Drop 'a skeleton that matches the shape of what is coming' (105-106) — one idiom, and one of the better-known generic tells.",
+          "isAppearance": false,
+          "threeRenditions": [
+            "A placeholder shaped like the thing arriving.",
+            "The acting row locked and dimmed with a local indicator, the rest of the screen live.",
+            "A status line that counts — 'loading 340 of 1,200' — while the table fills progressively and nothing is faked."
+          ],
+          "confidence": 0.85
+        },
+        {
+          "id": "operate-signal-verified-in-every-context",
+          "source": "sitesmith-v2.3 mode P (product UI)",
+          "sourcePath": "skills/sitesmith/v2/modes/product-ui.md:122-124",
+          "problemSolved": "A state colour checked once, on one surface, in one scheme, and then used as text on a light ground where it is illegible.",
+          "mechanism": "A signal is verified in every context it actually renders in, and where it needs two treatments both are declared with their roles named.",
+          "whyItWorks": "It catches the failure that a single contrast check misses: the same value used as fill and as text has two different contrast problems and only one gets tested.",
+          "contextCost": "medium",
+          "decision": "adapt",
+          "sitesmithForm": "State as per-context verification. Drop the specific treatments named in 123-124 ('dark chrome bar', 'saturated fill colour', 'darkened text colour', 'on paper') — they describe one palette.",
+          "isAppearance": false,
+          "threeRenditions": [
+            "Two declared roles per state, one fill and one text, each measured where it appears.",
+            "One value plus a rule that states are only ever filled and never set as text, so the second context does not arise.",
+            "States carried without hue — weight, gutter mark, position — so the only verification needed is against the ground."
+          ],
+          "confidence": 0.75
+        },
+        {
+          "id": "operate-signal-colour-is-reserved",
+          "source": "sitesmith-v2.3 mode P (product UI)",
+          "sourcePath": "skills/sitesmith/v2/modes/product-ui.md:126-127",
+          "problemSolved": "A colour that means something and is also used for decoration stops meaning anything, and the operator learns to ignore it.",
+          "mechanism": "A colour that carries meaning is not spent on decoration. 'A decorative use of it costs a real one.'",
+          "whyItWorks": "Stated as reservation rather than as scarcity, it constrains the relationship between signal and field without constraining the field — which is what makes it a floor rather than a palette.",
+          "contextCost": "low",
+          "decision": "adapt",
+          "sitesmithForm": "This is the replacement for the one-accent rule (111). Note that renditions (b) and (c) below let the screen be colourful, which line 126 forbids outright. That difference is exactly the difference between an obligation and a house style.",
+          "isAppearance": false,
+          "threeRenditions": [
+            "A near-monochrome field where three signal hues are the only colour present.",
+            "A colour-saturated field where signals are carried by an unmistakable non-hue device — a bracket, a rule, a change of case — because hue is already busy.",
+            "An inverted field where everything is saturated and the signal is the only desaturated thing."
+          ],
+          "confidence": 0.8
+        },
+        {
+          "id": "operate-state-legible-over-time",
+          "source": "sitesmith-v2.3 mode P (product UI)",
+          "sourcePath": "skills/sitesmith/v2/modes/product-ui.md:131-138",
+          "problemSolved": "An operated surface where the user cannot tell what was saved, what is pending, what failed or how old the number is. 'A dashboard that cannot say how fresh its data is has an unanswerable trust problem.'",
+          "mechanism": "Four answers are always available: what was saved and when; what is pending and what happens if the operator leaves; what failed, why and what to do; whether the number is current and as of when.",
+          "whyItWorks": "SKILL.md:168 requires the interactive states to exist and be reachable. This is different and not carried anywhere: the legibility of system state across time, including data freshness, which no state enumeration reaches.",
+          "contextCost": "low",
+          "decision": "adopt",
+          "sitesmithForm": "Carry all four verbatim as the operate-specific replacement for the marketing notion of proof. Freshness in particular has no equivalent in section 8.",
+          "isAppearance": false,
+          "threeRenditions": [
+            "A freshness caption under each figure and a pending badge in the chrome.",
+            "An event log beside the work surface where saved, pending and failed are timed entries, so the screen carries no state indicators at all.",
+            "The listing ordered by ingest time so staleness is positional, with failures held at the top until acknowledged."
+          ],
+          "confidence": 0.9
+        },
+        {
+          "id": "operate-navigation-shallow-invariant-persistent",
+          "source": "sitesmith-v2.3 mode P (product UI)",
+          "sourcePath": "skills/sitesmith/v2/modes/product-ui.md:142,152",
+          "problemSolved": "Navigation that moves between screens, goes more than two deep, or vanishes at narrow widths, on a surface the operator uses daily.",
+          "mechanism": "Two levels at most, in the same place on every screen, and at the narrowest width it changes form rather than disappearing.",
+          "whyItWorks": "Depth budget and invariance are structural properties, testable by walking the screens; neither implies a shape.",
+          "contextCost": "low",
+          "decision": "adapt",
+          "sitesmithForm": "Carry depth, invariance and survival-at-narrow. Drop 'A top bar or a left rail — pick one' (142) and the rail-versus-bar decision rule (144-145): two options is not three unrelated ways, and it excludes command palettes, tab bars and spatial navigation. Drop 960px (152) — SKILL.md:174-179 owns the widths.",
+          "isAppearance": false,
+          "threeRenditions": [
+            "A rail that becomes an icon strip.",
+            "A top bar that becomes a labelled select.",
+            "A command palette that is the navigation at every width and therefore never needs to collapse."
+          ],
+          "confidence": 0.8
+        },
+        {
+          "id": "operate-keyboard-reach-complete-and-discoverable",
+          "source": "sitesmith-v2.3 mode P (product UI)",
+          "sourcePath": "skills/sitesmith/v2/modes/product-ui.md:147-150,186-189",
+          "problemSolved": "A scroller no key reaches, a grid that cannot be traversed, and a shortcut that exists and is documented nowhere. 'Nothing looks wrong at any width, and the screen is unusable to the person who lives in it.'",
+          "mechanism": "Every destination, every scrollable region and every grid is reachable by key, and the key is visible somewhere on the screen.",
+          "whyItWorks": "Two things nothing else in the package carries. SKILL.md:170 requires focus to be visible, which is a different property from a region being traversable — a scroll container with no focusable child passes a focus-visibility check and is reachable by nobody. And discoverability of shortcuts is rarely stated at all: 'a shortcut nobody can see is a shortcut nobody uses.'",
+          "contextCost": "low",
+          "decision": "adopt",
+          "sitesmithForm": "Carry both halves — traversal and discoverability — as one obligation, and say explicitly that it is not the same requirement as visible focus.",
+          "isAppearance": false,
+          "threeRenditions": [
+            "A palette on a documented key with the key printed in the chrome.",
+            "Rail items carrying their own access key as visible text.",
+            "A roving-tabindex grid with an on-screen key legend, so traversal is learnable from the screen."
+          ],
+          "confidence": 0.9
+        },
+        {
+          "id": "operate-blocked-control-says-why",
+          "source": "sitesmith-v2.3 mode P (product UI)",
+          "sourcePath": "skills/sitesmith/v2/modes/product-ui.md:159-161",
+          "problemSolved": "A dead button with no explanation, which leaves the operator hunting the screen for what they did wrong.",
+          "mechanism": "The primary action states its consequence and its blockers. 'A disabled control says why, or is not disabled.'",
+          "whyItWorks": "It closes the loophole every accessibility checklist leaves open: SKILL.md:168 requires the disabled state to exist and be reachable, which a silent dead button satisfies. This requires it to be informative or absent.",
+          "contextCost": "low",
+          "decision": "adopt",
+          "sitesmithForm": "Carry verbatim including the example. The either/or construction is what makes it enforceable.",
+          "isAppearance": false,
+          "threeRenditions": [
+            "The blocker in the label — 'Book in (2 lines unresolved)'.",
+            "The control enabled, and activating it produces an error summary that focuses the first blocker.",
+            "An adjacent checklist of blockers that empties as they clear; the control enables when it is empty."
+          ],
+          "confidence": 0.9
+        },
+        {
+          "id": "operate-destructive-separated-by-position",
+          "source": "sitesmith-v2.3 mode P (product UI)",
+          "sourcePath": "skills/sitesmith/v2/modes/product-ui.md:163-164",
+          "problemSolved": "Destructive and constructive actions adjacent and distinguished only by colour, which fails for anyone who does not see the difference and for anyone moving fast.",
+          "mechanism": "Destructive actions are separated from constructive ones by position, not only by colour, and they confirm.",
+          "whyItWorks": "Already written in non-appearance terms by the original author — 'by position, not only by colour' names the mechanism and rejects the shortcut in the same clause.",
+          "contextCost": "low",
+          "decision": "adopt",
+          "sitesmithForm": "Carry verbatim. It needs no rewriting, which makes it the only rule in the file that was already floor-shaped.",
+          "isAppearance": false,
+          "threeRenditions": [
+            "Behind an overflow, requiring a second deliberate interaction.",
+            "On the opposite edge with real distance from the constructive control.",
+            "On a separate step entirely, with an undo window in place of a dialog."
+          ],
+          "confidence": 0.9
+        },
+        {
+          "id": "operate-no-editorial-subsetting",
+          "source": "sitesmith-v2.3 mode P (product UI)",
+          "sourcePath": "skills/sitesmith/v2/modes/product-ui.md:168-170,175-176",
+          "problemSolved": "A designer hiding data to keep an operated screen calm. 'The user came for the data and hiding it to keep the screen calm is a disservice.'",
+          "mechanism": "Nothing the operator needs is withheld; where there is genuinely too much, reduction is performed by the operator through filtering and sorting they control, not by a curated subset chosen in advance.",
+          "whyItWorks": "It draws the line at who chooses, which is the actual issue, rather than at how much is shown — so it survives on a surface with three fields and one with three hundred.",
+          "contextCost": "low",
+          "decision": "adopt",
+          "sitesmithForm": "Carry completeness plus operator-owned reduction as one rule. Drop 'High,' (168) — density as a register is a look; completeness is the obligation. Drop 'Prose is minimal' (172-173) — a word budget, and SKILL.md:132-143 already owns copy register.",
+          "isAppearance": false,
+          "threeRenditions": [
+            "A wide table scrolling horizontally inside its own container, with a column chooser and saved views.",
+            "Master list plus a detail pane showing every field of one record.",
+            "A query bar where the operator states the subset and the statement is visible and editable."
+          ],
+          "confidence": 0.85
+        },
+        {
+          "id": "operate-partial-is-a-state",
+          "source": "sitesmith-v2.3 mode P (product UI)",
+          "sourcePath": "skills/sitesmith/v2/modes/product-ui.md:183-185",
+          "problemSolved": "A bulk action where some rows succeeded and some did not, reported as either success or failure. It is the state an operated surface reaches on day one and the first one generated work leaves out.",
+          "mechanism": "Empty, error, partial and loading are all first-class states. Partial is named explicitly and separately.",
+          "whyItWorks": "SKILL.md:168 lists loading, empty, error and disabled. Partial is not in that list and is not reducible to any of them — it is the state where the operator must know exactly which half went through.",
+          "contextCost": "low",
+          "decision": "adopt",
+          "sitesmithForm": "Carry partial into the floor file as the fifth state, or add it to section 8's enumeration. Note that the reference to blocks/feedback/empty-state (185) is a dead path in v3.",
+          "isAppearance": false,
+          "threeRenditions": [
+            "A result summary naming the count that succeeded and the count that did not, with the failures still listed.",
+            "Per-row outcome marks left in place after the action, so the surface itself is the report.",
+            "A queue where failed items return to the queue and completed ones leave, so partial is expressed by what remains."
+          ],
+          "confidence": 0.85
+        }
+      ],
+      "appearanceRules": [
+        "L7 — 'Twelve decisions. Each is an answer, not a range.' The questionnaire framing itself: twelve appearance questions with the answers pre-filled.",
+        "L13-24 — the twelve-slot contents list, byte-identical in heading across marketing.md, ecommerce.md and product-ui.md. Five slots (Density, Radius, Imagery, Motion, Colour emphasis) are named after appearance properties.",
+        "L35 — 'The work surface — the table, the form, the queue.' The 1-5 sequence read as a stacking order is a layout template.",
+        "L49 — 'A cinematic hero on a dashboard is the clearest sign the wrong governance model was applied.' Names a look and forbids it; keep as rationale, not a rule.",
+        "L50-51 — 'What occupies the top is a chrome bar carrying identity, context and state, and under it the status line.' Prescribes one arrangement for the top of every operated screen. This is the operate-mode equivalent of a hero.",
+        "L62-64 — 'A 30px row cannot afford an 8px ramp — so the step is smaller.' A spacing ramp stated in prose. floor-lint does not catch it.",
+        "L70-71 — 'many type sizes, close together, most of them small, so the scale ratio is tight.' A type scale. Cannot be satisfied three visually unrelated ways.",
+        "L74-83 — section 4 in full, minus the affordance clause. The section is named after a CSS property and its content is a corner budget.",
+        "L76 — 'the corner does not eat the content.' Presupposes corners exist.",
+        "L79-81 — 'a generous radius removes the corner of a cell... a tool with taller rows can afford more, and a genuinely utilitarian instrument may want none at all.'",
+        "L82 — 'full-round is for status dots.' A radius rule.",
+        "L87 — 'Almost none.' An imagery quantity, and a quantity is a look.",
+        "L91-92 — 'the empty state, where a small neutral glyph gives the message somewhere to sit.' Prescribes an empty-state illustration.",
+        "L99 — 'Effectively none.' A motion quantity.",
+        "L102 — '--motion-fast, under 120ms.' A token from a contract file that will not exist in v3, plus a duration outside floor-lint's ALLOWED_NUMBERS.",
+        "L105-106 — 'a skeleton that matches the shape of what is coming, not a spinner over the whole screen.' One loading idiom, and a well-known generic tell.",
+        "L111 — 'One accent for the primary action and the current item.' The top convergence suspect. Same answer as marketing.md:133, and the arrangement NORDRIG-AB-FORENSICS.md:84-91 records the losing build defaulting into.",
+        "L112-116 — the semantic-colour exception ('has not broken the rule three times; it has used three semantic colours'). Exists only to reconcile L111 with reality.",
+        "L123-124 — 'a saturated fill colour and a darkened text colour', 'legible on a dark chrome bar', 'illegible as text on paper.' Describes one palette in one scheme.",
+        "L126 — 'The rest of the screen is neutral.' A palette.",
+        "L142 — 'A top bar or a left rail — pick one and keep it on every screen.' Two options is not three unrelated ways; excludes command palette, tab bar, breadcrumb-only and spatial navigation.",
+        "L144-145 — 'A rail is right when there are many destinations... A top bar is right when there are few.' A decision rule about which of two layouts.",
+        "L152 — 'Below 960px' — a breakpoint. The obligation (navigation changes form rather than vanishing) survives; the number and the word 'rail' do not.",
+        "L157 — 'bulk actions in a bar that appears above the data when a selection exists — not floating over it.' One placement.",
+        "L168 — 'High,' as the answer to content density. Density as a register is a look; completeness is the obligation.",
+        "L172-173 — 'Prose is minimal... Everything else is data and labels.' A word budget; SKILL.md sections 7 and 8 already own copy register.",
+        "L181 — 'A hero, generous spacing, an illustration, six rows of data.' Diagnostic restating slots 2, 3 and 5 in look terms."
+      ],
+      "universalRules": [
+        "A state is never carried by colour alone — each state has a word as well as a colour (product-ui.md:119-120). True of every page regardless of surface. SKILL.md section 8 does not currently carry it: lines 167-179 cover contrast numbers, focus visibility, semantic elements and alt text, but never say colour is not the sole carrier of meaning. Gap.",
+        "Every signal colour clears its contrast minimum against every surface it appears on, in both schemes (product-ui.md:121). Section 8 carries the numbers (4.5:1, 3:1) and the observation that an accent usually clears against only one of two grounds, but not the every-surface, both-schemes sweep. Partial gap.",
+        "A chart is data, not imagery: keyboard-reachable, labelled, and never colour-only (product-ui.md:94-96). True of any page carrying a chart, including a marketing page, so it cannot live in an operate-only floor file. Section 8 says nothing about charts. Gap.",
+        "Body measure roughly 55 to 75 characters (marketing.md:84-86). Read while checking whether deleting marketing.md loses anything. It is true of every page with prose and is the one genuine obligation in that file. Section 8 has no measure rule. Recommend salvaging it into section 8 as marketing.md is deleted."
+      ]
+    },
+    {
+      "key": "sitesmith-modes/marketing-and-tasks",
+      "mechanisms": [
+        {
+          "id": "delete-the-design-argument-test",
+          "source": "sitesmith v2.3 marketing mode",
+          "sourcePath": "skills/sitesmith/v2/modes/marketing.md:188-191",
+          "problemSolved": "A page that looks persuasive but says nothing. Design carries an empty argument and every review passes it because the review looks at the design.",
+          "mechanism": "Delete every image and every panel from the page and read what is left as plain text. If the remaining words do not persuade, the design was carrying an empty page and the fix is content, not layout.",
+          "whyItWorks": "It is a falsifier, not a preference. It separates the argument layer from the presentation layer by physically removing one of them, so the test cannot be satisfied by making the presentation better. It is the only rule in the three files that can fail a page that passes every other rule.",
+          "contextCost": "low",
+          "decision": "adopt",
+          "sitesmithForm": "SKILL.md section 7 or run.md gate: one line, applied before the visual critique. 'Strip the page to its text. If it does not persuade, stop and fix the argument.'",
+          "isAppearance": false,
+          "threeRenditions": [
+            "A dense tabular spec sheet whose every row is a claim with a source; stripped to text it reads as a complete datasheet",
+            "A single full-bleed object with the argument set as caption strata around it; stripped to text it reads as a short essay",
+            "A stepped configurator where each step answers one of the six beats; stripped to text it reads as a numbered decision path"
+          ],
+          "confidence": 0.95
+        },
+        {
+          "id": "preservation-contract",
+          "source": "sitesmith v2.3 redesign audit",
+          "sourcePath": "skills/sitesmith/v2/tasks/redesign-audit.md:38-48",
+          "problemSolved": "A redesign silently changes things that were never the designer's to change: the router, brand marks, URLs, form field names, analytics event names, priced claims, flagged experiments.",
+          "mechanism": "A named list of categories that are not yours to change unless the brief says so in words. If a fix requires breaking one, stop and say so rather than deciding it silently.",
+          "whyItWorks": "It converts an implicit boundary into an explicit escalation. The failure mode it prevents is not aesthetic, it is a broken analytics funnel or an unhonoured guarantee, and those are invisible in any screenshot-based verification. Zero appearance content: it constrains what may change, never what it should become.",
+          "contextCost": "low",
+          "decision": "adopt",
+          "sitesmithForm": "redesign.md, first section, before any pass. Verbatim shape with the five categories preserved.",
+          "threeRenditions": [
+            "A brutalist rebuild of a bank page where the ground, type and grid all change and every route name, field name and event name is byte-identical",
+            "A soft editorial rebuild of the same page where only the typography changes and the preserved list is trivially untouched",
+            "A rebuild that must break a route name to fix navigation, and stops to say so rather than shipping it"
+          ],
+          "isAppearance": false,
+          "confidence": 0.95
+        },
+        {
+          "id": "first-screen-from-strongest-material",
+          "source": "sitesmith v2.3 marketing mode",
+          "sourcePath": "skills/sitesmith/v2/modes/marketing.md:44-69",
+          "problemSolved": "Every marketing brief gets the same hero because a default arrangement exists to be reached for.",
+          "mechanism": "State the outcome only (a stranger knows what this is and who it is for, the one action is reachable before scroll) and refuse to name a default arrangement. A table maps the subject's strongest true material to what the first screen is built around: owned photography, a statement only this client could make, the real interface, an index, a single object, or nothing yet. The arrangement is the axis the competing comps are required to differ on.",
+          "whyItWorks": "It is generative rather than prescriptive: the input is the subject's evidence, so two subjects with different strongest material cannot arrive at the same first screen. The file states the causal claim itself at line 50: naming a default is how nine subjects end up with the same hero.",
+          "contextCost": "medium",
+          "decision": "adopt",
+          "sitesmithForm": "SKILL.md section 6, folded into the Layout step: the first screen is built around the subject's strongest true material, and that choice is written down before any code.",
+          "isAppearance": false,
+          "threeRenditions": [
+            "A bindery whose strongest material is owned photography of water-damaged ledgers: the first screen is one photograph at evidence size",
+            "A consultancy whose strongest material is a statement nobody else could make: the first screen is the words at a size that makes them the object",
+            "A tooling company whose strongest material is its own interface: the first screen is a real screenshot, legible in one frame, with a fake div-built screenshot explicitly banned"
+          ],
+          "confidence": 0.9
+        },
+        {
+          "id": "proof-strength-ladder-with-nothing-as-a-rung",
+          "source": "sitesmith v2.3 marketing mode",
+          "sourcePath": "skills/sitesmith/v2/modes/marketing.md:142-155",
+          "problemSolved": "A page needs a proof band, no real proof exists, so proof is invented. Invented proof is the clearest single tell that a machine wrote the page.",
+          "mechanism": "A descending ladder of proof strength: a named customer with role and company saying something specific, then a dated attributable number, then a real logo wall, then a briefly told case. Use the strongest you actually have. The fifth rung is Nothing, and a page with no proof is stated to be honest.",
+          "whyItWorks": "Most anti-fabrication rules only forbid. This one supplies a legal move at every level of available evidence, including zero, which is why it does not collapse under pressure. Making 'nothing' an explicit rung removes the incentive that produces the fabrication.",
+          "contextCost": "low",
+          "decision": "adopt",
+          "sitesmithForm": "SKILL.md section 7, appended to the claim-needs-a-source rule: the ladder plus the explicit permission to ship with no proof section at all.",
+          "isAppearance": false,
+          "threeRenditions": [
+            "One named quote set as the whole page, at manuscript scale, with the customer's role and company as the only other text",
+            "A dense sourced-figures table with a date column and a citation column, no quotation anywhere",
+            "An index of cases by year with no logos, no numbers and no quotes, each a situation, a change and an outcome"
+          ],
+          "confidence": 0.9
+        },
+        {
+          "id": "no-motion-between-intent-and-result",
+          "source": "sitesmith v2.3 marketing mode; corroborated by Nordrig build B",
+          "sourcePath": "skills/sitesmith/v2/modes/marketing.md:128",
+          "problemSolved": "Animation placed where a user is committing to something: a form that animates while being filled, a button whose transition delays the click, a purchase control with a flourish.",
+          "mechanism": "Nothing moves in a form. Nothing delays a click. Motion never sits between an intent and its result.",
+          "whyItWorks": "It draws the line by position rather than by duration or easing, so it survives any visual language. Every attempt to state it as a duration or a character becomes appearance immediately, which is what happened four lines earlier in the same section. Generalises Nordrig build B's 'no motion near money' to every commitment surface.",
+          "contextCost": "low",
+          "decision": "adopt",
+          "sitesmithForm": "SKILL.md section 8, one sentence appended to the motion rule.",
+          "isAppearance": false,
+          "threeRenditions": [
+            "A heavily animated editorial page whose single contact form has zero transitions and whose submit state changes instantly",
+            "A completely still interface where the rule is trivially satisfied and the only motion is a confirmation that appears after the result",
+            "A configurator with an easing-rich progress marker where the step change itself is instant and the marker catches up afterwards"
+          ],
+          "confidence": 0.9
+        },
+        {
+          "id": "comparison-axis-alignment",
+          "source": "sitesmith v2.3 redesign audit",
+          "sourcePath": "skills/sitesmith/v2/tasks/redesign-audit.md:59,92,93",
+          "problemSolved": "Things the reader is comparing do not line up: prices jitter between rows, card CTAs sit at three different heights, pricing columns start their feature lists at different vertical positions. Comparison becomes work.",
+          "mechanism": "Anything the reader is asked to compare must not shift position on the axis of comparison. Figures in an aligned run hold their columns; actions repeated across peer items form one line; peer columns start their comparable content at the same point.",
+          "whyItWorks": "It states the obligation as a property of the reader's task rather than as an implementation. The v2 phrasing hands over the implementation (tabular-nums, pin the CTA, fix the title block height) and tabular figures are one of the four devices the round-8 known-bad recipe is made of, so the implementation-shaped version smuggles the house style through the obligations door while passing the purity lint.",
+          "contextCost": "low",
+          "decision": "adapt",
+          "sitesmithForm": "floor/buy.md and floor/operate.md, stated without naming tabular-nums or any CSS property.",
+          "isAppearance": false,
+          "threeRenditions": [
+            "A price list as a right-aligned table with fixed-width numeric cells and no card anywhere",
+            "Three peer cards with the action pinned so the actions form one line, achieved by grid row assignment rather than height matching",
+            "A single scrolling comparison where each item's figure sits at a fixed offset from the item's left edge, so nothing is in a column at all"
+          ],
+          "confidence": 0.9
+        },
+        {
+          "id": "stack-decision-gate",
+          "source": "sitesmith v2.3 setup task",
+          "sourcePath": "skills/sitesmith/v2/tasks/setup.md:17-34,88-93",
+          "problemSolved": "A design task installs a framework into a project that already has one, or adds a second styling system, turning a scoped visual change into an unbudgeted migration.",
+          "mechanism": "Five filesystem checks plus reading CLAUDE.md, AGENTS.md and README.md before proposing anything. Any single match means skip setup entirely and adopt what is there. A project that documents its stack has chosen its stack. If nothing matches, say so in one line and state what you are about to install before installing it.",
+          "whyItWorks": "It is a cheap mechanical gate on the most expensive class of mistake in this skill, and it fails closed: the default outcome of the gate is to do nothing. Migrating stacks is named as a separate project with its own budget and risk, which removes the framing under which the mistake seems reasonable.",
+          "contextCost": "low",
+          "decision": "adopt",
+          "sitesmithForm": "stacks/static.md and redesign.md, as the first executable step of any run against existing code.",
+          "isAppearance": false,
+          "threeRenditions": [
+            "A WordPress theme with composer.json present: the gate matches, nothing is installed, the redesign is authored in the existing PHP templates",
+            "An empty directory: the gate matches nothing, the installation is announced in one line, a scaffold is created",
+            "A Vite project with Tailwind already configured: the gate matches twice, the design work uses the existing token layer"
+          ],
+          "confidence": 0.9
+        },
+        {
+          "id": "never-default-styled-generated-components",
+          "source": "sitesmith v2.3 setup task",
+          "sourcePath": "skills/sitesmith/v2/tasks/setup.md:83",
+          "problemSolved": "Component generators ship a complete, recognisable visual language. Installed and used unmodified, that language is the site's design, and it is the same language on every site that installed it.",
+          "mechanism": "You own the output. Never ship it at default styling.",
+          "whyItWorks": "It names the one dependency whose default state is itself a house style, and it does so at the moment the dependency is added rather than at review time when the whole page is already built on it. It is anti-convergence stated as an install-time obligation.",
+          "contextCost": "low",
+          "decision": "adopt",
+          "sitesmithForm": "SKILL.md section 8 or stacks/static.md: any generated or vendored component is restyled from the direction's own token layer before it ships.",
+          "isAppearance": false,
+          "threeRenditions": [
+            "A generated dialog primitive kept for its focus trap and rebuilt visually as a full-bleed takeover",
+            "The same primitive rebuilt as an inline disclosure with no overlay at all",
+            "The same primitive kept structurally identical with every colour, radius and spacing value replaced from the project's own named tokens"
+          ],
+          "confidence": 0.85
+        },
+        {
+          "id": "forgotten-surfaces-checklist",
+          "source": "sitesmith v2.3 redesign audit",
+          "sourcePath": "skills/sitesmith/v2/tasks/redesign-audit.md:170-181",
+          "problemSolved": "Generated sites are consistently missing the same six things, and each one is the difference between a mockup and a site.",
+          "mechanism": "Six named surfaces, added where they apply: a custom 404 offering a route back, privacy and terms links, a visible skip-to-content link as the first tab stop, client-side validation with messages tied to fields, a way back from every dead end, and an active state in the navigation.",
+          "whyItWorks": "Completeness is what a floor is for, and this list is empirical rather than derived. It is conditional by construction ('add whichever apply'), so it cannot mandate a surface a brief does not have. None of the six names a look.",
+          "contextCost": "low",
+          "decision": "adopt",
+          "sitesmithForm": "redesign.md and SKILL.md section 8, as a six-item completeness check run before delivery.",
+          "isAppearance": false,
+          "threeRenditions": [
+            "A single-page site where 404 does not apply and the other five are a footer pair, a skip link, inline validation, a back control and a scrollspy nav mark",
+            "A large catalogue where the 404 offers a category index and the nav mark is a persistent rail highlight",
+            "A documentation site where the way back from a dead end is a breadcrumb and the nav mark is a bold weight in a sidebar"
+          ],
+          "confidence": 0.9
+        },
+        {
+          "id": "read-score-repair-phasing",
+          "source": "sitesmith v2.3 redesign audit",
+          "sourcePath": "skills/sitesmith/v2/tasks/redesign-audit.md:23-36",
+          "problemSolved": "Fixing while reading produces a scattered diff and hides systemic problems behind local ones. Forty files change and nothing measurable improves.",
+          "mechanism": "Three phases in order, with no editing permitted during phase one. Read the stack and open the largest page and the smallest component. Score every finding with a file reference and fix nothing. Then repair in a fixed order, re-running the affected pass after each group. Four targeted changes beat forty files that improve nothing.",
+          "whyItWorks": "Separating diagnosis from repair is what makes the systemic finding visible at all: a local fix applied during reading removes the evidence of the pattern it was an instance of. The re-run after each group keeps the judgement honest as the page changes underneath it.",
+          "contextCost": "low",
+          "decision": "adopt",
+          "sitesmithForm": "redesign.md, as the run structure, with the repair order re-pointed at obligations rather than at the appearance-heavy passes.",
+          "isAppearance": false,
+          "threeRenditions": [
+            "An audit that ends at phase two with a written finding list and no diff, because the brief only asked what is wrong",
+            "A repair that touches three files because phase two found one systemic token problem",
+            "A repair that rebuilds every template because phase two found the systemic problem is the templates"
+          ],
+          "confidence": 0.85
+        },
+        {
+          "id": "six-states-enumerated",
+          "source": "sitesmith v2.3 redesign audit",
+          "sourcePath": "skills/sitesmith/v2/tasks/redesign-audit.md:96-112",
+          "problemSolved": "Interactive elements ship with rest and hover and nothing else. Missing states read as unfinished work and are then defended as a stylistic choice.",
+          "mechanism": "Every interactive element owes six states with a definition each: rest, hover (never the only affordance, because touch has no hover), focus-visible, active, disabled (with the actual attribute, because something that looks pressable and does nothing is a bug), and loading (occupying the shape of what it replaces). Then three page-level states: empty as a composed first-run view, error inline next to its cause with a way forward, and partial.",
+          "whyItWorks": "Section 8 of the current SKILL.md asserts the states exist. This enumerates them with the failure each one prevents, which is what makes it checkable. The hover-is-not-the-only-affordance clause and the error-placement clause are the two that are absent from v3 and both are behavioural, not visual.",
+          "contextCost": "medium",
+          "decision": "adapt",
+          "sitesmithForm": "SKILL.md section 8, expanded from one sentence to the enumeration, minus the skeleton and the scale(0.98) and the duration band.",
+          "isAppearance": false,
+          "threeRenditions": [
+            "A text-only interface where every state is a change of weight, case or underline and no colour changes at all",
+            "A high-chroma interface where every state is a colour and elevation change",
+            "A print-like interface where states are rules and offsets and the pending state is a dotted placeholder of the exact result size"
+          ],
+          "confidence": 0.85
+        },
+        {
+          "id": "argument-shape-six-beats",
+          "source": "sitesmith v2.3 marketing mode",
+          "sourcePath": "skills/sitesmith/v2/modes/marketing.md:27-42",
+          "problemSolved": "A persuade surface with a beautiful first screen and no argument beneath it: three feature cards standing in for the four questions the reader actually has.",
+          "mechanism": "The page is an argument in a fixed order: what this is, why it matters to you, how it works, why believe it, what it costs, what to do next. Six sections is a complete page; nine is a page hiding an argument it has not made. Not answering the cost question is answering it badly.",
+          "whyItWorks": "It is an ordering of information, not of layout, so it survives any visual language. It also falsifies the architecture's claim that a persuade-specific floor could only hold universals or looks: this is neither, because an operate surface has no argument to make.",
+          "contextCost": "low",
+          "decision": "adapt",
+          "sitesmithForm": "SKILL.md section 7, three lines. Not a fourth floor file: section 9 routes decide surfaces to sections 1 to 8 and there is deliberately no floor/decide.md.",
+          "isAppearance": false,
+          "threeRenditions": [
+            "Six full-bleed panels, one beat each, scrolled through",
+            "A single dense page where the six beats are six paragraphs of one column with no section breaks at all",
+            "A stepped configurator where answering each step surfaces the next beat, and the cost beat is the fifth step"
+          ],
+          "confidence": 0.85
+        },
+        {
+          "id": "one-imagery-treatment-per-site",
+          "source": "sitesmith v2.3 marketing mode",
+          "sourcePath": "skills/sitesmith/v2/modes/marketing.md:117-118",
+          "problemSolved": "Two photographic treatments on one page reads as two brands, and it is the most common way a site assembled from mixed sources gives itself away.",
+          "mechanism": "One treatment across the site: the same crop logic, the same aspect ratios, the same colour handling, everywhere.",
+          "whyItWorks": "It constrains consistency without naming which treatment, so it is satisfiable by any treatment at all including none. It is the imagery equivalent of a token layer: one decision made once that answers every later instance.",
+          "contextCost": "low",
+          "decision": "adopt",
+          "sitesmithForm": "SKILL.md section 6, one line in the plan: name the imagery treatment alongside colour and type.",
+          "isAppearance": false,
+          "threeRenditions": [
+            "Every image a full-bleed uncropped documentary frame with no colour treatment",
+            "Every image a square studio shot on one ground, silhouetted",
+            "Every image a duotone crop at one aspect ratio, tightly cropped to the subject"
+          ],
+          "confidence": 0.85
+        },
+        {
+          "id": "imagery-provenance-ladder",
+          "source": "sitesmith v2.3 marketing mode",
+          "sourcePath": "skills/sitesmith/v2/modes/marketing.md:107-115",
+          "problemSolved": "Imagery is the layer where a page most easily starts lying: a rendered fake of the product's interface, a stock photograph presented as the client's work, a placeholder that reads as a claim.",
+          "mechanism": "A descending preference: real photography the client owns, then generated imagery art-directed to one treatment, then a seeded placeholder service so crop and colour are stable between loads, then an explicitly labelled slot stating what belongs there. A div-built fake product screenshot is banned outright; a typeset excerpt of real output is allowed and must be labelled as an excerpt.",
+          "whyItWorks": "The seeded-placeholder rung is the non-obvious one: an unseeded placeholder changes between loads, so every screenshot and every review sees a different page and the layout can never be judged. The fake-screenshot ban is an honesty rule, not a taste rule, and it is the one case where the material and the claim are the same object.",
+          "contextCost": "low",
+          "decision": "adopt",
+          "sitesmithForm": "floor file or SKILL.md section 7 alongside the claim rule. Drop the accompanying 'images are mandatory' and 'no decorative SVG blobs' lines, which are appearance.",
+          "isAppearance": false,
+          "threeRenditions": [
+            "A page built entirely on the client's own archive photographs at one treatment",
+            "A page with no photography at all, using labelled slots that state what belongs there, shipped as a staging build",
+            "A page using one seeded placeholder service throughout so every reviewer sees the identical crops"
+          ],
+          "confidence": 0.85
+        },
+        {
+          "id": "phone-navigation-obligations",
+          "source": "sitesmith v2.3 marketing mode",
+          "sourcePath": "skills/sitesmith/v2/modes/marketing.md:165-166",
+          "problemSolved": "A phone navigation that hides the primary action behind a menu, or that gives no indication of where the visitor currently is.",
+          "mechanism": "On a phone: a real disclosure rather than a fake one, the current item marked, and the primary action visible without opening the menu.",
+          "whyItWorks": "Three separable obligations, all behavioural, none naming a form. The current-item obligation is the same rule as the redesign audit's sixth forgotten surface, which is corroboration from a second file rather than duplication.",
+          "contextCost": "low",
+          "decision": "adopt",
+          "sitesmithForm": "SKILL.md section 8, one line.",
+          "isAppearance": false,
+          "threeRenditions": [
+            "A bottom bar carrying the action with a sheet for the destinations and the current one marked by weight",
+            "A top bar with a full-screen index, the action pinned beside the trigger, the current item marked by a rule",
+            "A persistent rail on wide phones where nothing is hidden and the current item is marked by position"
+          ],
+          "confidence": 0.85
+        },
+        {
+          "id": "signature-swap-falsifier",
+          "source": "sitesmith v2.3 marketing mode",
+          "sourcePath": "skills/sitesmith/v2/modes/marketing.md:193-194",
+          "problemSolved": "A page that is technically correct and tonally interchangeable. Every check passes and no direction was chosen.",
+          "mechanism": "Ask what the page would lose if its one distinguishing decision were replaced by the category's default. If the answer is nothing, no direction was chosen.",
+          "whyItWorks": "Section 6 of the current SKILL.md asks for a Signature and a One risk but gives no way to fail either. This is that test. Stated as a swap rather than as a quality judgement it can be answered concretely, and it is cheap enough to run at the end of the plan rather than at the end of the build.",
+          "contextCost": "low",
+          "decision": "adapt",
+          "sitesmithForm": "SKILL.md section 6, appended to the Signature step. Generalise away from the v2 phrasing, which asks about a different accent hue and therefore presumes an accent-based design.",
+          "isAppearance": false,
+          "threeRenditions": [
+            "A page whose signature is a texture: swap it for a flat ground and the whole concept goes",
+            "A page whose signature is its section labelling system: swap it for generic headings and the world disappears",
+            "A page whose signature is a single full-bleed object: swap it for a three-card row and nothing of the client remains"
+          ],
+          "confidence": 0.8
+        },
+        {
+          "id": "verify-imports-against-manifest",
+          "source": "sitesmith v2.3 redesign audit",
+          "sourcePath": "skills/sitesmith/v2/tasks/redesign-audit.md:165-166",
+          "problemSolved": "A hallucinated import fails at build time and costs a full cycle, and it is a failure mode specific to the agent writing the code rather than to the design.",
+          "mechanism": "Verify every import against the dependency manifest before writing it.",
+          "whyItWorks": "It is a pre-condition rather than a post-hoc check, so it costs one file read instead of one failed build and one diagnosis. Nothing in the current v3 package covers it, and it is the only rule in these three files aimed squarely at the author being a model.",
+          "contextCost": "low",
+          "decision": "adopt",
+          "sitesmithForm": "run.md, in the build phase, one line.",
+          "isAppearance": false,
+          "threeRenditions": [
+            "A plain HTML build where the manifest is the set of files on disk and the check is a directory listing",
+            "A Vite project where the check is package.json before each new import",
+            "An Astro project where the check includes the integrations list before a component import"
+          ],
+          "confidence": 0.8
+        },
+        {
+          "id": "named-z-index-scale",
+          "source": "sitesmith v2.3 redesign audit",
+          "sourcePath": "skills/sitesmith/v2/tasks/redesign-audit.md:164",
+          "problemSolved": "Stacking becomes an arms race. z-index: 9999 means the scale was lost, and every later overlay has to outbid it.",
+          "mechanism": "A named z-index scale, declared once, with every stacking value drawn from it.",
+          "whyItWorks": "It states the obligation as the existence of a system rather than as any particular value, so it is satisfiable at any depth budget. The named form is what makes it checkable: a raw number in a component is the violation, regardless of its magnitude.",
+          "contextCost": "low",
+          "decision": "adopt",
+          "sitesmithForm": "SKILL.md section 8 or the redesign semantics pass, one line.",
+          "isAppearance": false,
+          "threeRenditions": [
+            "A flat page with exactly two layers named ground and overlay",
+            "A dashboard with six named layers including a toast layer above a modal layer",
+            "A page with no stacking at all, where the rule is satisfied by having no z-index in the codebase"
+          ],
+          "confidence": 0.8
+        },
+        {
+          "id": "transitions-on-transform-and-opacity-only",
+          "source": "sitesmith v2.3 redesign audit",
+          "sourcePath": "skills/sitesmith/v2/tasks/redesign-audit.md:113-114",
+          "problemSolved": "Animating width, height, top or left forces layout on every frame, so the motion is janky on exactly the devices least able to hide it.",
+          "mechanism": "Transitions belong on transform and opacity. Geometry is not animated.",
+          "whyItWorks": "It is a performance obligation stated as a property constraint, and it says nothing about duration, easing or character, which is where the same section immediately becomes appearance three lines later.",
+          "contextCost": "low",
+          "decision": "adopt",
+          "sitesmithForm": "SKILL.md section 8, appended to the motion rule.",
+          "isAppearance": false,
+          "threeRenditions": [
+            "A slow full-page cross-fade on opacity alone",
+            "A sharp slide-in on transform with no fade",
+            "A still interface where the rule is satisfied by animating nothing"
+          ],
+          "confidence": 0.8
+        },
+        {
+          "id": "content-variance-check",
+          "source": "sitesmith v2.3 redesign audit",
+          "sourcePath": "skills/sitesmith/v2/tasks/redesign-audit.md:134-135",
+          "problemSolved": "Identical timestamps across a blog roll, or one photograph reused for four people. Real content is untidy; generated content is uniform, and the uniformity is the tell.",
+          "mechanism": "Content that occurs in a series must vary the way real content varies: dates, authors, lengths and portraits differ across the set.",
+          "whyItWorks": "It targets the statistical signature of generated content rather than any individual item, which is why it catches pages where every individual item passes review. It is a completeness rule about the set, and the set is what the reader perceives.",
+          "contextCost": "low",
+          "decision": "adopt",
+          "sitesmithForm": "SKILL.md section 8, one line beside 'real content, no lorem'. Explicitly without the accompanying 'round numbers read as fake' line, which instructs more convincing fabrication.",
+          "isAppearance": false,
+          "threeRenditions": [
+            "A card grid whose entries differ in title length enough that the grid is visibly ragged",
+            "A table whose date column spans three years with irregular gaps",
+            "A quote wall with three quotes of very different lengths and no portraits at all"
+          ],
+          "confidence": 0.8
+        },
+        {
+          "id": "sufficient-stack-definition",
+          "source": "sitesmith v2.3 setup task",
+          "sourcePath": "skills/sitesmith/v2/tasks/setup.md:35-42,66-73,86",
+          "problemSolved": "Tooling accretes during a design task. A page ends up with a state library, a component library and three styling systems, and nobody asked for any of them.",
+          "mechanism": "A stack is sufficient when four things are true: something renders HTML, styles are authored in one system, there is a dev server with hot reload, and there is a production build emitting static assets. Do not add beyond this without being asked. Verify by running dev and build before writing any design code, because a scaffold that does not build is not a scaffold. Every addition is a dependency someone must maintain, and if CSS can do it, use CSS.",
+          "whyItWorks": "It defines sufficiency positively and closes the list, so additions have to be argued rather than assumed. The build-before-design ordering means the first failure is a stack failure rather than a design failure that turns out to be a stack failure.",
+          "contextCost": "low",
+          "decision": "adopt",
+          "sitesmithForm": "stacks/static.md.",
+          "isAppearance": false,
+          "threeRenditions": [
+            "A single self-contained HTML file that satisfies all four conditions with no install at all",
+            "A Vite and Tailwind project satisfying them with two dependencies",
+            "An Astro content site satisfying them with a content collection and no client JS"
+          ],
+          "confidence": 0.8
+        },
+        {
+          "id": "no-key-gated-service-in-setup",
+          "source": "sitesmith v2.3 setup task",
+          "sourcePath": "skills/sitesmith/v2/tasks/setup.md:95-97",
+          "problemSolved": "A design task quietly acquires a paid dependency or writes a credential into a config file on the user's behalf.",
+          "mechanism": "Never install a paid or key-gated service as part of setup. If a component source or asset API needs an account, name it as an option and let the user decide. Do not ask for, store, or write API keys into config on the user's behalf.",
+          "whyItWorks": "It is a safety boundary stated at the only point where it can be enforced cheaply, and it fails closed by naming the option rather than acting on it. Nothing in the current v3 package covers credential handling at all.",
+          "contextCost": "low",
+          "decision": "adopt",
+          "sitesmithForm": "stacks/static.md and run.md, verbatim.",
+          "isAppearance": false,
+          "threeRenditions": [
+            "A build that needs no third-party asset service",
+            "A build that names a paid image service as an option in the manifest and ships labelled slots instead",
+            "A build where the user supplies the key themselves outside the repository and the config reads it from the environment"
+          ],
+          "confidence": 0.8
+        },
+        {
+          "id": "scoring-rubric-with-resumption",
+          "source": "sitesmith v2.3 redesign audit",
+          "sourcePath": "skills/sitesmith/v2/tasks/redesign-audit.md:196-208",
+          "problemSolved": "A redesign ends with no statement of what improved and no statement of what is still broken, so the next session starts from nothing.",
+          "mechanism": "Six dimensions scored 1, 3 or 5 before and after: hierarchy, originality, cohesion, responsiveness, usability, slop resistance. Anything still at 2 or below after the repair order is where the next session starts.",
+          "whyItWorks": "The resumption clause is the load-bearing half: it converts a score into a work item. The dimensions are stated as observable outcomes rather than as visual preferences ('eye path is deliberate at every breakpoint', 'layout genuinely rethought per width').",
+          "contextCost": "medium",
+          "decision": "adapt",
+          "sitesmithForm": "redesign.md, with one addition that the original lacks. Originality at 5 reads 'could not be mistaken for another site', and all three round-8 sites passed that per-site test while the portfolio failed. The dimension must be scored against the studio's own previous builds, not against sites in general, or the rubric reproduces the failure with a number attached.",
+          "isAppearance": false,
+          "threeRenditions": [
+            "A minimal one-page redesign scored on all six with originality measured against the last three builds",
+            "A dashboard redesign where originality is scored low deliberately and usability is the target",
+            "An editorial redesign where responsiveness at 5 means three genuinely different layouts rather than one that reflows"
+          ],
+          "confidence": 0.75
+        },
+        {
+          "id": "icon-coherence",
+          "source": "sitesmith v2.3 redesign audit and setup task",
+          "sourcePath": "skills/sitesmith/v2/tasks/redesign-audit.md:152-153; v2/tasks/setup.md:84",
+          "problemSolved": "Icons drawn from three families at three stroke weights, or emoji standing in for icons and rendering differently on every platform.",
+          "mechanism": "One icon family, one stroke width, one optical size scale, decided once. Emoji are not icons: they render differently per platform and cannot be themed.",
+          "whyItWorks": "The emoji clause is technical rather than aesthetic, which is what makes it survive the test. The one-family clause names no family, so it is satisfiable by any icon language including a hand-drawn one or none at all.",
+          "contextCost": "low",
+          "decision": "adopt",
+          "sitesmithForm": "SKILL.md section 6, one line in the plan alongside type and colour.",
+          "isAppearance": false,
+          "threeRenditions": [
+            "A page with no icons at all, where every affordance is a word",
+            "A page with one hairline geometric family at a single optical size",
+            "A page with heavy filled pictograms drawn specifically for the subject's trade"
+          ],
+          "confidence": 0.75
+        },
+        {
+          "id": "one-intent-one-label",
+          "source": "sitesmith v2.3 marketing mode",
+          "sourcePath": "skills/sitesmith/v2/modes/marketing.md:174-175",
+          "problemSolved": "Two controls with the same intent carrying different labels, and the reader has to work out whether they do the same thing.",
+          "mechanism": "One intent has one label everywhere it appears. Two labels for one intent is a page that could not decide.",
+          "whyItWorks": "Section 7 already requires a control to keep the same word from action through to confirmation. This is the horizontal case of the same rule, across instances rather than across time, and it is the one that actually shows up on a persuade surface.",
+          "contextCost": "low",
+          "decision": "adapt",
+          "sitesmithForm": "SKILL.md section 7, appended to the existing same-word rule as a clause rather than as a new paragraph.",
+          "isAppearance": false,
+          "threeRenditions": [
+            "A page where the single action word appears three times identically at three scales",
+            "A page where the action appears once only, so the rule is trivially satisfied",
+            "A configurator where the same verb heads every step and closes the flow"
+          ],
+          "confidence": 0.75
+        },
+        {
+          "id": "defaults-to-alternatives-table",
+          "source": "sitesmith v2.3 redesign audit",
+          "sourcePath": "skills/sitesmith/v2/tasks/redesign-audit.md:137-151",
+          "problemSolved": "Nominally: replacing generic component patterns with less generic ones.",
+          "mechanism": "A ten-row table pairing each recognised default with a named replacement: squircles for circular avatars, a masonry wall for the testimonial carousel, a two-column list for the accordion, a slide-over for the modal, a tertiary text link for the filled-plus-ghost button pair.",
+          "whyItWorks": "It does not. Applied on every project the alternatives become the new defaults, so three redesigns of three different generic sites converge on one non-generic site. This is the inverted-convergence failure already identified in the architecture review, where systematically inverting each category's default rotates the categories into one another. The left column is genuinely useful as a catalogue of recognisable defaults and belongs in a tells corpus; the right column is a house style delivered as a repair instruction.",
+          "contextCost": "medium",
+          "decision": "reject",
+          "sitesmithForm": "Left column to corpora/tells; right column discarded. If a replacement is wanted, the obligation is 'name the default you are shipping and say why it is right here', which forces a per-subject answer instead of a global one.",
+          "isAppearance": true,
+          "threeRenditions": [
+            "Not applicable: the rule prescribes one replacement per default, so it has exactly one rendition by construction, which is why it fails the test"
+          ],
+          "confidence": 0.85
+        },
+        {
+          "id": "round-numbers-read-as-fake",
+          "source": "sitesmith v2.3 redesign audit",
+          "sourcePath": "skills/sitesmith/v2/tasks/redesign-audit.md:125",
+          "problemSolved": "Nominally: detecting fabricated statistics, which are tidy in a way real data is not.",
+          "mechanism": "'Round numbers read as fake. Real data is untidy. 47.2% is believable; 50% is a guess.'",
+          "whyItWorks": "As a detection heuristic it is correct. As an instruction to an author it says make your invented numbers more convincing, which directly contradicts SKILL.md section 7: facts are not yours to invent. It is one line above a rule forbidding invented metrics, in the same list, and the two cannot both be followed. Keep it only in a tells corpus where the reader is auditing rather than writing.",
+          "contextCost": "low",
+          "decision": "reject",
+          "sitesmithForm": "corpora/tells only, phrased as a detection signal, never as guidance to an author.",
+          "isAppearance": false,
+          "threeRenditions": [
+            "Not applicable: rejected on a correctness conflict rather than on the appearance test"
+          ],
+          "confidence": 0.85
+        }
+      ],
+      "appearanceRules": [
+        "marketing.md:80-82 — 'marketing sits at the open end of whatever ramp the contract defines'. A density steer with no subject input. Passes floor-lint.",
+        "marketing.md:104-105 — 'Images are mandatory in this mode.' Forbids the type-only page outright. Its own escape hatch cites 'mode M, manifesto hero', which is this same file and no longer contains a manifesto hero: a dead self-reference left by an earlier de-appearance pass.",
+        "marketing.md:114 — 'Never: hand-rolled decorative SVG blobs.' A ban on one device says nothing about what to do. Belongs in a tells corpus.",
+        "marketing.md:122-123 — 'Entrance only, and once. A short fade-and-rise on first view, staggered by no more than three elements.' Prescribes a motion character. Three sites obeying it move identically. Passes floor-lint clean.",
+        "marketing.md:133-134 — 'The accent works hard and appears rarely... Three places on a page, not thirty.' This is the round-8 monoculture stated as a floor rule.",
+        "marketing.md:136 — 'Neutrals carry the page.' Forbids two-accent, three-accent and no-accent palettes, all of which are legitimate directions. Together with 133-134 this is PALETTE-ANALYSIS finding 4 written as an obligation.",
+        "marketing.md:138-140 — the semantic-colour exemption. Bookkeeping that exists only to service the accent budget; it dies with it. Residual kernel: a state colour is not the emphasis colour.",
+        "marketing.md:149 — logo wall 'logos only, no category labels beneath them'. Component layout. The obligation is only that the logos are real customers.",
+        "marketing.md:159 — 'One line at 1440, height ≤ 80px, five destinations at most plus one action.' A nav height cap is a look. The surviving obligation is 160-161: above five destinations the sitemap is wrong, not the nav.",
+        "marketing.md:163-164 — 'A mega-menu is legitimate above roughly twelve destinations.' Names a component and a threshold for it. Kernel: nav form follows catalogue size.",
+        "marketing.md:179 — 'Two to four short paragraphs per section, or one paragraph and a list.' Forbids the dense essay and the index page. The surviving obligation is 180: a section makes one point.",
+        "marketing.md:182 — 'Sub-paragraphs under about 25 words.' Appearance in copy form.",
+        "marketing.md:71-72 (partial) — 'headline ≤ 2 lines at 1440, subtext ≤ 4 lines'. The reachable-action half is an obligation; the line caps are an arbitrary proxy that narrows expression without stating a real outcome.",
+        "marketing.md:88,90 (partial) — a floor section titled 'Radius' names an appearance axis even while every sentence inside refuses to set a value. The nesting-consistency rule at 92-95 is a genuine universal and should be lifted out of a section with this name.",
+        "redesign-audit.md:54 — 'Introduce a second face for headings.' Forbids a single-face direction. The stated reason, 'no hierarchy signal beyond size', is false: weight, case, colour, position and rule all signal hierarchy.",
+        "redesign-audit.md:55 — 'Add 500 and 600; use them for labels and subheads.' Prescribes a weight ramp.",
+        "redesign-audit.md:56 — 'Tighten tracking as size grows.' Caught by floor-lint as a type scale.",
+        "redesign-audit.md:61 — 'Sentence case, except where the brand demands otherwise.' Case is a look decision; the default is prescribed.",
+        "redesign-audit.md:67 — 'Shift a few points off the extreme and tint toward the accent's hue.' Caught by floor-lint. Also forbids pure-black and pure-white grounds, both legitimate directions.",
+        "redesign-audit.md:68 — 'More than one accent colour: pick one. Demote the rest to neutrals.' The same monoculture rule as marketing.md:133-136, restated in the redesign path so both paths arrive at it.",
+        "redesign-audit.md:69-70 — 'Choose one grey family' and 'desaturate accents above roughly 80% saturation'. A neutral strategy and a chroma cap.",
+        "redesign-audit.md:71 — 'Tint the shadow with the background hue; vary the scale by elevation.' Caught by floor-lint twice. The kernel is a tell, not a floor rule.",
+        "redesign-audit.md:73 — 'One dark section dropped into a light page: commit to the mode.' Kernel is systematic surface change; as written it forbids the deliberate single-section inversion.",
+        "redesign-audit.md:74-75 — 'Radial, mesh, or a flat fill with texture' and 'a low-opacity noise layer, pointer-events: none, fixed'. Mandates specific devices. The noise layer is exactly the kind of universal signature that makes three sites share one texture. Note that floor-lint misses both, because the file writes 'linear gradients' without the hyphen the regex needs.",
+        "redesign-audit.md:84 — 'Offset one axis. Left-align headings over centred content, or break one element out of the grid.' Forbids symmetry.",
+        "redesign-audit.md:85 — 'Two-column zig-zag, an asymmetric grid, or a horizontal scroller' as the replacement for three equal cards. The three-card row is a real tell; the prescribed replacements are appearance.",
+        "redesign-audit.md:88 — 'Constrain to roughly 1200-1440px with auto margins.' A container cap, and redundant with the 55-75ch measure obligation.",
+        "redesign-audit.md:89 — 'Identical border-radius on every element: tighter inside, softer outside.' Caught by floor-lint. Same nesting rule as marketing.md:92-95; keep it once, value-free.",
+        "redesign-audit.md:90 — 'Overlap with negative margin to create depth.' Mandates a device that a flat Swiss-grid direction would refuse.",
+        "redesign-audit.md:91 — 'Optical balance usually wants slightly more below.' A specific asymmetry preference.",
+        "redesign-audit.md:105 — 'Active: a small compression, around scale(0.98) or a 1px downward nudge.' Names the motion value. The obligation is only that an actioned control acknowledges the press.",
+        "redesign-audit.md:108 (partial) — 'a skeleton shaped like the content it replaces'. The obligation is that the pending state occupies the space the result will occupy; the skeleton is a named device and a known convergence tell.",
+        "redesign-audit.md:114-116 — '150-300ms for micro-interactions; ease-out entering, ease-in leaving; exits roughly two-thirds the length of entrances.' Motion character in numeric form, the same defect as marketing.md:122-123.",
+        "redesign-audit.md:139-151 — the entire Alternative column of the components table. Squircles, masonry walls, two-column FAQ lists, slide-overs, tertiary text links. Applied globally, the alternatives become the new defaults.",
+        "redesign-audit.md:149 (partial) — 'sun/moon toggle' as the named defect. The obligation is respecting prefers-color-scheme with an override; the toggle's shape is not the floor's business.",
+        "redesign-audit.md:103 (partial) — 'a ring that survives a dark background'. A focus indicator need not be a ring: an inversion, an offset bar or a background swap all satisfy the obligation."
+      ],
+      "universalRules": [
+        "Body measure sits between roughly 55 and 75 characters, and it is the measure that is constrained, not the container. (marketing.md:84; redesign-audit.md:57)",
+        "Line-height scales inversely with size: display text needs proportionally less leading than body text. (redesign-audit.md:58)",
+        "Few type sizes, used hard. A page with nine sizes has a scale, not a hierarchy. (marketing.md:86)",
+        "What is inside a container is tighter than the container. A control that shares its card's corner reads as a mistake. State it without naming a value. (marketing.md:92-95; redesign-audit.md:89)",
+        "Spacing comes from one declared step and every value is a multiple of it. The step itself is the direction's to choose. (marketing.md:85; redesign-audit.md:94)",
+        "Motion never sits between an intent and its result. Nothing moves in a form; nothing delays a click. (marketing.md:128)",
+        "Transitions belong on transform and opacity. Animating geometry forces layout on every frame. (redesign-audit.md:113-114)",
+        "Hover is never the only affordance, because touch has no hover. (redesign-audit.md:102)",
+        "A disabled control carries the actual disabled attribute. Something that looks pressable and does nothing is a bug. (redesign-audit.md:106)",
+        "The pending state occupies the space the result will occupy, so nothing jumps when the result arrives. (redesign-audit.md:108)",
+        "An error appears inline, next to its cause, with a way forward. An empty state is composed, not a blank panel. A partial state exists for when some data arrived and some did not. (redesign-audit.md:110-112)",
+        "Anything the reader is asked to compare must not shift position on the axis of comparison. State the obligation, never the implementation. (redesign-audit.md:59,92,93)",
+        "Depth cues come from one consistent model. Shadows implying different light sources are subconsciously wrong. (redesign-audit.md:72)",
+        "Use min-height with dynamic viewport units rather than fixed viewport height: 100vh jumps when mobile browser chrome retracts. (redesign-audit.md:86)",
+        "One styling system. No inline styles in a project that has one, and never a second system alongside the first. (redesign-audit.md:162; setup.md:92-93)",
+        "A named z-index scale. A raw stacking number in a component means the scale was lost. (redesign-audit.md:164)",
+        "One icon family, one stroke width, one optical size scale, decided once. Emoji are not icons: they render differently per platform and cannot be themed. (redesign-audit.md:152-153; setup.md:84)",
+        "Respect prefers-color-scheme and offer an override rather than assuming a mode. (redesign-audit.md:149)",
+        "Page metadata is part of shipping: title, description, og:title, og:description, og:image, favicon. (redesign-audit.md:167)",
+        "Verify every import against the dependency manifest before writing it. (redesign-audit.md:165-166)",
+        "Content in a series varies the way real content varies: dates, lengths, authors, portraits. Uniformity across a set is the tell, even when each item passes on its own. (redesign-audit.md:134-135)",
+        "Contrast is verified with a tool, not by eye, in both colour schemes. Section 8 already carries the numbers; it does not yet carry the method. (redesign-audit.md:77-78)",
+        "One imagery treatment across the site: same crop logic, same aspect ratios, same colour handling. (marketing.md:117-118)",
+        "Generated or vendored components are restyled from the project's own tokens before they ship. You own the output; never ship it at default styling. (setup.md:83)",
+        "No scaffold placeholder content in the delivered result: not the default logo, not the starter copy, not the example route. (setup.md:98-99)",
+        "Never install a paid or key-gated service as part of setup, and never ask for, store, or write API keys on the user's behalf. (setup.md:95-97)"
+      ],
+      "verdict": "marketing.md is 30% appearance, not the 50% on record, and it should still be deleted — but the reason on record is wrong and will misfire on the next two mode files. Recount: the architecture cites six of twelve numbered decisions as appearance (first-screen arrangement, density, radius, imagery, motion, accent count). Three of those six are stale. Sections 2, 3 and 4 had already been rewritten into outcome form and now say the opposite of what is attributed to them: 'There is no default arrangement here' (l.47), 'The specific numbers come from the contract' (l.80), 'there is no marketing radius either' (l.98). The honest count is two decisions wholly appearance (6 Motion, 7 Colour emphasis), two majority appearance (9 Navigation, 11 Content density), one mixed (5 Imagery). About 3.5 of 12, roughly 31 of 168 body lines.\n\nThe deletion still stands, for two reasons that are not the recorded one. First, the concentrated 30% is the failed recipe itself: 'the accent appears in three places, not thirty' plus 'neutrals carry the page' is PALETTE-ANALYSIS finding 4 written as an obligation, and Nordrig build B executed exactly that. Second, this file already survived one round of prose self-restraint — sections 2 to 4 were rewritten to refuse defaults, the run still produced 0/8, and the untouched sections 6 and 7 are why. Prose restraint does not work on a file of this shape.\n\nBut the stated reason — 'a marketing-specific craft floor could only contain rules that are either universal or a look' — is falsified by the file. Four rules are neither: the six-beat argument shape (l.29-39), the proof ladder with 'nothing' as a legitimate rung (l.144-152), the delete-every-image-and-panel test (l.188-191), and the table mapping the subject's strongest true material to what the first screen is built around (l.57-64). None is universal (a dashboard makes no argument and needs no proof section) and none is a look. The fourth is a divergence engine, not a convergence risk. Delete the file, rescue those four into SKILL.md sections 6 and 7 rather than inventing a floor/decide.md, and correct the recorded reasoning before ecommerce.md and product-ui.md are judged by the same two-category argument.\n\nredesign-audit.md is two documents. The four diagnostic tables (Passes 1, 2, 3, 6; ~60 lines) are 72% appearance — 28 of 39 rows — and are the redesign path's convergence engine. Pass 2 read top to bottom instructs every project to arrive at an off-black or off-white ground tinted toward one desaturated accent, one grey family, hue-tinted shadows and a noise layer. That is a complete house style shipped as an audit, and it is the same rule as marketing.md section 7 stated in a second file so that both the build path and the redesign path reach it. Pass 6 is the inverted version: prescribe one replacement per default globally and the alternatives become the new defaults. The remaining ~140 lines are 90% obligation and hold the strongest material in the whole v2 corpus: the preservation contract, read-score-repair phasing, the six states, the forgotten-surfaces checklist, the repair order and the scoring rubric. Build redesign.md from that half; move Pass 6's left column to a tells corpus and discard its right column. Two caveats carried forward: the tabular-figures rule is correct and complicit (it mandates one of the four round-8 devices through the obligations door), and the scoring rubric is proven insufficient in the exact dimension it measures, since all three converged sites passed its per-site Originality test while the portfolio failed.\n\nsetup.md is roughly 95% obligation and near-zero appearance — the purest floor material of the three and the most under-rated. Its decision gate, four-condition definition of a sufficient stack, build-before-design verification, API-key prohibition and 'never ship it at default styling' all have no home in v3 today. Fold it into stacks/static.md whole rather than silently.\n\nThe engineering finding that outranks all three: floor-lint.mjs passes marketing.md clean. Its only failure is a missing rendition heading. Meanwhile redesign-audit.md fails on five lines, four of which are quotations of defects it is telling you to remove. The lint's own model of appearance is 'a value someone could copy into a stylesheet', and that is not how round 8 converged: build B chose #0f1218 and #3dd6c6, values appearing nowhere in any v2 file, by executing a prescribed structure written in prose. Until the purity scan also bans prescribed devices, accent budgets, motion characters, nav dimensions, component substitutions and word counts, a rewritten floor can reproduce the failure and report green.\n\nFull extraction with line citations: docs/rebuild/research/sitesmith-modes/marketing-and-tasks.md"
+    }
+  ]
+}

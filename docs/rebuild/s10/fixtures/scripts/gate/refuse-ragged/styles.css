@@ -1,0 +1,41 @@
+:root {
+  --paper: #e6ecf2;
+  --liquor: #3b2a17;
+  --iron: #7a1f12;
+  --face-drum: "Courier New", monospace;
+  --face-ledger: Georgia, serif;
+  --step-drum: 2.75rem;
+  --step-ledger: 1.0625rem;
+  --curl: 3px;
+}
+
+html { background: var(--paper); }
+
+body {
+  background: var(--paper);
+  color: var(--liquor);
+  font-family: var(--face-ledger);
+  font-size: var(--step-ledger);
+}
+
+h1 {
+  font-family: var(--face-drum);
+  font-size: var(--step-drum);
+  color: var(--liquor);
+  background-image: linear-gradient(var(--liquor), var(--iron));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.wetline {
+  height: 0.5px;
+  border: 0;
+  border-radius: var(--curl);
+  background: var(--iron);
+}
+
+.edgeA { padding: 3rem 6rem; background: var(--paper); }
+.edgeB { padding: 3rem 9rem; background: var(--paper); }
+.ledgerpage { margin-top: 980px; }
+.ledgerpage dl { display: grid; grid-template-columns: auto auto; gap: 0.25rem 1rem; justify-content: start; }

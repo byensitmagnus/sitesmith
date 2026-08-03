@@ -1,0 +1,13 @@
+:root {
+  --pitch: #101014;
+  --chalk: #e8e8e8;
+  --face-ledger: Georgia, serif;
+  --step-ledger: 1.0625rem;
+  --step-drum: 2.75rem;
+}
+
+html { background: var(--pitch); }
+body { background: var(--pitch); color: var(--chalk); font-family: var(--face-ledger); font-size: var(--step-ledger); }
+h1 { font-family: var(--face-ledger); font-size: var(--step-drum); }
+.ledgerpage { margin-top: 980px; }
+.ledgerpage dl { display: grid; grid-template-columns: auto auto; gap: 0.25rem 1rem; justify-content: start; }

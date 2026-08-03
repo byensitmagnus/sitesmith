@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Orgelværkstedet Hvidbjerg. Aase og Thorbjørn restaurerer kirkeorgler.</title>
+<meta name="description" content="Aase og Thorbjørn har restaureret og intoneret kirkeorgler sammen siden 1998. Fire eller fem instrumenter om året. Første besøg er gratis og tager en halv dag.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700&family=Grenze:wght@400;500&display=swap" rel="stylesheet">
+<style>
+
+/* ── Orgelværkstedet Hvidbjerg ────────────────────────────────────────────
+   Bygget efter .sitesmith/direction.md. Grunden er støbt orgelmetal, blækket
+   er blyant, og alt hvad der skal læses tæt er skåret af bælgelæder.
+   Ingen versaler i hele arket. Ingen hjørneradius. Én bevægelse. */
+
+:root{
+  color-scheme: light;
+
+  /* Materialer, navngivet efter det de er */
+  --orgelmetal:#8b9099;
+  --orgelmetal-mørk:#74797f;
+  --blyant:#1b1e23;
+  --kassemørke:#242019;
+  --bælgelæder:#dccdb0;
+  --bælgelæder-skygge:#c6b598;
+  --tinpest:#c3ccd0;
+  --hudlim:#a1712c;
+  --klæde:#17603a;
+
+  /* Støbningens plet, ridser efter stemmehorn, skindets korn */
+  --plet-lys:rgba(207,213,219,.34);
+  --plet-lyd:rgba(196,203,210,.26);
+  --plet-mørk:rgba(88,93,99,.10);
+  --plet-dyb:rgba(96,101,107,.09);
+  --rids:rgba(72,77,83,.08);
+  --korn:rgba(122,101,68,.10);
+  --korn-tvær:rgba(255,250,240,.16);
+  --skygge-hud:rgba(22,19,14,.42);
+
+  /* Skrift */
+  --display:"Grenze",Georgia,serif;
+  --brød:"Archivo","Helvetica Neue",Arial,sans-serif;
+  --s-brød:1.0625rem;
+  --s-lille:0.9375rem;
+  --s-stop:0.95rem;
+  --s-h1:clamp(2.15rem,6.4vw,4.6rem);
+  --s-h2:clamp(1.7rem,3.6vw,2.7rem);
+  --s-arbejde:clamp(1.2rem,2.6vw,1.75rem);
+  --s-ingress:clamp(1.05rem,1.5vw,1.28rem);
+  --s-afvis:clamp(1.35rem,3vw,2.15rem);
+  --s-tal:clamp(1.25rem,2.4vw,1.7rem);
+
+  /* Løft og søm */
+  --hudskygge:drop-shadow(0 14px 26px var(--skygge-hud));
+  --knapløft:5px 5px 0 var(--kassemørke);
+  --søm:3px;
+
+  /* Håndskårne kanter. Et skind skæres med kniv langs en lineal der ikke er en
+     lineal: kanten vandrer, den takker ikke. Udslag under en halv procent. */
+  --klip-1:polygon(0.5% 0.9%, 14% 0.4%, 31% 0.7%, 49% 0.2%, 67% 0.6%, 84% 0.2%, 99.6% 0.5%,
+    99.3% 18%, 99.7% 38%, 99.2% 58%, 99.6% 79%, 99.1% 99.4%,
+    83% 99%, 65% 99.5%, 47% 98.9%, 29% 99.4%, 13% 99%, 0.4% 99.5%,
+    0.8% 80%, 0.3% 60%, 0.7% 40%, 0.2% 20%);
+  --klip-2:polygon(0.3% 0.5%, 17% 0.9%, 36% 0.3%, 55% 0.8%, 73% 0.3%, 99.5% 0.8%,
+    99.1% 22%, 99.6% 45%, 99.2% 68%, 99.7% 99.1%,
+    79% 99.5%, 58% 98.9%, 37% 99.5%, 16% 99%, 0.5% 99.4%,
+    0.3% 72%, 0.8% 48%, 0.4% 24%);
+  --klip-3:polygon(0.6% 0.4%, 20% 0.8%, 42% 0.2%, 63% 0.7%, 81% 0.3%, 99.4% 0.9%,
+    99.7% 25%, 99.2% 51%, 99.6% 76%, 99.2% 99.5%,
+    76% 98.9%, 52% 99.4%, 28% 98.9%, 0.3% 99.2%,
+    0.7% 74%, 0.2% 50%, 0.6% 26%);
+}
+
+*,*::before,*::after{box-sizing:border-box;}
+
+html{-webkit-text-size-adjust:100%;}
+
+body{
+  margin:0;
+  font-family:var(--brød);
+  font-size:var(--s-brød);
+  line-height:1.62;
+  color:var(--blyant);
+  background-color:var(--orgelmetal);
+  /* Støbt orgelmetal. Fire lag skyer med bløde kanter og lav dækning, hver med
+     sin flisestørrelse. Størrelserne har ingen fælles divisor, så gentagelsen
+     falder først efter mange skærmhøjder og aflæses som skjolder i pladen og
+     ikke som et mønster. Til sidst ridserne efter stemmehornet, på skrå. */
+  background-image:
+    radial-gradient(ellipse 190px 128px at 21% 24%, var(--plet-lys), transparent 72%),
+    radial-gradient(ellipse 148px 101px at 67% 71%, var(--plet-lyd), transparent 70%),
+    radial-gradient(ellipse 224px 143px at 84% 16%, var(--plet-mørk), transparent 74%),
+    radial-gradient(ellipse 167px 118px at 36% 83%, var(--plet-dyb), transparent 72%),
+    repeating-linear-gradient(24deg, var(--rids) 0 1px, transparent 1px 13px);
+  background-size:743px 617px, 611px 523px, 877px 719px, 691px 587px, auto;
+  background-repeat:repeat;
+}
+
+h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.04;margin:0;}
+p{margin:0;}
+ul{margin:0;padding:0;list-style:none;}
+
+.ramme{
+  width:100%;
+  max-width:74rem;
+  margin:0 auto;
+  padding-inline:clamp(1rem,4vw,3.5rem);
+}
+
+/* ── Hoved ─────────────────────────────────────────────────────────────── */
+
+.dæk{
+  padding-block:clamp(1rem,2.4vw,1.9rem);
+  display:flex;
+  flex-wrap:wrap;
+  gap:1.5rem clamp(1.6rem,3vw,2.5rem);
+  align-items:baseline;
+  justify-content:space-between;
+  border-bottom:var(--søm) solid var(--kassemørke);
+}
+
+.mærke{
+  display:inline-block;
+  font-family:var(--display);
+  font-size:clamp(1.15rem,2.2vw,1.5rem);
+  color:var(--blyant);
+  text-decoration:none;
+  padding-block:0.6rem;
+  min-height:44px;
+}
+.mærke:hover{text-decoration:underline;text-underline-offset:0.28em;}
+
+.dæk nav ul{display:flex;flex-wrap:wrap;gap:1.5rem clamp(1.6rem,3vw,2rem);}
+.dæk nav a{
+  display:inline-block;
+  color:var(--blyant);
+  font-size:var(--s-lille);
+  font-weight:500;
+  text-decoration:none;
+  padding:0.7rem 0;
+  min-height:44px;
+  border-bottom:2px solid transparent;
+}
+.dæk nav a:hover{border-bottom-color:var(--klæde);}
+.dæk nav a:active{color:var(--kassemørke);border-bottom-color:var(--kassemørke);}
+
+/* ── Fokus, synligt overalt ────────────────────────────────────────────── */
+
+a:focus-visible{
+  outline:3px solid var(--blyant);
+  outline-offset:4px;
+}
+.mørk a:focus-visible{outline-color:var(--bælgelæder);}
+
+.spring{
+  position:absolute;
+  left:-9999px;
+  top:0;
+  background-color:var(--bælgelæder);
+  color:var(--blyant);
+  padding:0.8rem 1.1rem;
+  font-weight:700;
+  text-decoration:none;
+}
+.spring:focus{left:0;z-index:9;}
+
+/* ── Bælgelæderet: signaturen ──────────────────────────────────────────── */
+
+.hud{filter:var(--hudskygge);}
+
+.bælgelæder{
+  position:relative;
+  clip-path:var(--klip-1);
+  background-color:var(--bælgelæder);
+  /* Skindets narv. Alunberedt fåreskind har porer, ikke linjer, så kornet er to
+     lag prikker på små fliser og ikke striber. Ovenpå to store, meget svage
+     skyer der giver skindet en lys og en mørk side. */
+  background-image:
+    radial-gradient(circle 1.4px at 34% 41%, var(--korn), transparent 100%),
+    radial-gradient(circle 1.2px at 71% 76%, var(--korn-tvær), transparent 100%),
+    radial-gradient(ellipse 300px 200px at 22% 18%, var(--korn-tvær), transparent 70%),
+    radial-gradient(ellipse 260px 180px at 84% 86%, var(--korn), transparent 68%);
+  background-size:13px 11px, 17px 14px, auto, auto;
+  color:var(--blyant);
+  padding:clamp(1.6rem,3.6vw,3.4rem) clamp(1.4rem,3.4vw,3.2rem) clamp(2.2rem,4.4vw,3.8rem);
+}
+.bælgelæder::after{
+  content:"";
+  position:absolute;
+  left:0;right:0;bottom:0;
+  height:10px;
+  background-color:var(--klæde);
+}
+.bælgelæder--to{clip-path:var(--klip-2);}
+.bælgelæder--tre{clip-path:var(--klip-3);}
+
+/* ── Første skærm ──────────────────────────────────────────────────────── */
+
+.bælgen{padding-block:clamp(2.2rem,5vw,4.6rem) clamp(2.6rem,6vw,5.4rem);}
+
+.bænk{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:clamp(1.8rem,4vw,3rem);
+  align-items:start;
+}
+@media (min-width:62rem){
+  .bænk{grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);gap:clamp(2rem,4vw,4rem);}
+}
+
+.stop{
+  font-family:var(--display);
+  font-size:var(--s-stop);
+  color:var(--blyant);
+  margin-bottom:0.9rem;
+}
+.stop::after{
+  content:"";
+  display:block;
+  width:2.6rem;
+  margin-top:0.45rem;
+  border-top:var(--søm) solid var(--klæde);
+}
+.mørk .stop{color:var(--tinpest);}
+.mørk .stop::after{border-top-color:var(--hudlim);}
+
+h1{
+  font-size:var(--s-h1);
+  font-weight:500;
+  max-inline-size:16ch;
+  margin-bottom:clamp(1rem,2vw,1.6rem);
+}
+
+.ingress{
+  font-size:var(--s-ingress);
+  max-inline-size:52ch;
+  margin-bottom:clamp(1.4rem,2.6vw,2.2rem);
+}
+
+.knap{
+  display:inline-block;
+  background-color:var(--klæde);
+  color:var(--bælgelæder);
+  font-weight:700;
+  font-size:var(--s-brød);
+  text-decoration:none;
+  padding:0.85rem 1.5rem;
+  min-height:48px;
+  box-shadow:var(--knapløft);
+}
+.knap:hover{background-color:var(--kassemørke);color:var(--bælgelæder);}
+.knap:active{transform:translate(3px,3px);box-shadow:var(--søm) var(--søm) 0 var(--kassemørke);}
+
+.under{
+  font-size:var(--s-lille);
+  margin-top:1.2rem;
+  max-inline-size:44ch;
+}
+.videre a{
+  display:inline-block;
+  font-size:var(--s-lille);
+  padding-block:0.8rem;
+  min-height:44px;
+  color:var(--klæde);
+  text-underline-offset:0.24em;
+}
+.videre a:hover{color:var(--kassemørke);}
+
+/* ── Tegningen ─────────────────────────────────────────────────────────── */
+
+.tegning{margin:0;}
+.tegning svg{display:block;width:100%;height:auto;max-width:22rem;}
+.tegning figcaption{
+  font-size:var(--s-lille);
+  color:var(--blyant);
+  margin-top:0.9rem;
+  max-inline-size:30ch;
+  padding-top:0.7rem;
+  border-top:2px solid var(--kassemørke);
+}
+
+.skind{fill:var(--bælgelæder);}
+.skind-fold{fill:var(--bælgelæder-skygge);}
+.fals-skygge{fill:var(--kassemørke);}
+.fals{fill:var(--kassemørke);}
+.lim{fill:var(--hudlim);}
+.hul{fill:var(--kassemørke);}
+
+@media (prefers-reduced-motion: no-preference){
+  .fold{
+    transform-box:fill-box;
+    transform-origin:2% 3%;
+    animation:aande 9s ease-in-out infinite alternate;
+  }
+  @keyframes aande{
+    from{transform:rotate(0deg);}
+    to{transform:rotate(1.4deg);}
+  }
+}
+
+/* ── Afsnittene ────────────────────────────────────────────────────────── */
+
+.afsnit{
+  padding-block:clamp(2.6rem,6vw,5rem);
+  border-top:var(--søm) solid var(--kassemørke);
+}
+
+h2{
+  font-size:var(--s-h2);
+  max-inline-size:18ch;
+  margin-bottom:clamp(1.1rem,2.2vw,1.8rem);
+}
+
+.arbejde{
+  display:grid;
+  grid-template-columns:1fr;
+  max-inline-size:52rem;
+}
+.arbejde li{
+  font-family:var(--display);
+  font-size:var(--s-arbejde);
+  line-height:1.2;
+  padding-block:clamp(0.8rem,1.8vw,1.25rem);
+  border-top:2px solid var(--orgelmetal-mørk);
+}
+.arbejde li:first-child{border-top:0;}
+
+.efterskrift{
+  margin-top:clamp(1.4rem,2.6vw,2.2rem);
+  max-inline-size:46ch;
+}
+
+.panel{max-inline-size:52rem;}
+.panel h2{margin-bottom:1rem;}
+.panel p + p{margin-top:1rem;}
+.panel p{max-inline-size:50ch;}
+
+.tal{
+  font-family:var(--display);
+  font-size:var(--s-tal);
+  line-height:1.18;
+}
+
+/* ── Afvisningen, på kassens mørke ─────────────────────────────────────── */
+
+.mørk{
+  background-color:var(--kassemørke);
+  color:var(--tinpest);
+}
+
+.afvisning{padding-block:clamp(2.4rem,5vw,4.4rem);}
+.afvisning p{
+  font-family:var(--display);
+  font-size:var(--s-afvis);
+  line-height:1.16;
+  color:var(--bælgelæder);
+  max-inline-size:27ch;
+}
+
+/* ── Piben: kontakt ────────────────────────────────────────────────────── */
+
+.kontakt{padding-block:clamp(2.6rem,6vw,5rem);}
+.kontakt h2{color:var(--bælgelæder);}
+.kontakt a{color:var(--bælgelæder);text-underline-offset:0.24em;}
+.kontakt a:hover{color:var(--tinpest);}
+
+.kort{
+  margin:0 0 clamp(1.6rem,3vw,2.4rem);
+  display:grid;
+  grid-template-columns:1fr;
+  gap:0.2rem;
+  max-inline-size:40rem;
+}
+.kort dt{
+  font-size:var(--s-lille);
+  font-weight:500;
+  color:var(--tinpest);
+  padding-top:0.9rem;
+  border-top:2px solid var(--hudlim);
+}
+.kort dd{
+  margin:0 0 0.9rem;
+  font-family:var(--display);
+  font-size:var(--s-tal);
+  color:var(--bælgelæder);
+}
+.kort dd a{display:inline-block;min-height:44px;padding-block:0.2rem;}
+@media (min-width:44rem){
+  .kort{grid-template-columns:repeat(2,minmax(0,1fr));gap:0.2rem clamp(1.5rem,4vw,3rem);}
+}
+
+.kontakt-note{max-inline-size:46ch;}
+.kontakt-note + .kontakt-note{margin-top:0.9rem;}
+
+footer{
+  border-top:var(--søm) solid var(--hudlim);
+  padding-block:clamp(1.6rem,3vw,2.4rem);
+  font-size:var(--s-lille);
+}
+footer p + p{margin-top:0.4rem;}
+footer a{color:var(--bælgelæder);text-underline-offset:0.24em;}
+footer a:hover{color:var(--tinpest);}
+
+</style>
+</head>
+<body>
+
+<a class="spring" href="#bælgen">Spring til indholdet</a>
+
+<header>
+  <div class="ramme dæk">
+    <a class="mærke" href="#bælgen">Orgelværkstedet Hvidbjerg</a>
+    <nav aria-label="Sidens afsnit">
+      <ul>
+        <li><a href="#vindladen">Arbejdet</a></li>
+        <li><a href="#trakturen">Aase og Thorbjørn</a></li>
+        <li><a href="#intonationen">Første besøg</a></li>
+        <li><a href="#piben">Kontakt</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <section id="bælgen" class="ramme bælgen" aria-labelledby="overskrift">
+    <div class="bænk">
+
+      <div class="hud">
+        <div class="bælgelæder">
+          <p class="stop">Bælgen</p>
+          <h1 id="overskrift">To par hænder. Fire eller fem orgler om året.</h1>
+          <p class="ingress">Aase og Thorbjørn har restaureret og intoneret kirkeorgler sammen siden 1998. Vi har værksted i Hvidbjerg i Thy og kører ud i hele landet.</p>
+          <p><a class="knap" href="tel:+4597871206">Ring 97 87 12 06</a></p>
+          <p class="under">Det første besøg er gratis og tager en halv dag.</p>
+          <p class="videre"><a href="#intonationen">Læs om første besøg</a></p>
+        </div>
+      </div>
+
+      <figure class="tegning">
+        <svg data-asset="bælghjørne" viewBox="0 0 320 360" role="img" aria-labelledby="tegningnavn">
+          <title id="tegningnavn">Tegning af et bælghjørne: et stykke skind skåret i hånden, med folden løbende på skrå fra hjørne til hjørne, sømhuller langs de to yderkanter og limsømmen langs underkanten.</title>
+          <defs>
+            <clipPath id="skindklip">
+              <path d="M34 24 L286 38 Q292 39 292 45 L285 316 Q284 323 277 324 L44 336 Q36 336 35 329 L27 34 Q27 25 34 24 Z"/>
+            </clipPath>
+          </defs>
+
+          <path class="skind" d="M34 24 L286 38 Q292 39 292 45 L285 316 Q284 323 277 324 L44 336 Q36 336 35 329 L27 34 Q27 25 34 24 Z"/>
+
+          <g clip-path="url(#skindklip)">
+            <g class="fold">
+              <path class="skind-fold" d="M30 92 L292 306 L286 340 L20 348 Z"/>
+              <path class="fals-skygge" d="M30 92 L292 306 L288 332 L26 122 Z" opacity="0.26"/>
+              <path class="fals" d="M28 88 L293 302 L289 313 L24 99 Z"/>
+            </g>
+          </g>
+
+          <path class="lim" d="M46 306 L282 296 L281 310 L47 320 Z"/>
+
+          <circle class="hul" cx="62" cy="43" r="4.5"/>
+          <circle class="hul" cx="136" cy="47" r="4.5"/>
+          <circle class="hul" cx="210" cy="51" r="4.5"/>
+          <circle class="hul" cx="272" cy="56" r="4.5"/>
+          <circle class="hul" cx="276" cy="128" r="4.5"/>
+          <circle class="hul" cx="275" cy="200" r="4.5"/>
+          <circle class="hul" cx="274" cy="264" r="4.5"/>
+        </svg>
+        <figcaption>Et bælghjørne med folden og limsømmen. Tegnet til denne side.</figcaption>
+      </figure>
+
+    </div>
+  </section>
+
+  <section id="vindladen" class="ramme afsnit" aria-labelledby="arbejdet">
+    <p class="stop">Vindladen</p>
+    <h2 id="arbejdet">Det vi laver</h2>
+    <ul class="arbejde">
+      <li>Omlædring af bælge og pneumatik</li>
+      <li>Reparation af vindlader</li>
+      <li>Udskiftning af piberækker</li>
+      <li>Intonation og stemning</li>
+      <li>Genopbygning af trakturer</li>
+    </ul>
+    <p class="efterskrift">Alt sammen i hånden.</p>
+  </section>
+
+  <section id="trakturen" class="ramme afsnit" aria-labelledby="deto">
+    <p class="stop">Trakturen</p>
+    <div class="hud">
+      <div class="bælgelæder bælgelæder--to panel">
+        <h2 id="deto">Aase og Thorbjørn</h2>
+        <p>Vi har arbejdet sammen siden 1998. Vi er to, og der bliver fire eller fem instrumenter om året.</p>
+        <p class="tal">En fuld restaurering løber over otte til atten måneder.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="mørk afvisning" aria-label="Det vi ikke laver">
+    <div class="ramme">
+      <p>Vi sætter ikke elektroniske orgler op. Bliver vi spurgt, siger vi det.</p>
+    </div>
+  </section>
+
+  <section id="intonationen" class="ramme afsnit" aria-labelledby="besøg">
+    <p class="stop">Intonationen</p>
+    <div class="hud">
+      <div class="bælgelæder bælgelæder--tre panel">
+        <h2 id="besøg">Første besøg</h2>
+        <p>Det første besøg er gratis og tager en halv dag.</p>
+        <p>Bagefter skriver vi en tilstandsrapport. Den skriver vi, uanset om arbejdet bliver til noget.</p>
+        <p><a class="knap" href="tel:+4597871206">Ring 97 87 12 06</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section id="piben" class="mørk kontakt" aria-labelledby="kontakt">
+    <div class="ramme">
+      <p class="stop">Piben</p>
+      <h2 id="kontakt">Kontakt</h2>
+      <dl class="kort">
+        <div>
+          <dt>Telefon</dt>
+          <dd><a href="tel:+4597871206">97 87 12 06</a></dd>
+        </div>
+        <div>
+          <dt>Post</dt>
+          <dd>Kirkevej 4, 7790 Hvidbjerg</dd>
+        </div>
+      </dl>
+      <p class="kontakt-note">Værkstedet ligger i Hvidbjerg i Thy. Vi kører ud i hele Danmark.</p>
+      <p class="kontakt-note">Vi har ikke en formular. Ring, eller skriv et brev.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="mørk">
+  <div class="ramme">
+    <p>Orgelværkstedet Hvidbjerg. Aase og Thorbjørn.</p>
+    <p>Kirkevej 4, 7790 Hvidbjerg. Telefon 97 87 12 06.</p>
+  </div>
+</footer>
+
+</body>
+</html>

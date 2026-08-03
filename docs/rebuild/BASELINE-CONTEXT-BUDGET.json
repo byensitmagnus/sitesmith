@@ -1,0 +1,120 @@
+{
+  "skill": "skills/sitesmith",
+  "method": "estimated tokens = bytes / 4; not a real tokeniser",
+  "always": {
+    "files": [
+      "SKILL.md",
+      "v2/README.md",
+      "v2/10-core.md"
+    ],
+    "bytes": 26183,
+    "estTokens": 6546
+  },
+  "routine": {
+    "note": "always + largest mode file + largest task file",
+    "bytes": 47736,
+    "estTokens": 11934
+  },
+  "total": {
+    "files": 139,
+    "bytes": 2520401,
+    "estTokens": 630100
+  },
+  "ratioRoutineOfTotal": 0.0189,
+  "byTopLevel": [
+    {
+      "dir": "data",
+      "bytes": 1442621,
+      "estTokens": 360655,
+      "pctOfTotal": 57.2
+    },
+    {
+      "dir": "references",
+      "bytes": 487356,
+      "estTokens": 121839,
+      "pctOfTotal": 19.3
+    },
+    {
+      "dir": "scripts",
+      "bytes": 254101,
+      "estTokens": 63525,
+      "pctOfTotal": 10.1
+    },
+    {
+      "dir": "v2",
+      "bytes": 146320,
+      "estTokens": 36580,
+      "pctOfTotal": 5.8
+    },
+    {
+      "dir": "blocks",
+      "bytes": 106483,
+      "estTokens": 26621,
+      "pctOfTotal": 4.2
+    },
+    {
+      "dir": "(root)",
+      "bytes": 72162,
+      "estTokens": 18041,
+      "pctOfTotal": 2.9
+    },
+    {
+      "dir": "LICENSES",
+      "bytes": 11358,
+      "estTokens": 2840,
+      "pctOfTotal": 0.5
+    }
+  ],
+  "largestTen": [
+    {
+      "rel": "data/google-fonts.csv",
+      "bytes": 745196,
+      "estTokens": 186299
+    },
+    {
+      "rel": "data/styles.csv",
+      "bytes": 142690,
+      "estTokens": 35673
+    },
+    {
+      "rel": "references/impeccable/live.md",
+      "bytes": 65440,
+      "estTokens": 16360
+    },
+    {
+      "rel": "data/products.csv",
+      "bytes": 58168,
+      "estTokens": 14542
+    },
+    {
+      "rel": "data/ui-reasoning.csv",
+      "bytes": 53070,
+      "estTokens": 13268
+    },
+    {
+      "rel": "data/typography.csv",
+      "bytes": 49741,
+      "estTokens": 12435
+    },
+    {
+      "rel": "scripts/design_system.py",
+      "bytes": 48368,
+      "estTokens": 12092
+    },
+    {
+      "rel": "data/stacks/threejs.csv",
+      "bytes": 44841,
+      "estTokens": 11210
+    },
+    {
+      "rel": "THIRD-PARTY-PROVENANCE.json",
+      "bytes": 41871,
+      "estTokens": 10468
+    },
+    {
+      "rel": "references/impeccable/critique.md",
+      "bytes": 40938,
+      "estTokens": 10235
+    }
+  ]
+}

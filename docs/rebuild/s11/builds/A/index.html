@@ -1,0 +1,533 @@
+<!doctype html>
+<html lang="da">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sømkraft. Tre istandsatte industrisymaskiner til salg.</title>
+<meta name="description" content="Tre istandsatte industrisymaskiner fra værkstedet i Herning. Pris, garanti, levering og bytte står på siden. Ring 97 22 08 41.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@500;700&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&display=swap">
+<style>
+/* Sømkraft. Prøvelappen: hver maskine er en stofprøve med sit eget prøvesøm.
+   Alle farver, skrifter og trin ligger som variabler. Ingen værdi står ved kaldsstedet. */
+
+:root {
+  color-scheme: light;
+
+  --hammerlak: #bfc5b8;
+  --stingplade: #e9eae1;
+  --lærred: #d3cec0;
+  --olie: #171a10;
+  --tråd: #a8203a;
+  --filt: #474b3d;
+  --rille: rgba(23, 26, 16, 0.30);
+  --væv: rgba(23, 26, 16, 0.11);
+  --løft: 0 -2px 0 rgba(23, 26, 16, 0.22);
+
+  --display-skrift: "Big Shoulders Display", "Arial Narrow", Impact, sans-serif;
+  --brød-skrift: "Newsreader", Georgia, "Times New Roman", serif;
+
+  --sats-h1: clamp(2.1rem, 5.2vw, 3.4rem);
+  --sats-h2: clamp(1.5rem, 3.2vw, 2.1rem);
+  --sats-h3: clamp(1.55rem, 3.6vw, 2.1rem);
+  --sats-firma: clamp(1.7rem, 4vw, 2.2rem);
+  --sats-tal: clamp(1.9rem, 4.4vw, 2.6rem);
+  --sats-tal-liste: clamp(1.25rem, 2.8vw, 1.6rem);
+  --sats-nr: clamp(2rem, 4vw, 2.6rem);
+  --sats-knap: 1.2rem;
+  --sats-manchet: clamp(1.08rem, 1.5vw, 1.22rem);
+  --sats-brød: 1.0625rem;
+  --sats-etiket: 0.92rem;
+  --sats-lille: 0.84rem;
+
+  --tak: 12px;
+  --mål: 62rem;
+  --luft: clamp(2.5rem, 6vw, 4.5rem);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { background: var(--hammerlak); }
+
+body {
+  margin: 0;
+  padding-bottom: 8.5rem;
+  background: var(--hammerlak);
+  color: var(--olie);
+  font-family: var(--brød-skrift);
+  font-size: var(--sats-brød);
+  line-height: 1.55;
+  -webkit-text-size-adjust: 100%;
+}
+
+h1, h2, h3, .firma, .tal, .nr, .ring {
+  font-family: var(--display-skrift);
+  font-weight: 700;
+  line-height: 1.02;
+  letter-spacing: -0.01em;
+}
+
+p { margin: 0 0 1rem; }
+p:last-child { margin-bottom: 0; }
+
+.ramme { width: min(100% - 2.2rem, var(--mål)); margin-inline: auto; }
+
+a { color: var(--olie); text-decoration-color: var(--tråd); text-underline-offset: 0.18em; }
+a:hover { text-decoration-thickness: 3px; }
+
+:focus-visible { outline: 3px solid var(--tråd); outline-offset: 3px; }
+
+/* ---- prøvesømmet, sidens signatur ------------------------------------ */
+
+.sting {
+  display: block;
+  height: 3px;
+  background:
+    repeating-linear-gradient(90deg, var(--tråd) 0 17px, transparent 17px 25px) 0 0 / 100% 3px repeat-x,
+    linear-gradient(var(--rille) 0 0) 0 1px / 100% 1px repeat-x;
+}
+
+.stinglinje {
+  height: 5.2rem;
+  display: grid;
+  align-content: center;
+  gap: 0.55rem;
+  padding: 0 1.3rem;
+  background-color: var(--lærred);
+  background-image:
+    repeating-linear-gradient(90deg, var(--væv) 0 1px, transparent 1px 6px),
+    repeating-linear-gradient(0deg, var(--væv) 0 1px, transparent 1px 6px);
+  border-bottom: 1px solid var(--rille);
+}
+
+.tomt {
+  margin: 0;
+  font-size: var(--sats-lille);
+  color: var(--filt);
+  font-style: italic;
+}
+
+/* ---- toppen ----------------------------------------------------------- */
+
+.top { padding: 1.4rem 0 1.1rem; }
+
+.toprad {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 2rem;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.firma { margin: 0; font-size: var(--sats-firma); }
+.hvad { margin: 0; font-size: var(--sats-etiket); color: var(--filt); }
+.tlf { margin: 0; display: flex; flex-wrap: wrap; gap: 0.2rem 0.9rem; align-items: baseline; }
+.tlf a { font-family: var(--display-skrift); font-size: var(--sats-tal-liste); }
+.tlf span { font-size: var(--sats-lille); color: var(--filt); }
+
+.skillelinje { margin: 1rem 0 0; }
+
+.spring {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  z-index: 5;
+  padding: 0.8rem 1.1rem;
+  background: var(--stingplade);
+  color: var(--olie);
+  white-space: nowrap;
+  clip-path: inset(50%);
+}
+.spring:focus { clip-path: none; }
+
+/* ---- indledningen ----------------------------------------------------- */
+
+.indledning { padding: 2rem 0 0; }
+h1 { margin: 0 0 0.9rem; font-size: var(--sats-h1); max-width: 22ch; }
+.manchet { font-size: var(--sats-manchet); max-width: 58ch; margin-bottom: 0.9rem; }
+.sortering { font-size: var(--sats-etiket); color: var(--filt); margin-bottom: 1.1rem; }
+
+.oversigt {
+  list-style: none;
+  margin: 0 0 2.4rem;
+  padding: 0;
+  display: grid;
+  gap: 1.5rem;
+}
+.oversigt a {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.15rem 1.2rem;
+  align-items: baseline;
+  min-height: 48px;
+  padding: 0.75rem 1rem;
+  background: var(--stingplade);
+  text-decoration: none;
+  border-left: 4px solid var(--tråd);
+}
+.oversigt a:hover { background: var(--lærred); }
+.oversigt a:active { background: var(--lærred); border-left-color: var(--olie); }
+.oversigt .navn { font-family: var(--display-skrift); font-size: var(--sats-tal-liste); text-decoration: underline; text-decoration-color: var(--rille); }
+.oversigt a:hover .navn { text-decoration-color: var(--tråd); }
+.oversigt .ord { grid-column: 1; font-size: var(--sats-etiket); color: var(--filt); }
+.oversigt .tal { grid-column: 2; grid-row: 1 / span 2; align-self: center; color: var(--tråd); font-size: var(--sats-tal-liste); }
+
+/* ---- maskinerne ------------------------------------------------------- */
+
+h2 { margin: 0 0 1.1rem; font-size: var(--sats-h2); }
+
+.maskine {
+  margin: 0 0 var(--luft);
+  padding-bottom: calc(var(--tak) + 1.7rem);
+  background: var(--stingplade);
+  -webkit-mask:
+    linear-gradient(var(--olie) 0 0) 0 0 / 100% calc(100% - var(--tak)) no-repeat,
+    conic-gradient(from -45deg at 50% 0, var(--olie) 90deg, transparent 0) 0 100% / calc(var(--tak) * 2) var(--tak) repeat-x;
+  mask:
+    linear-gradient(var(--olie) 0 0) 0 0 / 100% calc(100% - var(--tak)) no-repeat,
+    conic-gradient(from -45deg at 50% 0, var(--olie) 90deg, transparent 0) 0 100% / calc(var(--tak) * 2) var(--tak) repeat-x;
+}
+
+.krop { padding: 1.4rem 1.3rem 0; }
+.krop h3 { margin: 0 0 0.15rem; font-size: var(--sats-h3); }
+.baandtekst { font-size: var(--sats-etiket); color: var(--filt); margin: 0.85rem 0 1.4rem; }
+
+.spec { margin: 0; }
+.rk {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.1rem 1.4rem;
+  padding: 0.85rem 0;
+  border-top: 1px dashed var(--rille);
+}
+.rk dt { font-size: var(--sats-etiket); color: var(--filt); }
+.rk dd { margin: 0; }
+.rk-pris { padding-top: 1rem; }
+.rk-pris .tal { display: block; margin: 0 0 0.9rem; color: var(--tråd); font-size: var(--sats-tal); }
+.naar { font-size: var(--sats-lille); color: var(--filt); margin: 0.75rem 0 0; }
+
+.ring {
+  display: inline-block;
+  min-height: 48px;
+  padding: 0.72rem 1.3rem;
+  background: var(--tråd);
+  color: var(--stingplade);
+  font-size: var(--sats-knap);
+  line-height: 1.5;
+  text-decoration: none;
+  border-bottom: 3px solid var(--olie);
+}
+.ring:hover { background: var(--olie); border-bottom-color: var(--tråd); }
+.ring:active { background: var(--filt); border-bottom-color: var(--olie); }
+.ring:focus-visible { outline-color: var(--olie); }
+
+.vilkaar {
+  margin: 1.4rem 0 0;
+  padding-top: 1rem;
+  border-top: 1px dashed var(--rille);
+  font-size: var(--sats-etiket);
+  color: var(--filt);
+  max-width: 68ch;
+}
+
+/* ---- de fire ting ----------------------------------------------------- */
+
+.afsnit { padding: 0 0 var(--luft); }
+
+.proces { list-style: none; margin: 0 0 1.4rem; padding: 0; display: grid; gap: 1rem; }
+.proces li { display: grid; grid-template-columns: 3rem minmax(0, 1fr); gap: 0.9rem; align-items: baseline; border-top: 1px dashed var(--rille); padding-top: 0.7rem; }
+.nr { color: var(--tråd); font-size: var(--sats-nr); }
+.proces p { margin: 0; font-size: var(--sats-manchet); }
+
+/* ---- handelen --------------------------------------------------------- */
+
+.plade { background: var(--stingplade); padding: 1.5rem 1.3rem; }
+.handel { margin: 0; }
+.handel .rk:first-child { border-top: 0; padding-top: 0; }
+.mangler { margin-top: 1.6rem; padding-top: 1.2rem; border-top: 1px dashed var(--rille); max-width: 68ch; }
+
+/* ---- værkstedet ------------------------------------------------------- */
+
+.kontakt p { max-width: 58ch; }
+.kontakt .stor { font-family: var(--display-skrift); font-size: var(--sats-tal-liste); }
+
+footer { padding: 1.4rem 0 0; font-size: var(--sats-lille); color: var(--filt); }
+
+/* ---- opkaldsbjælken, altid inden for rækkevidde ----------------------- */
+
+.opkald {
+  position: fixed;
+  inset-inline: 0;
+  bottom: 0;
+  z-index: 4;
+  background: var(--stingplade);
+  box-shadow: var(--løft);
+  padding: 0.7rem 0 0.85rem;
+}
+.opkald .ramme { display: flex; flex-wrap: wrap; gap: 0.5rem 1.4rem; align-items: center; justify-content: space-between; }
+.opkald p { margin: 0; font-size: var(--sats-lille); color: var(--filt); }
+
+@media (min-width: 40rem) {
+  .rk { grid-template-columns: 9.5rem minmax(0, 1fr); }
+  .krop { padding: 1.7rem 1.8rem 0; }
+  .stinglinje { padding: 0 1.8rem; }
+  .plade { padding: 1.8rem; }
+}
+
+@media (max-width: 26rem) {
+  .opkald .ring { width: 100%; text-align: center; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+</style>
+</head>
+<body>
+
+<a class="spring" href="#maskiner">Spring til maskinerne</a>
+
+<header class="top">
+  <div class="ramme toprad">
+    <div>
+      <p class="firma">Sømkraft</p>
+      <p class="hvad">Istandsatte industrisymaskiner. Værksted i Herning.</p>
+    </div>
+    <p class="tlf">
+      <a href="tel:+4597220841">97 22 08 41</a>
+      <span>Tirsdag til fredag, 08:00 til 15:00</span>
+    </p>
+  </div>
+  <div class="ramme"><span class="sting skillelinje" data-asset="soem-skillelinje" aria-hidden="true"></span></div>
+</header>
+
+<main>
+
+  <section class="indledning">
+    <div class="ramme">
+      <h1>Tre industrisymaskiner, skilt ad til stellet og samlet igen.</h1>
+      <p class="manchet">Sømkraft er Ida, Karsten og Rune. Firmaet blev stiftet i 2014, og værkstedet ligger i Herning. Hver maskine kører otte timer under belastning, før den bliver sat til salg.</p>
+      <p class="sortering">Tre maskiner til salg lige nu, billigst først. Ingen fotos på siden: båndet på hver maskine er et prøvesøm, tegnet med CSS, med én streg for hver nål specifikationen nævner.</p>
+
+      <ul class="oversigt">
+        <li>
+          <a href="#juki">
+            <span class="navn">Juki DDL-8700</span>
+            <span class="ord">Enkeltnål, ligesting</span>
+            <span class="tal">9.400 kr.</span>
+          </a>
+        </li>
+        <li>
+          <a href="#pfaff">
+            <span class="navn">Pfaff 1245</span>
+            <span class="ord">Pullerfod, sammensat transport</span>
+            <span class="tal">14.900 kr.</span>
+          </a>
+        </li>
+        <li>
+          <a href="#brother">
+            <span class="navn">Brother B845</span>
+            <span class="ord">Tonålet, delt nålestang</span>
+            <span class="tal">18.500 kr.</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="afsnit" id="maskiner">
+    <div class="ramme">
+      <h2>Hele specifikationen, maskine for maskine</h2>
+
+      <article class="maskine" id="juki">
+        <div class="stinglinje" data-asset="proevesoem-juki" aria-hidden="true">
+          <span class="sting"></span>
+        </div>
+        <div class="krop">
+          <h3>Juki DDL-8700</h3>
+          <p class="baandtekst">Én streg i båndet: enkeltnål.</p>
+
+          <dl class="spec">
+            <div class="rk rk-pris">
+              <dt>Pris</dt>
+              <dd>
+                <span class="tal">9.400 kr.</span>
+                <a class="ring" href="tel:+4597220841">Ring om Juki DDL-8700</a>
+                <p class="naar">Telefonen tages i værkstedet, tirsdag til fredag mellem 08:00 og 15:00.</p>
+              </dd>
+            </div>
+            <div class="rk">
+              <dt>Specifikation</dt>
+              <dd>Enkeltnål, ligesting.</dd>
+            </div>
+            <div class="rk">
+              <dt>Motor</dt>
+              <dd>Servomotor monteret.</dd>
+            </div>
+            <div class="rk">
+              <dt>Istandsat</dt>
+              <dd>Skilt ad til stellet. Nye lejer. Lakeret. Kørt otte timer under belastning.</dd>
+            </div>
+            <div class="rk">
+              <dt>Billeder</dt>
+              <dd>Ingen fotos. Båndet ovenfor er tegnet, ikke fotograferet.</dd>
+            </div>
+          </dl>
+
+          <p class="vilkaar">Tolv måneders garanti på det mekaniske arbejde, ikke på motor og elektronik. Levering 900 kr. med egen vogn i Jylland og på Fyn, til Sjælland med fragtmand og pris fra os. Din gamle maskine tages i bytte, og værdien sættes, når vi har set den.</p>
+        </div>
+      </article>
+
+      <article class="maskine" id="pfaff">
+        <div class="stinglinje" data-asset="proevesoem-pfaff" aria-hidden="true">
+          <p class="tomt">antal nåle er ikke oplyst</p>
+        </div>
+        <div class="krop">
+          <h3>Pfaff 1245</h3>
+          <p class="baandtekst">Ingen streger i båndet: specifikationen nævner ikke antal nåle, og så tegner vi ingen.</p>
+
+          <dl class="spec">
+            <div class="rk rk-pris">
+              <dt>Pris</dt>
+              <dd>
+                <span class="tal">14.900 kr.</span>
+                <a class="ring" href="tel:+4597220841">Ring om Pfaff 1245</a>
+                <p class="naar">Telefonen tages i værkstedet, tirsdag til fredag mellem 08:00 og 15:00.</p>
+              </dd>
+            </div>
+            <div class="rk">
+              <dt>Specifikation</dt>
+              <dd>Pullerfod, sammensat transport.</dd>
+            </div>
+            <div class="rk">
+              <dt>Motor</dt>
+              <dd>Står ikke i specifikationen. Spørg på telefonen.</dd>
+            </div>
+            <div class="rk">
+              <dt>Istandsat</dt>
+              <dd>Skilt ad til stellet. Nye lejer. Lakeret. Kørt otte timer under belastning.</dd>
+            </div>
+            <div class="rk">
+              <dt>Billeder</dt>
+              <dd>Ingen fotos. Båndet ovenfor er tegnet, ikke fotograferet.</dd>
+            </div>
+          </dl>
+
+          <p class="vilkaar">Tolv måneders garanti på det mekaniske arbejde, ikke på motor og elektronik. Levering 900 kr. med egen vogn i Jylland og på Fyn, til Sjælland med fragtmand og pris fra os. Din gamle maskine tages i bytte, og værdien sættes, når vi har set den.</p>
+        </div>
+      </article>
+
+      <article class="maskine" id="brother">
+        <div class="stinglinje" data-asset="proevesoem-brother" aria-hidden="true">
+          <span class="sting"></span>
+          <span class="sting"></span>
+        </div>
+        <div class="krop">
+          <h3>Brother B845</h3>
+          <p class="baandtekst">To streger i båndet: tonålet.</p>
+
+          <dl class="spec">
+            <div class="rk rk-pris">
+              <dt>Pris</dt>
+              <dd>
+                <span class="tal">18.500 kr.</span>
+                <a class="ring" href="tel:+4597220841">Ring om Brother B845</a>
+                <p class="naar">Telefonen tages i værkstedet, tirsdag til fredag mellem 08:00 og 15:00.</p>
+              </dd>
+            </div>
+            <div class="rk">
+              <dt>Specifikation</dt>
+              <dd>Tonålet, delt nålestang.</dd>
+            </div>
+            <div class="rk">
+              <dt>Motor</dt>
+              <dd>Står ikke i specifikationen. Spørg på telefonen.</dd>
+            </div>
+            <div class="rk">
+              <dt>Istandsat</dt>
+              <dd>Skilt ad til stellet. Nye lejer. Lakeret. Kørt otte timer under belastning.</dd>
+            </div>
+            <div class="rk">
+              <dt>Billeder</dt>
+              <dd>Ingen fotos. Båndet ovenfor er tegnet, ikke fotograferet.</dd>
+            </div>
+          </dl>
+
+          <p class="vilkaar">Tolv måneders garanti på det mekaniske arbejde, ikke på motor og elektronik. Levering 900 kr. med egen vogn i Jylland og på Fyn, til Sjælland med fragtmand og pris fra os. Din gamle maskine tages i bytte, og værdien sættes, når vi har set den.</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="afsnit" id="istandsat">
+    <div class="ramme">
+      <h2>De fire ting, der sker med hver maskine</h2>
+      <ol class="proces">
+        <li><span class="nr" aria-hidden="true">1</span><p>Skilt ad til stellet.</p></li>
+        <li><span class="nr" aria-hidden="true">2</span><p>Nye lejer.</p></li>
+        <li><span class="nr" aria-hidden="true">3</span><p>Lakeret.</p></li>
+        <li><span class="nr" aria-hidden="true">4</span><p>Kørt otte timer under belastning.</p></li>
+      </ol>
+      <p>Det er hele listen. Alle tre maskiner har været igennem de samme fire ting, og i den rækkefølge.</p>
+    </div>
+  </section>
+
+  <section class="afsnit" id="handelen">
+    <div class="ramme">
+      <h2>Handelen</h2>
+      <div class="plade">
+        <dl class="spec handel">
+          <div class="rk">
+            <dt>Garanti</dt>
+            <dd>Tolv måneder på det mekaniske arbejde. Motor og elektronik er ikke omfattet.</dd>
+          </div>
+          <div class="rk">
+            <dt>Levering</dt>
+            <dd>900 kr. med egen vogn i Jylland og på Fyn. Til Sjælland kører fragtmand, og vi giver prisen.</dd>
+          </div>
+          <div class="rk">
+            <dt>Bytte</dt>
+            <dd>Vi tager din gamle maskine i bytte. Værdien sættes, når vi har set den.</dd>
+          </div>
+        </dl>
+        <div class="mangler">
+          <p>Der står ingen anmeldelser, ingen kundenavne og ingen tal på, hvor mange maskiner der er gået gennem værkstedet. Intet af det er dokumenteret på siden, og udokumenterede tal hører ikke hjemme ved siden af en pris.</p>
+          <p>Betaling og fortrydelsesret står her heller ikke. Tag det på telefonen, før du siger ja.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="afsnit kontakt" id="vaerkstedet">
+    <div class="ramme">
+      <h2>Værkstedet</h2>
+      <p>Sømkraft er tre personer: Ida, Karsten og Rune. Værkstedet ligger i Herning.</p>
+      <p>Åbent tirsdag til fredag, 08:00 til 15:00.</p>
+      <p class="stor"><a href="tel:+4597220841">97 22 08 41</a></p>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="ramme">
+    <span class="sting skillelinje" data-asset="soem-skillelinje" aria-hidden="true"></span>
+    <p>Sømkraft, Herning. Ida, Karsten og Rune. 97 22 08 41.</p>
+  </div>
+</footer>
+
+<div class="opkald">
+  <div class="ramme">
+    <p>Tirsdag til fredag, 08:00 til 15:00</p>
+    <a class="ring" href="tel:+4597220841">Ring 97 22 08 41</a>
+  </div>
+</div>
+
+</body>
+</html>

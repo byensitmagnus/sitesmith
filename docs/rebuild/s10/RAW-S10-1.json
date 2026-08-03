@@ -1,0 +1,178 @@
+{
+  "producedBy": "workflow wf_14029c66-9bb — 2 blind builders, 3 blind judges",
+  "agentCount": 5,
+  "subagentTokens": 635619,
+  "at": "2026-08-01",
+  "result": {
+    "builds": [
+      {
+        "label": "P",
+        "thesis": "The page is built as a measuring instrument, not as a local-services site. The subject is legal metrology, so every choice comes from that world: a cold zinc-and-steel ground rather than reassuring warmth, brass pulled from the reference weights, and one seal-green reserved exclusively for the primary action and the tolerance band. The hero's thesis is the object the technicians actually carry — a set of class F1 brass reference weights drawn in SVG on a steel plate — because it is the only reason anything the company says is true. The headline \"VÆGTEN VERIFICERET IGEN\" answers the panicked reader's exact problem in the exact word the inspector just used to them, and the lead, fact strip and phone number let a shop owner get from arrival to a call in well under a minute.",
+        "signature": "A graduated control rule running the full height of the page — 1px spine, minor ticks every 14px, brass major graduations every 70px — like the engraved scale on a balance beam. It carries one piece of real information rather than decoration: a single 9px seal-green segment on the rule, the tolerance band, spans exactly the section describing the calibration certificate and the verification seal. The page reads as a scale, and the green is where you end up. Its hero counterpart is the brass reference-weight set in SVG.",
+        "namedRisk": "Setting every heading in wide uppercase Archivo (width axis pushed to 115%) on a cold grey ground, with no photography and no warmth, for an audience that is stressed and non-technical. If it fails, it fails as cold. Justification: a person whose scale was just condemned wants visible competence, not a hug — and expanded caps are how instrument fascias and equipment nameplates are actually lettered. Mitigated by plain copy and a generous 17px body face in a humane engineering sans.",
+        "tokenNames": [
+          "--zink #E8EBEC (page ground, cool pale steel, deliberately not cream)",
+          "--kridt #F7F8F8 (card and panel surfaces)",
+          "--staal #C9D0D3 (rules, borders, graduations)",
+          "--blaek #16202A (text, cold blue-black, never pure black)",
+          "--messing #7A5410 (brass; mono data, labels, major graduations)",
+          "--plombe #1F6B4B (seal green; primary action and tolerance band only)"
+        ],
+        "typefaces": [
+          "Archivo (display, wdth axis at 115%, 700, uppercase — engraved instrument-nameplate lettering)",
+          "IBM Plex Sans (body — an engineering face drawn for technical documents, full Danish coverage)",
+          "IBM Plex Mono (data, field labels, eyebrows, phone number — the certificate voice)"
+        ],
+        "filesWritten": [
+          "C:\\Users\\Usmo1\\Documents\\sitesmith\\docs\\rebuild\\s10\\builds\\P\\PLAN.md",
+          "C:\\Users\\Usmo1\\Documents\\sitesmith\\docs\\rebuild\\s10\\builds\\P\\index.html"
+        ],
+        "selfAssessment": "Process followed the instruction file's two passes. Pass 1 produced the token system; pass 2 revised four parts that were the generic default — the hero (was headline + stat row + gradient accent, which would also have forced invented numbers), the palette (started cream/ink/terracotta, i.e. named default look #1), section numbering (01/02/03 cut; numbers now appear only in the four visit steps, which genuinely are a sequence), and the display face (was a high-contrast serif). PLAN.md states each change and why.\n\nVerified in-browser, not assumed. Contrast measured on computed styles in both schemes: light lowest 5.65:1 (spec-key), dark lowest 6.34:1 (CTA) — all pass AA. No horizontal overflow at 375/768/1440 (scrollWidth equals innerWidth; zero elements extend past the viewport). Zero <script> tags, zero inline styles, one h1, correct h1→h2→h3 order, all six sections aria-labelledby a real id, no dead anchors, skip link, 3px focus-visible outline, all motion inside prefers-reduced-motion: no-preference. The decorative SVGs are aria-hidden and the weight-set SVG has role=\"img\" with a title.\n\nFact discipline: I extracted every number the page renders and checked each against the brief — 98 12 44 30, 24, three, 07.00–15.30, 2009, III/IIII, F1, and the four step numbers. Nothing else. On a final read-through I found five sentences that had drifted past what the brief supports and rewrote them: an inference about what the certificate is for at the next inspection, a gloss on what class III/IIII scales are used for, a claim that the person who answers the phone does the job, \"prisen med det samme\" (the brief says quoted before the visit, not instantly), and a duplicated DANAK statement I cut under the remove-one-accessory rule.\n\nDisclosure: after I had written both PLAN.md and index.html in full, my first screenshot returned a different builder's file that was still loaded in the shared browser pane. I saw one screenshot of it, recognised it was not mine from the page title, and navigated to my own file immediately without reading further. My design was complete before that point — the file timestamps bear this out — so it had no influence on any decision, and I have not speculated about it here or changed anything in response to it.\n\nWeakest point: the minor graduations on the control rule render very faintly at #AFBAC0, so at a glance the rule reads mostly as brass major ticks. I darkened them once and judged a second increase would make the rule shout over the hero, which would spend boldness in two places. It is a deliberate trade rather than an oversight, but a reviewer could reasonably want the scale read more legibly."
+      },
+      {
+        "label": "Q",
+        "thesis": "En aflæsning mod nulpunktet: the site is built as the instrument's own logic rather than as a service brochure. A single hairline datum runs the full height of the document and every section hangs off it as a reading, because the whole trade lives on one axis with a marked centre. Chosen over the higher-ranked \"certificate you can read on the front page\" thesis on the axis of structural fidelity to the measurement act versus mimicry of the document, since the certificate idea resolves to serif display, hairline rules and dense centred columns, which is a default arrived at by association rather than by decision.",
+        "signature": "The deviation readout: one black-glass panel holding a horizontal scale with dashed tolerance limits, a filled band strip on the baseline, a marked zero, a dashed ghost marker sitting outside the band on the left, and a solid marker with a caret that travels once from the ghost position to zero on load and stops. It is the service, drawn, in four absolutely positioned spans and one keyframe. Under prefers-reduced-motion the animation is never declared and the marker is simply placed at zero, so the before-and-after still reads from the ghost marker and the caption. Supporting artefacts are two SVGs from the same noun list: five reference weights in falling sizes with the knob grip drawn, and a crimped verification seal.",
+        "namedRisk": "There is no hero headline block sitting over three soft cards. The structural spine is a single hairline at a fixed offset with every section hanging off it asymmetrically, and the loudest object on the page is a dark instrument readout showing a fault being corrected rather than a promise. If a visitor does not read the readout as a scale, the top of the page is a dark rectangle; the caption directly under it is written to catch exactly that person.",
+        "tokenNames": [
+          "--vejeplade",
+          "--lod",
+          "--nulpunkt",
+          "--plombe",
+          "--display",
+          "--tolerance"
+        ],
+        "typefaces": [
+          "Bricolage Grotesque",
+          "Atkinson Hyperlegible",
+          "Martian Mono"
+        ],
+        "filesWritten": [
+          "C:\\Users\\Usmo1\\Documents\\sitesmith\\docs\\rebuild\\s10\\builds\\Q\\PLAN.md",
+          "C:\\Users\\Usmo1\\Documents\\sitesmith\\docs\\rebuild\\s10\\builds\\Q\\index.html"
+        ],
+        "selfAssessment": "Method followed in order: subject pinned, noun list built from the trade before any visual decision, three theses written, the runner-up argued as if the top-ranked one did not exist, plan written with named colour tokens, type roles, ASCII layout, signature and one risk, then the neighbour-brief swap. The swap was the useful part: it showed that the datum line, step list, two callout speeds and phone-first header would all survive a move to a regional refrigeration company, so the readout was changed from a value inside a permitted range to a marker landing exactly on a named zero, and the accreditation block was rebuilt around the physical F1 weight set. Those changes cannot be transplanted.\n\nVerified in the browser at 320, 375, 768 and 1440: scrollWidth equals viewport width at every size, no element extends past the viewport, no console errors, all six links resolve (one in-page skip target, three tel:, two mailto:), heading order H1 then H2/H3 with no skips, every link box at least 45px tall, focus ring visible in --plombe on the skip link and the call button. Measured contrast used to place colours: --nulpunkt 6.2:1 and --plombe 6.8:1 on the ground, --tolerance 8.8:1 on the dark panel but only 1.7:1 on the ground, so --plombe never appears on the panel and --tolerance never carries text on the ground.\n\nEvery fact on the page traces to the brief: DANAK, classes III and IIII, F1 reference weights recertified annually, three working days, 24 hours for an extra fee with no amount stated, fixed price per instrument with no number, certificate and seal, founded 2009, Kirsten and Bo, one van, the phone number, the email, the hours, the customer types named in the brief body. No customer names, no testimonials, no review scores, no job counts, and deliberately no numerals on the readout scale so the diagram cannot be read as a performance claim. No em dashes in either file.\n\nOne disclosure. Midway through verification the browser pane switched by itself to a second tab holding a different page built from this same brief, and one screenshot of it reached me before I could act. I fronted my own tab immediately, did not read it further, and did not revisit it. Everything in PLAN.md, including the thesis ranking, the palette and the signature, was written and saved before that happened, and nothing was changed afterwards except the tolerance band rendering, the contact link underline, touch-target spacing and hiding the header sub-line under 560px.\n\nWeakest point: three font families is a lot of network weight for a one-page site whose job is to be understood in under a minute on a phone in a shop. The roles are genuinely distinct (display, body, readout) and the readout family carries the subject, but a stricter version of this design would cut Bricolage Grotesque and set the headlines in a heavier optical size of the body face."
+      }
+    ],
+    "verdicts": [
+      {
+        "lens": "Design director reviewing two comps for the same client. Both builds read in full (HTML + CSS + PLAN.md) and rendered live in Playwright over a local HTTP server at 375px, 768px and 1440px, full-page. Console clean on both (only a favicon 404). No horizontal overflow on either at 375px. Contrast claims in both plans were spot-checked by hand and both are honest (P's brass #7A5410 on #E8EBEC computes to 5.65:1 vs 5.6 claimed; Q's #46555C on #E9E7E2 computes to 6.26:1 vs 6.2 claimed).",
+        "scores": [
+          {
+            "label": "P",
+            "distinctiveness": 7,
+            "subjectGrounding": 8,
+            "typography": 8,
+            "colourAndSignature": 8,
+            "copyQuality": 8,
+            "briefFit": 9,
+            "total": 48,
+            "note": "Rendered, the metrology reading is real, not just asserted in the plan. A graduated rule runs the full left edge at 1440 — 1px spine, minor ticks every 14px, brass majors every 70px — and one section of it turns seal-green exactly alongside 'Det, du får med'. That is a page that encodes an idea in its chrome. The brass weight set is genuinely drawn: six-stop metal gradients, knob grips, a shadow ellipse per weight, F1 engraved on the smallest, standing on a graduated steel plate. Archivo with wdth pushed to 115 and set uppercase does read as instrument-nameplate lettering on screen — the type is a decision and it survives contact with the render. Two superfamilies (Plex Sans + Plex Mono) keep the voice tight, and mono carries every number, which is the certificate logic applied consistently. The 'Vilkår' section is a key/value spec sheet, which is what a calibration certificate actually looks like. Where it is ordinary: the hero is a standard headline-left/object-right split, the three icon cards under 'Det, du får med' are exactly the category default, and the 2×2 boxed step grid is default furniture. So the bones are generic and the skin is specific. The weights card is also under-filled at 768 — a small SVG floating in a large pale panel. Longest page of the two by some margin. But it does the brief's one job faster than Q: the inspection question is answered in the lead, the phone CTA and the four time/price facts are all on the first screen, and the time answer appears three separate times."
+          },
+          {
+            "label": "Q",
+            "distinctiveness": 5,
+            "subjectGrounding": 6,
+            "typography": 7,
+            "colourAndSignature": 5,
+            "copyQuality": 7,
+            "briefFit": 7,
+            "total": 37,
+            "note": "The best thing here is the thinking and the copy. The three-thesis exercise is real, the neighbour-swap test is honest, and 'Det, vi må skrive under på' and 'Har du et brev fra inspektøren liggende, så hav det ved hånden' are better lines than anything in P. But the render does not repay the plan. The signature readout — the whole argument — is a large black rectangle containing a 72px track, a faint 14px grey band and a hairline; at 1440 it is the loudest object above the fold and it communicates almost nothing. The plan predicted this exact failure ('if a visitor does not read the readout as a scale, the top of the page is a dark rectangle') and then shipped it anyway. The plan says 'light steel ground'; the token is #E9E7E2, a warm greige, i.e. the reassuring-local-business default the plan claimed to refuse. The supporting SVGs are outline line-art: the five weights read as paper shopping bags, the seal reads as a magnifying glass. The layout — a hairline datum with 01–05 mono labels in a left column — is a very common contemporary studio/editorial template, and I could put a consultancy's name on this page without changing a thing. Bricolage Grotesque headings have real character, but Martian Mono labels at 0.68rem (~11px) are too small to be read, and three unrelated families are looser than P's two. Brief fit suffers on mobile: the black diagram sits between the CTA and any answer about time or price, pushing 'tre arbejdsdage' roughly two screens down. Email link breaks mid-word across three lines at 768."
+          }
+        ],
+        "winner": "P",
+        "margin": "clear",
+        "reasoning": "Both are above the category floor and both plans argue their choices rather than assert them, so this is not a competent-vs-incompetent split. It is a split between a page whose idea survives the render and a page whose idea only exists in its plan.\\n\\nP's thesis is 'the page is a measuring instrument'. On screen that is a graduated rule down the full left edge with brass majors, a green segment of that rule aligned to the section about the certificate and the seal, a set of brass reference weights with real metal gradients and F1 engraved, and a certificate-style key/value table. Wide uppercase Archivo genuinely reads as an equipment nameplate. Q's thesis is 'the page is a reading against zero', which is arguably the better idea — the layout carrying the argument is more ambitious than P's decorated-edge approach. But the object that had to carry it is a big black panel holding a hairline and a faint grey band. It reads as a dark stat block, not a scale. Q's own plan named this risk and shipped into it.\\n\\nThe tell on subject grounding is the palette. P refused warmth on the argument that a metrology firm should not feel cosy, and shipped a genuinely cold zinc/steel/brass ground. Q's plan says 'light steel' and its token is #E9E7E2, a warm greige — the trades-page default the plan explicitly promised to avoid. Same with the numbering: P rejected 01/02/03 section labels as decoration and restricted numbers to the two places they carry order; Q runs 01–05 down the left column, which is the single most recognisable current studio-template gesture and would transplant unchanged to Q's own refrigeration-company neighbour test.\\n\\nOn the brief's one job — a stressed shop owner understanding fix, time and start in under a minute — P wins on structure, not on effort. Its lead answers the inspection question directly, the phone number and the four time/price facts are on the first screen, and the timing answer repeats three times. Q puts a black diagram between the CTA and any answer about time; at 375px 'tre arbejdsdage' is roughly two screens down.\\n\\nWhat keeps this from being a rout: Q's copy has more voice, its accessibility discipline is measurably honest, its type has personality, and P is carrying a lot of default furniture — a split hero, three icon cards, a 2×2 boxed step grid. P is a specific skin on generic bones. Q is a specific idea in generic clothes that did not get built. The skin shows and the idea does not, so P takes it clearly rather than narrowly. P is a page I would be reasonably pleased to have made; Q is a plan I would be pleased to have written and a comp I would send back.",
+        "factualErrors": [
+          "Q: 'Vi lægger besøget, så du kan have vægten i drift indtil da.' — invented. Nothing in the brief says the customer may keep using the instrument while waiting, and it directly contradicts the page's own premise that an inspector has taken the scale out of verification. This is the most serious invention on either page because it is operational advice with legal consequences for the shop owner.",
+          "Q: 'afvigelsen bliver skrevet ned i kalibreringsbeviset, du får med' — invented. The brief states only that every job ends with a calibration certificate and a verification seal. It says nothing about the certificate recording the measured deviation.",
+          "Q: 'Ellers er mærkatet på vægten nok til, at vi kan komme videre.' — invented. No fact in the brief establishes what information the company needs to proceed, or that a label on the instrument is sufficient.",
+          "Q (minor): 'Vi fører vægten tilbage til nulpunktet' and 'bliver justeret tilbage til nulpunktet' assert that the company adjusts the instrument. The brief says 'recalibrates and verifies'. Defensible as a reading of 'recalibrate', but it is a process claim the brief does not make explicitly.",
+          "P: no invented facts found. The nearest edges are 'kalibrerer instrumentet på stedet' (on-site work — clearly implied by a callout model with reference weights carried in a van) and 'Det gælder også, når vi kommer akut' (an extension of the brief's 'every job ends with a certificate'). Neither adds a fact the brief does not support.",
+          "Both builds: 'Vi har kalibreret og verificeret vægte siden 2009' (P) and 'Kalibrering og verifikation af vægte siden 2009' (Q) convert 'Founded 2009' into 'doing this work since 2009'. Trivially defensible, noted for completeness.",
+          "P (minor): the brief says 'a few pharmacies'; P writes 'apoteker' without the hedge, while Q correctly keeps 'et par apoteker'. A loss of precision rather than an invention."
+        ]
+      },
+      {
+        "lens": "Shop owner in Aalborg whose scale was just condemned by an inspector. Annoyed, on a phone, wants this dealt with today. Judging only on: do I understand what they do, what it costs me in time, and how to start — and does anything make me distrust them.",
+        "scores": [
+          {
+            "label": "P",
+            "distinctiveness": 8,
+            "subjectGrounding": 8,
+            "typography": 8,
+            "colourAndSignature": 7,
+            "copyQuality": 7,
+            "briefFit": 7,
+            "total": 45,
+            "note": "Cold zinc/steel/brass with one seal green, a graduated ruler as the page spine, and a brass F1 weight set drawn in SVG. Committed and unmistakable, and the certificate-style key/value table is real trade furniture. Two problems against the lens. First, the signature is desktop-only: the graduated rule and the green tolerance segment only exist above 1000px, so the phone reader the brief describes never sees them — and even at 1440 the green bar sits unlabelled at the far left edge, so it only reads as 'this is where you end up' if you have read the plan. Second, the four facts that answer 'what does this cost me in time' sit in 13px grey uppercase mono directly under the CTA, the least readable style on the page applied to its most action-relevant content, and then the same facts are repeated in the step list and again in the spec table. The page is 32% taller than Q on mobile while deciding less. 'Skriv til os' scrolls to a section instead of opening mail. Strong craft, assembled rather than cut."
+          },
+          {
+            "label": "Q",
+            "distinctiveness": 7,
+            "subjectGrounding": 9,
+            "typography": 8,
+            "colourAndSignature": 9,
+            "copyQuality": 8,
+            "briefFit": 9,
+            "total": 50,
+            "note": "The h1 is my problem read back to me — 'Ude af verifikation? Vi fører vægten tilbage til nulpunktet' — and the black readout panel under it is the service drawn: a ghost marker outside tolerance, a solid marker landing on zero. It works at 375px, which is where I am. Time cost gets its own section as two large typographic statements, normal vs akut, instead of being buried in a facts strip. The sticky header keeps 'Ring 98 12 44 30' on screen the whole way down. 'Du behøver ikke vide, hvilken klasse din vægt er i, eller hvad inspektøren skrev' and 'en vægt, der driller, koster det samme som en, der ikke gør' are the two lines on either page that actually lower my resistance. Marked down for the 01–05 numbered margin labels, which are a familiar editorial device rather than something this trade produced, for overflow-x:hidden on body as a defensive hack, and for three sentences invented beyond the brief — one of which tells me I can keep using a scale that just failed inspection."
+          }
+        ],
+        "winner": "Q",
+        "margin": "clear",
+        "reasoning": "Rendered both at 375px and 1440px via Playwright over a local HTTP server (file: protocol was blocked); screenshots reviewed, console clean apart from a favicon 404 on P.\\n\\nBoth are genuinely good and neither is generic. The decision turns on the reader the brief names: a stressed shop owner on a phone.\\n\\nQ wins on four things that matter to that person. (1) The headline names his situation in the first three words; P's headline is an outcome and the situation appears one beat later in the lead. (2) The time answer — three working days vs 24 hours — gets a dedicated section in large type; P puts it in 13px grey uppercase mono under the hero and then repeats it twice more. (3) The signature survives on mobile. P's whole conceptual device, the graduated rule and its green tolerance segment, is gated behind a 1000px media query, so the phone reader gets none of it; Q's black readout panel is the first object he sees at 375px and it diagrams the actual service. (4) The sticky call button follows him down the page.\\n\\nP is the more inventive structure on desktop and its typography is the bolder move — Archivo with the width axis pushed to 115% in caps is instrument-nameplate lettering and no neighbouring brief lands there by default. But three of P's six sections restate the same four facts, and the green tolerance bar it treats as its thesis is an unlabelled 9px stripe at the page edge that communicates nothing without the plan beside it. A device that only works if you read the designer's notes is not working.\\n\\nQ costs itself points for the 01–05 margin numbering, which is the one place it reaches for a recognisable editorial pattern (and which P's plan explicitly and correctly refused), and for three invented sentences. The worst of them, 'Vi lægger besøget, så du kan have vægten i drift indtil da', is not just outside the brief — as the reader in this scenario I would read it as advice to keep trading on a scale that just failed inspection, which is the one thing on either page that would make me pause. It is a single clause in an otherwise disciplined page, so it does not flip the result, but it is the sharpest thing I would send back.\\n\\n45 vs 50. Clear, not overwhelming.",
+        "factualErrors": [
+          "Q: 'Vi lægger besøget, så du kan have vægten i drift indtil da' — not in the brief, and it implies a scale that has been taken out of verification may keep being used for trade in the meantime. The most damaging invention on either page.",
+          "Q: 'afvigelsen bliver skrevet ned i kalibreringsbeviset, du får med' — the brief states only that every job ends with a calibration certificate; it says nothing about the certificate recording the measured deviation.",
+          "Q: 'Ellers er mærkatet på vægten nok til, at vi kan komme videre' — invented operational claim about what information is sufficient to start a job.",
+          "P: 'Vi arbejder for bagerier, fiskehandlere, mindre fødevareproducenter og apoteker i hele Nordjylland' — the brief says 'a few pharmacies'; dropping the qualifier overstates pharmacy coverage. Minor.",
+          "P: 'Det gælder også, når vi kommer akut' (certificate on emergency callouts) — a fair deduction from 'every job ends with a certificate', but presented as a separate assurance the brief never gives. Minor.",
+          "P: the hero SVG depicts exactly three reference weights on a steel plate — the brief specifies neither a count nor a form for the F1 weights. Illustrative rather than asserted, so low weight."
+        ]
+      },
+      {
+        "lens": "AI-tell hunter: scoring the page with fewer machine fingerprints higher, even if plainer. Both builds rendered in a real browser (Playwright, local http server) at 1440px and 375px, full-page, plus a horizontal-overflow probe with overflow-x forced visible.",
+        "scores": [
+          {
+            "label": "P",
+            "distinctiveness": 6,
+            "subjectGrounding": 7,
+            "typography": 8,
+            "colourAndSignature": 7,
+            "copyQuality": 6,
+            "briefFit": 7,
+            "total": 41,
+            "note": "Handsome and clearly metrological, but the skeleton is the standard service-page assembly and one tell is the loudest thing on the page: a three-icon card row (\"Det, du får med\") whose third icon is a generic arch/building glyph standing in for \"akkrediteret måling\". The graduated ruler is the best structural idea, and it is gated behind min-width:1000px — at 375px and 768px, the width the stressed shop owner actually uses, the whole conceit disappears and is replaced by a 2px brass border on eyebrows. The green \"tolerance\" segment aligned to a section is a metaphor that encodes nothing measurable; it is decorative structure wearing a meaning label. Type is the strongest axis: Archivo with the width axis pushed to 115% in caps is a real decision (instrument nameplate lettering), and pairing IBM Plex Sans with Plex Mono as \"body voice / certificate voice\" is reasoned, not defaulted. Tokens are all named from the trade (zink, staal, blaek, messing, plombe), and a dark scheme mirrors every role. Against it: the page is 5691px tall at 375px, the header is not sticky, and the same facts are restated four times across a hero strip, the step list, the cards and the spec table — assembly rather than deciding. Copy is competent but the headings (\"Sådan foregår et besøg\", \"Tid, pris og område\", \"Hvem der kommer\") would transplant onto any trades page unnoticed, and two card sentences are pure padding restating the preceding sentence."
+          },
+          {
+            "label": "Q",
+            "distinctiveness": 8,
+            "subjectGrounding": 8,
+            "typography": 7,
+            "colourAndSignature": 9,
+            "copyQuality": 8,
+            "briefFit": 8,
+            "total": 48,
+            "note": "Fewer tells and a harder centre. The datum line is not drawn — it is the left border of every section body, so the spine is continuous by construction, and the mono labels sit outside it as tick annotations. The signature is the deviation readout: a black-glass panel with a tolerance band, a marked zero, a dashed \"før\" marker outside the band and a solid marker that travels once to zero. That is the service drawn as a diagram rather than a promise, it encodes something true, and it survives intact at 375px, where P's equivalent idea is switched off. Six tokens, each with a stated role and a measured contrast ratio, one rust accent used strictly as punctuation and explicitly barred from the dark panel. Copy is the more situated of the two: \"Du behøver ikke vide, hvilken klasse din vægt er i, eller hvad inspektøren skrev\", \"Har du et brev fra inspektøren liggende, så hav det ved hånden\", \"Det, vi må skrive under på\", \"en vægt, der driller, koster det samme som en, der ikke gør\" — none of these could be swapped onto P's page or onto a neighbouring trade. Terminology is the more idiomatic Danish metrology (nulpunkt, afvigelse, verifikationsmærke). Tells that remain: 01–05 numbered section eyebrows are a stock template move regardless of the tick-annotation framing; the normal/akut two-up is a mild standard; Bricolage Grotesque is a fashionable pick and \"reads like something stamped\" is the thinnest justification in either plan; the SVG strokes are hardcoded hex rather than tokens and there is no dark scheme; body{overflow-x:hidden} is a precaution, not a fix (probing with it disabled showed no actual overflow). Sticky header keeps the phone reachable, and section 03 states the time cost once at display size — the clearest answer on either page to the brief's \"roughly what it will cost them in time\"."
+          }
+        ],
+        "winner": "Q",
+        "margin": "clear",
+        "reasoning": "Both pages are above the category floor and both plans openly hunt their own defaults, so this is decided on which page has fewer machine fingerprints and which one's structure carries the argument.\\n\\nThe swap test separates them. Take Q's readout panel, its datum spine and its copy to a refrigeration or lift-inspection company and they break — the marker lands on a named zero because a scale is correct at one point, the loddesæt in class F1 is an object nobody else owns, and the vocabulary (nulpunkt, afvigelse, verifikationsmærke) is weighing-specific. Take P's three-icon card row, its 2x2 step grid and its key/value spec table anywhere in regional technical services and nothing changes. P's own plan rejected 01/02/03 section numbering as decoration and Q uses it, which is a point against Q — but P then spends that credit on the more expensive tell, a three-card icon row with an arch glyph that means nothing.\\n\\nThe decisive difference is where each page's idea lives at the width that matters. P hangs its whole metrology conceit on a graduated rule gated at min-width:1000px. Rendered at 375px the rule is gone, the green tolerance segment is gone, and what remains is a long, well-typeset but ordinary service page — 5691px of scroll, non-sticky header, the three-working-day fact restated four times in four different components. Q's readout is the loudest object on the page at every breakpoint and it does real work: it shows a value outside tolerance being brought back to zero, which is literally the thing being sold, and the caption underneath is written for the visitor who does not read it as a scale.\\n\\nP wins typography outright — Archivo with the width axis pushed wide, set in caps, is the more expensive and better-argued type decision, and P is the only one with a dark scheme and tokenised SVG fills. Q's Bricolage Grotesque is the one fashionable choice on either page. But Q's Atkinson Hyperlegible is chosen for the reader's actual conditions (a phone, in a shop, after an inspection), which is grounding rather than taste.\\n\\nOn copy, P is clean but flat and repetitive; Q is specific and active, and its worst moment is one overreach rather than filler. On brief fit, Q states the time cost once, at display size, in a section built for it, with the phone permanently in a sticky header. P states it four times and never with weight.\\n\\nShorter page, fewer components, one idea carried all the way down. Q by a clear margin, 48 to 41.",
+        "factualErrors": [
+          "Q — \"Vi lægger besøget, så du kan have vægten i drift indtil da\" (section 03, Almindeligt tilkald). Implies the instrument may lawfully stay in use while it is out of verification. Nothing in the brief supports this, and it sits in tension with the brief's own premise that an inspector has taken the scale out of verification.",
+          "P — the hero illustration presents the class F1 reference weights as brass: SVG <title> reads \"Tre cylindriske referencelodder i messing på en stålplade\" and the fills are brass gradients. The brief states only that the weights are class F1; their material is invented, and class F1 weights are in practice stainless steel, so the invention is also wrong.",
+          "P — \"Vi arbejder for bagerier, fiskehandlere, mindre fødevareproducenter og apoteker i hele Nordjylland\" drops the brief's qualifier \"a few pharmacies\" and presents pharmacies as a full customer segment. Q renders the same list correctly as \"et par apoteker\".",
+          "Neither build invents customer names, testimonials, review scores, job counts or prices, and every phone number, email address, opening hour, accreditation class and callout window on both pages matches the brief exactly."
+        ]
+      }
+    ],
+    "tally": {
+      "P": 1,
+      "Q": 2,
+      "tie": 0
+    }
+  }
+}

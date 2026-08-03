@@ -266,8 +266,8 @@
       "competitorSha": "e988add20dab0fa97d7a76781c48961c8184288e / 1cf7d7ab0f1ac0bb3319fd20be389a3009f4037d",
       "sitesmithStatus": "partial",
       "decision": "adapt",
-      "rationale": "SiteSmith has references/06-redesign-audit.md and a REDESIGN route, but the v2 pipeline is written for a new build; there is no step that inventories an existing component library and reuses it.",
-      "sitesmithFile": "skills/sitesmith/references/06-redesign-audit.md",
+      "rationale": "SiteSmith has v2/tasks/redesign-audit.md and a REDESIGN route, but the v2 pipeline is written for a new build; there is no step that inventories an existing component library and reuses it.",
+      "sitesmithFile": "skills/sitesmith/v2/tasks/redesign-audit.md",
       "evidence": "benchmarks/06-redesign before/after pair",
       "licence": "original (upstream redesign-skill was removed for unverifiable provenance)",
       "priority": "P1"

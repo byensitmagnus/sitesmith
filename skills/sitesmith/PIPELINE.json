@@ -1,4 +1,9 @@
 {
+  "legacy": {
+    "status": "legacy",
+    "supersededBy": "product/pipeline.json",
+    "note": "The v2 pipeline. It defines no current user journey and no normal provider pack. It is reachable only through: node bin/sitesmith.mjs install --legacy-v2. Kept because the v2 evidence in docs/v2/ and evidence/cold-builds/ was produced against it and rewriting it would make that evidence unreproducible."
+  },
   "$comment": [
     "The canonical pipeline. One source, machine-readable, and the thing everything else is",
     "generated from: SKILL.md's build process, the command vocabulary, and the provider",
