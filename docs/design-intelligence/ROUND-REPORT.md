@@ -103,6 +103,14 @@ leading and supporting elements, grouping, density, rhythm, topology, the first 
 object, the signature, what the layout **becomes** at 375, 768 and 1440, container behaviour,
 focus order and the squint test.
 
+The responsive fields are prose and a person reads them. `compare` runs a **coarse geometry
+adaptation proxy** in their place: the leading elements must not sit in the same eight-pixel
+position at 375 and at 1440. That catches a page designed once and allowed to reflow, and
+nothing finer. A closed vocabulary a contract could declare and a script could check is
+recorded as a v1.1 candidate in `contract/schema.json`: `same-with-reason`, `reflow`,
+`reorder`, `collapse`, `split`, `replace`, `redraw`, `scroll`. It is deliberately not built
+in this round, and no pilot was changed for it.
+
 **It is provider-neutral and it travels.** `tools/test-pipeline-drift.mjs` unpacks a real
 install for all four providers and asserts `scripts/contract.mjs`, `scripts/colour.mjs`,
 `contract/schema.json` and `contract.md` are in every pack, and the ZIP check does the same.
@@ -291,20 +299,27 @@ served production build:
 node <skill>/scripts/contract.mjs stress --url <url> --write
 ```
 
-| pilot | url in the run | held | not run |
-|---|---|---|---|
-| 01 glazier | `http://localhost:4361/` | 3 | 4 |
-| 02 lock keeper | `http://localhost:4371/` | 3 | 5 |
-| 03 seed bank | `http://localhost:4381/` | 3 | 5 |
+| pilot | url, locally | url, in CI | held | not run |
+|---|---|---|---|---|
+| 01 glazier | `http://localhost:4361/` | `http://localhost:4351/` | 3 | 4 |
+| 02 lock keeper | `http://localhost:4371/` | `http://localhost:4372/` | 3 | 5 |
+| 03 seed bank | `http://localhost:4381/` | `http://localhost:4382/` | 3 | 5 |
 
 The three that held are the three a browser can decide: a heading at three times its length,
 the page at 200 per cent zoom, and the page with its own faces overridden to a deliberately
 wide fallback. The results are written into each `record/contract.json` under
 `typography.stress` and `layout.stress`, so they can be read without re-running anything.
 
-**This step is not yet in CI.** The pilot jobs run `contract.mjs check` and `compare`, and not
-`stress`. The recorded verdicts are from the local runs above, on the same production builds CI
-rebuilds from the committed lockfiles.
+**It runs in CI**, in all three pilot jobs, after the production build and the contract
+compare. CI asserts exit 0, that exactly three cases were answered, that none of the three got
+the verdict `failed`, and that at least one case is still `not run`. It runs **without
+`--write`**, so the committed contracts are not rewritten: CI proves the three still hold
+rather than recording a new verdict over the old one.
+
+The cases a browser cannot decide stay `not run` and were deliberately not converted into
+automatic tests. Whether a face carries the Danish alphabet, and what an empty console looks
+like at the start of a shift, are not questions a headless browser can answer, and a test that
+pretended otherwise would be worse than the honest gap.
 
 ## Known limits
 
@@ -317,10 +332,17 @@ rebuilds from the committed lockfiles.
 - **43 of 59 rules have never fired in this repository.** They are enforced and unmeasured.
 - **Three pilots is three.** They were built by one agent reading the skill, not by three cold
   agents with empty context windows. The cold loop is the harder test and this was not it.
-- **Five of the eight stress cases per pilot are still `not run`.** A browser can decide a
-  long heading, 200 per cent zoom and a blocked face; it cannot decide whether a face carries
-  the Danish alphabet, or what an empty console looks like at the start of a shift. Those are
-  written down with what is expected and no result, which is the honest value.
+- **The responsive claim is a proxy, not a validation.** `compare` proves two things about
+  the three declared transformations: that the three descriptions are not identical strings,
+  and that the leading elements' coarse geometry changes between 375 and 1440. It never reads
+  what the contract said the layout becomes. A page whose contract says the annotation is
+  redrawn passes by moving one element one grid cell.
+- **Three of the eight stress cases per pilot run in CI; the other five are `not run`.** A
+  browser can decide a long heading, 200 per cent zoom and a blocked face, and CI proves those
+  three on every push. It cannot decide whether a face carries the Danish alphabet, or what an
+  empty console looks like at the start of a shift. Those are written down with what is
+  expected and no result, which is the honest value, and they were deliberately not converted
+  into artificial automatic tests.
 - **The squint test is an ink-density proxy on painted boxes**, not a rendering. It is
   reported and never gated, and a page can be right and fail it.
 - **`verify.mjs` measures prose measure on the element that carries the text**, which is the

@@ -619,6 +619,26 @@ jobs:
           node ../../../skills/sitesmith-v3/scripts/contract.mjs compare --url http://localhost:4351/             | tee /tmp/pilot-compare.log
           grep -q "matches its contract" /tmp/pilot-compare.log             || { echo "::error::the pilot build does not match its contract"; exit 1; }
 
+      # The three stress cases a browser can decide, run against the same served build. It
+      # writes nothing: the committed contract stays as it is, and this proves the three
+      # still hold rather than recording a new verdict. The cases a browser cannot decide,
+      # such as whether a face carries the Danish alphabet, stay "not run" and are not
+      # converted into an artificial automatic test.
+      - name: the three browser stress cases hold
+        working-directory: evidence/pilot/site
+        run: |
+          node ../../../skills/sitesmith-v3/scripts/contract.mjs stress \
+            --url http://localhost:4351/ | tee /tmp/stress.log
+          held=$(grep -c "^  held  " /tmp/stress.log || true)
+          test "$held" = "3" \
+            || { echo "::error::expected three browser cases to hold, got $held"; exit 1; }
+          grep -q "^  FAILED" /tmp/stress.log \
+            && { echo "::error::a stress case failed"; exit 1; }
+          grep -qE "^  3 case\\(s\\) answered" /tmp/stress.log \
+            || { echo "::error::the run did not answer three cases"; exit 1; }
+          grep -q "not run" /tmp/stress.log \
+            || { echo "::error::no case was left as not run, which means something was invented"; exit 1; }
+
       - name: the locked critique is intact and attached to a render
         run: |
           node -e '
@@ -777,6 +797,26 @@ jobs:
             --url http://localhost:${{ matrix.pilot.port }}/ | tee /tmp/compare.log
           grep -q "matches its contract" /tmp/compare.log \
             || { echo "::error::the build does not match its contract"; exit 1; }
+
+      # The three stress cases a browser can decide, run against the same served build. It
+      # writes nothing: the committed contract stays as it is, and this proves the three
+      # still hold rather than recording a new verdict. The cases a browser cannot decide,
+      # such as whether a face carries the Danish alphabet, stay "not run" and are not
+      # converted into an artificial automatic test.
+      - name: the three browser stress cases hold
+        working-directory: evidence/pilots/${{ matrix.pilot.dir }}/site
+        run: |
+          node ../../../../skills/sitesmith-v3/scripts/contract.mjs stress \
+            --url http://localhost:${{ matrix.pilot.port }}/ | tee /tmp/stress.log
+          held=$(grep -c "^  held  " /tmp/stress.log || true)
+          test "$held" = "3" \
+            || { echo "::error::expected three browser cases to hold, got $held"; exit 1; }
+          grep -q "^  FAILED" /tmp/stress.log \
+            && { echo "::error::a stress case failed"; exit 1; }
+          grep -qE "^  3 case\\(s\\) answered" /tmp/stress.log \
+            || { echo "::error::the run did not answer three cases"; exit 1; }
+          grep -q "not run" /tmp/stress.log \
+            || { echo "::error::no case was left as not run, which means something was invented"; exit 1; }
 
       - name: the journey
         working-directory: evidence/pilots/${{ matrix.pilot.dir }}/site

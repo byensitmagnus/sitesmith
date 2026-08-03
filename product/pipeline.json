@@ -182,7 +182,7 @@
         "every primitive is declared on the page and renders as the contract's value",
         "the first viewport object and the signature render, and the first viewport object is in the first screen",
         "the declared focus order appears in the tab order, in that order",
-        "the leading elements are arranged differently at 375 and 1440",
+        "a coarse geometry adaptation proxy: the leading elements do not sit in the same eight-pixel position at 375 and at 1440. It is not a validation of the transformation the contract declares in prose",
         "the squint proxy: where the first screen's ink actually is",
         "the stress cases a browser can decide: a heading at three times its length, the page at 200 per cent zoom, and the page with its own faces blocked. A case a browser cannot decide keeps the words not run."
       ],

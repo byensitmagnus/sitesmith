@@ -574,10 +574,21 @@ async function compare(c, url) {
         fix: 'the keyboard walks the page in a different order than the contract states' });
     }
 
-    /* 4. Structural adaptation. The contract says what the layout becomes at each width;
-          this measures whether it becomes anything at all. Three widths that produce the
-          same arrangement of the leading elements is a page that was designed once and
-          allowed to reflow, which is the thing "responsive" is usually used to mean. */
+    /* 4. Coarse geometry adaptation, and it is a proxy rather than a validation.
+
+          The contract says in words what the layout becomes at 375, 768 and 1440. Nothing
+          here reads those words. What this measures is that the leading elements do not sit
+          in the same eight-pixel grid position at 375 and at 1440, which catches a page
+          designed once and allowed to reflow and catches nothing finer than that. A page
+          whose contract says "the drawing moves above the form and its annotation is
+          redrawn" passes this by moving the drawing one grid cell, and the annotation is
+          never looked at.
+
+          A real validation needs a vocabulary the contract can declare and this can check:
+          same-with-reason, reflow, reorder, collapse, split, replace, redraw, scroll. That
+          is recorded as a v1.1 candidate in contract/schema.json and is deliberately not
+          built here. Calling this a validation of the declared transformation would be the
+          one thing the whole contract exists to stop. */
     const arrangements = {};
     for (const w of [375, 768, 1440]) {
       await page.setViewportSize({ width: w, height: 900 });
@@ -591,8 +602,8 @@ async function compare(c, url) {
     }
     const shape = (w) => JSON.stringify(arrangements[w]);
     if (shape(375) === shape(1440) && (c.layout?.leading ?? []).filter(Boolean).length) {
-      findings.push({ what: 'the leading elements sit in the same arrangement at 375 and at 1440',
-        fix: 'the contract names a transformation at each width and the page performs none' });
+      findings.push({ what: 'the leading elements sit in the same coarse position at 375 and at 1440',
+        fix: 'the contract names a transformation at each width and the page performs no geometric change at all. This is a coarse proxy: passing it does not mean the declared transformation happened.' });
     }
 
     /* 5. The squint test, measured and reported, never gated. Downscale the first screen to

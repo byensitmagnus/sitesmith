@@ -283,7 +283,7 @@
       "type": "array",
       "min": 3,
       "of": "breakpoint",
-      "note": "375, 768 and 1440. What the layout becomes, not what it keeps."
+      "note": "375, 768 and 1440. What the layout becomes, not what it keeps. Prose, and read by a person: contract.mjs compare does not read these words. It measures a coarse geometry proxy, which is that the leading elements do not sit in the same eight-pixel position at 375 and at 1440. See v11Candidates.adaptationVocabulary for what a real validation would need."
     },
     "layout.container": {
       "req": true,
@@ -684,5 +684,22 @@
     "whenItCanFail": [
       "error"
     ]
+  },
+  "v11Candidates": {
+    "$comment": "Recorded, not built. This round deliberately added no adaptation schema; these are the shapes a later version would need, written down so the gap is a decision rather than an oversight.",
+    "adaptationVocabulary": {
+      "why": "layout.responsive[].becomes is prose, and prose cannot be checked against a DOM. A closed vocabulary per breakpoint could be: the contract declares which kind of change happens, and compare measures that kind.",
+      "kinds": {
+        "same-with-reason": "nothing changes, and the contract says why that is right",
+        "reflow": "the same elements, the same order, different line breaks",
+        "reorder": "the same elements in a different order",
+        "collapse": "several elements become one, or a control becomes a disclosure",
+        "split": "one element becomes several",
+        "replace": "an element is exchanged for a different element that does the same job",
+        "redraw": "a drawing keeps its meaning and is drawn again at its own scale, with its own annotation",
+        "scroll": "the element keeps its size and gains a scroll container, announced and keyboard reachable"
+      },
+      "status": "candidate for v1.1. Not implemented, not scheduled, and no pilot was changed for it."
+    }
   }
 }

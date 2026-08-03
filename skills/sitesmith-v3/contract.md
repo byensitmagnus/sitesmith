@@ -105,6 +105,11 @@ The record names two faces. The contract asks the questions that decide whether 
 - **Responsive**: what the layout *is* at each of 375, 768 and 1440. Not "it stacks". If the
   drawing's annotation has to be redrawn at the small size, say so, because a drawing scaled
   down without redrawing its annotation is a drawing nobody can read.
+
+  These are **prose, and a person reads them.** `compare` does not read the words. It runs a
+  coarse geometry proxy: the leading elements must not sit in the same eight-pixel position
+  at 375 and at 1440. That catches a page designed once and allowed to reflow, and nothing
+  finer. Passing it does not mean the transformation you declared happened.
 - **Focus order**, by selector, in order. `compare` checks the tab order contains it, in that
   order. Anything else the page focuses is the page's business.
 - **The squint test**, written down: with the page out of focus, what shape is left, and is
@@ -123,8 +128,12 @@ withholds rather than judging when that happens.
 
 It checks that every primitive is declared on the page and renders as the contract's value,
 that the first viewport object and the signature render and that the first is in the first
-screen, that the focus order appears in the tab order, and that the layout genuinely changes
-between 375 and 1440.
+screen, that the focus order appears in the tab order, and that the leading elements move at
+all between 375 and 1440.
+
+That last one is a **coarse geometry adaptation proxy**, not a validation of the declared
+transformation. A closed vocabulary the contract could declare and this could check is
+recorded as a v1.1 candidate in `contract/schema.json`, and it is deliberately not built.
 
 ## It does not gate the run
 
