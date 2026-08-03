@@ -1,0 +1,65 @@
+{
+  "workflowVersion": "1.0.0",
+  "workflow": "sitesmith-unified-rebuild",
+  "branch": "rebuild/sitesmith-unified",
+  "base": "dc00598cce2af92435a749856393e287506753bc",
+  "state": "S15_PACKAGE_AND_DOCUMENT",
+  "previousState": "S3_MECHANISM_GRAPH",
+  "allowedNextStates": [
+    "S13_HOLDOUT_BUILD"
+  ],
+  "states": [
+    "S0_REPO_TRUTH",
+    "S1_SOURCE_RESOLUTION",
+    "S2_REPO_AUTOPSIES",
+    "S3_MECHANISM_GRAPH",
+    "S4_CAPABILITY_SYNTHESIS",
+    "S5_ARCHITECTURE_CANDIDATES",
+    "S6_RED_TEAM",
+    "S7_ARCHITECTURE_SELECTION",
+    "S8_SKILL_SCAFFOLD",
+    "S9_MINIMAL_IMPLEMENTATION",
+    "S10_MECHANISM_TESTS",
+    "S11_PROTOTYPE_BUILD",
+    "S12_CRITIQUE_AND_REVISION",
+    "S13_HOLDOUT_BUILD",
+    "S14_FINAL_REVIEW",
+    "S15_PACKAGE_AND_DOCUMENT"
+  ],
+  "gates": {
+    "G0_repo_truth": "pass",
+    "G1_source_resolution": "pass",
+    "G2_autopsies": "pass",
+    "G3_architecture_selected": "pass",
+    "G4_red_team": "pass",
+    "G5_mechanism_tests": "pass",
+    "G6_holdout": "fail-three-rounds-defences-now-structural",
+    "G7_placement_coverage": "running"
+  },
+  "budget": {
+    "concurrentResearchAgentsLimit": 6,
+    "revisionLoopsPerPhaseLimit": 2,
+    "architectureCandidatesLimit": 3,
+    "prototypeSitesLimit": 2,
+    "paidThirdPartyApiSpend": 0,
+    "newHeadToHeadArms": 0,
+    "agentRunsSoFar": 140,
+    "subagentTokensTotal": 6665404,
+    "workflows": 16
+  },
+  "openRisks": [
+    "A9 has not passed. Three rounds, three fails, each fix relocating the convergence. The colour and signature vetoes are live and were not when any round ran; a fourth round is the next real evidence.",
+    "144 of 243 mechanisms are unchallenged; waves three and four had no red team.",
+    "The judge validation gate ponytail's measurement calls for is designed and not built, so every judge verdict here carries that discount.",
+    "The old skills/sitesmith tree is untouched. Migration and CI rewiring is 20 to 30 hours and is needed to publish, not to use.",
+    "No site built with this has shipped to a customer."
+  ],
+  "pushPolicy": "no push, no merge, no force-push until Magnus approves once for this branch",
+  "implementation": {
+    "step1_creative_surface": "done — drafted, smoke-tested, claims rule fixed after the test found the leak",
+    "step2_teach_repo_new_shape": "not started — provenance-build.mjs, configurable check-repo roots, must-fail fixtures for the four reference globs. 20-30h",
+    "step3_budget_gate": "done — tools/context-budget.mjs rewritten with declared manifest, three failure modes, 5-case test suite",
+    "remaining": "floor/buy.md, floor/operate.md, redesign.md, verify.md, stacks/*.md, gate.mjs, ledger.mjs, stack.mjs, then two prototypes and the holdout"
+  },
+  "courseCorrection": "2026-08-01: build paused. Extraction was broad (17 repos, 140 mechanisms) but the artifact used ~15 of them. Every adopted mechanism must now be traced to a named file, a quote, or a written drop before any more skill files are written. This project is a learning and community artefact, not a rush; depth is the point."
+}

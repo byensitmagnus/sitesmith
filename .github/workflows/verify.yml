@@ -1,8 +1,14 @@
 name: verify
 
 on:
+  # The release contract has to run on the branch the release is prepared on, not only after
+  # it lands. Everything below was green on main and unrun here, which is how a branch gets
+  # ten commits deep before anyone finds out.
   push:
-    branches: [main]
+    branches:
+      - main
+      - rebuild/sitesmith-unified
+      - 'release/**'
   pull_request:
   workflow_dispatch:
 
@@ -12,6 +18,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
@@ -25,6 +33,22 @@ jobs:
       # detectability, the plugin manifests, orphaned datasets, the counts quoted in
       # the docs, and a smoke test of every search domain, stack and design system.
       - run: python tools/check-repo.py
+
+      - name: installed bundles retain provenance, licences and notices
+        run: node tools/test-product-flow.mjs
+
+      # The v3 foundation is a traceability contract, not free-form prose. Keep its
+      # frontmatter/headings/anchors, frozen sources, 59-row ledger, matrix, module
+      # assignments, QC links, licensing state and review evidence machine-checked.
+      - name: v3 architecture documents remain internally complete
+        env:
+          SITESMITH_BASE_SHA: ${{ github.event.pull_request.base.sha || (github.event.before != '0000000000000000000000000000000000000000' && github.event.before) || '' }}
+        run: node tools/check-v3-docs.mjs
+
+      - name: v3 treatment dictionaries and assertion seals are current
+        run: |
+          node tools/sync-v3-treatments.mjs
+          node tools/seal-strength-assertions.mjs
 
       # The assignment-blinded review key opens only after the reviews are locked, bound to this round's
       # hashes, and unedited since. Rounds 3 to 6 committed the key while reviewers were
@@ -82,6 +106,129 @@ jobs:
             --contract skills/sitesmith/blocks/CONTRACT.md || fail=1
           echo "::endgroup::"
           exit $fail
+
+  # The v3 package is what tools/install-sitesmith.mjs installs and what the rebuild
+  # produced, and until this job existed nothing in CI ran a single one of its checks.
+  # That was not a gap in coverage, it was a gap in portability: eight of seventeen gate
+  # cases failed on a fresh checkout because every fixture's direction record was matched
+  # by a blanket .sitesmith/ ignore rule and had never been committed. The suites were
+  # green only on the machine that wrote them. This job is what makes that impossible to
+  # repeat, and it runs from a clean checkout on purpose.
+  v3:
+    name: the v3 package proves itself from a clean checkout
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: install a browser for the checks that render
+        working-directory: benchmarks
+        run: |
+          npm install --no-audit --no-fund
+          npx playwright install --with-deps chromium
+
+      # Ordered cheapest first, so a broken script fails before a browser is spent on it.
+      - name: stack router
+        run: node skills/sitesmith-v3/scripts/test-stack.mjs
+
+      - name: the anti-repeat ledger and the direction record parser
+        run: node skills/sitesmith-v3/scripts/test-ledger.mjs
+
+      - name: durable run state and its typed graph
+        run: node skills/sitesmith-v3/scripts/test-state.mjs
+
+      - name: component retrieval routes, and refuses to install
+        run: node skills/sitesmith-v3/scripts/test-components.mjs
+
+      # Every analysed source has to change the product. This refuses when one has no
+      # mechanism, no path, no proof, no licence or no attribution, and when a path or a
+      # proof names a file that is not in the tree.
+      - name: every source contributes, and every contribution exists
+        run: node tools/source-coverage.mjs
+
+      # The package may only point at paths it ships. A file naming a script that does not
+      # exist is the failure this catches, and it had shipped once.
+      - name: the package is self-contained
+        run: |
+          node tools/self-contained-lint.mjs
+          node tools/self-contained-lint.mjs --self-test
+
+      - name: the refusal gate, against work it must accept and work it must refuse
+        working-directory: benchmarks
+        run: node ../skills/sitesmith-v3/scripts/test-gate.mjs
+
+      - name: the render gate, including the fixtures that must keep failing
+        env:
+          SITESMITH_DEPS_DIR: ${{ github.workspace }}/benchmarks/node_modules
+        run: node skills/sitesmith-v3/scripts/test-verify.mjs
+
+      - name: every scenario stays inside its context ceiling
+        run: |
+          node tools/test-context-budget.mjs
+          node tools/context-budget.mjs skills/sitesmith-v3
+
+      - name: the floor files name renditions rather than an appearance
+        run: |
+          node tools/floor-lint.mjs skills/sitesmith-v3
+          node tools/floor-lint.mjs --self-test
+
+      - name: every extracted mechanism is accounted for, and provenance is measured
+        run: |
+          node tools/placement-coverage.mjs
+          node tools/provenance-overlap.mjs
+
+      # The pilot is the only build in this repository whose client exists, so it is the
+      # one place a real brief meets all three gates at once. It is committed with its
+      # direction record for exactly this reason.
+      # The pilot is frozen evidence: a page built in July, committed with its record, and
+      # never edited since. Its record still parses, it still renders, its floor still holds
+      # and its journey still runs, and those are the assertions this step can truthfully
+      # make about it forever.
+      #
+      # `gate.mjs` is not one of them. The gate grows: five refusal classes were added in
+      # August from cold-build reviews, and applying them to a page built before they existed
+      # means either editing the evidence to suit a later rule or watching CI go red on
+      # history. GATE-POLICY.md settles which: a rubric change takes effect forward only. So
+      # the gate runs against the pilot and its output is printed, and its exit code does not
+      # fail the run.
+      - name: the Byens IT pilot still parses, renders, holds its floor and drives its journey
+        working-directory: benchmarks
+        run: |
+          node serve.mjs 4341 .. &
+          for i in $(seq 1 30); do curl -sf http://localhost:4341/pilots/04-byens-it/ >/dev/null && break; sleep 1; done
+          node ../skills/sitesmith-v3/scripts/ledger.mjs parse ../pilots/04-byens-it
+          echo "::group::gate against frozen evidence, reported and not enforced"
+          node ../skills/sitesmith-v3/scripts/gate.mjs ../pilots/04-byens-it || \
+            echo "gate refusals above are measured against a page built before those classes existed; see docs/GATE-POLICY.md"
+          echo "::endgroup::"
+          node ../skills/sitesmith-v3/scripts/verify.mjs http://localhost:4341/pilots/04-byens-it/ --out /tmp/pilot-04
+          # Behaviour, which the render step never touches. Run from benchmarks/ because
+          # that is where playwright is installed on this runner.
+          node ../skills/sitesmith-v3/scripts/journey.mjs ../pilots/04-byens-it/journeys             --base http://localhost:4341/pilots/04-byens-it
+
+      # Every benchmark under the v3 gate, and the control group still refused by it. This
+      # is what says the v3 verifier can replace the v2 one rather than merely coexist.
+      - name: every benchmark passes the v3 verifier, and the control still fails it
+        working-directory: benchmarks
+        run: |
+          node serve.mjs 4342 . &
+          for i in $(seq 1 30); do curl -sf http://localhost:4342/01-saas-landing/ >/dev/null && break; sleep 1; done
+          for b in 01-saas-landing 02-product-page 03-dashboard 04-local-service 05-editorial \
+                   06-redesign/after 07-multistep-form 08-documentation 09-data-entry blocks \
+                   10-tannery/site 11-seed-library/site 12-tideworks/site; do
+            echo "::group::$b"
+            node ../skills/sitesmith-v3/scripts/verify.mjs "http://localhost:4342/$b/" \
+              --out "/tmp/v3-$(echo $b | tr / -)"
+            echo "::endgroup::"
+          done
+          if node ../skills/sitesmith-v3/scripts/verify.mjs \
+               "http://localhost:4342/06-redesign/before/" --out /tmp/v3-control; then
+            echo "::error::The control page passed the v3 verifier. It is the baseline and must keep its intentional defects."
+            exit 1
+          fi
+          echo "control refused, as it must be"
 
   benchmarks:
     name: benchmarks render and pass
@@ -286,8 +433,97 @@ jobs:
         if: always()
         run: node tools/bench-container.mjs down || true
 
-  clean-install:
-    name: a clean install can run the gates
+  # ── the release contract ────────────────────────────────────────────────────
+  # Two jobs, and between them they are what "v3 alpha is installable and reproducible"
+  # means. Everything above proves the repository is consistent with itself. These two
+  # prove a stranger gets a working product, from the archive, on a machine with nothing
+  # on it. If either fails, the release does not go out, whatever the rest says.
+
+  release-package:
+    name: the shipped archive is the product, on node ${{ matrix.node }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # 20 is the floor the package declares. 22 and 24 are what a person actually has
+        # installed today. The floor was declared and never tested above itself, so a change
+        # that needed a newer API would have shipped as "node >= 20" and broken nobody's
+        # machine here and everybody's machine there.
+        node: [20, 22, 24]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+
+      - name: one pipeline defines the journey, and every pack is generated from it
+        run: node tools/test-pipeline-drift.mjs
+
+      - name: the exit contract, and a run manifest with nobody's home directory in it
+        run: node tools/test-commands-exit.mjs
+
+      - name: build the archive and unpack it into an empty directory
+        run: |
+          node tools/package-sitesmith-v3.mjs
+          rm -rf /tmp/pkg && mkdir -p /tmp/pkg
+          unzip -q dist/sitesmith-install.zip -d /tmp/pkg
+          test -f /tmp/pkg/sitesmith/cli.mjs || { echo "::error::no cli.mjs in the archive"; exit 1; }
+          test -d /tmp/pkg/sitesmith/knowledge || { echo "::error::no knowledge index in the archive"; exit 1; }
+          test -d /tmp/pkg/sitesmith/scripts || { echo "::error::no scripts in the archive"; exit 1; }
+
+      # From here nothing touches this repository. The working directory is an empty
+      # project and the only SiteSmith on the machine is the one that came out of the ZIP.
+      - name: help, init and recommend, from the archive alone
+        run: |
+          mkdir -p /tmp/proj && cd /tmp/proj
+          node /tmp/pkg/sitesmith/cli.mjs --help | tee /tmp/help.txt
+          for c in init recommend build inspect redesign audit verify; do
+            grep -qE "^ {4}sitesmith $c\b" /tmp/help.txt \
+              || { echo "::error::$c is missing from the installed command surface"; exit 1; }
+          done
+          node /tmp/pkg/sitesmith/cli.mjs init --name "Clean package"
+          test -f .sitesmith/PROJECT.md
+          node /tmp/pkg/sitesmith/cli.mjs recommend \
+            "a shop that prices cut-to-measure panes from the buyer's own measurements" --surface buy \
+            | tee /tmp/rec.txt
+          grep -qi "never a complete visual template\|hard rule" /tmp/rec.txt \
+            || { echo "::error::recommend printed results without the hard rule"; exit 1; }
+
+      # Both halves of the contract, in one job, because a product that only proves the
+      # happy path has not proved the part that matters: that a blocked run says so with
+      # its exit code instead of reporting success and moving on.
+      - name: build blocks and exits 3 when it has no direction record
+        run: |
+          cd /tmp/proj
+          set +e
+          node /tmp/pkg/sitesmith/cli.mjs build --surface buy > /tmp/blocked.txt 2>&1
+          code=$?
+          set -e
+          test "$code" = "3" || { echo "::error::a blocked build exited $code, not 3"; cat /tmp/blocked.txt; exit 1; }
+          grep -q "blocker" /tmp/blocked.txt || { echo "::error::exit 3 without naming a blocker"; exit 1; }
+
+      - name: and gives a clear order of work when it has one
+        run: |
+          cd /tmp/proj
+          printf -- '---\nstack: astro\n---\n\n# A workshop\n\nCuts replacement panes to measure and prices them from the two measurements the buyer already has.\n' > BRIEF.md
+          node /tmp/pkg/sitesmith/scripts/ledger.mjs new . buy
+          node /tmp/pkg/sitesmith/cli.mjs build --surface buy | tee /tmp/ok.txt
+          test -f .sitesmith/RUN.md && test -f .sitesmith/RUN.json
+          grep -q "next    :" /tmp/ok.txt || { echo "::error::build named no next step"; exit 1; }
+          node -e '
+            const m = require("/tmp/proj/.sitesmith/RUN.json");
+            const { skillRoot, ...rest } = m;
+            const body = JSON.stringify(rest);
+            if (!skillRoot) { console.error("::error::RUN.json has no skillRoot"); process.exit(1); }
+            if (/\/(Users|home)\//.test(body) || /[A-Za-z]:\\\\/.test(body)) {
+              console.error("::error::RUN.json carries an absolute path outside skillRoot"); process.exit(1);
+            }
+            if (!m.knowledge.used.length) { console.error("::error::the archive found no knowledge"); process.exit(1); }
+            console.log(`ok  ${m.knowledge.used.length} posts, stack ${m.stack.name} (${m.stack.source})`);
+          '
+
+  pilot:
+    name: the pilot rebuilds from its lockfile and passes its own gates
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -295,13 +531,172 @@ jobs:
         with:
           node-version: 20
 
-      # The normal case, from nothing. The installer used to write a manifest, print an
-      # npm command, and leave the project unable to run the accessibility gate. This
-      # starts with an empty directory and finishes by running the real gate from it.
+      # npm ci, not npm install. The pilot's numbers are only evidence if the tree they were
+      # measured on is the tree that gets rebuilt, and `^5.14.1` resolved to 5.18.2 between
+      # the build and the commit.
+      - name: install from the committed lockfile
+        working-directory: evidence/pilot/site
+        run: |
+          npm ci --no-audit --no-fund
+          npx playwright install --with-deps chromium
+
+      - name: production build
+        working-directory: evidence/pilot/site
+        run: npm run build
+
+      - name: serve the production build
+        working-directory: evidence/pilot/site
+        run: |
+          node -e '
+            const { createServer } = require("http");
+            const { readFileSync, existsSync, statSync } = require("fs");
+            const { join, extname } = require("path");
+            const TYPES = { ".html": "text/html", ".css": "text/css", ".js": "text/javascript",
+                            ".svg": "image/svg+xml", ".json": "application/json", ".woff2": "font/woff2" };
+            createServer((req, res) => {
+              let p = join("dist", decodeURIComponent(req.url.split("?")[0]));
+              if (existsSync(p) && statSync(p).isDirectory()) p = join(p, "index.html");
+              if (!existsSync(p)) { res.writeHead(404).end("not found"); return; }
+              res.writeHead(200, { "content-type": TYPES[extname(p)] ?? "application/octet-stream" });
+              res.end(readFileSync(p));
+            }).listen(4351);
+          ' &
+          for i in $(seq 1 30); do curl -sf http://localhost:4351/ >/dev/null && break; sleep 1; done
+          curl -sf http://localhost:4351/ >/dev/null || { echo "::error::the pilot did not serve"; exit 1; }
+
+      # Three widths and axe in both colour schemes. verify exits non-zero on anything
+      # blocking and withholds rather than passes when it cannot measure.
+      - name: verify at 375, 768 and 1440, axe in both schemes
+        working-directory: evidence/pilot/site
+        run: |
+          node ../../../skills/sitesmith-v3/scripts/verify.mjs \
+            http://localhost:4351/ --out /tmp/pilot-shots | tee /tmp/pilot-verify.log
+          for w in 375 768 1440; do
+            test -f "/tmp/pilot-shots/$w.png" || { echo "::error::no render at ${w}px"; exit 1; }
+          done
+          # v3's verify prints "axe both schemes   : ran, N violations, M serious or critical".
+          # This pattern was v2's line, so the first run of this job reported a passing pilot
+          # as a failure: 0 violations in both schemes, PASS, nothing blocking, exit 1.
+          grep -qE "axe both schemes +: ran, [0-9]+ violations" /tmp/pilot-verify.log \
+            || { echo "::error::axe did not run against the pilot"; cat /tmp/pilot-verify.log; exit 1; }
+          grep -q "PASS, nothing blocking" /tmp/pilot-verify.log \
+            || { echo "::error::verify did not pass on the pilot"; exit 1; }
+
+      - name: the journey, against the production build
+        working-directory: evidence/pilot/site
+        run: |
+          node ../../../skills/sitesmith-v3/scripts/journey.mjs journeys \
+            --base http://localhost:4351 | tee /tmp/pilot-journey.log
+          grep -qE "^ +[1-9][0-9]* passed$" /tmp/pilot-journey.log \
+            || { echo "::error::the journey ran no spec, or one of them failed"; exit 1; }
+
+      # The critique is only evidence while it is attached to the render that shipped. This
+      # checks the record itself: a locked hash, an answer, and a correction round that says
+      # which render it moved from and to.
+      - name: the locked critique is intact and attached to a render
+        run: |
+          node -e '
+            const c = require("./evidence/pilot/record/critique.json");
+            const fail = (m) => { console.error(`::error::${m}`); process.exit(1); };
+            if (!/^[0-9a-f]{16}$/.test(c.render ?? "")) fail("the critique is not locked to a render hash");
+            if (!c.files?.length) fail("the critique names no images");
+            if ((c.answers ?? "").length < 500) fail("the critique has no answers in it");
+            if (!/ACCEPT|REJECT/.test(c.answers)) fail("the critique reaches no verdict");
+            for (const r of c.corrections ?? []) {
+              if (!r.fromRender || !r.toRender) fail("a correction round does not say which renders it sits between");
+              if (r.toRender !== c.render) fail("the last correction does not end at the locked render");
+            }
+            if ((c.corrections ?? []).length > 1) fail("more than one correction round; the second is refused");
+            console.log(`ok  locked to ${c.render}, ${c.files.length} images, ${(c.corrections ?? []).length} correction round`);
+          '
+
+      # Reported, not enforced, and the reason is written down rather than implied. The one
+      # refusal is look/no-photograph, which the brief itself causes: it supplies no
+      # photography and forbids generating any.
+      - name: the gate, with its draft status stated
+        working-directory: evidence/pilot/site
+        run: |
+          # Put the record back beside the build. evidence/pilot/ keeps site/ a clean
+          # buildable project and record/ the artefacts, which is right for reading and
+          # wrong for the gate: it looks for the asset manifest, the production report, the
+          # direction record and the critique next to the thing it is judging.
+          cp ../record/ASSET-MANIFEST.md ../record/PRODUCTION-REPORT.md .
+          mkdir -p .sitesmith/shots
+          cp ../record/direction.md ../record/critique.json .sitesmith/
+          cp ../renders/*.png .sitesmith/shots/
+          echo "::group::gate against the served production build"
+          node ../../../skills/sitesmith-v3/scripts/gate.mjs --url http://localhost:4351/ | tee /tmp/pilot-gate.log || true
+          echo "::endgroup::"
+          # A withheld verdict is a hard failure here, because withholding is exactly what
+          # pilot defect nine made the gate do instead of judging an unstyled document.
+          if grep -q "stylesheets did not load\|VERDICT MISSING\|NO VERDICT" /tmp/pilot-gate.log; then
+            echo "::error::the gate could not measure the pilot, so it has no verdict"; exit 1
+          fi
+          # The one expected refusal is look/no-photograph, which the brief itself causes:
+          # it supplies no photography and forbids generating any. Anything else is new and
+          # is named rather than absorbed.
+          sed -n '/^  REFUSED$/,/^$/p' /tmp/pilot-gate.log \
+            | grep -oE '^    [a-z]+/[a-z-]+' | tr -d ' ' | sort -u > /tmp/pilot-classes.txt || true
+          echo "refusal classes:"; cat /tmp/pilot-classes.txt
+          if grep -qv '^look/no-photograph$' /tmp/pilot-classes.txt; then
+            echo "::error::the pilot gained a refusal class beyond look/no-photograph"
+            grep -v '^look/no-photograph$' /tmp/pilot-classes.txt
+            exit 1
+          fi
+
+      - name: every artefact the pilot claims is in the repository
+        run: |
+          for f in evidence/pilot/BRIEF.md evidence/pilot/README.md \
+                   evidence/pilot/record/direction.md evidence/pilot/record/RUN.json \
+                   evidence/pilot/record/RUN.md evidence/pilot/record/critique.json \
+                   evidence/pilot/record/ASSET-MANIFEST.md evidence/pilot/record/PRODUCTION-REPORT.md \
+                   evidence/pilot/renders/375.png evidence/pilot/renders/768.png \
+                   evidence/pilot/renders/1440.png evidence/pilot/renders/reduced-motion-1440.png \
+                   evidence/pilot/site/package-lock.json evidence/pilot/site/journeys/koeb.spec.mjs; do
+            test -f "$f" || { echo "::error::$f is claimed and missing"; exit 1; }
+          done
+          # The committed manifest is the one the pilot produced, and it is not portable:
+          # it carries `project` as an absolute path and every command spelled out from a
+          # home directory. That is the tenth defect the pilot found, it was fixed in
+          # commands.mjs afterwards, and the artefact is kept as produced rather than
+          # regenerated, because a regenerated one would also carry today's knowledge
+          # results and would no longer be what the site was built from.
+          #
+          # So this asserts the artefact is still the historical one. That a manifest
+          # written today is portable is proved by tools/test-commands-exit.mjs, on a run
+          # that happens now rather than on evidence from July.
+          node -e '
+            const m = require("./evidence/pilot/record/RUN.json");
+            if (!m.project || m.skillRoot) {
+              console.error("::error::the pilot manifest has been regenerated; it is evidence and is kept as produced");
+              process.exit(1);
+            }
+            console.log(`ok  the pilot manifest is the pre-portability artefact, as produced`);
+          '
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: pilot-renders
+          path: /tmp/pilot-shots/
+          if-no-files-found: warn
+
+  legacy-v2-install:
+    name: the legacy v2 install still works behind its flag
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      # v2 is not what anyone gets by default any more. It is kept reachable because the
+      # evidence in docs/v2/ and benchmarks/ was produced against it, and evidence that
+      # cannot be re-run is a claim rather than evidence.
       - name: install into an empty directory
         run: |
           mkdir -p /tmp/fresh
-          node bin/sitesmith.mjs install --to /tmp/fresh --provider claude
+          node bin/sitesmith.mjs install --legacy-v2 --to /tmp/fresh --provider claude
           npx --yes --prefix /tmp/fresh playwright install --with-deps chromium
 
       # Read each package.json off disk rather than through require(). A package may decline

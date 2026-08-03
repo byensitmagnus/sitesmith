@@ -1,0 +1,66 @@
+name: package v3
+
+on:
+  push:
+    branches:
+      - main
+      - rebuild/sitesmith-unified
+    paths:
+      - 'skills/sitesmith-v3/**'
+      - 'tools/package-sitesmith-v3.mjs'
+      - '.github/workflows/package-v3.yml'
+  pull_request:
+    paths:
+      - 'skills/sitesmith-v3/**'
+      - 'tools/package-sitesmith-v3.mjs'
+      - '.github/workflows/package-v3.yml'
+  workflow_dispatch:
+
+jobs:
+  package:
+    name: build canonical v3 ZIPs
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: package from canonical source
+        run: node tools/package-sitesmith-v3.mjs
+
+      - name: archive contains the canonical skill
+        run: |
+          rm -rf /tmp/sitesmith-source /tmp/sitesmith-install
+          mkdir -p /tmp/sitesmith-source /tmp/sitesmith-install
+          unzip -q dist/sitesmith-v3.zip -d /tmp/sitesmith-source
+          unzip -q dist/sitesmith-install.zip -d /tmp/sitesmith-install
+
+          test -f /tmp/sitesmith-source/sitesmith-v3/SKILL.md
+          test -f /tmp/sitesmith-source/sitesmith-v3/scripts/test-gate.mjs
+          test -f /tmp/sitesmith-install/sitesmith/SKILL.md
+          test ! -e /tmp/sitesmith-install/sitesmith/scripts/test-gate.mjs
+
+          diff -qr skills/sitesmith-v3 /tmp/sitesmith-source/sitesmith-v3
+
+      - name: packaging is deterministic
+        run: |
+          cp dist/SHA256SUMS /tmp/SHA256SUMS.first
+          node tools/package-sitesmith-v3.mjs
+          diff -u /tmp/SHA256SUMS.first dist/SHA256SUMS
+          # From dist/, because SHA256SUMS lists bare filenames. Run from the repository
+          # root it reported "No such file or directory" for both archives and failed the
+          # job on a checksum mismatch that never happened.
+          cd dist && sha256sum -c SHA256SUMS
+
+      - name: upload installable archives
+        uses: actions/upload-artifact@v4
+        with:
+          name: sitesmith-v3-zips
+          path: |
+            dist/sitesmith-v3.zip
+            dist/sitesmith-install.zip
+            dist/SHA256SUMS
+          if-no-files-found: error
+          retention-days: 90

@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Four radii and a wrapped label, a fixture that must report and still pass</title>
+<!-- MUST-PASS fixture for skills/sitesmith-v3/scripts/verify.mjs, and the one that pins
+     the rule the whole package turns on: a script may verify, retrieve and refuse, and it
+     may never decide the design.
+     This page carries four corner radii, three type families, a button label that wraps,
+     two controls under one label, two labels on one target, tap targets under 44px, a pair
+     under the 24px gap, and a focus ring the stylesheet suppresses. Every one of those is
+     measured and printed. None of them is allowed to move the exit code, because none of
+     them is the script's call to make. If this fixture ever exits 1, a measurement has been
+     promoted to a verdict. -->
+<style>
+  :root { --paper: #fffdf7; --ink: #241f1a; --rule: #6f6558; --mark: #8a2f10; }
+  @media (prefers-color-scheme: dark) {
+    :root { --paper: #14120f; --ink: #f2ede3; --rule: #a89c8c; --mark: #ff9a6f; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink);
+         font-family: system-ui, sans-serif; font-size: 17px; line-height: 1.6; }
+  main { max-width: 60ch; margin: 0 auto; padding: 32px 20px 64px; }
+  h1, h2 { font-family: Georgia, serif; line-height: 1.2; }
+  h1 { font-size: 32px; margin: 0 0 8px; }
+  h2 { font-size: 21px; margin: 28px 0 8px; }
+  code { font-family: ui-monospace, monospace; }           /* third type family */
+  a { color: var(--mark); }
+  .plate  { border: 1px solid var(--rule); border-radius: 2px;  padding: 12px; margin: 16px 0; }
+  .card   { border: 1px solid var(--rule); border-radius: 9px;  padding: 12px; margin: 16px 0; }
+  .tab    { border: 1px solid var(--rule); border-radius: 18px; padding: 4px 10px; }
+  .pill   { border: 1px solid var(--rule); border-radius: 40px; padding: 4px 10px; }
+  .narrow { display: inline-block; width: 120px; padding: 10px;
+            border: 1px solid var(--rule); border-radius: 2px;
+            background: var(--paper); color: var(--ink); font: inherit; }
+  .tight a { font-size: 13px; padding: 0 4px; }            /* under the 44px floor, close together */
+  .bare:focus-visible { outline: none; }                   /* suppressed, and reported as such */
+  :focus-visible { outline: 3px solid var(--mark); outline-offset: 3px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Four radii and a wrapped label</h1>
+  <p>Everything on this page is a measurement the script reports and leaves alone. Whether
+    four corner radii is a system or an accident is a question for the person reading the
+    report, not for <code>verify.mjs</code>.</p>
+
+  <div class="plate">
+    <h2 id="stock">Stock</h2>
+    <p>A 2px radius here and a 9px radius below, so the vocabulary count has something to
+      count.</p>
+  </div>
+
+  <div class="card">
+    <p><span class="tab">Tab</span> <span class="pill">Pill</span></p>
+  </div>
+
+  <h2 id="orders">Orders</h2>
+  <p><button class="narrow bare" type="button">Order a sheet count for the press room</button></p>
+
+  <p class="tight">
+    <a class="bare" href="#stock">Stock</a>
+    <a class="bare" href="#orders">Orders</a>
+    <a class="bare" href="#stock">Stock</a>
+  </p>
+
+  <p>
+    <a href="index.html">Reload this fixture</a> and
+    <a href="index.html">start again from the top</a>.
+  </p>
+</main>
+</body>
+</html>

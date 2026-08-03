@@ -1,0 +1,927 @@
+{
+  "producedBy": "workflow wf_ffb0513f-0ef — 6 resolver agents + 6 independent refutation agents",
+  "agentCount": 12,
+  "subagentTokens": 986597,
+  "at": "2026-08-01",
+  "result": [
+    {
+      "batch": "motion",
+      "results": [
+        {
+          "id": "scroll-world",
+          "status": "resolved",
+          "candidates": [
+            {
+              "name": "oso95/scroll-world",
+              "url": "https://github.com/oso95/scroll-world",
+              "why": "Exact name match; description 'A skill that turn any brand into a scrollable 3D world'; 6283 stars; contains skills/scroll-world/SKILL.md with scroll-driven camera/scene mechanism. All other 'scroll-world' repos on GitHub are either forks of it (vyctncao/scroll-world explicitly says 'fork of oso95/scroll-world'), one-off demo sites (tea-leaf-scroll-world, KubeezMedia), or unrelated games (ScrollingWorldGame).",
+              "confidence": 0.97
+            },
+            {
+              "name": "vyctncao/scroll-world",
+              "url": "https://github.com/vyctncao/scroll-world",
+              "why": "Self-declared fork of oso95/scroll-world swapping the video backend to MuAPI. Downstream, not canonical. 3 stars.",
+              "confidence": 0.02
+            },
+            {
+              "name": "VR-Jobs/scroll-world",
+              "url": "https://github.com/VR-Jobs/scroll-world",
+              "why": "'Scroll World v5' generator with Doubao/Higgsfield pipeline — same vocabulary, 0 stars, no upstream/downstream statement. Almost certainly a derivative re-publish.",
+              "confidence": 0.01
+            }
+          ],
+          "chosen": {
+            "name": "scroll-world",
+            "repoUrl": "https://github.com/oso95/scroll-world",
+            "defaultBranch": "main",
+            "headCommit": "71cc36d3bb150248ae36a2c552f9cbf88802a79c",
+            "licence": "MIT",
+            "licenceFilePresent": true,
+            "relevantPaths": [
+              "skills/scroll-world/SKILL.md",
+              "skills/scroll-world/references/scrub-engine.js",
+              "skills/scroll-world/references/pipeline.md",
+              "skills/scroll-world/references/prompts.md",
+              "skills/scroll-world/references/index-template.html",
+              "skills/scroll-world/references/knockout.py",
+              ".claude-plugin/plugin.json",
+              ".claude-plugin/marketplace.json",
+              "README.md",
+              "LICENSE"
+            ],
+            "whyRelevant": "This is an agent skill (SKILL.md format, Claude Code plugin + Vercel skills CLI installable) whose entire mechanism is scroll-driven scene storytelling: N AI-generated scene stills, N 'dive-in' camera clips, N-1 'connector' clips, and a framework-agnostic vanilla-JS scrub engine that maps scroll position to video time. That is exactly the scroll scenes / scroll progression / camera logic the hint describes.",
+            "claimsToVerify": [
+              "Claims the scrub engine in references/scrub-engine.js is self-contained vanilla JS that builds its own DOM and injects its own CSS, so it is framework-agnostic (drops into plain HTML, Next.js, Vue, anything) — verify no framework imports and no external CSS dependency.",
+              "Claims scroll only drives time and the camera genuinely moves — i.e. the page scrubs PRE-RENDERED video by scroll position rather than doing runtime 3D. Verify the engine does video currentTime scrubbing, not WebGL/Three.js camera transforms.",
+              "Claims seams between scenes must be 'frame-identical' and that the connector-clip method (first/last-frame conditioning) prevents a visible pop — verify references/pipeline.md actually specifies a frame-extraction/verification step rather than just asserting it.",
+              "Claims it is agent-portable across Claude Code, Codex and 'any SKILL.md-compatible agent' — verify the SKILL.md frontmatter (allowed-tools: Bash, Read, Write, Edit, AskUserQuestion, Skill) does not hard-depend on Claude-only tooling.",
+              "Claims a hard external dependency chain (Monid CLI default / Higgsfield CLI fallback, ffmpeg, Python+Pillow) — verify how much of the skill is unusable without paid API balance, since that determines what can actually be rebuilt."
+            ]
+          },
+          "notes": "Resolved with high confidence. Method: `gh search repos \"scroll world\"` returned 15 hits; oso95/scroll-world dominates by stars (6283 vs next-highest 597) and is the only one described as a skill. Two of the other hits explicitly identify as forks/derivatives of it. Licence: BOTH signals agree — GitHub API license.spdx_id = \"MIT\" AND a real LICENSE file exists in the repo root (verified via `gh api contents/`, body reads 'MIT License / Copyright (c) 2026 cyw'). Head commit 71cc36d3bb150248ae36a2c552f9cbf88802a79c fetched from `gh api repos/oso95/scroll-world/commits/main`, repo last pushed 2026-07-29. All relevantPaths were confirmed by directory listing, not inferred. Note for the autopsy agent: the LICENSE copyright holder is 'cyw', which does not match the GitHub handle 'oso95' — worth a provenance sanity check, though it does not affect MIT redistributability. Not an Anthropic/Claude first-party skill; it is a third-party community skill distributed as a Claude Code plugin marketplace."
+        },
+        {
+          "id": "remotion-skills",
+          "status": "ambiguous",
+          "candidates": [
+            {
+              "name": "remotion-dev/skills",
+              "url": "https://github.com/remotion-dev/skills",
+              "why": "Official remotion-dev org repo, described 'Agent Skills', 4165 stars. Contains skills/ with 11 Remotion agent skills (remotion-best-practices, remotion-create, remotion-render, remotion-captions, remotion-docs, remotion-interactivity, remotion-maps, remotion-markup, remotion-multimedia, remotion-saas, remotion-upgrade). This is the standalone distribution repo agents install from.",
+              "confidence": 0.6
+            },
+            {
+              "name": "remotion-dev/remotion (packages/skills)",
+              "url": "https://github.com/remotion-dev/remotion/tree/main/packages/skills",
+              "why": "The skills genuinely live inside the main monorepo at packages/skills — identical directory structure (README.md, package.json, scripts, skills, tsconfig.json). The standalone repo's own package.json declares repository.url = https://github.com/remotion-dev/remotion/tree/main/packages/skills, which means the standalone repo is a subtree split/mirror and the monorepo is upstream of record.",
+              "confidence": 0.38
+            },
+            {
+              "name": "remotion-dev/claude-code-plugin",
+              "url": "https://github.com/remotion-dev/claude-code-plugin",
+              "why": "Official org repo, 'Remotion Agent Skills for Claude Code', 4 stars. A thin packaging/distribution wrapper for Claude Code, not where the skill content is authored. Sibling remotion-dev/kimi-code-plugin (1 star) confirms the wrapper pattern.",
+              "confidence": 0.02
+            },
+            {
+              "name": "buainoai/remotion-skills",
+              "url": "https://github.com/buainoai/remotion-skills",
+              "why": "Highest-ranked non-org name match (93 stars) but it is a third-party Chinese-language 'Remotion best-practices skill library', not published by remotion-dev. Explicitly ruled out as non-canonical.",
+              "confidence": 0.01
+            }
+          ],
+          "chosen": {
+            "name": "remotion-dev/skills",
+            "repoUrl": "https://github.com/remotion-dev/skills",
+            "defaultBranch": "main",
+            "headCommit": "4951f6aca2a236f2f2a2bff4734566963fe12707",
+            "licence": "",
+            "licenceFilePresent": false,
+            "relevantPaths": [
+              "skills/",
+              "skills/remotion-best-practices/SKILL.md",
+              "skills/remotion-create/SKILL.md",
+              "skills/remotion-create/tailwind.md",
+              "skills/remotion-create/video-layout.md",
+              "skills/remotion-render/",
+              "skills/remotion-captions/",
+              "skills/remotion-docs/",
+              "skills/remotion-interactivity/",
+              "skills/remotion-maps/",
+              "skills/remotion-markup/",
+              "skills/remotion-multimedia/",
+              "skills/remotion-saas/",
+              "skills/remotion-upgrade/",
+              "scripts/sync-agent-skills.ts",
+              "scripts/sync-embedded-skills.ts",
+              "scripts/prepare-embedded-skills.ts",
+              "scripts/validate-links.ts",
+              "package.json"
+            ],
+            "whyRelevant": "This is the dedicated remotion-dev repo holding the Remotion agent skills as SKILL.md files — 11 skills covering programmatic video creation, rendering, captions, interactivity and upgrades. It is the skills repo the hint asks for, not the renderer. Note that remotion-best-practices is a parent skill: its directory contains SKILL.md plus nested copies of the other ten skill directories, so there is an embedded/nested skill-composition mechanism worth inspecting (the scripts/ folder contains sync-embedded-skills.ts and prepare-embedded-skills.ts, which appear to generate that nesting).",
+            "claimsToVerify": [
+              "The README claims only 'This is an internal package and has no documentation' — verify whether the repo is genuinely intended for third-party consumption despite 4165 stars, since that affects whether its patterns are a supported reference or an internal artifact.",
+              "Implicit claim of skill composition: remotion-best-practices/ contains nested copies of the other ten skills. Verify whether these are duplicated content or symlinks/generated, and whether the nesting implements progressive context loading (load parent, then pull child SKILL.md on demand).",
+              "Claims of a build/sync pipeline via scripts/sync-agent-skills.ts, sync-embedded-skills.ts and prepare-embedded-skills.ts — verify whether skill content is hand-authored or generated from the Remotion docs, because that determines whether the skills are the source or a derived output.",
+              "scripts/validate-links.ts implies a claim that all doc links inside the skills are checked — verify it actually runs in CI and covers every SKILL.md.",
+              "package.json declares \"private\": true and version 4.0.503 tracking the Remotion release train — verify whether the skills are versioned in lockstep with the renderer, which would mean pinning a skill version implies pinning a Remotion version."
+            ]
+          },
+          "notes": "Marked AMBIGUOUS deliberately, on the upstream question only — the org and the content are certain, the canonical HOST is not. Both remotion-dev/skills and remotion-dev/remotion/packages/skills contain the same 11 skills with identical top-level structure (README.md, package.json, scripts, skills, tsconfig.json). Decisive evidence pointing at the monorepo as upstream: the standalone repo's package.json sets repository.url to https://github.com/remotion-dev/remotion/tree/main/packages/skills — i.e. remotion-dev/skills self-identifies as a subtree split of the monorepo. I still chose remotion-dev/skills because it is the artifact users and agents actually install and it is scoped to the skills alone. WHAT WOULD SETTLE IT: diff skills/ between the two at the recorded SHAs and check whether remotion-dev/skills has hand-written commits or only sync/split commits — if every commit is a mirror push, the monorepo is canonical and rebuild work should reference packages/skills. LICENCE WARNING (both signals checked, both negative for the chosen repo): GitHub API license field is null AND `gh api repos/remotion-dev/skills/contents/` shows NO LICENSE file in the repo root (`gh api repos/remotion-dev/skills/license` returns 404). So the chosen repo has NO licence at all — I used both the API field and the contents listing and they agree. The upstream monorepo remotion-dev/remotion DOES have LICENSE.md, and its API spdx_id is \"NOASSERTION\" — that is Remotion's own custom, non-OSI licence with commercial-use restrictions for companies over a size threshold, NOT MIT/Apache. Given the project's hard rule about only redistributing licence-cleared sources, treat Remotion skill text as NOT redistributable until a human reads remotion-dev/remotion LICENSE.md. Head commits (both fetched, neither invented): remotion-dev/skills main = 4951f6aca2a236f2f2a2bff4734566963fe12707 (pushed 2026-07-31); remotion-dev/remotion main = 278da3d665dcb769224e26ae7f2500d5efd272de (pushed 2026-08-01, moves fast — re-pin before any autopsy). All relevantPaths verified by `gh api contents/` listing."
+        }
+      ],
+      "verdicts": [
+        {
+          "id": "scroll-world",
+          "agrees": true,
+          "correctedRepoUrl": "https://github.com/oso95/scroll-world",
+          "correctedHeadCommit": "71cc36d3bb150248ae36a2c552f9cbf88802a79c",
+          "correctedLicence": "MIT",
+          "reason": "Independently re-derived. Fresh `gh search repos \"scroll world skill\"` plus a web search both surface oso95/scroll-world as the original (6283 stars; cth9191/scroll-world and KubeezMedia/kubeez-scroll-world-video are explicitly described as fork/derivative). Head commit re-fetched from `gh api repos/oso95/scroll-world/commits/main` = 71cc36d3bb150248ae36a2c552f9cbf88802a79c (matches; pushed_at 2026-07-29, not moved since). Licence checked both ways and both agree: API .license.spdx_id = \"MIT\" AND root contents listing includes LICENSE. Not a fork, not archived. All relevantPaths re-listed and confirmed: skills/scroll-world/{SKILL.md,references/} with references containing exactly index-template.html, knockout.py, pipeline.md, prompts.md, scrub-engine.js; .claude-plugin contains marketplace.json + plugin.json. Purpose re-checked against actual content, not just the name: SKILL.md frontmatter describes scroll-scrubbed camera flight with allowed-tools Bash/Read/Write/Edit/AskUserQuestion/Skill, and scrub-engine.js grep shows video `currentTime` seeking with no framework imports and no three/WebGL references — so the 'scrubs pre-rendered video, not runtime 3D' and 'framework-agnostic vanilla JS' claims survive a refutation attempt. One correction to the resolver's framing, not to the fields: SKILL.md states the video chain renders through Monid by default with Higgsfield as fallback biller, and stills come from Higgsfield or Codex — the resolver's dependency claim is directionally right but the default biller is Monid/Seedance 2.0. The LICENSE holder being 'cyw' rather than 'oso95' is real but does not affect MIT redistributability."
+        },
+        {
+          "id": "remotion-skills",
+          "agrees": true,
+          "correctedRepoUrl": "https://github.com/remotion-dev/skills",
+          "correctedHeadCommit": "4951f6aca2a236f2f2a2bff4734566963fe12707",
+          "correctedLicence": "",
+          "reason": "Independently re-derived and every recorded field checks out, including the negative licence finding. Fresh web search for Remotion agent skills returns remotion-dev/skills as the installable artifact (`npx skills add remotion-dev/skills`) while remotion.dev/docs/ai/skills points at the monorepo path packages/skills — so both hosts are real and the resolver's AMBIGUOUS flag is justified rather than sloppy. Head commit re-fetched = 4951f6aca2a236f2f2a2bff4734566963fe12707 (matches; pushed_at 2026-07-31). Licence verified three ways, all negative and all consistent with the recorded empty value: API .license = null, root contents listing = [README.md, package.json, scripts, skills, tsconfig.json] with NO LICENSE/LICENCE/COPYING, and `gh api repos/remotion-dev/skills/license` returns 404. Upstream monorepo remotion-dev/remotion has spdx_id NOASSERTION (custom non-OSI licence) — so the resolver's redistribution warning stands and I reinforce it: under this project's four-source rule, Remotion skill text is NOT redistributable. Content matches the intended role: skills/ contains exactly 11 skill directories (remotion-best-practices, captions, create, docs, interactivity, maps, markup, multimedia, render, saas, upgrade) and scripts/ contains the four .ts files claimed. NEW EVIDENCE that settles the resolver's open question: the last 15 commits on remotion-dev/skills are ALL authored by Jonny Burger with the identical message 'Update template' — i.e. this repo receives only automated mirror pushes and has no hand-written commits, which combined with package.json repository.url pointing to remotion-dev/remotion/tree/main/packages/skills means the MONOREPO is canonical upstream and any autopsy/rebuild should read packages/skills. I still record remotion-dev/skills as the resolved repo because it is the distribution artifact agents install, but the canonical-source caveat should be treated as resolved-against-the-standalone-repo, not open. Monorepo head re-pinned today: 278da3d665dcb769224e26ae7f2500d5efd272de."
+        }
+      ]
+    },
+    {
+      "batch": "implementation",
+      "results": [
+        {
+          "id": "ponytail",
+          "status": "resolved",
+          "candidates": [
+            {
+              "name": "DietrichGebert/ponytail",
+              "url": "https://github.com/DietrichGebert/ponytail",
+              "why": "Canonical upstream: 93,234 stars, description 'Makes your AI agent think like the laziest senior dev in the room. The best code is the code you never wrote.' Ships skills/ponytail/SKILL.md plus plugin manifests for ~20 agents (.claude-plugin, .codex-plugin, .cursor, .windsurf, etc.), homepage ponytail.dev, npm @dietrichgebert/ponytail. Matches the hint exactly: proportionality, smallest correct implementation, reuse before invention, dependency discipline.",
+              "confidence": 0.97
+            },
+            {
+              "name": "0xwilliamortiz/ponytail-improved",
+              "url": "https://github.com/0xwilliamortiz/ponytail-improved",
+              "why": "Derivative fork (572 stars), name literally marks it as a modification of the original. Not canonical.",
+              "confidence": 0.05
+            },
+            {
+              "name": "ilindaniel/ponytail-lite",
+              "url": "https://github.com/ilindaniel/ponytail-lite",
+              "why": "Explicitly self-describes as 'Inspired by Ponytail, but without the plugin madness' — downstream derivative, 133 stars.",
+              "confidence": 0.03
+            },
+            {
+              "name": "warp-svg/ponytail-gilfoyle",
+              "url": "https://github.com/warp-svg/ponytail-gilfoyle",
+              "why": "Self-declared reskin of DietrichGebert/ponytail. Confirms the upstream attribution rather than competing with it.",
+              "confidence": 0.02
+            }
+          ],
+          "chosen": {
+            "name": "ponytail",
+            "repoUrl": "https://github.com/DietrichGebert/ponytail",
+            "defaultBranch": "main",
+            "headCommit": "16f29800fd2681bdf24f3eb4ccffe38be3baec6b",
+            "licence": "MIT",
+            "licenceFilePresent": true,
+            "relevantPaths": [
+              "skills/ponytail/SKILL.md",
+              "skills/ponytail-audit/",
+              "skills/ponytail-debt/",
+              "skills/ponytail-gain/",
+              "skills/ponytail-help/",
+              "skills/ponytail-review/",
+              "AGENTS.md",
+              "commands/",
+              "hooks/",
+              "benchmarks/",
+              "benchmarks/results/2026-06-18-agentic.md",
+              "examples/",
+              "docs/agent-portability.md",
+              "docs/platform-native.md",
+              "ponytail-mcp/",
+              "tests/",
+              ".claude-plugin/",
+              "plugin.yaml"
+            ],
+            "whyRelevant": "This is the mechanism SiteSmith would borrow for restraint discipline: a single skill file that pushes an agent down a 'laziness ladder' — reach for the platform-native primitive before a dependency, the smallest correct implementation before an abstraction — with named safety carve-outs so the minimisation never strips a guard. It also ships something rare: a reproducible agentic benchmark harness (benchmarks/) that measures the skill's effect on a real repo rather than asserting it.",
+            "claimsToVerify": [
+              "Claims ~54% less code (up to 94%), ~20% cheaper, ~27% faster, and 100% safe versus a no-skill baseline, measured on headless Claude Code sessions editing fastapi/full-stack-fastapi-template across 12 feature tickets, n=4, Haiku 4.5 — check that benchmarks/ actually contains a runnable harness reproducing this, not just a results markdown.",
+              "Claims it keeps every safety guard while a bare 'YAGNI + one-liners' prompt drops one (95% safe) — verify SKILL.md contains explicit safety carve-outs that survive the minimisation pressure.",
+              "Claims it works with 20 agents via platform-native plugin manifests (.claude-plugin, .codex-plugin, .cursor, .windsurf, .kiro, .qoder, .opencode, .devin-plugin, .clinerules, .agents, gemini-extension.json, pi-extension) — verify these are real per-platform packagings of one source of truth and not 20 divergent copies.",
+              "Claims prefer-the-platform-primitive as the core move (README's date-picker example: 404 lines to a native <input type=\"date\">) — verify SKILL.md encodes this as an ordered decision procedure rather than a vibe."
+            ]
+          },
+          "notes": "Unambiguous. `gh search repos \"ponytail\"` returns the AI-agent repo as the overwhelming top hit; the hairstyle sense does not appear in GitHub results at all, and the unrelated matches (i17c/PonyTail IDEA log tracker, plumlis/ponytail image scraper, coldbricks/paisley-ponytail Webshots tool, sinsoku/ponytail) are trivially separable by description. Every other AI-agent 'ponytail' repo in the top 15 self-identifies as a fork, reskin, or derivative of DietrichGebert/ponytail, which independently corroborates it as upstream. Licence recorded two ways and they agree: GitHub API .license.spdx_id = MIT, AND a LICENSE file is present in the repo root per `gh api repos/DietrichGebert/ponytail/contents/`. Head commit 16f29800fd2681bdf24f3eb4ccffe38be3baec6b fetched from `gh api repos/DietrichGebert/ponytail/commits/main --jq .sha` — not inferred. Repo pushed 2026-07-15, so it is actively maintained and the SHA will drift; pin it. All relevantPaths were confirmed to exist via `gh api .../contents/` on the root, skills/, skills/ponytail/ and docs/ — skills/ponytail/ contains exactly one file, SKILL.md. Note for the autopsy agent: the README itself retracts an earlier headline benchmark ('the earlier single-shot benchmark reported 80-94% as a flat figure; against a fair agentic baseline that is the per-task ceiling, not the average'), so the repo has a track record of correcting its own claims — worth testing whether the current numbers survive the same scrutiny. Licence is MIT, so redistribution is permitted under the SiteSmith licence rule provided attribution is preserved."
+        },
+        {
+          "id": "ai-website-cloner-template",
+          "status": "resolved",
+          "candidates": [
+            {
+              "name": "JCodesMore/ai-website-cloner-template",
+              "url": "https://github.com/JCodesMore/ai-website-cloner-template",
+              "why": "Canonical upstream: 30,739 stars, exact name match, and the README describes precisely the hinted pipeline — 'Point it at a URL, run /clone-website, and your AI agent will inspect the site, extract design tokens and assets, write component specs, and dispatch parallel builders to reconstruct every section.' Confirmed .claude/skills/clone-website/SKILL.md exists.",
+              "confidence": 0.97
+            },
+            {
+              "name": "UHolli/ai-website-cloner",
+              "url": "https://github.com/UHolli/ai-website-cloner",
+              "why": "Same concept, 143 stars, but two orders of magnitude smaller and lacks the '-template' name the hint uses. Plausible but almost certainly downstream.",
+              "confidence": 0.05
+            },
+            {
+              "name": "ZevileN/hack-JCodesMore-ai-website-cloner-template",
+              "url": "https://github.com/ZevileN/hack-JCodesMore-ai-website-cloner-template",
+              "why": "Name explicitly encodes JCodesMore as the origin. Corroborates upstream rather than competing.",
+              "confidence": 0.01
+            },
+            {
+              "name": "hljlgj/ai-website-cloner",
+              "url": "https://github.com/hljlgj/ai-website-cloner",
+              "why": "Description reads 'ai-website-cloner from github/com/JCodesMore/ai-website-cloner-template' — a self-declared copy, further corroborating the upstream.",
+              "confidence": 0.01
+            }
+          ],
+          "chosen": {
+            "name": "ai-website-cloner-template",
+            "repoUrl": "https://github.com/JCodesMore/ai-website-cloner-template",
+            "defaultBranch": "master",
+            "headCommit": "a9b35751b756dd8e9c3951afec86d2cb869c4e0f",
+            "licence": "MIT",
+            "licenceFilePresent": true,
+            "relevantPaths": [
+              ".claude/skills/clone-website/SKILL.md",
+              "AGENTS.md",
+              "CLAUDE.md",
+              "GEMINI.md",
+              "docs/research/INSPECTION_GUIDE.md",
+              "docs/design-references/",
+              "scripts/sync-skills.mjs",
+              "scripts/sync-agent-rules.sh",
+              "src/app/",
+              "src/components/",
+              "src/lib/utils.ts",
+              "src/hooks/",
+              "src/types/",
+              "components.json",
+              "CHANGELOG.md"
+            ],
+            "whyRelevant": "This is the closest public prior art to SiteSmith's reconstruction path: a URL-in, Next.js-codebase-out pipeline where one skill file drives live browser inspection (`claude --chrome`), token and asset extraction, section mapping into component specs, and parallel builder dispatch. Two mechanisms are worth autopsying specifically — docs/research/INSPECTION_GUIDE.md as the evidence-gathering contract, and scripts/sync-skills.mjs + sync-agent-rules.sh as a single-source-of-truth generator that fans one skill out to 11+ agent-specific rule directories.",
+            "claimsToVerify": [
+              "Claims a single /clone-website command runs the full pipeline: inspect the site, extract design tokens and assets, write component specs, and dispatch PARALLEL builders per section — verify .claude/skills/clone-website/SKILL.md actually orchestrates concurrent subagents rather than a sequential loop.",
+              "Claims support for 11+ agents (Claude Code, Codex CLI, OpenCode, Copilot, Cursor, Windsurf, Gemini CLI, Cline, Roo Code, Continue, Amazon Q) — verify the per-agent directories are genuinely generated from one source by scripts/sync-skills.mjs and have not drifted apart.",
+              "Claims it accepts multiple target URLs in one invocation (/clone-website <url1> [<url2> ...]) — verify SKILL.md defines how multi-URL input is reconciled into one coherent design system rather than producing conflicting token sets.",
+              "Claims output is a 'clean, modern Next.js codebase' from reverse-engineering — verify whether it produces reusable components and real design tokens, or whether it screenshot-matches into one-off markup. This is the claim most load-bearing for SiteSmith, since a cloner that copies pixels is the opposite of the anti-AI-generic goal.",
+              "Claims Claude Code with Opus 4.8 gives best results and requires --chrome — verify how hard the dependency on live browser inspection is, i.e. whether the pipeline degrades gracefully without it."
+            ]
+          },
+          "notes": "Unambiguous. `gh search repos \"ai website cloner\"` returns JCodesMore/ai-website-cloner-template first at 30,739 stars; the runner-up has 143 and the remaining ~12 matches are near-zero-star copies, several of which name JCodesMore in their own description or repo name as the origin. Two disambiguation traps checked and cleared: the name is generic enough that low-effort clones dominate the long tail, and a second search for 'website cloner design tokens' returned zero results, so there is no competing token-extraction project hiding under a different name. IMPORTANT for anyone scripting against this: the default branch is `master`, NOT `main` — the sibling ponytail repo uses `main`, so do not assume. Head commit a9b35751b756dd8e9c3951afec86d2cb869c4e0f fetched from `gh api repos/JCodesMore/ai-website-cloner-template/commits/master --jq .sha` — not inferred. Licence recorded two ways and they agree: GitHub API .license.spdx_id = MIT, AND a LICENSE file is present in the repo root per `gh api .../contents/`; the README also links that LICENSE file directly. MIT means redistribution is permitted under the SiteSmith licence rule with attribution preserved. All relevantPaths were confirmed via `gh api .../contents/` on root, .claude/, .claude/skills/, .claude/skills/clone-website/, docs/, docs/research/, docs/design-references/, src/ and scripts/ — .claude/skills/clone-website/ contains exactly one file, SKILL.md, and docs/design-references/ currently holds only .gitkeep and comparison.png (a demo screenshot), so it is a placeholder for user-supplied references, not shipped reference material. Repo pushed 2026-07-30 (one day before this resolution), so it is under active development and the SHA will drift quickly; pin it. One caution for the autopsy: the README explicitly asks users NOT to clone the template directly and not to open PRs against it — that is a usage convention, not a licence restriction, and does not limit reading or studying the code."
+        }
+      ],
+      "verdicts": [
+        {
+          "id": "ponytail",
+          "agrees": true,
+          "correctedRepoUrl": "https://github.com/DietrichGebert/ponytail",
+          "correctedHeadCommit": "16f29800fd2681bdf24f3eb4ccffe38be3baec6b",
+          "correctedLicence": "MIT",
+          "reason": "Independently re-derived. `gh search repos ponytail` returns DietrichGebert/ponytail first at 93,234 stars; every other AI-agent match (ponytail-improved 572, ponytail-lite 133, ponytail-gilfoyle, karpathy-ponytail-skills) names it as origin in its own description, and the non-agent matches (i17c/PonyTail, plumlis/ponytail, coldbricks/paisley-ponytail, sinsoku/ponytail) are separable by description. Verified myself: default_branch=main, archived=false, fork=false; `gh api repos/DietrichGebert/ponytail/commits/main --jq .sha` = 16f29800fd2681bdf24f3eb4ccffe38be3baec6b, exact match. Licence confirmed two ways: API .license.spdx_id=MIT AND root contents include LICENSE, whose body I decoded and read — 'MIT License / Copyright (c) 2026 DietrichGebert'. All relevantPaths exist: skills/ contains exactly ponytail, ponytail-audit, ponytail-debt, ponytail-gain, ponytail-help, ponytail-review; skills/ponytail/ holds exactly SKILL.md; benchmarks/ is a real harness (promptfooconfig*.yaml, correctness.js, loc.js, behavior.js, benchmark-local.py, arms/, agentic/, results/) not just a results markdown; benchmarks/results/2026-06-18-agentic.md is present; docs/ holds exactly agent-portability.md and platform-native.md; commands/, hooks/, examples/, tests/, ponytail-mcp/, .claude-plugin/ and plugin.yaml all exist. Purpose matches the intended role: I read SKILL.md (120 lines) — it encodes an ordered '## The ladder' with the platform-primitive rung verbatim ('Native platform feature covers it? `<input type=\"date\">` over a picker lib'), a mode table with 'full' as default, and explicit carve-outs ('Never simplify away: input validation at trust boundaries, error handling'). Caveat, not a refutation: pushed 2026-07-15, actively maintained, so pin the SHA."
+        },
+        {
+          "id": "ai-website-cloner-template",
+          "agrees": true,
+          "correctedRepoUrl": "https://github.com/JCodesMore/ai-website-cloner-template",
+          "correctedHeadCommit": "a9b35751b756dd8e9c3951afec86d2cb869c4e0f",
+          "correctedLicence": "MIT",
+          "reason": "Independently re-derived. `gh search repos \"ai website cloner\"` returns JCodesMore/ai-website-cloner-template first at 30,739 stars; runner-up UHolli/ai-website-cloner has 143 and the rest are 0-31 star copies, several naming JCodesMore in their own repo name or description. Verified myself: default_branch=master (NOT main — the prior agent's warning is correct), archived=false, fork=false; `gh api .../commits/master --jq .sha` = a9b35751b756dd8e9c3951afec86d2cb869c4e0f, exact match. Licence confirmed two ways: API .license.spdx_id=MIT AND root contents include LICENSE, decoded and read — 'MIT License / Copyright (c) 2025 JCodesMore'. All relevantPaths exist: .claude/skills/clone-website/ holds exactly SKILL.md; docs/research/ holds exactly INSPECTION_GUIDE.md; docs/design-references/ holds only .gitkeep and comparison.png (placeholder, as noted); scripts/ holds .gitkeep, sync-agent-rules.sh, sync-skills.mjs; src/ holds app, components, hooks, lib, types with src/lib/utils.ts present; AGENTS.md, CLAUDE.md, GEMINI.md, components.json, CHANGELOG.md all in root. Purpose matches: I read SKILL.md (473 lines) — it is a URL-in/Next.js-out reconstruction pipeline, requires a browser MCP as a hard gate ('This skill cannot work without browser automation'), accepts multiple URLs with per-hostname isolated artifact folders, builds design tokens into src/app/globals.css mapped onto shadcn token names, dedupes inline SVGs into src/components/icons.tsx, writes per-component spec files to docs/research/components/ before dispatch, and explicitly dispatches parallel builder agents in worktrees. Two corrections to the prior agent's framing, neither changing the verdict: the browser dependency is NOT hard-bound to `claude --chrome` — SKILL.md accepts Chrome/Playwright/Browserbase/Puppeteer MCP and only prefers Chrome; and it does produce real components plus tokens rather than screenshot-matched one-off markup, so the load-bearing anti-generic concern reads favourably on inspection. Caveat: pushed 2026-07-30, fast-moving, pin the SHA."
+        }
+      ]
+    },
+    {
+      "batch": "orchestration-a",
+      "results": [
+        {
+          "id": "agency-agents",
+          "status": "resolved",
+          "candidates": [
+            {
+              "name": "msitarzewski/agency-agents",
+              "url": "https://github.com/msitarzewski/agency-agents",
+              "why": "Canonical upstream. 137,937 stars, MIT, active (pushed 2026-07-30). Every other match on GitHub either declares itself a fork ('Fork of msitarzewski/agency-agents') or a translation ('converted from msitarzewski/agency-agents'). Repo root contains the division directories (engineering, design, marketing, product, sales, testing, security, ...) plus divisions.json and tools.json — exactly the agency-shaped role structure the hint describes.",
+              "confidence": 0.97
+            },
+            {
+              "name": "jnMetaCode/agency-agents-zh",
+              "url": "https://github.com/jnMetaCode/agency-agents-zh",
+              "why": "18,619 stars, but self-describes as a Chinese-market derivative of the same persona library (267 roles, plus 52 China-market originals). Downstream, not canonical.",
+              "confidence": 0.05
+            },
+            {
+              "name": "Anas-Khan93/ai-agency-agents",
+              "url": "https://github.com/Anas-Khan93/ai-agency-agents",
+              "why": "'Open Agency' — independent open-source AI workforce with specialist agents for dev/growth/research/strategy. Plausible name match but only 503 stars and no evidence it is the repo the hint refers to.",
+              "confidence": 0.03
+            },
+            {
+              "name": "Raheel2774/agency-agents",
+              "url": "https://github.com/Raheel2774/agency-agents",
+              "why": "'The Agency' — 200+ specialist personas for Claude Code/Cursor/Codex/Gemini. Same name and near-identical description to the canonical repo but 5 stars; almost certainly a re-upload.",
+              "confidence": 0.02
+            }
+          ],
+          "chosen": {
+            "name": "msitarzewski/agency-agents",
+            "repoUrl": "https://github.com/msitarzewski/agency-agents",
+            "defaultBranch": "main",
+            "headCommit": "c89557f78509868c6d4cc08e5cbc79bc8625fe1c",
+            "licence": "MIT",
+            "licenceFilePresent": true,
+            "relevantPaths": [
+              "engineering/",
+              "design/",
+              "marketing/",
+              "product/",
+              "sales/",
+              "project-management/",
+              "testing/",
+              "security/",
+              "support/",
+              "strategy/",
+              "finance/",
+              "specialized/",
+              "divisions.json",
+              "tools.json",
+              "integrations/",
+              "integrations/claude-code/",
+              "integrations/codex/",
+              "scripts/",
+              "scripts/lint-agents.sh",
+              "scripts/check-agent-originality.sh",
+              "scripts/check-divisions.sh",
+              "scripts/install.sh",
+              "README.md",
+              "LICENSE"
+            ],
+            "whyRelevant": "The mechanism we care about — specialist agent role definitions organised like a creative/dev agency — lives as one Markdown file per persona inside the division directories (confirmed: engineering/ holds engineering-ai-engineer.md, engineering-backend-architect.md, engineering-code-reviewer.md, engineering-devops-automator.md, and ~dozens more, all prefixed with the division name). divisions.json and tools.json are the machine-readable structure that binds personas to divisions and to supported host tools. integrations/ holds the per-host adapters (claude-code, codex, cursor, opencode, openclaw, hermes, ...) which is where any delegation/handoff wiring would have to live. scripts/ holds the repo's own quality gates, including an originality check.",
+            "claimsToVerify": [
+              "README claims '230+ Specialized Agents' across 11+ divisions — count the actual .md persona files across the division directories and check the division count against divisions.json.",
+              "README claims each agent has 'Deep expertise in their domain (not generic prompt templates)' with identity, mission, workflows, technical deliverables with code examples, and success metrics — sample personas and check whether these sections are actually present and substantive, or whether the files are near-identical boilerplate with the noun swapped.",
+              "README claims support for 14 host platforms (Claude Code, Copilot, Antigravity, Gemini CLI, OpenCode, OpenClaw, Cursor, Aider, Windsurf, Qwen, Kimi, Codex, Osaurus, Hermes) — integrations/ lists 17 entries; verify each is a real adapter and not an empty stub.",
+              "The hint attributes 'delegation, handoff, responsibility boundaries' to this repo, but the README documents NO inter-agent delegation or handoff mechanism — agents are user-activated and independent. Verify against actual file content whether any handoff protocol exists at all, or whether the agency framing is purely taxonomic."
+            ]
+          },
+          "notes": "High confidence, no real ambiguity. The name is crowded on GitHub (15+ matches) but the crowd is almost entirely forks and translations that name msitarzewski/agency-agents as their source in their own descriptions — that self-attribution is what settles it. Provenance method: repo metadata and SPDX id from `gh api repos/msitarzewski/agency-agents` (license.spdx_id = MIT); licence FILE presence independently confirmed via `gh api repos/.../contents/` which lists a root LICENSE entry — both signals agree, so no conflict to resolve. Head commit c89557f78509868c6d4cc08e5cbc79bc8625fe1c fetched from `gh api repos/.../commits/main --jq .sha` on 2026-08-01; the repo is actively pushed to (last push 2026-07-30), so this SHA will drift. All relevantPaths were confirmed by directory listing except that I listed division directories generically — I confirmed engineering/, scripts/, and integrations/ contents explicitly and confirmed the rest exist as root entries. One caveat worth carrying into the autopsy: the hint's framing (delegation, handoff, responsibility boundaries) is NOT what the README claims — it claims a persona catalogue, not an orchestration protocol. If the rebuild is after handoff mechanics, this repo may be the wrong shape even though it is the right name."
+        },
+        {
+          "id": "ruflo",
+          "status": "resolved",
+          "candidates": [
+            {
+              "name": "ruvnet/ruflo",
+              "url": "https://github.com/ruvnet/ruflo",
+              "why": "Canonical. 66,724 stars, MIT, pushed 2026-08-01 (same day as resolution). Description is a near-exact match to the hint: 'The original agent meta-harness. Deploy intelligent multi-player swarms, coordinate autonomous workflows... adaptive memory, self-learning intelligence, RAG integration'. Confirmed on-disk mechanism: .claude/skills/ contains hive-mind-advanced, agentdb-memory-patterns, reasoningbank-intelligence, flow-nexus-swarm; .claude/agents/ contains consensus/, hive-mind/, neural/, goal/. Other 'ruflo' hits (turbo-flow, agentic-kit, ruflo-hub, stratoma-ai-stack, aleksander-del/ruflo) all name ruvnet/ruflo as the thing they wrap or fork.",
+              "confidence": 0.97
+            },
+            {
+              "name": "marcuspat/turbo-flow",
+              "url": "https://github.com/marcuspat/turbo-flow",
+              "why": "167 stars. Explicitly 'Ruflo orchestration, 215+ MCP tools, 60+ AI agents, SPARC methodology' — a devcontainer distribution built on top of ruflo, not ruflo itself.",
+              "confidence": 0.02
+            },
+            {
+              "name": "henryalouf/ruflow",
+              "url": "https://github.com/henryalouf/ruflow",
+              "why": "Spelling near-miss ('ruflow' not 'ruflo'), 74 stars, no description. Other ruflow repos are unrelated (a Ruby flow-based programming lib, a job-application agent system). None match the orchestration/shared-memory/swarm hint.",
+              "confidence": 0.01
+            }
+          ],
+          "chosen": {
+            "name": "ruvnet/ruflo",
+            "repoUrl": "https://github.com/ruvnet/ruflo",
+            "defaultBranch": "main",
+            "headCommit": "913f9eaedee92627950544424e50339feaf98271",
+            "licence": "MIT",
+            "licenceFilePresent": true,
+            "relevantPaths": [
+              "SKILL.md",
+              "CLAUDE.md",
+              "AGENTS.md",
+              ".claude/",
+              ".claude/skills/",
+              ".claude/skills/hive-mind-advanced/",
+              ".claude/skills/agentdb-memory-patterns/",
+              ".claude/skills/agentdb-learning/",
+              ".claude/skills/agentdb-vector-search/",
+              ".claude/skills/reasoningbank-intelligence/",
+              ".claude/skills/reasoningbank-agentdb/",
+              ".claude/skills/flow-nexus-swarm/",
+              ".claude/skills/sparc-methodology/",
+              ".claude/skills/hooks-automation/",
+              ".claude/agents/",
+              ".claude/agents/hive-mind/",
+              ".claude/agents/consensus/",
+              ".claude/agents/neural/",
+              ".claude/agents/goal/",
+              ".claude/commands/",
+              ".claude/workflows/",
+              ".claude/settings.json",
+              ".agents/",
+              ".agents/skills/",
+              ".agents/config.toml",
+              ".claude-plugin/",
+              ".harness/",
+              "v3/",
+              "v3/agents/",
+              "v3/mcp/",
+              "v3/plugins/",
+              "docs/",
+              "plugins/",
+              "verification/",
+              "tests/",
+              "LICENSE"
+            ],
+            "whyRelevant": "Every mechanism named in the hint has a confirmed on-disk home. Shared memory + state persistence: .claude/skills/agentdb-memory-patterns/, agentdb-vector-search/, agentdb-learning/, plus agentdb.rvf and agentdb.rvf.lock at repo root (the RVF trajectory-persistence store the README claims). Swarm coordination: .claude/skills/hive-mind-advanced/ and flow-nexus-swarm/, with .claude/agents/hive-mind/ and .claude/agents/consensus/ holding the Raft/Byzantine/Gossip agent definitions. Self-improvement: .claude/skills/reasoningbank-intelligence/ and reasoningbank-agentdb/, .claude/agents/neural/. Long workflows: .claude/workflows/, .claude/commands/, .claude/skills/sparc-methodology/, .claude/skills/stream-chain/. Host-agnostic packaging: .agents/ (config.toml + skills) mirrors .claude/, .claude-plugin/ and plugins/ carry the plugin manifests, and root SKILL.md is the single-skill entry point. v3/ is a parallel newer implementation tree with its own agents/, mcp/, and plugins/ — treat it as a second surface, not dead weight. verification/ and tests/ are where any self-proof would live.",
+            "claimsToVerify": [
+              "README claims '100+ Agents' but the CLI install path claims '98 agents, 60+ commands, 30 skills' — count actual agent definition files under .claude/agents/ (and v3/agents/) and reconcile the three numbers.",
+              "Claims '~210 tools, ready to call' via MCP — enumerate the actual registered MCP tool definitions (v3/mcp/, plugins/) and check whether the count is real, and whether tools are implemented or stubbed.",
+              "Claims agents 'remember across sessions' and 'Save and restore agent memory across sessions' via HNSW-indexed AgentDB / RVF — verify there is real persistence code and an actual index, not a JSON blob rewritten per run. agentdb.rvf is committed into the repo, which is worth checking: is it a real store, a seed, or a fixture?",
+              "Claims 'Agents learn from past successes and get smarter' and 'SONA self-learning with pattern matching' — locate the feedback loop that writes outcomes back into memory and check whether retrieval actually conditions later behaviour, or whether 'learning' is only logging.",
+              "Claims 'Queen-led hierarchy (Raft, Byzantine, Gossip)' consensus and 'hierarchical, mesh, and adaptive topologies' — check .claude/agents/consensus/ for whether these are implemented protocols or prompt-level descriptions of protocols."
+            ]
+          },
+          "notes": "High confidence. 'Ruflo' is a distinctive coined name, so disambiguation was easy — the only noise is the spelling-adjacent 'ruflow' cluster (a Ruby flow-based-programming library and an unrelated job-application agent system), neither of which matches the hint. Everything else in the search results is downstream of ruvnet/ruflo and says so. Provenance method: metadata and SPDX id from `gh api repos/ruvnet/ruflo` (license.spdx_id = MIT); licence FILE presence independently confirmed via `gh api repos/.../contents/` which lists a root LICENSE entry — both signals agree. Head commit 913f9eaedee92627950544424e50339feaf98271 fetched from `gh api repos/.../commits/main --jq .sha` on 2026-08-01; the repo was pushed to that same day, so expect drift within hours — pin this SHA if the rebuild needs reproducibility. Two path caveats for the autopsy agent, both real findings rather than guesses: (1) there is NO src/ directory — `gh api repos/ruvnet/ruflo/contents/src` returned 404, so do not assume a conventional layout; (2) root entries `crates` and `ruflo` did not return a normal directory listing (the API returned a raw.githubusercontent string instead of an object), which indicates they are symlinks rather than directories — resolve them before reading. I therefore excluded crates/ from relevantPaths despite it appearing in the root listing. All other listed paths were confirmed by explicit directory listing of .claude/, .claude/skills/, .claude/agents/, .agents/, and v3/. Note also that the same product appears upstream under the name 'claude-flow' (pacphi/agentic-kit describes 'ruflo (claude-flow)'), so historical references and older docs may use that name — relevant if the rebuild needs to trace provenance back past a rename."
+        }
+      ],
+      "verdicts": [
+        {
+          "id": "agency-agents",
+          "agrees": true,
+          "correctedRepoUrl": "https://github.com/msitarzewski/agency-agents",
+          "correctedHeadCommit": "c89557f78509868c6d4cc08e5cbc79bc8625fe1c",
+          "correctedLicence": "MIT",
+          "reason": "Independently confirmed. `gh api repos/msitarzewski/agency-agents/commits/main --jq .sha` returns c89557f78509868c6d4cc08e5cbc79bc8625fe1c exactly. Licence verified two ways: .license.spdx_id = MIT, and the root contents listing includes a LICENSE file. Fresh search (not starting from the given URL) returns msitarzewski/agency-agents as canonical; the crowd of same-named repos are forks/translations plus a companion app repo (msitarzewski/agency-agents-app) that explicitly names it as upstream. All 24 relevantPaths confirmed by directory listing: engineering/ has 58 entries, scripts/ contains lint-agents.sh + check-agent-originality.sh + check-divisions.sh + install.sh, integrations/ has 17 adapter directories (aider, antigravity, claude-code, codex, cursor, gemini-cli, github-copilot, hermes, kimi, mcp-memory, openclaw, opencode, qwen, vibe, windsurf, zcode + README). Two caveats that do not overturn the resolution: (1) relevantPaths is INCOMPLETE — the root listing also contains academic/, game-development/, gis/, healthcare/, paid-media/, spatial-computing/, six division dirs not listed; (2) the delegation caveat is CONFIRMED — README fetch shows no automated inter-agent handoff protocol; agents are independent and user-activated, with only a manual parallel-deployment example (Nexus Spatial Discovery Exercise). The prior agent flagged this itself, so it is an honest resolution of an imperfect-fit source, not a misidentification. README claims 230+ agents across 15+ divisions (prior agent wrote 11+ divisions, which understates it). Head commit will drift: last push 2026-07-30."
+        },
+        {
+          "id": "ruflo",
+          "agrees": true,
+          "correctedRepoUrl": "https://github.com/ruvnet/ruflo",
+          "correctedHeadCommit": "913f9eaedee92627950544424e50339feaf98271",
+          "correctedLicence": "MIT",
+          "reason": "Independently confirmed. `gh api repos/ruvnet/ruflo/commits/main --jq .sha` returns 913f9eaedee92627950544424e50339feaf98271 exactly. Licence verified two ways: .license.spdx_id = MIT, and a root LICENSE entry appears in the contents listing. Repo purpose matches the intended role directly — the GitHub description reads 'agent meta-harness. Deploy intelligent multi-player swarms, coordinate autonomous workflows... adaptive memory, self-learning intelligence, RAG integration, and native Claude Code / Codex / Hermes' which covers every mechanism the role needs (shared memory, swarm coordination, self-improvement, long workflows, host-agnostic packaging). Every relevantPath verified by explicit directory listing, not inference: .claude/ contains agents, commands, skills, workflows, settings.json; .claude/skills/ contains all nine named subdirs (hive-mind-advanced, agentdb-memory-patterns, agentdb-learning, agentdb-vector-search, reasoningbank-intelligence, reasoningbank-agentdb, flow-nexus-swarm, sparc-methodology, hooks-automation) out of 39 total; .claude/agents/ contains all four named subdirs (hive-mind, consensus, neural, goal) out of 33 entries; .agents/ contains config.toml + skills; v3/ contains agents, mcp, plugins; root contains SKILL.md, CLAUDE.md, AGENTS.md, .claude-plugin, .harness, docs, plugins, verification, tests, agentdb.rvf, agentdb.rvf.lock. One correction to the prior agent's NOTE (not to any resolution field): the claim 'there is NO src/ directory' holds only at repo root — v3/src does exist, so a rebuild tracing implementation code should look under v3/ rather than concluding the repo has no source tree. Head commit is highly volatile: pushed_at 2026-08-01T07:08:47Z, the same day as this check."
+        }
+      ]
+    },
+    {
+      "batch": "orchestration-b",
+      "results": [
+        {
+          "id": "awesome-claude-code-subagents",
+          "status": "resolved",
+          "candidates": [
+            {
+              "name": "VoltAgent/awesome-claude-code-subagents",
+              "url": "https://github.com/VoltAgent/awesome-claude-code-subagents",
+              "why": "Exact name match, 23,916 stars, description 'A collection of 100+ specialized Claude Code subagents covering a wide range of development use cases'. Matches the hint (VoltAgent) and the 'large taxonomy of reusable subagent definitions' framing: repo root contains a categories/ tree with 10 numbered category directories.",
+              "confidence": 0.98
+            },
+            {
+              "name": "rahulvrane/awesome-claude-agents",
+              "url": "https://github.com/rahulvrane/awesome-claude-agents",
+              "why": "Similar name ('awesome claude agents', 360 stars) but different repo name and far smaller; not the VoltAgent collection the hint points at.",
+              "confidence": 0.05
+            },
+            {
+              "name": "ximet/awesome-claude-code-subagents, briventia/…, 1nexvora/…, robzsaunders/…",
+              "url": "https://github.com/robzsaunders/awesome-claude-code-subagents",
+              "why": "Name-identical forks with 0-2 stars and (where present) verbatim copies of the VoltAgent description. Downstream copies, not canonical.",
+              "confidence": 0.02
+            }
+          ],
+          "chosen": {
+            "name": "VoltAgent/awesome-claude-code-subagents",
+            "repoUrl": "https://github.com/VoltAgent/awesome-claude-code-subagents",
+            "defaultBranch": "main",
+            "headCommit": "91810b33c707111e05e0988b12e7385d7b5cfe9d",
+            "licence": "MIT",
+            "licenceFilePresent": true,
+            "relevantPaths": [
+              "categories/",
+              "categories/01-core-development/",
+              "categories/02-language-specialists/",
+              "categories/03-infrastructure/",
+              "categories/04-quality-security/",
+              "categories/05-data-ai/",
+              "categories/06-developer-experience/",
+              "categories/07-specialized-domains/",
+              "categories/08-business-product/",
+              "categories/09-meta-orchestration/",
+              "categories/10-research-analysis/",
+              "categories/01-core-development/backend-developer.md",
+              "categories/01-core-development/frontend-developer.md",
+              "tools/subagent-catalog/",
+              "install-agents.sh",
+              ".claude-plugin/",
+              "CLAUDE.md",
+              "README.md",
+              "LICENSE"
+            ],
+            "whyRelevant": "This is the canonical upstream of the subagent taxonomy: agent definitions are one markdown file per subagent, grouped into ten numbered category directories, plus a catalog tool and an installer script. That directory layout IS the mechanism (a browsable taxonomy of reusable agent definitions) the rebuild cares about.",
+            "claimsToVerify": [
+              "Claims '100+ specialized Claude Code subagents' — count the actual .md agent files under categories/ (excluding README.md and .claude-plugin) and check whether it reaches 100.",
+              "Claims the collection covers 'a wide range of development use cases' via 10 categories — verify each category directory is non-trivially populated rather than a few stub files.",
+              "Claims installability: verify install-agents.sh and .claude-plugin/ actually produce working Claude Code agent installs, and that agent files carry valid frontmatter (name/description/tools) rather than prose-only markdown.",
+              "Claims to be a curated 'awesome' list — verify whether entries are original agent definitions authored in-repo (they appear to be full .md agent bodies) rather than links out to third-party repos, since that changes the licensing/provenance story."
+            ]
+          },
+          "notes": "Both signals agree: GitHub API reports license.spdx_id = MIT AND a LICENSE file exists in the repo root (gh api contents), so no null/file discrepancy. Head commit fetched live from gh api repos/VoltAgent/awesome-claude-code-subagents/commits/main. Repo pushed_at 2026-07-31, so the SHA is fresh and may move. Numerous identically-named forks exist (ximet, briventia, 1nexvora, robzsaunders, Cloud963 submodule, akbaraziz manager) — all 0-3 stars and derivative; VoltAgent at 23.9k stars with the original description is unambiguously canonical."
+        },
+        {
+          "id": "ai-dev-tasks",
+          "status": "resolved",
+          "candidates": [
+            {
+              "name": "snarktank/ai-dev-tasks",
+              "url": "https://github.com/snarktank/ai-dev-tasks",
+              "why": "Exact repo-name match, 7,782 stars, Ryan Carson's original. README describes exactly the hinted workflow: PRD -> granular task list -> one-sub-task-at-a-time implementation with human review checkpoints. Independently corroborated: stulogy/vibe-prd self-describes as 'a fork from Ryan Carson's AI Dev Tasks repository'.",
+              "confidence": 0.97
+            },
+            {
+              "name": "stulogy/vibe-prd",
+              "url": "https://github.com/stulogy/vibe-prd",
+              "why": "Explicitly a fork of the same workflow with PostgreSQL support added. Derivative, not canonical — but useful evidence that snarktank is the origin.",
+              "confidence": 0.02
+            },
+            {
+              "name": "cjo4m06/mcp-shrimp-task-manager",
+              "url": "https://github.com/cjo4m06/mcp-shrimp-task-manager",
+              "why": "Different project (MCP server for agent task management). Shares the 'structured dev tasks' concept but not the name, not the PRD->tasks markdown-prompt mechanism.",
+              "confidence": 0.01
+            }
+          ],
+          "chosen": {
+            "name": "snarktank/ai-dev-tasks",
+            "repoUrl": "https://github.com/snarktank/ai-dev-tasks",
+            "defaultBranch": "main",
+            "headCommit": "efbffaac10e68c94e14aaa587c79b7d5015b5ebd",
+            "licence": "Apache-2.0",
+            "licenceFilePresent": true,
+            "relevantPaths": [
+              "create-prd.md",
+              "generate-tasks.md",
+              "README.md",
+              "LICENSE"
+            ],
+            "whyRelevant": "The entire mechanism is three markdown files at repo root: create-prd.md (clarifying-questions-then-PRD prompt), generate-tasks.md (PRD -> parent tasks -> sub-tasks), and README.md which documents the four-step human-in-the-loop protocol. There is no code, no packaging — the prompts are the product, which is exactly the idea-to-PRD-to-tasks-to-sequential-execution workflow the rebuild is sourcing.",
+            "claimsToVerify": [
+              "README claims a step 4/5 'work through tasks one sub-task at a time, marking completion' protocol — but the current repo root contains NO process-task-list.md (only create-prd.md and generate-tasks.md). Verify where the execution/completion-marking rules actually live now (inside generate-tasks.md? README prose only?) and whether the file was removed upstream; earlier circulating copies of this repo included process-task-list.md.",
+              "Claims tool-agnosticism: 'works with any AI coding assistant including Amp, Claude Code, Windsurf'. Verify the prompt files contain no tool-specific syntax beyond the @file reference convention.",
+              "Claims 'built-in checkpoints for verification' / human approval per sub-task — verify generate-tasks.md actually instructs the agent to pause and wait for user confirmation, rather than that only appearing in README marketing prose.",
+              "Claims create-prd.md produces a scoped PRD by asking clarifying questions first — verify the file mandates the question phase before drafting."
+            ]
+          },
+          "notes": "GitHub API license.spdx_id = Apache-2.0 AND a LICENSE file is present in the repo root — both signals agree, no discrepancy. Head commit fetched live via gh api repos/snarktank/ai-dev-tasks/commits/main. Note the repo is comparatively stale: pushed_at 2025-11-05, so the SHA is stable. Important provenance caveat for the autopsy agent: the current head root listing is only LICENSE, README.md, create-prd.md, generate-tasks.md — the widely-cited third file process-task-list.md is NOT present at this commit. If the rebuild expects three prompt files, that expectation is based on an older revision or on a fork, and should be resolved against git history rather than assumed."
+        }
+      ],
+      "verdicts": [
+        {
+          "id": "awesome-claude-code-subagents",
+          "agrees": true,
+          "correctedRepoUrl": "https://github.com/VoltAgent/awesome-claude-code-subagents",
+          "correctedHeadCommit": "91810b33c707111e05e0988b12e7385d7b5cfe9d",
+          "correctedLicence": "MIT",
+          "reason": "Independently re-derived and could not refute. gh api repos/VoltAgent/awesome-claude-code-subagents/commits/main returns exactly 91810b33c707111e05e0988b12e7385d7b5cfe9d. Licence confirmed two ways: .license.spdx_id = MIT AND LICENSE present in the root contents listing (.claude-plugin, .claude, .github, .gitignore, CLAUDE.md, CONTRIBUTING.md, LICENSE, README.md, categories, install-agents.sh, tools) - no null/file discrepancy. Content matches the intended role rather than just the name: a recursive git-tree walk at that exact SHA counts 154 non-README .md agent files spread across all ten numbered category dirs (01-core-development through 10-research-analysis), so the '100+' claim is understated, not inflated, and no category is a stub. Spot-checked categories/01-core-development/backend-developer.md: it carries real Claude Code frontmatter (name, description, tools: Read/Write/Edit/Bash/Glob/Grep, model: sonnet) followed by a full agent body - i.e. original in-repo agent definitions, NOT an 'awesome'-style link list out to third-party repos, which keeps the MIT provenance story clean for redistribution. README self-describes as '154+ Claude Code subagents across 10 categories' and documents plugin install via 'claude plugin marketplace add', consistent with .claude-plugin/ and install-agents.sh. 23.9k stars versus the 0-3-star same-named forks confirms canonicity. Only live risk: pushed_at 2026-07-31 means the SHA can move, so pin it."
+        },
+        {
+          "id": "ai-dev-tasks",
+          "agrees": true,
+          "correctedRepoUrl": "https://github.com/snarktank/ai-dev-tasks",
+          "correctedHeadCommit": "efbffaac10e68c94e14aaa587c79b7d5015b5ebd",
+          "correctedLicence": "Apache-2.0",
+          "reason": "Independently re-derived and could not refute. gh api repos/snarktank/ai-dev-tasks/commits/main returns exactly efbffaac10e68c94e14aaa587c79b7d5015b5ebd; pushed_at 2025-11-05 so the SHA is stable. Licence confirmed two ways: .license.spdx_id = Apache-2.0 AND LICENSE is in the root listing. Root contents are exactly LICENSE, README.md, create-prd.md, generate-tasks.md - matching relevantPaths precisely and independently confirming the resolver's key caveat: process-task-list.md is NOT present at this commit, even though independent web sources still describe ai-dev-tasks as a three-file workflow (create-prd / generate-tasks / process-task-list). The rebuild must not assume that third file at this SHA; it belongs to an older revision or to a fork. That is a documented caveat, not a mis-resolution, so it does not flip the verdict. Purpose verified against actual file bodies, not marketing prose: create-prd.md mandates the question phase ('Before writing the PRD, the AI *must* ask only the most essential clarifying questions... Limit questions to 3-5') and saves to /tasks/prd-[feature-name].md; generate-tasks.md genuinely encodes the human checkpoint in the prompt itself - step 3 tells the user 'Respond with Go to proceed', step 4 is literally 'Wait for Confirmation: Pause and wait for the user to respond with Go', with a rationale note further down the file. Tool-agnosticism holds: README names Amp, Claude Code and Windsurf, and the only tool-flavoured syntax is the @file reference convention. The per-sub-task execution and completion-marking protocol now survives only as README steps 4-5 prose plus the generate-tasks Go gate, which is the one place the 'built-in checkpoints' claim is weaker than advertised. Repo is canonical (snarktank, 7.8k stars) versus the many derivative renames found in search: Mkid095/ai-dev-tasks-guide, surim0n/prd-creator, lemmylabh/Ryan-Carson, kwhorne/ai-dev-tasks."
+        }
+      ]
+    },
+    {
+      "batch": "contracts",
+      "results": [
+        {
+          "id": "before-implementing",
+          "status": "ambiguous",
+          "candidates": [
+            {
+              "name": "nicobailon/grill-for-unknowns",
+              "url": "https://github.com/nicobailon/grill-for-unknowns",
+              "why": "Agent skill (MIT, 191 stars) whose documented mechanism is the closest match to the hint: restate the plan in one paragraph, inspect the repo instead of asking the user when the repo can answer, ask only non-obvious blocking questions, surface assumptions, and keep grill/decide/implement strictly separated. Name does not match 'Before Implementing'.",
+              "confidence": 0.4
+            },
+            {
+              "name": "addyosmani/agent-skills",
+              "url": "https://github.com/addyosmani/agent-skills",
+              "why": "MIT, 81k stars. Contains the 'before implementing anything non-trivial, explicitly state your assumptions ... invite correction' contract plus skills idea-refine (restate as a crisp problem statement), interview-me (question rounds), planning-and-task-breakdown (plan proportional to stakes), doubt-driven-development. The hint's five elements are spread across several skills here rather than in one file called 'Before Implementing'.",
+              "confidence": 0.3
+            },
+            {
+              "name": "tobrun/skills (dev/skills/to-plan)",
+              "url": "https://github.com/tobrun/skills",
+              "why": "Only GitHub SKILL.md found containing the literal triad 'Blocking questions:' + 'Assumptions:' + 'Plan:'. Explore code first, interview only on what you cannot answer yourself, produce a reviewable plan before implementation. Small/obscure repo, name does not match.",
+              "confidence": 0.15
+            },
+            {
+              "name": "Piebald-AI/claude-code-system-prompts (system-prompt-exploratory-questions-analyze-before-implementing.md)",
+              "url": "https://github.com/Piebald-AI/claude-code-system-prompts",
+              "why": "A file literally titled 'analyze before implementing', extracted from Claude Code's own system prompt. Read in full: it is two sentences about answering exploratory questions with a recommendation and a tradeoff. It does NOT contain restate-goal / blocking-questions / assumptions / proportional-plan. Included only to rule it out.",
+              "confidence": 0.05
+            }
+          ],
+          "chosen": {
+            "name": "grill-for-unknowns",
+            "repoUrl": "https://github.com/nicobailon/grill-for-unknowns",
+            "defaultBranch": "main",
+            "headCommit": "d8d5f4b422b8be1301dd4a515d96589eaddc5f3c",
+            "licence": "MIT",
+            "licenceFilePresent": true,
+            "relevantPaths": [
+              "plugins/grill-for-unknowns/SKILL.md",
+              "plugins/",
+              "README.md",
+              "NOTICE.md",
+              "LICENSE",
+              "CHANGELOG.md",
+              ".claude-plugin/"
+            ],
+            "whyRelevant": "Best mechanism-level match for the described contract: investigate the repo before asking the user, restate the goal, raise only blocking/non-obvious questions, name assumptions explicitly, and reach shared understanding before any implementation begins. Chosen as the working stand-in, NOT as a confirmed name match.",
+            "claimsToVerify": [
+              "Claims the agent inspects the repository/codebase to answer questions itself instead of asking the user (investigate-before-asking).",
+              "Claims it restates the plan/goal back in one short paragraph before questioning.",
+              "Claims each question must surface exactly one consequential unknown (hidden assumption, edge case, permission boundary, data lifecycle, failure mode) rather than confirming the obvious.",
+              "Claims a hard boundary: grill first, decide second, implement third — no code until the unknowns are resolved.",
+              "Verify whether it produces a plan whose depth is proportional to the stakes, or only a question set — the hint's 'proportional plan' element may be absent."
+            ]
+          },
+          "notes": "NOT confirmed. No source — repo, skill directory, SKILL.md frontmatter name, or standalone document — is actually called 'Before Implementing'. Searched: `gh search repos before-implementing`, `search/repositories q=before-implementing in:name` (1 unrelated hit about incident management), `search/code` for `filename:before-implementing.md` (36 hits, all rules/ADRs/memory notes inside unrelated projects), `path:before-implementing` and `filename:SKILL.md path:*before-implementing*` (0 hits), `\"name: before-implementing\" in:file` (0), `\"Restate the goal\" \"Blocking questions\"` (28 hits, none named that), `\"Investigate before asking\"` (433 hits, no matching skill), plus web searches on the hint's five elements. Listed directory contents of anthropics/skills, addyosmani/agent-skills, indykite/skills and codejunkie99's 37 public repos — none contains a before-implementing skill. Metadata for the chosen candidate came from the GitHub API: SPDX licence MIT from `repos/nicobailon/grill-for-unknowns` .license.spdx_id AND a LICENSE file confirmed present in the repo root via `contents/` (both agree). Head commit d8d5f4b422b8be1301dd4a515d96589eaddc5f3c fetched from `commits/main`. Path plugins/grill-for-unknowns/SKILL.md was confirmed via GitHub code search results, not opened byte-for-byte. WHAT WOULD SETTLE IT: ask the requester where they saw 'Before Implementing' (X/Twitter post, a plugin marketplace entry, a private repo, or a section heading inside a larger CLAUDE.md/AGENTS.md). If it is a section heading rather than a standalone artifact, the most likely home is addyosmani/agent-skills (AGENTS.md / skills/using-agent-skills/SKILL.md carry the 'state your assumptions before implementing anything non-trivial' contract verbatim). Do not treat the chosen repo as the origin until that is confirmed."
+        },
+        {
+          "id": "graph-engineering",
+          "status": "ambiguous",
+          "candidates": [
+            {
+              "name": "codejunkie99/graph-engineering",
+              "url": "https://github.com/codejunkie99/graph-engineering",
+              "why": "The only prominent standalone repo (MIT, 252 stars, created 2026-07-23) named exactly 'graph-engineering' that packages the concept as an agent skill. Covers both halves the hint describes: knowledge graphs as what agents durably remember (typed entity nodes, precisely-named directional relations with time and provenance attached to every fact, ontology-constrained extraction, fusion, GraphRAG/memory serving) and task graphs as how agents work (fan-out, separate verifier contexts, stop rule, human gate, evaluation at every stage).",
+              "confidence": 0.5
+            },
+            {
+              "name": "Peter Steinberger (@steipete) X post, 18 July 2026",
+              "url": "https://x.com/steipete",
+              "why": "Widely cited as the moment the term went viral ('Are we still talking loops or did we shift to graphs yet?', ~2.9M views). It is the naming event, not a primary text — twelve words, no mechanism. Exact status URL not verified by me.",
+              "confidence": 0.2
+            },
+            {
+              "name": "explainx.ai — 'Graph Engineering: Wire Multi-Agent Orgs After Loops (2026)'",
+              "url": "https://www.explainx.ai/blog/graph-engineering-ai-agents-multi-agent-organizations-2026",
+              "why": "Dated 18 July 2026, the first substantive synthesis after the X post; introduces the stable org graph vs. mutating runtime work graph, typed edges, evaluator-updates-state / router-selects-allowed-edge feedback loop, and links onward to self-evolving agents. Closest prose match to the hint's 'evaluation feedback, self-improving workflows'. Secondary/derivative, not a repo.",
+              "confidence": 0.2
+            },
+            {
+              "name": "vanja.io — 'Graph Engineering: The Next Layer After Context'",
+              "url": "https://vanja.io/graph-engineering/",
+              "why": "Fetched and read: defines graph engineering as typed edges (supersedes, depends_on, caused) and multi-hop traversal versus similarity search, and cites no earlier primary source. Explicitly does NOT cover durable shared context between agents, experiment lineage, or self-improving workflows, so it under-covers the hint.",
+              "confidence": 0.1
+            },
+            {
+              "name": "langchain — '3 Years of Graph Engineering with LangGraph'",
+              "url": "https://www.langchain.com/blog/3-years-of-graph-engineering-with-langgraph",
+              "why": "Vendor retrospective claiming prior art on the practice. Relevant as a competing origin claim; frames graphs as orchestration topology only, with no context-graph/lineage layer.",
+              "confidence": 0.1
+            }
+          ],
+          "chosen": {
+            "name": "graph-engineering",
+            "repoUrl": "https://github.com/codejunkie99/graph-engineering",
+            "defaultBranch": "master",
+            "headCommit": "cfacb56a05a31ba69bf84d0b8b00f5ce463127ef",
+            "licence": "MIT",
+            "licenceFilePresent": true,
+            "relevantPaths": [
+              "graph-engineering/SKILL.md",
+              "graph-engineering/references/modeling.md",
+              "graph-engineering/references/extraction.md",
+              "graph-engineering/references/fusion-and-llm.md",
+              "graph-engineering/references/task-graphs.md",
+              "graph-engineering/references/curriculum.md",
+              "WORKFLOWS.md",
+              "dist/graph-engineering.skill",
+              "LICENSE",
+              "README.md"
+            ],
+            "whyRelevant": "Only actionable, licence-clean, self-contained artifact carrying the mechanism: typed graph nodes plus precisely-named directional relations as the agents' durable memory substrate, provenance and time on every fact (the lineage property), ontology-before-extraction with domain/range validation to reject hallucinated structure, fusion before storage, per-stage evaluation, and a task-graph half for multi-agent orchestration with verifier separation and human gates.",
+            "claimsToVerify": [
+              "Claims a 9-stage knowledge-graph pipeline distilled and translated from Southeast University's graduate KG course (npubird/KnowledgeGraphCourse, Prof. Peng Wang) — check the derivation is real and that the upstream course's licence permits redistribution, since the repo ships MIT.",
+              "Claims quality comes from pipeline ORDER — model the domain before extracting, fuse before storing, evaluate at every stage — and that stages 3 (ontology) and 8 (fusion) must never be skipped.",
+              "Claims every fact carries time and provenance (span + source pointer), which is the load-bearing claim for 'experiment lineage' and for distinguishing agent-written edges from human-confirmed facts.",
+              "Claims constraining the LLM to the ontology's relation list with domain/range checks 'removes most hallucinated structure' — an empirical claim with no cited measurement.",
+              "Claims a teaching mode that generates mermaid/HTML diagram artifacts per stage; verify the reference files actually contain that material rather than pointing outward."
+            ]
+          },
+          "notes": "AMBIGUOUS BY NATURE OF THE TERM. 'Graph engineering' has no single canonical primary source: it is a 2026 label (viral 18 July 2026, after 'prompt → context → loop') applied retroactively to knowledge-graph/GraphRAG and graph-orchestration work that predates it. Multiple unrelated repos ship a skill literally named graph-engineering — codejunkie99/graph-engineering, guyghost/swarm-dao (.agents/skills/graph-engineering, an XState-based DAO workflow governor, unrelated), xxarupakaxx/.codex (Japanese, loop-coordination contract), BhaveshKhaple/bhavesh-claude-skills (loops-and-graphs 5-layer workflow design), Mark393295827/third-brain-v7-skills (static-DAG contract, paired with loop-engineering and harness-engineering). I opened the first ~25 lines of each of those four alternatives; none covers the hint's full span, and codejunkie99's is the only one that treats the graph as durable shared memory rather than only as control flow. Licence evidence for the chosen repo: SPDX 'MIT' from the GitHub API .license.spdx_id AND a LICENSE file confirmed present in the repo root via `gh api contents/` — both sources agree. Default branch is 'master', not 'main' (`commits/main` returns 422); head commit cfacb56a05a31ba69bf84d0b8b00f5ce463127ef fetched from `commits/master`. Repo has had no push since creation day (2026-07-23), so it is unmaintained. WHAT WOULD SETTLE IT: the hint's exact vocabulary ('durable shared context between agents', 'experiment lineage', 'evaluation feedback', 'self-improving workflows') does not appear verbatim in the chosen repo's SKILL.md — if the requester is quoting a specific text, that phrasing points at a blog post (explainx.ai 18 Jul 2026 is the closest) rather than at this repo. Ask which one they read."
+        }
+      ],
+      "verdicts": [
+        {
+          "id": "before-implementing",
+          "agrees": true,
+          "correctedRepoUrl": "https://github.com/nicobailon/grill-for-unknowns",
+          "correctedHeadCommit": "d8d5f4b422b8be1301dd4a515d96589eaddc5f3c",
+          "correctedLicence": "MIT",
+          "reason": "Independently reconfirmed. gh api repos/nicobailon/grill-for-unknowns/commits/main -> d8d5f4b422b8be1301dd4a515d96589eaddc5f3c (matches). Licence checked two ways and both agree: .license.spdx_id = MIT, and contents/ lists a LICENSE file at repo root. Repo is public, not archived, pushed 2026-07-20, description 'Agent skill for finding unknowns, grilling plans, and reaching shared understanding before implementation'. I read plugins/grill-for-unknowns/SKILL.md in full rather than trusting search results: frontmatter name is grill-for-unknowns, version 0.1.3, license: MIT, author Nico Bailon (co-authored by Matt Pocock). Content genuinely carries the mechanism -- 'Read the territory: inspect the relevant docs/source/tests/config before grilling' (investigate-before-asking), 'Restate the map' (restate goal), 'the goal is to discover the few answers that would materially change the plan' plus 'Grill one decision at a time' (one consequential unknown per question, not confirming the obvious), 'Stay in Explore or Plan mode until the unknowns that could change the implementation are resolved' and 'Ask for confirmation before build' (grill first, decide second, implement third), and 'Propose defaults ... label it as an assumption' (name assumptions explicitly). I also independently re-ran the negative search and reproduce the other agent's finding: no artifact named 'Before Implementing' exists. gh search repos before-implementing returns 10 unrelated repos; search/code for 'name: before-implementing' returns 0; 'before-implementing' filename:SKILL.md returns 25 hits and none is named that. The two nearest name matches are both DISQUALIFIED on licence: Kiriyama2003/progate_April_lion/.github/skills/clarify-task-before-implementing/SKILL.md has license null (and is Japanese-language, scoped to splitting vague beginner requests), and xiaoquqi/hermes-agent-skills/productivity/verify-before-implementing/SKILL.md has license null (and is Chinese-language, narrowly about verifying directory/symlink structure). Neither is redistributable and neither covers the hint's span, so the MIT-licensed grill-for-unknowns remains the correct licence-clean stand-in. Two residual caveats I could not settle and would not: (1) the name match is still unconfirmed -- this repo is a mechanism stand-in, not a proven origin, and must not be cited as the source of the phrase 'Before Implementing'; (2) the hint's 'plan proportional to the stakes' element is only implied -- the skill's Implementation Plan Requirements section (decision surface, evidence, open questions, resolved assumptions, artifacts, steps, deviation policy) gates depth on task AMBIGUITY ('use this table explicitly when the task is ambiguous enough to justify it'), not on stakes. So claimsToVerify item 5 resolves as PARTIALLY ABSENT."
+        },
+        {
+          "id": "graph-engineering",
+          "agrees": true,
+          "correctedRepoUrl": "https://github.com/codejunkie99/graph-engineering",
+          "correctedHeadCommit": "cfacb56a05a31ba69bf84d0b8b00f5ce463127ef",
+          "correctedLicence": "MIT",
+          "reason": "Independently reconfirmed. Default branch is master (confirmed via .default_branch); gh api commits/master -> cfacb56a05a31ba69bf84d0b8b00f5ce463127ef (matches). Licence checked two ways and both agree: .license.spdx_id = MIT and contents/ root listing is ['LICENSE','README.md','WORKFLOWS.md','dist','graph-engineering'] with LICENSE present. Repo created 2026-07-23T14:10:49Z, pushed 2026-07-23T14:10:53Z -- confirmed single-push, unmaintained since creation day, not archived. Purpose matches the intended role, verified by reading README.md and graph-engineering/SKILL.md (121 lines) directly, not from search snippets. README opens 'The discipline of designing the structures AI agents work through -- not the prompts' and splits into knowledge graphs (what agents remember) and task graphs (how agents work), which is exactly the durable-shared-memory-plus-orchestration span the role needs. Claim-by-claim: (a) 9-stage pipeline and SEU derivation are real and explicitly credited to npubird/KnowledgeGraphCourse, Prof. Peng Wang -- and the licence worry is RESOLVED against the resolution's favour, because Credits states 'All original lecture PDFs are in Chinese and remain in the original repo; none are redistributed here', so shipping MIT over an independent English distillation is coherent rather than a licence violation. (b) Order-matters claim confirmed verbatim in README: 'Model the domain before extracting. Fuse before storing. Verify at every stage.' with stage 3 ontology and stage 8 fusion in the mermaid pipeline. (c) Time-and-provenance claim CONFIRMED in SKILL.md line 97 'Provenance on every fact. Each node/edge stores source, extracted_at, and confidence', line 65 'Always extract with span + source pointer for provenance', line 55 'Decide now how time and provenance attach to every fact' -- this is the load-bearing lineage claim and it holds. (d) The 'removes most hallucinated structure' claim remains an uncited empirical assertion; it is a weakness of the source, not a resolution error. (e) Teaching mode is real and self-contained, not an outward pointer: SKILL.md line 25 has a Teaching Mode section and line 33 'produce a small diagram the user can keep -- mermaid diagrams', and the references/ directory exists with the five named files. Task-graph half additionally cites Google DeepMind x MIT 'Towards a Science of Scaling Agent Systems' for the stop rule. Residual caveat I agree with and did not resolve: the term 'graph engineering' is genuinely contested across several unrelated 2026 skills, and the hint's exact phrasing ('durable shared context between agents', 'experiment lineage', 'self-improving workflows') does not appear verbatim here -- so this is the best licence-clean actionable artifact for the role, not a proven quotation source."
+        }
+      ]
+    },
+    {
+      "batch": "ui-sources",
+      "results": [
+        {
+          "id": "agent-elements-21st",
+          "status": "resolved",
+          "candidates": [
+            {
+              "name": "21st-dev/agent-elements",
+              "url": "https://github.com/21st-dev/agent-elements",
+              "why": "Official 21st.dev org repo. README: 'Agent Elements — production-ready React components for chat, tools, and AI workflows'; shadcn-style registry of agent UI primitives with tool cards (Bash, Edit, Search, Todo, Plan, Subagent, Mcp, Thinking), a Question tool for clarifying questions, streaming Markdown, and approval flows in EditTool. Matches the hint point-for-point (plans, approvals, tool renderers, subagent UI, questions, streaming).",
+              "confidence": 0.98
+            }
+          ],
+          "chosen": {
+            "name": "21st-dev/agent-elements",
+            "repoUrl": "https://github.com/21st-dev/agent-elements",
+            "defaultBranch": "main",
+            "headCommit": "b04b36cb6381a1dd1a0e86cc7c90564ddcd56d37",
+            "licence": "MIT",
+            "licenceFilePresent": true,
+            "relevantPaths": [
+              "README.md",
+              "LICENSE",
+              "skills/agent-elements/SKILL.md",
+              "skills/agent-elements/README.md",
+              "lib/agent-ui/",
+              "lib/agent-ui/components/",
+              "lib/agent-ui/components/tools/",
+              "lib/agent-ui/components/question/",
+              "lib/agent-ui/components/input/",
+              "lib/agent-ui/components/agent-chat.tsx",
+              "lib/agent-ui/components/message-list.tsx",
+              "lib/agent-ui/components/input-bar.tsx",
+              "lib/agent-ui/components/markdown.tsx",
+              "lib/agent-ui/theme.ts",
+              "lib/agent-ui/types.ts",
+              "lib/agent-ui/hooks/",
+              "agents/my-agent/",
+              "app/",
+              "scripts/",
+              "components.json"
+            ],
+            "whyRelevant": "Canonical upstream for the agent-UI primitives the rebuild wants: a shadcn-compatible registry of 26 components covering plan cards, edit approval with diffs, tool renderers dispatched by name, subagent UI, clarifying-question tool, and safe streaming markdown. It also ships its own Claude skill (skills/agent-elements/SKILL.md) that is a direct comparator for how a skill should describe a component library.",
+            "claimsToVerify": [
+              "README claims '26 components total' — count the actual component files under lib/agent-ui/components/ (incl. tools/, question/, input/ subdirs) and the registry index at /r/index.json.",
+              "README claims the registry is shadcn-compatible and that installing 'agent-chat' transitively installs everything it needs — verify components.json + scripts/ actually generate valid shadcn registry JSON with dependency chains.",
+              "README claims components are 'production-ready' and built on React 19 + Tailwind v4 + Vercel AI SDK — verify package.json pins those versions and that the API is typed on UIMessage[]/ChatStatus from 'ai'.",
+              "SKILL.md claims project-aware triggering (fires when code imports from @/components/agent-elements/* or that folder exists on disk) and explicitly scopes itself OUT for plain chat UIs — verify the skill body actually contains detection logic rather than just prose."
+            ]
+          },
+          "notes": "Unambiguous. Licence determined two ways and they agree: GitHub API .license.spdx_id = MIT, AND a LICENSE file exists in repo root (fetched, first lines read 'MIT License / Copyright (c) 2026 21st.dev'). Head SHA fetched via gh api repos/21st-dev/agent-elements/commits/main. Repo has no description field set on GitHub; identification rests on README content and org ownership. 88 stars, last pushed 2026-04-24. All listed relevantPaths were confirmed to exist via gh api contents listings; paths ending in '/' are directories I listed, files were seen by name."
+        },
+        {
+          "id": "magic-21st",
+          "status": "ambiguous",
+          "candidates": [
+            {
+              "name": "21st-dev/magic-mcp",
+              "url": "https://github.com/21st-dev/magic-mcp",
+              "why": "The historically canonical 'Magic' MCP — npm package @21st-dev/magic, 5564 stars. This is what website-builder-setup and every '21st.dev Magic MCP' era setup actually installed. BUT its own README now states 'Magic MCP is now the 21st MCP' and that this package is only a thin stdio compatibility proxy since v0.2.0; src/ contains a single index.ts.",
+              "confidence": 0.72
+            },
+            {
+              "name": "21st-dev/cli",
+              "url": "https://github.com/21st-dev/cli",
+              "why": "The named successor. magic-mcp's README directs users to 'npx @21st-dev/cli@latest init' and the unified remote 21st MCP at https://21st.dev/api/mcp. If the rebuild wants the CURRENT component-generation mechanism rather than the historical one, this is the canonical source. Only 17 stars, no licence, last pushed 2026-01-27 (older than magic-mcp's push, suggesting the CLI is thin and the real server is closed/remote).",
+              "confidence": 0.22
+            },
+            {
+              "name": "21st-dev/skill",
+              "url": "https://github.com/21st-dev/skill",
+              "why": "21st.dev's own agent skill: 'search, install and publish React/shadcn components, themes and templates from the terminal'. Apache-2.0 with a LICENSE file. Closest thing to a 'component registry used by a builder setup' expressed as a skill, but it is not the MCP itself and has 0 stars.",
+              "confidence": 0.06
+            },
+            {
+              "name": "21st-dev/registry",
+              "url": "https://github.com/21st-dev/registry",
+              "why": "Open-source CLI for private React component registries, works with any agent supporting SKILL.md. Matches 'component registry' in the hint but is about PRIVATE team registries, not the public 21st.dev generation MCP.",
+              "confidence": 0.03
+            }
+          ],
+          "chosen": {
+            "name": "21st-dev/magic-mcp",
+            "repoUrl": "https://github.com/21st-dev/magic-mcp",
+            "defaultBranch": "main",
+            "headCommit": "dfba16c1b9baa63ed4efd0c69121ed08ba697b1a",
+            "licence": "ISC",
+            "licenceFilePresent": false,
+            "relevantPaths": [
+              "README.md",
+              "src/index.ts",
+              "package.json",
+              "llms-install.md",
+              "smithery.yaml",
+              "Dockerfile",
+              "tsconfig.json"
+            ],
+            "whyRelevant": "This is the repo behind the '21st.dev Magic' entry that website-builder-setup installs, so it is the correct upstream for reconstructing what that stack actually wired up. Its current state is itself the important finding: the real component-generation logic no longer lives here — src/ is one file (index.ts) that proxies to the remote 21st MCP at https://21st.dev/api/mcp. Any rebuild that assumes local generation code exists in this repo will be wrong.",
+            "claimsToVerify": [
+              "README claims that since v0.2.0 the package is 'a small stdio proxy that forwards every MCP message to the 21st MCP server' — verify src/index.ts contains only proxying, no component generation or local registry.",
+              "README claims legacy tool names (21st_magic_component_builder, 21st_magic_component_inspiration, 21st_magic_component_refiner, logo_search) are still accepted and translated to generate/get_inspiration/search_logo — verify whether that translation happens in this repo or only server-side.",
+              "README claims the API key is accepted in five historical forms (positional API_KEY=, --API_KEY=, /API_KEY:, -API_KEY, plus TWENTY_FIRST_API_KEY / API_KEY_21ST env vars) — verify src/index.ts parses all of them.",
+              "website-builder-setup claims 21st.dev Magic provides '100+ production-ready React components' (README) while the 21st-dev org description says '10,000+ React/Tailwind components' — neither number is verifiable from this repo's content, since the catalogue is remote. Flag both as unverifiable-from-source."
+            ]
+          },
+          "notes": "AMBIGUOUS by succession, not by identity. Nothing else on GitHub is plausibly 'the' 21st Magic — a gh search for '21st.dev magic mcp' returned only forks, security-lab clones (sls-org-testing-*) and third-party installers. The ambiguity is which node of the 21st.dev lineage is 'canonical' for the rebuild: the historical Magic MCP (21st-dev/magic-mcp, what website-builder-setup actually installed) or its stated successor (21st-dev/cli + the closed remote server at https://21st.dev/api/mcp). I chose magic-mcp because the task frames this as 'the registry used by website builder setups', which is historical. WHAT WOULD SETTLE IT: decide whether the rebuild is reconstructing what the old stack did (→ magic-mcp) or wiring the current 21st.dev product (→ 21st-dev/cli, and note the actual generation server is not open source at all). LICENCE CONFLICT — record carefully: GitHub API .license.spdx_id is NULL, there is NO LICENSE file in repo root (confirmed via gh api contents, and a code search for filename:LICENSE in the repo returned total_count 0), but package.json declares \"license\": \"ISC\". I recorded ISC because that is the only actual declaration, sourced from package.json — NOT from the GitHub licence field, which is null. GitHub therefore does not recognise this repo as licensed; a bare package.json field is weaker provenance than a LICENSE file. Treat redistribution of this repo's text as unresolved-risk until a maintainer confirms. Head SHA fetched live; 21st-dev/cli head is 66909f29d5ca7245496b00909cae50bfa9972731 (main, licence null) if the alternate candidate is chosen instead."
+        },
+        {
+          "id": "website-builder-setup",
+          "status": "resolved",
+          "candidates": [
+            {
+              "name": "tenfoldmarc/website-builder-setup",
+              "url": "https://github.com/tenfoldmarc/website-builder-setup",
+              "why": "Exact name match, exact author match (tenfoldmarc), 284 stars — by far the most-starred of the ten name matches (all others had 0-2 stars and were unrelated forks, personal projects, or a PayloadCMS template). Description confirms the hint verbatim: 'One install, three tools: UI/UX Pro Max + Framer Motion + 21st.dev. By @tenfoldmarc'.",
+              "confidence": 0.99
+            },
+            {
+              "name": "creativecore-ai/ccai-website-builder-setup",
+              "url": "https://github.com/creativecore-ai/ccai-website-builder-setup",
+              "why": "Name-similar and in the same problem space (scaffolds Next.js + Tailwind + shadcn marketing site with a brand-derived STYLE_GUIDE.md), but different author, different stack story, 1 star. Not the hinted repo.",
+              "confidence": 0.01
+            }
+          ],
+          "chosen": {
+            "name": "tenfoldmarc/website-builder-setup",
+            "repoUrl": "https://github.com/tenfoldmarc/website-builder-setup",
+            "defaultBranch": "main",
+            "headCommit": "83d94dac66b90b1da37152084ac671989379b692",
+            "licence": "",
+            "licenceFilePresent": false,
+            "relevantPaths": [
+              "README.md",
+              "website-builder-setup/SKILL.md"
+            ],
+            "whyRelevant": "The entire repo is two files: a README and a single SKILL.md. The SKILL.md is a linear onboarding script (check Node → install UI/UX Pro Max → install Framer Motion → install 21st.dev Magic) written for a zero-coding-experience user, with explicit 'if a step fails, don't stop, give the manual command and keep moving' instruction. That whole mechanism is the thing being rebuilt, and it is small enough to autopsy in full.",
+            "claimsToVerify": [
+              "SKILL.md description claims 'One skill, three tools, zero coding experience needed' — verify the skill actually completes all three installs unattended rather than handing off manual commands at each failure point.",
+              "README claims UI/UX Pro Max gives '50+ design styles, 161 color palettes, 57 font pairings' and that this makes sites 'look designed, not AI-generated' — these are claims about a THIRD-PARTY skill, not about this repo's own content; verify the numbers against ui-ux-pro-max upstream, not here.",
+              "README claims 21st.dev Magic supplies '100+ production-ready React components' — unverifiable from this repo and inconsistent with 21st.dev's own '10,000+' figure.",
+              "README documents an OLD INSTALL path ('claude install-skill <url>') explicitly marked REMOVED, and the current path clones into ~/.claude/commands/ (commands, not skills) — verify whether that install location still works with current Claude Code skill discovery, since it may be stale."
+            ]
+          },
+          "notes": "RESOLVED, and the prior audit is CONFIRMED: this repo has NO licence of any kind. Verified two independent ways, both negative. (1) GitHub API repos/tenfoldmarc/website-builder-setup returns license: null. (2) gh api contents on the repo root lists exactly two entries — README.md and the directory website-builder-setup — and that directory contains exactly one file, SKILL.md. There is no LICENSE, LICENSE.md, COPYING, or licence header anywhere, because there are only two files in the entire repo. There is also no package.json to carry a fallback licence field (unlike 21st-dev/magic-mcp). I used the contents listing as primary evidence and the API licence field as corroboration; they agree. CONSEQUENCE for the rebuild: all rights reserved by default under copyright — the text of README.md and website-builder-setup/SKILL.md must not be copied or redistributed. This matches the existing LICENSE-AUDIT.md position in this project. Head SHA 83d94dac66b90b1da37152084ac671989379b692 fetched live from commits/main; last pushed 2026-06-11, 284 stars. Author identity corroborated by the README's own byline linking to instagram.com/tenfoldmarc."
+        }
+      ],
+      "verdicts": [
+        {
+          "id": "agent-elements-21st",
+          "agrees": true,
+          "correctedRepoUrl": "https://github.com/21st-dev/agent-elements",
+          "correctedHeadCommit": "b04b36cb6381a1dd1a0e86cc7c90564ddcd56d37",
+          "correctedLicence": "MIT",
+          "reason": "Independently confirmed. gh api commits/main -> b04b36cb6381a1dd1a0e86cc7c90564ddcd56d37 (exact match). Licence checked two ways, both agree: .license.spdx_id = MIT AND a LICENSE file exists in root; I decoded it, first lines read 'MIT License / Copyright (c) 2026 21st.dev'. Purpose matches the intended role: lib/agent-ui/ holds components/ (agent-chat.tsx, message-list.tsx, input-bar.tsx, markdown.tsx, user-message.tsx, error-message.tsx, question/, input/), theme.ts, types.ts, hooks/, and components/tools/ with bash-tool, edit-tool, plan-tool, search-tool, subagent-tool, mcp-tool, thinking-tool, todo-tool, generic-tool, tool-registry.ts, tool-router.ts, tool-renderer.tsx, tool-approval-footer.tsx — i.e. the plan cards, edit approval, name-dispatched tool renderers and subagent UI claimed. skills/agent-elements/ contains SKILL.md and README.md; agents/my-agent, app/, scripts/, components.json all exist. Every relevantPath resolves. A fresh web search for an agent-UI component registry returned this same repo as canonical, not a competitor. Non-blocking caveats: the repo has no GitHub description (identification rests on README + org ownership), and the '26 components' figure is a README claim I did not exhaustively recount against /r/index.json — correctly listed as a claimToVerify rather than asserted."
+        },
+        {
+          "id": "magic-21st",
+          "agrees": true,
+          "correctedRepoUrl": "https://github.com/21st-dev/magic-mcp",
+          "correctedHeadCommit": "dfba16c1b9baa63ed4efd0c69121ed08ba697b1a",
+          "correctedLicence": "ISC",
+          "reason": "Independently confirmed, licence conflict included — the prior record is honest about it. Head: gh api commits/main -> dfba16c1b9baa63ed4efd0c69121ed08ba697b1a (exact match). Licence checked two ways, both negative for a file-backed licence: repos/21st-dev/magic-mcp .license = null, and root contents are [.gitignore, Dockerfile, README.md, llms-install.md, package-lock.json, package.json, smithery.yaml, src, tsconfig.json] — no LICENSE/LICENCE/COPYING; code search filename:LICENSE in-repo returns total_count 0. The sole declaration is package.json \"license\": \"ISC\" (decoded and read: @21st-dev/magic 0.2.2, author serafim@21st.dev). So ISC with licenceFilePresent:false is accurate and the redistribution-risk caveat stands. Content matches both the role and the stated finding: src/ contains exactly one file, index.ts (7425 bytes), whose header states the package became a thin stdio<->HTTP proxy to https://21st.dev/api/mcp at v0.2.0, names the four legacy tool names it keeps callable, and whose resolveApiKey() literally implements all five historical key forms (API_KEY=, --API_KEY=, /API_KEY:, -API_KEY=, separate-argv -API_KEY) plus TWENTY_FIRST_API_KEY / API_KEY_21ST / API_KEY env vars. No local generation code or registry exists here, exactly as flagged. On the succession ambiguity: website-builder-setup's own SKILL.md installs '21st.dev Magic' as tool three, so magic-mcp is the correct historical upstream for this role; 21st-dev/cli would only be right if the goal were wiring today's product. Repo not archived, last push 2026-07-31, 5564 stars."
+        },
+        {
+          "id": "website-builder-setup",
+          "agrees": true,
+          "correctedRepoUrl": "https://github.com/tenfoldmarc/website-builder-setup",
+          "correctedHeadCommit": "83d94dac66b90b1da37152084ac671989379b692",
+          "correctedLicence": "",
+          "reason": "Independently confirmed on every axis. Head: gh api commits/main -> 83d94dac66b90b1da37152084ac671989379b692 (exact match). Licence checked two ways, both negative and agreeing: .license = null, AND root contents are exactly [README.md, website-builder-setup], with that directory containing exactly [SKILL.md]. Two files in the entire repo, no LICENSE/COPYING, and no package.json to carry a fallback field (unlike magic-mcp). Empty-string licence is correct and the LICENSE-AUDIT.md position holds: all rights reserved by default, do not copy or redistribute the text — I read SKILL.md only to verify identity and am not reproducing it. Purpose matches the intended role exactly: the frontmatter description is 'Install the full AI website builder stack — UI/UX Pro Max, Framer Motion animations, and 21st.dev components. One skill, three tools, zero coding experience needed', followed by a tool table citing 50+ styles / 161 palettes / 57 font pairings for UI/UX Pro Max and '100+ polished React components' for 21st.dev Magic, a Node prerequisite gate, then sequential installs. The body contains the explicit instruction that on failure the agent should acknowledge, hand over the manual command and keep moving — which corroborates both the 'does not complete unattended' concern and the third-party, unverifiable-from-source '100+' figure that conflicts with 21st.dev's own 10,000+ claim. GitHub description, 284 stars and pushed 2026-06-11 also match."
+        }
+      ]
+    }
+  ]
+}

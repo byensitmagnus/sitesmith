@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="da">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Klokkestøberiet Hjelm, åbent støberi den 14. september</title>
+<meta name="description" content="Én støbning, én dag. Klokkestøberiet Hjelm åbner formen kl. 11.14 den 14. september. Programmet time for time.">
+<style>
+/* En klokke er en tone før den er et objekt. Siden er bygget som partituret for dagen:
+   én lodret linje af tider, og overtonerne tændes efterhånden som man ruller. Ingen
+   hero, ingen kort, ingen mørk baggrund med neon. Værkstedet er lyst og sandet. */
+:root{
+  --sand:#cdd2c6; --sand-2:#dde2d6; --form:#7d8672;
+  --jern:#1c231d; --jern-2:#414a3f;
+  --gloed:#a83308; --paa-gloed:#f6fbff;
+  --serif:'Iowan Old Style','Palatino Linotype',Palatino,Georgia,serif;
+  --mono:ui-monospace,'Cascadia Mono','SF Mono','Segoe UI Mono',monospace;
+  --t: 0;
+  --s-1:6px; --s-2:12px; --s-3:20px; --s-4:32px; --s-5:52px; --s-6:84px;
+  --tekst:18px; --lille:13px; --mikro:11px; --stor:21px;
+}
+@media (prefers-color-scheme:dark){
+  :root{ --sand:#0a1410; --sand-2:#132420; --form:#556258;
+         --jern:#dbe6dd; --jern-2:#a4b2a6; --gloed:#ff7a3c; --paa-gloed:#0d0603; }
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--sand);color:var(--jern);
+     font-family:var(--serif);font-size:var(--tekst);line-height:1.55}
+.spring{position:absolute;left:-9999px;top:0;min-height:44px;padding:14px 18px}
+.spring:focus{position:fixed;left:12px;top:12px;z-index:99;background:var(--gloed);
+              color:var(--paa-gloed);text-decoration:none}
+a{color:var(--gloed)}
+:focus-visible{outline:3px solid var(--gloed);outline-offset:3px}
+
+.top{padding:var(--s-4) var(--s-3) var(--s-3);border-bottom:2px solid var(--jern)}
+.top h1{font-size:clamp(30px,7vw,58px);line-height:1.02;margin:0 0 var(--s-2);
+        font-weight:400;letter-spacing:-.015em}
+.top p{margin:0;max-width:52ch;color:var(--jern-2);font-size:var(--stor)}
+.stempel{font-family:var(--mono);font-size:var(--lille);color:var(--jern-2);
+         margin:0 0 var(--s-3)}
+
+/* Partituret. Tiderne står i en enkelt lodret linje, og linjen er en rigtig linje. */
+.partitur{position:relative;padding:var(--s-5) var(--s-3) var(--s-6);max-width:70ch}
+.partitur::before{content:"";position:absolute;left:calc(var(--s-3) + 62px);top:0;bottom:0;
+                  width:2px;background:var(--form)}
+.slag{position:relative;padding-left:96px;margin-bottom:var(--s-5)}
+.slag time{position:absolute;left:0;top:2px;font-family:var(--mono);font-size:var(--lille);
+           color:var(--jern-2)}
+.slag::before{content:"";position:absolute;left:59px;top:6px;width:8px;height:8px;
+              background:var(--sand);border:2px solid var(--form);border-radius:50%}
+.slag h2{margin:0 0 var(--s-1);font-size:clamp(20px,3.4vw,27px);font-weight:400;line-height:1.2}
+.slag p{margin:0;color:var(--jern-2);max-width:46ch}
+.slag--stoeb::before{background:var(--gloed);border-color:var(--gloed)}
+
+/* Overtonerækken. Syv bånd, hver en ren funktion af scroll-tallet. Ingen keyframes. */
+.toner{padding:0 var(--s-3) var(--s-6);max-width:70ch}
+.toner h2{font-size:clamp(20px,3.4vw,27px);font-weight:400;margin:0 0 var(--s-2)}
+.toner p{color:var(--jern-2);max-width:46ch;margin:0 0 var(--s-4)}
+.raekke{display:grid;gap:var(--s-2);margin:0;padding:0;list-style:none}
+.raekke li{display:grid;grid-template-columns:96px 1fr auto;gap:var(--s-2);align-items:center;
+           font-family:var(--mono);font-size:var(--lille);color:var(--jern-2)}
+.baand{height:10px;background:var(--sand-2);border:1px solid var(--form);position:relative}
+.baand i{position:absolute;inset:0;background:var(--gloed);
+         transform:scaleX(var(--fyld,0));transform-origin:left center}
+.raekke li[data-tone="1"]{--fyld:clamp(0,calc((var(--t) - 0.05) * 8),1)}
+.raekke li[data-tone="2"]{--fyld:clamp(0,calc((var(--t) - 0.14) * 8),1)}
+.raekke li[data-tone="3"]{--fyld:clamp(0,calc((var(--t) - 0.23) * 8),1)}
+.raekke li[data-tone="4"]{--fyld:clamp(0,calc((var(--t) - 0.32) * 8),1)}
+.raekke li[data-tone="5"]{--fyld:clamp(0,calc((var(--t) - 0.41) * 8),1)}
+.raekke li[data-tone="6"]{--fyld:clamp(0,calc((var(--t) - 0.50) * 8),1)}
+.raekke li[data-tone="7"]{--fyld:clamp(0,calc((var(--t) - 0.59) * 8),1)}
+
+
+/* Snittet. Én tegning på hele siden, og den er en måling: profilen er den der giver
+   overtonerne ovenfor. Skematisk, og billedteksten siger det. */
+.snit{padding:0 var(--s-3) var(--s-6);max-width:70ch}
+.snit figure{margin:0}
+.snit svg{width:100%;max-width:420px;height:auto;display:block}
+.snit figcaption{font-family:var(--mono);font-size:var(--lille);color:var(--jern-2);
+                 margin-top:var(--s-2);max-width:46ch}
+.snit .vaeg{fill:var(--form)}
+.snit .luft{fill:none;stroke:var(--jern-2);stroke-width:1.5;stroke-dasharray:5 4}
+.snit .slagring{fill:none;stroke:var(--gloed);stroke-width:3}
+
+.praktisk{padding:var(--s-5) var(--s-3) var(--s-6);border-top:2px solid var(--jern);max-width:70ch}
+.praktisk dl{display:grid;grid-template-columns:1fr;gap:var(--s-3);margin:0}
+@media (min-width:640px){.praktisk dl{grid-template-columns:1fr 1fr}}
+.praktisk dt{font-family:var(--mono);font-size:var(--lille);color:var(--jern-2)}
+.praktisk dd{margin:var(--s-1) 0 0;font-size:var(--stor)}
+.kilde{font-family:var(--mono);font-size:var(--lille);color:var(--jern-2);
+       border-top:1px solid var(--form);padding-top:var(--s-3);margin-top:var(--s-5);max-width:60ch}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .baand i{transform:scaleX(1)}
+}
+</style>
+</head>
+<body>
+<a class="spring" href="#partitur">Spring til dagens program</a>
+
+<header class="top">
+  <p class="stempel">Klokkestøberiet Hjelm · åbent støberi</p>
+  <h1>Formen åbnes 11.14. Der er én støbning, og den venter ikke.</h1>
+  <p>Søndag den 14. september. Kom før elleve, eller kom til det der er tilbage af dagen.</p>
+</header>
+
+<main>
+  <section class="partitur" id="partitur" aria-label="Programmet time for time">
+    <div class="slag">
+      <time datetime="09:00">09.00</time>
+      <h2>Ovnen er allerede varm</h2>
+      <p>Den blev tændt i går aftes. Man kan mærke det på gulvet inden man ser noget.</p>
+    </div>
+    <div class="slag">
+      <time datetime="10:20">10.20</time>
+      <h2>Kernen brydes af</h2>
+      <p>Lerkappen slås fra i stykker. Stykkerne bliver liggende hvor de falder, resten af dagen.</p>
+    </div>
+    <div class="slag slag--stoeb">
+      <time datetime="11:14">11.14</time>
+      <h2>Støbningen</h2>
+      <p>Fire minutter. Der bliver ikke sagt noget imens, og der bliver ikke lavet om på tidspunktet.</p>
+    </div>
+    <div class="slag">
+      <time datetime="14:00">14.00</time>
+      <h2>Afkøling, og en samtale om hvorfor det tager tre dage</h2>
+      <p>Klokken må ikke røres før torsdag. Det er den del af faget der er sværest at sælge.</p>
+    </div>
+    <div class="slag">
+      <time datetime="16:30">16.30</time>
+      <h2>Stemning af en klokke fra 1912</h2>
+      <p>Den er en kvart tone under. Det høres tydeligt, når man får de to at høre efter hinanden.</p>
+    </div>
+  </section>
+
+  <section class="toner">
+    <h2>Hvad man hører, når man hører én klokke</h2>
+    <p>Syv toner på én gang. De kommer ikke samtidig, og rækkefølgen er den samme hver gang.</p>
+    <ul class="raekke">
+      <li data-tone="1"><span>Underoktav</span><span class="baand"><i></i></span><span>0,5×</span></li>
+      <li data-tone="2"><span>Prime</span><span class="baand"><i></i></span><span>1,0×</span></li>
+      <li data-tone="3"><span>Terts</span><span class="baand"><i></i></span><span>1,2×</span></li>
+      <li data-tone="4"><span>Kvint</span><span class="baand"><i></i></span><span>1,5×</span></li>
+      <li data-tone="5"><span>Oktav</span><span class="baand"><i></i></span><span>2,0×</span></li>
+      <li data-tone="6"><span>Decim</span><span class="baand"><i></i></span><span>2,5×</span></li>
+      <li data-tone="7"><span>Duodecim</span><span class="baand"><i></i></span><span>3,0×</span></li>
+    </ul>
+  </section>
+
+
+  <section class="snit" aria-label="Snit gennem klokken">
+    <figure>
+      <svg data-asset="a2" viewBox="0 0 300 240" role="img" aria-label="Skematisk snit gennem en klokke: væggen er tykkest ved slagringen forneden.">
+        <path class="vaeg" d="M150 12 h14 v18 h-9 c0 34 22 52 34 84 c9 24 12 48 12 72 v14 h20 v20 h-71 v-20 h13 v-14 c0-24-3-46-11-66 c-7-18-16-30-22-44 v124 h-24 v-124 c-6 14-15 26-22 44 c-8 20-11 42-11 66 v14 h13 v20 h-71 v-20 h20 v-14 c0-24 3-48 12-72 c12-32 34-50 34-84 h-9 v-18 h14 z" transform="translate(-2,0)"/>
+        <path class="luft" d="M150 30 v190"/>
+        <path class="slagring" d="M62 214 h44"/>
+        <path class="slagring" d="M194 214 h44"/>
+      </svg>
+      <figcaption>Slagringen er markeret. Væggen er tykkest netop dér, og det er tykkelsen
+        der bestemmer rækken ovenfor. Skematisk, ikke en tegning af en bestemt klokke.</figcaption>
+    </figure>
+  </section>
+
+  <section class="praktisk">
+    <dl>
+      <dt>Dato</dt><dd>Søndag 14. september</dd>
+      <dt>Støbning</dt><dd>11.14, én gang</dd>
+      <dt>Adgang</dt><dd>Uden tilmelding</dd>
+      <dt>Fodtøj</dt><dd>Lukkede sko, gulvet er sand</dd>
+    </dl>
+    <p class="kilde">Alt på siden står i støberiets eget dagsprogram. Der er ikke tilføjet
+      besøgstal, priser eller parkeringsforhold, fordi programmet ikke nævner dem.</p>
+  </section>
+</main>
+
+<script>
+/* Scroll-world-modellen: scroll bliver ét tal 0..1, og hvert bånd er en ren funktion af
+   det tal via en CSS-variabel. Ingen keyframes, intet bibliotek, ingen observer pr. element. */
+(function(){
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+  var root = document.documentElement;
+  var queued = false;
+  function frame(){
+    queued = false;
+    var max = document.documentElement.scrollHeight - window.innerHeight;
+    var t = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 1;
+    root.style.setProperty('--t', t.toFixed(4));
+  }
+  function onScroll(){ if(queued) return; queued = true; window.requestAnimationFrame(frame); }
+  function apply(){
+    window.removeEventListener('scroll', onScroll);
+    if (reduce.matches){ root.style.setProperty('--t','1'); return; }
+    window.addEventListener('scroll', onScroll, {passive:true});
+    frame();
+  }
+  if (reduce.addEventListener) reduce.addEventListener('change', apply);
+  apply();
+})();
+</script>
+</body>
+</html>

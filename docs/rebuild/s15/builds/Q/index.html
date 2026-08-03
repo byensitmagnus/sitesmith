@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Klinke &amp; Datter — pneumatiske selvspillende klaverer og pianolaer, Odense</title>
+<meta name="description" content="Verner og Liv Klinke reparerer pneumatiske selvspillende klaverer og pianolaer i Odense. Vurdering i hjemmet 1.850 kr. med skriftlig tilstandsrapport.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..800&family=Martian+Mono:wght@300..600&family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400..500&display=swap" rel="stylesheet">
+<style>
+/* ---------- tokens ---------- */
+:root{
+  --papir:#E9DFC6;
+  --papir-lys:#F5EFDE;
+  --blaek:#16201B;
+  --daempet:#4C5146;
+  --messing:#6E5210;
+  --messing-lys:#B08F2E;
+
+  --display:"Archivo","Helvetica Neue",Arial,sans-serif;
+  --broed:"Newsreader",Georgia,"Times New Roman",serif;
+  --mono:"Martian Mono",ui-monospace,"Courier New",monospace;
+
+  --fs-h1:clamp(2.1rem,6.2vw,4.4rem);
+  --fs-h2:clamp(1.6rem,3.4vw,2.4rem);
+  --fs-h3:clamp(1.15rem,1.9vw,1.4rem);
+  --fs-broed:clamp(1.02rem,0.97rem + 0.28vw,1.14rem);
+  --fs-label:0.72rem;
+
+  --rum:clamp(3.5rem,8vw,7rem);
+  --hairline:1px solid color-mix(in srgb,var(--messing) 34%,transparent);
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  background:var(--papir);
+  color:var(--blaek);
+  font-family:var(--broed);
+  font-size:var(--fs-broed);
+  line-height:1.65;
+  font-optical-sizing:auto;
+  overflow-x:hidden;
+}
+img,svg{max-width:100%}
+p{margin:0 0 1em}
+p:last-child{margin-bottom:0}
+h1,h2,h3{margin:0;font-family:var(--display);font-weight:700;line-height:1.04;letter-spacing:-0.015em;font-variation-settings:"wdth" 116}
+h1{font-size:var(--fs-h1);text-wrap:balance}
+h2{font-size:var(--fs-h2);text-wrap:balance}
+h3{font-size:var(--fs-h3);font-variation-settings:"wdth" 110;letter-spacing:-0.005em}
+a{color:var(--messing);text-underline-offset:0.22em;text-decoration-thickness:from-font}
+a:hover{color:var(--blaek)}
+:focus-visible{outline:3px solid var(--messing);outline-offset:3px;border-radius:2px}
+.paa-moerk :focus-visible{outline-color:var(--messing-lys)}
+
+.wrap{width:min(1180px,90vw);margin-inline:auto}
+.label{
+  font-family:var(--mono);font-size:var(--fs-label);font-weight:500;
+  letter-spacing:0.16em;text-transform:uppercase;color:var(--messing);
+  line-height:1.4;display:block;
+}
+.paa-moerk .label{color:var(--messing-lys)}
+
+/* ---------- topbjælke ---------- */
+.top{
+  display:flex;flex-wrap:wrap;gap:0.4rem 1.5rem;align-items:baseline;
+  justify-content:space-between;
+  padding:1.4rem 0 1.2rem;border-bottom:var(--hairline);
+}
+.top__navn{font-family:var(--display);font-variation-settings:"wdth" 120;font-weight:700;
+  font-size:1.05rem;letter-spacing:0.01em}
+.top__tlf{font-family:var(--mono);font-size:0.8rem;letter-spacing:0.06em;text-decoration:none;
+  border-bottom:1px solid color-mix(in srgb,var(--messing) 45%,transparent);padding-bottom:2px}
+
+/* ---------- hero ---------- */
+.hero{padding-block:clamp(2.6rem,7vw,5rem) clamp(2rem,4vw,3rem)}
+.hero__eyebrow{margin-bottom:clamp(1.2rem,3vw,2rem)}
+.hero h1{max-width:20ch}
+.hero__deck{
+  max-width:52ch;margin-top:1.4rem;font-size:clamp(1.08rem,1rem + 0.5vw,1.3rem);
+  color:var(--daempet);
+}
+.hero__handling{display:flex;flex-wrap:wrap;align-items:center;gap:1rem 1.6rem;margin-top:2rem}
+.knap{
+  display:inline-block;font-family:var(--display);font-variation-settings:"wdth" 112;
+  font-weight:700;font-size:1.05rem;letter-spacing:0.01em;
+  background:var(--blaek);color:var(--papir-lys);text-decoration:none;
+  padding:0.85rem 1.5rem;border:2px solid var(--blaek);
+}
+.knap:hover{background:var(--messing);border-color:var(--messing);color:var(--papir-lys)}
+.hero__aabent{font-family:var(--mono);font-size:0.76rem;letter-spacing:0.1em;color:var(--daempet)}
+
+/* ---------- signatur: noderullen ---------- */
+.rullefelt{margin-top:clamp(2.4rem,6vw,4rem);position:relative}
+.rulle{
+  position:relative;overflow:hidden;
+  height:clamp(150px,20vw,222px);
+  background:var(--papir-lys);
+  border-top:2px solid color-mix(in srgb,var(--blaek) 55%,transparent);
+  border-bottom:2px solid color-mix(in srgb,var(--blaek) 55%,transparent);
+  display:flex;flex-direction:column;
+}
+.rulle::after{ /* papirets krumning */
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(180deg,rgba(22,32,27,.16),transparent 22%,transparent 76%,rgba(22,32,27,.18));
+}
+.spor{
+  flex:1 1 0;min-height:0;padding:5px 0;
+  background-repeat:repeat;background-size:320px 100%;
+  background-clip:content-box;
+  background-image:linear-gradient(90deg,var(--stops));
+}
+.rulle--koerer .spor{animation:fremfoering 10s linear infinite}
+@keyframes fremfoering{from{background-position-x:0}to{background-position-x:-320px}}
+
+.spor:nth-child(1){--stops:transparent 0 24px,var(--blaek) 24px 38px,transparent 38px 132px,var(--blaek) 132px 146px,transparent 146px 236px,var(--blaek) 236px 252px,transparent 252px 320px}
+.spor:nth-child(2){--stops:transparent 0 62px,var(--blaek) 62px 74px,transparent 74px 168px,var(--blaek) 168px 188px,transparent 188px 268px,var(--blaek) 268px 280px,transparent 280px 320px}
+.spor:nth-child(3){--stops:transparent 0 10px,var(--blaek) 10px 22px,transparent 22px 96px,var(--blaek) 96px 108px,transparent 108px 200px,var(--blaek) 200px 214px,transparent 214px 292px,var(--blaek) 292px 304px,transparent 304px 320px}
+.spor:nth-child(4){--stops:transparent 0 44px,var(--blaek) 44px 56px,transparent 56px 150px,var(--blaek) 150px 162px,transparent 162px 248px,var(--blaek) 248px 276px,transparent 276px 320px}
+.spor:nth-child(5){--stops:transparent 0 84px,var(--blaek) 84px 96px,transparent 96px 176px,var(--blaek) 176px 190px,transparent 190px 258px,var(--blaek) 258px 270px,transparent 270px 320px}
+.spor:nth-child(6){--stops:transparent 0 16px,var(--blaek) 16px 30px,transparent 30px 118px,var(--blaek) 118px 130px,transparent 130px 214px,var(--blaek) 214px 226px,transparent 226px 300px,var(--blaek) 300px 316px,transparent 316px 320px}
+.spor:nth-child(7){--stops:transparent 0 52px,var(--blaek) 52px 66px,transparent 66px 140px,var(--blaek) 140px 152px,transparent 152px 232px,var(--blaek) 232px 244px,transparent 244px 286px,var(--blaek) 286px 298px,transparent 298px 320px}
+.spor:nth-child(8){--stops:transparent 0 28px,var(--blaek) 28px 40px,transparent 40px 104px,var(--blaek) 104px 124px,transparent 124px 190px,var(--blaek) 190px 202px,transparent 202px 264px,var(--blaek) 264px 276px,transparent 276px 320px}
+.spor:nth-child(9){--stops:transparent 0 70px,var(--blaek) 70px 82px,transparent 82px 158px,var(--blaek) 158px 170px,transparent 170px 246px,var(--blaek) 246px 258px,transparent 258px 306px,var(--blaek) 306px 318px,transparent 318px 320px}
+.spor:nth-child(10){--stops:transparent 0 6px,var(--blaek) 6px 18px,transparent 18px 92px,var(--blaek) 92px 104px,transparent 104px 182px,var(--blaek) 182px 196px,transparent 196px 270px,var(--blaek) 270px 282px,transparent 282px 320px}
+
+.trackerbar{
+  position:absolute;top:-12px;bottom:-12px;left:clamp(26px,11%,150px);width:17px;
+  background:linear-gradient(90deg,#6B521A,#E0C066 38%,#C6A344 62%,#755A1C);
+  box-shadow:0 0 0 1.5px rgba(22,32,27,.75),9px 0 18px rgba(22,32,27,.3);
+}
+.trackerbar::after{
+  content:"";position:absolute;inset:16px 4px;
+  background-image:repeating-linear-gradient(180deg,#0F1410 0 5px,transparent 5px 10%);
+}
+.rullefelt__note{
+  margin-top:0.8rem;font-family:var(--mono);font-size:var(--fs-label);letter-spacing:0.1em;
+  color:var(--daempet);text-transform:uppercase;
+}
+
+/* ---------- nøgletal under hero ---------- */
+.noegletal{
+  display:grid;gap:1.6rem;margin:0;
+  padding-top:1.8rem;border-top:var(--hairline);
+}
+.noegletal div{margin:0}
+.noegletal dt{margin-bottom:0.35rem}
+.noegletal dd{margin:0;font-family:var(--display);font-variation-settings:"wdth" 114;
+  font-weight:700;font-size:clamp(1.25rem,2.2vw,1.65rem);line-height:1.15}
+.noegletal dd small{display:block;font-family:var(--broed);font-weight:400;font-size:0.92rem;
+  color:var(--daempet);margin-top:0.4rem;line-height:1.5}
+@media (min-width:760px){.noegletal{grid-template-columns:repeat(3,1fr);gap:2.5rem}}
+
+/* ---------- sektionsrytme ---------- */
+.sektion{padding-block:var(--rum);border-top:var(--hairline)}
+.sektion--flad{border-top:none}
+.sektion--tal{padding-block:clamp(2.4rem,5vw,3.6rem)}
+.opslag{display:grid;gap:1.4rem}
+.opslag__venstre{padding-top:0.35rem}
+.opslag__hoejre{min-width:0}
+.opslag__hoejre > h2 + p{margin-top:1.2rem;max-width:56ch;color:var(--daempet)}
+@media (min-width:920px){
+  .opslag{grid-template-columns:13rem minmax(0,1fr);gap:3.5rem}
+}
+
+/* ---------- sådan starter du ---------- */
+.trin{list-style:none;margin:2.6rem 0 0;padding:0;display:grid;gap:2rem}
+.trin li{border-top:2px solid var(--blaek);padding-top:1rem}
+.trin h3{margin-top:0.55rem}
+.trin p{margin-top:0.6rem;color:var(--daempet);font-size:0.98rem}
+@media (min-width:700px){.trin{grid-template-columns:repeat(2,1fr);gap:2.2rem 2.5rem}}
+@media (min-width:1100px){.trin{grid-template-columns:repeat(4,1fr)}}
+
+/* ---------- omfang ---------- */
+.omfang{display:grid;gap:2rem;margin-top:2.4rem}
+@media (min-width:700px){.omfang{grid-template-columns:1fr 1fr;gap:3rem}}
+.omfang ul{list-style:none;margin:0.9rem 0 0;padding:0}
+.omfang li{
+  font-family:var(--display);font-variation-settings:"wdth" 110;font-weight:600;
+  font-size:1.05rem;line-height:1.3;padding:0.7rem 0;border-bottom:var(--hairline);
+}
+.omfang--nej li{color:var(--daempet);text-decoration:line-through;
+  text-decoration-color:color-mix(in srgb,var(--messing) 60%,transparent);
+  text-decoration-thickness:2px}
+.omfang__fodnote{margin-top:1.6rem;max-width:52ch;color:var(--daempet);font-style:italic}
+
+/* ---------- mørk sektion: fejl ---------- */
+.paa-moerk{background:var(--blaek);color:var(--papir);border-top:none}
+.paa-moerk h2{color:var(--papir-lys)}
+.paa-moerk .opslag__hoejre > h2 + p{color:color-mix(in srgb,var(--papir) 74%,transparent)}
+.fejl{list-style:none;margin:2.8rem 0 0;padding:0;display:grid;gap:0}
+.fejl li{
+  padding:1.4rem 0;
+  border-top:1px solid color-mix(in srgb,var(--messing-lys) 38%,transparent);
+  display:grid;gap:0.5rem;align-items:baseline;
+}
+.fejl li:last-child{border-bottom:1px solid color-mix(in srgb,var(--messing-lys) 38%,transparent)}
+.fejl h3{color:var(--papir-lys);font-weight:600}
+@media (min-width:700px){
+  .fejl li{grid-template-columns:9.5rem minmax(0,1fr);gap:1.5rem}
+}
+
+/* ---------- tid og pladser ---------- */
+.tid{display:grid;gap:2.6rem;margin-top:2.6rem}
+@media (min-width:820px){.tid{grid-template-columns:1fr 1fr;gap:3.5rem;align-items:start}}
+.spaend{
+  font-family:var(--display);font-variation-settings:"wdth" 120;font-weight:800;
+  font-size:clamp(3.2rem,9vw,5.6rem);line-height:0.9;letter-spacing:-0.03em;
+  display:flex;align-items:baseline;gap:0.5rem;flex-wrap:wrap;
+}
+.spaend span{font-size:clamp(1rem,2vw,1.5rem);font-weight:600;font-variation-settings:"wdth" 100;
+  letter-spacing:0.02em;color:var(--daempet)}
+.tid p{margin-top:1.1rem;max-width:44ch;color:var(--daempet)}
+.pladser{display:flex;gap:0.7rem;margin-top:1.2rem}
+.pladser i{
+  display:block;width:34px;height:48px;border:2px solid var(--blaek);
+  border-top-width:7px;background:transparent;
+}
+
+/* ---------- ruller ---------- */
+.ruller__tal{display:grid;gap:1.8rem;margin-top:2.4rem}
+@media (min-width:640px){.ruller__tal{grid-template-columns:1fr 1fr;gap:3rem;max-width:34rem}}
+.ruller__tal dt{margin-bottom:0.3rem}
+.ruller__tal dd{margin:0;font-family:var(--display);font-variation-settings:"wdth" 120;
+  font-weight:800;font-size:clamp(2.4rem,6vw,3.6rem);line-height:1;letter-spacing:-0.03em;
+  display:flex;align-items:baseline;gap:0.45rem;flex-wrap:wrap}
+.ruller__tal dd span{font-size:clamp(0.95rem,1.8vw,1.3rem);font-weight:600;
+  font-variation-settings:"wdth" 100;letter-spacing:0.02em;color:var(--daempet)}
+.rulle--stille{height:clamp(96px,12vw,130px);margin-top:clamp(2.4rem,5vw,3.4rem)}
+.rulle--stille .spor:nth-child(n+7){display:none}
+
+/* ---------- værkstedet ---------- */
+.folk{list-style:none;margin:2.6rem 0 0;padding:0;display:grid;gap:1.6rem}
+.folk li{display:flex;gap:1.4rem;align-items:baseline;border-top:2px solid var(--blaek);
+  padding-top:1rem;flex-wrap:wrap}
+.folk b{font-family:var(--display);font-variation-settings:"wdth" 120;font-weight:800;
+  font-size:clamp(1.9rem,4vw,2.6rem);line-height:1;letter-spacing:-0.02em}
+.folk span{color:var(--daempet);max-width:36ch}
+@media (min-width:820px){.folk{grid-template-columns:1fr 1fr;gap:2.5rem}}
+
+.praktisk{display:grid;gap:1.8rem;margin-top:3rem;padding-top:2rem;border-top:var(--hairline)}
+.praktisk dd{margin:0.35rem 0 0;font-size:1.02rem}
+.praktisk .stor{font-family:var(--display);font-variation-settings:"wdth" 112;font-weight:800;
+  font-size:clamp(1.5rem,4.2vw,2.2rem);line-height:1.15;letter-spacing:-0.01em;
+  white-space:nowrap;
+  text-decoration:none;display:inline-block;border-bottom:3px solid var(--messing)}
+.praktisk .stor:hover{color:var(--messing)}
+@media (min-width:760px){.praktisk{grid-template-columns:repeat(3,1fr);gap:2.5rem}}
+
+.bund{padding:2rem 0 3.5rem;border-top:var(--hairline);
+  font-family:var(--mono);font-size:var(--fs-label);letter-spacing:0.1em;
+  text-transform:uppercase;color:var(--daempet)}
+
+@media (prefers-reduced-motion:reduce){
+  .rulle--koerer .spor{animation:none}
+  *{transition:none!important}
+}
+</style>
+</head>
+<body>
+
+<header class="wrap top">
+  <span class="top__navn">Klinke &amp; Datter</span>
+  <a class="top__tlf" href="tel:+4566124709">66 12 47 09</a>
+</header>
+
+<main>
+
+  <section class="wrap hero">
+    <span class="label hero__eyebrow">Pneumatiske selvspillende klaverer og pianolaer · Odense</span>
+    <h1>Kan den reddes? Det finder vi ud af på en halv dag.</h1>
+    <p class="hero__deck">Du har arvet et klaver, der spiller af sig selv, og du ved ikke,
+      om der er noget at gøre ved det. Verner og Liv Klinke arbejder med den slags
+      instrumenter i et værksted i Odense.</p>
+    <p class="hero__handling">
+      <a class="knap" href="tel:+4566124709">Ring 66 12 47 09</a>
+      <span class="hero__aabent">Tirsdag–torsdag kl. 9.00–16.00</span>
+    </p>
+  </section>
+
+  <div class="rullefelt">
+    <div class="rulle rulle--koerer" role="img"
+         aria-label="En perforeret noderulle løber langsomt hen under en tracker bar af messing.">
+      <div class="spor"></div><div class="spor"></div><div class="spor"></div>
+      <div class="spor"></div><div class="spor"></div><div class="spor"></div>
+      <div class="spor"></div><div class="spor"></div><div class="spor"></div>
+      <div class="spor"></div>
+      <div class="trackerbar" aria-hidden="true"></div>
+    </div>
+    <p class="wrap rullefelt__note">Papir, huller, messing og luft — det er hele mekanikken</p>
+  </div>
+
+  <section class="wrap sektion sektion--flad sektion--tal" aria-label="Det korte om vurderingen">
+    <dl class="noegletal">
+      <div>
+        <dt class="label">Første vurdering</dt>
+        <dd>1.850 kr.<small>Prisen for at få instrumentet gennemgået.</small></dd>
+      </div>
+      <div>
+        <dt class="label">Varighed</dt>
+        <dd>En halv dag<small>Hjemme hos dig, hvor instrumentet står.</small></dd>
+      </div>
+      <div>
+        <dt class="label">Du får</dt>
+        <dd>En skriftlig rapport<small>Uanset om arbejdet bliver til noget.</small></dd>
+      </div>
+    </dl>
+  </section>
+
+  <section class="wrap sektion" aria-labelledby="start">
+    <div class="opslag">
+      <div class="opslag__venstre"><span class="label">Sådan starter du</span></div>
+      <div class="opslag__hoejre">
+        <h2 id="start">Fire skridt, og du behøver kun tage det første</h2>
+        <p>Markøren viser, hvem der handler. Du starter, vi kommer ud, og så er
+          beslutningen din igen.</p>
+        <ol class="trin">
+          <li>
+            <span class="label">Du</span>
+            <h3>Ringer til værkstedet</h3>
+            <p>Fortæl hvad du har, og hvor det står. Telefonen er den vej ind.</p>
+          </li>
+          <li>
+            <span class="label">Vi</span>
+            <h3>Kommer ud og ser på det</h3>
+            <p>En halv dag hjemme hos dig. Vurderingen koster 1.850 kr.</p>
+          </li>
+          <li>
+            <span class="label">Du</span>
+            <h3>Får en skriftlig tilstandsrapport</h3>
+            <p>Den kommer, uanset om arbejdet bliver til noget. Den er din at beholde.</p>
+          </li>
+          <li>
+            <span class="label">Du</span>
+            <h3>Beslutter, om vi går videre</h3>
+            <p>Prisen på en restaurering får du efter vurderingen. Vi giver ikke et
+              tilbud før.</p>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap sektion" aria-labelledby="omfang">
+    <div class="opslag">
+      <div class="opslag__venstre"><span class="label">Omfang</span></div>
+      <div class="opslag__hoejre">
+        <h2 id="omfang">Vi laver kun det pneumatiske</h2>
+        <p>Instrumenter, der spiller ved hjælp af luft, bælge og perforeret papir. Er dit
+          instrument elektronisk, er vi de forkerte at ringe til.</p>
+        <div class="omfang">
+          <div>
+            <span class="label">Det tager vi ind</span>
+            <ul>
+              <li>Pneumatiske selvspillende klaverer</li>
+              <li>Pianolaer</li>
+            </ul>
+          </div>
+          <div>
+            <span class="label">Det tager vi ikke</span>
+            <ul class="omfang--nej">
+              <li>Elektroniske instrumenter</li>
+              <li>Almindelige klaverer</li>
+            </ul>
+          </div>
+        </div>
+        <p class="omfang__fodnote">Er vi der alligevel, stemmer vi gerne et almindeligt
+          klaver, mens vi er i huset.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sektion paa-moerk" aria-labelledby="fejl">
+    <div class="wrap opslag">
+      <div class="opslag__venstre"><span class="label">Indeni kassen</span></div>
+      <div class="opslag__hoejre">
+        <h2 id="fejl">De fejl, vi oftest nævner</h2>
+        <p>Bliver vi spurgt, hvad der plejer at være galt, er det som regel én af disse
+          fem. Ordet foran er selve fejlen — ikke en rækkefølge.</p>
+        <ul class="fejl">
+          <li><span class="label">Smuldret</span><h3>Pungelæderet</h3></li>
+          <li><span class="label">Revnet</span><h3>Slangerne til tracker baren</h3></li>
+          <li><span class="label">Slidt</span><h3>Slagpneumatikkerne</h3></li>
+          <li><span class="label">Sprukket</span><h3>Vindkanalen</h3></li>
+          <li><span class="label">Hårde</span><h3>Drivremmene</h3></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap sektion sektion--flad" aria-labelledby="tid">
+    <div class="opslag">
+      <div class="opslag__venstre"><span class="label">Tid</span></div>
+      <div class="opslag__hoejre">
+        <h2 id="tid">En fuld restaurering tager lang tid</h2>
+        <div class="tid">
+          <div>
+            <p class="spaend">4–9 <span>måneder</span></p>
+            <p>Så længe tager en fuld pneumatisk restaurering. Prisen bliver først sat
+              efter vurderingen.</p>
+          </div>
+          <div>
+            <span class="label">Pladser i værkstedet</span>
+            <div class="pladser" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+            <p>Vi har fire instrumenter inde ad gangen. Der er som regel ventetid, før et
+              nyt kan komme ind.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sektion" aria-labelledby="ruller">
+    <div class="wrap opslag">
+      <div class="opslag__venstre"><span class="label">Noderuller</span></div>
+      <div class="opslag__hoejre">
+        <h2 id="ruller">Vi skærer nye ruller efter originale mastere</h2>
+        <p>Hullerne bliver stanset her i værkstedet, så et instrument, der er blevet
+          spilleklart, også har noget at spille.</p>
+        <dl class="ruller__tal">
+          <div>
+            <dt class="label">På lager</dt>
+            <dd>38 <span>titler</span></dd>
+          </div>
+          <div>
+            <dt class="label">Pris pr. rulle</dt>
+            <dd>340 <span>kr.</span></dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+    <div class="rulle rulle--stille" aria-hidden="true">
+      <div class="spor"></div><div class="spor"></div><div class="spor"></div>
+      <div class="spor"></div><div class="spor"></div><div class="spor"></div>
+    </div>
+  </section>
+
+  <section class="wrap sektion" aria-labelledby="vaerksted">
+    <div class="opslag">
+      <div class="opslag__venstre"><span class="label">Værkstedet</span></div>
+      <div class="opslag__hoejre">
+        <h2 id="vaerksted">To personer, far og datter</h2>
+        <ul class="folk">
+          <li><b>1981</b><span>Verner Klinke har arbejdet med pneumatiske klaverer siden
+            dette år.</span></li>
+          <li><b>2011</b><span>Liv Klinke kom til værkstedet og har været med siden.</span></li>
+        </ul>
+
+        <dl class="praktisk">
+          <div>
+            <dt class="label">Ring</dt>
+            <dd><a class="stor" href="tel:+4566124709">66 12 47 09</a></dd>
+          </div>
+          <div>
+            <dt class="label">Åbent</dt>
+            <dd>Tirsdag, onsdag og torsdag<br>kl. 9.00–16.00</dd>
+          </div>
+          <div>
+            <dt class="label">Adresse</dt>
+            <dd>Havnegade 22<br>5000 Odense C</dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="wrap bund">
+  Klinke &amp; Datter · Havnegade 22, 5000 Odense C · 66 12 47 09
+</footer>
+
+</body>
+</html>

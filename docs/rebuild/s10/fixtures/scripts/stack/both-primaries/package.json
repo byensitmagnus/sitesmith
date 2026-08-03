@@ -1,0 +1,9 @@
+{
+  "name": "fixture-both-primaries",
+  "private": true,
+  "dependencies": {
+    "next": "15.4.2",
+    "astro": "5.12.0",
+    "react": "19.1.0"
+  }
+}

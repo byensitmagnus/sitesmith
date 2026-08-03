@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="da">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Orgelværkstedet Hvidbjerg. Aase og Thorbjørn restaurerer og intonerer kirkeorgler.</title>
+<meta name="description" content="Aase og Thorbjørn lægger nyt skind på bælge og pneumatik, reparerer vindlader, skifter piberækker, intonerer, stemmer og bygger trakturer op igen. Første besøg er gratis og tager en halv dag. Ring 97 87 12 06.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alegreya:wght@400;500&family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&display=swap">
+<style>
+:root{
+  /* Farverne er materialer fra værkstedet, ikke roller. Se .sitesmith/direction.md. */
+  --bælgskind:#B9AB93;
+  --nyt-alunlæder:#E3D9C4;
+  --sod-og-jern:#191512;
+  --orgelmetal:#45484E;
+  --hudlim:#6E3D0E;
+  --rødt-filt:#7E1A1A;
+  --vindladens-eg:#3A2717;
+
+  --korn-mørkt:rgba(25,21,18,0.10);
+  --korn-lyst:rgba(227,217,196,0.16);
+  --sting:rgba(25,21,18,0.45);
+
+  --skrift-display:"Old Standard TT","Iowan Old Style","Palatino Linotype",Georgia,serif;
+  --skrift-brød:"Alegreya","Iowan Old Style","Palatino Linotype",Georgia,serif;
+
+  --trin-brød:1.09rem;
+  --trin-manchet:1.28rem;
+  --trin-del:1.62rem;
+  --trin-flade:clamp(1.7rem,1.2rem + 1.7vw,2.35rem);
+  --trin-navn:clamp(2.1rem,1.35rem + 3.4vw,3.6rem);
+
+  --rum-1:0.5rem;
+  --rum-2:0.9rem;
+  --rum-3:1.6rem;
+  --rum-4:2.6rem;
+  --rum-5:clamp(3rem,2rem + 4vw,5.2rem);
+
+  --spalte:min(100%,62rem);
+  --fold:clamp(2.6rem,1.6rem + 2.2vw,4.4rem);
+}
+
+*,*::before,*::after{box-sizing:border-box}
+
+html{-webkit-text-size-adjust:100%}
+
+body{
+  margin:0;
+  background-color:var(--bælgskind);
+  color:var(--sod-og-jern);
+  font-family:var(--skrift-brød);
+  font-size:var(--trin-brød);
+  line-height:1.62;
+  overflow-wrap:break-word;
+}
+
+/* Læderets korn. To skrå lag, ikke et billede: der findes ingen billeder. */
+.flade{
+  padding-block:var(--rum-5);
+  padding-inline:1.1rem;
+  background-color:var(--bælgskind);
+  background-image:
+    repeating-linear-gradient(101deg,var(--korn-mørkt) 0 1px,transparent 1px 6px),
+    repeating-linear-gradient(13deg,var(--korn-lyst) 0 1px,transparent 1px 11px);
+}
+.flade--nyt{background-color:var(--nyt-alunlæder)}
+.flade--eg{background-color:var(--vindladens-eg);color:var(--nyt-alunlæder)}
+
+.indre{width:var(--spalte);margin-inline:auto}
+
+/* Signaturen: bælgens fold. Ud går forud for det, værkstedet giver.
+   Ind går forud for det, det koster, eller det de ikke laver. */
+.bælgfold{
+  height:var(--fold);
+  background-color:var(--vindladens-eg);
+  background-image:
+    repeating-linear-gradient(90deg,var(--sting) 0 2px,transparent 2px 16px),
+    linear-gradient(180deg,var(--vindladens-eg) 0%,var(--orgelmetal) 30%,var(--nyt-alunlæder) 50%,var(--orgelmetal) 70%,var(--vindladens-eg) 100%);
+  background-size:100% 3px,100% 100%;
+  background-position:0 50%,0 0;
+  background-repeat:no-repeat,no-repeat;
+}
+.bælgfold--ind{
+  background-color:var(--nyt-alunlæder);
+  background-image:
+    repeating-linear-gradient(90deg,var(--sting) 0 2px,transparent 2px 16px),
+    linear-gradient(180deg,var(--nyt-alunlæder) 0%,var(--orgelmetal) 26%,var(--vindladens-eg) 50%,var(--orgelmetal) 74%,var(--nyt-alunlæder) 100%);
+}
+
+h1,h2,h3{font-family:var(--skrift-display);margin:0}
+
+.værksted{
+  font-family:var(--skrift-display);
+  font-style:italic;
+  font-size:var(--trin-manchet);
+  margin:0 0 var(--rum-4);
+}
+
+h1{
+  font-weight:700;
+  font-size:var(--trin-navn);
+  line-height:1.06;
+  max-width:19ch;
+  margin-bottom:var(--rum-3);
+}
+
+.manchet{
+  font-size:var(--trin-manchet);
+  font-weight:500;
+  line-height:1.5;
+  max-width:34rem;
+  margin:0 0 var(--rum-2);
+}
+
+h2{
+  font-weight:700;
+  font-size:var(--trin-flade);
+  line-height:1.14;
+  max-width:22ch;
+  margin-bottom:var(--rum-2);
+}
+
+.indledning,.brød{max-width:36rem;margin:0 0 var(--rum-2)}
+.brød:last-child{margin-bottom:0}
+
+.dele{margin-top:var(--rum-4)}
+
+.del{
+  border-top:2px solid var(--korn-mørkt);
+  padding-top:var(--rum-3);
+  margin-top:var(--rum-3);
+}
+
+h3{
+  font-weight:400;
+  font-style:italic;
+  font-size:var(--trin-del);
+  line-height:1.2;
+  margin-bottom:var(--rum-1);
+}
+
+.del p{margin:0;max-width:36rem}
+
+/* Rødt filt sidder kun dér, hvor noget standser. */
+.nej{
+  border-left:6px solid var(--rødt-filt);
+  padding-left:var(--rum-3);
+}
+
+.handling{margin:var(--rum-4) 0 var(--rum-2)}
+
+.ring{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:3.3rem;
+  padding:var(--rum-2) var(--rum-3);
+  background-color:var(--hudlim);
+  color:var(--nyt-alunlæder);
+  border:2px solid var(--vindladens-eg);
+  font-family:var(--skrift-display);
+  font-weight:700;
+  font-size:var(--trin-del);
+  text-decoration:none;
+  white-space:nowrap;
+  transition:background-color 120ms linear;
+}
+.ring:hover{background-color:var(--vindladens-eg)}
+.ring:active{background-color:var(--sod-og-jern)}
+.ring:focus-visible{
+  outline:3px solid var(--nyt-alunlæder);
+  outline-offset:3px;
+  box-shadow:0 0 0 6px var(--rødt-filt);
+}
+
+.under{margin:0;max-width:34rem}
+
+.post{font-style:normal;margin-top:var(--rum-3);max-width:36rem}
+
+.tlf{
+  display:inline-block;
+  min-height:2.9rem;
+  padding-block:var(--rum-1);
+  color:inherit;
+  text-decoration-thickness:2px;
+  text-underline-offset:0.2em;
+}
+.tlf:hover{text-decoration-thickness:4px}
+/* Den eneste .tlf sidder på ege-foden, så ringen er alunlæder mod eg: 10,11. */
+.tlf:focus-visible{
+  outline:3px solid var(--nyt-alunlæder);
+  outline-offset:3px;
+}
+
+.fod-navn{
+  font-family:var(--skrift-display);
+  font-size:var(--trin-del);
+  margin:0 0 var(--rum-2);
+}
+.fod-linje{margin:0}
+
+@media (min-width:48em){
+  .flade{padding-inline:2rem}
+  .del{
+    display:grid;
+    grid-template-columns:minmax(0,15rem) minmax(0,1fr);
+    column-gap:var(--rum-3);
+    align-items:start;
+  }
+}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    transition-duration:0.01ms !important;
+    animation-duration:0.01ms !important;
+    animation-iteration-count:1 !important;
+    scroll-behavior:auto !important;
+  }
+}
+</style>
+</head>
+<body>
+
+<header class="flade">
+  <div class="indre">
+    <p class="værksted">Orgelværkstedet Hvidbjerg</p>
+    <h1>Aase og Thorbjørn restaurerer og intonerer kirkeorgler.</h1>
+    <p class="manchet">Vi har arbejdet sammen siden 1998. Værkstedet ligger i Hvidbjerg i Thy, og vi kører i hele Danmark.</p>
+    <p class="manchet">Vi tager fire eller fem instrumenter om året. En fuld restaurering løber otte til atten måneder.</p>
+    <p class="handling"><a class="ring" href="tel:+4597871206">Ring 97 87 12 06</a></p>
+    <p class="under">Første besøg er gratis og tager en halv dag.</p>
+  </div>
+</header>
+
+<div class="bælgfold" aria-hidden="true"></div>
+
+<main>
+
+  <section class="flade flade--nyt" aria-labelledby="arbejdet">
+    <div class="indre">
+      <h2 id="arbejdet">Arbejdet, i den rækkefølge vinden går</h2>
+      <p class="indledning">Bælgen laver vinden. Vindladen fordeler den. Piberne gør den hørbar. Trakturen går den modsatte vej, fra tangenten ind til ventilen.</p>
+
+      <div class="dele">
+        <article class="del">
+          <h3>Bælgen og pneumatikken</h3>
+          <p>Bælgen er den del, der holder vinden, og den er lavet af skind. Vi lægger nyt skind på bælge og på pneumatikken.</p>
+        </article>
+
+        <article class="del">
+          <h3>Vindladen</h3>
+          <p>Vindladen er kassen, der fordeler vinden ud til piberne. Vi reparerer vindlader.</p>
+        </article>
+
+        <article class="del">
+          <h3>Piberækkerne</h3>
+          <p>Piberne er den del, man hører. Vi skifter piberækker ud.</p>
+        </article>
+
+        <article class="del">
+          <h3>Intonation og stemning</h3>
+          <p>Intonation er at bestemme, hvordan hver enkelt pibe skal lyde, pibe for pibe. Vi intonerer og stemmer.</p>
+        </article>
+
+        <article class="del">
+          <h3>Trakturen</h3>
+          <p>Trakturen er forbindelsen fra tangenten til ventilen. Vi bygger trakturer op igen.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <div class="bælgfold bælgfold--ind" aria-hidden="true"></div>
+
+  <section class="flade" aria-labelledby="nej">
+    <div class="indre nej">
+      <h2 id="nej">Det, vi siger nej til</h2>
+      <p class="brød">Vi installerer ikke elektroniske orgler. Der går ingen vind gennem dem. Spørger I os, siger vi det med det samme.</p>
+      <p class="brød">Vi tager fire eller fem instrumenter om året. Vi er to. En fuld restaurering løber otte til atten måneder, og det er den tid, arbejdet tager.</p>
+    </div>
+  </section>
+
+  <div class="bælgfold" aria-hidden="true"></div>
+
+  <section class="flade flade--nyt" aria-labelledby="besøg">
+    <div class="indre">
+      <h2 id="besøg">Det første besøg</h2>
+      <p class="brød">Vi kommer ud og bruger en halv dag ved orglet. Det koster ingenting.</p>
+      <p class="brød">Bagefter skriver vi en tilstandsrapport. Den skriver vi, uanset om opgaven bliver til noget.</p>
+      <p class="handling"><a class="ring" href="tel:+4597871206">Ring 97 87 12 06</a></p>
+      <address class="post">Eller skriv til os: Kirkevej 4, 7790 Hvidbjerg.</address>
+    </div>
+  </section>
+
+</main>
+
+<div class="bælgfold bælgfold--ind" aria-hidden="true"></div>
+
+<footer class="flade flade--eg">
+  <div class="indre">
+    <p class="fod-navn">Orgelværkstedet Hvidbjerg</p>
+    <p class="fod-linje">Aase og Thorbjørn</p>
+    <address class="post">
+      Kirkevej 4, 7790 Hvidbjerg<br>
+      <a class="tlf" href="tel:+4597871206">97 87 12 06</a>
+    </address>
+  </div>
+</footer>
+
+</body>
+</html>

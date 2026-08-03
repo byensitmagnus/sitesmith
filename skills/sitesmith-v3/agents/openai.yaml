@@ -1,0 +1,63 @@
+# Thin adapter. The skill's instructions live in SKILL.md and nowhere else, because a
+# second copy is a second thing to update and the first one to go stale. This file only
+# says how a non-Claude host reaches them.
+#
+# What an adapter is allowed to carry: trigger phrasing, paths, tool syntax, host
+# execution details, metadata. Nothing about how a website should be designed.
+
+name: sitesmith
+version: 3.0.0
+description: >-
+  Design, build, redesign and audit websites and web apps that do not look
+  AI-generated. Triggers on: build a website, make a landing page, design a page,
+  redesign this, make it look better, this looks generic, choose colours or fonts,
+  add motion, make it responsive, accessibility pass, design review, UI audit.
+
+entry: ../SKILL.md
+
+# Read once at the start, before section 2. Everything else is opened at its step.
+always_read:
+  - ../SKILL.md
+
+# One file per step, and exactly one adapter out of stacks/.
+read_at_step:
+  run_order: ../run.md
+  buying_surface: ../floor/buy.md
+  operating_surface: ../floor/operate.md
+  existing_code: ../redesign.md
+  release: ../verify.md
+  stack_adapter: ../stacks/    # one of: static, nextjs, react, astro, wordpress
+
+commands:
+  # Executed, not read into context. The host needs a shell and Node 20 or newer.
+  detect_stack: node ../scripts/stack.mjs detect .
+  new_direction_record: node ../scripts/ledger.mjs new <surface> <build-dir>
+  check_direction_record: node ../scripts/ledger.mjs parse <build-dir>
+  check_repeat: node ../scripts/ledger.mjs check <build-dir>
+  record_render: node ../scripts/ledger.mjs commit <build-dir>
+  render_and_measure: node ../scripts/verify.mjs <url> --out <dir>
+  # Behaviour, which the render step does not touch: it never clicks, submits or adds to
+  # a cart. Run it from the directory that has playwright installed.
+  run_journeys: node ../scripts/journey.mjs <build-dir>/journeys --base <url>
+  release_gate: node ../scripts/gate.mjs <build-dir> --skill <skill-dir>
+
+requires:
+  node: ">=20"
+  # Only for the render step. Without them every check that renders withholds its
+  # verdict and says so; it never prints a pass it did not earn.
+  optional:
+    - playwright
+    - "@axe-core/playwright"
+
+degraded:
+  no_browser: >-
+    Build, then state plainly that nothing was rendered or verified and mark the
+    release verdict as not taken. Never imply a check ran.
+  no_stack_detected: >-
+    Use plain HTML and CSS with no build step, and say so.
+  no_subagents: >-
+    Run the critique inline against the written checklist. The skill never requires a
+    host that can spawn agents.
+
+licence: MIT
+notices: ../THIRD-PARTY-NOTICES.md

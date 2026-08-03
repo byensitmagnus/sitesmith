@@ -1,0 +1,642 @@
+<!doctype html>
+<html lang="da">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sømkraft, Herning: tre gennemgåede industrisymaskiner til salg</title>
+<meta name="description" content="Sømkraft i Herning sælger tre gennemgåede industrisymaskiner: Juki DDL-8700, Pfaff 1245 og Brother B845. Priser, garanti og levering står på siden.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bevan&family=Newsreader:opsz,wght@6..72,400;6..72,600&display=swap">
+<style>
+:root{
+  color-scheme: light;
+
+  /* Farverne i værkstedet. Syv materialer og tre trådfarver, en pr. maskine. */
+  --laminatbord:#ede7da;
+  --kridt:#f7f4ec;
+  --stobejern:#1b1a17;
+  --staal:#5c5f58;
+  --rids:#c8c3b4;
+  --maskinlak:#3f4a42;
+  --olie:#8f5a14;
+  --traad-karmoisin:#b3243b;
+  --traad-marine:#1f4e79;
+  --traad-mos:#2e6b45;
+
+  --skrift-plade:'Bevan', Georgia, serif;
+  --skrift-brod:'Newsreader', Georgia, serif;
+
+  --maal-h1:clamp(2.4rem, 6vw, 4.2rem);
+  --maal-h2:clamp(1.6rem, 3vw, 2.1rem);
+  --maal-navn:1.55rem;
+  --maal-pris:clamp(1.4rem, 2.4vw, 1.9rem);
+  --maal-lead:1.25rem;
+  --maal-brod:1.0625rem;
+  --maal-lille:0.9375rem;
+  --maal-mikro:0.8125rem;
+
+  --rum-1:0.5rem;
+  --rum-2:0.9rem;
+  --rum-3:1.5rem;
+  --rum-4:2.5rem;
+  --rum-5:4rem;
+  --rum-6:6rem;
+  --spalte:74rem;
+  --haarstreg:1px;
+  --traadbredde:3px;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+
+html{
+  background:var(--laminatbord);
+}
+
+body{
+  margin:0;
+  background:var(--laminatbord);
+  color:var(--stobejern);
+  font-family:var(--skrift-brod);
+  font-size:var(--maal-brod);
+  line-height:1.62;
+  -webkit-text-size-adjust:100%;
+}
+
+h1,h2,h3,p,ul,ol,dl,dd,figure{margin:0}
+ul,ol{padding:0;list-style:none}
+
+.indhold{
+  width:100%;
+  max-width:var(--spalte);
+  margin:0 auto;
+  padding-inline:var(--rum-3);
+}
+
+/* Springlink */
+.spring{
+  position:absolute;
+  left:-9999px;
+  top:0;
+  background:var(--stobejern);
+  color:var(--kridt);
+  padding:var(--rum-2) var(--rum-3);
+  z-index:5;
+}
+.spring:focus{left:0}
+
+/* Toplinje: den ene kontrol der forpligter, altid inden for rækkevidde */
+.toplinje{
+  position:sticky;
+  top:0;
+  z-index:4;
+  background:var(--kridt);
+  border-bottom:var(--haarstreg) solid var(--rids);
+}
+.toplinje__rk{
+  display:flex;
+  flex-wrap:wrap;
+  gap:var(--rum-2) var(--rum-3);
+  align-items:center;
+  justify-content:space-between;
+  padding-block:var(--rum-2);
+}
+.vaerksted{
+  font-family:var(--skrift-plade);
+  font-size:var(--maal-brod);
+  line-height:1.2;
+  letter-spacing:-0.01em;
+}
+.vaerksted span{
+  display:block;
+  font-family:var(--skrift-brod);
+  font-size:var(--maal-mikro);
+  color:var(--staal);
+}
+
+/* Ring-kontrollen. Den eneste fyldte flade på siden. */
+.ring{
+  display:inline-flex;
+  align-items:center;
+  min-height:44px;
+  padding:var(--rum-1) var(--rum-3);
+  background:var(--stobejern);
+  color:var(--kridt);
+  font-size:var(--maal-brod);
+  font-weight:600;
+  text-decoration:none;
+  border:2px solid var(--stobejern);
+}
+.ring:hover{background:var(--maskinlak);border-color:var(--maskinlak)}
+.ring:active{background:var(--maskinlak);border-color:var(--stobejern)}
+
+a{color:var(--stobejern)}
+a:focus-visible,
+.ring:focus-visible,
+.indeks__rk:focus-visible{
+  outline:3px solid var(--traad-karmoisin);
+  outline-offset:3px;
+}
+
+/* Første skærm */
+.aabning{
+  padding-block:var(--rum-5) var(--rum-4);
+}
+.aabning__rk{
+  display:grid;
+  gap:var(--rum-4);
+}
+h1{
+  font-family:var(--skrift-plade);
+  font-weight:400;
+  font-size:var(--maal-h1);
+  line-height:1.02;
+  letter-spacing:-0.015em;
+  max-width:16ch;
+}
+.lead{
+  font-size:var(--maal-lead);
+  max-width:52ch;
+  margin-top:var(--rum-3);
+}
+
+/* Indeks: navn, mekanik og pris på hver række, samme sted hver gang */
+.indeks h2{
+  font-family:var(--skrift-brod);
+  font-weight:600;
+  font-size:var(--maal-brod);
+  padding-bottom:var(--rum-1);
+  border-bottom:var(--haarstreg) solid var(--rids);
+}
+.indeks__rk{
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:0 var(--rum-3);
+  align-items:baseline;
+  min-height:44px;
+  padding-block:var(--rum-2);
+  border-bottom:var(--haarstreg) solid var(--rids);
+  text-decoration:none;
+}
+.indeks__rk:hover .indeks__navn{text-decoration:underline}
+.indeks__navn{font-weight:600}
+.indeks__pris{font-weight:600;font-size:var(--maal-brod)}
+.indeks__mek{
+  grid-column:1 / -1;
+  font-size:var(--maal-lille);
+  color:var(--staal);
+}
+.indeks__traad{
+  display:inline-block;
+  width:1.4rem;
+  height:var(--traadbredde);
+  margin-right:var(--rum-1);
+  vertical-align:middle;
+}
+
+/* Maskinen */
+.maskine{padding-top:var(--rum-5)}
+
+.plade{
+  background:var(--maskinlak);
+  color:var(--kridt);
+  padding:var(--rum-3);
+  display:flex;
+  flex-wrap:wrap;
+  gap:var(--rum-1) var(--rum-3);
+  align-items:baseline;
+  justify-content:space-between;
+}
+.plade__navn{
+  font-family:var(--skrift-plade);
+  font-weight:400;
+  font-size:var(--maal-navn);
+  line-height:1.1;
+  letter-spacing:-0.01em;
+}
+.plade__pris{
+  font-size:var(--maal-pris);
+  font-weight:600;
+  line-height:1.1;
+}
+
+.maskine__krop{
+  display:grid;
+  gap:var(--rum-4);
+  background:var(--kridt);
+  padding:var(--rum-3);
+}
+
+/* Signaturen: nålefeltet */
+.naalefelt{
+  display:block;
+}
+.naalefelt svg{
+  display:block;
+  width:100%;
+  height:auto;
+}
+.naalefelt figcaption{
+  font-size:var(--maal-mikro);
+  color:var(--staal);
+  margin-top:var(--rum-2);
+  max-width:56ch;
+}
+.t-linje{fill:none;stroke:var(--stobejern);stroke-width:2}
+.t-flade{fill:var(--rids);stroke:var(--stobejern);stroke-width:2}
+.t-plade{fill:var(--staal)}
+.t-traad{fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.maskine--juki .t-traad{stroke:var(--traad-karmoisin)}
+.maskine--pfaff .t-traad{stroke:var(--traad-marine)}
+.maskine--brother .t-traad{stroke:var(--traad-mos)}
+
+/* Trådlinjen: samme tråd som i nålen, nu som stregen der lukker maskinen */
+.traadlinje{
+  height:var(--traadbredde);
+  margin-top:var(--rum-4);
+}
+.maskine--juki .traadlinje{background:var(--traad-karmoisin)}
+.maskine--pfaff .traadlinje{background:var(--traad-marine)}
+.maskine--brother .traadlinje{
+  height:calc(var(--traadbredde) * 3);
+  border-top:var(--traadbredde) solid var(--traad-mos);
+  border-bottom:var(--traadbredde) solid var(--traad-mos);
+  background:var(--kridt);
+}
+.maskine--juki .indeks__traad{background:var(--traad-karmoisin)}
+.maskine--pfaff .indeks__traad{background:var(--traad-marine)}
+.maskine--brother .indeks__traad{background:var(--traad-mos)}
+
+.fakta{
+  display:grid;
+  grid-template-columns:auto 1fr;
+  gap:0 var(--rum-3);
+}
+.fakta dt{
+  font-size:var(--maal-lille);
+  color:var(--staal);
+  padding-block:var(--rum-1);
+  border-top:var(--haarstreg) solid var(--rids);
+}
+.fakta dd{
+  padding-block:var(--rum-1);
+  border-top:var(--haarstreg) solid var(--rids);
+}
+.binding{
+  font-weight:600;
+  margin-block:var(--rum-3);
+  max-width:56ch;
+}
+
+/* Afsnit */
+.afsnit{padding-top:var(--rum-6)}
+.afsnit h2{
+  font-family:var(--skrift-plade);
+  font-weight:400;
+  font-size:var(--maal-h2);
+  line-height:1.1;
+  letter-spacing:-0.01em;
+  max-width:22ch;
+  margin-bottom:var(--rum-3);
+}
+.afsnit p{max-width:58ch}
+.afsnit p + p{margin-top:var(--rum-2)}
+
+/* Beslaget: garantien spænder om de fire ting, og undtagelsen står uden for */
+.beslag{
+  display:flex;
+  flex-wrap:wrap;
+  gap:var(--rum-3) var(--rum-4);
+  align-items:center;
+}
+.trin{
+  border-left:var(--traadbredde) solid var(--stobejern);
+  border-top:var(--traadbredde) solid var(--stobejern);
+  border-bottom:var(--traadbredde) solid var(--stobejern);
+  padding:var(--rum-3) var(--rum-4) var(--rum-3) var(--rum-3);
+}
+.trin li + li{margin-top:var(--rum-1)}
+.beslag__maerkat{
+  font-weight:600;
+  max-width:22ch;
+}
+.undtagelse{
+  color:var(--olie);
+  margin-top:var(--rum-3);
+  font-weight:600;
+}
+
+/* Byttemaskinen: det eneste der kører den anden vej, og det eneste højrestillede */
+.afsnit--modsat{
+  text-align:right;
+  border-right:var(--traadbredde) solid var(--stobejern);
+  padding-right:var(--rum-3);
+}
+.afsnit--modsat h2,
+.afsnit--modsat p{margin-left:auto}
+
+.kontakt{
+  padding-block:var(--rum-6);
+  margin-top:var(--rum-6);
+  border-top:var(--haarstreg) solid var(--rids);
+}
+.kontakt .stor{
+  font-size:var(--maal-lead);
+  font-weight:600;
+}
+.mangler{
+  margin-top:var(--rum-4);
+  font-size:var(--maal-lille);
+  color:var(--staal);
+  max-width:52ch;
+}
+
+@media (min-width:48rem){
+  .maskine__krop{
+    grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);
+    align-items:start;
+    padding:var(--rum-4);
+  }
+}
+
+@media (min-width:62rem){
+  .aabning__rk{
+    grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);
+    align-items:end;
+    gap:var(--rum-5);
+  }
+  .plade{padding:var(--rum-3) var(--rum-4)}
+}
+
+/* Der er ingen bevægelse på siden. Blokken står her, så en senere rettelse
+   ikke kan smugle en ind uden at se den. */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    animation:none;
+    transition:none;
+    scroll-behavior:auto;
+  }
+}
+</style>
+</head>
+<body>
+
+<a class="spring" href="#hoved">Spring til indholdet</a>
+
+<div class="toplinje">
+  <div class="indhold toplinje__rk">
+    <p class="vaerksted">Sømkraft<span>Værksted i Herning</span></p>
+    <a class="ring" href="tel:97220841">Ring 97 22 08 41</a>
+  </div>
+</div>
+
+<main id="hoved">
+
+  <section class="aabning">
+    <div class="indhold aabning__rk">
+      <div>
+        <h1>Tre maskiner, skilt ad til stellet og sat sammen igen.</h1>
+        <p class="lead">Vi er tre i værkstedet i Herning, og der står tre industrisymaskiner klar
+          til salg. Herunder står der hvad hver enkelt er, hvad der er lavet ved den, hvad den
+          koster, og hvad det koster at få den ud til dig. Skal du høre nærmere om en bestemt
+          maskine, så ring 97 22 08 41.</p>
+      </div>
+
+      <div class="indeks">
+        <h2 id="indeks-titel">Tre maskiner til salg lige nu</h2>
+        <a class="indeks__rk maskine--juki" href="#juki">
+          <span class="indeks__navn"><span class="indeks__traad"></span>Juki DDL-8700</span>
+          <span class="indeks__pris">9.400 kr.</span>
+          <span class="indeks__mek">Enkeltnål, ligesøm. Servomotor monteret.</span>
+        </a>
+        <a class="indeks__rk maskine--pfaff" href="#pfaff">
+          <span class="indeks__navn"><span class="indeks__traad"></span>Pfaff 1245</span>
+          <span class="indeks__pris">14.900 kr.</span>
+          <span class="indeks__mek">Transportfod, sammensat fremføring.</span>
+        </a>
+        <a class="indeks__rk maskine--brother" href="#brother">
+          <span class="indeks__navn"><span class="indeks__traad"></span>Brother B845</span>
+          <span class="indeks__pris">18.500 kr.</span>
+          <span class="indeks__mek">Dobbeltnål, delt nålestang.</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <article class="maskine maskine--juki" id="juki">
+    <div class="indhold">
+      <div class="plade">
+        <h2 class="plade__navn">Juki DDL-8700</h2>
+        <p class="plade__pris">9.400 kr.</p>
+      </div>
+
+      <div class="maskine__krop">
+        <figure class="naalefelt">
+          <svg viewBox="0 0 360 210" role="img" aria-labelledby="tegn-juki-titel"
+               data-asset="naalefelt-juki">
+            <title id="tegn-juki-titel">Tegning af Juki DDL-8700 set forfra: én nålestang med én
+              nål, en hel trykfod og to lag materiale over stikpladen. Den karmoisinrøde tråd
+              løber fra trådføreren, gennem nåleøjet og videre ud til højre som én søm.</title>
+            <circle class="t-linje" cx="330" cy="26" r="7"/>
+            <path class="t-linje" d="M296 26h27"/>
+            <rect class="t-linje" x="169" y="34" width="14" height="72"/>
+            <rect class="t-flade" x="161" y="98" width="30" height="16"/>
+            <path class="t-linje" d="M176 114v52"/>
+            <path class="t-linje" d="M214 44v74"/>
+            <path class="t-linje" d="M136 118h78v28h-78z"/>
+            <circle class="t-linje" cx="176" cy="132" r="7"/>
+            <rect class="t-flade" x="20" y="146" width="320" height="12"/>
+            <rect class="t-flade" x="20" y="158" width="320" height="12"/>
+            <rect class="t-plade" x="8" y="176" width="344" height="9"/>
+            <path class="t-linje" d="M150 176v9M164 176v9M188 176v9M202 176v9"/>
+            <path class="t-traad" d="M330 33c0 22-34 20-60 30-22 9-84 12-94 33v55l0 0"/>
+            <path class="t-traad" d="M176 151h124c34 0 48 22 60 57"/>
+          </svg>
+          <figcaption>Nål og fod set forfra. De tre tegninger er sat op ens, så de kan holdes op
+            mod hinanden. De viser antal nåle og fodens type, ikke maskinens mål.</figcaption>
+        </figure>
+
+        <div>
+          <dl class="fakta">
+            <dt>Mekanik</dt><dd>Enkeltnål, ligesøm.</dd>
+            <dt>Motor</dt><dd>Servomotor monteret.</dd>
+            <dt>Pris</dt><dd>9.400 kr.</dd>
+            <dt>Garanti</dt><dd>Tolv måneder på det mekaniske arbejde. Motor og elektronik er ikke
+              omfattet.</dd>
+            <dt>Levering</dt><dd>900 kr. i Jylland og på Fyn. Til Sjælland med fragtmand, og
+              prisen bliver oplyst.</dd>
+          </dl>
+          <p class="binding">Du betaler 9.400 kr. for maskinen, og 900 kr. hvis vi selv kører den
+            ud i Jylland eller på Fyn. Garantien løber tolv måneder på det mekaniske arbejde og
+            dækker ikke motor og elektronik.</p>
+          <a class="ring" href="tel:97220841">Ring om DDL-8700, 97 22 08 41</a>
+        </div>
+      </div>
+
+      <div class="traadlinje"></div>
+    </div>
+  </article>
+
+  <article class="maskine maskine--pfaff" id="pfaff">
+    <div class="indhold">
+      <div class="plade">
+        <h2 class="plade__navn">Pfaff 1245</h2>
+        <p class="plade__pris">14.900 kr.</p>
+      </div>
+
+      <div class="maskine__krop">
+        <figure class="naalefelt">
+          <svg viewBox="0 0 360 210" role="img" aria-labelledby="tegn-pfaff-titel"
+               data-asset="naalefelt-pfaff">
+            <title id="tegn-pfaff-titel">Tegning af Pfaff 1245 set forfra: én nålestang med én nål
+              og en trykfod i to dele, der står i hver sin højde over de to lag materiale. Den
+              marineblå tråd løber fra trådføreren, gennem nåleøjet og videre ud til højre som én
+              søm.</title>
+            <circle class="t-linje" cx="330" cy="26" r="7"/>
+            <path class="t-linje" d="M296 26h27"/>
+            <rect class="t-linje" x="169" y="34" width="14" height="72"/>
+            <rect class="t-flade" x="161" y="98" width="30" height="16"/>
+            <path class="t-linje" d="M176 114v52"/>
+            <path class="t-linje" d="M132 40v78M214 52v66"/>
+            <path class="t-linje" d="M108 118h48v28h-48z"/>
+            <path class="t-linje" d="M196 128h58v18h-58z"/>
+            <circle class="t-linje" cx="176" cy="132" r="7"/>
+            <path class="t-linje" d="M156 132h13M183 132h13"/>
+            <rect class="t-flade" x="20" y="146" width="320" height="12"/>
+            <rect class="t-flade" x="20" y="158" width="320" height="12"/>
+            <rect class="t-plade" x="8" y="176" width="344" height="9"/>
+            <path class="t-linje" d="M150 176v9M164 176v9M188 176v9M202 176v9"/>
+            <path class="t-traad" d="M330 33c0 22-34 20-60 30-22 9-84 12-94 33v55l0 0"/>
+            <path class="t-traad" d="M176 151h124c34 0 48 22 60 57"/>
+          </svg>
+          <figcaption>Nål og fod set forfra. De tre tegninger er sat op ens, så de kan holdes op
+            mod hinanden. De viser antal nåle og fodens type, ikke maskinens mål.</figcaption>
+        </figure>
+
+        <div>
+          <dl class="fakta">
+            <dt>Mekanik</dt><dd>Transportfod, sammensat fremføring.</dd>
+            <dt>Pris</dt><dd>14.900 kr.</dd>
+            <dt>Garanti</dt><dd>Tolv måneder på det mekaniske arbejde. Motor og elektronik er ikke
+              omfattet.</dd>
+            <dt>Levering</dt><dd>900 kr. i Jylland og på Fyn. Til Sjælland med fragtmand, og
+              prisen bliver oplyst.</dd>
+          </dl>
+          <p class="binding">Du betaler 14.900 kr. for maskinen, og 900 kr. hvis vi selv kører den
+            ud i Jylland eller på Fyn. Garantien løber tolv måneder på det mekaniske arbejde og
+            dækker ikke motor og elektronik.</p>
+          <a class="ring" href="tel:97220841">Ring om 1245, 97 22 08 41</a>
+        </div>
+      </div>
+
+      <div class="traadlinje"></div>
+    </div>
+  </article>
+
+  <article class="maskine maskine--brother" id="brother">
+    <div class="indhold">
+      <div class="plade">
+        <h2 class="plade__navn">Brother B845</h2>
+        <p class="plade__pris">18.500 kr.</p>
+      </div>
+
+      <div class="maskine__krop">
+        <figure class="naalefelt">
+          <svg viewBox="0 0 360 210" role="img" aria-labelledby="tegn-brother-titel"
+               data-asset="naalefelt-brother">
+            <title id="tegn-brother-titel">Tegning af Brother B845 set forfra: to nålestænger med
+              et mellemrum imellem sig, hver med sin nål, og en fod med to nålehuller over de to
+              lag materiale. To mosgrønne tråde løber fra trådførerne, gennem hvert sit nåleøje og
+              videre ud til højre som to parallelle sømme.</title>
+            <circle class="t-linje" cx="330" cy="26" r="7"/>
+            <circle class="t-linje" cx="300" cy="40" r="7"/>
+            <path class="t-linje" d="M270 40h23M296 26h27"/>
+            <rect class="t-linje" x="141" y="34" width="14" height="72"/>
+            <rect class="t-linje" x="197" y="34" width="14" height="72"/>
+            <path class="t-linje" d="M172 40v66"/>
+            <rect class="t-flade" x="133" y="98" width="30" height="16"/>
+            <rect class="t-flade" x="189" y="98" width="30" height="16"/>
+            <path class="t-linje" d="M148 114v52M204 114v52"/>
+            <path class="t-linje" d="M112 118h128v28h-128z"/>
+            <circle class="t-linje" cx="148" cy="132" r="7"/>
+            <circle class="t-linje" cx="204" cy="132" r="7"/>
+            <rect class="t-flade" x="20" y="146" width="320" height="12"/>
+            <rect class="t-flade" x="20" y="158" width="320" height="12"/>
+            <rect class="t-plade" x="8" y="176" width="344" height="9"/>
+            <path class="t-linje" d="M124 176v9M138 176v9M214 176v9M228 176v9"/>
+            <path class="t-traad" d="M330 33c0 20-40 20-70 30-26 9-84 14-92 33v52l0 0"/>
+            <path class="t-traad" d="M300 47c-4 18-40 18-64 26-22 8-32 20-32 33v49l0 0"/>
+            <path class="t-traad" d="M148 150h152c34 0 48 22 60 58"/>
+            <path class="t-traad" d="M204 156h96c30 0 44 18 56 52"/>
+          </svg>
+          <figcaption>Nål og fod set forfra. De tre tegninger er sat op ens, så de kan holdes op
+            mod hinanden. De viser antal nåle og fodens type, ikke maskinens mål.</figcaption>
+        </figure>
+
+        <div>
+          <dl class="fakta">
+            <dt>Mekanik</dt><dd>Dobbeltnål, delt nålestang.</dd>
+            <dt>Pris</dt><dd>18.500 kr.</dd>
+            <dt>Garanti</dt><dd>Tolv måneder på det mekaniske arbejde. Motor og elektronik er ikke
+              omfattet.</dd>
+            <dt>Levering</dt><dd>900 kr. i Jylland og på Fyn. Til Sjælland med fragtmand, og
+              prisen bliver oplyst.</dd>
+          </dl>
+          <p class="binding">Du betaler 18.500 kr. for maskinen, og 900 kr. hvis vi selv kører den
+            ud i Jylland eller på Fyn. Garantien løber tolv måneder på det mekaniske arbejde og
+            dækker ikke motor og elektronik.</p>
+          <a class="ring" href="tel:97220841">Ring om B845, 97 22 08 41</a>
+        </div>
+      </div>
+
+      <div class="traadlinje"></div>
+    </div>
+  </article>
+
+  <section class="afsnit" id="ombygning">
+    <div class="indhold">
+      <h2>Det samme er lavet ved alle tre</h2>
+      <div class="beslag">
+        <ul class="trin">
+          <li>Skilt ad til stellet.</li>
+          <li>Nye lejer sat i.</li>
+          <li>Sprøjtelakeret.</li>
+          <li>Kørt otte timer under belastning, inden den bliver solgt.</li>
+        </ul>
+        <p class="beslag__maerkat">Tolv måneders garanti på det mekaniske arbejde.</p>
+      </div>
+      <p class="undtagelse">Motor og elektronik er ikke omfattet af garantien.</p>
+    </div>
+  </section>
+
+  <section class="afsnit" id="levering">
+    <div class="indhold">
+      <h2>Hvad koster det at få den ud til dig?</h2>
+      <p>Vi kører selv ud i Jylland og på Fyn. Det koster 900 kr. Skal maskinen til Sjælland, går
+        den med fragtmand, og prisen bliver oplyst.</p>
+    </div>
+  </section>
+
+  <section class="afsnit afsnit--modsat" id="bytte">
+    <div class="indhold">
+      <h2>Og din gamle maskine</h2>
+      <p>Den tager vi i bytte. Hvad den er værd, kan vi først sige, når vi har set den.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="kontakt">
+  <div class="indhold">
+    <h2>Sådan får du fat i os</h2>
+    <p class="stor">Ring 97 22 08 41.</p>
+    <p>Værkstedet er åbent tirsdag til fredag, 08:00 til 15:00.</p>
+    <p>Sømkraft blev startet i 2014. Vi er tre: Ida, Karsten og Rune, og værkstedet ligger i
+      Herning.</p>
+    <p class="mangler">Der står ingen anmeldelser, kundenavne eller salgstal på siden. Vi har ikke
+      noget optalt at vise, og så skriver vi det ikke.</p>
+  </div>
+</footer>
+
+</body>
+</html>

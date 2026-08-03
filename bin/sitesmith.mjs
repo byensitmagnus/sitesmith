@@ -2,7 +2,7 @@
 /**
  * The product layer. Original work, MIT.
  *
- *   node bin/sitesmith.mjs install [--to <dir>] [--provider claude|codex|cursor|all] [--no-deps]
+ *   node bin/sitesmith.mjs install [--to <dir>] [--provider claude|codex|cursor|openai|all]
  *   node bin/sitesmith.mjs update  [--to <dir>]
  *   node bin/sitesmith.mjs doctor  [--to <dir>]
  *   node bin/sitesmith.mjs pack    --provider <p> --out <dir>
@@ -12,10 +12,12 @@
  * machine can actually run the gates — because "it didn't work" almost always means Playwright
  * is missing, and the honest answer is to say so by name.
  *
- * Provider packs are **generated from PIPELINE.json**, never hand-written. The pipeline is the
- * single source of truth for what the commands are and what each step reads, produces and
- * gates on; three hand-maintained copies of that would drift apart within a week, and the drift
- * would be invisible until someone followed the wrong one.
+ * Provider packs are **generated from product/pipeline.json**, never hand-written, and never
+ * from anywhere else. One file is the journey. Four hand-maintained copies of it drift apart
+ * within a week and the drift is invisible until someone follows the wrong one.
+ *
+ * Everything below marked v2 is history. It is reachable only through `--legacy-v2`, and the
+ * code that reads skills/sitesmith/PIPELINE.json is kept for that route alone.
  */
 
 import { readFile, writeFile, mkdir, readdir, stat, rm, cp } from 'node:fs/promises';
@@ -37,7 +39,8 @@ const flag = (n, d = null) => {
 };
 const has = (n) => args.includes(`--${n}`);
 
-/* Where each provider looks. A pack that lands anywhere else is a file, not an install. */
+/* v2 only. The current provider table lives in tools/provider-pack.mjs and is read from
+   product/pipeline.json; this one is reached only through --legacy-v2. */
 const PROVIDERS = {
   claude: { dir: '.claude/skills/sitesmith', entry: 'SKILL.md',
             what: 'Claude Code reads SKILL.md frontmatter to decide when to load a skill.' },
@@ -124,8 +127,9 @@ async function doctor(target, { onlyTarget = false } = {}) {
   return bad.length ? 1 : 0;
 }
 
-/* ── packs ────────────────────────────────────────────────────────────────
-   Generated from PIPELINE.json. Editing a pack by hand is how three copies drift. */
+/* ── packs, v2 ────────────────────────────────────────────────────────────
+   Generated from skills/sitesmith/PIPELINE.json, which is the legacy pipeline. The current
+   one is product/pipeline.json and tools/provider-pack.mjs renders it. */
 async function buildPack(provider, outDir) {
   const p = JSON.parse(await readFile(join(SKILL, 'PIPELINE.json'), 'utf8'));
   const cmds = Object.entries(p.commands).filter(([k]) => !k.startsWith('$'));
@@ -267,6 +271,36 @@ async function install(target, providers, { quiet = false } = {}) {
 /* ── run ──────────────────────────────────────────────────────────────────── */
 const target = flag('to', process.cwd() === ROOT ? homedir() : process.cwd());
 
+/* The seven product commands live in commands.mjs and share one router there. This file
+   keeps the four that put the skill on a machine. One entry point, so there is one command
+   to learn. */
+{
+  const { route, usage } = await import('../skills/sitesmith-v3/commands.mjs');
+  const code = await route(cmd, { root: ROOT, argv: args.slice(1) });
+  if (code !== null) process.exit(code);
+  if (cmd === undefined || cmd === '--help' || cmd === '-h' || cmd === 'help') {
+    say(usage());
+    process.exit(0);
+  }
+}
+
+/* A normal install is v3, and it goes through the installer that knows v3, with the
+   provider packs generated from product/pipeline.json. v2 is history and explicit legacy
+   support: it is reachable, it is labelled, and it is never what someone gets by default.
+   Before this, `install` without a flag delegated to v3 while `install --provider` still
+   read v2's PIPELINE.json, so no provider pack anyone received came from the current
+   contract. */
+if ((cmd === 'install' || cmd === 'update') && !has('legacy-v2')) {
+  const { spawnSync } = await import('node:child_process');
+  const passthrough = args.slice(1).filter((a, i, all) =>
+    a === '--to' || all[i - 1] === '--to' || a === '--provider' || all[i - 1] === '--provider'
+    || a === '--force' || a === '--dry-run');
+  const r = spawnSync(process.execPath,
+    [join(ROOT, 'tools/install-sitesmith.mjs'), ...passthrough, ...(cmd === 'update' ? ['--force'] : [])],
+    { stdio: 'inherit' });
+  process.exit(r.status ?? 1);
+}
+
 if (cmd === 'doctor') {
   process.exit(await doctor(target, { onlyTarget: args.includes('--to') }));
 } else if (cmd === 'install' || cmd === 'update') {
@@ -275,10 +309,10 @@ if (cmd === 'doctor') {
   const bad = providers.filter((p) => !PROVIDERS[p]);
   if (bad.length) { console.error(`unknown provider: ${bad.join(', ')}`); process.exit(2); }
 
-  say(`\n  sitesmith ${cmd} → ${target}\n`);
+  say(`\n  sitesmith ${cmd} --legacy-v2 → ${target}\n`);
   await install(target, providers);
-  say(`\n  ${cmd === 'install' ? 'installed' : 'updated'}. Each pack's entry point is generated ` +
-      'from PIPELINE.json, so the three cannot drift.\n');
+  say(`\n  ${cmd === 'install' ? 'installed' : 'updated'} the v2 skill. Its packs are generated ` +
+      "from skills/sitesmith/PIPELINE.json, which is legacy and defines no current journey.\n");
   const rc = has('no-doctor') ? 0 : await doctor(target, { onlyTarget: args.includes('--to') });
   /* An install that could not place what the gates need has installed nothing usable, and
      reporting that with exit 0 is how CI goes green over a broken environment. */
@@ -286,16 +320,40 @@ if (cmd === 'doctor') {
 } else if (cmd === 'pack') {
   const provider = flag('provider');
   const out = flag('out');
-  if (!PROVIDERS[provider] || !out) {
-    console.error('usage: sitesmith.mjs pack --provider claude|codex|cursor --out <dir>');
-    process.exit(2);
+  /* v2's pack is still reachable behind the same explicit flag as its install, so the two
+     legacy routes are named the same way and neither is the default. */
+  if (has('legacy-v2')) {
+    if (!PROVIDERS[provider] || !out) {
+      console.error('usage: sitesmith.mjs pack --legacy-v2 --provider claude|codex|cursor --out <dir>');
+      process.exit(2);
+    }
+    say(await buildPack(provider, out));
+  } else {
+    const { PROVIDERS: P3, providerNames, loadPipeline, packFiles } = await import('../tools/provider-pack.mjs');
+    if (!P3[provider] || !out) {
+      console.error(`usage: sitesmith.mjs pack --provider ${providerNames().join('|')} --out <dir>`);
+      process.exit(2);
+    }
+    const files = packFiles(provider, await loadPipeline());
+    await mkdir(out, { recursive: true });
+    for (const [f, body] of Object.entries(files)) {
+      await mkdir(dirname(join(out, f)), { recursive: true });
+      await writeFile(join(out, f), body);
+      say(join(out, f));
+    }
+    if (!files[P3[provider].entry]) {
+      say(`  entry ${P3[provider].entry} is the skill's own file; install copies it.`);
+    }
   }
-  say(await buildPack(provider, out));
 } else {
   console.error(`usage:
-  sitesmith.mjs install [--to <dir>] [--provider claude|codex|cursor|all] [--no-doctor] [--no-deps]
+  sitesmith.mjs install [--to <dir>] [--provider claude|codex|cursor|openai|all] [--force]
   sitesmith.mjs update  [--to <dir>]
   sitesmith.mjs doctor  [--to <dir>]
-  sitesmith.mjs pack    --provider <p> --out <dir>`);
+  sitesmith.mjs pack    --provider <p> --out <dir>
+
+legacy, v2 only, never the default:
+  sitesmith.mjs install --legacy-v2 [--provider claude|codex|cursor|all] [--no-doctor] [--no-deps]
+  sitesmith.mjs pack    --legacy-v2 --provider <p> --out <dir>`);
   process.exit(2);
 }

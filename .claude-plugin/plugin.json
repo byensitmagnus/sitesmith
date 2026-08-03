@@ -1,7 +1,7 @@
 {
   "name": "sitesmith",
-  "version": "1.0.0",
-  "description": "One skill for building websites that do not look AI-generated. A three-command init, build and audit journey, visible design dials, stack routing, 161 palettes, 73 font pairings and rendered Playwright verification.",
+  "version": "3.1.0",
+  "description": "One skill for building websites that do not look AI-generated. It plans a direction from the subject's own materials, builds in the detected stack, and refuses its own output in a browser: named design defects with coordinates, a visual critique locked to the render it was written against, and an anti-repeat ledger across builds.",
   "author": {
     "name": "sitesmith contributors",
     "url": "https://github.com/byensitmagnus/sitesmith"

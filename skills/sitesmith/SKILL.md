@@ -38,9 +38,9 @@ marketing and its order admin is product UI. One design system across all of the
 
 | The situation | Task | Start at |
 | --- | --- | --- |
-| Empty directory, no frontend stack | **SETUP** | [references/10-setup.md](references/10-setup.md), then NEW |
+| Empty directory, no frontend stack | **SETUP** | [v2/tasks/setup.md](v2/tasks/setup.md), then NEW |
 | "Build a site / page / portfolio" | **NEW** | Step 1 below |
-| Existing code, "redesign / make it better" | **REDESIGN** | [references/06-redesign-audit.md](references/06-redesign-audit.md) — audit before touching anything |
+| Existing code, "redesign / make it better" | **REDESIGN** | [v2/tasks/redesign-audit.md](v2/tasks/redesign-audit.md) — audit before touching anything |
 | "Build a pricing table / nav / hero" | **COMPONENT** | [blocks/](blocks/README.md) |
 | "Review this UI / is it accessible?" | **AUDIT** | [v2/00-done.md](v2/00-done.md), then the mode file |
 
@@ -141,7 +141,7 @@ When two things disagree, the higher row wins.
 | [v2/40-interaction.md](v2/40-interaction.md) | End of `init`, then journeys in `build` |
 | [v2/50-critique.md](v2/50-critique.md) | `audit`, after technical verification |
 | [blocks/](blocks/README.md) | `build` |
-| [references/06-redesign-audit.md](references/06-redesign-audit.md) | REDESIGN only |
+| [v2/tasks/redesign-audit.md](v2/tasks/redesign-audit.md) | REDESIGN only |
 | [references/](references/README.md) | Provenance. Not during a build. |
 
 Sixty core rules plus one mode file is what you hold while working. The others are read at
@@ -183,13 +183,14 @@ mechanical release verdict is missing.
 
 ## 7. Attribution
 
-sitesmith v1 was assembled from four openly licensed projects, credited in
-[NOTICE.md](../../NOTICE.md): [taste-skill](https://github.com/Leonxlnx/taste-skill) (MIT),
+sitesmith v1 was assembled from four openly licensed projects. The notices and complete licence
+copies that travel with every installed bundle are in
+[THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md): [taste-skill](https://github.com/Leonxlnx/taste-skill) (MIT),
 [ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) (MIT),
 [frontend-design](https://github.com/anthropics/claude-plugins-official) (Apache 2.0) and
 [impeccable](https://github.com/pbakaus/impeccable) (Apache 2.0). Their material is in
 [references/](references/README.md), and several v2 core rules descend from it.
 
-`v2/`, `blocks/`, `references/06-redesign-audit.md`, `references/10-setup.md`,
-`scripts/verify.mjs` and `scripts/token-drift.mjs` are original work, MIT. Full provenance:
-[LICENSE-AUDIT.md](../../LICENSE-AUDIT.md).
+`v2/`, `blocks/`, `v2/tasks/redesign-audit.md`, `v2/tasks/setup.md`,
+`scripts/verify.mjs` and `scripts/token-drift.mjs` are original work, MIT. Full source-repository
+provenance is in `LICENSE-AUDIT.md` and `docs/v3/LICENSE-DERIVATION-AUDIT.md`.

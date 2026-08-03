@@ -1,0 +1,727 @@
+<!doctype html>
+<html lang="da">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Klinke &amp; Datter · Pneumatiske selvspillende klaverer og pianolaer · Odense</title>
+<meta name="description" content="Værksted i Odense for pneumatiske selvspillende klaverer og pianolaer. Første besøg koster 1.850 kr. og ender i en skriftlig tilstandsrapport.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Courier+Prime:wght@400;700&family=Zilla+Slab:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ──────────────────────────────────────────────────────────────
+   Klinke & Datter. Værkstedsark.
+   Farverne er taget fra materialerne i faget, ikke fra en stemning:
+   rullepapir, blæk, valnød, messing, hammerfilt, blyrør.
+   Intet på denne side bevæger sig.
+   ────────────────────────────────────────────────────────────── */
+
+:root{
+  /* materialerne */
+  --rullepapir:#E6D9BB;
+  --blæk:#140D04;
+  --blækdyb:#0B0703;
+  --valnød:#3A2318;
+  --messing:#7A5410;
+  --messingstreg:#8C6316;
+  --messinglys:#C29A45;
+  --hammerfilt:#A81F16;
+  --blyrør:#5A5648;
+  --fokus:var(--hammerfilt);
+
+  /* kanalens lysning: undertryk set fra siden, tegnet i ét felt */
+  --kanalfyld:linear-gradient(90deg,
+    rgba(58,35,24,.17) 0%,
+    rgba(58,35,24,.05) 45%,
+    rgba(58,35,24,.15) 100%);
+
+  /* skrifterne og deres roller */
+  --skrift-display:"Zilla Slab",Georgia,"Times New Roman",serif;
+  --skrift-brød:"Atkinson Hyperlegible","Segoe UI",system-ui,-apple-system,sans-serif;
+  --skrift-maskine:"Courier Prime","Courier New",monospace;
+
+  /* skalaen */
+  --str-brød:17px;
+  --str-brød-lille:16.5px;
+  --str-optakt:1.16rem;
+  --str-fund:1.08rem;
+  --str-navn:1.35rem;
+  --str-tal:1.35rem;
+  --str-beløb:1.5rem;
+  --str-knap:1.12rem;
+  --str-knap-bred:1.04rem;
+  --str-maskine:.9rem;
+  --str-label:.82rem;
+  --str-note:.84rem;
+  --str-billedtekst:.78rem;
+  --str-bogstav:.72em;
+
+  /* arkets mål */
+  --rende:56px;      /* venstre margen, hvor kanalen løber */
+  --rørX:14px;       /* kanalens venstre kant inde i margenen */
+  --rørW:18px;       /* kanalens fulde bredde inkl. vægge */
+  --indryk:20px;     /* indholdets venstre indrykning */
+  --kant:28px;       /* indholdets højre luft */
+
+  color-scheme:light;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+
+html{-webkit-text-size-adjust:100%}
+
+body{
+  margin:0;
+  background:var(--rullepapir);
+  color:var(--blæk);
+  font-family:var(--skrift-brød);
+  font-size:var(--str-brød);
+  line-height:1.68;
+}
+
+/* Der er ingen animation på siden. Reglen står her, fordi en senere
+   tilføjelse ellers ville slippe igennem uden at blive stoppet. */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+}
+
+/* ── typografi ────────────────────────────────────────────────── */
+
+h1,h2,h3,.navnetræk{
+  font-family:var(--skrift-display);
+  font-weight:700;
+  margin:0;
+}
+
+h1{
+  font-size:clamp(2rem,5.6vw,3.35rem);
+  line-height:1.05;
+  letter-spacing:-.01em;
+  max-width:16ch;
+}
+
+h2{
+  font-size:clamp(1.5rem,3.2vw,1.95rem);
+  line-height:1.15;
+  font-weight:600;
+  margin-bottom:1.1rem;
+}
+
+h3{
+  font-size:var(--str-fund);
+  line-height:1.35;
+  font-weight:600;
+  margin:0 0 .35rem;
+}
+
+p{margin:0 0 1.05rem;max-width:62ch}
+p:last-child{margin-bottom:0}
+
+.maskine{
+  font-family:var(--skrift-maskine);
+  font-size:var(--str-maskine);
+}
+
+.bogstav{
+  font-family:var(--skrift-maskine);
+  font-weight:700;
+  font-size:var(--str-bogstav);
+  color:var(--messing);
+  border:2px solid var(--messingstreg);
+  padding:.05em .45em .1em;
+  margin-right:.6em;
+  vertical-align:.14em;
+}
+
+/* ── arket og dets felter ─────────────────────────────────────── */
+
+/* Arket har en bredde som et ark, ikke som en skærm. Ved store bredder får det
+   en kant i højre side, så den tomme plads udenfor er papirets margen og ikke
+   et hul i layoutet. */
+.ark{max-width:1040px;margin:0 auto}
+
+@media (min-width:1120px){
+  .ark{border-right:1px solid var(--messingstreg)}
+}
+
+.felt{
+  display:grid;
+  grid-template-columns:var(--rende) minmax(0,1fr);
+}
+
+.felt + .felt{border-top:1px solid var(--messingstreg)}
+
+.indhold{
+  padding:2.6rem var(--kant) 3rem var(--indryk);
+}
+
+@media (min-width:900px){
+  .indhold{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) minmax(0,15rem);
+    column-gap:clamp(2rem,4vw,4rem);
+    align-items:start;
+  }
+  .indhold > *{grid-column:1}
+  .margen{grid-column:2}
+  .margen--top{grid-row:1/span 20;align-self:start}
+}
+
+/* ── kanalen: luftens vej, tegnet ned ad sidens venstre kant ──── */
+
+.kanal{position:relative}
+
+.kanal::before{
+  content:"";
+  position:absolute;
+  top:0;bottom:0;
+  left:var(--rørX);
+  width:var(--rørW);
+  border-left:2px solid var(--messingstreg);
+  border-right:2px solid var(--messingstreg);
+  background:var(--kanalfyld);
+}
+
+/* lukket ende foroven, åben ende forneden */
+.kanal--start::after{
+  content:"";
+  position:absolute;
+  top:0;left:var(--rørX);
+  width:var(--rørW);height:3px;
+  background:var(--messingstreg);
+}
+.kanal--slut::after{
+  content:"";
+  position:absolute;
+  bottom:0;left:var(--rørX);
+  width:var(--rørW);height:3px;
+  background:var(--messingstreg);
+}
+
+/* ── hovedet ──────────────────────────────────────────────────── */
+
+.hoved .indhold{
+  padding-top:1.5rem;padding-bottom:1.5rem;
+  display:flex;flex-wrap:wrap;gap:.4rem 2rem;
+  align-items:baseline;justify-content:space-between;
+}
+
+.navnetræk{
+  font-size:var(--str-navn);
+  letter-spacing:.005em;
+}
+
+.undertitel{
+  font-family:var(--skrift-maskine);
+  font-size:var(--str-label);
+  letter-spacing:.02em;
+  color:var(--messing);
+  margin:0;
+}
+
+.hoved address{
+  font-style:normal;
+  font-family:var(--skrift-maskine);
+  font-size:var(--str-label);
+  color:var(--blyrør);
+  text-align:right;
+}
+
+/* ── første skærm ─────────────────────────────────────────────── */
+
+.optakt{
+  font-size:var(--str-optakt);
+  max-width:46ch;
+  margin-top:1.4rem;
+}
+
+/* honorarpanel */
+
+.panel{
+  border:2px solid var(--valnød);
+  margin-top:1.8rem;
+  max-width:26rem;
+}
+
+.panel h2{
+  font-family:var(--skrift-maskine);
+  font-size:var(--str-label);
+  font-weight:700;
+  letter-spacing:.03em;
+  background:var(--valnød);
+  color:var(--rullepapir);
+  margin:0;
+  padding:.5rem .9rem .55rem;
+}
+
+.panel dl{margin:0;padding:.2rem .9rem .9rem}
+
+.panel dl > div{
+  display:flex;
+  justify-content:space-between;
+  gap:1rem;
+  padding:.6rem 0;
+  border-bottom:1px solid var(--messingstreg);
+}
+.panel dl > div:last-of-type{border-bottom:0}
+
+.panel dt{
+  font-family:var(--skrift-maskine);
+  font-size:var(--str-label);
+  color:var(--messing);
+  padding-top:.15rem;
+  flex:0 0 auto;
+}
+
+.panel dd{
+  margin:0;
+  text-align:right;
+  font-weight:700;
+  max-width:22ch;
+}
+
+.panel .beløb{
+  font-family:var(--skrift-display);
+  font-size:var(--str-beløb);
+  line-height:1.1;
+}
+
+.panel .handling{padding:0 .9rem .9rem}
+
+/* ── den ene kontrol, der forpligter ──────────────────────────── */
+
+.ring{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:52px;
+  padding:.55rem 1.5rem;
+  background:var(--valnød);
+  color:var(--rullepapir);
+  text-decoration:none;
+  font-family:var(--skrift-display);
+  font-weight:700;
+  font-size:var(--str-knap);
+  letter-spacing:.01em;
+  border:2px solid var(--valnød);
+}
+.ring--bred{width:100%;font-size:var(--str-knap-bred);padding-left:.9rem;padding-right:.9rem}
+.ring:hover{background:var(--blæk);border-color:var(--blæk)}
+.ring:active{background:var(--blækdyb);border-color:var(--blækdyb)}
+
+/* I det mørke bånd er knappen lys, og den skifter til messing i stedet for
+   til et lysere papir, fordi et lysere papir ikke findes i værkstedet. */
+.ring--lys{background:var(--rullepapir);color:var(--valnød);border-color:var(--rullepapir)}
+.ring--lys:hover{background:var(--messinglys);border-color:var(--messinglys)}
+.ring--lys:active{background:var(--messinglys);border-color:var(--valnød)}
+
+.aabningstid{
+  margin:.7rem 0 0;
+  font-family:var(--skrift-maskine);
+  font-size:var(--str-note);
+  color:var(--blyrør);
+}
+
+a{color:var(--blæk)}
+a:hover{text-decoration-thickness:3px}
+
+:focus-visible{
+  outline:3px solid var(--fokus);
+  outline-offset:3px;
+}
+
+.spring{
+  position:absolute;
+  left:-9999px;
+  top:0;
+  background:var(--valnød);
+  color:var(--rullepapir);
+  padding:.8rem 1.2rem;
+  z-index:2;
+}
+.spring:focus{left:0}
+
+/* ── felt B: de fem fund ──────────────────────────────────────── */
+
+.optælling{
+  list-style:none;
+  margin:2rem 0 0;
+  padding:0;
+  max-width:62ch;
+}
+
+.optælling li{
+  position:relative;
+  padding:0 0 1.6rem;
+}
+.optælling li:last-child{padding-bottom:0}
+
+/* stumpen, der grener ud fra kanalen til fundet */
+.optælling li::before{
+  content:"";
+  position:absolute;
+  top:11px;
+  left:calc(-1 * (var(--rende) + var(--indryk) - var(--rørX) - var(--rørW)));
+  width:calc(var(--rende) + var(--indryk) - var(--rørX) - var(--rørW));
+  height:2px;
+  background:var(--messingstreg);
+}
+
+/* mærket tværs over kanalen, der hvor luften slipper ud */
+.optælling li::after{
+  content:"";
+  position:absolute;
+  top:7px;
+  left:calc(-1 * (var(--rende) + var(--indryk) - var(--rørX)));
+  width:var(--rørW);
+  height:9px;
+  background:var(--hammerfilt);
+}
+
+.nr{
+  font-family:var(--skrift-display);
+  font-weight:700;
+  color:var(--hammerfilt);
+  margin-right:.5em;
+}
+
+.optælling p{margin:0}
+
+.efterskrift{
+  margin-top:2rem;
+  padding-top:1.2rem;
+  border-top:1px solid var(--messingstreg);
+  max-width:62ch;
+}
+
+/* ── margennoter: ordene, faget bruger ────────────────────────── */
+
+.margen{
+  border-left:2px solid var(--messingstreg);
+  padding-left:.9rem;
+  margin:0 0 1.6rem;
+  font-family:var(--skrift-maskine);
+  font-size:var(--str-note);
+  line-height:1.5;
+  color:var(--blyrør);
+  max-width:34ch;
+}
+.margen b{color:var(--blæk);font-weight:700}
+
+/* tegningen står i samme spalte som noterne, men uden notens streg */
+.margen--tegning{border-left:0;padding-left:0;max-width:none}
+
+@media (min-width:900px){
+  .margen{margin-bottom:0}
+}
+
+/* ── felt E: rullen ───────────────────────────────────────────── */
+
+.rulle{display:block;width:100%;max-width:122px;height:auto}
+
+.billedtekst{
+  margin:.7rem 0 0;
+  font-family:var(--skrift-maskine);
+  font-size:var(--str-billedtekst);
+  line-height:1.45;
+  color:var(--blyrør);
+  max-width:30ch;
+}
+
+.pris{
+  font-family:var(--skrift-display);
+  font-weight:700;
+  font-size:var(--str-tal);
+}
+
+/* ── de to mennesker ──────────────────────────────────────────── */
+
+.folk{
+  list-style:none;
+  margin:1.6rem 0 0;
+  padding:0;
+  display:grid;
+  gap:1.4rem;
+  max-width:62ch;
+}
+@media (min-width:620px){
+  .folk{grid-template-columns:1fr 1fr;gap:2.2rem}
+}
+.folk li{border-top:2px solid var(--messingstreg);padding-top:.7rem}
+.folk .aarstal{
+  font-family:var(--skrift-maskine);
+  font-size:var(--str-label);
+  letter-spacing:.02em;
+  color:var(--messing);
+  display:block;
+}
+
+/* ── foden, mørkt bånd ────────────────────────────────────────── */
+
+.fod{
+  --messingstreg:var(--messinglys);
+  --fokus:var(--rullepapir);
+  background:var(--valnød);
+  color:var(--rullepapir);
+}
+.fod a{color:var(--rullepapir)}
+.fod a.ring--lys{color:var(--valnød)}
+.fod .indhold{padding-top:2.4rem;padding-bottom:2.6rem}
+.fod address{font-style:normal}
+.fod .maskine{color:var(--rullepapir);line-height:1.9}
+.fod h2{margin-bottom:.9rem}
+
+/* ── små skærme ───────────────────────────────────────────────── */
+
+@media (max-width:640px){
+  :root{--rende:30px;--rørX:7px;--rørW:12px;--indryk:13px;--kant:16px}
+  body{font-size:var(--str-brød-lille)}
+  .indhold{padding-top:2.1rem;padding-bottom:2.3rem}
+  .hoved address{text-align:left}
+  .panel dl{padding-left:.75rem;padding-right:.75rem}
+  .panel dl > div{flex-direction:column;gap:.1rem;align-items:flex-start}
+  .panel dd{text-align:left}
+}
+</style>
+</head>
+<body>
+
+<a class="spring" href="#start">Gå til indholdet</a>
+
+<div class="ark">
+
+  <header class="felt hoved">
+    <div class="kanal kanal--start" aria-hidden="true"></div>
+    <div class="indhold">
+      <div>
+        <p class="navnetræk">Klinke &amp; Datter</p>
+        <p class="undertitel">Pneumatiske selvspillende klaverer og pianolaer</p>
+      </div>
+      <address>
+        Havnegade 22, 5000 Odense C<br>
+        Tirsdag til torsdag, 09.00 til 16.00
+      </address>
+    </div>
+  </header>
+
+  <main id="start">
+
+    <section class="felt" aria-labelledby="h-start">
+      <div class="kanal" aria-hidden="true"></div>
+      <div class="indhold">
+        <h1 id="h-start">Kan det reddes? Det finder vi ud af hjemme hos dig.</h1>
+
+        <p class="optakt">Du har arvet et selvspillende klaver eller en pianola, og den
+        står stille. Vi er to, der laver den slags og kun den slags. Første besøg tager en
+        halv dag og ender i en skriftlig tilstandsrapport, uanset om arbejdet går videre.</p>
+
+        <div class="panel margen margen--top">
+          <h2 id="h-panel">Første besøg</h2>
+          <dl aria-labelledby="h-panel">
+            <div>
+              <dt>Pris</dt>
+              <dd class="beløb">1.850 kr.</dd>
+            </div>
+            <div>
+              <dt>Varighed</dt>
+              <dd>En halv dag</dd>
+            </div>
+            <div>
+              <dt>Sted</dt>
+              <dd>Hjemme hos dig</dd>
+            </div>
+            <div>
+              <dt>Du får</dt>
+              <dd>En skriftlig tilstandsrapport</dd>
+            </div>
+          </dl>
+          <div class="handling">
+            <a class="ring ring--bred" href="tel:66124709">Ring 66 12 47 09</a>
+            <p class="aabningstid">Værkstedet tager telefonen tirsdag til torsdag,
+            09.00 til 16.00.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="felt" aria-labelledby="h-a">
+      <div class="kanal" aria-hidden="true"></div>
+      <div class="indhold">
+        <h2 id="h-a"><span class="bogstav" aria-hidden="true">A</span>Hvad vi arbejder på</h2>
+        <p class="margen"><b>Pneumatisk:</b> drevet af luft, ikke af strøm.</p>
+        <p>Vi arbejder på pneumatiske selvspillende klaverer og pianolaer. Ikke
+        elektroniske instrumenter, og ikke almindelige klaverer. Er vi der i forvejen,
+        stemmer vi gerne et almindeligt klaver.</p>
+      </div>
+    </section>
+
+    <section class="felt" aria-labelledby="h-b">
+      <div class="kanal" aria-hidden="true"></div>
+      <div class="indhold">
+        <h2 id="h-b"><span class="bogstav" aria-hidden="true">B</span>De fem fejl, vi oftest finder</h2>
+        <p class="margen"><b>Trakterstang:</b> den messingliste med en række huller, som
+        rullen løber hen over. På engelsk tracker bar.</p>
+
+        <p>Et pneumatisk instrument spiller ved undertryk. Bælgen suger luften ud, og
+        hullerne i rullen lukker luft ind gennem trakterstangen. Derfra går luften videre
+        gennem slangerne til lommerne, og lommerne åbner ventilerne til slagbælgene, som
+        sætter hamrene i gang. Slipper luften ud undervejs, når kraften ikke frem.</p>
+
+        <ol class="optælling">
+          <li>
+            <h3><span class="nr">1</span>Lommelæderet er smuldret</h3>
+            <p>Lommerne er små læderskiver, der løfter sig, når der kommer luft ind gennem
+            slangen. Læderet er det tyndeste materiale i instrumentet. Når det smuldrer,
+            holder lommen ikke luft.</p>
+          </li>
+          <li>
+            <h3><span class="nr">2</span>Slangerne til trakterstangen er revnet</h3>
+            <p>Fra hvert hul i trakterstangen går der en slange ind til sin egen lomme.
+            Gummiet bliver stift med årene, og en revnet slange er ikke tæt.</p>
+          </li>
+          <li>
+            <h3><span class="nr">3</span>Slagbælgene er slidte</h3>
+            <p>Slagbælgene er de små bælge, der klapper sammen og sætter hammeren i gang.
+            De er beklædt med gummieret stof, og stoffet slides.</p>
+          </li>
+          <li>
+            <h3><span class="nr">4</span>Vindkanalen har en revne</h3>
+            <p>Vindkanalen fører undertrykket rundt i instrumentet. Revner træet, slipper
+            undertrykket ud, før det når frem. På engelsk hedder den wind trunk.</p>
+          </li>
+          <li>
+            <h3><span class="nr">5</span>Drivremmene er blevet hårde</h3>
+            <p>Remmene trækker rullen forbi trakterstangen. Det er den ene af de fem, der
+            ikke handler om luft, men om gummi, der er blevet hårdt med årene.</p>
+          </li>
+        </ol>
+
+        <p class="efterskrift">Hvilke af dem der er tale om hos dig, kan vi først sige,
+        når vi har stået ved instrumentet.</p>
+      </div>
+    </section>
+
+    <section class="felt" aria-labelledby="h-c">
+      <div class="kanal" aria-hidden="true"></div>
+      <div class="indhold">
+        <h2 id="h-c"><span class="bogstav" aria-hidden="true">C</span>Vurderingen</h2>
+        <p class="margen"><b>Tilstandsrapport:</b> det skriftlige, du får efter besøget.</p>
+
+        <p>Vurderingen foregår hjemme hos dig og tager en halv dag. Den koster 1.850 kr.
+        Du får en skriftlig tilstandsrapport, uanset om arbejdet går videre.</p>
+        <p>Sådan begynder det: du ringer, og vi aftaler en dag i værkstedets åbningstid.</p>
+        <p><a class="ring" href="tel:66124709">Ring 66 12 47 09</a></p>
+      </div>
+    </section>
+
+    <section class="felt" aria-labelledby="h-d">
+      <div class="kanal" aria-hidden="true"></div>
+      <div class="indhold">
+        <h2 id="h-d"><span class="bogstav" aria-hidden="true">D</span>Restaureringen</h2>
+        <p class="margen"><b>Tilbud:</b> den pris, vi giver, når vi har set instrumentet.</p>
+
+        <p>En fuld pneumatisk restaurering tager fire til ni måneder. Vi giver en pris,
+        når vurderingen er lavet, og ikke før.</p>
+        <p>Vi har fire instrumenter inde ad gangen, så der er som regel ventetid.</p>
+      </div>
+    </section>
+
+    <section class="felt" aria-labelledby="h-e">
+      <div class="kanal" aria-hidden="true"></div>
+      <div class="indhold">
+        <h2 id="h-e"><span class="bogstav" aria-hidden="true">E</span>Rullerne</h2>
+
+        <div class="margen margen--top margen--tegning">
+          <svg class="rulle" data-asset="rulle-skema" viewBox="0 0 130 300" role="img" aria-labelledby="rulle-titel">
+            <title id="rulle-titel">Skematisk tegning af en perforeret musikrulle med
+            huller fordelt i otte spor ned gennem papiret.</title>
+            <rect x="12" y="2" width="106" height="296" fill="#E6D9BB" stroke="#8C6316" stroke-width="2"/>
+            <line x1="22" y1="2" x2="22" y2="298" stroke="#5A5648" stroke-width="1" opacity=".5"/>
+            <line x1="108" y1="2" x2="108" y2="298" stroke="#5A5648" stroke-width="1" opacity=".5"/>
+            <g fill="#3A2318">
+              <rect x="30" y="16" width="6" height="16" rx="3"/>
+              <rect x="60" y="16" width="6" height="10" rx="3"/>
+              <rect x="90" y="22" width="6" height="22" rx="3"/>
+              <rect x="40" y="38" width="6" height="12" rx="3"/>
+              <rect x="70" y="44" width="6" height="18" rx="3"/>
+              <rect x="30" y="58" width="6" height="10" rx="3"/>
+              <rect x="50" y="62" width="6" height="26" rx="3"/>
+              <rect x="100" y="66" width="6" height="12" rx="3"/>
+              <rect x="80" y="80" width="6" height="14" rx="3"/>
+              <rect x="40" y="96" width="6" height="20" rx="3"/>
+              <rect x="60" y="100" width="6" height="10" rx="3"/>
+              <rect x="90" y="104" width="6" height="16" rx="3"/>
+              <rect x="30" y="124" width="6" height="14" rx="3"/>
+              <rect x="70" y="126" width="6" height="24" rx="3"/>
+              <rect x="100" y="134" width="6" height="10" rx="3"/>
+              <rect x="50" y="146" width="6" height="12" rx="3"/>
+              <rect x="80" y="152" width="6" height="18" rx="3"/>
+              <rect x="30" y="166" width="6" height="22" rx="3"/>
+              <rect x="60" y="172" width="6" height="10" rx="3"/>
+              <rect x="90" y="176" width="6" height="14" rx="3"/>
+              <rect x="40" y="192" width="6" height="16" rx="3"/>
+              <rect x="70" y="198" width="6" height="12" rx="3"/>
+              <rect x="100" y="200" width="6" height="20" rx="3"/>
+              <rect x="50" y="216" width="6" height="14" rx="3"/>
+              <rect x="80" y="224" width="6" height="10" rx="3"/>
+              <rect x="30" y="234" width="6" height="18" rx="3"/>
+              <rect x="60" y="242" width="6" height="22" rx="3"/>
+              <rect x="90" y="248" width="6" height="12" rx="3"/>
+              <rect x="40" y="262" width="6" height="16" rx="3"/>
+              <rect x="70" y="272" width="6" height="14" rx="3"/>
+            </g>
+          </svg>
+          <p class="billedtekst">Skematisk tegning af en perforeret rulle. Ikke en bestemt
+          titel og ikke en måltegning.</p>
+        </div>
+
+        <p>Vi skærer nye musikruller efter originale mastere. Der er 38 titler på lager.</p>
+        <p><span class="pris">340 kr.</span> pr. rulle. Spørg efter dem, når du ringer.</p>
+      </div>
+    </section>
+
+    <section class="felt" aria-labelledby="h-f">
+      <div class="kanal" aria-hidden="true"></div>
+      <div class="indhold">
+        <h2 id="h-f"><span class="bogstav" aria-hidden="true">F</span>Værkstedet</h2>
+        <p class="margen"><b>Åbent:</b> tirsdag, onsdag og torsdag.</p>
+
+        <p>Vi er to, og vi laver ikke andet.</p>
+        <ul class="folk">
+          <li>
+            <span class="aarstal">Siden 1981</span>
+            <strong>Verner Klinke</strong>
+          </li>
+          <li>
+            <span class="aarstal">Siden 2011</span>
+            <strong>Liv Klinke</strong>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="felt fod" aria-labelledby="h-fod">
+    <div class="kanal kanal--slut" aria-hidden="true"></div>
+    <div class="indhold">
+      <h2 id="h-fod">Ring, så aftaler vi et besøg</h2>
+      <p>Første besøg koster 1.850 kr. og tager en halv dag. Du får en skriftlig
+      tilstandsrapport, uanset om arbejdet går videre.</p>
+      <p><a class="ring ring--lys" href="tel:66124709">Ring 66 12 47 09</a></p>
+
+      <address class="maskine margen margen--top">
+        Klinke &amp; Datter<br>
+        Havnegade 22<br>
+        5000 Odense C<br>
+        Telefon 66 12 47 09<br>
+        Åbent tirsdag til torsdag<br>
+        09.00 til 16.00
+      </address>
+    </div>
+  </footer>
+
+</div>
+
+</body>
+</html>

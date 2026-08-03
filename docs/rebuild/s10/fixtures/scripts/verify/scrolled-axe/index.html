@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Long counter list, a fixture that must keep passing verify.mjs</title>
+<!-- MUST-PASS fixture for skills/sitesmith-v3/scripts/verify.mjs.
+     It is not a design sample and nothing here is a recommendation.
+
+     It reproduces one specific false positive. verify.mjs runs a keyboard sweep that
+     presses Tab up to eighty times, which scrolls the page and leaves an element
+     focused, and it then runs axe. axe resolves an element's background by compositing
+     what sits behind its box in viewport coordinates, so anything that has scrolled
+     above the fold gets the background of whatever now occupies that screen position.
+
+     This page makes the sweep scroll: a dark bar at the top whose caption is pale grey on
+     near-black, forty focusable rows below it, and a cream panel further down. Without
+     the restore the scan runs from roughly scrollY 2000 here, which is what the test
+     asserts against.
+
+     It is worth being exact about what this fixture does and does not prove. Its own
+     colours survive the wrong compositing, so it does not produce a false violation; the
+     page that does is benchmark 09-data-entry, which reports a 1.1 to 1 blocker at
+     scrollY 650 and passes at 0. What this fixture pins is the precondition — that the
+     scan runs from the top of the page with nothing focused — because that is the part a
+     later edit can drop silently.
+
+     Every colour pair here clears AA where it is actually drawn, in both schemes. -->
+<style>
+  :root {
+    --chrome: #16171a; --chrome-ink: #e8e8e6; --chrome-ink-2: #9b9ea4;
+    --paper: #f4f3ef; --ink: #1c1e22; --ink-2: #4a4f57;
+    --cream: #fdf3d6; --edge: #6d4a00;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --chrome: #0b0c0d; --chrome-ink: #ecece9; --chrome-ink-2: #a4a8ae;
+      --paper: #121316; --ink: #eceef0; --ink-2: #b0b6bf;
+      --cream: #2e2408; --edge: #f2b705;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink);
+         font-family: system-ui, sans-serif; font-size: 16px; line-height: 1.55; }
+  /* Deliberately not sticky. A sticky bar would stay in the viewport and hide the bug. */
+  .bar { background: var(--chrome); color: var(--chrome-ink); padding: 14px 20px;
+         display: flex; flex-wrap: wrap; gap: 16px; align-items: baseline; }
+  .bar .who { color: var(--chrome-ink-2); font-size: 13px; }
+  .bar a { color: var(--chrome-ink); display: inline-block; min-height: 44px;
+           padding: 10px 4px; }
+  main { max-width: 62ch; margin: 0 auto; padding: 24px 20px 64px; }
+  h1 { font-size: 30px; line-height: 1.2; margin: 0 0 12px; }
+  p { color: var(--ink-2); }
+  ul { list-style: none; margin: 24px 0; padding: 0; }
+  li + li { margin-top: 24px; }
+  li a { display: block; min-height: 44px; padding: 12px 14px;
+         border: 1px solid var(--edge); border-radius: 4px;
+         color: var(--ink); text-decoration: none; background: var(--paper); }
+  li a:focus-visible { outline: 3px solid var(--edge); outline-offset: 2px; }
+  /* The panel the bar's caption gets composited against when the scan runs scrolled. */
+  .panel { background: var(--cream); color: var(--ink); border: 1px solid var(--edge);
+           border-radius: 4px; padding: 20px; margin: 32px 0; }
+</style>
+</head>
+<body>
+<header class="bar">
+  <strong>Bay 4</strong>
+  <span class="who">Signed in <b>A. Whitcombe</b></span>
+  <a href="#roll-list">Skip to the roll list</a>
+</header>
+<main>
+  <h1>Rolls counted this shift</h1>
+  <p>Forty entries, each one focusable, so a keyboard sweep has to scroll past the bar.</p>
+  <ul id="roll-list">
+    <li><a href="#roll-list">Roll 01 — counted</a></li>
+    <li><a href="#roll-list">Roll 02 — counted</a></li>
+    <li><a href="#roll-list">Roll 03 — counted</a></li>
+    <li><a href="#roll-list">Roll 04 — counted</a></li>
+    <li><a href="#roll-list">Roll 05 — counted</a></li>
+    <li><a href="#roll-list">Roll 06 — counted</a></li>
+    <li><a href="#roll-list">Roll 07 — counted</a></li>
+    <li><a href="#roll-list">Roll 08 — counted</a></li>
+    <li><a href="#roll-list">Roll 09 — counted</a></li>
+    <li><a href="#roll-list">Roll 10 — counted</a></li>
+  </ul>
+  <div class="panel">
+    <h2>Unresolved</h2>
+    <p>Two rolls are short against the docket and are held here until a supervisor signs.</p>
+  </div>
+  <ul>
+    <li><a href="#roll-list">Roll 11 — counted</a></li>
+    <li><a href="#roll-list">Roll 12 — counted</a></li>
+    <li><a href="#roll-list">Roll 13 — counted</a></li>
+    <li><a href="#roll-list">Roll 14 — counted</a></li>
+    <li><a href="#roll-list">Roll 15 — counted</a></li>
+    <li><a href="#roll-list">Roll 16 — counted</a></li>
+    <li><a href="#roll-list">Roll 17 — counted</a></li>
+    <li><a href="#roll-list">Roll 18 — counted</a></li>
+    <li><a href="#roll-list">Roll 19 — counted</a></li>
+    <li><a href="#roll-list">Roll 20 — counted</a></li>
+    <li><a href="#roll-list">Roll 21 — counted</a></li>
+    <li><a href="#roll-list">Roll 22 — counted</a></li>
+    <li><a href="#roll-list">Roll 23 — counted</a></li>
+    <li><a href="#roll-list">Roll 24 — counted</a></li>
+    <li><a href="#roll-list">Roll 25 — counted</a></li>
+    <li><a href="#roll-list">Roll 26 — counted</a></li>
+    <li><a href="#roll-list">Roll 27 — counted</a></li>
+    <li><a href="#roll-list">Roll 28 — counted</a></li>
+    <li><a href="#roll-list">Roll 29 — counted</a></li>
+    <li><a href="#roll-list">Roll 30 — counted</a></li>
+  </ul>
+</main>
+</body>
+</html>

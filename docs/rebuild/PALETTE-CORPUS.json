@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "provenance": "Screenshots supplied by Magnus, 2026-08-01. The colour NAMES in those screenshots were inconsistent; the hex values are the source of truth and the names were discarded.",
+  "role": "retrieval and inspiration corpus. These are NOT SiteSmith defaults and must never be emitted as a default palette. A palette is only reachable when the brief's subject, mood and mode make it the right answer.",
+  "palettes": [
+    { "id": "P01", "hexes": ["#012F25", "#FAF2A0", "#FC7D14"] },
+    { "id": "P02", "hexes": ["#2A0C1B", "#FFE0EB", "#BE2C55"] },
+    { "id": "P03", "hexes": ["#36D2FF", "#58D4F9", "#0C1433"] },
+    { "id": "P04", "hexes": ["#071317", "#02A0A0", "#FFBD65"] },
+    { "id": "P05", "hexes": ["#FAAA48", "#FFDDAC", "#2F0F03"] },
+    { "id": "P06", "hexes": ["#50E8F4", "#C7F8FE", "#001619"] },
+    { "id": "P07", "hexes": ["#E88C2B", "#FFFBF3", "#4E0401"] },
+    { "id": "P08", "hexes": ["#002B4C", "#C0EBFF", "#F59E71"] }
+  ]
+}

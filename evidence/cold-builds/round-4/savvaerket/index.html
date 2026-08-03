@@ -1,0 +1,874 @@
+<!doctype html>
+<html lang="da">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rold Savværk, løvtræ fra Rold Skov, savet og tørret siden 1958</title>
+<meta name="description" content="Bøg, eg, ask og elm på lager, tørret til 8 procent. Priser pr. m3 høvlet bræt. Afhentning på Røverstuevej 6 i Skørping eller lastbil til Jylland og Fyn.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@400..600&amp;family=Vollkorn:wght@600;700&amp;display=swap" rel="stylesheet">
+<style>
+:root {
+  color-scheme: dark;
+
+  /* Farverne står navngivet efter det, de er, i .sitesmith/direction.md. */
+  --kammer: #2b1310;
+  --grus: #35211d;
+  --kerf: #55403a;
+  --endetrae: #cdc0ab;
+  --endetrae-lys: #ddd2be;
+  --endetrae-dyb: #b3a48d;
+  --tekst: #d9d2c6;
+  --kridt: #e5eaef;
+  --damp: #a99a86;
+  --kridtgul: #c6b45a;
+
+  --skrift-display: "Vollkorn", "Iowan Old Style", Georgia, serif;
+  --skrift-brod: "Spline Sans", "Segoe UI", system-ui, sans-serif;
+
+  --f-xs: clamp(0.66rem, 1.9vw, 0.8rem);
+  --f-s: 0.88rem;
+  --f-m: 1rem;
+  --f-l: 1.3rem;
+  --f-pris: clamp(1rem, 3.4vw, 1.55rem);
+  --f-xl: clamp(1.55rem, 2.6vw, 1.8rem);
+  --f-2xl: clamp(1.85rem, 4vw, 2.55rem);
+  --f-tegning: 0.82rem;
+  --f-maerke: 2.9rem;
+  --haar: 1px;
+
+  --sp-1: 0.25rem;
+  --sp-2: 0.5rem;
+  --sp-3: 0.85rem;
+  --sp-4: 1.4rem;
+  --sp-5: 2.2rem;
+  --sp-6: 3.4rem;
+  --kant: 1.4rem;
+
+  /* Stakkens skala. Alle tykkelser tegnes med den samme, så søjlehøjderne
+     kan sammenlignes direkte. 2 px pr. mm ved 1024 og derover. */
+  --mm: 1.45px;
+  --stroe: 5px;
+  --rum: 1180px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { background: var(--kammer); }
+
+body {
+  margin: 0;
+  background: var(--kammer);
+  background-image: repeating-linear-gradient(
+    102deg,
+    var(--kerf) 0 1px,
+    var(--kammer) 1px 9px
+  );
+  background-blend-mode: soft-light;
+  color: var(--tekst);
+  font-family: var(--skrift-brod);
+  font-size: var(--f-m);
+  font-weight: 450;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 {
+  font-family: var(--skrift-display);
+  font-weight: 700;
+  color: var(--kridt);
+  letter-spacing: -0.01em;
+  line-height: 1.12;
+  margin: 0;
+  text-wrap: balance;
+}
+
+h1 { font-size: var(--f-2xl); }
+h2 { font-size: var(--f-xl); }
+h3 { font-size: var(--f-l); }
+
+p { margin: 0; }
+
+a { color: var(--kridt); text-underline-offset: 0.22em; }
+a:hover { color: var(--kridtgul); }
+
+:focus-visible {
+  outline: 2px solid var(--kridtgul);
+  outline-offset: 3px;
+}
+
+.spring {
+  position: absolute;
+  top: var(--sp-2);
+  left: var(--sp-4);
+  z-index: 5;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: var(--sp-2) var(--sp-3);
+  background: var(--kridtgul);
+  color: var(--kammer);
+  font-weight: 500;
+  transform: translateY(-260%);
+}
+.spring:focus { transform: translateY(0); }
+.spring:hover { color: var(--kammer); }
+
+/* ── skallen ─────────────────────────────────────────────── */
+
+.masthead { border-bottom: 1px solid var(--kerf); }
+
+.baand {
+  max-width: var(--rum);
+  margin: 0 auto;
+  padding-inline: var(--kant);
+}
+
+.masthead .baand {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--sp-5);
+  padding-block: var(--sp-2);
+}
+
+.navn {
+  font-family: var(--skrift-display);
+  font-weight: 700;
+  font-size: var(--f-l);
+  color: var(--kridt);
+}
+
+.menu { display: flex; flex-wrap: wrap; gap: var(--sp-5); }
+.menu a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding-inline: var(--sp-1);
+  font-size: var(--f-s);
+  font-weight: 500;
+  text-decoration-color: var(--damp);
+}
+
+.tlf { font-size: var(--f-s); color: var(--damp); }
+.tlf a { font-weight: 500; display: inline-flex; align-items: center; min-height: 44px; }
+
+main {
+  max-width: var(--rum);
+  margin: 0 auto;
+  padding-inline: var(--kant);
+}
+main > .baand { padding-inline: 0; }
+
+.band { padding-block: var(--sp-5); }
+.band + .band { border-top: 1px solid var(--kerf); }
+
+.etiket {
+  font-size: var(--f-s);
+  font-weight: 500;
+  color: var(--damp);
+  margin-bottom: var(--sp-3);
+}
+
+.underlinje { font-size: var(--f-s); color: var(--damp); }
+
+/* ── bånd 1: lageret, stakken set for enden ──────────────── */
+
+.baand--intro {
+  display: grid;
+  grid-template-columns: 130px minmax(0, 1fr);
+  gap: var(--sp-5);
+}
+
+.intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  gap: var(--sp-5);
+}
+
+.pladsen { margin: 0; }
+.pladsen-rk {
+  padding-block: var(--sp-2);
+  border-top: 1px solid var(--kerf);
+}
+.pladsen-rk:last-child { border-bottom: 1px solid var(--kerf); }
+.pladsen dt {
+  font-size: var(--f-xs);
+  font-weight: 500;
+  color: var(--damp);
+}
+.pladsen dd { margin: 0; font-size: var(--f-s); color: var(--tekst); }
+
+.manchet {
+  margin-top: var(--sp-3);
+  max-width: 62ch;
+  color: var(--tekst);
+}
+
+.videre {
+  display: inline-block;
+  margin-top: var(--sp-4);
+  padding: var(--sp-2) var(--sp-4);
+  min-height: 44px;
+  border: 1px solid var(--damp);
+  font-weight: 500;
+  text-decoration: none;
+  line-height: 30px;
+}
+.videre:hover { border-color: var(--kridtgul); color: var(--kridtgul); }
+
+.stak { margin: var(--sp-5) 0 0; }
+
+.stak-gulv {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--sp-2);
+  align-items: end;
+  border-bottom: 2px solid var(--damp);
+  padding-bottom: var(--sp-1);
+}
+
+.soejle { display: flex; flex-direction: column; justify-content: flex-end; min-width: 0; }
+
+.sort { margin-bottom: var(--sp-1); }
+
+.pris {
+  font-family: var(--skrift-display);
+  font-weight: 600;
+  font-size: var(--f-pris);
+  color: var(--kridt);
+  line-height: 1.05;
+  font-variant-numeric: tabular-nums;
+}
+.enhed {
+  display: block;
+  font-family: var(--skrift-brod);
+  font-weight: 400;
+  font-size: var(--f-xs);
+  line-height: 1.35;
+  color: var(--damp);
+}
+.rest {
+  display: block;
+  font-family: var(--skrift-brod);
+  font-weight: 500;
+  font-size: var(--f-xs);
+  line-height: 1.35;
+  color: var(--kridtgul);
+}
+
+.planker { list-style: none; margin: var(--sp-4) 0 0; padding: 0; }
+
+.planke {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-1);
+  height: calc(var(--t) * var(--mm));
+  padding-inline: var(--sp-2);
+  margin-top: var(--stroe);
+  background: linear-gradient(177deg, var(--endetrae-lys) 0 16%, var(--endetrae) 52%);
+  border-top: 1px solid var(--kerf);
+  color: var(--kammer);
+  font-size: var(--f-xs);
+  font-variant-numeric: tabular-nums;
+}
+.planke:nth-child(even) { background: linear-gradient(177deg, var(--endetrae) 0 16%, var(--endetrae-dyb) 52%); }
+.tyk { font-weight: 500; }
+.maerke { font-weight: 400; }
+
+.t-27 { --t: 27; }
+.t-40 { --t: 40; }
+.t-52 { --t: 52; }
+.t-65 { --t: 65; }
+
+.stak figcaption {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--sp-2) var(--sp-4);
+  margin-top: var(--sp-2);
+  font-size: var(--f-xs);
+  color: var(--damp);
+}
+
+/* ── bånd 2: specifikationen ─────────────────────────────── */
+
+.tabelrum { overflow-x: auto; margin-top: var(--sp-4); }
+
+.spec {
+  width: 100%;
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+  font-size: var(--f-s);
+}
+.spec caption {
+  text-align: left;
+  color: var(--damp);
+  font-size: var(--f-s);
+  padding-bottom: var(--sp-3);
+}
+.spec th, .spec td {
+  text-align: left;
+  padding: var(--sp-2) var(--sp-3) var(--sp-2) 0;
+  border-bottom: 1px solid var(--kerf);
+  white-space: nowrap;
+}
+.spec thead th {
+  color: var(--damp);
+  font-weight: 500;
+  border-bottom: 1px solid var(--damp);
+}
+.spec tbody th { font-weight: 500; color: var(--kridt); }
+.spec .kr { text-align: right; padding-right: 0; color: var(--kridt); font-weight: 500; }
+.spec tbody tr:hover th, .spec tbody tr:hover td { background: var(--grus); }
+
+.vilkaar { list-style: none; margin: var(--sp-4) 0 0; padding: 0; }
+.vilkaar li { padding-block: var(--sp-2); max-width: 78ch; }
+.vilkaar b { font-weight: 500; color: var(--kridt); }
+
+/* ── bånd 3: kammeret ────────────────────────────────────── */
+
+.baand--tre {
+  display: grid;
+  grid-template-columns: 130px minmax(0, 0.95fr) minmax(0, 1.05fr);
+  gap: var(--sp-5);
+}
+.kolonne > * + * { margin-top: var(--sp-3); }
+.kolonne p { max-width: 60ch; }
+
+.maaling { display: block; width: 100%; max-width: 320px; height: auto; }
+.maaling-flade { fill: var(--endetrae); }
+.maaling-kerf { fill: var(--kerf); }
+.maaling-midte { stroke: var(--kammer); stroke-width: var(--haar); stroke-dasharray: 6 5; }
+.maaling-spids { fill: var(--kammer); }
+.maaling-tal { fill: var(--kammer); font-family: var(--skrift-display); font-weight: 700; font-size: var(--f-maerke); }
+.maaling-note { fill: var(--kammer); font-family: var(--skrift-brod); font-weight: 500; font-size: var(--f-tegning); }
+.maaling-maal { fill: var(--damp); font-family: var(--skrift-brod); font-size: var(--f-tegning); }
+.maaling-linje { stroke: var(--damp); stroke-width: var(--haar); }
+
+.tavle { background: var(--grus); padding: var(--sp-4) var(--sp-3); border-top: 2px solid var(--kridtgul); }
+.dage { display: block; width: 100%; height: auto; margin-top: var(--sp-3); }
+.streg { fill: var(--kridt); }
+.dage-tekst { fill: var(--damp); font-family: var(--skrift-brod); font-size: var(--f-tegning); }
+
+.ukendt {
+  margin-top: var(--sp-3);
+  padding-top: var(--sp-3);
+  border-top: 1px solid var(--kerf);
+  color: var(--tekst);
+}
+
+/* ── bånd 4: bestillingssedlen ───────────────────────────── */
+
+.baand--to {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--sp-5);
+}
+
+.felt { display: block; margin-top: var(--sp-4); }
+.felt > span { display: block; font-size: var(--f-s); color: var(--damp); margin-bottom: var(--sp-1); }
+
+select, input[type="number"] {
+  width: 100%;
+  min-height: 44px;
+  padding: var(--sp-2) var(--sp-3);
+  background: var(--kammer);
+  color: var(--tekst);
+  border: 1px solid var(--damp);
+  font-family: var(--skrift-brod);
+  font-size: var(--f-m);
+  font-variant-numeric: tabular-nums;
+}
+select:hover, input[type="number"]:hover { border-color: var(--kridtgul); }
+option:disabled { color: var(--damp); }
+
+.hjaelp { font-size: var(--f-s); color: var(--damp); margin-top: var(--sp-1); max-width: 60ch; }
+.ordrepanel > .underlinje { max-width: 60ch; }
+.fejl:not(:empty) {
+  margin-top: var(--sp-2);
+  padding: var(--sp-2) var(--sp-3);
+  border-left: 3px solid var(--kridtgul);
+  background: var(--grus);
+  color: var(--kridt);
+  font-size: var(--f-s);
+}
+[aria-invalid="true"] { border-color: var(--kridtgul); }
+
+.skriv {
+  margin-top: var(--sp-5);
+  min-height: 44px;
+  padding: var(--sp-2) var(--sp-5);
+  background: var(--kridtgul);
+  color: var(--kammer);
+  border: 1px solid var(--kridtgul);
+  font-family: var(--skrift-brod);
+  font-size: var(--f-m);
+  font-weight: 500;
+  cursor: pointer;
+}
+.skriv:hover { background: var(--kammer); color: var(--kridtgul); }
+.skriv:active { background: var(--grus); color: var(--kridtgul); }
+.skriv[disabled] { background: var(--grus); color: var(--damp); border-color: var(--kerf); cursor: not-allowed; }
+
+.slip { background: var(--grus); padding: var(--sp-4); border-top: 2px solid var(--kridtgul); }
+.slip h3 { color: var(--kridt); }
+.tom { margin-top: var(--sp-3); color: var(--damp); }
+
+.seddel { margin: var(--sp-3) 0 0; font-variant-numeric: tabular-nums; }
+.linje {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--sp-2) var(--sp-4);
+  padding-block: var(--sp-2);
+  border-bottom: 1px solid var(--kerf);
+}
+.linje dt { color: var(--damp); font-size: var(--f-s); }
+.linje dd { margin: 0; color: var(--tekst); text-align: right; }
+.linje--sum { border-bottom: 2px solid var(--damp); }
+.linje--sum dt { color: var(--kridt); font-weight: 500; font-size: var(--f-m); }
+.linje--sum dd { color: var(--kridt); font-weight: 500; font-size: var(--f-l); font-family: var(--skrift-display); }
+.ring { margin-top: var(--sp-3); }
+
+/* ── bunden ──────────────────────────────────────────────── */
+
+.bund { border-top: 1px solid var(--kerf); margin-top: var(--sp-5); }
+.bund a { display: inline-flex; align-items: center; min-height: 44px; }
+.bund .baand {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--sp-2) var(--sp-5);
+  padding-block: var(--sp-4);
+  font-size: var(--f-s);
+  color: var(--damp);
+}
+
+/* ── mindre skærme ───────────────────────────────────────── */
+
+@media (min-width: 640px) {
+  :root { --mm: 1.7px; --stroe: 6px; }
+}
+@media (min-width: 1024px) {
+  :root { --mm: 2px; }
+}
+@media (max-width: 900px) {
+  .baand--intro { grid-template-columns: minmax(0, 1fr); gap: var(--sp-3); }
+  .intro { grid-template-columns: minmax(0, 1fr); gap: var(--sp-4); }
+  .baand--tre { grid-template-columns: minmax(0, 1fr); gap: var(--sp-4); }
+  .baand--to { grid-template-columns: minmax(0, 1fr); gap: var(--sp-4); }
+  .tavle { padding: var(--sp-3); }
+  .menu { gap: 1.65rem; }
+}
+@media (max-width: 520px) {
+  :root { --kant: 0.85rem; }
+  .stak-gulv { gap: var(--sp-1); }
+  .planke { padding-inline: var(--sp-1); }
+  .planker { margin-top: var(--sp-3); }
+  .spec { font-size: var(--f-xs); }
+  .spec th, .spec td { padding-right: var(--sp-2); }
+}
+</style>
+</head>
+<body>
+
+<a class="spring" href="#main">Spring til lageret</a>
+
+<header class="masthead">
+  <div class="baand">
+    <p class="navn">Rold Savværk</p>
+    <nav class="menu" aria-label="Sider på denne side">
+      <a href="#lager">Lager</a>
+      <a href="#specifikation">Specifikation</a>
+      <a href="#toerring">Tørring</a>
+      <a href="#bestilling">Bestilling</a>
+    </nav>
+    <p class="tlf"><a href="tel:+4598391240">98 39 12 40</a>, hverdage 07 til 15</p>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="band" id="lager">
+    <div class="baand baand--intro">
+      <p class="etiket">Pladsen, set for enden</p>
+      <div class="indhold">
+      <div class="intro">
+        <div>
+          <h1>Bøg, eg, ask og elm fra Rold Skov, tørret til 8 procent.</h1>
+          <p class="manchet">Fem mennesker, én båndsav med 1,3 m klinge og to tørrekamre på 22 m³.
+            Vi sælger plankevis, i hele planker på 2,4 til 4,8 m. Prisen er pr. m³ høvlet bræt.</p>
+          <a class="videre" href="#bestilling">Til bestillingssedlen</a>
+        </div>
+        <dl class="pladsen">
+          <div class="pladsen-rk"><dt>Pladsen</dt><dd>Røverstuevej 6, 9520 Skørping</dd></div>
+          <div class="pladsen-rk"><dt>Åbent</dt><dd>Hverdage 07 til 15</dd></div>
+          <div class="pladsen-rk"><dt>Hjem</dt><dd>Afhentning, eller lastbil til Jylland og Fyn, 1.450 kr pr. læs</dd></div>
+          <div class="pladsen-rk"><dt>Grønt træ</dt><dd>Kan reserveres, før det kommer i kammeret</dd></div>
+        </dl>
+      </div>
+
+      <figure class="stak">
+        <div class="stak-gulv">
+          <div class="soejle">
+            <h3 class="sort">Bøg</h3>
+            <p class="pris">8.900<span class="enhed">kr pr. m³</span></p>
+            <ul class="planker">
+              <li class="planke t-27"><span class="tyk">27 mm</span><span class="maerke">8 %</span></li>
+              <li class="planke t-40"><span class="tyk">40 mm</span><span class="maerke">8 %</span></li>
+              <li class="planke t-52"><span class="tyk">52 mm</span><span class="maerke">8 %</span></li>
+            </ul>
+          </div>
+          <div class="soejle">
+            <h3 class="sort">Eg</h3>
+            <p class="pris">19.400<span class="enhed">kr pr. m³</span></p>
+            <ul class="planker">
+              <li class="planke t-27"><span class="tyk">27 mm</span><span class="maerke">8 %</span></li>
+              <li class="planke t-40"><span class="tyk">40 mm</span><span class="maerke">8 %</span></li>
+              <li class="planke t-52"><span class="tyk">52 mm</span><span class="maerke">8 %</span></li>
+              <li class="planke t-65"><span class="tyk">65 mm</span><span class="maerke">8 %</span></li>
+            </ul>
+          </div>
+          <div class="soejle">
+            <h3 class="sort">Ask</h3>
+            <p class="pris">12.700<span class="enhed">kr pr. m³</span></p>
+            <ul class="planker">
+              <li class="planke t-27"><span class="tyk">27 mm</span><span class="maerke">8 %</span></li>
+              <li class="planke t-40"><span class="tyk">40 mm</span><span class="maerke">8 %</span></li>
+            </ul>
+          </div>
+          <div class="soejle">
+            <h3 class="sort">Elm</h3>
+            <p class="pris">16.200<span class="enhed">kr pr. m³</span><span class="rest">3,4 m³ tilbage</span></p>
+            <ul class="planker">
+              <li class="planke t-40"><span class="tyk">40 mm</span><span class="maerke">8 %</span></li>
+            </ul>
+          </div>
+        </div>
+        <figcaption>
+          <span>Hver planke er tegnet i sin tykkelse, alle fire søjler i samme skala og på samme gulv.</span>
+          <span>Tallet til venstre er tykkelsen. Mærket til højre er fugtprocenten, som den står skrevet på endetræet.</span>
+        </figcaption>
+      </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="specifikation">
+    <div class="baand">
+      <p class="etiket">Række for række</p>
+      <h2>Specifikationen</h2>
+      <div class="tabelrum" role="region" aria-label="Specifikationen, kan rulles vandret" tabindex="0">
+        <table class="spec">
+          <caption>Alt, der ligger tørt på pladsen. Prisen er pr. m³ høvlet bræt og står samme sted i hver række.</caption>
+          <thead>
+            <tr>
+              <th scope="col">Træsort</th>
+              <th scope="col">Tykkelse</th>
+              <th scope="col">Fugt</th>
+              <th scope="col">Længde</th>
+              <th scope="col" class="kr">Pris pr. m³</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">Bøg</th><td>27 mm</td><td>8 %</td><td>2,4 til 4,8 m</td><td class="kr">8.900 kr</td></tr>
+            <tr><th scope="row">Bøg</th><td>40 mm</td><td>8 %</td><td>2,4 til 4,8 m</td><td class="kr">8.900 kr</td></tr>
+            <tr><th scope="row">Bøg</th><td>52 mm</td><td>8 %</td><td>2,4 til 4,8 m</td><td class="kr">8.900 kr</td></tr>
+            <tr><th scope="row">Eg</th><td>27 mm</td><td>8 %</td><td>2,4 til 4,8 m</td><td class="kr">19.400 kr</td></tr>
+            <tr><th scope="row">Eg</th><td>40 mm</td><td>8 %</td><td>2,4 til 4,8 m</td><td class="kr">19.400 kr</td></tr>
+            <tr><th scope="row">Eg</th><td>52 mm</td><td>8 %</td><td>2,4 til 4,8 m</td><td class="kr">19.400 kr</td></tr>
+            <tr><th scope="row">Eg</th><td>65 mm</td><td>8 %</td><td>2,4 til 4,8 m</td><td class="kr">19.400 kr</td></tr>
+            <tr><th scope="row">Ask</th><td>27 mm</td><td>8 %</td><td>2,4 til 4,8 m</td><td class="kr">12.700 kr</td></tr>
+            <tr><th scope="row">Ask</th><td>40 mm</td><td>8 %</td><td>2,4 til 4,8 m</td><td class="kr">12.700 kr</td></tr>
+            <tr><th scope="row">Elm</th><td>40 mm</td><td>8 %</td><td>2,4 til 4,8 m</td><td class="kr">16.200 kr</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <ul class="vilkaar">
+        <li><b>Elm:</b> der er 3,4 m³ tilbage på pladsen.</li>
+        <li><b>Hele planker.</b> Vi sælger plankevis og afkorter dem ikke.</li>
+        <li><b>Afhentning:</b> Røverstuevej 6, 9520 Skørping, hverdage 07 til 15.</li>
+        <li><b>Lastbil til Jylland og Fyn:</b> 1.450 kr pr. læs.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="band" id="toerring">
+    <div class="baand baand--tre">
+      <p class="etiket">Kammeret</p>
+
+      <div class="kolonne">
+        <h2>8 procent, målt i midten</h2>
+        <p>Alt træ på pladsen er tørret til 8 procent. Tallet måles med en modstandsmåler,
+          hvis to spidser sidder i plankens midte, og det skrives på endetræet, så det
+          følger planken hjem.</p>
+        <figure class="maaling-fig">
+          <svg class="maaling" viewBox="0 0 320 268" role="img"
+               aria-label="Enden af en planke i snit, 27 mm høj og med en brudt kant til højre, fordi bredden fortsætter ud af tegningen. To spidser går ned fra den øverste flade og standser på midterlinjen, og tallet 8 procent står skrevet på enden."
+               data-asset="maaling">
+            <path class="maaling-flade" d="M46 30 H272 l10 18 l-10 18 l10 18 l-10 18 l10 18 l-10 18 l10 18 l-10 18 l10 18 l-10 18 l10 18 l-10 18 H46 Z"></path>
+            <rect class="maaling-kerf" x="46" y="30" width="226" height="2"></rect>
+            <rect class="maaling-kerf" x="46" y="244" width="226" height="2"></rect>
+            <line class="maaling-midte" x1="46" y1="138" x2="276" y2="138"></line>
+            <rect class="maaling-spids" x="150" y="30" width="3" height="108"></rect>
+            <rect class="maaling-spids" x="176" y="30" width="3" height="108"></rect>
+            <circle class="maaling-spids" cx="151" cy="138" r="4"></circle>
+            <circle class="maaling-spids" cx="177" cy="138" r="4"></circle>
+            <text class="maaling-tal" x="56" y="216">8 %</text>
+            <text class="maaling-note" x="192" y="134">midten</text>
+            <line class="maaling-linje" x1="24" y1="30" x2="24" y2="246"></line>
+            <line class="maaling-linje" x1="18" y1="30" x2="30" y2="30"></line>
+            <line class="maaling-linje" x1="18" y1="246" x2="30" y2="246"></line>
+            <text class="maaling-maal" x="10" y="138" transform="rotate(-90 10 138)" text-anchor="middle">27 mm</text>
+          </svg>
+          <figcaption class="underlinje">Enden af en 27 mm planke, tegnet otte gange så stor som den er.
+            Kun tykkelsen er målsat, og den brudte kant til højre står for den bredde, tegningen ikke måler.</figcaption>
+        </figure>
+      </div>
+
+      <div class="kolonne tavle">
+        <h3>Tørretiden</h3>
+        <p class="underlinje">Én omgang i kammeret, streg for streg. Hver streg er en dag,
+          hver række en uge.</p>
+        <svg class="dage" viewBox="0 0 330 210" role="img"
+             aria-label="To optællinger i streger: 21 dage for 27 mm sat som tre hele uger, og 34 dage for 52 mm sat som fire uger og seks dage."
+             data-asset="tavle-dage">
+          <text class="dage-tekst" x="0" y="14">27 mm, 21 dage</text>
+          <g class="streg">
+            <rect x="0" y="28" width="4" height="22"></rect><rect x="16" y="28" width="4" height="22"></rect><rect x="32" y="28" width="4" height="22"></rect><rect x="48" y="28" width="4" height="22"></rect><rect x="64" y="28" width="4" height="22"></rect><rect x="80" y="28" width="4" height="22"></rect><rect x="96" y="28" width="4" height="22"></rect>
+            <rect x="0" y="60" width="4" height="22"></rect><rect x="16" y="60" width="4" height="22"></rect><rect x="32" y="60" width="4" height="22"></rect><rect x="48" y="60" width="4" height="22"></rect><rect x="64" y="60" width="4" height="22"></rect><rect x="80" y="60" width="4" height="22"></rect><rect x="96" y="60" width="4" height="22"></rect>
+            <rect x="0" y="92" width="4" height="22"></rect><rect x="16" y="92" width="4" height="22"></rect><rect x="32" y="92" width="4" height="22"></rect><rect x="48" y="92" width="4" height="22"></rect><rect x="64" y="92" width="4" height="22"></rect><rect x="80" y="92" width="4" height="22"></rect><rect x="96" y="92" width="4" height="22"></rect>
+          </g>
+          <text class="dage-tekst" x="180" y="14">52 mm, 34 dage</text>
+          <g class="streg">
+            <rect x="180" y="28" width="4" height="22"></rect><rect x="196" y="28" width="4" height="22"></rect><rect x="212" y="28" width="4" height="22"></rect><rect x="228" y="28" width="4" height="22"></rect><rect x="244" y="28" width="4" height="22"></rect><rect x="260" y="28" width="4" height="22"></rect><rect x="276" y="28" width="4" height="22"></rect>
+            <rect x="180" y="60" width="4" height="22"></rect><rect x="196" y="60" width="4" height="22"></rect><rect x="212" y="60" width="4" height="22"></rect><rect x="228" y="60" width="4" height="22"></rect><rect x="244" y="60" width="4" height="22"></rect><rect x="260" y="60" width="4" height="22"></rect><rect x="276" y="60" width="4" height="22"></rect>
+            <rect x="180" y="92" width="4" height="22"></rect><rect x="196" y="92" width="4" height="22"></rect><rect x="212" y="92" width="4" height="22"></rect><rect x="228" y="92" width="4" height="22"></rect><rect x="244" y="92" width="4" height="22"></rect><rect x="260" y="92" width="4" height="22"></rect><rect x="276" y="92" width="4" height="22"></rect>
+            <rect x="180" y="124" width="4" height="22"></rect><rect x="196" y="124" width="4" height="22"></rect><rect x="212" y="124" width="4" height="22"></rect><rect x="228" y="124" width="4" height="22"></rect><rect x="244" y="124" width="4" height="22"></rect><rect x="260" y="124" width="4" height="22"></rect><rect x="276" y="124" width="4" height="22"></rect>
+            <rect x="180" y="156" width="4" height="22"></rect><rect x="196" y="156" width="4" height="22"></rect><rect x="212" y="156" width="4" height="22"></rect><rect x="228" y="156" width="4" height="22"></rect><rect x="244" y="156" width="4" height="22"></rect><rect x="260" y="156" width="4" height="22"></rect>
+          </g>
+        </svg>
+        <p>To kamre, 22 m³ i hvert.</p>
+        <p class="ukendt">Grønt træ kan reserveres, før det kommer ind i kammeret. Fugttallet
+          for den omgang findes først, når planken er ude igen. Så bliver det skrevet på
+          endetræet.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="bestilling">
+    <div class="baand baand--to">
+
+      <form class="ordrepanel" id="ordre" novalidate>
+        <h2>Bestillingssedlen</h2>
+        <p class="underlinje">Vælg sort, tykkelse og mængde. Sedlen bliver skrevet her på siden,
+          og den læses op i telefonen, hverdage 07 til 15.</p>
+
+        <label class="felt" for="sort"><span>Træsort</span>
+          <select id="sort" name="sort">
+            <option value="boeg">Bøg, 8.900 kr pr. m³</option>
+            <option value="eg">Eg, 19.400 kr pr. m³</option>
+            <option value="ask">Ask, 12.700 kr pr. m³</option>
+            <option value="elm">Elm, 16.200 kr pr. m³</option>
+          </select>
+        </label>
+
+        <label class="felt" for="tykkelse"><span>Tykkelse</span>
+          <select id="tykkelse" name="tykkelse">
+            <option value="27">27 mm</option>
+            <option value="40">40 mm</option>
+            <option value="52">52 mm</option>
+            <option value="65">65 mm</option>
+          </select>
+        </label>
+        <p class="hjaelp" id="tykkelse-hjaelp">Tykkelser, som den valgte sort ikke ligger i, kan ikke vælges.</p>
+
+        <label class="felt" for="maengde"><span>Mængde i m³ høvlet bræt</span>
+          <input id="maengde" name="maengde" type="number" inputmode="decimal" min="0.1" step="0.1"
+                 aria-describedby="maengde-hjaelp maengde-fejl">
+        </label>
+        <p class="hjaelp" id="maengde-hjaelp">Længden er 2,4 til 4,8 m, og plankerne sælges hele.
+          Hvilke planker der ligger øverst i stakken, afgøres på pladsen.</p>
+        <p class="fejl" id="maengde-fejl" role="alert"></p>
+
+        <label class="felt" for="levering"><span>Levering</span>
+          <select id="levering" name="levering">
+            <option value="afhent">Afhentning på pladsen, Røverstuevej 6</option>
+            <option value="lastbil">Lastbil til Jylland eller Fyn, 1.450 kr pr. læs</option>
+          </select>
+        </label>
+
+        <button class="skriv" type="submit" id="skriv">Skriv sedlen</button>
+      </form>
+
+      <aside class="slip" aria-labelledby="slip-titel">
+        <h3 id="slip-titel">Sedlen</h3>
+        <div id="seddel" role="status">
+          <p class="tom">De fire linjer herunder står på hver eneste seddel, der forlader pladsen.
+            Resten bliver skrevet, når du har valgt en mængde og trykket på knappen.</p>
+          <dl class="seddel">
+            <div class="linje"><dt>Fugt</dt><dd>8 %, målt i midten</dd></div>
+            <div class="linje"><dt>Længde</dt><dd>2,4 til 4,8 m, hele planker</dd></div>
+            <div class="linje"><dt>Afhentning</dt><dd>Røverstuevej 6, hverdage 07 til 15</dd></div>
+            <div class="linje"><dt>Lastbil til Jylland og Fyn</dt><dd>1.450 kr pr. læs</dd></div>
+          </dl>
+        </div>
+      </aside>
+
+    </div>
+  </section>
+
+</main>
+
+<footer class="bund">
+  <div class="baand">
+    <p>Rold Savværk, Røverstuevej 6, 9520 Skørping</p>
+    <p><a href="tel:+4598391240">98 39 12 40</a>, hverdage 07 til 15</p>
+    <p>Savet siden 1958</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+
+  var SORTER = {
+    boeg: { navn: "Bøg", pris: 8900, tykkelser: [27, 40, 52] },
+    eg:   { navn: "Eg", pris: 19400, tykkelser: [27, 40, 52, 65] },
+    ask:  { navn: "Ask", pris: 12700, tykkelser: [27, 40] },
+    elm:  { navn: "Elm", pris: 16200, tykkelser: [40], rest: 3.4 }
+  };
+  var LAES = 1450;
+
+  var sort = document.getElementById("sort");
+  var tykkelse = document.getElementById("tykkelse");
+  var maengde = document.getElementById("maengde");
+  var levering = document.getElementById("levering");
+  var fejl = document.getElementById("maengde-fejl");
+  var seddel = document.getElementById("seddel");
+  var form = document.getElementById("ordre");
+
+  function kr(tal) {
+    return tal.toLocaleString("da-DK", { maximumFractionDigits: 0 }) + " kr";
+  }
+  function m3(tal) {
+    return tal.toLocaleString("da-DK", { minimumFractionDigits: 1, maximumFractionDigits: 2 }) + " m³";
+  }
+
+  function opdaterTykkelser() {
+    var valgt = SORTER[sort.value];
+    var stadigGyldig = false;
+    for (var i = 0; i < tykkelse.options.length; i++) {
+      var o = tykkelse.options[i];
+      var kan = valgt.tykkelser.indexOf(Number(o.value)) > -1;
+      o.disabled = !kan;
+      if (kan && o.selected) { stadigGyldig = true; }
+    }
+    if (!stadigGyldig) {
+      tykkelse.value = String(valgt.tykkelser[0]);
+    }
+  }
+
+  function ryd() {
+    fejl.textContent = "";
+    maengde.removeAttribute("aria-invalid");
+  }
+
+  function sigFejl(besked) {
+    fejl.textContent = besked;
+    maengde.setAttribute("aria-invalid", "true");
+  }
+
+  var staaende = Array.prototype.slice.call(seddel.childNodes);
+
+  function tomSeddel() {
+    seddel.replaceChildren.apply(seddel, staaende);
+  }
+
+  function linje(navn, vaerdi, sum) {
+    var d = document.createElement("div");
+    d.className = sum ? "linje linje--sum" : "linje";
+    var dt = document.createElement("dt");
+    dt.textContent = navn;
+    var dd = document.createElement("dd");
+    dd.textContent = vaerdi;
+    d.appendChild(dt);
+    d.appendChild(dd);
+    return d;
+  }
+
+  function skriv() {
+    ryd();
+    var valgt = SORTER[sort.value];
+    var maal = parseFloat(String(maengde.value).replace(",", "."));
+
+    if (!maengde.value || isNaN(maal) || maal < 0.1) {
+      sigFejl("Skriv hvor mange m³ du skal bruge. Mindst 0,1 m³.");
+      tomSeddel();
+      maengde.focus();
+      return;
+    }
+    if (valgt.rest && maal > valgt.rest) {
+      sigFejl("Der er " + m3(valgt.rest) + " elm tilbage på pladsen. Sæt tallet ned, eller ring på 98 39 12 40.");
+      tomSeddel();
+      maengde.focus();
+      return;
+    }
+
+    var traepris = Math.round(valgt.pris * maal);
+    var medLastbil = levering.value === "lastbil";
+    var dl = document.createElement("dl");
+    dl.className = "seddel";
+    dl.appendChild(linje("Træsort", valgt.navn));
+    dl.appendChild(linje("Tykkelse", tykkelse.value + " mm"));
+    dl.appendChild(linje("Fugt", "8 %, målt i midten"));
+    dl.appendChild(linje("Længde", "2,4 til 4,8 m, hele planker"));
+    dl.appendChild(linje("Mængde", m3(maal)));
+    dl.appendChild(linje("Pris pr. m³", kr(valgt.pris)));
+    dl.appendChild(linje("Træ", kr(traepris)));
+    if (medLastbil) {
+      dl.appendChild(linje("Lastbil til Jylland eller Fyn", kr(LAES) + " pr. læs"));
+      dl.appendChild(linje("Træ og ét læs", kr(traepris + LAES), true));
+    } else {
+      dl.appendChild(linje("Afhentning", "Røverstuevej 6, hverdage 07 til 15"));
+      dl.appendChild(linje("Træ i alt", kr(traepris), true));
+    }
+
+    var skrevet = document.createElement("p");
+    skrevet.className = "underlinje";
+    skrevet.textContent = "Sedlen er skrevet.";
+
+    var ring = document.createElement("p");
+    ring.className = "ring";
+    var a = document.createElement("a");
+    a.href = "tel:+4598391240";
+    a.textContent = "98 39 12 40";
+    ring.appendChild(document.createTextNode("Læs sedlen op på "));
+    ring.appendChild(a);
+    ring.appendChild(document.createTextNode(", hverdage 07 til 15."));
+
+    seddel.replaceChildren(skrevet, dl, ring);
+  }
+
+  sort.addEventListener("change", function () {
+    opdaterTykkelser();
+    ryd();
+  });
+  maengde.addEventListener("input", ryd);
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    skriv();
+  });
+
+  opdaterTykkelser();
+})();
+</script>
+
+</body>
+</html>

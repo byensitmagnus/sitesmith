@@ -1,0 +1,1385 @@
+<!doctype html>
+<html lang="da">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Driftskonsol, Nordbo Fjernvarme</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&amp;family=Zilla+Slab:wght@500;600&amp;display=swap">
+<style>
+:root {
+  --zink: #b7c0c2;
+  --plade: #cbd3d4;
+  --kridt: #dfe6e6;
+  --rids: #4d5b5e;
+  --kappe: #0b171a;
+  --messing: #c99a17;
+  --ir: #17614f;
+  --face-display: "Zilla Slab", Georgia, serif;
+  --face-body: "Atkinson Hyperlegible", Verdana, sans-serif;
+  --t-h1: 1.4rem;
+  --t-h2: 1.0625rem;
+  --t-body: 0.9375rem;
+  --t-tal: 1.0625rem;
+  --t-lille: 0.8125rem;
+  --t-nr: 0.6875rem;
+  --t-felt: 1rem;
+  --snit-h: 84px;
+}
+* { box-sizing: border-box; }
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--zink);
+  color: var(--kappe);
+}
+body {
+  font-family: var(--face-body);
+  font-size: var(--t-body);
+  line-height: 1.45;
+}
+h1, h2, h3 {
+  font-family: var(--face-display);
+  font-weight: 600;
+  margin: 0;
+  line-height: 1.2;
+}
+h1 { font-size: var(--t-h1); }
+h2, h3 { font-size: var(--t-h2); font-weight: 500; }
+p, ul, ol, dl { margin: 0; }
+ul, ol { list-style: none; padding: 0; }
+
+.top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 20px;
+  padding: 12px 20px;
+  border-bottom: 2px solid var(--kappe);
+}
+.top .værk { font-family: var(--face-display); font-size: var(--t-h2); }
+.top .vagt { margin-left: auto; font-size: var(--t-lille); }
+.top .tid { font-variant-numeric: tabular-nums; font-weight: 700; }
+
+main { padding: 16px 20px 0; }
+
+/* ---- signaturen: 61 snit gennem rørparret ---- */
+.net > h2 { margin-bottom: 2px; }
+.net-under { font-size: var(--t-lille); max-width: 78ch; margin-bottom: 10px; }
+.ledningsnet {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(44px, 1fr));
+  background: var(--kridt);
+  border: 1px solid var(--rids);
+}
+.stn {
+  appearance: none;
+  display: block;
+  width: 100%;
+  padding: 0 0 2px;
+  margin: 0;
+  border: 0;
+  border-right: 1px solid var(--rids);
+  border-bottom: 1px solid var(--rids);
+  background: none;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  transition: background-color 80ms linear;
+}
+.stn:hover { background: var(--plade); }
+.stn:focus-visible { outline: 3px solid var(--kappe); outline-offset: -3px; }
+.stn:active { background: var(--zink); }
+.stn[aria-pressed="true"] { background: var(--plade); box-shadow: inset 0 0 0 2px var(--kappe); }
+.snit {
+  position: relative;
+  display: block;
+  height: var(--snit-h);
+}
+.grænse {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 35.714%;
+  height: 1px;
+  z-index: 4;
+  background: var(--kappe);
+}
+.afkøling {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: var(--retur);
+  height: var(--afkøling);
+  z-index: 1;
+  background-image: repeating-linear-gradient(45deg, var(--rids) 0 1px, transparent 1px 6px);
+}
+.overskud {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 35.714%;
+  height: var(--overskud);
+  z-index: 2;
+  background: var(--messing);
+}
+.linje { position: absolute; left: 0; right: 0; z-index: 3; background: var(--kappe); }
+.frem { bottom: var(--frem); height: 2px; }
+.retur { bottom: var(--retur); height: 3px; }
+.gammel .linje {
+  background: none;
+  background-image: repeating-linear-gradient(90deg, var(--kappe) 0 4px, transparent 4px 8px);
+}
+.fod {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 5px;
+  z-index: 5;
+  background: var(--ir);
+}
+.nr {
+  display: block;
+  font-family: var(--face-display);
+  font-weight: 500;
+  font-size: var(--t-nr);
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+  padding-top: 2px;
+}
+.tegnforklaring {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px 24px;
+  font-size: var(--t-lille);
+  padding: 8px 0 0;
+}
+.tegnforklaring b { font-weight: 700; }
+
+/* ---- to spalter ---- */
+.spalter {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 340px;
+  gap: 20px;
+  padding: 20px 0 0;
+  align-items: start;
+}
+.panel {
+  background: var(--plade);
+  border: 1px solid var(--rids);
+  padding: 12px 14px 14px;
+}
+.panel + .panel { margin-top: 16px; }
+.panel > h2, .panel > h3 { margin-bottom: 6px; }
+.regel { font-size: var(--t-lille); margin-bottom: 8px; }
+
+/* ---- afvigelseslisten ---- */
+.række {
+  appearance: none;
+  display: grid;
+  grid-template-columns: 5.5rem repeat(4, minmax(0, 1fr)) minmax(0, 2.2fr);
+  align-items: baseline;
+  gap: 4px 10px;
+  width: 100%;
+  text-align: left;
+  padding: 8px 8px;
+  margin: 0;
+  border: 0;
+  border-top: 1px solid var(--rids);
+  background: none;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  transition: background-color 80ms linear;
+}
+.række:hover { background: var(--kridt); }
+.række:focus-visible { outline: 3px solid var(--kappe); outline-offset: -3px; }
+.række:active { background: var(--zink); }
+.række[aria-pressed="true"] { background: var(--kridt); box-shadow: inset 3px 0 0 0 var(--kappe); }
+.række-id { font-family: var(--face-display); font-weight: 600; font-size: var(--t-tal); }
+.række-tal { display: block; }
+.mærke { display: block; font-size: var(--t-nr); }
+.tal { font-weight: 700; font-size: var(--t-tal); font-variant-numeric: tabular-nums; }
+.række-grund { font-size: var(--t-lille); }
+
+/* ---- valgt station ---- */
+.tom { font-size: var(--t-body); }
+.valgt-id { font-family: var(--face-display); font-weight: 600; font-size: var(--t-h1); }
+.aflæs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px 12px; padding: 6px 0 10px; }
+.aflæs dt { font-size: var(--t-nr); }
+.aflæs dd { margin: 0; font-weight: 700; font-size: var(--t-tal); font-variant-numeric: tabular-nums; }
+.dom { font-size: var(--t-lille); padding-bottom: 10px; }
+.dom.brud { border-left: 5px solid var(--messing); padding-left: 8px; }
+
+form { border-top: 1px solid var(--rids); padding-top: 10px; }
+label { display: block; font-size: var(--t-lille); font-weight: 700; padding-bottom: 2px; }
+select, input[type="text"] {
+  width: 100%;
+  font-family: var(--face-body);
+  font-size: var(--t-felt);
+  padding: 9px 8px;
+  border: 1px solid var(--rids);
+  background: var(--kridt);
+  color: var(--kappe);
+  min-height: 44px;
+}
+select:focus-visible, input[type="text"]:focus-visible { outline: 3px solid var(--kappe); outline-offset: 1px; }
+[aria-invalid="true"] { border: 2px solid var(--kappe); }
+.hjælp { font-size: var(--t-nr); padding: 3px 0 10px; }
+.fejl { font-size: var(--t-lille); font-weight: 700; padding: 3px 0 10px; }
+.fejlsum {
+  border: 2px solid var(--kappe);
+  background: var(--kridt);
+  padding: 8px 10px;
+  margin-bottom: 10px;
+  font-size: var(--t-lille);
+}
+.fejlsum a { color: var(--kappe); }
+.fejlsum h3 { font-size: var(--t-body); }
+.knap {
+  appearance: none;
+  font-family: var(--face-body);
+  font-size: var(--t-felt);
+  font-weight: 700;
+  min-height: 44px;
+  padding: 10px 16px;
+  border: 2px solid var(--kappe);
+  background: var(--messing);
+  color: var(--kappe);
+  cursor: pointer;
+  transition: background-color 80ms linear;
+}
+.knap:hover { background: var(--kridt); }
+.knap:focus-visible { outline: 3px solid var(--kappe); outline-offset: 2px; }
+.knap:active { background: var(--zink); }
+.knap[disabled] { background: var(--plade); cursor: default; }
+.knap.let { background: var(--kridt); font-weight: 400; }
+.knap.let:hover { background: var(--zink); }
+
+/* ---- montører ---- */
+.montør { border-top: 1px solid var(--rids); padding: 8px 0; }
+.montør-navn { font-family: var(--face-display); font-weight: 600; font-size: var(--t-tal); }
+.montør-stand { font-size: var(--t-lille); }
+.montør-grund { font-size: var(--t-nr); padding-bottom: 6px; }
+.handlinger { display: flex; flex-wrap: wrap; gap: 24px; }
+.slut { margin-left: auto; }
+.bekræft { border: 2px solid var(--kappe); background: var(--kridt); padding: 8px; margin-top: 8px; font-size: var(--t-lille); }
+.bekræft .handlinger { padding-top: 8px; }
+
+/* ---- journal og tilstand ---- */
+.journal li { border-top: 1px solid var(--rids); padding: 7px 0; font-size: var(--t-lille); }
+.journal .når { font-weight: 700; font-variant-numeric: tabular-nums; }
+.tilstand { border-top: 1px solid var(--rids); padding-top: 8px; margin-top: 8px; font-size: var(--t-lille); }
+.besked { font-weight: 700; }
+.forbehold { font-size: var(--t-nr); padding-top: 6px; }
+
+.bund {
+  border-top: 2px solid var(--kappe);
+  margin-top: 20px;
+  padding: 10px 20px 22px;
+  font-size: var(--t-lille);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 24px;
+}
+.bund b { font-variant-numeric: tabular-nums; }
+
+.skjult {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+@media (max-width: 980px) {
+  .spalter { grid-template-columns: minmax(0, 1fr); }
+  .række { grid-template-columns: 5rem repeat(2, minmax(0, 1fr)); }
+  .række-grund { grid-column: 1 / -1; }
+}
+@media (max-width: 560px) {
+  main { padding: 12px 12px 0; }
+  .top { padding: 10px 12px; }
+  .bund { padding: 10px 12px 20px; }
+  .række { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .aflæs { grid-template-columns: minmax(0, 1fr); }
+}
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none; }
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <span class="værk">Nordbo Fjernvarme</span>
+  <h1>Driftskonsol</h1>
+  <span class="vagt">Vagt <span class="tid">06:00</span> til <span class="tid">14:00</span>. Klokken er <span class="tid">09:41</span>.</span>
+</header>
+
+<main>
+
+  <section class="net" aria-labelledby="net-h">
+    <h2 id="net-h">Ledningsnettet</h2>
+    <p class="net-under">61 stationer i nummerorden, så hver station bliver på sin plads. Hver søjle er et snit gennem rørparret: øverste linje er fremløbet, nederste er returen, og skraveringen mellem dem er afkølingen. Søjlen går fra 20 til 90 grader. Den vandrette streg tværs igennem er returgrænsen på 45 grader. Piletasterne flytter mellem stationerne, og Enter vælger den.</p>
+    <div class="ledningsnet" id="ledningsnet" role="group" aria-labelledby="net-h">
+      <button type="button" class="stn" data-stn="ST-01" aria-pressed="false" tabindex="-1" aria-label="ST-01. Fremløb 76,7 grader. Retur 37,5 grader. Differenstryk 0,77 bar. Aflæst for 15 minutter siden. Inden for grænserne.">
+        <span class="snit" style="--frem:81.000%;--retur:25.000%;--afkøling:56.000%">
+          <span class="grænse"></span>
+          <span class="afkøling"></span>
+          <span class="linje frem"></span>
+          <span class="linje retur"></span>
+        </span>
+        <span class="nr">01</span>
+      </button>
+      <button type="button" class="stn" data-stn="ST-02" aria-pressed="false" tabindex="-1" aria-label="ST-02. Fremløb 82,3 grader. Retur 36,4 grader. Differenstryk 0,52 bar. Aflæst for 6 minutter siden. Inden for grænserne.">
+        <span class="snit" style="--frem:89.000%;--retur:23.429%;--afkøling:65.571%">
+          <span class="grænse"></span>
+          <span class="afkøling"></span>
+          <span class="linje frem"></span>
+          <span class="linje retur"></span>
+        </span>
+        <span class="nr">02</span>
+      </button>
+      <button type="button" class="stn" data-stn="ST-03" aria-pressed="false" tabindex="-1" aria-label="ST-03. Fremløb 86,0 grader. Retur 42,7 grader. Differenstryk 0,45 bar. Aflæst for 6 minutter siden. Inden for grænserne.">
+        <span class="snit" style="--frem:94.286%;--retur:32.429%;--afkøling:61.857%">
+          <span class="grænse"></span>
+          <span class="afkøling"></span>
+          <span class="linje frem"></span>
+          <span class="linje retur"></span>
+        </span>
+        <span class="nr">03</span>
+      </button>
+      <button type="button" class="stn" data-stn="ST-04" aria-pressed="false" tabindex="-1" aria-label="ST-04. Fremløb 83,1 grader. Retur 34,9 grader. Differenstryk 0,43 bar. Aflæst for 14 minutter siden. Inden for grænserne.">
+        <span class="snit" style="--frem:90.143%;--retur:21.286%;--afkøling:68.857%">
+          <span class="grænse"></span>
+          <span class="afkøling"></span>
+          <span class="linje frem"></span>
+          <span class="linje retur"></span>
+        </span>
+        <span class="nr">04</span>
+      </button>
+      <button type="button" class="stn" data-stn="ST-05" aria-pressed="false" tabindex="-1" aria-label="ST-05. Fremløb 79,4 grader. Retur 43,2 grader. Differenstryk 0,43 bar. Aflæst for 7 minutter siden. Inden for grænserne.">
+        <span class="snit" style="--frem:84.857%;--retur:33.143%;--afkøling:51.714%">
+          <span class="grænse"></span>
+          <span class="afkøling"></span>
+          <span class="linje frem"></span>
+          <span class="linje retur"></span>
+        </span>
+        <span class="nr">05</span>
+      </button>
+      <button type="button" class="stn" data-stn="ST-06" aria-pressed="false" tabindex="-1" aria-label="ST-06. Fremløb 82,8 grader. Retur 38,8 grader. Differenstryk 0,38 bar. Aflæst for 2 minutter siden. Inden for grænserne.">
+        <span class="snit" style="--frem:89.714%;--retur:26.857%;--afkøling:62.857%">
+          <span class="grænse"></span>
+          <span class="afkøling"></span>
+          <span class="linje frem"></span>
+          <span class="linje retur"></span>
+        </span>
+        <span class="nr">06</span>
+      </button>
+      <button type="button" class="stn varm" data-stn="ST-07" aria-pressed="false" tabindex="-1" aria-label="ST-07. Fremløb 74,8 grader. Retur 51,2 grader. Differenstryk 0,58 bar. Aflæst for 3 minutter siden. Afviger: Retur 51,2 grader, 6,2 over grænsen.">
+        <span class="snit" style="--frem:78.286%;--retur:44.571%;--afkøling:33.714%;--overskud:8.857%">
+          <span class="grænse"></span>
+          <span class="afkøling"></span>
+          <span class="overskud"></span>
+          <span class="linje frem"></span>
+          <span class="linje retur"></span>
+        </span>
+        <span class="nr">07</span>
+      </button>
+      <button type="button" class="stn varm" data-stn="ST-08" aria-pressed="false" tabindex="-1" aria-label="ST-08. Fremløb 70,3 grader. Retur 46,8 grader. Differenstryk 0,47 bar. Aflæst for 2 minutter siden. Afviger: Retur 46,8 grader, 1,8 over grænsen.">
+        <span class="snit" style="--frem:71.857%;--retur:38.286%;--afkøling:33.571%;--overskud:2.571%">
+          <span class="grænse"></span>
+          <span class="afkøling"></span>
+          <span class="overskud"></span>
+          <span class="linje frem"></span>
+          <span class="linje retur"></span>
+        </span>
+        <span class="nr">08</span>
+      </button>
+      <button type="button" class="stn" data-stn="ST-09" aria-pressed="false" tabindex="-1" aria-label="ST-09. Fremløb 76,0 grader. Retur 33,6 grader. Differenstryk 0,65 bar. Aflæst for 15 minutter siden. Inden for grænserne.">
+        <span class="snit" style="--frem:80.000%;--retur:19.429%;--afkøling:60.571%">
+          <span class="grænse"></span>
+          <span class="afkøling"></span>
+          <span class="linje frem"></span>
+          <span class="linje retur"></span>
+        </span>
+        <span class="nr">09</span>
+      </button>
+      <button type="button" class="stn" data-stn="ST-10" aria-pressed="false" tabindex="-1" aria-label="ST-10. Fremløb 77,8 grader. Retur 39,9 grader. Differenstryk 0,51 bar. Aflæst for 16 minutter siden. Inden for grænserne.">
+        <span class="snit" style="--frem:82.571%;--retur:28.429%;--afkøling:54.143%">
+          <span class="grænse"></span>
+          <span class="afkøling"></span>
+          <span class="linje frem"></span>
+          <span class="linje retur"></span>
+        </span>
+        <span class="nr">10</span>
+      </button>
+      <button type="button" class="stn" data-stn="ST-11" aria-pressed="false" tabindex="-1" aria-label="ST-11. Fremløb 85,4 grader. Retur 43,4 grader. Differenstryk 0,36 bar. Aflæst for 13 minutter siden. Inden for grænserne.">
+        <span class="snit" style="--frem:93.429%;--retur:33.429%;--afkøling:60.000%">
+          <span class="grænse"></span>
+          <span class="afkøling"></span>
+          <span class="linje frem"></span>
+          <span class="linje retur"></span>
+        </span>
+        <span class="nr">11</span>
+      </button>
+      <button type="button" class="stn" data-stn="ST-12" aria-pressed="false" tabindex="-1" aria-label="ST-12. Fremløb 77,5 grader. Retur 35,6 grader. Differenstryk 0,50 bar. Aflæst for 6 minutter siden. Inden for grænserne.">
+        <span class="snit" style="--frem:82.143%;--retur:22.286%;--afkøling:59.857%">
+          <span class="grænse"></span>
+          <span class="afkøling"></span>
+          <span class="linje frem"></span>
+          <span class="linje retur"></span>
+        </span>
+        <span class="nr">12</span>
+      </button>
+      <button type="button" class="stn" data-stn="ST-13" aria-pressed="false" tabindex="-1" aria-label="ST-13. Fremløb 69,1 grader. Retur 42,7 grader. Differenstryk 0,63 bar. Aflæst for 12 minutter siden. Inden for grænserne.">
+        <span class="snit" style="--frem:70.143%;--retur:32.429%;--afkøling:37.714%">
+          <span class="grænse"></span>
+          <span class="afkøling"></span>
+          <span class="linje frem"></span>
+          <span class="linje retur"></span>
+        </span>
+        <span class="nr">13</span>
+      </button>
+      <button type="button" class="stn" data-stn="ST-14" aria-pressed="false" tabindex="-1" aria-label="ST-14. Fremløb 79,3 grader. Retur 36,3 grader. Differenstryk 0,51 bar. Aflæst for 12 minutter siden. Inden for grænserne.">
+        <span class="snit" style="--frem:84.714%;--retur:23.286%;--afkøling:61.429%">
+          <span class="grænse"></span>
+          <span class="afkøling"></span>
+          <span class="linje frem"></span>
+          <span class="linje retur"></span>
+        </span>
+        <span class="nr">14</span>
+      </button>
+      <button type="button" class="stn" data-stn="ST-15" aria-pressed="false" tabindex="-1" aria-label="ST-15. Fremløb 71,8 grader. Retur 36,5 grader. Differenstryk 0,50 bar. Aflæst for 8 minutter siden. Inden for grænserne.">
+        <span class="snit" style="--frem:74.000%;--retur:23.571%;--afkøling:50.429%">
+          <span class="grænse"></span>
+          <span class="afkøling"></span>
+          <span class="linje frem"></span>
+          <span class="linje retur"></span>
+        </span>
+        <span class="nr">15</span>
+      </button>
+      <button type="button" class="stn" data-stn="ST-16" aria-pressed="false" tabindex="-1" aria-label="ST-16. Fremløb 72,2 grader. Retur 35,9 grader. Differenstryk 0,42 bar. Aflæst for 14 minutter siden. Inden for grænserne.">
+        <span class="snit" style="--frem:74.571%;--retur:22.714%;--afkøling:51.857%">
+          <span class="grænse"></span>
+          <span class="afkøling"></span>
+          <span class="linje frem"></span>
+          <span class="linje retur"></span>
+        </span>
+        <span class="nr">16</span>
+      </button>
+      <button type="button" class="stn" data-stn="ST-17" aria-pressed="false" tabindex="-1" aria-label="ST-17. Fremløb 84,6 grader. Retur 38,3 grader. Differenstryk 0,78 bar. Aflæst for 8 minutter siden. Inden for grænserne.">
+        <span class="snit" style="--frem:92.286%;--retur:26.143%;--afkøling:66.143%">
+          <span class="grænse"></span>
+          <span class="afkøling"></span>
+          <span class="linje frem"></span>
+          <span class="linje retur"></span>
+        </span>
+        <span class="nr">17</span>
+      </button>
+      <button type="button" class="stn" data-stn="ST-18" aria-pressed="false" tabindex="-1" aria-label="ST-18. Fremløb 75,8 grader. Retur 38,7 grader. Differenstryk 0,35 bar. Aflæst for 1 minut siden. Inden for grænserne.">
+        <span class="snit" style="--frem:79.714%;--retur:26.714%;--afkøling:53.000%">
+          <span class="grænse"></span>
+          <span class="afkøling"></span>
+          <span class="linje frem"></span>
+          <span class="linje retur"></span>
+        </span>
+        <span class="nr">18</span>
+      </button>
+      <button type="button" class="stn tryk-brud" data-stn="ST-19" aria-pressed="false" tabindex="-1" aria-label="ST-19. Fremløb 79,1 grader. Retur 40,4 grader. Differenstryk 0,21 bar. Aflæst for 2 minutter siden. Afviger: Differenstryk 0,21 bar, 0,09 under båndet.">
+        <span class="snit" style="--frem:84.429%;--retur:29.143%;--afkøling:55.286%">
+          <span class="grænse"></span>
+          <span class="afkøling"></span>
+          <span class="linje frem"></span>
+          <span class="linje retur"></span>
+          <span class="fod"></span>
+        </span>
+        <span class="nr">19</span>
+      </button>
+      <button type="button" class="stn" data-stn="ST-20" aria-pressed="false" tabindex="-1" aria-label="ST-20. Fremløb 70,1 grader. Retur 42,4 grader. Differenstryk 0,70 bar. Aflæst for 11 minutter siden. Inden for grænserne.">
+        <span class="snit" style="--frem:71.571%;--retur:32.000%;--afkøling:39.571%">
+          <span class="grænse"></span>
+          <span class="afkøling"></span>
+          <span class="linje frem"></span>
+          <span class="linje retur"></span>
+        </span>
+        <span class="nr">20</span>
+      </button>
+      <button type="button" class="stn" data-stn="ST-21" aria-pressed="false" tabindex="-1" aria-label="ST-21. Fremløb 80,8 grader. Retur 43,4 grader. Differenstryk 0,59 bar. Aflæst for 5 minutter siden. Inden for grænserne.">
+        <span class="snit" style="--frem:86.857%;--retur:33.429%;--afkøling:53.429%">
+          <span class="grænse"></span>
+          <span class="afkøling"></span>
+          <span class="linje frem"></span>
+          <span class="linje retur"></span>
+        </span>
+        <span class="nr">21</span>
+      </button>
+      <button type="button" class="stn" data-stn="ST-22" aria-pressed="false" tabindex="-1" aria-label="ST-22. Fremløb 71,4 grader. Retur 35,4 grader. Differenstryk 0,79 bar. Aflæst for 2 minutter siden. Inden for grænserne.">
+        <span class="snit" style="--frem:73.429%;--retur:22.000%;--afkøling:51.429%">
+          <span class="grænse"></span>
+          <span class="afkøling"></span>
+          <span class="linje frem"></span>
+          <span class="linje retur"></span>
+        </span>
+        <span class="nr">22</span>
+      </button>
+      <button type="button" class="stn" data-stn="ST-23" aria-pressed="false" tabindex="-1" aria-label="ST-23. Fremløb 84,2 grader. Retur 42,5 grader. Differenstryk 0,60 bar. Aflæst for 14 minutter siden. Inden for grænserne.">
+        <span class="snit" style="--frem:91.714%;--retur:32.143%;--afkøling:59.571%">
+          <span class="grænse"></span>
+          <span class="afkøling"></span>
+          <span class="linje frem"></span>
+          <span class="linje retur"></span>
+        </span>
+        <span class="nr">23</span>
+      </button>
+      <button type="button" class="stn" data-stn="ST-24" aria-pressed="false" tabindex="-1" aria-label="ST-24. Fremløb 68,5 grader. Retur 41,6 grader. Differenstryk 0,67 bar. Aflæst for 8 minutter siden. Inden for grænserne.">
+        <span class="snit" style="--frem:69.286%;--retur:30.857%;--afkøling:38.429%">
+          <span class="grænse"></span>
+          <span class="afkøling"></span>
+          <span class="linje frem"></span>
+          <span class="linje retur"></span>
+        </span>
+        <span class="nr">24</span>
+      </button>
+      <button type="button" class="stn" data-stn="ST-25" aria-pressed="false" tabindex="-1" aria-label="ST-25. Fremløb 82,6 grader. Retur 36,2 grader. Differenstryk 0,54 bar. Aflæst for 14 minutter siden. Inden for grænserne.">
+        <span class="snit" style="--frem:89.429%;--retur:23.143%;--afkøling:66.286%">
+          <span class="grænse"></span>
+          <span class="afkøling"></span>
+          <span class="linje frem"></span>
+          <span class="linje retur"></span>
+        </span>
+        <span class="nr">25</span>
+      </button>
+      <button type="button" class="stn gammel" data-stn="ST-26" aria-pressed="false" tabindex="-1" aria-label="ST-26. Fremløb 76,2 grader. Retur 38,9 grader. Differenstryk 0,55 bar. Aflæst for 23 minutter siden. Afviger: Aflæsningen er 23 minutter gammel.">
+        <span class="snit" style="--frem:80.286%;--retur:27.000%;--afkøling:53.286%">
+          <span class="grænse"></span>
+          <span class="afkøling"></span>
+          <span class="linje frem"></span>
+          <span class="linje retur"></span>
+        </span>
+        <span class="nr">26</span>
+      </button>
+      <button type="button" class="stn" data-stn="ST-27" aria-pressed="false" tabindex="-1" aria-label="ST-27. Fremløb 87,9 grader. Retur 43,5 grader. Differenstryk 0,72 bar. Aflæst for 12 minutter siden. Inden for grænserne.">
+        <span class="snit" style="--frem:97.000%;--retur:33.571%;--afkøling:63.429%">
+          <span class="grænse"></span>
+          <span class="afkøling"></span>
+          <span class="linje frem"></span>
+          <span class="linje retur"></span>
+        </span>
+        <span class="nr">27</span>
+      </button>
+      <button type="button" class="stn" data-stn="ST-28" aria-pressed="false" tabindex="-1" aria-label="ST-28. Fremløb 71,0 grader. Retur 41,4 grader. Differenstryk 0,34 bar. Aflæst for 4 minutter siden. Inden for grænserne.">
+        <span class="snit" style="--frem:72.857%;--retur:30.571%;--afkøling:42.286%">
+          <span class="grænse"></span>
+          <span class="afkøling"></span>
+          <span class="linje frem"></span>
+          <span class="linje retur"></span>
+        </span>
+        <span class="nr">28</span>
+      </button>
+      <button type="button" class="stn" data-stn="ST-29" aria-pressed="false" tabindex="-1" aria-label="ST-29. Fremløb 77,0 grader. Retur 36,9 grader. Differenstryk 0,71 bar. Aflæst for 8 minutter siden. Inden for grænserne.">
+        <span class="snit" style="--frem:81.429%;--retur:24.143%;--afkøling:57.286%">
+          <span class="grænse"></span>
+          <span class="afkøling"></span>
+          <span class="linje frem"></span>
+          <span class="linje retur"></span>
+        </span>
+        <span class="nr">29</span>
+      </button>
+      <button type="button" class="stn" data-stn="ST-30" aria-pressed="false" tabindex="-1" aria-label="ST-30. Fremløb 72,3 grader. Retur 40,6 grader. Differenstryk 0,74 bar. Aflæst for 13 minutter siden. Inden for grænserne.">
+        <span class="snit" style="--frem:74.714%;--retur:29.429%;--afkøling:45.286%">
+          <span class="grænse"></span>
+          <span class="afkøling"></span>
+          <span class="linje frem"></span>
+          <span class="linje retur"></span>
+        </span>
+        <span class="nr">30</span>
+      </button>
+      <button type="button" class="stn varm tryk-brud" data-stn="ST-31" aria-pressed="false" tabindex="-1" aria-label="ST-31. Fremløb 71,2 grader. Retur 47,6 grader. Differenstryk 0,94 bar. Aflæst for 4 minutter siden. Afviger: Retur 47,6 grader, 2,6 over grænsen. Differenstryk 0,94 bar, 0,04 over båndet.">
+        <span class="snit" style="--frem:73.143%;--retur:39.429%;--afkøling:33.714%;--overskud:3.714%">
+          <span class="grænse"></span>
+          <span class="afkøling"></span>
+          <span class="overskud"></span>
+          <span class="linje frem"></span>
+          <span class="linje retur"></span>
+          <span class="fod"></span>
+        </span>
+        <span class="nr">31</span>
+      </button>
+      <button type="button" class="stn" data-stn="ST-32" aria-pressed="false" tabindex="-1" aria-label="ST-32. Fremløb 80,5 grader. Retur 33,5 grader. Differenstryk 0,49 bar. Aflæst for 17 minutter siden. Inden for grænserne.">
+        <span class="snit" style="--frem:86.429%;--retur:19.286%;--afkøling:67.143%">
+          <span class="grænse"></span>
+          <span class="afkøling"></span>
+          <span class="linje frem"></span>
+          <span class="linje retur"></span>
+        </span>
+        <span class="nr">32</span>
+      </button>
+      <button type="button" class="stn" data-stn="ST-33" aria-pressed="false" tabindex="-1" aria-label="ST-33. Fremløb 82,1 grader. Retur 42,3 grader. Differenstryk 0,58 bar. Aflæst for 10 minutter siden. Inden for grænserne.">
+        <span class="snit" style="--frem:88.714%;--retur:31.857%;--afkøling:56.857%">
+          <span class="grænse"></span>
+          <span class="afkøling"></span>
+          <span class="linje frem"></span>
+          <span class="linje retur"></span>
+        </span>
+        <span class="nr">33</span>
+      </button>
+      <button type="button" class="stn" data-stn="ST-34" aria-pressed="false" tabindex="-1" aria-label="ST-34. Fremløb 79,6 grader. Retur 35,1 grader. Differenstryk 0,51 bar. Aflæst for 7 minutter siden. Inden for grænserne.">
+        <span class="snit" style="--frem:85.143%;--retur:21.571%;--afkøling:63.571%">
+          <span class="grænse"></span>
+          <span class="afkøling"></span>
+          <span class="linje frem"></span>
+          <span class="linje retur"></span>
+        </span>
+        <span class="nr">34</span>
+      </button>
+      <button type="button" class="stn" data-stn="ST-35" aria-pressed="false" tabindex="-1" aria-label="ST-35. Fremløb 86,9 grader. Retur 40,0 grader. Differenstryk 0,66 bar. Aflæst for 11 minutter siden. Inden for grænserne.">
+        <span class="snit" style="--frem:95.571%;--retur:28.571%;--afkøling:67.000%">
+          <span class="grænse"></span>
+          <span class="afkøling"></span>
+          <span class="linje frem"></span>
+          <span class="linje retur"></span>
+        </span>
+        <span class="nr">35</span>
+      </button>
+      <button type="button" class="stn" data-stn="ST-36" aria-pressed="false" tabindex="-1" aria-label="ST-36. Fremløb 83,3 grader. Retur 43,9 grader. Differenstryk 0,44 bar. Aflæst for 2 minutter siden. Inden for grænserne.">
+        <span class="snit" style="--frem:90.429%;--retur:34.143%;--afkøling:56.286%">
+          <span class="grænse"></span>
+          <span class="afkøling"></span>
+          <span class="linje frem"></span>
+          <span class="linje retur"></span>
+        </span>
+        <span class="nr">36</span>
+      </button>
+      <button type="button" class="stn" data-stn="ST-37" aria-pressed="false" tabindex="-1" aria-label="ST-37. Fremløb 71,6 grader. Retur 39,3 grader. Differenstryk 0,62 bar. Aflæst for 16 minutter siden. Inden for grænserne.">
+        <span class="snit" style="--frem:73.714%;--retur:27.571%;--afkøling:46.143%">
+          <span class="grænse"></span>
+          <span class="afkøling"></span>
+          <span class="linje frem"></span>
+          <span class="linje retur"></span>
+        </span>
+        <span class="nr">37</span>
+      </button>
+      <button type="button" class="stn" data-stn="ST-38" aria-pressed="false" tabindex="-1" aria-label="ST-38. Fremløb 86,2 grader. Retur 40,8 grader. Differenstryk 0,67 bar. Aflæst for 4 minutter siden. Inden for grænserne.">
+        <span class="snit" style="--frem:94.571%;--retur:29.714%;--afkøling:64.857%">
+          <span class="grænse"></span>
+          <span class="afkøling"></span>
+          <span class="linje frem"></span>
+          <span class="linje retur"></span>
+        </span>
+        <span class="nr">38</span>
+      </button>
+      <button type="button" class="stn" data-stn="ST-39" aria-pressed="false" tabindex="-1" aria-label="ST-39. Fremløb 72,8 grader. Retur 37,1 grader. Differenstryk 0,82 bar. Aflæst for 9 minutter siden. Inden for grænserne.">
+        <span class="snit" style="--frem:75.429%;--retur:24.429%;--afkøling:51.000%">
+          <span class="grænse"></span>
+          <span class="afkøling"></span>
+          <span class="linje frem"></span>
+          <span class="linje retur"></span>
+        </span>
+        <span class="nr">39</span>
+      </button>
+      <button type="button" class="stn" data-stn="ST-40" aria-pressed="false" tabindex="-1" aria-label="ST-40. Fremløb 78,0 grader. Retur 41,3 grader. Differenstryk 0,69 bar. Aflæst for 12 minutter siden. Inden for grænserne.">
+        <span class="snit" style="--frem:82.857%;--retur:30.429%;--afkøling:52.429%">
+          <span class="grænse"></span>
+          <span class="afkøling"></span>
+          <span class="linje frem"></span>
+          <span class="linje retur"></span>
+        </span>
+        <span class="nr">40</span>
+      </button>
+      <button type="button" class="stn" data-stn="ST-41" aria-pressed="false" tabindex="-1" aria-label="ST-41. Fremløb 70,5 grader. Retur 36,7 grader. Differenstryk 0,85 bar. Aflæst for 9 minutter siden. Inden for grænserne.">
+        <span class="snit" style="--frem:72.143%;--retur:23.857%;--afkøling:48.286%">
+          <span class="grænse"></span>
+          <span class="afkøling"></span>
+          <span class="linje frem"></span>
+          <span class="linje retur"></span>
+        </span>
+        <span class="nr">41</span>
+      </button>
+      <button type="button" class="stn" data-stn="ST-42" aria-pressed="false" tabindex="-1" aria-label="ST-42. Fremløb 73,6 grader. Retur 40,1 grader. Differenstryk 0,41 bar. Aflæst for 16 minutter siden. Inden for grænserne.">
+        <span class="snit" style="--frem:76.571%;--retur:28.714%;--afkøling:47.857%">
+          <span class="grænse"></span>
+          <span class="afkøling"></span>
+          <span class="linje frem"></span>
+          <span class="linje retur"></span>
+        </span>
+        <span class="nr">42</span>
+      </button>
+      <button type="button" class="stn" data-stn="ST-43" aria-pressed="false" tabindex="-1" aria-label="ST-43. Fremløb 83,7 grader. Retur 37,0 grader. Differenstryk 0,56 bar. Aflæst for 9 minutter siden. Inden for grænserne.">
+        <span class="snit" style="--frem:91.000%;--retur:24.286%;--afkøling:66.714%">
+          <span class="grænse"></span>
+          <span class="afkøling"></span>
+          <span class="linje frem"></span>
+          <span class="linje retur"></span>
+        </span>
+        <span class="nr">43</span>
+      </button>
+      <button type="button" class="stn gammel" data-stn="ST-44" aria-pressed="false" tabindex="-1" aria-label="ST-44. Fremløb 77,0 grader. Retur 39,8 grader. Differenstryk 0,61 bar. Aflæst for 34 minutter siden. Afviger: Aflæsningen er 34 minutter gammel.">
+        <span class="snit" style="--frem:81.429%;--retur:28.286%;--afkøling:53.143%">
+          <span class="grænse"></span>
+          <span class="afkøling"></span>
+          <span class="linje frem"></span>
+          <span class="linje retur"></span>
+        </span>
+        <span class="nr">44</span>
+      </button>
+      <button type="button" class="stn" data-stn="ST-45" aria-pressed="false" tabindex="-1" aria-label="ST-45. Fremløb 78,2 grader. Retur 38,7 grader. Differenstryk 0,70 bar. Aflæst for 1 minut siden. Inden for grænserne.">
+        <span class="snit" style="--frem:83.143%;--retur:26.714%;--afkøling:56.429%">
+          <span class="grænse"></span>
+          <span class="afkøling"></span>
+          <span class="linje frem"></span>
+          <span class="linje retur"></span>
+        </span>
+        <span class="nr">45</span>
+      </button>
+      <button type="button" class="stn" data-stn="ST-46" aria-pressed="false" tabindex="-1" aria-label="ST-46. Fremløb 84,8 grader. Retur 41,4 grader. Differenstryk 0,84 bar. Aflæst for 8 minutter siden. Inden for grænserne.">
+        <span class="snit" style="--frem:92.571%;--retur:30.571%;--afkøling:62.000%">
+          <span class="grænse"></span>
+          <span class="afkøling"></span>
+          <span class="linje frem"></span>
+          <span class="linje retur"></span>
+        </span>
+        <span class="nr">46</span>
+      </button>
+      <button type="button" class="stn" data-stn="ST-47" aria-pressed="false" tabindex="-1" aria-label="ST-47. Fremløb 80,1 grader. Retur 36,3 grader. Differenstryk 0,52 bar. Aflæst for 3 minutter siden. Inden for grænserne.">
+        <span class="snit" style="--frem:85.857%;--retur:23.286%;--afkøling:62.571%">
+          <span class="grænse"></span>
+          <span class="afkøling"></span>
+          <span class="linje frem"></span>
+          <span class="linje retur"></span>
+        </span>
+        <span class="nr">47</span>
+      </button>
+      <button type="button" class="stn" data-stn="ST-48" aria-pressed="false" tabindex="-1" aria-label="ST-48. Fremløb 81,7 grader. Retur 40,9 grader. Differenstryk 0,50 bar. Aflæst for 3 minutter siden. Inden for grænserne.">
+        <span class="snit" style="--frem:88.143%;--retur:29.857%;--afkøling:58.286%">
+          <span class="grænse"></span>
+          <span class="afkøling"></span>
+          <span class="linje frem"></span>
+          <span class="linje retur"></span>
+        </span>
+        <span class="nr">48</span>
+      </button>
+      <button type="button" class="stn" data-stn="ST-49" aria-pressed="false" tabindex="-1" aria-label="ST-49. Fremløb 84,6 grader. Retur 38,8 grader. Differenstryk 0,43 bar. Aflæst for 6 minutter siden. Inden for grænserne.">
+        <span class="snit" style="--frem:92.286%;--retur:26.857%;--afkøling:65.429%">
+          <span class="grænse"></span>
+          <span class="afkøling"></span>
+          <span class="linje frem"></span>
+          <span class="linje retur"></span>
+        </span>
+        <span class="nr">49</span>
+      </button>
+      <button type="button" class="stn" data-stn="ST-50" aria-pressed="false" tabindex="-1" aria-label="ST-50. Fremløb 75,9 grader. Retur 42,8 grader. Differenstryk 0,75 bar. Aflæst for 10 minutter siden. Inden for grænserne.">
+        <span class="snit" style="--frem:79.857%;--retur:32.571%;--afkøling:47.286%">
+          <span class="grænse"></span>
+          <span class="afkøling"></span>
+          <span class="linje frem"></span>
+          <span class="linje retur"></span>
+        </span>
+        <span class="nr">50</span>
+      </button>
+      <button type="button" class="stn" data-stn="ST-51" aria-pressed="false" tabindex="-1" aria-label="ST-51. Fremløb 84,0 grader. Retur 34,8 grader. Differenstryk 0,78 bar. Aflæst for 4 minutter siden. Inden for grænserne.">
+        <span class="snit" style="--frem:91.429%;--retur:21.143%;--afkøling:70.286%">
+          <span class="grænse"></span>
+          <span class="afkøling"></span>
+          <span class="linje frem"></span>
+          <span class="linje retur"></span>
+        </span>
+        <span class="nr">51</span>
+      </button>
+      <button type="button" class="stn varm" data-stn="ST-52" aria-pressed="false" tabindex="-1" aria-label="ST-52. Fremløb 82,5 grader. Retur 49,3 grader. Differenstryk 0,72 bar. Aflæst for 1 minut siden. Afviger: Retur 49,3 grader, 4,3 over grænsen.">
+        <span class="snit" style="--frem:89.286%;--retur:41.857%;--afkøling:47.429%;--overskud:6.143%">
+          <span class="grænse"></span>
+          <span class="afkøling"></span>
+          <span class="overskud"></span>
+          <span class="linje frem"></span>
+          <span class="linje retur"></span>
+        </span>
+        <span class="nr">52</span>
+      </button>
+      <button type="button" class="stn" data-stn="ST-53" aria-pressed="false" tabindex="-1" aria-label="ST-53. Fremløb 68,3 grader. Retur 42,0 grader. Differenstryk 0,63 bar. Aflæst for 11 minutter siden. Inden for grænserne.">
+        <span class="snit" style="--frem:69.000%;--retur:31.429%;--afkøling:37.571%">
+          <span class="grænse"></span>
+          <span class="afkøling"></span>
+          <span class="linje frem"></span>
+          <span class="linje retur"></span>
+        </span>
+        <span class="nr">53</span>
+      </button>
+      <button type="button" class="stn" data-stn="ST-54" aria-pressed="false" tabindex="-1" aria-label="ST-54. Fremløb 82,2 grader. Retur 37,6 grader. Differenstryk 0,68 bar. Aflæst for 5 minutter siden. Inden for grænserne.">
+        <span class="snit" style="--frem:88.857%;--retur:25.143%;--afkøling:63.714%">
+          <span class="grænse"></span>
+          <span class="afkøling"></span>
+          <span class="linje frem"></span>
+          <span class="linje retur"></span>
+        </span>
+        <span class="nr">54</span>
+      </button>
+      <button type="button" class="stn" data-stn="ST-55" aria-pressed="false" tabindex="-1" aria-label="ST-55. Fremløb 81,5 grader. Retur 41,7 grader. Differenstryk 0,39 bar. Aflæst for 10 minutter siden. Inden for grænserne.">
+        <span class="snit" style="--frem:87.857%;--retur:31.000%;--afkøling:56.857%">
+          <span class="grænse"></span>
+          <span class="afkøling"></span>
+          <span class="linje frem"></span>
+          <span class="linje retur"></span>
+        </span>
+        <span class="nr">55</span>
+      </button>
+      <button type="button" class="stn" data-stn="ST-56" aria-pressed="false" tabindex="-1" aria-label="ST-56. Fremløb 82,5 grader. Retur 38,8 grader. Differenstryk 0,59 bar. Aflæst for 5 minutter siden. Inden for grænserne.">
+        <span class="snit" style="--frem:89.286%;--retur:26.857%;--afkøling:62.429%">
+          <span class="grænse"></span>
+          <span class="afkøling"></span>
+          <span class="linje frem"></span>
+          <span class="linje retur"></span>
+        </span>
+        <span class="nr">56</span>
+      </button>
+      <button type="button" class="stn" data-stn="ST-57" aria-pressed="false" tabindex="-1" aria-label="ST-57. Fremløb 72,2 grader. Retur 40,3 grader. Differenstryk 0,85 bar. Aflæst for 7 minutter siden. Inden for grænserne.">
+        <span class="snit" style="--frem:74.571%;--retur:29.000%;--afkøling:45.571%">
+          <span class="grænse"></span>
+          <span class="afkøling"></span>
+          <span class="linje frem"></span>
+          <span class="linje retur"></span>
+        </span>
+        <span class="nr">57</span>
+      </button>
+      <button type="button" class="stn" data-stn="ST-58" aria-pressed="false" tabindex="-1" aria-label="ST-58. Fremløb 77,7 grader. Retur 38,1 grader. Differenstryk 0,77 bar. Aflæst for 6 minutter siden. Inden for grænserne.">
+        <span class="snit" style="--frem:82.429%;--retur:25.857%;--afkøling:56.571%">
+          <span class="grænse"></span>
+          <span class="afkøling"></span>
+          <span class="linje frem"></span>
+          <span class="linje retur"></span>
+        </span>
+        <span class="nr">58</span>
+      </button>
+      <button type="button" class="stn" data-stn="ST-59" aria-pressed="false" tabindex="-1" aria-label="ST-59. Fremløb 86,3 grader. Retur 35,6 grader. Differenstryk 0,48 bar. Aflæst for 12 minutter siden. Inden for grænserne.">
+        <span class="snit" style="--frem:94.714%;--retur:22.286%;--afkøling:72.429%">
+          <span class="grænse"></span>
+          <span class="afkøling"></span>
+          <span class="linje frem"></span>
+          <span class="linje retur"></span>
+        </span>
+        <span class="nr">59</span>
+      </button>
+      <button type="button" class="stn" data-stn="ST-60" aria-pressed="false" tabindex="-1" aria-label="ST-60. Fremløb 80,8 grader. Retur 38,3 grader. Differenstryk 0,73 bar. Aflæst for 11 minutter siden. Inden for grænserne.">
+        <span class="snit" style="--frem:86.857%;--retur:26.143%;--afkøling:60.714%">
+          <span class="grænse"></span>
+          <span class="afkøling"></span>
+          <span class="linje frem"></span>
+          <span class="linje retur"></span>
+        </span>
+        <span class="nr">60</span>
+      </button>
+      <button type="button" class="stn" data-stn="ST-61" aria-pressed="false" tabindex="-1" aria-label="ST-61. Fremløb 84,2 grader. Retur 37,9 grader. Differenstryk 0,52 bar. Aflæst for 2 minutter siden. Inden for grænserne.">
+        <span class="snit" style="--frem:91.714%;--retur:25.571%;--afkøling:66.143%">
+          <span class="grænse"></span>
+          <span class="afkøling"></span>
+          <span class="linje frem"></span>
+          <span class="linje retur"></span>
+        </span>
+        <span class="nr">61</span>
+      </button>
+    </div>
+    <ul class="tegnforklaring">
+      <li><b>Messingklods over stregen:</b> retur over 45 grader, og klodsen er selve overskridelsen.</li>
+      <li><b>Irret fod:</b> differenstryk uden for 0,3 til 0,9 bar.</li>
+      <li><b>Stiplede linjer:</b> aflæsningen er over 20 minutter gammel.</li>
+    </ul>
+  </section>
+
+  <div class="spalter">
+
+    <section class="panel" aria-labelledby="afvig-h">
+      <h2 id="afvig-h">Afvigelser nu, <span id="afvig-tal">7</span> stationer</h2>
+      <p class="regel">Rækkefølgen er temperatur, så tryk, så alder, og inden for hver gruppe ligger den største afvigelse øverst. De tre brud kan ikke lægges sammen til ét tal, så rangeringen er valgt og står her, hvor den kan modsiges.</p>
+      <ul class="afvig-liste">
+        <li>
+          <button type="button" class="række" data-stn="ST-07" aria-pressed="false">
+            <span class="række-id">ST-07</span>
+            <span class="række-tal"><span class="mærke">Fremløb, grader</span><span class="tal">74,8</span></span>
+            <span class="række-tal"><span class="mærke">Retur, grader</span><span class="tal">51,2</span></span>
+            <span class="række-tal"><span class="mærke">Differenstryk, bar</span><span class="tal">0,58</span></span>
+            <span class="række-tal"><span class="mærke">Aflæst, minutter siden</span><span class="tal">3</span></span>
+            <span class="række-grund">Retur 51,2 grader, 6,2 over grænsen.</span>
+          </button>
+        </li>
+        <li>
+          <button type="button" class="række" data-stn="ST-52" aria-pressed="false">
+            <span class="række-id">ST-52</span>
+            <span class="række-tal"><span class="mærke">Fremløb, grader</span><span class="tal">82,5</span></span>
+            <span class="række-tal"><span class="mærke">Retur, grader</span><span class="tal">49,3</span></span>
+            <span class="række-tal"><span class="mærke">Differenstryk, bar</span><span class="tal">0,72</span></span>
+            <span class="række-tal"><span class="mærke">Aflæst, minutter siden</span><span class="tal">1</span></span>
+            <span class="række-grund">Retur 49,3 grader, 4,3 over grænsen.</span>
+          </button>
+        </li>
+        <li>
+          <button type="button" class="række" data-stn="ST-31" aria-pressed="false">
+            <span class="række-id">ST-31</span>
+            <span class="række-tal"><span class="mærke">Fremløb, grader</span><span class="tal">71,2</span></span>
+            <span class="række-tal"><span class="mærke">Retur, grader</span><span class="tal">47,6</span></span>
+            <span class="række-tal"><span class="mærke">Differenstryk, bar</span><span class="tal">0,94</span></span>
+            <span class="række-tal"><span class="mærke">Aflæst, minutter siden</span><span class="tal">4</span></span>
+            <span class="række-grund">Retur 47,6 grader, 2,6 over grænsen. Differenstryk 0,94 bar, 0,04 over båndet.</span>
+          </button>
+        </li>
+        <li>
+          <button type="button" class="række" data-stn="ST-08" aria-pressed="false">
+            <span class="række-id">ST-08</span>
+            <span class="række-tal"><span class="mærke">Fremløb, grader</span><span class="tal">70,3</span></span>
+            <span class="række-tal"><span class="mærke">Retur, grader</span><span class="tal">46,8</span></span>
+            <span class="række-tal"><span class="mærke">Differenstryk, bar</span><span class="tal">0,47</span></span>
+            <span class="række-tal"><span class="mærke">Aflæst, minutter siden</span><span class="tal">2</span></span>
+            <span class="række-grund">Retur 46,8 grader, 1,8 over grænsen.</span>
+          </button>
+        </li>
+        <li>
+          <button type="button" class="række" data-stn="ST-19" aria-pressed="false">
+            <span class="række-id">ST-19</span>
+            <span class="række-tal"><span class="mærke">Fremløb, grader</span><span class="tal">79,1</span></span>
+            <span class="række-tal"><span class="mærke">Retur, grader</span><span class="tal">40,4</span></span>
+            <span class="række-tal"><span class="mærke">Differenstryk, bar</span><span class="tal">0,21</span></span>
+            <span class="række-tal"><span class="mærke">Aflæst, minutter siden</span><span class="tal">2</span></span>
+            <span class="række-grund">Differenstryk 0,21 bar, 0,09 under båndet.</span>
+          </button>
+        </li>
+        <li>
+          <button type="button" class="række" data-stn="ST-44" aria-pressed="false">
+            <span class="række-id">ST-44</span>
+            <span class="række-tal"><span class="mærke">Fremløb, grader</span><span class="tal">77,0</span></span>
+            <span class="række-tal"><span class="mærke">Retur, grader</span><span class="tal">39,8</span></span>
+            <span class="række-tal"><span class="mærke">Differenstryk, bar</span><span class="tal">0,61</span></span>
+            <span class="række-tal"><span class="mærke">Aflæst, minutter siden</span><span class="tal">34</span></span>
+            <span class="række-grund">Aflæsningen er 34 minutter gammel.</span>
+          </button>
+        </li>
+        <li>
+          <button type="button" class="række" data-stn="ST-26" aria-pressed="false">
+            <span class="række-id">ST-26</span>
+            <span class="række-tal"><span class="mærke">Fremløb, grader</span><span class="tal">76,2</span></span>
+            <span class="række-tal"><span class="mærke">Retur, grader</span><span class="tal">38,9</span></span>
+            <span class="række-tal"><span class="mærke">Differenstryk, bar</span><span class="tal">0,55</span></span>
+            <span class="række-tal"><span class="mærke">Aflæst, minutter siden</span><span class="tal">23</span></span>
+            <span class="række-grund">Aflæsningen er 23 minutter gammel.</span>
+          </button>
+        </li>
+      </ul>
+    </section>
+
+    <aside aria-label="Handling og vagtens status">
+
+      <section class="panel" aria-labelledby="valgt-h">
+        <h2 id="valgt-h" tabindex="-1">Valgt station</h2>
+        <div id="valgt-tom">
+          <p class="tom">Ingen station er valgt endnu. Vælg en søjle i ledningsnettet eller en række i afvigelseslisten, så står stationens fire aflæsninger her sammen med felterne til et udkald.</p>
+        </div>
+        <div id="valgt-indhold" hidden>
+          <p class="valgt-id" id="valgt-id">ST-00</p>
+          <dl class="aflæs">
+            <div><dt>Fremløb</dt><dd><span id="v-frem">0,0</span> grader</dd></div>
+            <div><dt>Retur</dt><dd><span id="v-retur">0,0</span> grader</dd></div>
+            <div><dt>Differenstryk</dt><dd><span id="v-tryk">0,00</span> bar</dd></div>
+            <div><dt>Aflæst</dt><dd>for <span id="v-alder">0 minutter</span> siden</dd></div>
+          </dl>
+          <p class="dom" id="v-grund">Alle fire aflæsninger er inden for grænserne.</p>
+
+          <form id="udkald-form" novalidate>
+            <div class="fejlsum" id="fejlsum" hidden tabindex="-1">
+              <h3>Udkaldet blev ikke sendt</h3>
+              <ul id="fejlliste"></ul>
+            </div>
+
+            <label for="montør">Montør</label>
+            <select id="montør" name="montør" aria-describedby="montør-fejl">
+              <option value="">Vælg montør</option>
+            </select>
+            <p class="fejl" id="montør-fejl" hidden>Vælg den montør der skal køre.</p>
+
+            <label for="årsag">Årsag, én linje</label>
+            <input type="text" id="årsag" name="årsag" maxlength="90" autocomplete="off" aria-describedby="årsag-hjælp årsag-fejl">
+            <p class="hjælp" id="årsag-hjælp">Årsagen følger med udkaldet og bliver stående i journalen.</p>
+            <p class="fejl" id="årsag-fejl" hidden>Skriv en kort årsag. Udkaldet sendes ikke uden.</p>
+
+            <button type="submit" class="knap">Send montør</button>
+          </form>
+          <p class="forbehold">Et sendt udkald kan ikke trækkes tilbage. Det kan afsluttes eller flyttes til en anden montør, og begge dele står i montørlisten herunder.</p>
+        </div>
+      </section>
+
+      <section class="panel" aria-labelledby="montør-h">
+        <h2 id="montør-h">Montører</h2>
+        <ul id="montør-liste"></ul>
+      </section>
+
+      <section class="panel" aria-labelledby="journal-h">
+        <h2 id="journal-h">Udkald i vagten</h2>
+        <ol class="journal" id="journal"></ol>
+        <div class="tilstand">
+          <p class="besked" id="besked" role="status">Intet er sendt fra denne skærm endnu.</p>
+          <p>Aflæsningerne på skærmen er fra <span class="tid">09:41</span>. Der kommer nye hvert 5. minut. 2 stationer mangler en frisk aflæsning, så deres tal er ældre end resten.</p>
+          <p class="forbehold">Udkald sendt herfra bliver i browseren og går ikke videre til nogen. Skærmen styrer ikke anlægget, den ser på det og sender folk ud.</p>
+        </div>
+      </section>
+
+    </aside>
+  </div>
+</main>
+
+<footer class="bund">
+  <span><b>61</b> stationer</span>
+  <span><b id="bund-afvig">7</b> afviger nu</span>
+  <span><b id="bund-udkald">3</b> udkald i vagten, <b id="bund-slut">1</b> afsluttet</span>
+  <span>Vagten skifter <b>14:00</b></span>
+</footer>
+
+<script>
+"use strict";
+var STATIONER = [{"id":"ST-01","frem":"76,7","retur":"37,5","tryk":"0,77","alder":"15 minutter","grund":"Alle fire aflæsninger er inden for grænserne."},{"id":"ST-02","frem":"82,3","retur":"36,4","tryk":"0,52","alder":"6 minutter","grund":"Alle fire aflæsninger er inden for grænserne."},{"id":"ST-03","frem":"86,0","retur":"42,7","tryk":"0,45","alder":"6 minutter","grund":"Alle fire aflæsninger er inden for grænserne."},{"id":"ST-04","frem":"83,1","retur":"34,9","tryk":"0,43","alder":"14 minutter","grund":"Alle fire aflæsninger er inden for grænserne."},{"id":"ST-05","frem":"79,4","retur":"43,2","tryk":"0,43","alder":"7 minutter","grund":"Alle fire aflæsninger er inden for grænserne."},{"id":"ST-06","frem":"82,8","retur":"38,8","tryk":"0,38","alder":"2 minutter","grund":"Alle fire aflæsninger er inden for grænserne."},{"id":"ST-07","frem":"74,8","retur":"51,2","tryk":"0,58","alder":"3 minutter","grund":"Retur 51,2 grader, 6,2 over grænsen."},{"id":"ST-08","frem":"70,3","retur":"46,8","tryk":"0,47","alder":"2 minutter","grund":"Retur 46,8 grader, 1,8 over grænsen."},{"id":"ST-09","frem":"76,0","retur":"33,6","tryk":"0,65","alder":"15 minutter","grund":"Alle fire aflæsninger er inden for grænserne."},{"id":"ST-10","frem":"77,8","retur":"39,9","tryk":"0,51","alder":"16 minutter","grund":"Alle fire aflæsninger er inden for grænserne."},{"id":"ST-11","frem":"85,4","retur":"43,4","tryk":"0,36","alder":"13 minutter","grund":"Alle fire aflæsninger er inden for grænserne."},{"id":"ST-12","frem":"77,5","retur":"35,6","tryk":"0,50","alder":"6 minutter","grund":"Alle fire aflæsninger er inden for grænserne."},{"id":"ST-13","frem":"69,1","retur":"42,7","tryk":"0,63","alder":"12 minutter","grund":"Alle fire aflæsninger er inden for grænserne."},{"id":"ST-14","frem":"79,3","retur":"36,3","tryk":"0,51","alder":"12 minutter","grund":"Alle fire aflæsninger er inden for grænserne."},{"id":"ST-15","frem":"71,8","retur":"36,5","tryk":"0,50","alder":"8 minutter","grund":"Alle fire aflæsninger er inden for grænserne."},{"id":"ST-16","frem":"72,2","retur":"35,9","tryk":"0,42","alder":"14 minutter","grund":"Alle fire aflæsninger er inden for grænserne."},{"id":"ST-17","frem":"84,6","retur":"38,3","tryk":"0,78","alder":"8 minutter","grund":"Alle fire aflæsninger er inden for grænserne."},{"id":"ST-18","frem":"75,8","retur":"38,7","tryk":"0,35","alder":"1 minut","grund":"Alle fire aflæsninger er inden for grænserne."},{"id":"ST-19","frem":"79,1","retur":"40,4","tryk":"0,21","alder":"2 minutter","grund":"Differenstryk 0,21 bar, 0,09 under båndet."},{"id":"ST-20","frem":"70,1","retur":"42,4","tryk":"0,70","alder":"11 minutter","grund":"Alle fire aflæsninger er inden for grænserne."},{"id":"ST-21","frem":"80,8","retur":"43,4","tryk":"0,59","alder":"5 minutter","grund":"Alle fire aflæsninger er inden for grænserne."},{"id":"ST-22","frem":"71,4","retur":"35,4","tryk":"0,79","alder":"2 minutter","grund":"Alle fire aflæsninger er inden for grænserne."},{"id":"ST-23","frem":"84,2","retur":"42,5","tryk":"0,60","alder":"14 minutter","grund":"Alle fire aflæsninger er inden for grænserne."},{"id":"ST-24","frem":"68,5","retur":"41,6","tryk":"0,67","alder":"8 minutter","grund":"Alle fire aflæsninger er inden for grænserne."},{"id":"ST-25","frem":"82,6","retur":"36,2","tryk":"0,54","alder":"14 minutter","grund":"Alle fire aflæsninger er inden for grænserne."},{"id":"ST-26","frem":"76,2","retur":"38,9","tryk":"0,55","alder":"23 minutter","grund":"Aflæsningen er 23 minutter gammel."},{"id":"ST-27","frem":"87,9","retur":"43,5","tryk":"0,72","alder":"12 minutter","grund":"Alle fire aflæsninger er inden for grænserne."},{"id":"ST-28","frem":"71,0","retur":"41,4","tryk":"0,34","alder":"4 minutter","grund":"Alle fire aflæsninger er inden for grænserne."},{"id":"ST-29","frem":"77,0","retur":"36,9","tryk":"0,71","alder":"8 minutter","grund":"Alle fire aflæsninger er inden for grænserne."},{"id":"ST-30","frem":"72,3","retur":"40,6","tryk":"0,74","alder":"13 minutter","grund":"Alle fire aflæsninger er inden for grænserne."},{"id":"ST-31","frem":"71,2","retur":"47,6","tryk":"0,94","alder":"4 minutter","grund":"Retur 47,6 grader, 2,6 over grænsen. Differenstryk 0,94 bar, 0,04 over båndet."},{"id":"ST-32","frem":"80,5","retur":"33,5","tryk":"0,49","alder":"17 minutter","grund":"Alle fire aflæsninger er inden for grænserne."},{"id":"ST-33","frem":"82,1","retur":"42,3","tryk":"0,58","alder":"10 minutter","grund":"Alle fire aflæsninger er inden for grænserne."},{"id":"ST-34","frem":"79,6","retur":"35,1","tryk":"0,51","alder":"7 minutter","grund":"Alle fire aflæsninger er inden for grænserne."},{"id":"ST-35","frem":"86,9","retur":"40,0","tryk":"0,66","alder":"11 minutter","grund":"Alle fire aflæsninger er inden for grænserne."},{"id":"ST-36","frem":"83,3","retur":"43,9","tryk":"0,44","alder":"2 minutter","grund":"Alle fire aflæsninger er inden for grænserne."},{"id":"ST-37","frem":"71,6","retur":"39,3","tryk":"0,62","alder":"16 minutter","grund":"Alle fire aflæsninger er inden for grænserne."},{"id":"ST-38","frem":"86,2","retur":"40,8","tryk":"0,67","alder":"4 minutter","grund":"Alle fire aflæsninger er inden for grænserne."},{"id":"ST-39","frem":"72,8","retur":"37,1","tryk":"0,82","alder":"9 minutter","grund":"Alle fire aflæsninger er inden for grænserne."},{"id":"ST-40","frem":"78,0","retur":"41,3","tryk":"0,69","alder":"12 minutter","grund":"Alle fire aflæsninger er inden for grænserne."},{"id":"ST-41","frem":"70,5","retur":"36,7","tryk":"0,85","alder":"9 minutter","grund":"Alle fire aflæsninger er inden for grænserne."},{"id":"ST-42","frem":"73,6","retur":"40,1","tryk":"0,41","alder":"16 minutter","grund":"Alle fire aflæsninger er inden for grænserne."},{"id":"ST-43","frem":"83,7","retur":"37,0","tryk":"0,56","alder":"9 minutter","grund":"Alle fire aflæsninger er inden for grænserne."},{"id":"ST-44","frem":"77,0","retur":"39,8","tryk":"0,61","alder":"34 minutter","grund":"Aflæsningen er 34 minutter gammel."},{"id":"ST-45","frem":"78,2","retur":"38,7","tryk":"0,70","alder":"1 minut","grund":"Alle fire aflæsninger er inden for grænserne."},{"id":"ST-46","frem":"84,8","retur":"41,4","tryk":"0,84","alder":"8 minutter","grund":"Alle fire aflæsninger er inden for grænserne."},{"id":"ST-47","frem":"80,1","retur":"36,3","tryk":"0,52","alder":"3 minutter","grund":"Alle fire aflæsninger er inden for grænserne."},{"id":"ST-48","frem":"81,7","retur":"40,9","tryk":"0,50","alder":"3 minutter","grund":"Alle fire aflæsninger er inden for grænserne."},{"id":"ST-49","frem":"84,6","retur":"38,8","tryk":"0,43","alder":"6 minutter","grund":"Alle fire aflæsninger er inden for grænserne."},{"id":"ST-50","frem":"75,9","retur":"42,8","tryk":"0,75","alder":"10 minutter","grund":"Alle fire aflæsninger er inden for grænserne."},{"id":"ST-51","frem":"84,0","retur":"34,8","tryk":"0,78","alder":"4 minutter","grund":"Alle fire aflæsninger er inden for grænserne."},{"id":"ST-52","frem":"82,5","retur":"49,3","tryk":"0,72","alder":"1 minut","grund":"Retur 49,3 grader, 4,3 over grænsen."},{"id":"ST-53","frem":"68,3","retur":"42,0","tryk":"0,63","alder":"11 minutter","grund":"Alle fire aflæsninger er inden for grænserne."},{"id":"ST-54","frem":"82,2","retur":"37,6","tryk":"0,68","alder":"5 minutter","grund":"Alle fire aflæsninger er inden for grænserne."},{"id":"ST-55","frem":"81,5","retur":"41,7","tryk":"0,39","alder":"10 minutter","grund":"Alle fire aflæsninger er inden for grænserne."},{"id":"ST-56","frem":"82,5","retur":"38,8","tryk":"0,59","alder":"5 minutter","grund":"Alle fire aflæsninger er inden for grænserne."},{"id":"ST-57","frem":"72,2","retur":"40,3","tryk":"0,85","alder":"7 minutter","grund":"Alle fire aflæsninger er inden for grænserne."},{"id":"ST-58","frem":"77,7","retur":"38,1","tryk":"0,77","alder":"6 minutter","grund":"Alle fire aflæsninger er inden for grænserne."},{"id":"ST-59","frem":"86,3","retur":"35,6","tryk":"0,48","alder":"12 minutter","grund":"Alle fire aflæsninger er inden for grænserne."},{"id":"ST-60","frem":"80,8","retur":"38,3","tryk":"0,73","alder":"11 minutter","grund":"Alle fire aflæsninger er inden for grænserne."},{"id":"ST-61","frem":"84,2","retur":"37,9","tryk":"0,52","alder":"2 minutter","grund":"Alle fire aflæsninger er inden for grænserne."}];
+var KORT = {};
+for (var i = 0; i < STATIONER.length; i++) KORT[STATIONER[i].id] = STATIONER[i];
+
+var montører = [
+  { navn: "Palle", stand: "kører", station: "ST-31" },
+  { navn: "Sanne", stand: "fri", station: null },
+  { navn: "Vagn", stand: "på stedet", station: "ST-08" }
+];
+
+var journal = [
+  { når: "06:31", station: "ST-23", montør: "Sanne", årsag: "Aflæsningen udeblev i 40 minutter", slut: "07:58", flyttet: null },
+  { når: "06:48", station: "ST-08", montør: "Vagn", årsag: "Retur 46,8 grader efter vagtskiftet", slut: null, flyttet: null },
+  { når: "09:26", station: "ST-31", montør: "Palle", årsag: "Retur 47,6 grader og differenstryk 0,94 bar", slut: null, flyttet: null }
+];
+
+var NU = "09:41";
+var valgt = null;
+var åbenBekræft = null;
+
+var q = function (s) { return document.querySelector(s); };
+var beskedFelt = q("#besked");
+var siger = function (t) { beskedFelt.textContent = t; };
+
+/* ---- ledningsnettet, roving tabindex ---- */
+var net = q("#ledningsnet");
+var snitKnapper = Array.prototype.slice.call(net.querySelectorAll(".stn"));
+if (snitKnapper.length) snitKnapper[0].tabIndex = 0;
+
+var flytFokus = function (fra, til) {
+  if (til < 0 || til >= snitKnapper.length) return;
+  snitKnapper[fra].tabIndex = -1;
+  snitKnapper[til].tabIndex = 0;
+  snitKnapper[til].focus();
+};
+
+var kolonner = function () {
+  var bredde = net.getBoundingClientRect().width;
+  var enkelt = snitKnapper[0].getBoundingClientRect().width;
+  return Math.max(1, Math.round(bredde / enkelt));
+};
+
+net.addEventListener("keydown", function (e) {
+  var her = snitKnapper.indexOf(document.activeElement);
+  if (her < 0) return;
+  var k = kolonner();
+  var mål = null;
+  if (e.key === "ArrowRight") mål = her + 1;
+  else if (e.key === "ArrowLeft") mål = her - 1;
+  else if (e.key === "ArrowDown") mål = Math.min(her + k, snitKnapper.length - 1);
+  else if (e.key === "ArrowUp") mål = Math.max(her - k, 0);
+  else if (e.key === "Home") mål = 0;
+  else if (e.key === "End") mål = snitKnapper.length - 1;
+  if (mål === null) return;
+  e.preventDefault();
+  flytFokus(her, mål);
+});
+
+/* ---- valg af station ---- */
+var vælg = function (id, flytFokusTilPanel) {
+  valgt = id;
+  var s = KORT[id];
+  q("#valgt-tom").hidden = true;
+  q("#valgt-indhold").hidden = false;
+  q("#valgt-id").textContent = s.id;
+  q("#v-frem").textContent = s.frem;
+  q("#v-retur").textContent = s.retur;
+  q("#v-tryk").textContent = s.tryk;
+  q("#v-alder").textContent = s.alder;
+  var grund = q("#v-grund");
+  grund.textContent = s.grund;
+  grund.className = s.grund.indexOf("inden for") === -1 ? "dom brud" : "dom";
+  ryd();
+  q("#årsag").value = "";
+  tegnMontørValg();
+  var alle = document.querySelectorAll("[data-stn]");
+  for (var i = 0; i < alle.length; i++) {
+    alle[i].setAttribute("aria-pressed", alle[i].getAttribute("data-stn") === id ? "true" : "false");
+  }
+  siger("Valgt station " + s.id + ". " + s.grund);
+  if (flytFokusTilPanel) q("#valgt-h").focus();
+};
+
+document.addEventListener("click", function (e) {
+  var knap = e.target.closest ? e.target.closest("[data-stn]") : null;
+  if (!knap) return;
+  vælg(knap.getAttribute("data-stn"), true);
+});
+
+/* ---- montører ---- */
+var aktivtUdkald = function (navn) {
+  for (var i = 0; i < journal.length; i++) {
+    if (journal[i].montør === navn && !journal[i].slut) return journal[i];
+  }
+  return null;
+};
+
+var tegnMontørValg = function () {
+  var v = q("#montør");
+  v.innerHTML = "";
+  var tom = document.createElement("option");
+  tom.value = "";
+  tom.textContent = "Vælg montør";
+  v.appendChild(tom);
+  for (var i = 0; i < montører.length; i++) {
+    var m = montører[i];
+    var o = document.createElement("option");
+    o.value = m.navn;
+    if (m.stand === "fri") {
+      o.textContent = m.navn + ", fri";
+    } else {
+      o.textContent = m.navn + ", " + m.stand + " ved " + m.station + ". Afslut eller flyt det udkald først.";
+      o.disabled = true;
+    }
+    v.appendChild(o);
+  }
+};
+
+var tegnMontører = function () {
+  var liste = q("#montør-liste");
+  liste.innerHTML = "";
+  for (var i = 0; i < montører.length; i++) {
+    (function (m) {
+      var li = document.createElement("li");
+      li.className = "montør";
+      var navn = document.createElement("p");
+      navn.className = "montør-navn";
+      navn.textContent = m.navn;
+      li.appendChild(navn);
+      var stand = document.createElement("p");
+      stand.className = "montør-stand";
+      stand.textContent = m.stand === "fri" ? "Fri, ingen udkald." : m.stand.charAt(0).toUpperCase() + m.stand.slice(1) + " ved " + m.station + ".";
+      li.appendChild(stand);
+      var u = aktivtUdkald(m.navn);
+      if (u) {
+        var grund = document.createElement("p");
+        grund.className = "montør-grund";
+        grund.textContent = "Sendt " + u.når + ". " + u.årsag + ".";
+        li.appendChild(grund);
+        var h = document.createElement("div");
+        h.className = "handlinger";
+        var flyt = document.createElement("button");
+        flyt.type = "button";
+        flyt.className = "knap let";
+        flyt.textContent = "Flyt udkaldet på " + u.station;
+        flyt.addEventListener("click", function () { bekræftFlyt(li, u, m); });
+        h.appendChild(flyt);
+        var slut = document.createElement("button");
+        slut.type = "button";
+        slut.className = "knap let slut";
+        slut.textContent = "Afslut udkaldet på " + u.station;
+        slut.addEventListener("click", function () { bekræftAfslut(li, u, m); });
+        h.appendChild(slut);
+        li.appendChild(h);
+      }
+      liste.appendChild(li);
+    })(montører[i]);
+  }
+};
+
+var lukBekræft = function () {
+  if (åbenBekræft && åbenBekræft.parentNode) åbenBekræft.parentNode.removeChild(åbenBekræft);
+  åbenBekræft = null;
+};
+
+var bekræftAfslut = function (li, u, m) {
+  lukBekræft();
+  var boks = document.createElement("div");
+  boks.className = "bekræft";
+  var t = document.createElement("p");
+  t.textContent = "Udkaldet på " + u.station + " lukkes og kan ikke åbnes igen. " + m.navn + " bliver fri. Årsagen bliver stående i journalen.";
+  boks.appendChild(t);
+  var h = document.createElement("div");
+  h.className = "handlinger";
+  var fortryd = document.createElement("button");
+  fortryd.type = "button";
+  fortryd.className = "knap let";
+  fortryd.textContent = "Behold udkaldet";
+  fortryd.addEventListener("click", function () { lukBekræft(); siger("Udkaldet på " + u.station + " står stadig åbent."); });
+  h.appendChild(fortryd);
+  var ja = document.createElement("button");
+  ja.type = "button";
+  ja.className = "knap slut";
+  ja.textContent = "Afslut udkaldet";
+  ja.addEventListener("click", function () {
+    u.slut = NU;
+    m.stand = "fri";
+    m.station = null;
+    lukBekræft();
+    tegn();
+    siger("Udkaldet på " + u.station + " er afsluttet " + NU + ". " + m.navn + " er fri.");
+  });
+  h.appendChild(ja);
+  boks.appendChild(h);
+  li.appendChild(boks);
+  åbenBekræft = boks;
+  fortryd.focus();
+};
+
+var bekræftFlyt = function (li, u, m) {
+  lukBekræft();
+  var boks = document.createElement("div");
+  boks.className = "bekræft";
+  var fri = montører.filter(function (x) { return x.stand === "fri"; });
+  if (!fri.length) {
+    var ingen = document.createElement("p");
+    ingen.textContent = "Ingen montør er fri lige nu, så udkaldet kan ikke flyttes. Afslut et af de andre udkald først.";
+    boks.appendChild(ingen);
+    var luk = document.createElement("button");
+    luk.type = "button";
+    luk.className = "knap let";
+    luk.textContent = "Luk";
+    luk.addEventListener("click", lukBekræft);
+    boks.appendChild(luk);
+    li.appendChild(boks);
+    åbenBekræft = boks;
+    luk.focus();
+    return;
+  }
+  var id = "flyt-" + u.station.replace(/[^A-Za-z0-9]/g, "");
+  var lab = document.createElement("label");
+  lab.setAttribute("for", id);
+  lab.textContent = "Flyt udkaldet på " + u.station + " til";
+  boks.appendChild(lab);
+  var v = document.createElement("select");
+  v.id = id;
+  for (var i = 0; i < fri.length; i++) {
+    var o = document.createElement("option");
+    o.value = fri[i].navn;
+    o.textContent = fri[i].navn + ", fri";
+    v.appendChild(o);
+  }
+  boks.appendChild(v);
+  var h = document.createElement("div");
+  h.className = "handlinger";
+  var fortryd = document.createElement("button");
+  fortryd.type = "button";
+  fortryd.className = "knap let";
+  fortryd.textContent = "Behold " + m.navn;
+  fortryd.addEventListener("click", function () { lukBekræft(); siger("Udkaldet på " + u.station + " bliver hos " + m.navn + "."); });
+  h.appendChild(fortryd);
+  var ja = document.createElement("button");
+  ja.type = "button";
+  ja.className = "knap";
+  ja.textContent = "Flyt udkaldet";
+  ja.addEventListener("click", function () {
+    var ny = v.value;
+    for (var j = 0; j < montører.length; j++) {
+      if (montører[j].navn === ny) { montører[j].stand = "kører"; montører[j].station = u.station; }
+    }
+    m.stand = "fri";
+    m.station = null;
+    u.montør = ny;
+    u.flyttet = NU;
+    lukBekræft();
+    tegn();
+    siger("Udkaldet på " + u.station + " er flyttet til " + ny + " klokken " + NU + ". " + m.navn + " er fri.");
+  });
+  h.appendChild(ja);
+  boks.appendChild(h);
+  li.appendChild(boks);
+  åbenBekræft = boks;
+  v.focus();
+};
+
+/* ---- journal ---- */
+var tegnJournal = function () {
+  var ol = q("#journal");
+  ol.innerHTML = "";
+  for (var i = 0; i < journal.length; i++) {
+    var u = journal[i];
+    var li = document.createElement("li");
+    var når = document.createElement("span");
+    når.className = "når";
+    når.textContent = u.når;
+    li.appendChild(når);
+    var t = " " + u.station + ", " + u.montør + ". " + u.årsag + ". ";
+    if (u.slut) t += "Afsluttet " + u.slut + ".";
+    else if (u.flyttet) t += "Flyttet " + u.flyttet + " og stadig åbent.";
+    else t += "Åbent.";
+    li.appendChild(document.createTextNode(t));
+    ol.appendChild(li);
+  }
+  q("#bund-udkald").textContent = String(journal.length);
+  q("#bund-slut").textContent = String(journal.filter(function (u) { return u.slut; }).length);
+};
+
+var tegn = function () { tegnMontører(); tegnJournal(); tegnMontørValg(); };
+
+/* ---- udkaldsformularen ---- */
+var ryd = function () {
+  q("#fejlsum").hidden = true;
+  q("#fejlliste").innerHTML = "";
+  q("#montør-fejl").hidden = true;
+  q("#årsag-fejl").hidden = true;
+  q("#montør").removeAttribute("aria-invalid");
+  q("#årsag").removeAttribute("aria-invalid");
+};
+
+q("#udkald-form").addEventListener("submit", function (e) {
+  e.preventDefault();
+  ryd();
+  var fejl = [];
+  var m = q("#montør").value;
+  var årsag = q("#årsag").value.trim();
+  if (!m) {
+    fejl.push(["montør", "Vælg den montør der skal køre."]);
+    q("#montør-fejl").hidden = false;
+    q("#montør").setAttribute("aria-invalid", "true");
+  }
+  if (!årsag) {
+    fejl.push(["årsag", "Skriv en kort årsag. Udkaldet sendes ikke uden."]);
+    q("#årsag-fejl").hidden = false;
+    q("#årsag").setAttribute("aria-invalid", "true");
+  }
+  if (fejl.length) {
+    var ul = q("#fejlliste");
+    for (var i = 0; i < fejl.length; i++) {
+      var li = document.createElement("li");
+      var a = document.createElement("a");
+      a.href = "#" + fejl[i][0];
+      a.textContent = fejl[i][1];
+      a.addEventListener("click", function (ev) {
+        ev.preventDefault();
+        document.getElementById(this.getAttribute("href").slice(1)).focus();
+      });
+      li.appendChild(a);
+      ul.appendChild(li);
+    }
+    q("#fejlsum").hidden = false;
+    q("#fejlsum").focus();
+    siger("Udkaldet blev ikke sendt. " + (fejl.length === 1 ? "Et felt mangler." : fejl.length + " felter mangler."));
+    return;
+  }
+  journal.push({ når: NU, station: valgt, montør: m, årsag: årsag, slut: null, flyttet: null });
+  for (var j = 0; j < montører.length; j++) {
+    if (montører[j].navn === m) { montører[j].stand = "kører"; montører[j].station = valgt; }
+  }
+  q("#årsag").value = "";
+  tegn();
+  siger("Montør sendt til " + valgt + ". " + m + " kører. Årsag: " + årsag);
+});
+
+tegn();
+</script>
+</body>
+</html>

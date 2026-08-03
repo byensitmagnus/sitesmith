@@ -1,0 +1,4479 @@
+{
+  "schemaVersion": "1.1.0",
+  "generatedAt": "2026-07-30",
+  "frozenSources": [
+    {
+      "sourceRepository": "https://github.com/Leonxlnx/taste-skill.git",
+      "sourceCommit": "e988add20dab0fa97d7a76781c48961c8184288e"
+    },
+    {
+      "sourceRepository": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "sourceCommit": "4857a2c5ef989794751a0f66b8545a4a49566286"
+    },
+    {
+      "sourceRepository": "https://github.com/anthropics/skills",
+      "sourceCommit": "b29e7cf65e5cb78a5ac33d582270551bc74a14eb"
+    },
+    {
+      "sourceRepository": "https://github.com/pbakaus/impeccable.git",
+      "sourceCommit": "6b342244e915d64b0d6e84d5eec448fd196ce6bb"
+    }
+  ],
+  "capabilities": [
+    {
+      "capabilityId": "TASTE-CAP-001",
+      "sourceRepository": "https://github.com/Leonxlnx/taste-skill.git",
+      "sourceCommit": "e988add20dab0fa97d7a76781c48961c8184288e",
+      "sourceFiles": [
+        "README.md",
+        "skill.sh",
+        "skills/llms.txt",
+        ".claude-plugin/marketplace.json",
+        ".claude-plugin/plugin.json"
+      ],
+      "sourceLines": [
+        "README.md:L75-L147",
+        "skill.sh:L3-L24",
+        "skills/llms.txt:L1-L13",
+        ".claude-plugin/marketplace.json:L1-L20",
+        ".claude-plugin/plugin.json:L1-L19"
+      ],
+      "activationMechanism": "External npx skills add scan, direct Markdown copy/paste, Claude plugin discovery, or local Bash alias lookup.",
+      "inputs": [
+        "Git repository URL",
+        "Optional frontmatter install name",
+        "Host-specific skill/plugin loader"
+      ],
+      "outputs": [
+        "One or all installed SKILL.md prompt packages",
+        "For skill.sh, a relative path printed to stdout"
+      ],
+      "persistentArtifacts": [
+        "Host-owned installed skill copies; location and metadata are not defined by Taste"
+      ],
+      "runtimeBehavior": "The external installer scans skills/; skill.sh maps 13 aliases to file paths and prints one.",
+      "deterministicParts": [
+        "Pinned frontmatter names",
+        "Static alias-to-path map"
+      ],
+      "nondeterministicParts": [
+        "External CLI version and install semantics",
+        "Host trigger matching and precedence"
+      ],
+      "userDecisionPoints": [
+        "Install all skills or one named skill",
+        "Use experimental v2 or pinned v1"
+      ],
+      "strengths": [
+        "Portable Markdown packaging",
+        "README distinguishes folder names from install names"
+      ],
+      "failureModes": [
+        "Folder aliases and frontmatter names differ",
+        "Mutable install is not commit/checksum pinned",
+        "Plugin version 1.0.0 does not encode experimental skill v2 state",
+        "Unknown Bash alias has no explicit error branch",
+        "Bash unavailable on audited Windows host"
+      ],
+      "tests": [
+        "13 SKILL.md files and 13 unique frontmatter names enumerated statically",
+        "No tracked installer test, provider-parity test, or CI workflow",
+        "Get-Command bash returned unavailable; skill.sh not executed"
+      ],
+      "networkDependencies": [
+        "GitHub repository access",
+        "npm/npx access for external Vercel agent-skills CLI"
+      ],
+      "license": "MIT, root LICENSE:L1-L20",
+      "attributionRequirements": [
+        "Retain Copyright (c) 2026 Leonxlnx",
+        "Retain the MIT permission notice in copies or substantial portions"
+      ],
+      "sitesmithDecision": "reimplement",
+      "decisionReason": "SiteSmith needs one pinned registry, canonical IDs, explicit aliases, precedence, compatibility, and provider parity rather than external implicit discovery.",
+      "sitesmithSuccessorCapability": "SS3.CAPABILITY_REGISTRY",
+      "requiredImprovement": "Add commit and content hashes, canonical/alias validation, compatibility, conflict priority, provider conformance tests, and explicit unknown-ID errors.",
+      "verificationMethod": "Install from a local frozen fixture into each supported host; assert identical IDs, hashes, priorities, errors, and uninstall behavior without network access.",
+      "integrationTreatmentId": "clean-room-standard",
+      "licenceTreatmentId": "taste-mit"
+    },
+    {
+      "capabilityId": "TASTE-CAP-002",
+      "sourceRepository": "https://github.com/Leonxlnx/taste-skill.git",
+      "sourceCommit": "e988add20dab0fa97d7a76781c48961c8184288e",
+      "sourceFiles": [
+        "skills/taste-skill/SKILL.md"
+      ],
+      "sourceLines": [
+        "skills/taste-skill/SKILL.md:L13-L39"
+      ],
+      "activationMechanism": "Runs first after the default skill is triggered.",
+      "inputs": [
+        "Page kind",
+        "Vibe words",
+        "References",
+        "Audience",
+        "Brand",
+        "Constraints"
+      ],
+      "outputs": [
+        "One-line Design Read naming language, three dial values, system, and reason",
+        "At most one clarification question when materially divergent choices exist"
+      ],
+      "persistentArtifacts": [],
+      "runtimeBehavior": "The model infers missing signals, states a compact direction, and proceeds unless ambiguity is judged material.",
+      "deterministicParts": [
+        "Six named signal categories",
+        "Required one-line field order",
+        "One-question ceiling"
+      ],
+      "nondeterministicParts": [
+        "Signal extraction",
+        "Materiality/confidence judgment",
+        "Direction and rationale"
+      ],
+      "userDecisionPoints": [
+        "Answer the one clarification question if asked",
+        "Supply explicit references or constraints"
+      ],
+      "strengths": [
+        "Makes hidden assumptions visible before code",
+        "Separates aesthetic direction from implementation system"
+      ],
+      "failureModes": [
+        "No evidence pointer or confidence per inferred field",
+        "No schema or persisted artifact",
+        "One question can be insufficient",
+        "Plausible prose can hide unsupported inference"
+      ],
+      "tests": [
+        "Examples exist at source lines 27-31",
+        "No brief fixture set, expected outputs, or parser tests"
+      ],
+      "networkDependencies": [],
+      "license": "MIT, root LICENSE:L1-L20",
+      "attributionRequirements": [
+        "Preserve MIT notice if wording/schema is copied substantially"
+      ],
+      "sitesmithDecision": "adapt",
+      "decisionReason": "The visible pre-build commitment is useful, but it must become source-linked structured evidence rather than ephemeral prose.",
+      "sitesmithSuccessorCapability": "SS3.BRIEF_EVIDENCE",
+      "requiredImprovement": "Persist brief.json with value, source, confidence, explicit/inferred/unknown status, materiality, and unresolved decisions.",
+      "verificationMethod": "Run gold fixtures covering explicit, missing, contradictory, and reference-led briefs; assert stable schema, correct evidence, calibrated unknowns, and no implementation before blockers close.",
+      "integrationTreatmentId": "spec-compatible-standard",
+      "licenceTreatmentId": "taste-mit"
+    },
+    {
+      "capabilityId": "TASTE-CAP-003",
+      "sourceRepository": "https://github.com/Leonxlnx/taste-skill.git",
+      "sourceCommit": "e988add20dab0fa97d7a76781c48961c8184288e",
+      "sourceFiles": [
+        "skills/taste-skill/SKILL.md",
+        "README.md"
+      ],
+      "sourceLines": [
+        "skills/taste-skill/SKILL.md:L43-L78;L552-L568",
+        "README.md:L157-L163"
+      ],
+      "activationMechanism": "After Design Read; explicit conversational/user values override inferred presets.",
+      "inputs": [
+        "Brief signals",
+        "Optional explicit DESIGN_VARIANCE",
+        "Optional explicit MOTION_INTENSITY",
+        "Optional explicit VISUAL_DENSITY"
+      ],
+      "outputs": [
+        "Three 1-10 dial levels",
+        "Behavioral bands and use-case preset choice"
+      ],
+      "persistentArtifacts": [],
+      "runtimeBehavior": "Natural-language cues map to preset values; baseline is 8/6/4 only when no override exists.",
+      "deterministicParts": [
+        "Dial names and nominal ranges",
+        "Published presets and level bands",
+        "Explicit override precedence"
+      ],
+      "nondeterministicParts": [
+        "Cue interpretation",
+        "Mapping when several presets fit",
+        "Concrete downstream rule selection"
+      ],
+      "userDecisionPoints": [
+        "Set or override any dial"
+      ],
+      "strengths": [
+        "Compact direction control",
+        "Separates layout, motion, and density"
+      ],
+      "failureModes": [
+        "Presets are not typed policy",
+        "No provenance or conflict reconciliation",
+        "Same values vary across models"
+      ],
+      "tests": [
+        "Static preset and band tables exist",
+        "No mapping fixtures or determinism tests"
+      ],
+      "networkDependencies": [],
+      "license": "MIT, root LICENSE:L1-L20",
+      "attributionRequirements": [
+        "Preserve MIT notice if dial text/tables are copied substantially"
+      ],
+      "sitesmithDecision": "adapt",
+      "decisionReason": "Keep the understandable controls as priors, but compile them into explicit constraints with bounded effects.",
+      "sitesmithSuccessorCapability": "SS3.DIRECTION_POLICY",
+      "requiredImprovement": "Define typed ranges, cue weights, conflict order, allowed effects, seed, confidence, and persisted direction.json.",
+      "verificationMethod": "Snapshot table-driven fixtures; identical normalized brief plus seed must produce identical policy and explicit overrides must always win.",
+      "integrationTreatmentId": "spec-compatible-standard",
+      "licenceTreatmentId": "taste-mit"
+    },
+    {
+      "capabilityId": "TASTE-CAP-004",
+      "sourceRepository": "https://github.com/Leonxlnx/taste-skill.git",
+      "sourceCommit": "e988add20dab0fa97d7a76781c48961c8184288e",
+      "sourceFiles": [
+        "skills/taste-skill/SKILL.md"
+      ],
+      "sourceLines": [
+        "skills/taste-skill/SKILL.md:L82-L118;L122-L157;L983-L1109"
+      ],
+      "activationMechanism": "Runs after dial inference when brief words or product context imply a known system or aesthetic.",
+      "inputs": [
+        "Normalized brief language",
+        "Product/platform context",
+        "Existing stack and dependency files"
+      ],
+      "outputs": [
+        "One official system or honestly labeled native aesthetic",
+        "Proposed install command for a missing package"
+      ],
+      "persistentArtifacts": [
+        "Project dependency files only if implementation changes them"
+      ],
+      "runtimeBehavior": "Named systems route to official packages; aesthetics route to web standards/custom implementation; one system per project.",
+      "deterministicParts": [
+        "Published system/aesthetic map",
+        "Official-versus-approximation distinction",
+        "Dependency-file inspection requirement"
+      ],
+      "nondeterministicParts": [
+        "Inferred system match",
+        "Current package compatibility",
+        "Whether a system is appropriate"
+      ],
+      "userDecisionPoints": [
+        "Explicitly name or prohibit a system",
+        "Approve materially new dependencies when project policy requires it"
+      ],
+      "strengths": [
+        "Distinguishes systems from aesthetics",
+        "Labels Apple Liquid Glass web work as approximation",
+        "Prefers official implementations"
+      ],
+      "failureModes": [
+        "Commands and URLs can age",
+        "Commands lack versions and lockfile policy",
+        "No license/bundle/security/offline checks",
+        "Inference can conflict with codebase"
+      ],
+      "tests": [
+        "Static maps, commands, and links exist",
+        "No link checker, package-resolution test, or compatibility matrix"
+      ],
+      "networkDependencies": [
+        "npm and selected registries/CDNs",
+        "Official documentation URLs listed at source lines 1033-1109"
+      ],
+      "license": "MIT for Taste text; third-party systems retain separate licenses",
+      "attributionRequirements": [
+        "Preserve Taste MIT notice",
+        "Resolve each dependency license separately"
+      ],
+      "sitesmithDecision": "adapt",
+      "decisionReason": "The routing knowledge is useful, but external facts must be live-validated and constrained by the project.",
+      "sitesmithSuccessorCapability": "SS3.DESIGN_SYSTEM_CATALOG",
+      "requiredImprovement": "Store versioned package IDs, supported stacks, official source, license, bundle impact, last-verified date, and fail-closed compatibility checks.",
+      "verificationMethod": "Resolve each entry in isolated fixtures, validate ownership/license, build minimal projects, and fail closed on stale entries.",
+      "integrationTreatmentId": "spec-compatible-standard",
+      "licenceTreatmentId": "taste-mit"
+    },
+    {
+      "capabilityId": "TASTE-CAP-005",
+      "sourceRepository": "https://github.com/Leonxlnx/taste-skill.git",
+      "sourceCommit": "e988add20dab0fa97d7a76781c48961c8184288e",
+      "sourceFiles": [
+        "skills/taste-skill/SKILL.md",
+        "CHANGELOG.md"
+      ],
+      "sourceLines": [
+        "skills/taste-skill/SKILL.md:L161-L347;L595-L701",
+        "CHANGELOG.md:L34-L65"
+      ],
+      "activationMechanism": "Applied during direction composition and rechecked in preflight.",
+      "inputs": [
+        "Brief and truth-source copy/assets",
+        "Dial policy",
+        "Existing brand/design tokens"
+      ],
+      "outputs": [
+        "Typography, color, shape, layout, content, and anti-slop constraints",
+        "Generated UI/copy"
+      ],
+      "persistentArtifacts": [
+        "Generated source code and content only"
+      ],
+      "runtimeBehavior": "The model applies conditional heuristics and hard bans, including layout-family diversity and anti-AI-tell sweeps.",
+      "deterministicParts": [
+        "Enumerated banned patterns and numerical limits",
+        "One-accent, radius-system, theme, hero-length, and bento rules"
+      ],
+      "nondeterministicParts": [
+        "Premium/generic judgments",
+        "Font/palette/layout rotation",
+        "Contextual exceptions"
+      ],
+      "userDecisionPoints": [
+        "Explicit brand requirements",
+        "Real content and attribution inputs"
+      ],
+      "strengths": [
+        "Broad recurring-failure catalogue",
+        "Calls out fake UI/data, low contrast, repetition, and inconsistency"
+      ],
+      "failureModes": [
+        "Universal bans suppress valid choices",
+        "Previous-project rotation has no state",
+        "Novelty can outrank task success",
+        "Mechanical diversity can reduce coherence"
+      ],
+      "tests": [
+        "CHANGELOG describes prior observations",
+        "No corpus, scorer, screenshots, experiment protocol, or regression suite"
+      ],
+      "networkDependencies": [
+        "Font/icon/image sources if selected"
+      ],
+      "license": "MIT, root LICENSE:L1-L20",
+      "attributionRequirements": [
+        "Preserve MIT notice for substantially copied rule catalogues"
+      ],
+      "sitesmithDecision": "adapt",
+      "decisionReason": "Convert high-signal failure patterns into risk checks; reject prohibition as universal taste policy.",
+      "sitesmithSuccessorCapability": "SS3.CRAFT_CONSTRAINTS",
+      "requiredImprovement": "Classify each rule as invariant, brand constraint, domain default, heuristic, or opt-in style with rationale, severity, exception, and detector.",
+      "verificationMethod": "Use a labeled cross-domain corpus with valid exceptions; measure detector precision/recall and require review escape hatches.",
+      "integrationTreatmentId": "spec-compatible-standard",
+      "licenceTreatmentId": "taste-mit"
+    },
+    {
+      "capabilityId": "TASTE-CAP-006",
+      "sourceRepository": "https://github.com/Leonxlnx/taste-skill.git",
+      "sourceCommit": "e988add20dab0fa97d7a76781c48961c8184288e",
+      "sourceFiles": [
+        "skills/taste-skill/SKILL.md"
+      ],
+      "sourceLines": [
+        "skills/taste-skill/SKILL.md:L262-L296;L333-L339"
+      ],
+      "activationMechanism": "During composition whenever visual assets, logos, product UI, or social proof are needed.",
+      "inputs": [
+        "Brief and section content",
+        "User references/brand assets",
+        "Host image and web capabilities"
+      ],
+      "outputs": [
+        "Generated or sourced images/logos",
+        "Explicit TODO placeholders as last resort",
+        "Implementation using assets"
+      ],
+      "persistentArtifacts": [
+        "Image files and code when host chooses paths; Taste defines no manifest"
+      ],
+      "runtimeBehavior": "Prefer image generation, then relevant brand/open-license assets, then placeholders; fake div screenshots are prohibited.",
+      "deterministicParts": [
+        "Source priority",
+        "Hero visual requirement",
+        "Named logo sources",
+        "Anti-fake-screen rule"
+      ],
+      "nondeterministicParts": [
+        "Provider output",
+        "Asset relevance/license interpretation",
+        "Count, names, retries, and selection"
+      ],
+      "userDecisionPoints": [
+        "Supply or approve brand assets",
+        "Accept generated imagery or fallback"
+      ],
+      "strengths": [
+        "Rejects silent fake screenshots",
+        "Makes missing assets visible"
+      ],
+      "failureModes": [
+        "No provider/prompt/source/rights/checksum/alt/budget/retry manifest",
+        "Remote availability uncontrolled",
+        "Fixed image-count preference can conflict with needs"
+      ],
+      "tests": [
+        "Prose hierarchy exists",
+        "No asset fixture, license validator, broken-link test, or fidelity gate"
+      ],
+      "networkDependencies": [
+        "Host image provider",
+        "Picsum",
+        "Simple Icons/devicon",
+        "Other asset sources"
+      ],
+      "license": "MIT for Taste instructions; each asset requires separate rights evaluation",
+      "attributionRequirements": [
+        "Preserve Taste MIT notice",
+        "Store source-specific license and attribution for each external asset"
+      ],
+      "sitesmithDecision": "reimplement",
+      "decisionReason": "SiteSmith needs a provenance-first asset pipeline, not an implicit model/tool preference.",
+      "sitesmithSuccessorCapability": "SS3.ASSET_PLAN",
+      "requiredImprovement": "Create assets/manifest.json with purpose, source/provider, prompt, model, seed, dimensions, checksum, rights, attribution, alt, status, cost, retries, and selection reason.",
+      "verificationMethod": "Run offline, provider-failure, incompatible-license, duplicate, missing-alt, and budget fixtures; fail closed on unproven production assets.",
+      "integrationTreatmentId": "clean-room-standard",
+      "licenceTreatmentId": "taste-mit"
+    },
+    {
+      "capabilityId": "TASTE-CAP-007",
+      "sourceRepository": "https://github.com/Leonxlnx/taste-skill.git",
+      "sourceCommit": "e988add20dab0fa97d7a76781c48961c8184288e",
+      "sourceFiles": [
+        "skills/taste-skill/SKILL.md"
+      ],
+      "sourceLines": [
+        "skills/taste-skill/SKILL.md:L352-L515;L519-L591;L775-L779"
+      ],
+      "activationMechanism": "Motion is selected when context warrants it; guardrails apply during implementation and preflight.",
+      "inputs": [
+        "Motion dial",
+        "Narrative and interaction needs",
+        "Framework/dependencies",
+        "Reduced-motion and color-scheme preferences"
+      ],
+      "outputs": [
+        "Optional GSAP or Motion code",
+        "Reduced-motion fallback",
+        "Performance/accessibility constraints"
+      ],
+      "persistentArtifacts": [
+        "Source code and dependency metadata only"
+      ],
+      "runtimeBehavior": "Provides three skeletons, bans manual React scroll loops, limits animated properties, and requests CWV, contrast, keyboard, reduced-motion, and theme checks.",
+      "deterministicParts": [
+        "Skeleton code",
+        "Forbidden property/event patterns",
+        "Reduced-motion threshold",
+        "Stated CWV targets"
+      ],
+      "nondeterministicParts": [
+        "Whether motion is motivated",
+        "Library and intensity",
+        "Self-assessed performance result"
+      ],
+      "userDecisionPoints": [
+        "Brand/theme requirements",
+        "Motion or no-motion preference"
+      ],
+      "strengths": [
+        "Motion is conditional",
+        "Reduced motion and transform/opacity are explicit",
+        "Skeletons reduce common errors"
+      ],
+      "failureModes": [
+        "Dual-mode default can exceed scope",
+        "No executable browser gate",
+        "Pinned scrolling can harm UX",
+        "Versions and cleanup unverified"
+      ],
+      "tests": [
+        "Code snippets exist without fixture tests",
+        "No Lighthouse, axe, Playwright, trace, or reduced-motion artifacts"
+      ],
+      "networkDependencies": [
+        "npm packages for selected motion/framework/font/icon dependencies"
+      ],
+      "license": "MIT for Taste text/snippets; third-party licenses apply separately",
+      "attributionRequirements": [
+        "Preserve Taste MIT notice",
+        "Preserve selected library notices"
+      ],
+      "sitesmithDecision": "adapt",
+      "decisionReason": "Retain conditional motion and accessibility principles, but enforce them through measurable project-aware gates.",
+      "sitesmithSuccessorCapability": "SS3.MOTION_AND_A11Y_CONTRACT",
+      "requiredImprovement": "Compile intent per component, record necessity, enforce cleanup and reduced-motion, honor theme scope, and attach browser evidence.",
+      "verificationMethod": "Automate target-view interaction tests, reduced motion, axe, Lighthouse/CWV, long-task traces, cleanup, and overflow assertions.",
+      "integrationTreatmentId": "spec-compatible-standard",
+      "licenceTreatmentId": "taste-mit"
+    },
+    {
+      "capabilityId": "TASTE-CAP-008",
+      "sourceRepository": "https://github.com/Leonxlnx/taste-skill.git",
+      "sourceCommit": "e988add20dab0fa97d7a76781c48961c8184288e",
+      "sourceFiles": [
+        "skills/taste-skill/SKILL.md",
+        "skills/redesign-skill/SKILL.md"
+      ],
+      "sourceLines": [
+        "skills/taste-skill/SKILL.md:L783-L831",
+        "skills/redesign-skill/SKILL.md:L8-L178"
+      ],
+      "activationMechanism": "Triggered for existing-project/redesign requests; classify Greenfield, Preserve, or Overhaul.",
+      "inputs": [
+        "Existing source tree and stack",
+        "Current IA/copy/components/a11y/analytics/brand/legal text",
+        "Redesign scope"
+      ],
+      "outputs": [
+        "Audit",
+        "Mode selection",
+        "Targeted changes",
+        "Approval request for protected contracts"
+      ],
+      "persistentArtifacts": [
+        "Modified project files",
+        "Audit requested but no canonical path/schema"
+      ],
+      "runtimeBehavior": "Read before editing, preserve functional contracts, prioritize high-impact levers, and avoid rewriting by default.",
+      "deterministicParts": [
+        "Three mode labels",
+        "Preservation list",
+        "Protected changes",
+        "Scan-diagnose-fix sequence"
+      ],
+      "nondeterministicParts": [
+        "Audit completeness",
+        "Mode decision",
+        "Visual quality judgment"
+      ],
+      "userDecisionPoints": [
+        "Approve protected contract changes",
+        "Resolve ambiguous Preserve versus Overhaul"
+      ],
+      "strengths": [
+        "Surgical posture",
+        "Preserves a11y and analytics",
+        "Requires stack inspection"
+      ],
+      "failureModes": [
+        "No baseline, inventory, ledger, rollback, or independent comparison",
+        "Sibling suggests fabricated content/random dates",
+        "Style fixes can override brand"
+      ],
+      "tests": [
+        "Detailed prose audit exists",
+        "No baseline, DOM/API contract, screenshot, or rollback tests"
+      ],
+      "networkDependencies": [
+        "Optional assets/fonts/dependencies introduced by redesign"
+      ],
+      "license": "MIT, root LICENSE:L1-L20",
+      "attributionRequirements": [
+        "Preserve MIT notice for substantially copied audit text"
+      ],
+      "sitesmithDecision": "adapt",
+      "decisionReason": "Preserve-mode discipline is core-worthy; content fabrication and unrecorded subjective rewrites are not.",
+      "sitesmithSuccessorCapability": "SS3.REDESIGN_BASELINE",
+      "requiredImprovement": "Persist baseline and protected contracts, derive change budget, ban fabricated facts, require diff/proof, and make rollback explicit.",
+      "verificationMethod": "Use legacy fixtures with routes/forms/analytics/a11y tests before and after; assert protected contracts, scoped diffs, visual comparison, and rollback.",
+      "integrationTreatmentId": "spec-compatible-standard",
+      "licenceTreatmentId": "taste-mit"
+    },
+    {
+      "capabilityId": "TASTE-CAP-009",
+      "sourceRepository": "https://github.com/Leonxlnx/taste-skill.git",
+      "sourceCommit": "e988add20dab0fa97d7a76781c48961c8184288e",
+      "sourceFiles": [
+        "skills/taste-skill/SKILL.md"
+      ],
+      "sourceLines": [
+        "skills/taste-skill/SKILL.md:L910-L979"
+      ],
+      "activationMechanism": "Required immediately before declaring the page complete.",
+      "inputs": [
+        "Built page",
+        "Brief/dials/system",
+        "Copy/assets/interactions"
+      ],
+      "outputs": [
+        "Self-assessed pass/fail across 62 Markdown checkboxes",
+        "Prompt-directed repairs"
+      ],
+      "persistentArtifacts": [],
+      "runtimeBehavior": "The same model checks brief, visual craft, hero, assets, motion, performance, a11y, copy, responsiveness, and AI tells.",
+      "deterministicParts": [
+        "62 enumerated checklist items"
+      ],
+      "nondeterministicParts": [
+        "Every pass/fail judgment",
+        "Repair completeness",
+        "Whether checks executed"
+      ],
+      "userDecisionPoints": [],
+      "strengths": [
+        "Broad risk coverage",
+        "Failed item nominally blocks completion"
+      ],
+      "failureModes": [
+        "Self-attestation is not proof",
+        "Subjective checks lack thresholds",
+        "No evidence path/tool versions/retry limits",
+        "No independent verifier"
+      ],
+      "tests": [
+        "Static probe counted 62 items",
+        "No executable preflight or recorded result"
+      ],
+      "networkDependencies": [
+        "Any external Lighthouse/browser tooling chosen by host; undefined by Taste"
+      ],
+      "license": "MIT, root LICENSE:L1-L20",
+      "attributionRequirements": [
+        "Preserve MIT notice for substantially copied checklist"
+      ],
+      "sitesmithDecision": "reimplement",
+      "decisionReason": "SiteSmith needs an executable evidence gate with separate policy and measurement layers.",
+      "sitesmithSuccessorCapability": "SS3.RELEASE_GATES",
+      "requiredImprovement": "Map each item to invariant, static detector, browser detector, visual reviewer, or waiver and persist all evidence.",
+      "verificationMethod": "Seed defects across fixtures; require each gate to catch its defect, control false positives, rerun reproducibly, and block unwaived failures.",
+      "integrationTreatmentId": "clean-room-standard",
+      "licenceTreatmentId": "taste-mit"
+    },
+    {
+      "capabilityId": "TASTE-CAP-010",
+      "sourceRepository": "https://github.com/Leonxlnx/taste-skill.git",
+      "sourceCommit": "e988add20dab0fa97d7a76781c48961c8184288e",
+      "sourceFiles": [
+        "skills/taste-skill/SKILL.md"
+      ],
+      "sourceLines": [
+        "skills/taste-skill/SKILL.md:L705-L779;L835-L893"
+      ],
+      "activationMechanism": "Pattern names inform composition; a planned block registry would provide implementations.",
+      "inputs": [
+        "Direction policy",
+        "Content structure",
+        "Framework/dependency constraints"
+      ],
+      "outputs": [
+        "Selected pattern names",
+        "Future block files with metadata and implementation notes"
+      ],
+      "persistentArtifacts": [
+        "None at HEAD; declared skills/taste-skill/blocks directory is absent"
+      ],
+      "runtimeBehavior": "Current vocabulary is descriptive; block section specifies a future directory, frontmatter, body, and discipline contract.",
+      "deterministicParts": [
+        "Named pattern catalogue",
+        "Proposed block metadata/body fields"
+      ],
+      "nondeterministicParts": [
+        "Pattern choice",
+        "Compatibility",
+        "Implementation because blocks are absent"
+      ],
+      "userDecisionPoints": [
+        "Direction/style and allowed dependencies"
+      ],
+      "strengths": [
+        "Calls vocabulary a vocabulary",
+        "Future contract asks for provenance and constraints"
+      ],
+      "failureModes": [
+        "Names can prompt hallucinated code",
+        "No blocks/source/license/tests/version matrix",
+        "Animation rule lacks package ownership"
+      ],
+      "tests": [
+        "Test-Path skills/taste-skill/blocks returned false",
+        "No block tests or fixture renders"
+      ],
+      "networkDependencies": [
+        "Future references and selected dependencies"
+      ],
+      "license": "MIT for Taste catalogue; future blocks need independent license review",
+      "attributionRequirements": [
+        "Preserve Taste MIT notice",
+        "Preserve future block source attribution/licenses"
+      ],
+      "sitesmithDecision": "adapt",
+      "decisionReason": "Keep names as discovery index, but expose only vendored, licensed, tested, compatible implementations.",
+      "sitesmithSuccessorCapability": "SS3.PATTERN_CATALOG",
+      "requiredImprovement": "Require stable block IDs, source commit/license, supported stacks, dependencies, constraints, a11y, fixture, visual baseline, and deprecation policy.",
+      "verificationMethod": "Schema validation plus isolated build/render/a11y tests; reject entries without complete provenance or a green fixture.",
+      "integrationTreatmentId": "spec-compatible-standard",
+      "licenceTreatmentId": "taste-mit"
+    },
+    {
+      "capabilityId": "TASTE-CAP-011",
+      "sourceRepository": "https://github.com/Leonxlnx/taste-skill.git",
+      "sourceCommit": "e988add20dab0fa97d7a76781c48961c8184288e",
+      "sourceFiles": [
+        "skills/image-to-code-skill/SKILL.md",
+        "README.md"
+      ],
+      "sourceLines": [
+        "skills/image-to-code-skill/SKILL.md:L1-L69;L112-L411;L835-L891;L1083-L1142",
+        "README.md:L120;L143-L155"
+      ],
+      "activationMechanism": "Explicit image-to-code selection or prompt phrase generate images, then analyze, then code.",
+      "inputs": [
+        "Website brief",
+        "Optional references",
+        "Host image-generation capability",
+        "Target codebase and stack"
+      ],
+      "outputs": [
+        "Reference images",
+        "Internal visual analysis",
+        "Final implementation files"
+      ],
+      "persistentArtifacts": [
+        "Generated images and code; no prescribed paths or manifest"
+      ],
+      "runtimeBehavior": "Mandates image generation before code for most design work, analyzes details, implements to match, and regenerates weak or missing details.",
+      "deterministicParts": [
+        "Image-analyze-code stage order",
+        "Analysis/fidelity questions",
+        "Direct-code exception categories"
+      ],
+      "nondeterministicParts": [
+        "Provider output and section count",
+        "Internal choices",
+        "Fidelity judgment and retries"
+      ],
+      "userDecisionPoints": [
+        "Provide references and preference",
+        "Request direct code in a permitted exception"
+      ],
+      "strengths": [
+        "Separates visual target from implementation",
+        "Strong anti-drift awareness",
+        "Requires readable references"
+      ],
+      "failureModes": [
+        "Mandatory images can waste cost",
+        "No provider/budget/approval/frame/manifest/state",
+        "Per-section images can fragment system",
+        "Same model creates and grades reference"
+      ],
+      "tests": [
+        "21-item clarity check and 22-step sequence exist",
+        "No provider fixture, manifest, fidelity metric, build fixture, or end-to-end test"
+      ],
+      "networkDependencies": [
+        "Host image provider",
+        "Remote asset sources",
+        "Project package registry"
+      ],
+      "license": "MIT for Taste text; asset rights apply separately",
+      "attributionRequirements": [
+        "Preserve Taste MIT notice",
+        "Record rights for generated/external assets"
+      ],
+      "sitesmithDecision": "adapt",
+      "decisionReason": "Keep optional reference-led implementation, but remove mandatory all-section generation and self-referential proof.",
+      "sitesmithSuccessorCapability": "SS3.REFERENCE_RENDER_PIPELINE",
+      "requiredImprovement": "Add value gate, fixed frame/count/cost budget, provider abstraction, manifest, candidate selection, separate reviewer, and resumable stages.",
+      "verificationMethod": "Compare direct and reference-led fixtures; require fidelity, equal function, bounded cost, deterministic manifest, and resume after provider failure.",
+      "integrationTreatmentId": "spec-compatible-standard",
+      "licenceTreatmentId": "taste-mit"
+    },
+    {
+      "capabilityId": "TASTE-CAP-012",
+      "sourceRepository": "https://github.com/Leonxlnx/taste-skill.git",
+      "sourceCommit": "e988add20dab0fa97d7a76781c48961c8184288e",
+      "sourceFiles": [
+        "skills/imagegen-frontend-web/SKILL.md"
+      ],
+      "sourceLines": [
+        "skills/imagegen-frontend-web/SKILL.md:L1-L74;L78-L315;L397-L447;L823-L933"
+      ],
+      "activationMechanism": "Explicit imagegen-frontend-web selection for image-only website comps.",
+      "inputs": [
+        "Page/section brief",
+        "Desired section count and references",
+        "Host image-generation capability"
+      ],
+      "outputs": [
+        "Separate horizontal reference image per section",
+        "Page-pack concepts and internal checks"
+      ],
+      "persistentArtifacts": [
+        "Images only; filenames, directories, manifest, and retained design bible unspecified"
+      ],
+      "runtimeBehavior": "Defaults to one readable image per section, varies composition, locks continuity, and commits to count before generating.",
+      "deterministicParts": [
+        "Images-only boundary",
+        "Direction catalogues",
+        "Checklist questions",
+        "Page-pack definitions"
+      ],
+      "nondeterministicParts": [
+        "Direction and pixels",
+        "Section interpretation",
+        "Retries and selection"
+      ],
+      "userDecisionPoints": [
+        "Image/section count",
+        "References and direction"
+      ],
+      "strengths": [
+        "Readable frames and continuity",
+        "Anti-repetition and conversion checks"
+      ],
+      "failureModes": [
+        "No cost ceiling",
+        "No prompt/seed/provider/frame/provenance/index",
+        "Internal log is not stored",
+        "No factual copy source contract"
+      ],
+      "tests": [
+        "21-question internal check exists",
+        "No fixture set, perceptual baseline, provider mock, or consistency test"
+      ],
+      "networkDependencies": [
+        "Unspecified host image-generation provider"
+      ],
+      "license": "MIT for Taste prompt; generated asset rights apply separately",
+      "attributionRequirements": [
+        "Preserve Taste MIT notice",
+        "Track provider/asset rights"
+      ],
+      "sitesmithDecision": "reimplement",
+      "decisionReason": "Production needs selected-direction specs and bounded, recorded generation.",
+      "sitesmithSuccessorCapability": "SS3.WEB_REFERENCE_FRAMES",
+      "requiredImprovement": "Generate only decision-critical frames and persist purpose, dimensions, prompt, provider/model, seed, candidates, cost, continuity, and selection reasons.",
+      "verificationMethod": "Provider-mocked contracts plus fixed briefs scored for legibility, consistency, differentiation, responsive inference, budget, and metadata.",
+      "integrationTreatmentId": "clean-room-standard",
+      "licenceTreatmentId": "taste-mit"
+    },
+    {
+      "capabilityId": "TASTE-CAP-013",
+      "sourceRepository": "https://github.com/Leonxlnx/taste-skill.git",
+      "sourceCommit": "e988add20dab0fa97d7a76781c48961c8184288e",
+      "sourceFiles": [
+        "skills/imagegen-frontend-mobile/SKILL.md"
+      ],
+      "sourceLines": [
+        "skills/imagegen-frontend-mobile/SKILL.md:L1-L110;L152-L330;L1262-L1364"
+      ],
+      "activationMechanism": "Explicit imagegen-frontend-mobile selection for image-only app screens and flows.",
+      "inputs": [
+        "App category and flow",
+        "Platform mode",
+        "Screen count",
+        "Host image-generation capability"
+      ],
+      "outputs": [
+        "Mobile screen images in device frames",
+        "Flow and optional detail renders"
+      ],
+      "persistentArtifacts": [
+        "Images only; internal design bible is not persisted"
+      ],
+      "runtimeBehavior": "Picks one platform, mirrors screen count, creates fresh details, locks internal bible, checks 27 questions, and regenerates weak screens.",
+      "deterministicParts": [
+        "Images-only scope",
+        "Count mirroring",
+        "Platform/no-crop rules",
+        "Bible/check fields"
+      ],
+      "nondeterministicParts": [
+        "Platform inference",
+        "Design bible",
+        "Pixels",
+        "Retry count",
+        "Visual judgment"
+      ],
+      "userDecisionPoints": [
+        "Platform and screen count",
+        "Flow and references"
+      ],
+      "strengths": [
+        "App-native flow/readability consistency",
+        "Dedicated details instead of crops"
+      ],
+      "failureModes": [
+        "No cost/latency control",
+        "Bible/flow/prompts/provider/retries unrecorded",
+        "Default phone frame can be wrong",
+        "No interaction semantics validation"
+      ],
+      "tests": [
+        "27-item internal check exists",
+        "No geometry, flow, provider, OCR, or consistency tests"
+      ],
+      "networkDependencies": [
+        "Unspecified host image-generation provider"
+      ],
+      "license": "MIT for Taste prompt; generated asset rights apply separately",
+      "attributionRequirements": [
+        "Preserve Taste MIT notice",
+        "Track provider rights"
+      ],
+      "sitesmithDecision": "reject",
+      "decisionReason": "Named deliberate loss: App-native flow/readability consistency. Native-mobile generation is outside SiteSmith's website remit.",
+      "sitesmithSuccessorCapability": "none",
+      "requiredImprovement": "Reconsider only if SiteSmith's remit expands to native mobile; then require platform/device selection, persistent bible, semantic flow graph, raw-screen option, budget, provenance, and state verification.",
+      "verificationMethod": "Exact exclusion assertion: out-of-scope routing directs mobile work elsewhere, and the mobile generator, phone-frame defaults, design-bible mechanism, prompts, assets, and runtime entry points are absent from SiteSmith core and package output.",
+      "integrationTreatmentId": "deliberate-rejection",
+      "licenceTreatmentId": "taste-mit"
+    },
+    {
+      "capabilityId": "TASTE-CAP-014",
+      "sourceRepository": "https://github.com/Leonxlnx/taste-skill.git",
+      "sourceCommit": "e988add20dab0fa97d7a76781c48961c8184288e",
+      "sourceFiles": [
+        "skills/brandkit/SKILL.md"
+      ],
+      "sourceLines": [
+        "skills/brandkit/SKILL.md:L1-L157;L248-L335;L709-L798"
+      ],
+      "activationMechanism": "Explicit brandkit selection for an image-only identity board.",
+      "inputs": [
+        "Brand/category/audience/personality",
+        "Metaphor and references",
+        "Optional layout/palette",
+        "Host image capability"
+      ],
+      "outputs": [
+        "One brand-kit overview image",
+        "Logo/application/color/type/image/system panels"
+      ],
+      "persistentArtifacts": [
+        "One image; no vector, token package, or manifest"
+      ],
+      "runtimeBehavior": "Infers strategy, derives symbols, composes a board, extracts reference rhythm without exact copying, and prompts image model.",
+      "deterministicParts": [
+        "Default layout/panel taxonomy",
+        "Prompt template",
+        "Reference non-copy rules"
+      ],
+      "nondeterministicParts": [
+        "Strategy",
+        "Logo output",
+        "Pixels",
+        "Trademark similarity",
+        "Typography accuracy"
+      ],
+      "userDecisionPoints": [
+        "Strategy and references",
+        "Layout/palette",
+        "Concept acceptance"
+      ],
+      "strengths": [
+        "Meaning-first questions",
+        "Reference/non-copy distinction",
+        "Coherent board model"
+      ],
+      "failureModes": [
+        "Raster board is not production identity",
+        "No trademark/vector/a11y/color/font/export/provenance contract",
+        "Ownable asserted without evidence"
+      ],
+      "tests": [
+        "Prompt template and final standard exist",
+        "No fixture, trademark, vector, export, or token tests"
+      ],
+      "networkDependencies": [
+        "Host image provider",
+        "Any font/reference/trademark source"
+      ],
+      "license": "MIT for Taste prompt; marks/assets/fonts need separate rights analysis",
+      "attributionRequirements": [
+        "Preserve Taste MIT notice",
+        "Track model/provider and source/font licenses"
+      ],
+      "sitesmithDecision": "reimplement",
+      "decisionReason": "Retain the meaning-first questioning outcome through a clean-room SiteSmith intake contract without importing the one-shot raster-board mechanism or prompt expression.",
+      "sitesmithSuccessorCapability": "SS3.BRAND_INPUT_VALIDATOR",
+      "requiredImprovement": "Accept validated brand inputs; any future exploration needs human approval, vectors, tokens, provenance, and trademark review.",
+      "verificationMethod": "A positive successor fixture proves SS3.BRAND_INPUT_VALIDATOR retains meaning-first intake across approved brand inputs and fails closed when required logos/fonts/colors lack source, rights, or approval; a separate negative fixture proves the one-shot raster-board source mechanism is absent.",
+      "integrationTreatmentId": "clean-room-brand-input",
+      "licenceTreatmentId": "taste-mit"
+    },
+    {
+      "capabilityId": "TASTE-CAP-015",
+      "sourceRepository": "https://github.com/Leonxlnx/taste-skill.git",
+      "sourceCommit": "e988add20dab0fa97d7a76781c48961c8184288e",
+      "sourceFiles": [
+        "skills/stitch-skill/SKILL.md",
+        "skills/stitch-skill/DESIGN.md"
+      ],
+      "sourceLines": [
+        "skills/stitch-skill/SKILL.md:L1-L184",
+        "skills/stitch-skill/DESIGN.md:L1-L121"
+      ],
+      "activationMechanism": "Explicit stitch-design-taste selection; requires Google Stitch, optionally MCP.",
+      "inputs": [
+        "Project intent and visual direction",
+        "Target Stitch workflow"
+      ],
+      "outputs": [
+        "DESIGN.md with atmosphere, palette, type, components, layout, motion, and bans"
+      ],
+      "persistentArtifacts": [
+        "DESIGN.md"
+      ],
+      "runtimeBehavior": "Translates three-dial language into a semantic Stitch document; repository also ships a fixed example.",
+      "deterministicParts": [
+        "Required DESIGN.md structure",
+        "Named fields and examples"
+      ],
+      "nondeterministicParts": [
+        "Inferred values",
+        "Stitch interpretation",
+        "MCP availability"
+      ],
+      "userDecisionPoints": [
+        "Choose Stitch",
+        "Approve semantic direction"
+      ],
+      "strengths": [
+        "Concrete handoff artifact",
+        "Functional token roles"
+      ],
+      "failureModes": [
+        "Example hardcodes conflicting house style",
+        "No schema/parser/provenance/round-trip test",
+        "External semantics not vendored"
+      ],
+      "tests": [
+        "Template and example exist",
+        "No schema validator, Stitch fixture, or round trip"
+      ],
+      "networkDependencies": [
+        "https://labs.google/stitch",
+        "Optional Stitch MCP server"
+      ],
+      "license": "MIT for Taste files; Stitch terms apply separately",
+      "attributionRequirements": [
+        "Preserve Taste MIT notice"
+      ],
+      "sitesmithDecision": "adapt",
+      "decisionReason": "A versioned design-spec artifact is useful, but must be provider-neutral and evidence-derived.",
+      "sitesmithSuccessorCapability": "SS3.DESIGN_SPEC",
+      "requiredImprovement": "Define provider-neutral versioned schema, source/confidence per token, exceptions, validation, adapters, and drift detection.",
+      "verificationMethod": "Schema snapshots and adapter contracts; compile to mock providers, re-extract results, and fail on semantic/token drift.",
+      "integrationTreatmentId": "spec-compatible-standard",
+      "licenceTreatmentId": "taste-mit"
+    },
+    {
+      "capabilityId": "TASTE-CAP-016",
+      "sourceRepository": "https://github.com/Leonxlnx/taste-skill.git",
+      "sourceCommit": "e988add20dab0fa97d7a76781c48961c8184288e",
+      "sourceFiles": [
+        "skills/gpt-tasteskill/SKILL.md",
+        "skills/soft-skill/SKILL.md",
+        "skills/minimalist-skill/SKILL.md",
+        "skills/brutalist-skill/SKILL.md",
+        "skills/taste-skill-v1/SKILL.md",
+        "README.md"
+      ],
+      "sourceLines": [
+        "skills/gpt-tasteskill/SKILL.md:L1-L74",
+        "skills/soft-skill/SKILL.md:L1-L98",
+        "skills/minimalist-skill/SKILL.md:L1-L85",
+        "skills/brutalist-skill/SKILL.md:L1-L92",
+        "skills/taste-skill-v1/SKILL.md:L1-L226",
+        "README.md:L115-L147"
+      ],
+      "activationMechanism": "User/host independently selects or combines a sibling; no router or precedence exists.",
+      "inputs": [
+        "Design request",
+        "Optional style",
+        "Host model identity"
+      ],
+      "outputs": [
+        "Style constraints and frontend",
+        "GPT design_plan before code"
+      ],
+      "persistentArtifacts": [
+        "Generated code/chat only"
+      ],
+      "runtimeBehavior": "Style siblings apply fixed lenses; GPT simulates RNG, imposes AIDA and GSAP; v1 preserves legacy behavior.",
+      "deterministicParts": [
+        "Option lists and hard rules",
+        "Prompt-length formula description",
+        "AIDA order"
+      ],
+      "nondeterministicParts": [
+        "Simulated RNG result",
+        "Style interpretation",
+        "Conflict order"
+      ],
+      "userDecisionPoints": [
+        "Select lens/version",
+        "Override conflicts"
+      ],
+      "strengths": [
+        "Legible aesthetic extremes",
+        "Legacy path avoids silent migration"
+      ],
+      "failureModes": [
+        "Overlapping activation",
+        "Rules conflict across lenses",
+        "Randomization is narrated, not executed",
+        "Universal AIDA/GSAP ignores context",
+        "Brutalist fake data/legal marks"
+      ],
+      "tests": [
+        "Prompt-only files",
+        "No router, seed, collision, or conformance suite"
+      ],
+      "networkDependencies": [
+        "Picsum",
+        "npm GSAP/icon/font packages"
+      ],
+      "license": "MIT, root LICENSE:L1-L20",
+      "attributionRequirements": [
+        "Preserve Taste MIT notice"
+      ],
+      "sitesmithDecision": "reimplement",
+      "decisionReason": "Retain legible aesthetic extremes through clean-room typed lenses without importing overlapping prompt personas, simulated randomness, or source expression.",
+      "sitesmithSuccessorCapability": "SS3.STYLE_LENSES",
+      "requiredImprovement": "One router, exclusive lens IDs, compatibility matrix, real seeded selector, truth constraints, precedence, and provider parity evidence.",
+      "verificationMethod": "Positive successor fixtures prove SS3.STYLE_LENSES retains legible aesthetic extremes through pairwise conflict tests, seeded selection, domain fixtures, a11y/performance gates, and one active final constraint graph; a separate negative fixture proves the overlapping-persona and simulated-randomness source mechanisms are absent.",
+      "integrationTreatmentId": "clean-room-style-lenses",
+      "licenceTreatmentId": "taste-mit"
+    },
+    {
+      "capabilityId": "TASTE-CAP-017",
+      "sourceRepository": "https://github.com/Leonxlnx/taste-skill.git",
+      "sourceCommit": "e988add20dab0fa97d7a76781c48961c8184288e",
+      "sourceFiles": [
+        "skills/output-skill/SKILL.md",
+        "research/laziness/README.md",
+        "research/laziness/findings/empirical-results.md",
+        "research/laziness/findings/references.md",
+        "research/laziness/remediation/prompt-engineering.md"
+      ],
+      "sourceLines": [
+        "skills/output-skill/SKILL.md:L1-L49",
+        "research/laziness/README.md:L1-L25",
+        "research/laziness/findings/empirical-results.md:L1-L58",
+        "research/laziness/findings/references.md:L1-L20",
+        "research/laziness/remediation/prompt-engineering.md:L1-L52"
+      ],
+      "activationMechanism": "Explicit full-output-enforcement selection; research supplies rationale/templates.",
+      "inputs": [
+        "Requested deliverable count",
+        "Output limits"
+      ],
+      "outputs": [
+        "Complete response or manual PAUSED marker"
+      ],
+      "persistentArtifacts": [
+        "Chat only; no machine state or continuation token"
+      ],
+      "runtimeBehavior": "Counts deliverables, bans placeholders, self-checks completion, and asks user to resume manually.",
+      "deterministicParts": [
+        "Banned phrases",
+        "Scope-build-cross-check",
+        "Pause marker"
+      ],
+      "nondeterministicParts": [
+        "Limit prediction",
+        "Completeness judgment",
+        "Resume position"
+      ],
+      "userDecisionPoints": [
+        "Send continue after pause"
+      ],
+      "strengths": [
+        "Deliverable counting",
+        "Clean-breakpoint intent"
+      ],
+      "failureModes": [
+        "Prompt cannot guarantee budget/state",
+        "Manual resume is not transactional",
+        "Research claims lack resolvable citations and artifacts",
+        "Advice requests hidden reasoning/manipulative framing"
+      ],
+      "tests": [
+        "No controlled experiment artifacts or harness",
+        "Numeric claims are not reproducible from repository"
+      ],
+      "networkDependencies": [
+        "None implemented; external studies/docs are only named"
+      ],
+      "license": "MIT, root LICENSE:L1-L20",
+      "attributionRequirements": [
+        "Preserve Taste MIT notice",
+        "Cite primary research before empirical claims"
+      ],
+      "sitesmithDecision": "reimplement",
+      "decisionReason": "Retain deliverable counting through clean-room checkpointed orchestration and validation without importing urgency language, manual pause markers, unverified claims, or source expression.",
+      "sitesmithSuccessorCapability": "SS3.RUN_CHECKPOINTS",
+      "requiredImprovement": "Track artifacts/state transactionally, validate outputs, resume idempotently, and use primary reproducible evidence.",
+      "verificationMethod": "Positive successor fault fixtures prove SS3.RUN_CHECKPOINTS counts and validates every declared deliverable, survives kill/restart without duplicate or lost artifacts, and resumes exactly under constrained budgets; a separate negative fixture proves the urgency-language and manual pause-marker source mechanisms are absent.",
+      "integrationTreatmentId": "clean-room-run-checkpoints",
+      "licenceTreatmentId": "taste-mit"
+    },
+    {
+      "capabilityId": "TASTE-CAP-018",
+      "sourceRepository": "https://github.com/Leonxlnx/taste-skill.git",
+      "sourceCommit": "e988add20dab0fa97d7a76781c48961c8184288e",
+      "sourceFiles": [
+        ".github/copilot-instructions.md"
+      ],
+      "sourceLines": [
+        ".github/copilot-instructions.md:L1-L11"
+      ],
+      "activationMechanism": "Repository claims GitHub Copilot automatically reads the file from .github/.",
+      "inputs": [
+        "Copilot session in repository"
+      ],
+      "outputs": [
+        "Anti-generic, whitespace, spring-motion, complete-output, and sibling-skill behavior"
+      ],
+      "persistentArtifacts": [],
+      "runtimeBehavior": "Provider behavior is delegated to Copilot instruction-loading semantics.",
+      "deterministicParts": [
+        "Five written rules"
+      ],
+      "nondeterministicParts": [
+        "Whether/when file is loaded",
+        "Interaction with other instructions"
+      ],
+      "userDecisionPoints": [],
+      "strengths": [
+        "Small provider entry surface"
+      ],
+      "failureModes": [
+        "Automatic-load claim untested",
+        "Global motion/output rules can conflict",
+        "No provider parity or skill-load proof"
+      ],
+      "tests": [
+        "No provider behavior test or recorded Copilot run"
+      ],
+      "networkDependencies": [
+        "GitHub Copilot service"
+      ],
+      "license": "MIT, root LICENSE:L1-L20",
+      "attributionRequirements": [
+        "Preserve Taste MIT notice"
+      ],
+      "sitesmithDecision": "reimplement",
+      "decisionReason": "Adapters should compile one canonical policy and report loaded capabilities, not carry divergent prose.",
+      "sitesmithSuccessorCapability": "SS3.PROVIDER_ADAPTERS",
+      "requiredImprovement": "Generate provider files from one schema, record checksum/version, expose acknowledgement, and run equivalent fixtures.",
+      "verificationMethod": "Provider conformance compares normalized decisions/artifacts for identical briefs and fails missing/conflicting policies.",
+      "integrationTreatmentId": "clean-room-standard",
+      "licenceTreatmentId": "taste-mit"
+    },
+    {
+      "capabilityId": "TASTE-CAP-019",
+      "sourceRepository": "https://github.com/Leonxlnx/taste-skill.git",
+      "sourceCommit": "e988add20dab0fa97d7a76781c48961c8184288e",
+      "sourceFiles": [
+        "scripts/build-emil-sponsor-row.mjs",
+        "scripts/convert-readme-assets-webp.mjs",
+        "scripts/process-readme-buttons.mjs",
+        "scripts/process-sponsor-badge.mjs"
+      ],
+      "sourceLines": [
+        "scripts/build-emil-sponsor-row.mjs:L1-L41",
+        "scripts/convert-readme-assets-webp.mjs:L1-L142",
+        "scripts/process-readme-buttons.mjs:L1-L108",
+        "scripts/process-sponsor-badge.mjs:L1-L83"
+      ],
+      "activationMechanism": "Manual Node execution from repository root; no package script or documented command.",
+      "inputs": [
+        "README/sponsor images",
+        "Hard-coded Downloads files for three scripts",
+        "sharp package"
+      ],
+      "outputs": [
+        "PNG/WebP README and sponsor assets"
+      ],
+      "persistentArtifacts": [
+        "Rewritten image assets"
+      ],
+      "runtimeBehavior": "Reads, crops, removes background, resizes, composites, and writes images with sharp.",
+      "deterministicParts": [
+        "Dimensions",
+        "Thresholds",
+        "Quality settings",
+        "Output paths"
+      ],
+      "nondeterministicParts": [
+        "Undeclared sharp version and codec",
+        "Hard-coded input content/availability"
+      ],
+      "userDecisionPoints": [
+        "Provision source files and dependency"
+      ],
+      "strengths": [
+        "Small understandable transformations"
+      ],
+      "failureModes": [
+        "No manifest/lockfile",
+        "Absolute paths",
+        "Mutates tracked assets without dry-run/source hashes/goldens",
+        "Not website runtime"
+      ],
+      "tests": [
+        "Statically inspected only",
+        "No tests, manifest, fixtures, or reproducible command"
+      ],
+      "networkDependencies": [
+        "npm access for undeclared sharp in clean environment"
+      ],
+      "license": "MIT for scripts; embedded asset rights may differ",
+      "attributionRequirements": [
+        "Preserve Taste MIT notice",
+        "Verify sponsor/logo asset rights"
+      ],
+      "sitesmithDecision": "reject",
+      "decisionReason": "Named deliberate loss: Small understandable transformations. Taste repository-presentation utilities are not a SiteSmith website capability.",
+      "sitesmithSuccessorCapability": "none",
+      "requiredImprovement": "No SiteSmith integration; upstream would need locked package, relative inputs, dry-run, source manifest, and golden hashes.",
+      "verificationMethod": "Exact exclusion assertion: the README/sponsor transformation scripts, their assets, commands, dependencies, and runtime entry points are absent from SiteSmith core and package output.",
+      "integrationTreatmentId": "deliberate-rejection",
+      "licenceTreatmentId": "taste-mit"
+    },
+    {
+      "capabilityId": "uupm.skill.activation",
+      "sourceRepository": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "sourceCommit": "4857a2c5ef989794751a0f66b8545a4a49566286",
+      "sourceFiles": [
+        ".claude/skills/ui-ux-pro-max/SKILL.md",
+        "src/ui-ux-pro-max/templates/base/skill-content.md",
+        "src/ui-ux-pro-max/templates/base/quick-reference.md"
+      ],
+      "sourceLines": [
+        "SKILL.md:10-45",
+        "skill-content.md:5-45",
+        "quick-reference.md:1-42"
+      ],
+      "activationMechanism": "Provider-installed prompt aktiveres af UI/UX-intent; host-agenten følger workflowet.",
+      "inputs": [
+        "user request",
+        "repository context",
+        "provider environment",
+        "plugin root"
+      ],
+      "outputs": [
+        "activation decision",
+        "requirement summary",
+        "next CLI action"
+      ],
+      "persistentArtifacts": [],
+      "runtimeBehavior": "Prompt-only; ingen runtime-isolation eller programmatisk enforcement.",
+      "deterministicParts": [
+        "documented trigger categories",
+        "fixed workflow order"
+      ],
+      "nondeterministicParts": [
+        "host-agent intent interpretation",
+        "amount of project inspection"
+      ],
+      "userDecisionPoints": [
+        "ambiguous product goal",
+        "missing Python",
+        "conflicting existing design direction"
+      ],
+      "strengths": [
+        "clear entry criteria",
+        "explicit skip cases",
+        "required design-system first step"
+      ],
+      "failureModes": [
+        "over-broad activation",
+        "host ignores instructions",
+        "generated provider prompt differs from plugin prompt"
+      ],
+      "tests": [
+        "No capability-specific activation test is tracked upstream; provider snapshots cover generated prompt shape but not host-trigger semantics."
+      ],
+      "networkDependencies": [],
+      "license": "MIT at repository root; generated bundle may include separately licensed siblings",
+      "attributionRequirements": [
+        "retain Next Level Builder copyright and MIT permission notice when redistributing substantial portions"
+      ],
+      "sitesmithDecision": "adapt",
+      "decisionReason": "Aktiveringsideen er nyttig, men SiteSmith v3 skal begynde med world/brief qualification, ikke databasevalg.",
+      "sitesmithSuccessorCapability": "sitesmith.v3.activation-and-brief-gate",
+      "requiredImprovement": "Én canonical provider-neutral activation contract med explicit scope, failure state og typed input.",
+      "verificationMethod": "Golden intent corpus på use/skip/ambiguous cases plus provider snapshot-paritet.",
+      "integrationTreatmentId": "spec-compatible-standard",
+      "licenceTreatmentId": "uupm-mit"
+    },
+    {
+      "capabilityId": "uupm.requirements.stack-detect",
+      "sourceRepository": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "sourceCommit": "4857a2c5ef989794751a0f66b8545a4a49566286",
+      "sourceFiles": [
+        ".claude/skills/ui-ux-pro-max/SKILL.md",
+        "src/ui-ux-pro-max/templates/base/skill-content.md"
+      ],
+      "sourceLines": [
+        "SKILL.md:49-55",
+        "skill-content.md:37-55"
+      ],
+      "activationMechanism": "Step 1 i prompt-workflowet efter skill-activation.",
+      "inputs": [
+        "request text",
+        "package.json/files",
+        "explicit stack/platform"
+      ],
+      "outputs": [
+        "product type",
+        "target audience",
+        "style keywords",
+        "inferred stack",
+        "platform"
+      ],
+      "persistentArtifacts": [],
+      "runtimeBehavior": "Host-agent infererer felterne; ingen typed parser eller confidence.",
+      "deterministicParts": [
+        "required field names"
+      ],
+      "nondeterministicParts": [
+        "inference",
+        "whether agent asks user",
+        "phrase extraction"
+      ],
+      "userDecisionPoints": [
+        "stack/platform unresolved",
+        "native-vs-web ambiguity"
+      ],
+      "strengths": [
+        "fixed stale React Native assumption was removed",
+        "project evidence is named"
+      ],
+      "failureModes": [
+        "silent wrong inference",
+        "no evidence/provenance",
+        "no brand/world constraints"
+      ],
+      "tests": [
+        "No capability-specific stack-detection test is tracked upstream; the requirement exists only in prompt text."
+      ],
+      "networkDependencies": [],
+      "license": "MIT",
+      "attributionRequirements": [
+        "retain MIT notice for copied wording"
+      ],
+      "sitesmithDecision": "adapt",
+      "decisionReason": "SiteSmith behøver stack detection og et bredere evidensbaseret project brief.",
+      "sitesmithSuccessorCapability": "sitesmith.v3.brief-and-stack-resolver",
+      "requiredImprovement": "Typed ProjectBrief med evidence path, confidence, unresolved fields og explicit gate ved materiel tvivl.",
+      "verificationMethod": "Fixture-repos for Next.js, React/Vite, Astro og ambiguous/no-package cases.",
+      "integrationTreatmentId": "spec-compatible-standard",
+      "licenceTreatmentId": "uupm-mit"
+    },
+    {
+      "capabilityId": "uupm.search.bm25",
+      "sourceRepository": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "sourceCommit": "4857a2c5ef989794751a0f66b8545a4a49566286",
+      "sourceFiles": [
+        "src/ui-ux-pro-max/scripts/core.py"
+      ],
+      "sourceLines": [
+        "core.py:17-119",
+        "core.py:122-179",
+        "core.py:181-289"
+      ],
+      "activationMechanism": "Kald fra domain-, stack- og design-system-search.",
+      "inputs": [
+        "query string",
+        "CSV rows",
+        "domain config",
+        "max_results"
+      ],
+      "outputs": [
+        "positive-score result rows",
+        "selected columns",
+        "query/domain metadata",
+        "zero-hit suggestions"
+      ],
+      "persistentArtifacts": [
+        "process-local CSV/BM25 cache"
+      ],
+      "runtimeBehavior": "Lowercase/tokenize/synonym-normalize; BM25 k1=1.5, b=0.75; positive score only; stable row-order ties.",
+      "deterministicParts": [
+        "tokenization",
+        "fixed synonyms",
+        "BM25 math",
+        "stable tie order",
+        "pinned CSV content"
+      ],
+      "nondeterministicParts": [],
+      "userDecisionPoints": [
+        "domain override",
+        "max_results",
+        "fallback after zero results"
+      ],
+      "strengths": [
+        "offline",
+        "stdlib-only",
+        "fast",
+        "transparent",
+        "deterministic"
+      ],
+      "failureModes": [
+        "no score calibration",
+        "lexical miss",
+        "crude prefix suggestions",
+        "row-order tie bias",
+        "no ranking-quality corpus"
+      ],
+      "tests": [
+        "tokenizer",
+        "basic hits",
+        "zero-result behavior",
+        "all configured domains/stacks searchable",
+        "16/16 suite PASS"
+      ],
+      "networkDependencies": [],
+      "license": "MIT",
+      "attributionRequirements": [
+        "retain Next Level Builder MIT notice when code/data is redistributed"
+      ],
+      "sitesmithDecision": "integrate",
+      "decisionReason": "Egnet som bounded knowledge retrieval; uegnet som visuel-direction selector.",
+      "sitesmithSuccessorCapability": "sitesmith.v3.evidence-index",
+      "requiredImprovement": "Emit row ID, score, tokens, source version/hash, confidence og conflicts; aldrig auto-promovér top-1.",
+      "verificationMethod": "Frozen relevance corpus med NDCG/MRR, typo/zero/tie tests og determinism hash.",
+      "integrationTreatmentId": "vendored-deterministic",
+      "licenceTreatmentId": "uupm-mit"
+    },
+    {
+      "capabilityId": "uupm.classify.product-reasoning",
+      "sourceRepository": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "sourceCommit": "4857a2c5ef989794751a0f66b8545a4a49566286",
+      "sourceFiles": [
+        "src/ui-ux-pro-max/scripts/core.py",
+        "src/ui-ux-pro-max/scripts/design_system.py",
+        "src/ui-ux-pro-max/data/products.csv",
+        "src/ui-ux-pro-max/data/ui-reasoning.csv"
+      ],
+      "sourceLines": [
+        "core.py:319-408",
+        "design_system.py:81-201",
+        "ui-reasoning.csv:1-162",
+        "products.csv:1-193"
+      ],
+      "activationMechanism": "Første fase i DesignSystemGenerator.generate.",
+      "inputs": [
+        "query",
+        "product keywords",
+        "products.csv",
+        "ui-reasoning.csv"
+      ],
+      "outputs": [
+        "one product category",
+        "reasoning row",
+        "style priorities",
+        "rationale",
+        "anti-patterns",
+        "raw decision_rules"
+      ],
+      "persistentArtifacts": [],
+      "runtimeBehavior": "Vægtet keywordmatch vælger top-1 med fixed tie order; reasoning matches exact/fuzzy og fallback.",
+      "deterministicParts": [
+        "keyword table",
+        "tie order",
+        "CSV content",
+        "exact/fuzzy rules"
+      ],
+      "nondeterministicParts": [],
+      "userDecisionPoints": [],
+      "strengths": [
+        "192-category coverage",
+        "explicit rationale/avoid fields",
+        "exact-title runtime classified 192/192"
+      ],
+      "failureModes": [
+        "category stereotypes",
+        "no uncertainty gate",
+        "misclassification",
+        "66/161 duplicate JSON keys",
+        "decision_rules not formatted"
+      ],
+      "tests": [
+        "known/unknown reasoning fallback",
+        "basic domain detection",
+        "no classifier corpus or duplicate-key test"
+      ],
+      "networkDependencies": [],
+      "license": "MIT root claim; dataset provenance is not separately enumerated upstream",
+      "attributionRequirements": [
+        "retain MIT notice and source pin for redistributed data"
+      ],
+      "sitesmithDecision": "reimplement",
+      "decisionReason": "Retain 192-category coverage through a clean-room evidence-and-confidence signal contract without importing top-one stereotype selection, source data expression, or classifier code.",
+      "sitesmithSuccessorCapability": "sitesmith.v3.world-qualification-and-signal-extractor",
+      "requiredImprovement": "Multi-label evidence/confidence, strict duplicate-key rejection og separation af facts, hypotheses og approved direction.",
+      "verificationMethod": "A positive successor corpus proves sitesmith.v3.world-qualification-and-signal-extractor retains 192-category coverage as multi-label evidence/confidence signals with strict duplicate-key rejection and low-confidence handling; a separate negative fixture proves the top-one product stereotype and visual-selection source mechanism is absent.",
+      "integrationTreatmentId": "clean-room-product-reasoning",
+      "licenceTreatmentId": "uupm-mit"
+    },
+    {
+      "capabilityId": "uupm.generate.design-system",
+      "sourceRepository": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "sourceCommit": "4857a2c5ef989794751a0f66b8545a4a49566286",
+      "sourceFiles": [
+        "src/ui-ux-pro-max/scripts/design_system.py",
+        "src/ui-ux-pro-max/scripts/search.py"
+      ],
+      "sourceLines": [
+        "design_system.py:35-329",
+        "design_system.py:668-729",
+        "search.py:91-150"
+      ],
+      "activationMechanism": "search.py <query> --design-system eller promptens required Step 2.",
+      "inputs": [
+        "query",
+        "optional project name",
+        "output format",
+        "variance",
+        "motion",
+        "density"
+      ],
+      "outputs": [
+        "raw design_system object",
+        "ASCII",
+        "Markdown",
+        "optional persistence metadata"
+      ],
+      "persistentArtifacts": [],
+      "runtimeBehavior": "Søger product/style/color/typography/landing sekventielt og reducerer hvert domæne til én anbefaling.",
+      "deterministicParts": [
+        "raw result on pinned data/options",
+        "format field selection"
+      ],
+      "nondeterministicParts": [
+        "terminal truecolor rendering depends on environment"
+      ],
+      "userDecisionPoints": [
+        "query wording",
+        "dials",
+        "format",
+        "whether to persist"
+      ],
+      "strengths": [
+        "one-command coherent starter",
+        "multiple output formats",
+        "local/offline"
+      ],
+      "failureModes": [
+        "no conflict adjudication",
+        "no provenance/scores/fallback flag",
+        "defaults dominate",
+        "stereotype output",
+        "hardcoded house-style boilerplate"
+      ],
+      "tests": [
+        "repeated raw runs byte-identical",
+        "no composition-quality/golden design tests"
+      ],
+      "networkDependencies": [],
+      "license": "MIT",
+      "attributionRequirements": [
+        "retain MIT notice for copied generator code/data"
+      ],
+      "sitesmithDecision": "reimplement",
+      "decisionReason": "One-shot top-1 composition conflicts with SiteSmith v3's candidate/world/typed-contract direction.",
+      "sitesmithSuccessorCapability": "sitesmith.v3.designspec-compiler",
+      "requiredImprovement": "Compile after world selection; preserve alternatives/conflicts/provenance in a typed DesignSpec.",
+      "verificationMethod": "Schema validation, deterministic fixtures, conflict fixtures, snapshots og consumer tests.",
+      "integrationTreatmentId": "clean-room-standard",
+      "licenceTreatmentId": "uupm-mit"
+    },
+    {
+      "capabilityId": "uupm.tune.design-dials",
+      "sourceRepository": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "sourceCommit": "4857a2c5ef989794751a0f66b8545a4a49566286",
+      "sourceFiles": [
+        "src/ui-ux-pro-max/scripts/search.py",
+        "src/ui-ux-pro-max/scripts/design_system.py",
+        "src/ui-ux-pro-max/data/motion.csv"
+      ],
+      "sourceLines": [
+        "search.py:14-24",
+        "search.py:97-124",
+        "design_system.py:35-77",
+        "design_system.py:207-329"
+      ],
+      "activationMechanism": "Valgfrie --variance, --motion og --density med --design-system.",
+      "inputs": [
+        "three optional integers 1-10",
+        "query",
+        "resolved search rows"
+      ],
+      "outputs": [
+        "style bias",
+        "motion tier/snippet",
+        "spacing scale",
+        "dial metadata"
+      ],
+      "persistentArtifacts": [
+        "dial values inside MASTER.md when persistence is enabled"
+      ],
+      "runtimeBehavior": "Variance påvirker style, motion henter GSAP-data, density overskriver spacing; unset bevarer baseline.",
+      "deterministicParts": [
+        "tier thresholds",
+        "fixed bounds",
+        "spacing maps",
+        "pinned motion data"
+      ],
+      "nondeterministicParts": [],
+      "userDecisionPoints": [
+        "whether and how strongly to tune each dial"
+      ],
+      "strengths": [
+        "small explicit control surface",
+        "tunable without query prompt-hacking"
+      ],
+      "failureModes": [
+        "numbers lack world semantics",
+        "bias compounds stereotypes",
+        "motion may not match stack",
+        "opaque partial composition"
+      ],
+      "tests": [
+        "argument bounds only; no dial matrix/golden tests observed"
+      ],
+      "networkDependencies": [],
+      "license": "MIT",
+      "attributionRequirements": [
+        "retain MIT notice for copied code/data"
+      ],
+      "sitesmithDecision": "adapt",
+      "decisionReason": "Dials er nyttige som explicit kontrol efter world-valg, ikke som skjult ranker-bias.",
+      "sitesmithSuccessorCapability": "sitesmith.v3.aesthetic-control-vector",
+      "requiredImprovement": "Semantiske axes bundet til approved world med præcise token/layout-effekter og conflict detection.",
+      "verificationMethod": "Boundary tests 1/5/10, pairwise dial matrix og deterministic DesignSpec snapshots.",
+      "integrationTreatmentId": "spec-compatible-standard",
+      "licenceTreatmentId": "uupm-mit"
+    },
+    {
+      "capabilityId": "uupm.lookup.domain-knowledge",
+      "sourceRepository": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "sourceCommit": "4857a2c5ef989794751a0f66b8545a4a49566286",
+      "sourceFiles": [
+        "src/ui-ux-pro-max/scripts/core.py",
+        "src/ui-ux-pro-max/scripts/search.py",
+        "src/ui-ux-pro-max/data/*.csv"
+      ],
+      "sourceLines": [
+        "core.py:17-78",
+        "core.py:267-289",
+        "core.py:411-441",
+        "search.py:150-162"
+      ],
+      "activationMechanism": "search.py <query> --domain <domain> eller auto-domain detection.",
+      "inputs": [
+        "query",
+        "one of 12 domains",
+        "max_results"
+      ],
+      "outputs": [
+        "ranked row projections",
+        "domain metadata",
+        "zero-result suggestions"
+      ],
+      "persistentArtifacts": [
+        "process-local cache"
+      ],
+      "runtimeBehavior": "Søger lokale CSV'er for style, color, typography, product, landing, UX, charts, fonts, icons, React, app interface og motion.",
+      "deterministicParts": [
+        "domain config",
+        "CSV schemas",
+        "BM25 order"
+      ],
+      "nondeterministicParts": [],
+      "userDecisionPoints": [
+        "explicit domain",
+        "query refinement",
+        "which evidence to use"
+      ],
+      "strengths": [
+        "broad compact knowledge base",
+        "no network",
+        "domain-specific output columns"
+      ],
+      "failureModes": [
+        "stale/unsourced knowledge",
+        "no row IDs/scores",
+        "auto-domain false positives",
+        "cross-domain conflicts"
+      ],
+      "tests": [
+        "12/12 domain runtime smoke PASS",
+        "configured-file tests PASS"
+      ],
+      "networkDependencies": [],
+      "license": "MIT root claim; row-level factual provenance not enumerated",
+      "attributionRequirements": [
+        "retain upstream MIT notice/source pin when datasets are bundled"
+      ],
+      "sitesmithDecision": "integrate",
+      "decisionReason": "Data kan støtte konkrete spørgsmål efter direction; den skal være evidence, ikke taste oracle.",
+      "sitesmithSuccessorCapability": "sitesmith.v3.bounded-ux-knowledge-query",
+      "requiredImprovement": "Source/version per row, stable IDs, confidence, freshness, conflicts og citations.",
+      "verificationMethod": "Schema/hash gate, relevance corpus, attribution audit og consumer tests.",
+      "integrationTreatmentId": "vendored-deterministic",
+      "licenceTreatmentId": "uupm-mit"
+    },
+    {
+      "capabilityId": "uupm.lookup.stack-guidance",
+      "sourceRepository": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "sourceCommit": "4857a2c5ef989794751a0f66b8545a4a49566286",
+      "sourceFiles": [
+        "src/ui-ux-pro-max/scripts/core.py",
+        "src/ui-ux-pro-max/scripts/search.py",
+        "src/ui-ux-pro-max/data/stacks/*.csv"
+      ],
+      "sourceLines": [
+        "core.py:88-119",
+        "core.py:442-464",
+        "search.py:91-92",
+        "search.py:150-157"
+      ],
+      "activationMechanism": "search.py <query> --stack <one-of-22> efter stack inference.",
+      "inputs": [
+        "query",
+        "stack identifier",
+        "stack CSV"
+      ],
+      "outputs": [
+        "ranked implementation guidance rows",
+        "stack/query metadata"
+      ],
+      "persistentArtifacts": [
+        "process-local cache"
+      ],
+      "runtimeBehavior": "Separate BM25 index per stack; output columns varierer per stack-config.",
+      "deterministicParts": [
+        "22-name allowlist",
+        "row data",
+        "BM25 order"
+      ],
+      "nondeterministicParts": [],
+      "userDecisionPoints": [
+        "correct stack",
+        "relevant guidance selection"
+      ],
+      "strengths": [
+        "22 concrete adapters",
+        "local lookup",
+        "implementation-focused fields"
+      ],
+      "failureModes": [
+        "wrong stack inference",
+        "stale versions",
+        "advisory without compile proof",
+        "docs/data list drift"
+      ],
+      "tests": [
+        "22/22 stack runtime smoke PASS",
+        "configured-file tests PASS"
+      ],
+      "networkDependencies": [],
+      "license": "MIT root claim",
+      "attributionRequirements": [
+        "retain MIT notice/source pin for bundled stack datasets"
+      ],
+      "sitesmithDecision": "adapt",
+      "decisionReason": "SiteSmith v3 behøver få canonical executable adapters frem for 22 flade rådtabeller.",
+      "sitesmithSuccessorCapability": "sitesmith.v3.stack-adapter-contracts",
+      "requiredImprovement": "Versioned adapter schema, detection evidence, codegen/build gates og unsupported-state.",
+      "verificationMethod": "Matrix builds for supported stacks, compile/lint/render gates og stale-version fixtures.",
+      "integrationTreatmentId": "spec-compatible-standard",
+      "licenceTreatmentId": "uupm-mit"
+    },
+    {
+      "capabilityId": "uupm.persist.master-overrides",
+      "sourceRepository": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "sourceCommit": "4857a2c5ef989794751a0f66b8545a4a49566286",
+      "sourceFiles": [
+        "src/ui-ux-pro-max/scripts/design_system.py",
+        "src/ui-ux-pro-max/scripts/search.py",
+        "src/ui-ux-pro-max/templates/base/skill-content.md"
+      ],
+      "sourceLines": [
+        "design_system.py:668-789",
+        "design_system.py:792-1135",
+        "design_system.py:1324-1356",
+        "search.py:101-145",
+        "skill-content.md:71-103"
+      ],
+      "activationMechanism": "--persist --output-dir <root> [-p name] [--page page] [--force].",
+      "inputs": [
+        "generated design system",
+        "project name",
+        "output root",
+        "optional page",
+        "force flag"
+      ],
+      "outputs": [
+        "design-system/<slug>/MASTER.md",
+        "optional pages/<page>.md",
+        "status/created_files"
+      ],
+      "persistentArtifacts": [
+        "MASTER.md",
+        "page override Markdown"
+      ],
+      "runtimeBehavior": "Safe slug; existing MASTER early-skips without force; force overwrites; naive page classifier.",
+      "deterministicParts": [
+        "slugging",
+        "hierarchy",
+        "content except timestamps",
+        "skip/force branch"
+      ],
+      "nondeterministicParts": [
+        "datetime.now timestamps"
+      ],
+      "userDecisionPoints": [
+        "output root",
+        "project name",
+        "page",
+        "force overwrite"
+      ],
+      "strengths": [
+        "explicit output root",
+        "safe slug",
+        "preserves existing MASTER by default"
+      ],
+      "failureModes": [
+        "cannot add page without force",
+        "force overwrites MASTER",
+        "page false positives",
+        "no provenance hash/version",
+        "wrong template path"
+      ],
+      "tests": [
+        "persist-skip-force PASS",
+        "output containment PASS",
+        "no add-page-existing-MASTER test"
+      ],
+      "networkDependencies": [],
+      "license": "MIT",
+      "attributionRequirements": [
+        "retain MIT notice for copied persistence implementation"
+      ],
+      "sitesmithDecision": "reimplement",
+      "decisionReason": "Hierarchical intent er god, men untyped Markdown og overwrite-coupling er ikke en sikker contract.",
+      "sitesmithSuccessorCapability": "sitesmith.v3.versioned-designspec-store",
+      "requiredImprovement": "Atomic typed artifact, immutable provenance, separate page patch, migrations og stable hash.",
+      "verificationMethod": "Golden round-trip, add-page-without-master-change, atomicity, migration og traversal tests.",
+      "integrationTreatmentId": "clean-room-standard",
+      "licenceTreatmentId": "uupm-mit"
+    },
+    {
+      "capabilityId": "uupm.provider.template-build",
+      "sourceRepository": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "sourceCommit": "4857a2c5ef989794751a0f66b8545a4a49566286",
+      "sourceFiles": [
+        "cli/src/types/index.ts",
+        "cli/src/utils/template.ts",
+        "cli/src/providers/*.json",
+        "src/ui-ux-pro-max/templates/base/*.md",
+        "skill.json"
+      ],
+      "sourceLines": [
+        "types/index.ts:1-69",
+        "template.ts:35-165",
+        "template.ts:240-317",
+        "skill.json:20-41"
+      ],
+      "activationMechanism": "uipro init --ai <provider|all>.",
+      "inputs": [
+        "AI type",
+        "target dir",
+        "global flag",
+        "force flag",
+        "provider JSON",
+        "base templates"
+      ],
+      "outputs": [
+        "provider-specific prompt/skill file",
+        "optional quick reference",
+        "copied runtime assets"
+      ],
+      "persistentArtifacts": [
+        "provider directories/files under target or global home"
+      ],
+      "runtimeBehavior": "19 concrete providers; all full install; Claude/Codex quick reference; duplicate paths dedupe first-wins.",
+      "deterministicParts": [
+        "provider configs",
+        "template substitution",
+        "fixed iteration order"
+      ],
+      "nondeterministicParts": [
+        "filesystem-existing branches",
+        "silently caught provider failures"
+      ],
+      "userDecisionPoints": [
+        "provider",
+        "local/global",
+        "force"
+      ],
+      "strengths": [
+        "broad provider reach",
+        "template source",
+        "local generation"
+      ],
+      "failureModes": [
+        "Antigravity/Codex shared-path wrong winner",
+        "plugin/template drift",
+        "platform list drift",
+        "swallowed failures",
+        "no provider tests"
+      ],
+      "tests": [
+        "asset sync checks source/assets; no provider-render/install matrix"
+      ],
+      "networkDependencies": [],
+      "license": "MIT for CLI/templates; bundled outputs may contain Apache-2.0/OFL components",
+      "attributionRequirements": [
+        "propagate all bundled component notices, not only root MIT"
+      ],
+      "sitesmithDecision": "adapt",
+      "decisionReason": "Canonical provider builds er værdifulde, men collisions og silent partial installs skal fjernes.",
+      "sitesmithSuccessorCapability": "sitesmith.v3.provider-compiler",
+      "requiredImprovement": "Canonical IR, unique destinations, collision errors, transaction, manifest og provider snapshots.",
+      "verificationMethod": "19-provider golden matrix, all-collision test, install/uninstall round-trip og manifest parity.",
+      "integrationTreatmentId": "spec-compatible-standard",
+      "licenceTreatmentId": "mixed-bundle"
+    },
+    {
+      "capabilityId": "uupm.cli.install-uninstall",
+      "sourceRepository": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "sourceCommit": "4857a2c5ef989794751a0f66b8545a4a49566286",
+      "sourceFiles": [
+        "cli/src/commands/init.ts",
+        "cli/src/commands/uninstall.ts",
+        "cli/src/utils/template.ts",
+        "cli/src/utils/extract.ts",
+        "cli/src/utils/github.ts"
+      ],
+      "sourceLines": [
+        "init.ts:41-103",
+        "init.ts:127-193",
+        "template.ts:172-287",
+        "extract.ts:90-146",
+        "github.ts:54-123"
+      ],
+      "activationMechanism": "uipro init / uipro uninstall; legacy via init --legacy.",
+      "inputs": [
+        "cwd",
+        "AI provider",
+        "local/global",
+        "force",
+        "legacy/offline/token flags"
+      ],
+      "outputs": [
+        "installed folders/files",
+        "status messages",
+        "known-path removal"
+      ],
+      "persistentArtifacts": [
+        "provider prompt files",
+        "runtime data/scripts",
+        "six sibling skills"
+      ],
+      "runtimeBehavior": "Default copies bundled assets offline; legacy fetches release ZIP; existing orchestrator can early-return; copy overlays.",
+      "deterministicParts": [
+        "target resolution",
+        "bundled copy",
+        "known folder names"
+      ],
+      "nondeterministicParts": [
+        "filesystem state",
+        "GitHub release/network in legacy",
+        "temp path"
+      ],
+      "userDecisionPoints": [
+        "provider",
+        "local/global",
+        "force",
+        "legacy/offline",
+        "uninstall confirmation"
+      ],
+      "strengths": [
+        "offline default",
+        "Windows-aware paths",
+        "safe copy primitives",
+        "GitHub fallback"
+      ],
+      "failureModes": [
+        "stale orphans",
+        "no refresh without force",
+        "silent partial provider failures",
+        "legacy temp leak",
+        "shared-path uninstall ambiguity"
+      ],
+      "tests": [
+        "no end-to-end install/update/uninstall matrix observed"
+      ],
+      "networkDependencies": [
+        "GitHub API/download only in legacy mode"
+      ],
+      "license": "MIT CLI plus mixed licenses in installed sibling/font artifacts",
+      "attributionRequirements": [
+        "install root MIT plus Apache/OFL notices for included components"
+      ],
+      "sitesmithDecision": "adapt",
+      "decisionReason": "Offline install er god, men skal være transactional, manifest-owned og stale-clean.",
+      "sitesmithSuccessorCapability": "sitesmith.v3.transactional-installer",
+      "requiredImprovement": "Planned diff, ownership manifest, rollback, owned stale cleanup, collision detection og symmetric uninstall.",
+      "verificationMethod": "Temp-home E2E matrix, interrupted recovery og zero-unowned-delete assertion.",
+      "integrationTreatmentId": "spec-compatible-standard",
+      "licenceTreatmentId": "mixed-bundle"
+    },
+    {
+      "capabilityId": "uupm.cli.update-versions",
+      "sourceRepository": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "sourceCommit": "4857a2c5ef989794751a0f66b8545a4a49566286",
+      "sourceFiles": [
+        "cli/src/commands/update.ts",
+        "cli/src/commands/versions.ts",
+        "cli/src/utils/github.ts",
+        "cli/package.json",
+        "skill.json",
+        ".claude-plugin/plugin.json",
+        ".claude-plugin/marketplace.json",
+        "scripts/sync-release-version.mjs",
+        ".github/workflows/release.yml"
+      ],
+      "sourceLines": [
+        "update.ts:30-93",
+        "versions.ts:10-45",
+        "github.ts:54-123",
+        "sync-release-version.mjs:1-77"
+      ],
+      "activationMechanism": "uipro update eller uipro versions.",
+      "inputs": [
+        "installed CLI version",
+        "optional GitHub token",
+        "latest releases",
+        "cwd/provider options"
+      ],
+      "outputs": [
+        "release list",
+        "global npm update attempt",
+        "rerun-init instruction",
+        "forced refresh when equal"
+      ],
+      "persistentArtifacts": [
+        "global npm package",
+        "refreshed installed files after init"
+      ],
+      "runtimeBehavior": "Always queries GitHub; can spawn global npm install; skill migration is a separate rerun.",
+      "deterministicParts": [
+        "semver validation",
+        "branch logic"
+      ],
+      "nondeterministicParts": [
+        "network",
+        "latest release",
+        "global permissions",
+        "locale date"
+      ],
+      "userDecisionPoints": [
+        "token",
+        "global npm mutation",
+        "rerunning init"
+      ],
+      "strengths": [
+        "release visibility",
+        "semver guard",
+        "manual fallback"
+      ],
+      "failureModes": [
+        "2.11.3/2.11.0/2.5.0 drift",
+        "release workflow skips sync script",
+        "non-atomic update",
+        "always-online versions"
+      ],
+      "tests": [
+        "no update/version drift or migration tests observed"
+      ],
+      "networkDependencies": [
+        "api.github.com",
+        "github.com release assets",
+        "npm registry"
+      ],
+      "license": "MIT package metadata; cli/README.md conflicts with CC-BY-NC-4.0",
+      "attributionRequirements": [
+        "retain MIT notice",
+        "resolve contradictory public license metadata"
+      ],
+      "sitesmithDecision": "reimplement",
+      "decisionReason": "SiteSmith kræver pinned, reproducible og offline-verificerbar release state.",
+      "sitesmithSuccessorCapability": "sitesmith.v3.release-manifest-updater",
+      "requiredImprovement": "Single version source, signed/checksummed manifest, plan/apply, atomic migration og offline status.",
+      "verificationMethod": "Version-consistency CI, fake-release tests, checksum failure, rollback og snapshots.",
+      "integrationTreatmentId": "clean-room-standard",
+      "licenceTreatmentId": "uupm-metadata-conflict"
+    },
+    {
+      "capabilityId": "uupm.bundle.sibling-skills",
+      "sourceRepository": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "sourceCommit": "4857a2c5ef989794751a0f66b8545a4a49566286",
+      "sourceFiles": [
+        "cli/scripts/sync-assets.mjs",
+        "cli/src/utils/template.ts",
+        ".claude/skills/banner-design",
+        ".claude/skills/brand",
+        ".claude/skills/design",
+        ".claude/skills/design-system",
+        ".claude/skills/slides",
+        ".claude/skills/ui-styling"
+      ],
+      "sourceLines": [
+        "sync-assets.mjs:22-46",
+        "sync-assets.mjs:149-152",
+        "template.ts:208-287",
+        "design/SKILL.md:3-64",
+        "ui-styling/SKILL.md:1-10"
+      ],
+      "activationMechanism": "Automatisk full install for alle provider configs.",
+      "inputs": [
+        "bundled sibling tree",
+        "target provider root",
+        "force/existing state"
+      ],
+      "outputs": [
+        "six additional skills beside ui-ux-pro-max"
+      ],
+      "persistentArtifacts": [
+        "banner-design",
+        "brand",
+        "design",
+        "design-system",
+        "slides",
+        "ui-styling"
+      ],
+      "runtimeBehavior": "Copy/overlay; fonts/binaries excluded from CLI sync, so plugin tree and CLI output differ.",
+      "deterministicParts": [
+        "six-name list",
+        "extension filters",
+        "copy order"
+      ],
+      "nondeterministicParts": [
+        "existing target state"
+      ],
+      "userDecisionPoints": [],
+      "strengths": [
+        "broader creative workflow from one install"
+      ],
+      "failureModes": [
+        "unexpected scope",
+        "mixed authors/licenses",
+        "network/API siblings",
+        "stale overlays",
+        "plugin/CLI divergence"
+      ],
+      "tests": [
+        "sync-assets --check PASS",
+        "no behavioral sibling tests"
+      ],
+      "networkDependencies": [
+        "individual siblings may call Gemini, Pexels, shadcn or other services"
+      ],
+      "license": "mixed: root MIT; ui-styling Apache-2.0 LICENSE despite MIT frontmatter; fonts OFL; claudekit credits",
+      "attributionRequirements": [
+        "component-specific copyright/license/NOTICE",
+        "OFL retention",
+        "do not flatten to root MIT"
+      ],
+      "sitesmithDecision": "reject",
+      "decisionReason": "Named deliberate loss: broader creative workflow from one install. SiteSmith må ikke skjult installere en kreativ suite som sideeffekt af én website-skill.",
+      "sitesmithSuccessorCapability": "none",
+      "requiredImprovement": "Reconsider only through a new decision for separately pinned opt-ins with licence manifest, capability declaration, explicit consent, and minimal surface.",
+      "verificationMethod": "Exact exclusion assertion: all six sibling skills, their assets, transitive dependencies, install side effects, and runtime entry points are absent from the default SiteSmith core and package output.",
+      "integrationTreatmentId": "deliberate-rejection",
+      "licenceTreatmentId": "mixed-bundle"
+    },
+    {
+      "capabilityId": "uupm.optional.browser-stack",
+      "sourceRepository": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "sourceCommit": "4857a2c5ef989794751a0f66b8545a4a49566286",
+      "sourceFiles": [
+        "stack/scripts/design-audit.mjs",
+        "stack/.mcp.json",
+        "stack/scripts/setup.sh",
+        "stack/.claude/commands/design-plan.md",
+        "stack/README.md"
+      ],
+      "sourceLines": [
+        "design-audit.mjs:1-229",
+        ".mcp.json:1-16",
+        "setup.sh:10-20",
+        "design-plan.md:1-24",
+        "README.md:15-82"
+      ],
+      "activationMechanism": "Separat stack-setup; ikke installeret af default CLI-bundle.",
+      "inputs": [
+        "target URL",
+        "output directory",
+        "Playwright Chromium",
+        "MCP servers",
+        "optional shadcn"
+      ],
+      "outputs": [
+        "six viewport screenshots",
+        "report.md",
+        "report.json",
+        "console errors",
+        "findings",
+        "exit code"
+      ],
+      "persistentArtifacts": [
+        "node_modules",
+        "Playwright browser",
+        "screenshots",
+        "reports",
+        "MCP config"
+      ],
+      "runtimeBehavior": "Audits 360/390/768/1024/1440/1920; dedupes findings; exits 2 only on high findings.",
+      "deterministicParts": [
+        "viewport list",
+        "heuristic checks",
+        "severity order",
+        "report schema"
+      ],
+      "nondeterministicParts": [
+        "webpage/network timing",
+        "@latest packages",
+        "browser/environment"
+      ],
+      "userDecisionPoints": [
+        "whether to install/run",
+        "target URL"
+      ],
+      "strengths": [
+        "real browser",
+        "multi-viewport",
+        "structured report",
+        "nonzero high-severity gate"
+      ],
+      "failureModes": [
+        "unpinned supply chain",
+        "README 7 vs code 6",
+        "unsupported web-vitals domain",
+        "heuristic limits",
+        "setup mutations"
+      ],
+      "tests": [
+        "not run in this audit",
+        "no dedicated audit tests observed"
+      ],
+      "networkDependencies": [
+        "npm registry",
+        "Playwright download",
+        "target site",
+        "MCP packages"
+      ],
+      "license": "root MIT plus transitive npm/MCP licenses",
+      "attributionRequirements": [
+        "retain root license and third-party lockfile/SBOM obligations"
+      ],
+      "sitesmithDecision": "reimplement",
+      "decisionReason": "Browser-proof er centralt, men stacken er optional, unpinned og ikke generator-connected.",
+      "sitesmithSuccessorCapability": "sitesmith.v3.proof-runner",
+      "requiredImprovement": "Pinned deps, offline fixtures, DesignSpec-aware checks, color schemes, interaction, console/network/link/a11y gates.",
+      "verificationMethod": "Known-good/bad fixtures, viewport snapshots, lock verification og false-positive/negative corpus.",
+      "integrationTreatmentId": "clean-room-standard",
+      "licenceTreatmentId": "uupm-mit"
+    },
+    {
+      "capabilityId": "uupm.quality.tests-release",
+      "sourceRepository": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "sourceCommit": "4857a2c5ef989794751a0f66b8545a4a49566286",
+      "sourceFiles": [
+        "src/ui-ux-pro-max/scripts/tests/test_core.py",
+        "src/ui-ux-pro-max/scripts/validate_data.py",
+        "scripts/validate-csv.py",
+        "cli/scripts/sync-assets.mjs",
+        "cli/tests/e2e/preview.spec.ts",
+        ".github/workflows/tests.yml",
+        ".github/workflows/check-asset-sync.yml"
+      ],
+      "sourceLines": [
+        "test_core.py:1-134",
+        "validate_data.py:1-117",
+        "preview.spec.ts:8-31",
+        "tests.yml:14-43",
+        "check-asset-sync.yml:20-36"
+      ],
+      "activationMechanism": "Developer/CI commands for unit, data, asset and static preview checks.",
+      "inputs": [
+        "runtime files",
+        "CSVs",
+        "one static preview HTML",
+        "CI environment"
+      ],
+      "outputs": [
+        "pass/fail",
+        "validation messages",
+        "browser console errors"
+      ],
+      "persistentArtifacts": [
+        "CI logs/test artifacts only"
+      ],
+      "runtimeBehavior": "16 stdlib tests; parse/schema checks; asset parity; static preview visible-body/no-console smoke.",
+      "deterministicParts": [
+        "unit/data/asset validations on pinned tree"
+      ],
+      "nondeterministicParts": [
+        "browser/CI environment"
+      ],
+      "userDecisionPoints": [],
+      "strengths": [
+        "fast core suite",
+        "configured-file smoke",
+        "source-to-CLI asset parity"
+      ],
+      "failureModes": [
+        "no ranking quality",
+        "no classifier/duplicate-key tests",
+        "no provider lifecycle tests",
+        "preview not generator output"
+      ],
+      "tests": [
+        "16/16 PASS",
+        "validate_data PASS",
+        "35 CSV PASS",
+        "asset sync PASS",
+        "12+22 smoke PASS"
+      ],
+      "networkDependencies": [
+        "CI dependency install/browser setup; core test none"
+      ],
+      "license": "MIT",
+      "attributionRequirements": [
+        "retain test/code MIT notice when copied"
+      ],
+      "sitesmithDecision": "adapt",
+      "decisionReason": "Bevar billige gates, men v3 behøver product-level proof og traceability.",
+      "sitesmithSuccessorCapability": "sitesmith.v3.release-proof-matrix",
+      "requiredImprovement": "Ranking/classification/generator goldens, strict JSON parse, provider lifecycle and generated-site browser proof.",
+      "verificationMethod": "CI must fail on seeded regressions; known-bad control fixture remains failing.",
+      "integrationTreatmentId": "spec-compatible-standard",
+      "licenceTreatmentId": "uupm-mit"
+    },
+    {
+      "capabilityId": "frontend.subject-vernacular",
+      "sourceRepository": "https://github.com/anthropics/skills",
+      "sourceCommit": "b29e7cf65e5cb78a5ac33d582270551bc74a14eb",
+      "sourceFiles": [
+        "skills/frontend-design/SKILL.md"
+      ],
+      "sourceLines": [
+        "L11-L13"
+      ],
+      "activationMechanism": "The example-skills plugin exposes the frontend-design folder; host skill discovery or explicit mention loads SKILL.md.",
+      "inputs": [
+        "brief",
+        "available user memory",
+        "subject context"
+      ],
+      "outputs": [
+        "declared subject",
+        "audience",
+        "page job",
+        "subject-grounded design choices"
+      ],
+      "persistentArtifacts": [],
+      "runtimeBehavior": "The host model pins missing subject facts and derives the design language from the subject's materials, instruments, artifacts and vernacular.",
+      "deterministicParts": [
+        "none beyond static instruction text"
+      ],
+      "nondeterministicParts": [
+        "subject inference",
+        "relevance judgement",
+        "creative mapping"
+      ],
+      "userDecisionPoints": [
+        "The user may supply the subject; otherwise the model states its inferred choice."
+      ],
+      "strengths": [
+        "Makes art direction specific to the subject rather than a generic style label."
+      ],
+      "failureModes": [
+        "The same model can rationalise a generic choice after generating it.",
+        "No source or truth schema distinguishes fact from invention."
+      ],
+      "tests": [
+        "No upstream capability-specific automated test found."
+      ],
+      "networkDependencies": [],
+      "license": "Apache-2.0",
+      "attributionRequirements": [
+        "Ship the Apache-2.0 licence when redistributing.",
+        "Mark modified files and retain applicable notices."
+      ],
+      "sitesmithDecision": "adapt",
+      "decisionReason": "Subject-world grounding is essential, but SiteSmith must make the grounding traceable and reviewable.",
+      "sitesmithSuccessorCapability": "creative.subject-vernacular",
+      "requiredImprovement": "Every material visual choice cites a locked evidence item or is explicitly marked creative; blind reviewers can identify the brief subject above chance without brand-name text.",
+      "verificationMethod": "QC-CREATIVE-01 subject-grounding rubric plus evidence-reference schema test.",
+      "integrationTreatmentId": "spec-compatible-standard",
+      "licenceTreatmentId": "frontend-apache"
+    },
+    {
+      "capabilityId": "frontend.hero-thesis",
+      "sourceRepository": "https://github.com/anthropics/skills",
+      "sourceCommit": "b29e7cf65e5cb78a5ac33d582270551bc74a14eb",
+      "sourceFiles": [
+        "skills/frontend-design/SKILL.md"
+      ],
+      "sourceLines": [
+        "L15-L17"
+      ],
+      "activationMechanism": "Loaded with frontend-design and applied during the design-principles pass.",
+      "inputs": [
+        "subject world",
+        "page job",
+        "real content"
+      ],
+      "outputs": [
+        "one hero thesis expressed through the most characteristic true element"
+      ],
+      "persistentArtifacts": [],
+      "runtimeBehavior": "The model chooses a characteristic headline, image, animation, demo or interaction instead of a default marketing composition.",
+      "deterministicParts": [
+        "none"
+      ],
+      "nondeterministicParts": [
+        "thesis selection",
+        "form selection",
+        "justification"
+      ],
+      "userDecisionPoints": [],
+      "strengths": [
+        "Connects the opening composition to the site's argument."
+      ],
+      "failureModes": [
+        "No rendered proof that the selected thesis remains visible or true."
+      ],
+      "tests": [
+        "No upstream capability-specific automated test found."
+      ],
+      "networkDependencies": [],
+      "license": "Apache-2.0",
+      "attributionRequirements": [
+        "Apache-2.0 redistribution conditions apply to copied expression."
+      ],
+      "sitesmithDecision": "adapt",
+      "decisionReason": "The thesis is a high-value creative constraint that can become a traceable world/spec field.",
+      "sitesmithSuccessorCapability": "creative.hero-thesis",
+      "requiredImprovement": "Bind the thesis to page job and evidence, then verify its prominence and truth in the finished render.",
+      "verificationMethod": "QC-CREATIVE-02 thesis trace test and blinded hero-specificity rating.",
+      "integrationTreatmentId": "spec-compatible-standard",
+      "licenceTreatmentId": "frontend-apache"
+    },
+    {
+      "capabilityId": "frontend.type-as-identity",
+      "sourceRepository": "https://github.com/anthropics/skills",
+      "sourceCommit": "b29e7cf65e5cb78a5ac33d582270551bc74a14eb",
+      "sourceFiles": [
+        "skills/frontend-design/SKILL.md"
+      ],
+      "sourceLines": [
+        "L19-L20"
+      ],
+      "activationMechanism": "Loaded with frontend-design and applied while planning the visual system.",
+      "inputs": [
+        "subject",
+        "tone",
+        "content roles"
+      ],
+      "outputs": [
+        "display, body and optional utility typography roles",
+        "type scale",
+        "weight, width and spacing intent"
+      ],
+      "persistentArtifacts": [],
+      "runtimeBehavior": "The model makes typography part of the identity instead of a neutral default.",
+      "deterministicParts": [
+        "none"
+      ],
+      "nondeterministicParts": [
+        "font choice",
+        "pairing",
+        "scale and treatment"
+      ],
+      "userDecisionPoints": [],
+      "strengths": [
+        "Raises typography to a first-class art-direction mechanism."
+      ],
+      "failureModes": [
+        "No font availability, licence, loading, fallback or rendered-distinctness check."
+      ],
+      "tests": [
+        "No upstream capability-specific automated test found."
+      ],
+      "networkDependencies": [
+        "A host may fetch fonts, but the skill does not define or constrain that call."
+      ],
+      "license": "Apache-2.0",
+      "attributionRequirements": [
+        "Apache-2.0 applies to copied instruction text; chosen fonts need separate licences."
+      ],
+      "sitesmithDecision": "adapt",
+      "decisionReason": "Creative type direction must be preserved while asset rights and rendering become enforceable.",
+      "sitesmithSuccessorCapability": "creative.typography-identity",
+      "requiredImprovement": "Record font provenance/fallbacks and prove that the chosen roles render, remain legible and differ materially across worlds.",
+      "verificationMethod": "QC-CREATIVE-03 typography rubric, font asset manifest and fallback screenshot gate.",
+      "integrationTreatmentId": "spec-compatible-standard",
+      "licenceTreatmentId": "frontend-apache"
+    },
+    {
+      "capabilityId": "frontend.semantic-structure",
+      "sourceRepository": "https://github.com/anthropics/skills",
+      "sourceCommit": "b29e7cf65e5cb78a5ac33d582270551bc74a14eb",
+      "sourceFiles": [
+        "skills/frontend-design/SKILL.md"
+      ],
+      "sourceLines": [
+        "L21-L21"
+      ],
+      "activationMechanism": "Loaded with frontend-design and applied to labels, dividers, numbering and hierarchy.",
+      "inputs": [
+        "content hierarchy",
+        "sequence semantics"
+      ],
+      "outputs": [
+        "structural devices that encode real content relationships"
+      ],
+      "persistentArtifacts": [],
+      "runtimeBehavior": "The model rejects decorative numbering and uses structure only when the content relationship warrants it.",
+      "deterministicParts": [
+        "none"
+      ],
+      "nondeterministicParts": [
+        "semantic judgement",
+        "layout expression"
+      ],
+      "userDecisionPoints": [],
+      "strengths": [
+        "Prevents decorative information architecture."
+      ],
+      "failureModes": [
+        "Self-review can miss false semantics; no content model is required."
+      ],
+      "tests": [
+        "No upstream capability-specific automated test found."
+      ],
+      "networkDependencies": [],
+      "license": "Apache-2.0",
+      "attributionRequirements": [
+        "Apache-2.0 redistribution conditions apply to copied expression."
+      ],
+      "sitesmithDecision": "integrate",
+      "decisionReason": "This belongs with SiteSmith's content hierarchy and journey truth rather than as a standalone style rule.",
+      "sitesmithSuccessorCapability": "creative.semantic-structure",
+      "requiredImprovement": "Every repeated marker or sequence maps to a typed content relationship and survives a screen-reader/visual hierarchy check.",
+      "verificationMethod": "QC-UX-01 semantic-structure fixture and blind information-architecture review.",
+      "integrationTreatmentId": "principle-only",
+      "licenceTreatmentId": "frontend-apache"
+    },
+    {
+      "capabilityId": "frontend.motion-intent",
+      "sourceRepository": "https://github.com/anthropics/skills",
+      "sourceCommit": "b29e7cf65e5cb78a5ac33d582270551bc74a14eb",
+      "sourceFiles": [
+        "skills/frontend-design/SKILL.md"
+      ],
+      "sourceLines": [
+        "L23-L25",
+        "L41-L43"
+      ],
+      "activationMechanism": "Loaded with frontend-design during planning and self-critique.",
+      "inputs": [
+        "subject",
+        "interaction purpose",
+        "chosen complexity"
+      ],
+      "outputs": [
+        "one motion thesis or an explicit restraint decision"
+      ],
+      "persistentArtifacts": [],
+      "runtimeBehavior": "The model favours an orchestrated moment over scattered effects and is told to respect reduced motion.",
+      "deterministicParts": [
+        "none"
+      ],
+      "nondeterministicParts": [
+        "motion concept",
+        "timing",
+        "implementation"
+      ],
+      "userDecisionPoints": [],
+      "strengths": [
+        "Motion serves the subject and is concentrated rather than sprayed across components."
+      ],
+      "failureModes": [
+        "No executable reduced-motion or performance proof."
+      ],
+      "tests": [
+        "No upstream capability-specific automated test found."
+      ],
+      "networkDependencies": [],
+      "license": "Apache-2.0",
+      "attributionRequirements": [
+        "Apache-2.0 redistribution conditions apply to copied expression."
+      ],
+      "sitesmithDecision": "adapt",
+      "decisionReason": "Creative motion judgement should remain high-freedom while accessibility and performance are low-freedom gates.",
+      "sitesmithSuccessorCapability": "creative.motion-intent",
+      "requiredImprovement": "Lock purpose, trigger and reduced-motion alternative, then prove both journeys and budget.",
+      "verificationMethod": "QC-MOTION-01 motion-purpose review plus reduced-motion and performance browser gates.",
+      "integrationTreatmentId": "spec-compatible-standard",
+      "licenceTreatmentId": "frontend-apache"
+    },
+    {
+      "capabilityId": "frontend.anti-default-calibration",
+      "sourceRepository": "https://github.com/anthropics/skills",
+      "sourceCommit": "b29e7cf65e5cb78a5ac33d582270551bc74a14eb",
+      "sourceFiles": [
+        "skills/frontend-design/SKILL.md"
+      ],
+      "sourceLines": [
+        "L29-L31"
+      ],
+      "activationMechanism": "Loaded during the brainstorm/explore/critique process.",
+      "inputs": [
+        "brief-bound visual constraints",
+        "model-default calibration list"
+      ],
+      "outputs": [
+        "revised plan that avoids spending free choices on current defaults"
+      ],
+      "persistentArtifacts": [],
+      "runtimeBehavior": "The model names three current clusters, obeys explicit brief requests and revises unbound axes that fall into those defaults.",
+      "deterministicParts": [
+        "the three written reference clusters"
+      ],
+      "nondeterministicParts": [
+        "similarity judgement",
+        "revision"
+      ],
+      "userDecisionPoints": [
+        "Explicit brief direction overrides the anti-default advice."
+      ],
+      "strengths": [
+        "Distinguishes a justified style from an unexamined default."
+      ],
+      "failureModes": [
+        "Static calibration ages.",
+        "Avoiding a default can create a predictable opposite-default.",
+        "Same-model self-check is confirmation-prone."
+      ],
+      "tests": [
+        "No upstream capability-specific automated test found."
+      ],
+      "networkDependencies": [],
+      "license": "Apache-2.0",
+      "attributionRequirements": [
+        "Apache-2.0 redistribution conditions apply to copied expression."
+      ],
+      "sitesmithDecision": "reimplement",
+      "decisionReason": "The principle is essential, but calibration must be versioned, measured and isolated from the generator's first choice.",
+      "sitesmithSuccessorCapability": "direction.anti-default-calibration",
+      "requiredImprovement": "Compare typed and rendered fingerprints against versioned default and opposite-default probes without making either a ban list.",
+      "verificationMethod": "QC-DIRECTION-01 default/opposite classifier fixture and cross-run cliché-rate benchmark.",
+      "integrationTreatmentId": "clean-room-standard",
+      "licenceTreatmentId": "frontend-apache"
+    },
+    {
+      "capabilityId": "frontend.compact-plan-signature",
+      "sourceRepository": "https://github.com/anthropics/skills",
+      "sourceCommit": "b29e7cf65e5cb78a5ac33d582270551bc74a14eb",
+      "sourceFiles": [
+        "skills/frontend-design/SKILL.md"
+      ],
+      "sourceLines": [
+        "L33-L35"
+      ],
+      "activationMechanism": "Loaded before project code is written.",
+      "inputs": [
+        "brief",
+        "subject",
+        "audience",
+        "page job"
+      ],
+      "outputs": [
+        "4-6 colour tokens",
+        "2+ type roles",
+        "layout prose/ASCII alternatives",
+        "one signature"
+      ],
+      "persistentArtifacts": [],
+      "runtimeBehavior": "The model plans a compact system, critiques generic elements, and proceeds only after revision.",
+      "deterministicParts": [
+        "required plan categories and rough counts"
+      ],
+      "nondeterministicParts": [
+        "plan content",
+        "comparison",
+        "signature"
+      ],
+      "userDecisionPoints": [
+        "Ideas are shown only when the model has high confidence; no mandatory selection gate."
+      ],
+      "strengths": [
+        "Small enough to preserve creative focus and directness.",
+        "Forces one memorable idea."
+      ],
+      "failureModes": [
+        "Plan is not durable or machine-readable.",
+        "One actor generates and approves it.",
+        "ASCII alternatives need not be structurally distinct."
+      ],
+      "tests": [
+        "No upstream capability-specific automated test found."
+      ],
+      "networkDependencies": [],
+      "license": "Apache-2.0",
+      "attributionRequirements": [
+        "Apache-2.0 redistribution conditions apply to copied expression."
+      ],
+      "sitesmithDecision": "adapt",
+      "decisionReason": "The compactness is a regression guard against workflow bloat, while SiteSmith needs typed traceability.",
+      "sitesmithSuccessorCapability": "direction.world-contract",
+      "requiredImprovement": "Compile equally framed, subject-grounded world contracts and preserve a short human-readable card; reject infrastructure fields from the creative prompt.",
+      "verificationMethod": "QC-DIRECTION-02 world schema/structural-distance test and time-to-direction SLO.",
+      "integrationTreatmentId": "spec-compatible-standard",
+      "licenceTreatmentId": "frontend-apache"
+    },
+    {
+      "capabilityId": "frontend.plan-critique-build",
+      "sourceRepository": "https://github.com/anthropics/skills",
+      "sourceCommit": "b29e7cf65e5cb78a5ac33d582270551bc74a14eb",
+      "sourceFiles": [
+        "skills/frontend-design/SKILL.md"
+      ],
+      "sourceLines": [
+        "L35-L39"
+      ],
+      "activationMechanism": "The same loaded skill moves from revised design plan to code.",
+      "inputs": [
+        "reviewed compact plan",
+        "user project"
+      ],
+      "outputs": [
+        "working frontend code following the revised plan"
+      ],
+      "persistentArtifacts": [
+        "project code"
+      ],
+      "runtimeBehavior": "After same-context self-critique, the host model implements directly rather than handing off through a long workflow.",
+      "deterministicParts": [
+        "none"
+      ],
+      "nondeterministicParts": [
+        "self-critique",
+        "implementation",
+        "fidelity"
+      ],
+      "userDecisionPoints": [],
+      "strengths": [
+        "Low ceremony and strong continuity between concept and implementation."
+      ],
+      "failureModes": [
+        "Self-critique is not independent.",
+        "No immutable plan or fidelity gate.",
+        "CSS specificity warning is advisory."
+      ],
+      "tests": [
+        "No upstream capability-specific automated test found."
+      ],
+      "networkDependencies": [
+        "Only those chosen by the host/project; none required by the skill."
+      ],
+      "license": "Apache-2.0",
+      "attributionRequirements": [
+        "Apache-2.0 redistribution conditions apply to copied expression."
+      ],
+      "sitesmithDecision": "adapt",
+      "decisionReason": "SiteSmith should preserve direct implementation after selection, but not mutable or self-approved direction.",
+      "sitesmithSuccessorCapability": "build.spec-directness",
+      "requiredImprovement": "Builder sees one locked DesignSpec and may interpret only declared degrees of freedom; fidelity review cannot see generator rationale.",
+      "verificationMethod": "QC-FIDELITY-01 spec-to-render review plus time/cost comparison against the compact upstream flow.",
+      "integrationTreatmentId": "spec-compatible-standard",
+      "licenceTreatmentId": "frontend-apache"
+    },
+    {
+      "capabilityId": "frontend.restraint-quality-floor",
+      "sourceRepository": "https://github.com/anthropics/skills",
+      "sourceCommit": "b29e7cf65e5cb78a5ac33d582270551bc74a14eb",
+      "sourceFiles": [
+        "skills/frontend-design/SKILL.md"
+      ],
+      "sourceLines": [
+        "L41-L43"
+      ],
+      "activationMechanism": "Loaded during build self-critique.",
+      "inputs": [
+        "work in progress",
+        "selected signature"
+      ],
+      "outputs": [
+        "reduced decoration",
+        "mobile/focus/reduced-motion quality intent",
+        "optional screenshots and notes"
+      ],
+      "persistentArtifacts": [
+        "optional notes"
+      ],
+      "runtimeBehavior": "The model spends boldness once, removes unsupported decoration and self-critiques screenshots if tools exist.",
+      "deterministicParts": [
+        "none"
+      ],
+      "nondeterministicParts": [
+        "restraint judgement",
+        "screenshot critique"
+      ],
+      "userDecisionPoints": [],
+      "strengths": [
+        "Protects one coherent signature instead of accumulating decoration."
+      ],
+      "failureModes": [
+        "Quality floor is advisory and tool-conditional.",
+        "Optional notes do not prevent repetition across runs."
+      ],
+      "tests": [
+        "No upstream capability-specific automated test found."
+      ],
+      "networkDependencies": [],
+      "license": "Apache-2.0",
+      "attributionRequirements": [
+        "Apache-2.0 redistribution conditions apply to copied expression."
+      ],
+      "sitesmithDecision": "integrate",
+      "decisionReason": "Creative restraint should guide the critic while SiteSmith's browser gates prove the floor.",
+      "sitesmithSuccessorCapability": "proof.restraint-quality",
+      "requiredImprovement": "Separate subjective restraint review from mandatory mobile, focus, reduced-motion and screenshot evidence.",
+      "verificationMethod": "QC-CREATIVE-04 clutter/signature rubric plus accessibility and responsive browser gates.",
+      "integrationTreatmentId": "principle-only",
+      "licenceTreatmentId": "frontend-apache"
+    },
+    {
+      "capabilityId": "frontend.interface-writing",
+      "sourceRepository": "https://github.com/anthropics/skills",
+      "sourceCommit": "b29e7cf65e5cb78a5ac33d582270551bc74a14eb",
+      "sourceFiles": [
+        "skills/frontend-design/SKILL.md"
+      ],
+      "sourceLines": [
+        "L45-L55"
+      ],
+      "activationMechanism": "Loaded when the host writes labels, actions, failure and empty states.",
+      "inputs": [
+        "user task",
+        "brand/audience register",
+        "interaction states"
+      ],
+      "outputs": [
+        "plain user-facing labels",
+        "stable action vocabulary",
+        "actionable failure and empty-state copy"
+      ],
+      "persistentArtifacts": [
+        "project copy"
+      ],
+      "runtimeBehavior": "The model writes from the user's side, keeps action names consistent and makes errors/empty states directional rather than decorative.",
+      "deterministicParts": [
+        "none"
+      ],
+      "nondeterministicParts": [
+        "copy generation",
+        "tone calibration"
+      ],
+      "userDecisionPoints": [
+        "User-supplied brand voice and terminology override generic wording."
+      ],
+      "strengths": [
+        "Treats interface writing as usability and wayfinding."
+      ],
+      "failureModes": [
+        "No factual claim ledger.",
+        "No automated state-coverage or vocabulary-consistency test."
+      ],
+      "tests": [
+        "No upstream capability-specific automated test found."
+      ],
+      "networkDependencies": [],
+      "license": "Apache-2.0",
+      "attributionRequirements": [
+        "Apache-2.0 redistribution conditions apply to copied expression."
+      ],
+      "sitesmithDecision": "integrate",
+      "decisionReason": "This strengthens SiteSmith's truthful content hierarchy and journey contracts.",
+      "sitesmithSuccessorCapability": "truth.interface-writing",
+      "requiredImprovement": "Bind factual copy to ClaimLedger, require every interactive state, and mechanically check stable action vocabulary.",
+      "verificationMethod": "QC-UX-02 state-copy fixture, claim-link check and blind usability review.",
+      "integrationTreatmentId": "principle-only",
+      "licenceTreatmentId": "frontend-apache"
+    },
+    {
+      "capabilityId": "IMP-001",
+      "sourceRepository": "https://github.com/pbakaus/impeccable.git",
+      "sourceCommit": "6b342244e915d64b0d6e84d5eec448fd196ce6bb",
+      "sourceFiles": [
+        "cli/bin/cli.js",
+        "cli/lib/skills.mjs",
+        "scripts/build.js",
+        "scripts/lib/transformers/providers.js",
+        "package.json",
+        "plugin/.grok-plugin/plugin.json"
+      ],
+      "sourceLines": [
+        "cli/bin/cli.js:31-85",
+        "cli/lib/skills.mjs:22-149",
+        "cli/lib/skills.mjs:525-667",
+        "cli/lib/skills.mjs:918-965",
+        "cli/lib/skills.mjs:1192-1370",
+        "cli/lib/skills.mjs:1832-1880",
+        "cli/lib/skills.mjs:2004-2023",
+        "scripts/build.js:6-14",
+        "scripts/build.js:436-485",
+        "scripts/build.js:521-579",
+        "scripts/build.js:627-692",
+        "scripts/lib/transformers/providers.js:12-156",
+        "package.json:1-24",
+        "plugin/.grok-plugin/plugin.json:1-20"
+      ],
+      "activationMechanism": "Brugeren kører CLI-kommandoerne install, link, update eller check; provider vælges eksplicit eller resolves fra alias/layout, hvorefter en universal bundle downloades eller læses fra IMPECCABLE_BUNDLE_PATH og transformeres.",
+      "inputs": [
+        "Providernavn eller provideralias",
+        "Global eller project-local scope",
+        "Remote universal ZIP eller lokal IMPECCABLE_BUNDLE_PATH",
+        "Eksisterende providerfiler og hook-konfiguration",
+        "Interaktivt eller ikke-interaktivt hookvalg"
+      ],
+      "outputs": [
+        "Provider-specifik skilltree",
+        "Eventuelle agentfiler",
+        "Eventuelle hook-manifester",
+        "Installationsstatus og hash-sammenligning"
+      ],
+      "persistentArtifacts": [
+        "Provider-specifikke skillmapper",
+        "Hook-konfiguration",
+        "skills-lock.json eller tilsvarende provider metadata"
+      ],
+      "runtimeBehavior": "CLI'en dispatcher detector- og installationskommandoer, downloader højst via én redirect, udpakker med zip-slip-beskyttelse, transformer provider-paths og kan skrive hooks. Hashen sammenligner downloadet bundle med installeret tree, men autentificerer ikke serverartifactet.",
+      "deterministicParts": [
+        "Provideralias-resolution",
+        "Pathtransformation givet samme bundle og provider",
+        "Zip-slip pathcheck",
+        "Tree-hash givet samme filer"
+      ],
+      "nondeterministicParts": [
+        "Remote bundleindhold uden pinnet digest/signatur",
+        "Netværksfejl og redirectrespons",
+        "Interaktivt hookvalg",
+        "Provider-runtime efter installation"
+      ],
+      "userDecisionPoints": [
+        "Provider og installationsscope",
+        "Om hooks skal installeres",
+        "Om lokal bundle override bruges"
+      ],
+      "strengths": [
+        "Én buildpipeline kan materialisere 14 providerlayouts",
+        "Lokal bundle override understøtter offline test",
+        "Zip-slip-beskyttelse findes",
+        "Provider-specifik transformation er centraliseret"
+      ],
+      "failureModes": [
+        "Ingen cryptographic signature eller pinned checksum for download",
+        "Agents og hooks har ikke dokumenteret featureparitet på alle providers",
+        "Ikke-interaktiv installation kan aktivere hooks som default",
+        "Versionsnumre er splittet mellem skill, CLI og extension",
+        "Genereret Grok-manifest siger MIT trods Apache-2.0 rootlicens",
+        "POSIX hookkommandoer kan være uegnede i Windows-provider runtimes"
+      ],
+      "tests": [
+        "CLI --help startede succesfuldt",
+        "CLI --version returnerede 3.5.0",
+        "install --help kunne ikke runtime-testes uden fflate/node_modules",
+        "Build- og providertransformkode blev statisk inspiceret",
+        "Ingen download eller providerinstallation blev udført"
+      ],
+      "networkDependencies": [
+        "Remote universal bundle endpoint /api/download/bundle/universal",
+        "Eventuel HTTP redirect destination"
+      ],
+      "license": "Apache-2.0; genereret Grok MIT-værdi er en buildfejl og må ikke bruges som styrende licens",
+      "attributionRequirements": [
+        "Distribuér komplet Apache-2.0-licenstekst",
+        "Bevar relevante upstream copyright- og NOTICE-oplysninger",
+        "Markér modificerede vendorede filer prominent",
+        "Bevar ehmo/platform-design-skills-attributionen fra upstream NOTICE"
+      ],
+      "sitesmithDecision": "reimplement",
+      "decisionReason": "Providertransformidéen er nyttig, men SiteSmith bør ikke arve usigneret remote install, uklar hook-default, versionsdrift eller shellafhængige Windows-hooks.",
+      "sitesmithSuccessorCapability": "En SiteSmith bundle-manager med typed provider adapters, samlet versionskilde og eksplicit capability matrix.",
+      "requiredImprovement": "Kræv signerede eller pinned SHA-256 artifacts, eksplicit hook-opt-in, native command arrays pr. OS/provider, ens licensmetadata og CI på Windows plus Linux.",
+      "verificationMethod": "Golden-tree tests for hver provider, signature/digest negative tests, Windows/Linux install-E2E, hook opt-in assertion og license-manifest consistency gate.",
+      "integrationTreatmentId": "clean-room-standard",
+      "licenceTreatmentId": "impeccable-platform-apache"
+    },
+    {
+      "capabilityId": "IMP-002",
+      "sourceRepository": "https://github.com/pbakaus/impeccable.git",
+      "sourceCommit": "6b342244e915d64b0d6e84d5eec448fd196ce6bb",
+      "sourceFiles": [
+        "skill/SKILL.src.md",
+        "skill/reference/craft.md",
+        "skill/command-metadata.json"
+      ],
+      "sourceLines": [
+        "skill/SKILL.src.md:1-23",
+        "skill/SKILL.src.md:31-85",
+        "skill/reference/craft.md:1-5",
+        "skill/command-metadata.json:1-15"
+      ],
+      "activationMechanism": "Skill-frontmatter matcher frontend-, UI- og designarbejde; ved aktivering køres context én gang, én routed playbook indlæses og craft-floor anvendes. Eksplicitte kommandoer kan vælge playbook direkte.",
+      "inputs": [
+        "Brugerprompt",
+        "Context-output",
+        "Eksplicit kommando eller intentklassifikation",
+        "Eksisterende PRODUCT, DESIGN og surface state"
+      ],
+      "outputs": [
+        "Valgt primær playbook",
+        "Craft-floor som fælles kvalitetsinstruktion",
+        "Modevalg mellem new work, iteration, audit, critique, live og øvrige operationer"
+      ],
+      "persistentArtifacts": [],
+      "runtimeBehavior": "En promptbaseret router vælger en enkelt playbook. craft.md viderestiller alene til skillen og tilføjer ingen selvstændig capability.",
+      "deterministicParts": [
+        "Den dokumenterede kommando-til-playbook mapping",
+        "Kravet om context før routing",
+        "Craft-aliasets viderestilling"
+      ],
+      "nondeterministicParts": [
+        "LLM-intentklassifikation ved implicit aktivering",
+        "Fortolkning ved overlappende intents",
+        "Hvor stramt craft-floor følges"
+      ],
+      "userDecisionPoints": [
+        "Eksplicit kommando kan overstyre implicit routing",
+        "Brugeren kan vælge mode, hvis prompten ikke afgør den"
+      ],
+      "strengths": [
+        "Central indgang reducerer behovet for at kende alle playbooks",
+        "Én-playbook-reglen begrænser kontekstbloat",
+        "Fælles craft-floor giver et minimumsniveau"
+      ],
+      "failureModes": [
+        "Implicit routing er modelafhængig",
+        "Mange modes øger overlap og mental model",
+        "Deprecated craft-alias kan ligne en særskilt capability",
+        "Command metadata kan drive providertekster, der ikke matcher autoritativ playbook"
+      ],
+      "tests": [
+        "Routing og source blev statisk inspiceret",
+        "Ingen LLM-behavior suite blev kørt",
+        "Craft-alias blev verificeret som femlinjers deprecated wrapper"
+      ],
+      "networkDependencies": [],
+      "license": "Apache-2.0",
+      "attributionRequirements": [
+        "Distribuér Apache-2.0-licensteksten",
+        "Bevar upstream NOTICE ved redistribution",
+        "Markér SiteSmith-modifikationer"
+      ],
+      "sitesmithDecision": "adapt",
+      "decisionReason": "Den centrale router er værdifuld, men SiteSmiths produktflow er bevidst enklere og har ikke brug for alle aliases og overlappende modes.",
+      "sitesmithSuccessorCapability": "SiteSmith workflow- og capability-router for init, build og audit med få eksplicitte sideflows og begrundede capability-subsets.",
+      "requiredImprovement": "Brug typed intentenum, én autoritativ command registry og en begrundet capability-plan med selectedCapabilities og excludedCapabilities; standardopgaver skal vælge et ægte subset, bevare 100 % nødvendige capabilities, vælge 0 forbudte og returnere ambiguity frem for full-registry fallback. Bind derefter route, ActorInputPacket, WorkOrder og ProviderSubmission til samme capability-manifest og instruction digest.",
+      "verificationMethod": "QC-ROUTING-01 table-driven fixtures for surface, page-job og task; stabil selection, 100 % required, 0 forbidden, selectedCapabilities < 59 for standardopgaver, eksplicit ambiguity, metadata/playbook parity og eksakt route→packet→submission set/digest parity. Seed required-omission samt excluded/forbidden/full-registry instruction injection efter en ellers gyldig route; alle skal fejle lukket.",
+      "integrationTreatmentId": "spec-compatible-standard",
+      "licenceTreatmentId": "impeccable-apache"
+    },
+    {
+      "capabilityId": "IMP-003",
+      "sourceRepository": "https://github.com/pbakaus/impeccable.git",
+      "sourceCommit": "6b342244e915d64b0d6e84d5eec448fd196ce6bb",
+      "sourceFiles": [
+        "skill/scripts/context.mjs",
+        "skill/scripts/lib/artifact-schema.mjs",
+        "tests/context.test.mjs",
+        "tests/context-signals.test.mjs",
+        "tests/staleness.test.mjs"
+      ],
+      "sourceLines": [
+        "skill/scripts/context.mjs:1-27",
+        "skill/scripts/context.mjs:69-125",
+        "skill/scripts/context.mjs:984-1060",
+        "skill/scripts/context.mjs:1080-1430",
+        "skill/scripts/lib/artifact-schema.mjs:19-93",
+        "tests/context.test.mjs:540-557",
+        "tests/context.test.mjs:1183-1207"
+      ],
+      "activationMechanism": "Skill-start eller doctor/hook kalder context-scriptet med cwd, eventuelle targetargumenter og miljøvariabler.",
+      "inputs": [
+        "Current working directory",
+        "Monorepo target eller filtarget",
+        "PRODUCT.md",
+        "DESIGN.md og .impeccable/design.json",
+        "Surface briefs",
+        ".impeccable/config.json",
+        "Hookstatus",
+        "Environment flags for update check"
+      ],
+      "outputs": [
+        "Resolved project og target",
+        "Artifact paths og staleness",
+        "Routing directives",
+        "Hook og autonomy directives",
+        "Surface brief resolution",
+        "Eventuel version update notice"
+      ],
+      "persistentArtifacts": [
+        "Daglig update-check cache",
+        "PRODUCT stamp og design sidecar læses som state",
+        "Surface briefs læses som state"
+      ],
+      "runtimeBehavior": "Resolveren traverserer project-/monorepostate, udleder directives og kan foretage et throttled GET til versionsendpointet. Flere relative paths returneres med platformens native separator.",
+      "deterministicParts": [
+        "Artifact schema- og stamp-parsing",
+        "Stalenessberegning givet samme filer",
+        "Targetresolution givet samme path",
+        "Daily cachebeslutning givet samme timestamp/cache"
+      ],
+      "nondeterministicParts": [
+        "Versionsendpointrespons",
+        "Filsystemtiming og samtidige ændringer",
+        "LLM'ens efterfølgende brug af directives"
+      ],
+      "userDecisionPoints": [
+        "Monorepo target ved tvetydighed",
+        "Opt-out af update check",
+        "Valg af surface ved flere matches"
+      ],
+      "strengths": [
+        "Samler product, design, surface og hookstate ét sted",
+        "Har explicit staleness model",
+        "Understøtter monorepos og konkrete targets",
+        "Update check kan slås fra"
+      ],
+      "failureModes": [
+        "Windows path.relative producerer backslashes i clone-stable identifiers",
+        "To contexttests fejler på Windows-separatorer",
+        "Implicit netværkskald kan svække reproducerbare offline runs",
+        "Mange directives er tekst og ikke typed state"
+      ],
+      "tests": [
+        "tests/staleness.test.mjs: 50/50 pass",
+        "tests/context-signals.test.mjs: 34/34 pass",
+        "tests/context.test.mjs: 96/98 pass",
+        "De to failures forventede slash-normaliserede paths men fik Windows backslashes"
+      ],
+      "networkDependencies": [
+        "Version endpoint /api/version, dagligt throttled",
+        "Kan deaktiveres med IMPECCABLE_NO_UPDATE_CHECK eller config"
+      ],
+      "license": "Apache-2.0",
+      "attributionRequirements": [
+        "Distribuér Apache-2.0-licensteksten",
+        "Bevar NOTICE",
+        "Markér ændringer"
+      ],
+      "sitesmithDecision": "reimplement",
+      "decisionReason": "Konceptet er centralt, men SiteSmith kræver platformneutrale artifactidentiteter og maskinlæsbar state frem for tekstuelle directives.",
+      "sitesmithSuccessorCapability": "Typed SiteSmith RunContext og ArtifactGraph.",
+      "requiredImprovement": "Normalisér alle persisted IDs til '/', adskil filesystem paths fra artifact IDs, gør netværkscheck eksplicit og serialisér state med schema version.",
+      "verificationMethod": "Samme golden context snapshots på Windows/Linux/macOS, monorepo fixtures, offline test og schema migration tests.",
+      "integrationTreatmentId": "clean-room-standard",
+      "licenceTreatmentId": "impeccable-apache"
+    },
+    {
+      "capabilityId": "IMP-004",
+      "sourceRepository": "https://github.com/pbakaus/impeccable.git",
+      "sourceCommit": "6b342244e915d64b0d6e84d5eec448fd196ce6bb",
+      "sourceFiles": [
+        "skill/reference/init.md",
+        "skill/scripts/lib/artifact-schema.mjs",
+        "skill/command-metadata.json"
+      ],
+      "sourceLines": [
+        "skill/reference/init.md:1-23",
+        "skill/reference/init.md:25-41",
+        "skill/reference/init.md:56-125",
+        "skill/scripts/lib/artifact-schema.mjs:19-83",
+        "skill/command-metadata.json:6-8"
+      ],
+      "activationMechanism": "Routing vælger init, når PRODUCT.md mangler eller er stale, eller brugeren eksplicit kalder init.",
+      "inputs": [
+        "Eksisterende repo og dokumenter",
+        "Brugerens produktmål",
+        "Målgruppe, problem, scope og constraints",
+        "Platformhypotese",
+        "Eksisterende PRODUCT stamp"
+      ],
+      "outputs": [
+        "PRODUCT.md med schema/stamp",
+        "Kanonisk produktkontekst",
+        "Eventuelle native referencebehov",
+        "Completion gate"
+      ],
+      "persistentArtifacts": [
+        "PRODUCT.md"
+      ],
+      "runtimeBehavior": "Playbooken explorer først, stiller højst tre fokuserede spørgsmål i en round og skriver produkttruth. Den må eksplicit ikke skrive eller tilbyde DESIGN.md.",
+      "deterministicParts": [
+        "PRODUCT schema version og stampformat",
+        "Krav til sections",
+        "Separationen mellem PRODUCT og DESIGN"
+      ],
+      "nondeterministicParts": [
+        "LLM-sammenfatning af produkttruth",
+        "Spørgsmålsvalg",
+        "Platformhypotese ved uklar evidens"
+      ],
+      "userDecisionPoints": [
+        "Svar på højst tre fokuserede spørgsmål",
+        "Bekræftelse af produkttruth ved reel tvivl"
+      ],
+      "strengths": [
+        "Adskiller produktfakta fra visuel designretning",
+        "Begrænser spørgerunden",
+        "Har schema og staleness stamp",
+        "Kan fail-closed ved utilstrækkelig produktkontekst"
+      ],
+      "failureModes": [
+        "LLM kan stadig opfinde produktfakta",
+        "Metadata siger, at init tilbyder DESIGN.md, mens playbooken forbyder det",
+        "Markdownschema er ikke i sig selv en streng validator"
+      ],
+      "tests": [
+        "Staleness suite verificerede PRODUCT schema og stamp",
+        "Sourcekontrakten blev sammenholdt med command metadata",
+        "Ingen LLM behavior test blev kørt"
+      ],
+      "networkDependencies": [],
+      "license": "Apache-2.0",
+      "attributionRequirements": [
+        "Distribuér Apache-2.0-licensteksten",
+        "Bevar NOTICE",
+        "Markér adapteret schema/playbook"
+      ],
+      "sitesmithDecision": "adapt",
+      "decisionReason": "Sandhed før design matcher SiteSmiths mål og bør bevares, men kontrakten skal være schema-valideret og metadata må ikke modsige playbooken.",
+      "sitesmithSuccessorCapability": "SiteSmith ProductBrief v3 med typed truth/provenance fields.",
+      "requiredImprovement": "Indfør JSON Schema eller valideret frontmatter, fact-source links, unknown-state og en generated command registry fra samme source.",
+      "verificationMethod": "Schema negative tests, hallucination/unknown fixtures, metadata parity test og stale stamp tests.",
+      "integrationTreatmentId": "spec-compatible-standard",
+      "licenceTreatmentId": "impeccable-apache"
+    },
+    {
+      "capabilityId": "IMP-005",
+      "sourceRepository": "https://github.com/pbakaus/impeccable.git",
+      "sourceCommit": "6b342244e915d64b0d6e84d5eec448fd196ce6bb",
+      "sourceFiles": [
+        "skill/reference/shape.md"
+      ],
+      "sourceLines": [
+        "skill/reference/shape.md:1-35",
+        "skill/reference/shape.md:37-53",
+        "skill/reference/shape.md:55-59"
+      ],
+      "activationMechanism": "Routing vælger shape ved uklar ny funktion eller eksplicit shape-kommando før implementering.",
+      "inputs": [
+        "Produktkontekst",
+        "Brugerens problem eller idé",
+        "Eksisterende surface og constraints",
+        "Svar på fokuserede spørgsmål"
+      ],
+      "outputs": [
+        "Afgrænset implementation brief",
+        "Ny-work resolution",
+        "Bekræftet scope og non-goals"
+      ],
+      "persistentArtifacts": [],
+      "runtimeBehavior": "Playbooken interviewer, resolves om arbejdet er new work og fremlægger en brief. Efter bekræftelse stopper den uden kode og uden at skrive artifacts.",
+      "deterministicParts": [
+        "Stop-before-code kontrakten",
+        "Briefens dokumenterede felter",
+        "Ingen persistence i shape"
+      ],
+      "nondeterministicParts": [
+        "LLM-spørgsmål og opsummering",
+        "Klassifikation af new work",
+        "Fortolkning af implicit constraints"
+      ],
+      "userDecisionPoints": [
+        "Besvar reelle uklarheder",
+        "Bekræft briefen"
+      ],
+      "strengths": [
+        "Forhindrer tidlig implementering på uklar retning",
+        "Holder planning og execution adskilt",
+        "Gør scope synligt før kode"
+      ],
+      "failureModes": [
+        "Kan skabe unødvendigt interview ved allerede præcis brief",
+        "Briefen er kun samtalestate og kan gå tabt mellem agents",
+        "LLM kan stille flere spørgsmål end værdien berettiger"
+      ],
+      "tests": [
+        "Playbooken blev statisk verificeret",
+        "Ingen LLM behavior suite blev kørt"
+      ],
+      "networkDependencies": [],
+      "license": "Apache-2.0",
+      "attributionRequirements": [
+        "Distribuér Apache-2.0-licensteksten",
+        "Bevar NOTICE",
+        "Markér eventuelle SiteSmith-ændringer"
+      ],
+      "sitesmithDecision": "retain",
+      "decisionReason": "Planning-only med eksplicit briefbekræftelse er enkelt og nyttigt, så længe det ikke bliver en obligatorisk spørgemaskine.",
+      "sitesmithSuccessorCapability": "SiteSmith Shape checkpoint med struktureret brief.",
+      "requiredImprovement": "Auto-skip interview ved komplet brugerbrief og serialisér den bekræftede brief i run-state, uden at oprette permanent designartifact.",
+      "verificationMethod": "Fixtures for komplet, delvis og tvetydig brief; assert nul kodeændringer før bekræftelse.",
+      "integrationTreatmentId": "spec-compatible-retained",
+      "licenceTreatmentId": "impeccable-apache"
+    },
+    {
+      "capabilityId": "IMP-006",
+      "sourceRepository": "https://github.com/pbakaus/impeccable.git",
+      "sourceCommit": "6b342244e915d64b0d6e84d5eec448fd196ce6bb",
+      "sourceFiles": [
+        "skill/reference/new-work.md",
+        "skill/agents/impeccable-finish-reviewer.md",
+        "skill/agents/impeccable-documenter.md"
+      ],
+      "sourceLines": [
+        "skill/reference/new-work.md:1-25",
+        "skill/reference/new-work.md:27-57",
+        "skill/reference/new-work.md:59-101",
+        "skill/reference/new-work.md:103-109",
+        "skill/agents/impeccable-finish-reviewer.md:1-48",
+        "skill/agents/impeccable-documenter.md:1-35"
+      ],
+      "activationMechanism": "Routing vælger new-work for et nyt surface eller en ny retning efter PRODUCT/shape; flowet kan delegere til visualizer, asset producer, finish reviewer og documenter.",
+      "inputs": [
+        "PRODUCT truth",
+        "Eksisterende surface/design authority",
+        "Bekræftet brief",
+        "Concept seed",
+        "Brugerens godkendte retning",
+        "Implementeringsdiff og screenshots"
+      ],
+      "outputs": [
+        "Valgt visual authority",
+        "Implementeringskontrakt",
+        "Bygget surface",
+        "To screenshot reviewrunder",
+        "Fresh finish verdict",
+        "DESIGN dokumentation"
+      ],
+      "persistentArtifacts": [
+        "Godkendt mock/decision",
+        "Surface brief",
+        "Kode og assets",
+        "DESIGN.md",
+        ".impeccable/design.json når relevant"
+      ],
+      "runtimeBehavior": "Playbooken forsøger først at udvide et etableret surface. Ellers producerer den candidate worlds, concept seed og tre kompositioner, låser retning, bygger, screenshot-reviewer to gange og kræver en frisk read-only finish reviewer før dokumentation.",
+      "deterministicParts": [
+        "Den beskrevne faserekkefølge",
+        "Krav om approval før build",
+        "Krav om to screenshotrunder og fresh finish reviewer",
+        "Finish reviewer outputkontrakt"
+      ],
+      "nondeterministicParts": [
+        "LLM's candidate worlds og designvalg",
+        "Visuel vurdering",
+        "Implementeringskvalitet",
+        "Finish reviewer verdict uden maskinelle thresholds"
+      ],
+      "userDecisionPoints": [
+        "Valg af visual authority ved reel tvivl",
+        "Godkendelse af én retning",
+        "Eventuelle domænevalg i implementeringskontrakten"
+      ],
+      "strengths": [
+        "Et etableret surface prioriteres frem for unødvendig ny retning",
+        "Approval ligger før kostbar implementering",
+        "Fresh reviewer reducerer self-review bias",
+        "Dokumentation sker efter faktisk implementation"
+      ],
+      "failureModes": [
+        "Promptkrav kan springes over uden maskinstate",
+        "To screenshots er ikke defineret som viewport/browser matrix",
+        "Fresh reviewer er stadig LLM-afhængig",
+        "Syv candidate worlds kan være dyrt og støjende"
+      ],
+      "tests": [
+        "Agent- og playbookkontrakter blev statisk inspiceret",
+        "Ingen fuld new-work browser-E2E blev kørt",
+        "Ingen LLM behavior suite blev kørt"
+      ],
+      "networkDependencies": [
+        "Kan indirekte bruge concept seed API",
+        "Kan indirekte bruge image provider"
+      ],
+      "license": "Apache-2.0",
+      "attributionRequirements": [
+        "Distribuér Apache-2.0-licensteksten",
+        "Bevar NOTICE",
+        "Markér workflowmodifikationer"
+      ],
+      "sitesmithDecision": "adapt",
+      "decisionReason": "Direction-lock, approval, fresh reviewer og document-at-finish er stærke mekanismer, men de skal være en verificerbar state machine i SiteSmith.",
+      "sitesmithSuccessorCapability": "SiteSmith BuildRun state machine med evidence gates og reviewer handoff.",
+      "requiredImprovement": "Persistér fase, inputs, approval og beviser; definér viewportmatrix, fail/pass thresholds og maskinelt krav før faseovergang.",
+      "verificationMethod": "State-transition tests, resume/crash fixtures, screenshot artifact assertions og reviewer schema validation.",
+      "integrationTreatmentId": "spec-compatible-standard",
+      "licenceTreatmentId": "impeccable-apache"
+    },
+    {
+      "capabilityId": "IMP-007",
+      "sourceRepository": "https://github.com/pbakaus/impeccable.git",
+      "sourceCommit": "6b342244e915d64b0d6e84d5eec448fd196ce6bb",
+      "sourceFiles": [
+        "skill/scripts/concept-seed.mjs",
+        "skill/scripts/lib/roll-selection.mjs",
+        "tests/concept-seed.test.mjs"
+      ],
+      "sourceLines": [
+        "skill/scripts/concept-seed.mjs:95-100",
+        "skill/scripts/concept-seed.mjs:145-190",
+        "skill/scripts/concept-seed.mjs:259-346",
+        "skill/scripts/concept-seed.mjs:401-440",
+        "skill/scripts/concept-seed.mjs:479-537",
+        "skill/scripts/lib/roll-selection.mjs:126-266"
+      ],
+      "activationMechanism": "New-work eller eksplicit concept-seed kald starter scriptet efter en PRODUCT-gate; source vælges som lokal katalogdel, remote API eller degraded fallback.",
+      "inputs": [
+        "PRODUCT context",
+        "Scope og key",
+        "Reroll",
+        "Mode, grain og platform",
+        "Lokal seed pool eller remote rollrespons",
+        "Telemetry opt-out flags"
+      ],
+      "outputs": [
+        "Fem til syv candidates",
+        "Seks challengers, to pr. tier",
+        "Tre kompositioner når flag er aktivt",
+        "Chosen seed identity",
+        "Degraded fallback ved manglende source"
+      ],
+      "persistentArtifacts": [
+        "Kan indgå i godkendt mock/decision",
+        "Remote service kan modtage choice event"
+      ],
+      "runtimeBehavior": "Scriptet prioriterer lokal katalogdel, derefter GET /roll, derefter degraded output. SHA256 vælger indices deterministisk givet samme pool. Valgfri choice telemetry POST'er chosenId, key, scope og mode.",
+      "deterministicParts": [
+        "SHA256-baseret candidate count og indexvalg givet identisk pool/input",
+        "Udvælgelse af seks challengers fra tiers",
+        "Kompositionsudledning givet samme candidates",
+        "Degraded outputformat"
+      ],
+      "nondeterministicParts": [
+        "Remote katalogindhold uden revision i request",
+        "Netværksfejl",
+        "Serverens roll-algoritme og katalogopdateringer",
+        "Efterfølgende LLM-fortolkning"
+      ],
+      "userDecisionPoints": [
+        "Reroll",
+        "Mode, grain og platform",
+        "Valg af seed/komposition",
+        "Telemetry opt-out"
+      ],
+      "strengths": [
+        "Undgår én ustruktureret designidé",
+        "Lokal determinisme er veldækket",
+        "Har degraded fallback",
+        "Har telemetry opt-out"
+      ],
+      "failureModes": [
+        "Remote request pinner ikke katalogrevision",
+        "Samme kommando kan derfor give forskellig pool over tid",
+        "Copy siger chosen id only, men payload har fire felter",
+        "Fuldt katalog ships ikke lokalt",
+        "Kompositioner er skjult bag miljøflag"
+      ],
+      "tests": [
+        "tests/concept-seed.test.mjs: 29/29 pass",
+        "Dækker determinisme, scope independence, degraded mode, seks challengers, reroll, mode/grain/platform og PRODUCT gate",
+        "Remote API blev ikke kaldt"
+      ],
+      "networkDependencies": [
+        "GET /roll med scope, key, reroll, mode, grain og platform",
+        "POST /chosen med chosenId, key, scope og mode",
+        "Telemetry kan slås fra med DO_NOT_TRACK eller IMPECCABLE_NO_TELEMETRY"
+      ],
+      "license": "Apache-2.0",
+      "attributionRequirements": [
+        "Distribuér Apache-2.0-licensteksten",
+        "Bevar NOTICE",
+        "Markér reimplementeret seedlogik hvis kode kopieres"
+      ],
+      "sitesmithDecision": "reimplement",
+      "decisionReason": "SiteSmith har brug for reproducerbare benchmark/build runs; et upinnet remote katalog og telemetry som ikke beskrives præcist opfylder ikke det krav.",
+      "sitesmithSuccessorCapability": "Pinnet lokal ConceptSeedLedger med poolrevision og candidate provenance.",
+      "requiredImprovement": "Gem poolrevision, full candidate IDs, selection hash og valgt komposition; brug lokal katalogsnapshot som default og telemetry off som default.",
+      "verificationMethod": "Golden seed snapshots på tværs af OS, replay mod gemt poolrevision, network-denied test og telemetry payload contract test.",
+      "integrationTreatmentId": "clean-room-standard",
+      "licenceTreatmentId": "impeccable-apache"
+    },
+    {
+      "capabilityId": "IMP-008",
+      "sourceRepository": "https://github.com/pbakaus/impeccable.git",
+      "sourceCommit": "6b342244e915d64b0d6e84d5eec448fd196ce6bb",
+      "sourceFiles": [
+        "skill/reference/visualize.md",
+        "skill/reference/new-work.md",
+        "skill/agents/impeccable-asset-producer.md",
+        "tests/serve-question.test.mjs"
+      ],
+      "sourceLines": [
+        "skill/reference/visualize.md:3-17",
+        "skill/reference/visualize.md:19-47",
+        "skill/reference/new-work.md:71-85",
+        "skill/agents/impeccable-asset-producer.md:1-104"
+      ],
+      "activationMechanism": "Visualize aktiveres i new-work efter concept seed eller eksplicit, når et nyt visual authority valg kræves.",
+      "inputs": [
+        "Produkttruth og brief",
+        "Concept seed og candidate worlds",
+        "Eksisterende designconstraints",
+        "Asset inventory",
+        "Eventuel image generation provider"
+      ],
+      "outputs": [
+        "Præcis tre high-fidelity kompositioner",
+        "Decision page i .impeccable/mocks",
+        "Ét godkendt valg",
+        "Asset prompts og producer-resultater"
+      ],
+      "persistentArtifacts": [
+        ".impeccable/mocks",
+        "Godkendt path eller JSON",
+        "Genererede assets",
+        "Prompt- og assetmetadata i det omfang agenten skriver dem"
+      ],
+      "runtimeBehavior": "Playbooken kræver tre sammenlignelige muligheder, serverer et approvalspørgsmål og forbyder implementering før brugerens valg. Asset producer kan kalde provider eller OpenAI fallback.",
+      "deterministicParts": [
+        "Kravet om præcis tre kompositioner",
+        "Ét ikke-skipbart approvalpunkt",
+        "No-code-before-approval kontrakten",
+        "Decision page pathkonvention"
+      ],
+      "nondeterministicParts": [
+        "LLM-kompositioner",
+        "Billedgenerering",
+        "Brugerens æstetiske valg",
+        "Provider-output og billedomkostning"
+      ],
+      "userDecisionPoints": [
+        "Vælg én af tre retninger",
+        "Godkend eventuelle billedassets",
+        "Afklar manglende asset authority"
+      ],
+      "strengths": [
+        "Gør retning konkret før implementation",
+        "Begrænser valget til tre",
+        "Approval er eksplicit og ikke skippeligt",
+        "Assetbehov beskrives før build"
+      ],
+      "failureModes": [
+        "Tre forslag kan være kosmetiske variationer frem for reelle retninger",
+        "Godkendelse kan være ustruktureret chatstate",
+        "Image output er nondeterministisk og kan koste penge",
+        "Manglende hash/proveniens svækker replay"
+      ],
+      "tests": [
+        "tests/serve-question.test.mjs: 8/8 pass",
+        "Dækker serve, answer, start-wait, headless og sketch streaming",
+        "Ingen billedgeneration eller visuel kvalitetsmåling blev kørt"
+      ],
+      "networkDependencies": [
+        "Eventuel image provider",
+        "OpenAI image fallback med brugerens API key og billing"
+      ],
+      "license": "Apache-2.0",
+      "attributionRequirements": [
+        "Distribuér Apache-2.0-licensteksten",
+        "Bevar NOTICE",
+        "Følg separat licens/proveniens for genererede eller tredjeparts assets"
+      ],
+      "sitesmithDecision": "adapt",
+      "decisionReason": "Tre konkrete retninger og approval før build er stærkt, men SiteSmith skal kunne bevise præcis hvad der blev godkendt.",
+      "sitesmithSuccessorCapability": "SiteSmith DirectionGate med tre artifactbundles og signed approval record.",
+      "requiredImprovement": "Gem HTML/screenshot hashes, seedrevision, prompts, assetlicens og structured approval med timestamp; kræv reel variation mellem retninger.",
+      "verificationMethod": "Schema test for approval record, hash replay, three-direction diversity checks og asset provenance gate.",
+      "integrationTreatmentId": "spec-compatible-standard",
+      "licenceTreatmentId": "impeccable-apache"
+    },
+    {
+      "capabilityId": "IMP-009",
+      "sourceRepository": "https://github.com/pbakaus/impeccable.git",
+      "sourceCommit": "6b342244e915d64b0d6e84d5eec448fd196ce6bb",
+      "sourceFiles": [
+        "skill/scripts/lib/surface-briefs.mjs",
+        "tests/surface-brief.test.mjs",
+        "skill/reference/new-work.md"
+      ],
+      "sourceLines": [
+        "skill/scripts/lib/surface-briefs.mjs:5-8",
+        "skill/scripts/lib/surface-briefs.mjs:11-51",
+        "skill/scripts/lib/surface-briefs.mjs:54-123",
+        "skill/scripts/lib/surface-briefs.mjs:127-150",
+        "skill/reference/new-work.md:77-83"
+      ],
+      "activationMechanism": "New-work skriver eller resolver et surface brief, når et konkret route/component target er kendt.",
+      "inputs": [
+        "Konkret surface target",
+        "Briefindhold",
+        "Eksisterende surface mappings",
+        "Versioneret frontmatter"
+      ],
+      "outputs": [
+        "Normaliseret surface ID",
+        "Entydig resolve eller ambiguity",
+        "Versioneret surface brief"
+      ],
+      "persistentArtifacts": [
+        ".impeccable/surfaces/<surface>.md"
+      ],
+      "runtimeBehavior": "Biblioteket normaliserer target, parser frontmatter, lister og resolver briefs og nægter at skrive uden konkret target.",
+      "deterministicParts": [
+        "Schema parsing",
+        "Target-to-path mapping givet samme pathseparator",
+        "Ambiguity detection",
+        "Fail-closed write uden target"
+      ],
+      "nondeterministicParts": [
+        "LLM-genereret briefindhold",
+        "Targetvalg ved flere mulige surfaces"
+      ],
+      "userDecisionPoints": [
+        "Vælg konkret target ved ambiguity",
+        "Godkend surface scope som del af direction"
+      ],
+      "strengths": [
+        "Binder designbeslutninger til et konkret surface",
+        "Versioneret frontmatter",
+        "Fail-closed på manglende target",
+        "Separat fra global DESIGN"
+      ],
+      "failureModes": [
+        "Windows backslashes kan lække til clone-stable identifiers gennem context",
+        "Ingen eksplicit migration mellem fremtidige schema versions",
+        "Markdownindhold er kun delvist typed"
+      ],
+      "tests": [
+        "tests/surface-brief.test.mjs: 5/5 pass",
+        "Context suite havde separat Windows surface-path failure"
+      ],
+      "networkDependencies": [],
+      "license": "Apache-2.0",
+      "attributionRequirements": [
+        "Distribuér Apache-2.0-licensteksten",
+        "Bevar NOTICE",
+        "Markér reimplementeret mapping"
+      ],
+      "sitesmithDecision": "reimplement",
+      "decisionReason": "Afgrænset surface-state er nyttig, men artifactidentiteten skal være platformneutral og mere typed.",
+      "sitesmithSuccessorCapability": "SiteSmith SurfaceSpec med canonical URI og schema migration.",
+      "requiredImprovement": "Adskil canonical surface URI fra filesystem path, normalisér '/', tilføj provenance og migrations.",
+      "verificationMethod": "Cross-platform golden paths, ambiguity fixtures, schema migration tests og concrete-target negative test.",
+      "integrationTreatmentId": "clean-room-standard",
+      "licenceTreatmentId": "impeccable-apache"
+    },
+    {
+      "capabilityId": "IMP-010",
+      "sourceRepository": "https://github.com/pbakaus/impeccable.git",
+      "sourceCommit": "6b342244e915d64b0d6e84d5eec448fd196ce6bb",
+      "sourceFiles": [
+        "skill/reference/document.md",
+        "skill/scripts/lib/artifact-schema.mjs",
+        "tests/design-parser.test.mjs"
+      ],
+      "sourceLines": [
+        "skill/reference/document.md:1-78",
+        "skill/reference/document.md:128-255",
+        "skill/reference/document.md:257-340",
+        "skill/reference/document.md:350-390",
+        "skill/scripts/lib/artifact-schema.mjs:19-23",
+        "skill/scripts/lib/artifact-schema.mjs:43-93"
+      ],
+      "activationMechanism": "Documenter-agenten kører efter implementering/finish eller document kaldes eksplicit; seed mode kan bruges før fuld implementation under PRODUCT-gate.",
+      "inputs": [
+        "Implementeret UI og kode",
+        "Eksisterende DESIGN.md",
+        "PRODUCT.md",
+        "Observerede tokens, components og patterns",
+        "Scan eller seed mode"
+      ],
+      "outputs": [
+        "DESIGN.md i otte canonical sections",
+        ".impeccable/design.json schema v2 i scan/full mode",
+        "Minimal DESIGN seed uden sidecar i seed mode"
+      ],
+      "persistentArtifacts": [
+        "DESIGN.md",
+        ".impeccable/design.json"
+      ],
+      "runtimeBehavior": "Playbooken scanner implementation, skriver eller udvider DESIGN uden silent overwrite og genererer en extension-only sidecar. Når data mangler, kan instruktionen syntetisere ramps og component entries.",
+      "deterministicParts": [
+        "Frontmatter- og sidecar schema versions",
+        "Otte sectionnavne",
+        "Sidecar parsing",
+        "Seed-mode no-sidecar kontrakt"
+      ],
+      "nondeterministicParts": [
+        "LLM-ekstraktion fra kode",
+        "Syntetiserede ramps/components",
+        "Narrativ designbeskrivelse",
+        "Valg mellem konfliktende implementation patterns"
+      ],
+      "userDecisionPoints": [
+        "Scan eller seed mode",
+        "Konflikter med eksisterende DESIGN",
+        "Godkendelse af normative tokens"
+      ],
+      "strengths": [
+        "Dokumenterer faktisk implementation efter build",
+        "Har maskinlæsbar sidecar",
+        "Forbyder silent overwrite",
+        "Adskiller minimal seed fra fuld dokumentation"
+      ],
+      "failureModes": [
+        "Syntetiserede værdier kan ligne observeret ground truth",
+        "Markdown er ekstern-formatorienteret og kan drive scope uden behov",
+        "Sidecar er extension-only og kan divergere fra DESIGN",
+        "Ingen feltproveniens"
+      ],
+      "tests": [
+        "tests/design-parser.test.mjs: 6/6 pass",
+        "Staleness suite dækkede sidecar schema",
+        "Ingen semantic extraction accuracy test blev kørt"
+      ],
+      "networkDependencies": [],
+      "license": "Apache-2.0",
+      "attributionRequirements": [
+        "Distribuér Apache-2.0-licensteksten",
+        "Bevar NOTICE",
+        "Markér ændret schema og template"
+      ],
+      "sitesmithDecision": "adapt",
+      "decisionReason": "Designartifactet og sidecar er værdifulde, men SiteSmith må skelne observerede fakta fra modelsyntese.",
+      "sitesmithSuccessorCapability": "SiteSmith DesignContract med per-field provenance og validated tokens.",
+      "requiredImprovement": "Tilføj origin enum extracted, user-approved eller synthesized, source pointers, conflict state og schema validation.",
+      "verificationMethod": "Parser/round-trip tests, provenance-required negative tests, implementation-to-token fixtures og DESIGN/sidecar consistency gate.",
+      "integrationTreatmentId": "spec-compatible-standard",
+      "licenceTreatmentId": "impeccable-apache"
+    },
+    {
+      "capabilityId": "IMP-011",
+      "sourceRepository": "https://github.com/pbakaus/impeccable.git",
+      "sourceCommit": "6b342244e915d64b0d6e84d5eec448fd196ce6bb",
+      "sourceFiles": [
+        "cli/engine/registry/antipatterns.mjs",
+        "cli/engine/cli/main.mjs",
+        "skill/scripts/detect.mjs",
+        "skill/reference/audit.md",
+        ".impeccable/config.json"
+      ],
+      "sourceLines": [
+        "cli/engine/registry/antipatterns.mjs:4-548",
+        "cli/engine/registry/antipatterns.mjs:559-616",
+        "cli/engine/cli/main.mjs:193-290",
+        "cli/engine/cli/main.mjs:281-435",
+        "skill/scripts/detect.mjs:7-21",
+        "skill/reference/audit.md:1-136"
+      ],
+      "activationMechanism": "Audit-playbook, hook eller direkte detect CLI scanner targets; --no-config kan omgå repo ignore/config ved kontrollerede fixtures.",
+      "inputs": [
+        "Filer, directories eller URL targets",
+        "Detector config og ignore patterns",
+        "DESIGN pr. target",
+        "Outputformat og CLI flags",
+        "Auditens kode-/browserbevis"
+      ],
+      "outputs": [
+        "Primary og advisory findings",
+        "JSON eller menneskeligt output",
+        "Exit 2 ved primary findings",
+        "LLM-score på fem auditdimensioner"
+      ],
+      "persistentArtifacts": [
+        "Eventuelle auditrapporter",
+        "Detector config og ignores"
+      ],
+      "runtimeBehavior": "Detectoren kører 59 registrerede regler over understøttede engines og filer/URL'er. CLI'en partitionerer advisory findings. Audit-playbooken kombinerer detectorresultater med en modelbaseret vurdering.",
+      "deterministicParts": [
+        "Registryet på 59 rule IDs ved frozen commit",
+        "32 slop og 27 quality rule IDs",
+        "Én advisory-markering",
+        "Exitcodekontrakt for primary findings",
+        "Ignore/config resolution"
+      ],
+      "nondeterministicParts": [
+        "LLM's fem dimensionscores",
+        "Browserrender og dynamisk sideindhold",
+        "False positives fra heuristiske regler",
+        "URL response over tid"
+      ],
+      "userDecisionPoints": [
+        "Targets og config",
+        "Om findings accepteres, ignoreres eller fixes",
+        "Auditens designprioriteter"
+      ],
+      "strengths": [
+        "Reel executable detector frem for kun promptcheckliste",
+        "Maskinlæsbar JSON og meningsfuld exitcode",
+        "Advisory kan separeres fra blockers",
+        "File og URL modes"
+      ],
+      "failureModes": [
+        "Detector clean kan fejlfortolkes som samlet kvalitetsproof",
+        "Heuristiske false positives og false negatives",
+        "Repo ignores kan skjule testfixtures uden --no-config",
+        "Audit-score er modelafhængig",
+        "Ingen obligatorisk axe, link, console, responsive eller dark-mode matrix"
+      ],
+      "tests": [
+        "Direkte registryimport talte 59 rules, 32 slop, 27 quality og 1 advisory",
+        "detect --json --no-config på CSS-in-JS fixture gav 7 findings og exit 2",
+        "Samme fixture uden --no-config blev korrekt ignoreret af repo config",
+        "Ingen fuld browser- eller accessibility-E2E blev kørt"
+      ],
+      "networkDependencies": [
+        "Kun ved URL mode eller browsermodtagelse",
+        "Ingen netværksafhængighed for lokale filer"
+      ],
+      "license": "Apache-2.0",
+      "attributionRequirements": [
+        "Distribuér Apache-2.0-licensteksten ved integration",
+        "Bevar NOTICE og relevante headers",
+        "Markér SiteSmith rule- eller engineændringer",
+        "Bevar ehmo/platform-design-skills-attribution hvor relevant"
+      ],
+      "sitesmithDecision": "integrate",
+      "decisionReason": "Detectoren er den mest konkrete reusable capability, men den må være én signaltype i en bredere SiteSmith verification gate.",
+      "sitesmithSuccessorCapability": "Pinned Impeccable detector adapter i SiteSmith AuditGate.",
+      "requiredImprovement": "Pin sourcecommit, implementér Apache-compliance, record config/ignores, tilføj axe, screenshots, console, links, overflow, color schemes og false-positive ledger.",
+      "verificationMethod": "Golden positive/negative fixtures, config visibility report, browsermatrix, axe gate, screenshot artifacts og benchmark mod manuelt labelset.",
+      "integrationTreatmentId": "provider-plugin",
+      "licenceTreatmentId": "impeccable-apache"
+    },
+    {
+      "capabilityId": "IMP-012",
+      "sourceRepository": "https://github.com/pbakaus/impeccable.git",
+      "sourceCommit": "6b342244e915d64b0d6e84d5eec448fd196ce6bb",
+      "sourceFiles": [
+        "cli/lib/skills.mjs",
+        "cli/lib/staleness-deep.mjs",
+        "skill/scripts/context.mjs",
+        "tests/hook.test.mjs",
+        "tests/doctor.test.mjs"
+      ],
+      "sourceLines": [
+        "cli/lib/skills.mjs:1294-1370",
+        "cli/lib/skills.mjs:1533-1613",
+        "cli/lib/staleness-deep.mjs:218-311",
+        "skill/scripts/context.mjs:1235-1265",
+        "tests/hook.test.mjs:706-718",
+        "tests/hook.test.mjs:2264-2292",
+        "tests/hook.test.mjs:2884-2911",
+        "tests/doctor.test.mjs:332-347"
+      ],
+      "activationMechanism": "Installer kan skrive stop- eller per-edit hooks; hook kalder context/detector. Doctor analyserer installerede commands, paths, artifacts og staleness.",
+      "inputs": [
+        "Provider hookmanifest",
+        "OS paths og shell",
+        "Redigeret fil og extension",
+        "Detector config",
+        "Installeret skilltree"
+      ],
+      "outputs": [
+        "Allow eller deny hookresultat",
+        "Context/detector findings",
+        "Doctor diagnostics",
+        "Hook staleness status"
+      ],
+      "persistentArtifacts": [
+        "Provider hookkonfiguration",
+        "Installerede hook scripts"
+      ],
+      "runtimeBehavior": "Build/install omskriver hookkommandoer og kan merge dem ind i provider config. Commands bruger POSIX guardform. Doctor forsøger at parse hook markers og resolve paths, men regexen genkender ikke alle Windows-backslash paths.",
+      "deterministicParts": [
+        "Hook template generation givet provider/path",
+        "Stop versus per-edit mode",
+        "Doctor checks givet parseable command",
+        "Detectorresultat givet samme fil/config"
+      ],
+      "nondeterministicParts": [
+        "Providerens faktiske shellsemantik",
+        "Samtidige file edits",
+        "LLM/editor lifecycle",
+        "OS path quoting edge cases"
+      ],
+      "userDecisionPoints": [
+        "Om hooks installeres",
+        "Stop eller per-edit mode",
+        "Om denyfinding skal fixes eller bypasses"
+      ],
+      "strengths": [
+        "Kan flytte kvalitetskontrol tæt på redigeringen",
+        "Doctor giver samlet installationsdiagnose",
+        "Flere lifecycle modes",
+        "Provider manifests genereres centralt"
+      ],
+      "failureModes": [
+        "POSIX guardcommand med Windows absolute path er ikke end-to-end bevist",
+        "Doctor overser guarded Windows path med backslashes",
+        "Ikke-interaktiv hookdefault kan være overraskende",
+        "Hooksuite har en mulig .blade.php HTML-engine allow/deny regression",
+        "Nogle testfailures skyldes selv ikke-portable fixtures"
+      ],
+      "tests": [
+        "Hook suite: 197/202 pass",
+        "Én slash presentation failure og tre /proj fixture failures blev klassificeret som testportabilitet eller semantisk tvivl",
+        "En .blade.php test forventede deny men fik allow og kræver reproduktion",
+        "Doctor suite: 37/38 pass",
+        "Doctor failure beviser miss på guarded Windows absolute path"
+      ],
+      "networkDependencies": [],
+      "license": "Apache-2.0",
+      "attributionRequirements": [
+        "Distribuér Apache-2.0-licensteksten",
+        "Bevar NOTICE",
+        "Markér hook/doctorændringer"
+      ],
+      "sitesmithDecision": "reimplement",
+      "decisionReason": "SiteSmith kan bruge lifecycle gates, men hooks skal være eksplicitte, strukturerede og dokumenteret cross-platform.",
+      "sitesmithSuccessorCapability": "SiteSmith native HookRunner og Doctor med command arrays frem for shellstrings.",
+      "requiredImprovement": "Brug OS-native process spawning, canonical paths, opt-in hooks, extension mapping tests og Windows/Linux CI.",
+      "verificationMethod": "Installer plus hook E2E i PowerShell, cmd og POSIX shell; missing-script doctor fixtures; .blade.php engine regression test.",
+      "integrationTreatmentId": "clean-room-standard",
+      "licenceTreatmentId": "impeccable-apache"
+    },
+    {
+      "capabilityId": "IMP-013",
+      "sourceRepository": "https://github.com/pbakaus/impeccable.git",
+      "sourceCommit": "6b342244e915d64b0d6e84d5eec448fd196ce6bb",
+      "sourceFiles": [
+        "skill/reference/critique.md",
+        "tests/critique-storage.test.mjs"
+      ],
+      "sourceLines": [
+        "skill/reference/critique.md:1-14",
+        "skill/reference/critique.md:29-97",
+        "skill/reference/critique.md:100-241",
+        "skill/reference/critique.md:171",
+        "skill/reference/critique.md:811"
+      ],
+      "activationMechanism": "Critique kaldes eksplicit eller som reviewfase og forsøger at starte to isolerede assessments: designreview og detector/browserreview.",
+      "inputs": [
+        "Target surface",
+        "PRODUCT/DESIGN context",
+        "Kode og runtime",
+        "Detector JSON",
+        "Browserobservationer",
+        "Tidligere critique snapshots"
+      ],
+      "outputs": [
+        "To uafhængige assessments",
+        "Syntetiseret critique",
+        "Score og prioriterede findings",
+        "Persisted critique snapshot og trend"
+      ],
+      "persistentArtifacts": [
+        ".impeccable/critique snapshots",
+        "Trenddata"
+      ],
+      "runtimeBehavior": "Playbooken kræver to isolerede reviewerperspektiver og frisk browserkontekst, syntetiserer derefter findings og gemmer resultat. Den falder tilbage, hvis subagents ikke findes.",
+      "deterministicParts": [
+        "Storage slug/snapshot/trend format",
+        "Kravet om to assessmentroller",
+        "Detector JSON-input",
+        "Rapportens beskrevne sections"
+      ],
+      "nondeterministicParts": [
+        "LLM-scores og designjudgment",
+        "Subagentuafhængighed i praksis",
+        "Browsertilstand",
+        "Syntese og severity"
+      ],
+      "userDecisionPoints": [
+        "Hvilket target vurderes",
+        "Hvilke findings accepteres",
+        "Om critique fører til polish eller redesign"
+      ],
+      "strengths": [
+        "To perspektiver reducerer single-reviewer bias",
+        "Detectorbevis indgår eksplicit",
+        "Snapshots og trends kan vise udvikling",
+        "Fresh browser tab er krævet"
+      ],
+      "failureModes": [
+        "To LLM-reviews er ikke nødvendigvis statistisk uafhængige",
+        "Scores mangler kalibreret ground truth",
+        "Unresolved config_file placeholder findes",
+        "Persona-gren forventer Design Context, som init ikke producerer",
+        "Trend kan give falsk præcision"
+      ],
+      "tests": [
+        "tests/critique-storage.test.mjs: 22/22 pass",
+        "Dækker slug, snapshot, trend og CLI storage",
+        "Ingen test beviser reviewerobjektivitet eller scorekalibrering",
+        "Ingen LLM behavior suite blev kørt"
+      ],
+      "networkDependencies": [
+        "Eventuelt browsertarget",
+        "Eventuel ekstern modelprovider"
+      ],
+      "license": "Apache-2.0",
+      "attributionRequirements": [
+        "Distribuér Apache-2.0-licensteksten",
+        "Bevar NOTICE",
+        "Markér critique-templateændringer"
+      ],
+      "sitesmithDecision": "adapt",
+      "decisionReason": "Uafhængige reviews og persistence er værdifuldt, men SiteSmith skal skelne målte facts fra modelvurderinger og fjerne stale branches.",
+      "sitesmithSuccessorCapability": "SiteSmith ReviewPanel med strict evidence JSON og assignment-blinded reviewers.",
+      "requiredImprovement": "Strict schema, evidence citations, reviewer provenance, blinded assignment, score calibration og build-fail kun på objektive gates.",
+      "verificationMethod": "Schema validation, seeded reviewer fixtures, inter-rater agreement tracking, stale-placeholder lint og comparison mod menneskeligt labelset.",
+      "integrationTreatmentId": "spec-compatible-standard",
+      "licenceTreatmentId": "impeccable-apache"
+    },
+    {
+      "capabilityId": "IMP-014",
+      "sourceRepository": "https://github.com/pbakaus/impeccable.git",
+      "sourceCommit": "6b342244e915d64b0d6e84d5eec448fd196ce6bb",
+      "sourceFiles": [
+        "skill/reference/polish.md",
+        "skill/reference/harden.md",
+        "skill/reference/audit.md"
+      ],
+      "sourceLines": [
+        "skill/reference/polish.md:1-18",
+        "skill/reference/polish.md:20-97",
+        "skill/reference/harden.md:1-31",
+        "skill/reference/harden.md:33-310",
+        "skill/reference/harden.md:322-336",
+        "skill/reference/audit.md:63-136"
+      ],
+      "activationMechanism": "Polish vælges for et eksisterende surface med etableret retning; harden vælges før release eller for robustness, ofte efter audit/critique.",
+      "inputs": [
+        "Eksisterende implementation og design authority",
+        "Seneste critique/detectorbevis",
+        "Error, data, i18n og edge-case inventory",
+        "Diff og runtime screenshots"
+      ],
+      "outputs": [
+        "Prioriteret polishdiff",
+        "Robustness/hardening ændringer",
+        "Verifikationsnoter",
+        "Resterende risici"
+      ],
+      "persistentArtifacts": [
+        "Kodeændringer",
+        "Eventuelle audit- eller critique artifacts"
+      ],
+      "runtimeBehavior": "Polish skal bevare etableret direction og triagere evidens; harden gennemgår omfattende checklistområder og foreslår manuelle/automatiske tests. Der er ingen samlet executable completion gate i playbooks.",
+      "deterministicParts": [
+        "Checklistområder",
+        "Preserve-established-direction kontrakt",
+        "Krav om at bruge seneste critique",
+        "Dokumenterede testkategorier"
+      ],
+      "nondeterministicParts": [
+        "LLM-prioritering",
+        "Visuel polishbedømmelse",
+        "Hvilke edge cases anses relevante",
+        "Om foreslåede tests faktisk køres"
+      ],
+      "userDecisionPoints": [
+        "Accepterede tradeoffs",
+        "Hvilke edge cases er i scope",
+        "Hvornår established direction må ændres"
+      ],
+      "strengths": [
+        "Polish må ikke lydløst redesigne",
+        "Harden dækker fejl, data, i18n og adversarial inputs bredt",
+        "Evidens og diff er eksplicitte",
+        "Kategorierne er nyttige som reviewinventory"
+      ],
+      "failureModes": [
+        "Checklist completion kan forveksles med runtime proof",
+        "Ingen obligatorisk browser/device matrix",
+        "Ingen typed pass/fail state pr. hardeningcase",
+        "LLM kan erklære verified uden at have kørt alle foreslåede tests"
+      ],
+      "tests": [
+        "Playbooks blev statisk inspiceret",
+        "Detectorfixture blev kørt separat",
+        "Ingen samlet harden/polish E2E eller browsermatrix blev kørt"
+      ],
+      "networkDependencies": [
+        "Kun hvis runtime/browser target er remote"
+      ],
+      "license": "Apache-2.0",
+      "attributionRequirements": [
+        "Distribuér Apache-2.0-licensteksten",
+        "Bevar NOTICE",
+        "Markér adapterede checklister"
+      ],
+      "sitesmithDecision": "adapt",
+      "decisionReason": "Inventarerne er gode, men SiteSmiths Sandhed → Proof kræver executable evidence frem for promptbekræftelse.",
+      "sitesmithSuccessorCapability": "SiteSmith ReleaseMatrix med typed cases, commands og artifacts.",
+      "requiredImprovement": "Omsæt hvert relevant punkt til not-applicable, pass eller fail med command, artifact og timestamp; håndhæv viewport, axe, console, links og overflow.",
+      "verificationMethod": "Schema-required evidence, negative fixtures, replay af commands og release gate, der afviser missing proof.",
+      "integrationTreatmentId": "spec-compatible-standard",
+      "licenceTreatmentId": "impeccable-apache"
+    },
+    {
+      "capabilityId": "IMP-015",
+      "sourceRepository": "https://github.com/pbakaus/impeccable.git",
+      "sourceCommit": "6b342244e915d64b0d6e84d5eec448fd196ce6bb",
+      "sourceFiles": [
+        "skill/reference/live.md",
+        "skill/reference/live-setup.md",
+        "skill/scripts/live/live-server.mjs",
+        "skill/scripts/live/session-store.mjs",
+        "skill/agents/impeccable-manual-edit-applier.md",
+        "tests/live-roots.test.mjs"
+      ],
+      "sourceLines": [
+        "skill/reference/live.md:1-78",
+        "skill/reference/live.md:80-179",
+        "skill/reference/live.md:181-327",
+        "skill/scripts/live/live-server.mjs:5-7",
+        "skill/scripts/live/live-server.mjs:675-717",
+        "skill/scripts/live/live-server.mjs:946-1104",
+        "skill/scripts/live/live-server.mjs:1529-1655",
+        "skill/scripts/live/session-store.mjs:10-35",
+        "skill/scripts/live/session-store.mjs:94-124",
+        "skill/scripts/live/session-store.mjs:285-562",
+        "skill/agents/impeccable-manual-edit-applier.md:1-103",
+        "tests/live-roots.test.mjs:173-176",
+        "tests/live-roots.test.mjs:310-316",
+        "tests/live-roots.test.mjs:350-356"
+      ],
+      "activationMechanism": "Eksplicit live-kommando booter lokal server og browserharness, opretter token/session og går i poll-loop med generate, steer, accept, discard, resume og exit.",
+      "inputs": [
+        "Lokal app URL og project root",
+        "Token og session ID",
+        "Valgt DOM target",
+        "Generate/steer/manual-edit actions",
+        "Tre variantpayloads",
+        "Framework og source mapping"
+      ],
+      "outputs": [
+        "Tre live HTML-varianter",
+        "Accepted eller discarded variant",
+        "Sessionjournal og snapshots",
+        "Manual edit patches",
+        "Live completion state"
+      ],
+      "persistentArtifacts": [
+        ".impeccable Live session journal",
+        "Snapshots og recovery cache",
+        "Accepterede source edits når applier køres",
+        "Eventuelle carbonized/cleanup artifacts"
+      ],
+      "runtimeBehavior": "En loopback-only server bruger SSE, POST og long polling. Origin checks begrænser browseraccess, og live.js kræver token. Session store er append-only og replaybar. Playbooken leverer fulde HTML-varianter og anvender accepteret valg tilbage til source.",
+      "deterministicParts": [
+        "Session state machine og append-only eventorder",
+        "Loopback bind",
+        "Origin og token checks",
+        "Replay givet samme journal",
+        "Accept/discard transitions"
+      ],
+      "nondeterministicParts": [
+        "LLM-genererede HTML-varianter",
+        "DOM/framework mapping",
+        "Browser timing",
+        "Manual edits",
+        "Source patch synthesis"
+      ],
+      "userDecisionPoints": [
+        "Generate, steer, accept, discard, resume eller exit",
+        "Valg mellem tre varianter",
+        "Godkendelse af manual edit",
+        "Target element"
+      ],
+      "strengths": [
+        "Tæt visuel feedbackloop",
+        "Append-only recovery og resume",
+        "Loopback, origin og tokenbegrænsning",
+        "Explicit accept/discard state",
+        "Framework-aware source application"
+      ],
+      "failureModes": [
+        "Stor kompleksitets- og angrebsflade for en kernebuilder",
+        "Genereret HTML kan bryde framework- eller securitykontrakter",
+        "Browser/source mapping kan ramme forkert fil",
+        "Kræver live-setup.md, som SiteSmiths vendorbundle mangler",
+        "Cross-platform Live-root E2E er ikke grøn på Windows-testharness",
+        "CSP og fuld browsersecurity blev ikke auditeret end-to-end"
+      ],
+      "tests": [
+        "Live session store: 32/32 pass",
+        "Live recovery: 8/8 pass",
+        "Live completion: 8/8 pass",
+        "Live poll: 17/17 pass",
+        "Live roots: 18/21 pass",
+        "De tre Live-root failures skyldes testens Windows import med C:-specifier og er ikke klassificeret som produktionsfejl",
+        "Ingen Playwright/browser-E2E blev kørt"
+      ],
+      "networkDependencies": [
+        "Ingen ekstern service kræves for lokal server/state",
+        "Ekstern model- eller imageprovider kan kræves for generation",
+        "Lokal loopback HTTP/SSE"
+      ],
+      "license": "Apache-2.0",
+      "attributionRequirements": [
+        "Distribuér Apache-2.0-licensteksten",
+        "Bevar NOTICE",
+        "Markér Live- og appliermodifikationer",
+        "Følg asset-/modelprovider-vilkår separat"
+      ],
+      "sitesmithDecision": "reject",
+      "decisionReason": "Named deliberate loss: Tæt visuel feedbackloop. Live-loopet er ikke nødvendigt for SiteSmith v3's kerne og øger state-, security-, framework- og cross-platform-risiko væsentligt.",
+      "sitesmithSuccessorCapability": "none",
+      "requiredImprovement": "Hvis behovet bevises: isoleret pluginproces, CSP, signed session protocol, framework-specific safe appliers, complete live-setup, Windows/Linux/macOS browser-E2E og recovery/fuzz tests.",
+      "verificationMethod": "Exact exclusion assertion: Live server, browser harness, SSE/poll protocol, token/session journal, variant loop, source applier, commands, assets, and runtime entry points are absent from SiteSmith core and package output.",
+      "integrationTreatmentId": "deliberate-rejection",
+      "licenceTreatmentId": "impeccable-apache"
+    }
+  ],
+  "integrationTreatments": {
+    "clean-room-standard": {
+      "category": "clean-room reimplementation",
+      "matrixText": "clean-room reimplementation — Implement natively; upstream remains a behavioural reference and copied expression remains provenance-tracked."
+    },
+    "spec-compatible-standard": {
+      "category": "spec-compatible reimplementation",
+      "matrixText": "spec-compatible reimplementation — Adapt semantics behind the module interface; do not concatenate prompts."
+    },
+    "deliberate-rejection": {
+      "category": "deliberate rejection",
+      "matrixText": "deliberate rejection — Exclude the source mechanism and record the named loss; the negative fixture proves exclusion only."
+    },
+    "clean-room-brand-input": {
+      "category": "clean-room reimplementation",
+      "matrixText": "clean-room reimplementation — Implement natively from the outcome contract; do not copy the raster-board implementation or prompt expression."
+    },
+    "clean-room-style-lenses": {
+      "category": "clean-room reimplementation",
+      "matrixText": "clean-room reimplementation — Implement natively from the outcome contract; do not copy sibling-persona, simulated-randomness, or prompt expression."
+    },
+    "clean-room-run-checkpoints": {
+      "category": "clean-room reimplementation",
+      "matrixText": "clean-room reimplementation — Implement natively from the outcome contract; do not copy urgency language, pause-marker protocol, research claims, or prompt expression."
+    },
+    "vendored-deterministic": {
+      "category": "vendored component",
+      "matrixText": "vendored component — Pin the deterministic subset behind a typed adapter and verify its source hash."
+    },
+    "clean-room-product-reasoning": {
+      "category": "clean-room reimplementation",
+      "matrixText": "clean-room reimplementation — Implement natively from the outcome contract; do not copy classifier code, source data expression, top-one stereotype selection, or prompt expression."
+    },
+    "principle-only": {
+      "category": "principle-only inspiration",
+      "matrixText": "principle-only inspiration — Preserve the documented prompt principle as a behaviour target; do not copy prompt expression or treat it as deterministic code or an adapter."
+    },
+    "spec-compatible-retained": {
+      "category": "spec-compatible reimplementation",
+      "matrixText": "spec-compatible reimplementation — Retain the semantic contract behind a typed SiteSmith artifact."
+    },
+    "provider-plugin": {
+      "category": "provider-plugin",
+      "matrixText": "provider-plugin — Pin the deterministic subset behind a typed adapter and verify its source hash."
+    }
+  },
+  "licenceTreatments": {
+    "taste-mit": {
+      "matrixText": "MIT: retain Taste copyright and permission notice for copied or substantial portions; track asset and dependency rights separately.",
+      "allowedSourceIds": [
+        "taste-skill"
+      ],
+      "requiredCarriageIds": [
+        "root-mit-license",
+        "third-party-notices"
+      ]
+    },
+    "uupm-mit": {
+      "matrixText": "MIT: retain the Next Level Builder copyright and permission notice for copied code, data, or substantial wording; pin provenance.",
+      "allowedSourceIds": [
+        "ui-ux-pro-max"
+      ],
+      "requiredCarriageIds": [
+        "root-mit-license",
+        "third-party-notices"
+      ]
+    },
+    "mixed-bundle": {
+      "matrixText": "Mixed bundle: retain root MIT plus every Apache-2.0/OFL/component notice; never flatten installed artifacts to root MIT.",
+      "allowedSourceIds": [
+        "ui-ux-pro-max"
+      ],
+      "requiredCarriageIds": [
+        "root-mit-license",
+        "apache-2.0-license",
+        "third-party-notices"
+      ]
+    },
+    "uupm-metadata-conflict": {
+      "matrixText": "MIT code, but resolve the public CC-BY-NC-4.0 metadata conflict before redistribution or release.",
+      "allowedSourceIds": [
+        "ui-ux-pro-max"
+      ],
+      "requiredCarriageIds": [
+        "root-mit-license",
+        "third-party-notices"
+      ]
+    },
+    "frontend-apache": {
+      "matrixText": "Apache-2.0: ship the licence, retain applicable notices, and mark modified copied files; font licences remain separate.",
+      "allowedSourceIds": [
+        "frontend-design"
+      ],
+      "requiredCarriageIds": [
+        "apache-2.0-license",
+        "third-party-notices"
+      ]
+    },
+    "impeccable-platform-apache": {
+      "matrixText": "Apache-2.0: ship the full licence and NOTICE, retain platform-design-skills attribution, mark modifications; ignore the generated Grok MIT metadata error.",
+      "allowedSourceIds": [
+        "impeccable"
+      ],
+      "requiredCarriageIds": [
+        "apache-2.0-license",
+        "third-party-notices"
+      ]
+    },
+    "impeccable-apache": {
+      "matrixText": "Apache-2.0: ship the full licence and NOTICE, retain applicable headers, and mark modifications; asset/provider terms remain separate where relevant.",
+      "allowedSourceIds": [
+        "impeccable"
+      ],
+      "requiredCarriageIds": [
+        "apache-2.0-license",
+        "third-party-notices"
+      ]
+    }
+  }
+}

@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="da">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ovnvagt, Kalkværket, skakt 1 til 4</title>
+<meta name="description" content="Vagtbordet for fire kalkovne. Temperatur, træk, sidste ilægning og hvem der har kvitteret.">
+<style>
+/* Et vagtbord læses på fire meters afstand af en der har handsker på. Derfor: høj
+   kontrast, store tal, ingen ikoner, ingen kort, ingen bløde hjørner. Tilstand er et
+   ord med en ramme om, aldrig en farve alene. Skærmen er mørk fordi rummet er det. */
+:root{
+  --plade:#0d1620; --plade-2:#16212d; --kant:#39424e; --kant-2:#586475;
+  --skrift:#e2ebf4; --skrift-2:#9fb0c2;
+  --ok:#57c98a; --ok-flade:#0e2a1c;
+  --hoej:#f0b429; --hoej-flade:#2e2306;
+  --stop:#ff6b5e; --stop-flade:#320f0c;
+  --handling:#0b47b8; --paa-handling:#ffffff;
+  --sans:'Segoe UI',system-ui,-apple-system,sans-serif;
+  --mono:ui-monospace,'Cascadia Mono','SF Mono','Segoe UI Mono',monospace;
+  --p1:4px; --p2:8px; --p3:14px; --p4:22px; --p5:34px;
+  --brod:15px; --lille:12px; --mikro:10px; --kaempe:44px; --stor:19px;
+}
+/* Der er ingen lys tilstand. Rummet er mørkt hele døgnet, skærmen sidder på væggen, og
+   en lys variant ville kun findes for den der kigger på den fra et kontor. Retningen
+   siger det, og her står den i koden. */
+*{box-sizing:border-box}
+body{margin:0;background:var(--plade);color:var(--skrift);
+     font-family:var(--sans);font-size:var(--brod);line-height:1.4}
+.spring{position:absolute;left:-9999px;top:0;min-height:44px;padding:14px 18px}
+.spring:focus{position:fixed;left:8px;top:8px;z-index:99;background:var(--handling);
+              color:var(--paa-handling);text-decoration:none}
+a{color:var(--skrift)}
+:focus-visible{outline:3px solid var(--handling);outline-offset:2px}
+
+.bjaelke{display:flex;flex-wrap:wrap;gap:var(--p2) var(--p4);align-items:baseline;
+         padding:var(--p3) var(--p4);background:var(--plade-2);border-bottom:1px solid var(--kant);
+         font-family:var(--mono);font-size:var(--lille);color:var(--skrift-2)}
+.bjaelke b{color:var(--skrift);font-size:var(--stor);display:block;line-height:1.1}
+.mrk{text-decoration:none;color:var(--skrift-2)}
+.bjaelke nav{display:flex;gap:var(--p4)}
+.bjaelke nav a{min-height:44px;display:inline-flex;align-items:center;
+               text-decoration:none;color:var(--skrift-2)}
+.bjaelke nav a:hover,.bjaelke nav a:focus-visible{color:var(--skrift)}
+.fod{display:flex;flex-wrap:wrap;gap:var(--p2) var(--p5);align-items:baseline;
+     padding:var(--p4);border-top:1px solid var(--kant);background:var(--plade-2);
+     font-family:var(--mono);font-size:var(--lille);color:var(--skrift-2)}
+.fod a{min-height:44px;display:inline-flex;align-items:center;color:var(--skrift)}
+.kildeblok{padding:var(--p4)}
+
+main{padding:var(--p4)}
+h1{font-size:var(--stor);margin:0 0 var(--p4);font-weight:600}
+
+.skakter{display:grid;gap:var(--p3);grid-template-columns:1fr}
+@media (min-width:760px){.skakter{grid-template-columns:1fr 1fr}}
+@media (min-width:1180px){.skakter{grid-template-columns:repeat(4,1fr)}}
+
+.skakt{background:var(--plade-2);border:1px solid var(--kant);padding:var(--p3)}
+.skakt h2{margin:0 0 var(--p2);font-size:var(--brod);font-family:var(--mono);
+          color:var(--skrift-2);font-weight:400}
+.grad{font-family:var(--mono);font-size:var(--kaempe);line-height:1;letter-spacing:-.02em;
+      font-variant-numeric:tabular-nums;margin:0 0 var(--p2)}
+.tilstand{display:inline-block;font-family:var(--mono);font-size:var(--lille);
+          padding:3px var(--p2);border:1px solid currentColor}
+.t-ok{color:var(--ok);background:var(--ok-flade)}
+.t-hoej{color:var(--hoej);background:var(--hoej-flade)}
+.t-stop{color:var(--stop);background:var(--stop-flade)}
+.raek{display:flex;justify-content:space-between;gap:var(--p2);
+      font-family:var(--mono);font-size:var(--lille);color:var(--skrift-2);
+      padding:var(--p1) 0;border-top:1px solid var(--kant)}
+.raek:first-of-type{margin-top:var(--p3)}
+.raek b{color:var(--skrift);font-weight:400;font-variant-numeric:tabular-nums}
+
+.kvit{margin-top:var(--p3);display:flex;gap:var(--p2);flex-wrap:wrap}
+.kn{min-height:44px;min-width:44px;padding:var(--p2) var(--p3);background:transparent;
+    color:var(--skrift);border:1px solid var(--kant-2);font:inherit;font-size:var(--lille);
+    font-family:var(--mono);cursor:pointer}
+.kn:hover{border-color:var(--skrift)}
+.kn--h{background:var(--handling);border-color:var(--handling);color:var(--paa-handling)}
+.kn:disabled{opacity:.45;cursor:not-allowed}
+
+.log{margin-top:var(--p5);border-top:1px solid var(--kant);padding-top:var(--p4)}
+.log h2{font-size:var(--brod);margin:0 0 var(--p3);font-family:var(--mono);
+        color:var(--skrift-2);font-weight:400}
+.log ol{list-style:none;margin:0;padding:0;font-family:var(--mono);font-size:var(--lille)}
+.log li{display:grid;grid-template-columns:74px 96px 1fr;gap:var(--p3);
+        padding:var(--p2) 0;border-bottom:1px solid var(--kant);color:var(--skrift-2)}
+.log li b{color:var(--skrift);font-weight:400}
+.status{margin-top:var(--p3);font-family:var(--mono);font-size:var(--lille);color:var(--skrift-2)}
+.kilde{margin-top:var(--p5);font-family:var(--mono);font-size:var(--lille);
+       color:var(--skrift-2);max-width:64ch}
+</style>
+</head>
+<body>
+<a class="spring" href="#skakter">Spring til ovnene</a>
+
+<header class="bjaelke">
+  <a class="mrk" href="#skakter"><b>Ovnvagt</b><span>Kalkværket</span></a>
+  <nav aria-label="Vagtbordet">
+    <a href="#skakter">Skakterne</a>
+    <a href="#vagtlog">Vagtlog</a>
+  </nav>
+  <span>Vagt 06.00 til 14.00</span>
+  <span>A. Bjerregaard</span>
+</header>
+
+<main>
+  <h1>Fire skakter, sidst aflæst for 40 sekunder siden</h1>
+
+  <div class="skakter" id="skakter">
+    <section class="skakt">
+      <h2>Skakt 1</h2>
+      <p class="grad">942°</p>
+      <p><span class="tilstand t-ok">Inden for</span></p>
+      <div class="raek"><span>Træk</span><b>-38 Pa</b></div>
+      <div class="raek"><span>Sidste ilægning</span><b>05.40</b></div>
+      <div class="raek"><span>Kvitteret</span><b>A.B. 06.02</b></div>
+      <div class="kvit">
+        <button class="kn" type="button" disabled>Kvitteret</button>
+      </div>
+    </section>
+
+    <section class="skakt">
+      <h2>Skakt 2</h2>
+      <p class="grad">1.081°</p>
+      <p><span class="tilstand t-hoej">Over bånd</span></p>
+      <div class="raek"><span>Træk</span><b>-52 Pa</b></div>
+      <div class="raek"><span>Sidste ilægning</span><b>05.10</b></div>
+      <div class="raek"><span>Kvitteret</span><b>ikke endnu</b></div>
+      <div class="kvit">
+        <button class="kn kn--h" type="button" data-kvit="2">Kvittér skakt 2</button>
+        <button class="kn" type="button" data-luk="2">Spjæld 20 %</button>
+      </div>
+    </section>
+
+    <section class="skakt">
+      <h2>Skakt 3</h2>
+      <p class="grad">874°</p>
+      <p><span class="tilstand t-ok">Inden for</span></p>
+      <div class="raek"><span>Træk</span><b>-31 Pa</b></div>
+      <div class="raek"><span>Sidste ilægning</span><b>05.55</b></div>
+      <div class="raek"><span>Kvitteret</span><b>A.B. 06.03</b></div>
+      <div class="kvit">
+        <button class="kn" type="button" disabled>Kvitteret</button>
+      </div>
+    </section>
+
+    <section class="skakt">
+      <h2>Skakt 4</h2>
+      <p class="grad">1.196°</p>
+      <p><span class="tilstand t-stop">Stands ilægning</span></p>
+      <div class="raek"><span>Træk</span><b>-64 Pa</b></div>
+      <div class="raek"><span>Sidste ilægning</span><b>04.35</b></div>
+      <div class="raek"><span>Kvitteret</span><b>ikke endnu</b></div>
+      <div class="kvit">
+        <button class="kn kn--h" type="button" data-kvit="4">Kvittér skakt 4</button>
+        <button class="kn" type="button" data-luk="4">Spjæld 40 %</button>
+      </div>
+    </section>
+  </div>
+
+  <p class="status" id="status" role="status">Ingen handling siden vagten begyndte.</p>
+
+  <section class="log" id="vagtlog">
+    <h2>Vagtlog</h2>
+    <ol id="log">
+      <li><span>06.03</span><span>Skakt 3</span><b>Kvitteret, A.B.</b></li>
+      <li><span>06.02</span><span>Skakt 1</span><b>Kvitteret, A.B.</b></li>
+      <li><span>05.55</span><span>Skakt 3</span><b>Ilagt 1,4 t</b></li>
+      <li><span>05.40</span><span>Skakt 1</span><b>Ilagt 1,6 t</b></li>
+      <li><span>04.35</span><span>Skakt 4</span><b>Ilagt 1,5 t</b></li>
+    </ol>
+  </section>
+
+</main>
+
+<footer class="fod">
+  <a href="#skakter">Ovnvagt, Kalkværket</a>
+  <a href="#vagtlog">Vagtlog for denne vagt</a>
+  <span>Skift 06.00 til 14.00</span>
+</footer>
+
+<div class="kildeblok">
+  <p class="kilde">Tallene er værkets egne båndgrænser og vagtlog. Der står ingen
+    produktionsmål, ingen skiftplan og ingen personhistorik, fordi vagtbordet ikke fører dem.</p>
+</div>
+
+<script>
+/* Hver handling ændrer noget synligt, skriver i loggen og annonceres i role="status".
+   Ingen bekræftelsesdialog: en vagt med handsker skal ikke ramme to knapper i træk. */
+(function(){
+  var log = document.getElementById('log');
+  var status = document.getElementById('status');
+  function skriv(skakt, tekst){
+    var li = document.createElement('li');
+    li.innerHTML = '<span>nu</span><span>Skakt ' + skakt + '</span><b>' + tekst + '</b>';
+    log.insertBefore(li, log.firstChild);
+    status.textContent = 'Skakt ' + skakt + ': ' + tekst.toLowerCase() + '.';
+  }
+  [].slice.call(document.querySelectorAll('[data-kvit]')).forEach(function(b){
+    b.addEventListener('click', function(){
+      var n = b.getAttribute('data-kvit');
+      var kort = b.closest('.skakt');
+      kort.querySelectorAll('.raek b')[2].textContent = 'A.B. nu';
+      b.disabled = true; b.textContent = 'Kvitteret'; b.classList.remove('kn--h');
+      skriv(n, 'Kvitteret, A.B.');
+    });
+  });
+  [].slice.call(document.querySelectorAll('[data-luk]')).forEach(function(b){
+    b.addEventListener('click', function(){
+      var n = b.getAttribute('data-luk');
+      var kort = b.closest('.skakt');
+      var traek = kort.querySelectorAll('.raek b')[0];
+      traek.textContent = (parseInt(traek.textContent, 10) + 9) + ' Pa';
+      b.disabled = true;
+      skriv(n, 'Spjæld justeret, træk ' + traek.textContent);
+    });
+  });
+})();
+</script>
+</body>
+</html>
