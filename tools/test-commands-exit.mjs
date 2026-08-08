@@ -15,7 +15,8 @@
  * repository.
  */
 
-import { mkdtemp, rm, writeFile, readFile } from 'node:fs/promises';
+import { mkdtemp, mkdir, rm, writeFile, readFile } from 'node:fs/promises';
+import { existsSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
 import { tmpdir, homedir } from 'node:os';
 import { fileURLToPath } from 'node:url';
@@ -56,17 +57,73 @@ try {
     '---\nstack: astro\n---\n\n# A workshop\n\nCuts replacement glass panes to measure and prices them from the two measurements the buyer already has.\n');
   spawnSync(process.execPath, [LEDGER, 'new', '.', 'buy'], { cwd: dir, encoding: 'utf8' });
 
-  /* The record exists and the contract does not, so build still blocks, and it blocks on
-     the next thing rather than on everything at once. Two unanswerable questions with no
-     order between them is what the manifest exists to prevent. */
+  /* The record `ledger.mjs new` writes is a blank template, and this file used to ask for
+     exit 0 on it once a contract existed. That was the defect rather than the contract: a
+     blank record means the direction step produced nothing, and exit 0 tells an automated
+     caller to go on and build. Two 0-byte files passed the same way. RUN.md is still written
+     in every one of these states, so an agent that needs the manifest to learn what to fill
+     in is never locked out. */
+  const blank = run(['build', '--surface', 'buy']);
+  check('build on the blank record ledger.mjs new writes: exit 3', blank.status === 3, `exit ${blank.status}`);
+  check('and it says the record is an empty template', /empty template/.test(blank.stdout), blank.stdout.slice(-300));
+  check('the manifest is written anyway, so this is not a deadlock',
+    existsSync(join(dir, '.sitesmith/RUN.md')));
+
+  /* Fill it, then ask the contract question. Asked against a blank record the answer is
+     "fill the record", which is right and is not what this next check is about. */
+  const record = await readFile(join(dir, '.sitesmith/direction.md'), 'utf8');
+  await writeFile(join(dir, '.sitesmith/direction.md'), record
+    .replace(/^1\.\s*$/m, '1. A cutting list you price before you ring.')
+    .replace(/^2\.\s*$/m, '2. The shop counter, with the buyer\'s two measurements on it.')
+    .replace(/^Built:.*$/m, 'Built: 2, axis: the buyer already holds both numbers, because the counter is where they are read out'));
+
+  /* The record is answered and the contract does not exist, so build still blocks, and it
+     blocks on the next thing rather than on everything at once. Two unanswerable questions
+     with no order between them is what the manifest exists to prevent. */
   const noContract = run(['build', '--surface', 'buy']);
-  check('build with a record and no design contract: exit 3', noContract.status === 3, `exit ${noContract.status}`);
+  check('build with an answered record and no design contract: exit 3', noContract.status === 3, `exit ${noContract.status}`);
   check('and it names the contract as the next thing', /contract\.mjs new buy/.test(noContract.stdout),
     noContract.stdout.slice(-300));
 
   spawnSync(process.execPath, [CONTRACT, 'new', 'buy', '--to', dir], { cwd: dir, encoding: 'utf8' });
+
+  const zeroByte = await mkdtemp(join(tmpdir(), 'sitesmith-zero-'));
+  await mkdir(join(zeroByte, '.sitesmith'), { recursive: true });
+  await writeFile(join(zeroByte, 'BRIEF.md'), '# A workshop\n\nCuts glass to measure.\n');
+  await writeFile(join(zeroByte, '.sitesmith/direction.md'), '');
+  await writeFile(join(zeroByte, '.sitesmith/contract.json'), '');
+  const empty = run(['build', '--surface', 'buy'], zeroByte);
+  check('build on two 0-byte files: exit 3, not 0', empty.status === 3, `exit ${empty.status}\n${empty.stdout.slice(-300)}`);
+  await rm(zeroByte, { recursive: true, force: true });
+
+  const broken = await mkdtemp(join(tmpdir(), 'sitesmith-broken-'));
+  await mkdir(join(broken, '.sitesmith'), { recursive: true });
+  await writeFile(join(broken, 'BRIEF.md'), '# A workshop\n\nCuts glass to measure.\n');
+  await writeFile(join(broken, '.sitesmith/direction.md'), '## Subject\n\nA two-person glass shop.\n');
+  await writeFile(join(broken, '.sitesmith/contract.json'), '{ not json');
+  const bad2 = run(['build', '--surface', 'buy'], broken);
+  check('build on a contract that is not JSON: exit 3', bad2.status === 3, `exit ${bad2.status}`);
+  await rm(broken, { recursive: true, force: true });
+
+  /* The state a real run passes through and the one worth naming precisely: candidates were
+     written, nothing was chosen. Counting non-blank lines would have called this filled. */
+  const noChoice = await mkdtemp(join(tmpdir(), 'sitesmith-nochoice-'));
+  await mkdir(join(noChoice, '.sitesmith'), { recursive: true });
+  await writeFile(join(noChoice, 'BRIEF.md'), '# A workshop\n\nCuts glass to measure.\n');
+  await writeFile(join(noChoice, '.sitesmith/direction.md'),
+    '## Theses\n\n1. A cutting list you price before you ring.\n2. The shop counter.\n\n## Built\n\nBuilt: <thesis number>, axis: <the axis>, because <reason>\n');
+  await writeFile(join(noChoice, '.sitesmith/contract.json'), '{"v":1}');
+  const unchosen = run(['build', '--surface', 'buy'], noChoice);
+  check('build on theses with nothing chosen: exit 3', unchosen.status === 3, `exit ${unchosen.status}`);
+  check('and it names the Built line as the placeholder it still is',
+    /nothing chosen/.test(unchosen.stdout), unchosen.stdout.slice(-260));
+  await rm(noChoice, { recursive: true, force: true });
+
+  /* A written thesis and a real choice is all build asks for. Whether the record is any good
+     belongs to ledger.mjs; duplicating that judgement here would let build refuse what the
+     ledger allows. */
   const ok = run(['build', '--surface', 'buy']);
-  check('build with brief, surface, record and contract: exit 0', ok.status === 0,
+  check('build with brief, surface, an answered record and a contract: exit 0', ok.status === 0,
     `exit ${ok.status}\n${ok.stdout.slice(-400)}`);
 
   /* A brief long enough that the old 1200-character cut would have decided what the index

@@ -16,7 +16,7 @@
  */
 
 import { mkdir, writeFile, readFile } from 'node:fs/promises';
-import { existsSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
 import { join, resolve, relative, dirname, sep } from 'node:path';
 
@@ -292,12 +292,26 @@ export async function build(root, project, { surface, brief }) {
   const blockers = [];
   if (!surface) blockers.push('no surface given: pass --surface buy|operate|read|experience');
   if (!briefPath) blockers.push('no BRIEF.md and no filled PROJECT.md, so nothing states the facts the page may use');
-  if (!existsSync(directionPath)) blockers.push(`no direction record: run \`${scriptOf('ledger.mjs')} new . ${surface ?? '<surface>'}\``);
+
+  /* Existence is not the question. Two 0-byte files passed this and exited 0, which made
+     every downstream claim that a build cannot skip the direction step untrue: the record
+     is what the direction step leaves behind, so a blank one means the step did not run.
+     The test is deliberately weak, one filled heading, because the strong test belongs to
+     ledger.mjs and duplicating it here would let build refuse what the ledger allows. */
+  const direction = readRecord(directionPath);
+  if (!direction.exists) blockers.push(`no direction record: run \`${scriptOf('ledger.mjs')} new . ${surface ?? '<surface>'}\``);
+  else if (!direction.filled) {
+    blockers.push(`the direction record at ${rel(directionPath)} is ${direction.why}. `
+      + `Fill it, then \`${scriptOf('ledger.mjs')} check .\``);
+  }
   /* The contract is a blocker only once the record exists, because it is written from the
      record. Asking for both at once would hand the agent two unanswerable questions and
      one order of work that does not say which comes first. */
-  if (existsSync(directionPath) && !existsSync(contractPath)) {
+  if (direction.exists && !existsSync(contractPath)) {
     blockers.push(`no design contract: run \`${scriptOf('contract.mjs')} new ${surface ?? '<surface>'}\`, fill it from the record, then \`${scriptOf('contract.mjs')} check --write\``);
+  } else if (direction.exists) {
+    const contract = readContract(contractPath);
+    if (!contract.ok) blockers.push(`the design contract at ${rel(contractPath)} is ${contract.why}. Run \`${scriptOf('contract.mjs')} check --write\``);
   }
 
   const manifest = {
@@ -365,6 +379,47 @@ export async function build(root, project, { surface, brief }) {
      contract looks like when it was meant and never written. */
   if (blockers.length) say(`  ${blockers.length} blocker(s): exit 3, nothing was faked.\n`);
   return blockers.length ? 3 : 0;
+}
+
+/* Both readers answer one question: did the step that writes this file actually run. They
+   are sync and local rather than imported from the engines, because commands.mjs resolves
+   script paths at runtime and a static import would pin it to one installed layout. */
+function readRecord(path) {
+  if (!existsSync(path)) return { exists: false, filled: false, why: 'missing' };
+  let text;
+  try { text = readFileSync(path, 'utf8'); } catch { return { exists: true, filled: false, why: 'unreadable' }; }
+  if (!text.trim()) return { exists: true, filled: false, why: 'empty' };
+
+  /* Two signals, and they are the two the direction step exists to produce: candidates were
+     written, and one of them was chosen. Counting non-blank lines is not enough, because the
+     template `ledger.mjs new` writes already carries the surface, three empty list markers
+     and a Built line full of angle brackets. The patterns mirror ledger.mjs's own parser
+     rather than re-implementing its judgement: ledger decides whether a record is good, this
+     only decides whether one was written. */
+  /* `[ \t]+`, not `\s+`. With `\s+` the template's own "1.\n2." matched: the newline was the
+     whitespace and the next marker was the content, so three empty list markers read as a
+     written thesis and the whole check passed on a blank record. */
+  const hasThesis = /^[ \t]*\d+[.)][ \t]+\S/m.test(text);
+  const built = text.match(/^\s*Built:\s*(.+)$/m);
+  const chosen = built && !built[1].includes('<') && built[1].trim().length > 3;
+
+  if (!hasThesis && !chosen) {
+    return { exists: true, filled: false, why: 'an empty template: no thesis is written and nothing is chosen' };
+  }
+  if (!hasThesis) return { exists: true, filled: false, why: 'chosen without a thesis list to choose from' };
+  if (!chosen) return { exists: true, filled: false, why: 'a thesis list with nothing chosen: the Built line is still the placeholder' };
+  return { exists: true, filled: true, why: null };
+}
+
+function readContract(path) {
+  let text;
+  try { text = readFileSync(path, 'utf8'); } catch { return { ok: false, why: 'unreadable' }; }
+  if (!text.trim()) return { ok: false, why: 'empty' };
+  let data;
+  try { data = JSON.parse(text); } catch { return { ok: false, why: 'not valid JSON' }; }
+  if (!data || typeof data !== 'object' || Array.isArray(data)) return { ok: false, why: 'not an object' };
+  if (!Object.keys(data).length) return { ok: false, why: 'an empty object' };
+  return { ok: true, why: null };
 }
 
 function runMarkdown(m) {
