@@ -80,3 +80,41 @@ output was verified complete rather than re-rolled until it looked clean.
 
 This is a defect in a pinned third-party tool on this platform. It is recorded here and
 nothing in this repository is changed because of it.
+
+---
+
+## Run stopped and voided, 2026-08-09
+
+The three-arm run was stopped mid-judging and voided in full. Judges compared all three
+directions inside one packet, so a handicapped C can move relative A/B preference: the
+A-versus-B result from that run is not salvageable either, and no result was computed from it.
+
+**Label: INVALID-C-SURFACE-SCOPE. Nothing deleted.**
+
+Preserved at `scratchpad/lab/INVALID-C-SURFACE-SCOPE/`:
+
+| what | count |
+| --- | --- |
+| judge verdicts, with brief and arm order reconstructed from each judge's own prompt | 24 |
+| normalisation and scrub results | 85 |
+| normalised packet files the judges actually read, with hashes | 48 |
+| workflow journal and 400 agent transcripts, left in place | `wf_fa140a24-f59` |
+
+The 24 verdicts carry a `wouldHaveWon` field, reconstructed for the record. It is not a result
+and is excluded from every promotion statistic, permanently.
+
+**The raw A and B artifacts are reused, not regenerated.** Their generation never touched the
+C routing defect. All 48 direction files were re-hashed against `ARTEFACTS.json` before reuse:
+48 of 48 match, none changed, none missing.
+
+**C2** replaces arm C. The prompt now carries no scope at all: the agent reads new-work.md's
+own routing, decides where a greenfield brief goes, and reports the scope it used. Handing it
+the answer is what caused this defect, so it is not handed the answer again.
+
+Judging restarts from zero and runs as four checkpointed batches of four briefs. Each judge
+writes its own verdict file before finishing, so a session limit costs one batch rather than a
+run. No interim tally is computed, logged or acted on between batches.
+
+Blinding is now measured rather than assumed: the scrub names which procedure produced each
+direction, scored against ground truth, and judging is refused outright if accuracy reaches
+50 per cent against a chance rate of 33. That threshold was fixed before the run started.
