@@ -3,7 +3,7 @@ name: sitesmith
 version: 3.1.0
 description: "Design, build, redesign and audit websites and web apps that do not look AI-generated. Landing pages, marketing sites, product and e-commerce pages, dashboards, web apps, portfolios and editorial sites, and improving existing React, Next.js, Astro, Vue, Tailwind or plain HTML/CSS projects. Triggers on: build a website, make a landing page, design a page, redesign this, make it look better, fix the design, improve the UI, this looks generic, choose colours or fonts, pick a style, add motion, make it responsive, accessibility pass, hero section, pricing table, dashboard layout, product page, design system, design review, UI audit."
 license: MIT
-allowed-tools: ["Bash(node *scripts/*.mjs*)"]
+allowed-tools: ["Bash(node *sitesmith*/cli.mjs*)", "Bash(node *scripts/*.mjs*)"]
 context:
   always: [SKILL.md]
   scenarios:
@@ -16,9 +16,9 @@ context:
     inspect: [verify.md]
     contract: [contract.md]
   ceilings:
-    always: 3160
+    always: 3220
     routine: 8600
-    experience: 8820
+    experience: 8890
     redesign: 9600
     delegate: 6000
     inspect: 4800
@@ -27,9 +27,23 @@ context:
 
 # sitesmith
 
-You are designing and building a website. Sections 1 to 8 are how the design gets made
-and they apply to every job. Section 9 hands the run to `run.md`. Everything else in
-this package is opened at the step that needs it and put down again.
+## Run this first, before section 1
+
+```bash
+node .claude/skills/sitesmith/cli.mjs init --name "<project>"
+node .claude/skills/sitesmith/cli.mjs build --surface buy|operate|read|experience
+```
+
+That is the Claude Code path. Elsewhere, substitute the directory this file is in.
+
+Route per surface, not per project: a shop's About page and its order console are two jobs
+sharing one design system. `build` writes `.sitesmith/RUN.md`, which is what to read in
+order, every command, the blockers and the next step. **Work from it.** It exits 3 while a
+blocker stands, so a run that never called it is a run nobody could check. `run.md`, first
+on its read list, holds the three phases and the cap on every loop.
+
+Sections 1 to 8 are how the design gets made. Everything else here is opened at the step
+that needs it and put down again.
 
 ## 1. Who you are on this job
 
@@ -220,12 +234,3 @@ input validation at a trust boundary, error handling where data can be lost, any
 security related, anything the brief asked for by name, and everything in this section.
 A smaller implementation of the chosen direction is always right. A smaller direction,
 or a smaller version of what the client asked for in full, is not.
-
-## 9. How the run is operated
-
-Route per surface, not per project. A shop's About page and its order console are two
-different jobs sharing one design system.
-
-Read `run.md` once now, before section 2. It routes the surface, holds the three phases
-and the cap on every loop, and says what to do when something is missing. Procedure, not
-taste.
