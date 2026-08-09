@@ -46,45 +46,45 @@ const CASES = [
   },
   {
     name: 'pass, no browser',
-    fixture: 'pass', browser: false, expect: 1,
+    fixture: 'pass', browser: false, expect: 3,
     must: ['VERDICT MISSING', 'direction fidelity', 'This is not a pass'],
     mustNot: ['every check ran'],
     why: 'with nothing to render the direction verdict is missing, and a missing verdict is not a pass',
   },
   {
     name: 'dishonest page',
-    fixture: 'refuse-dishonest', browser: true, expect: 2,
+    fixture: 'refuse-dishonest', browser: true, expect: 1,
     must: ['honesty/placeholder-language', 'honesty/dummy-identifier', 'honesty/empty-brand-mark', 'honesty/unmanifested-asset'],
     mustNot: ['tokens/undeclared-literal'],
     why: 'honesty runs first and stops the gate, so the undeclared literal in the same stylesheet is named as a missing verdict rather than measured',
   },
   {
     name: 'em dash, elision, an uninstalled design system',
-    fixture: 'refuse-source', browser: true, expect: 2,
+    fixture: 'refuse-source', browser: true, expect: 1,
     must: ['copy/em-dash', 'output/elision-placeholder', 'honesty/design-system-not-installed'],
     why: 'three source refusals that no flag and no allowlist can turn off',
   },
   {
     name: 'report accounting',
-    fixture: 'refuse-report', browser: true, expect: 2,
+    fixture: 'refuse-report', browser: true, expect: 1,
     must: ['reads/outside-manifest', 'run-notes/no-reason-on-a-step-that-did-not-run', 'reconciliation/unreconciled-finding'],
     why: 'a read outside the declared scenario, a step that did not run and never said why, and a mechanical finding nobody dispositioned',
   },
   {
     name: 'token drift in emitted CSS',
-    fixture: 'refuse-drift', browser: true, expect: 2,
+    fixture: 'refuse-drift', browser: true, expect: 1,
     must: ['tokens/undeclared-literal'],
     why: 'literals at call sites in a stylesheet the build emitted, which is the blindness the v2.3 scanner had',
   },
   {
     name: 'the named tells',
-    fixture: 'refuse-tells', browser: true, expect: 2,
+    fixture: 'refuse-tells', browser: true, expect: 1,
     must: ['antipattern/gradient-text', 'antipattern/three-card-grid', 'antipattern/framework-default-scale', 'antipattern/icon-tile-row'],
     why: 'four tells, none of them claimed in the direction record',
   },
   {
     name: 'a page about a real thing with no photograph of it',
-    fixture: 'no-photo', browser: true, expect: 2,
+    fixture: 'no-photo', browser: true, expect: 1,
     must: ['look/no-photograph'],
     // ui-ux-pro-max states it without hedging: a pure-text page is not minimalism, it is
     // incomplete work. This repository proved it the hard way, with five pages and zero
@@ -94,7 +94,7 @@ const CASES = [
   },
   {
     name: 'a page with nowhere to go and nothing saying who it is',
-    fixture: 'no-shell', browser: true, expect: 2,
+    fixture: 'no-shell', browser: true, expect: 1,
     must: ['look/no-way-out', 'look/no-shell'],
     // The cleanest correlation in the corpus: the four pages the owner rejected have one
     // anchor each, the skip link, and no nav and no footer between them. The one page he
@@ -104,7 +104,7 @@ const CASES = [
   },
   {
     name: 'an experience surface whose first screen is words on a flat ground',
-    fixture: 'look-unpainted', browser: true, expect: 2,
+    fixture: 'look-unpainted', browser: true, expect: 1,
     must: ['look/first-viewport-unpainted', 'look/dead-field'],
     // The whole point of look.md, and the hole the S17 holdouts went through. Every other
     // check in this gate refuses a defect; these two refuse an absence, and nothing here
@@ -120,7 +120,7 @@ const CASES = [
   },
   {
     name: 'a buy surface with nothing that drives it',
-    fixture: 'buy-no-journeys', browser: true, expect: 2,
+    fixture: 'buy-no-journeys', browser: true, expect: 1,
     must: ['journeys/none'],
     // verify.md promised this gate long before anything implemented it. Nothing here
     // clicks: verify.mjs renders and measures, its keyboard pass presses Tab and reads
@@ -150,7 +150,7 @@ const CASES = [
   },
   {
     name: 'a banned ground and an AI purple, unclaimed',
-    fixture: 'unpinned', browser: true, expect: 2,
+    fixture: 'unpinned', browser: true, expect: 1,
     must: ['palette/premium-consumer-default', 'colour/ai-purple'],
     why: 'the same build as the pinned fixture in every respect except the two lines that claim the colours',
   },
@@ -166,19 +166,19 @@ const CASES = [
   },
   {
     name: 'the round-8 recipe',
-    fixture: 'refuse-round8', browser: true, expect: 2,
+    fixture: 'refuse-round8', browser: true, expect: 1,
     must: ['antipattern/round-8-recipe'],
     why: 'this studio shipped this exact combination three times and the portfolio failed on sameness',
   },
   {
     name: 'the render is not the direction',
-    fixture: 'refuse-render', browser: true, expect: 2,
+    fixture: 'refuse-render', browser: true, expect: 1,
     must: ['direction/ground-outside-declared-band', 'direction/display-face-not-the-declared-one', 'direction/signature-does-not-render'],
     why: 'measured at 1440 in the default colour scheme, which is the view anyone was actually shown',
   },
   {
     name: 'a palette this gate cannot convert',
-    fixture: 'withhold-oklch', browser: true, expect: 1,
+    fixture: 'withhold-oklch', browser: true, expect: 3,
     must: ['VERDICT MISSING', 'colour space this gate cannot convert'],
     mustNot: ['every check ran'],
     why: 'the ground verdict is withheld and named, and nothing is guessed from a colour space the gate has no conversion for',
@@ -191,26 +191,26 @@ const CASES = [
   },
   {
     name: 'the same build without the flag',
-    fixture: 'draft-build', browser: true, expect: 2,
+    fixture: 'draft-build', browser: true, expect: 1,
     must: ['honesty/unmanifested-asset'],
     why: 'the downgrade is the flag, not the build',
   },
   {
     name: 'a record and a report that do not answer',
-    fixture: 'refuse-record', browser: true, expect: 2,
+    fixture: 'refuse-record', browser: true, expect: 1,
     must: ['report/no-files-opened-list', 'run-notes/missing-field', 'reconciliation/false-positive-without-reason',
       'direction/one-off-without-a-reason', 'direction/palette-not-declared', 'direction/signature-not-declared'],
     why: 'the record declares no palette, type or signature, the one-off carries no reason, a run note is absent rather than answered, and a finding is dismissed as a false positive without saying why',
   },
   {
     name: 'a draft claiming release',
-    fixture: 'refuse-draft-release', args: ['--draft'], browser: true, expect: 2,
+    fixture: 'refuse-draft-release', args: ['--draft'], browser: true, expect: 1,
     must: ['honesty/release-claimed-on-a-draft-build'],
     why: 'no build claiming release may have used --draft',
   },
   {
     name: 'a band whose content stops against one edge',
-    fixture: 'refuse-lopsided', browser: true, expect: 2,
+    fixture: 'refuse-lopsided', browser: true, expect: 1,
     must: ['look/lopsided-band', 'section#terms', 'Terms of the pit ledger'],
     why: 'three blind reviewers put this first on three unrelated pages, and every check for it until now stopped at the fold',
   },
@@ -222,7 +222,7 @@ const CASES = [
   },
   {
     name: 'two bands that nearly line up',
-    fixture: 'refuse-ragged', browser: true, expect: 2,
+    fixture: 'refuse-ragged', browser: true, expect: 1,
     must: ['look/ragged-margin', 'spine', '48px off it'],
     mustNot: ['look/lopsided-band'],
     // A reviewer paid to accept a read surface put this above everything else on the page:
@@ -232,7 +232,7 @@ const CASES = [
   },
   {
     name: 'most of the page wearing one shape',
-    fixture: 'refuse-one-layout', browser: true, expect: 2,
+    fixture: 'refuse-one-layout', browser: true, expect: 1,
     must: ['look/one-layout', '4 of 4 bands are the same shape', '1col-full'],
     // Three reviewers on three unrelated pages across two rounds wrote the same sentence
     // in their own words. The console that got six distinct layouts, one per section, is
@@ -241,7 +241,7 @@ const CASES = [
   },
   {
     name: 'a rule that points at nothing for most of its length',
-    fixture: 'refuse-overdrawn', browser: true, expect: 2,
+    fixture: 'refuse-overdrawn', browser: true, expect: 1,
     must: ['look/wider-than-its-content'],
     // Three reviewers, three rounds, three unrelated pages: "a line that points at nothing
     // for three quarters of its length"; "1368px wide holding two dots and a chip, about
@@ -251,7 +251,7 @@ const CASES = [
   },
   {
     name: 'a console whose first screen has nothing to press',
-    fixture: 'operate-no-action', browser: true, expect: 2,
+    fixture: 'operate-no-action', browser: true, expect: 1,
     must: ['operate/nothing-to-do-on-the-first-screen'],
     // Two reviewers, two rounds, two unrelated consoles, neither seeing the other's page:
     // "the top 200px go on vehicle inventory, not on routes"; "there is no button on the
@@ -268,7 +268,7 @@ const CASES = [
   },
   {
     name: 'a rendered page with no critique locked against it',
-    fixture: 'critique-missing', browser: true, expect: 2,
+    fixture: 'critique-missing', browser: true, expect: 1,
     must: ['critique/not-taken'],
     // look.md section 6 and verify.md both ask for a critique and nothing has ever read
     // one. Three builds wrote theirs, cleared their own gates, and were rejected by three

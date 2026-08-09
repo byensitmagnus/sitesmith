@@ -70,7 +70,7 @@ const QUESTIONS = [
 
 if (CMD === 'packet') {
   const r = renderHash()
-  if (!r) die(1, `no screenshots under ${show(SHOTS)}. Run verify.mjs first; a critique with no render is an opinion.`)
+  if (!r) die(3, `no screenshots under ${show(SHOTS)}. Run verify.mjs first; a critique with no render is an opinion.`)
   const brief = ['BRIEF.md', 'brief.md', '../BRIEF.md'].map((f) => join(BUILD, f)).find(existsSync)
   const lines = [
     '# Critique packet',
@@ -101,20 +101,20 @@ if (CMD === 'packet') {
 
 if (CMD === 'lock') {
   const file = flag('--file')
-  if (!file) die(1, 'usage: critique.mjs lock [build] --file <answers.md> [--correction "what changed and why"]')
-  if (!existsSync(file)) die(1, `no such file: ${file}`)
+  if (!file) die(2, 'usage: critique.mjs lock [build] --file <answers.md> [--correction "what changed and why"]')
+  if (!existsSync(file)) die(2, `no such file: ${file}`)
   const r = renderHash()
-  if (!r) die(1, `no screenshots under ${show(SHOTS)}. Run verify.mjs first.`)
+  if (!r) die(3, `no screenshots under ${show(SHOTS)}. Run verify.mjs first.`)
   const answers = readFileSync(file, 'utf8').trim()
   if (answers.split('\n').filter((l) => l.trim()).length < 6) {
-    die(2, 'fewer than six answered lines. The six questions are the critique; a shorter answer is a verdict with no reading behind it.')
+    die(1, 'fewer than six answered lines. The six questions are the critique; a shorter answer is a verdict with no reading behind it.')
   }
   const prior = existsSync(STATE) ? JSON.parse(readFileSync(STATE, 'utf8')) : null
   const correction = flag('--correction')
   const corrections = prior?.corrections ?? []
   if (correction) corrections.push({ note: correction, fromRender: prior?.render ?? null, toRender: r.hash })
   if (corrections.length > 1) {
-    die(2, `${corrections.length} correction rounds. look.md allows one: a second round is where a page gets sanded flat, and if the second look is still wrong the thesis was wrong.`)
+    die(1, `${corrections.length} correction rounds. look.md allows one: a second round is where a page gets sanded flat, and if the second look is still wrong the thesis was wrong.`)
   }
   writeFileSync(STATE, `${JSON.stringify({ v: 1, render: r.hash, files: r.files, answers, corrections }, null, 1)}\n`, 'utf8')
   console.log(`locked against render ${r.hash} (${r.files.length} images)${corrections.length ? `, ${corrections.length} correction round` : ''}`)
@@ -122,4 +122,4 @@ if (CMD === 'lock') {
   process.exit(0)
 }
 
-die(1, 'usage: critique.mjs packet|lock [build] [--file <answers.md>] [--correction "..."]')
+die(2, 'usage: critique.mjs packet|lock [build] [--file <answers.md>] [--correction "..."]')

@@ -56,7 +56,8 @@ const has = (name) => argv.includes(name);
 if (has('--help') || has('-h')) {
   console.log(`usage: gate.mjs [build-dir] [--draft] [--url <url>]
                 [--skill <dir>] [--direction <file>] [--manifest <file>] [--report <file>]`);
-  process.exit(1);
+  /* 2, the invocation. Asking what the arguments are is not a defect in a page. */
+  process.exit(2);
 }
 
 const flagValues = new Set();
@@ -128,7 +129,9 @@ async function walk(dir, out = []) {
 const buildStat = await stat(BUILD).catch(() => null);
 if (!buildStat?.isDirectory()) {
   console.error(`gate: ${show(BUILD)} is not a directory. Point the gate at the build.`);
-  process.exit(1);
+  /* 2. The gate was pointed at the wrong thing, which is the caller's mistake, not the
+     page's. */
+  process.exit(2);
 }
 
 const allFiles = await walk(BUILD);
@@ -2194,11 +2197,16 @@ function report(missingVerdicts) {
   if (uniq.length) {
     const classes = new Set(uniq.map((f) => f.cls));
     console.log(`  REFUSED ${EM} ${uniq.length} defect(s) in ${classes.size} class(es)${missingVerdicts.length ? `, and ${missingVerdicts.length} verdict(s) missing` : ''}\n`);
-    process.exit(2);
+    /* 1, a measured defect, and 3 below, a withheld verdict. These were 2 and 1, the wrong
+       way round against the contract this package publishes, so a caller branching on the
+       published meanings read every refusal as a bad invocation and every missing browser as
+       a defect in the page. CI greps this output rather than the code, so nothing downstream
+       depended on the old numbers. */
+    process.exit(1);
   }
   if (missingVerdicts.length) {
     console.log(`  NO VERDICT ${EM} nothing refused, and ${missingVerdicts.length} check(s) could not run. This is not a pass.\n`);
-    process.exit(1);
+    process.exit(3);
   }
   console.log('  every check ran and none refused\n');
   process.exit(0);
