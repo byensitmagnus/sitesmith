@@ -36,6 +36,7 @@ import { join, resolve, relative, sep, extname, basename, dirname } from 'node:p
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { createRequire } from 'node:module';
 import { createHash } from 'node:crypto';
+import { selectorIn } from './ledger.mjs';
 
 /* The one character this package bans outright, written as an escape so that the file
    enforcing the ban does not contain the thing it bans. Two refusal messages below are
@@ -250,11 +251,14 @@ const directionRaw = await readFile(DIRECTION_PATH, 'utf8').catch(() => null);
 const direction = directionRaw ? parseDirection(directionRaw) : null;
 
 /* The signature has to name something a query can find. Prose alone would leave the gate
-   guessing which element the build was designed around, and guessing is deciding. */
-function signatureSelector(d) {
-  const m = (d.signature?.value ?? '').match(/`([^`]+)`|\(([.#[][^)]+)\)/);
-  return m ? (m[1] ?? m[2]).trim() : null;
-}
+   guessing which element the build was designed around, and guessing is deciding.
+
+   The pattern lives in ledger.mjs and is imported rather than repeated. Both files answer
+   "which element is the signature" about the same record, so two copies of the regex is two
+   answers waiting to diverge: the gate would refuse a build whose signature the ledger had
+   already measured, or the reverse, and the two reports would contradict each other about
+   one page. */
+const signatureSelector = (d) => selectorIn(d.signature?.value);
 
 /* ── colour ────────────────────────────────────────────────────────────── */
 
