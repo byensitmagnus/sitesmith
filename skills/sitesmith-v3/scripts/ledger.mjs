@@ -374,15 +374,21 @@ export function devicesOf(raw = {}) {
   return [...d].sort()
 }
 
+/* The hues are computed here, from the colours, rather than read off fields a caller was
+   expected to have set. They were set one level up, in the CLI, so `fingerprintOf(await
+   measure(page))` returned null for all three and silently disarmed both colour vetoes: the
+   fingerprint still looked complete, and judge() compared nothing. A function that is wrong
+   unless you remember to prepare its argument is a trap, and the only defence against it was
+   that one call site happened to remember. */
 export function fingerprintOf(raw = {}) {
   return {
     ground: groundBand(Number(raw.luminance)),
-    groundHue: raw.groundHue ?? null,
-    accentHue: raw.accentHue ?? null,
+    groundHue: hueOf(raw.groundColor),
+    accentHue: hueOf(raw.accentColor),
     /* Round three's tell. Manila card, reading sheet and tawed sheepskin, three noun
        lists with nothing in common, all resolved to one hue inside 0.8 degrees. In two of
        the three the material was not the ground, so nothing looked at it. */
-    signatureHue: raw.signatureHue ?? null,
+    signatureHue: hueOf(raw.signatureColor),
     groundColor: raw.groundColor ?? null,
     accentColor: raw.accentColor ?? null,
     signatureColor: raw.signatureColor ?? null,
@@ -832,13 +838,11 @@ if (!invokedDirectly) { /* imported for its parts; nothing runs */ } else {
     // first and never waived: an empty heading is not a design choice the brief can pin.
     const recordProblems = directionProblems(record)
 
-    const { raw, source } = await obtainRaw(dir)
-    raw.groundHue = hueOf(raw.groundColor)
-    raw.accentHue = hueOf(raw.accentColor)
     /* Round four recorded signatureHue as null on every build, because the veto was added
        and the measurement never was. A check wired to nothing is worse than no check: it
-       appears in the report as having run. */
-    raw.signatureHue = hueOf(raw.signatureColor)
+       appears in the report as having run. The three hues were computed here, which meant
+       only this call site got them; they are computed inside fingerprintOf now. */
+    const { raw, source } = await obtainRaw(dir)
     const fingerprint = fingerprintOf(raw)
 
     let ledger

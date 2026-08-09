@@ -244,6 +244,44 @@ for (const [name, got, want] of [
   results.push(`${ok ? '  ok  ' : '  FAIL'} ${name}`)
 }
 
+/* fingerprintOf read groundHue, accentHue and signatureHue off its argument, and the only
+   code that set them was the CLI, one level up. Any other caller got three nulls, hueGap
+   returned null for every comparison, and both colour vetoes went quiet while the report
+   still showed a fingerprint. The function computes them from the colours now, so it cannot
+   be called wrong. */
+{
+  const { fingerprintOf, judge, SEED_RECIPE } = await import('./ledger.mjs')
+  const raw = {
+    luminance: 0.91,
+    groundColor: 'rgb(240, 236, 225)',
+    accentColor: 'rgb(180, 40, 30)',
+    signatureColor: 'rgb(20, 90, 140)',
+    displayFamily: 'Times New Roman',
+    assetShare: 0,
+  }
+  const f = fingerprintOf(raw)
+  const line = (name, ok, detail = '') => {
+    results.push(`  ${ok ? 'ok  ' : 'FAIL'}  ${name}${ok || !detail ? '' : `\n          ${detail}`}`)
+    if (!ok) failed += 1
+  }
+  line('fingerprintOf computes the three hues from the colours it was given',
+    f.groundHue !== null && f.accentHue !== null && f.signatureHue !== null,
+    `ground ${f.groundHue}, accent ${f.accentHue}, signature ${f.signatureHue}`)
+  line('and it agrees with the CLI, which used to compute them itself',
+    f.groundHue === 44 && f.accentHue === 4 && f.signatureHue === 205,
+    `got ${f.groundHue}, ${f.accentHue}, ${f.signatureHue}`)
+  line('a colour that was never measured still gives null, rather than a made-up hue',
+    fingerprintOf({ ...raw, signatureColor: undefined }).signatureHue === null)
+  line('and a grey has no hue, so two builds are not vetoed for both using grey',
+    fingerprintOf({ ...raw, accentColor: 'rgb(128, 128, 128)' }).accentHue === null)
+
+  /* The consequence, not just the field: a fingerprint built by any caller can now be judged
+     against the hard-coded recipe. With null hues the colour rules could not fire at all. */
+  const v = judge({ fingerprint: fingerprintOf({ ...raw, luminance: 0.95, groundColor: SEED_RECIPE.groundColor ?? raw.groundColor }), ledger: [], selfId: 'x' })
+  line('judge() runs on a fingerprint no CLI prepared', v && typeof v === 'object',
+    JSON.stringify(v))
+}
+
 for (const line of results) console.log(line)
 console.log(failed ? `\n${failed} case(s) disagreed with the expected exit\n` : `\nall ${results.length} cases agreed\n`)
 if (existsSync(tmp)) console.log(`working files: ${tmp}`)
