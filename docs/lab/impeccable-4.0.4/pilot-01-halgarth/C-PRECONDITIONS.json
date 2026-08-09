@@ -1,0 +1,16 @@
+{
+  "pin": "9a949fb543d44cfb406f61bcab99d95d7f12cf1d",
+  "pinVerified": {
+    "skill/scripts/concept-seed.mjs": "78c13ebc98d2e06d2c6e7017e326c54eb6a8ba97",
+    "skill/reference/new-work.md": "4a2265488295c94a7de1a7326047518646897387"
+  },
+  "scope": "direction",
+  "header": "DIRECTION CONCEPT SEED (key: 17ccb1bc; mode: persuade; source: api; approved pool: 94ff10ff20de; 281/531 human-approved; rerun with --scope direction --mode persuade --from 17ccb1bc --candidate-count 7 to reproduce this roll against this catalog revision)",
+  "source": "api",
+  "approvedPool": "281/531 human-approved",
+  "challengersDealt": 6,
+  "assignedIndex": 7,
+  "degraded": false,
+  "seedSha256": "f5ba663e9962ca0ca1c803dae4b6841be74c18fd9d350cc2c58ca0561ce2ee64",
+  "exitNote": "the process threw the known libuv shutdown assertion after stdout had flushed; the capture is complete and was not re-rolled"
+}

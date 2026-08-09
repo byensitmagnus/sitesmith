@@ -1,0 +1,15 @@
+{
+  "sealedBefore": "the judge call",
+  "rule": "sha256 of the three canonical hashes joined by colons, first four bytes, modulo six, over the six permutations of A B C in that order",
+  "permIndex": 4,
+  "candidateToArm": {
+    "candidate-1": "C",
+    "candidate-2": "A",
+    "candidate-3": "B"
+  },
+  "armMeaning": {
+    "A": "current SiteSmith, no external assignment",
+    "B": "same SiteSmith with assign.mjs",
+    "C": "pinned Impeccable 4.0.4"
+  }
+}

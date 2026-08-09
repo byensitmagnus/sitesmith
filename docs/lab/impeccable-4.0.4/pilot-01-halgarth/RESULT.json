@@ -1,0 +1,34 @@
+{
+  "instrument": "VALID",
+  "hashConsistencyCheck": "the file each candidate number points at is the canonical artifact the sealed mapping names",
+  "winner": "A",
+  "meaning": "current SiteSmith, no external assignment",
+  "distance": "CLOSE",
+  "confidence": "MEDIUM",
+  "verbosityInfluence": "NO",
+  "candidateToArm": {
+    "candidate-1": "C",
+    "candidate-2": "A",
+    "candidate-3": "B"
+  },
+  "perArm": {
+    "C": {
+      "candidate": 1,
+      "strongest": "The Witness Rule instruments the three numeric fields that actually gate a booking with a real limit-scale built as progressive enhancement (native <meter>/CSS first), so self-triage lives at the exact point of the form, not just as hero decoration — the only signature element of the three that is load-bearing on the form itself.",
+      "weakest": "Its own honest-risk section admits the core visual register (blueprint blue, scribed rules, stamped marks) is a smaller step from generic industrial-B2B cliche than it first appears — exactly the failure mode the brief's ban on stock photography and trust badges was written to avoid."
+    },
+    "A": {
+      "candidate": 2,
+      "strongest": "The thesis is the tightest possible restatement of the brief's own stated reason for the page to exist, and the design shows it has internalised the brief's constraints, not just its content, by explicitly rejecting a plausible move (a numbered 1-2-3 process claim) because it would overstate what the Facts license.",
+      "weakest": "The full qualitative refusal list, including the ATEX criterion that is one of only two refusal scenarios the brief actually models, is missing from the hero; a reader out of scope on a non-numeric ground has to scroll past pricing and turnaround to find out, and the direction's own biggest named risk (the merged capability/price table reading cramped) lands specifically at the narrow phone width that is the brief's stated primary reading context."
+    },
+    "B": {
+      "candidate": 3,
+      "strongest": "The signature device (the working-day tally) is the most elegant, lowest-risk piece of engineering in the packet: a static, JS-free list of tiles correct on first paint that structurally cannot drift from the brief's fixed reference dates, matching the 'no clock' premise more completely than either competitor.",
+      "weakest": "The whole first viewport is spent on turnaround timing, the least urgent of the brief's three named questions, so a visitor cannot learn the single highest-stakes fact, whether their rotor is even in scope, without scrolling past the hero — working against the brief's own framing of the phone call and refusal as the actual problem the page exists to solve."
+    }
+  },
+  "modelCallsUsedInPilot": 4,
+  "rationale": "Candidate 2 wins because its thesis is the most direct translation of the brief's own named problem: the site exists to stop the wasted fifteen-minute refusal call, and \"a weighbridge, not a shopfront\" states that job as the single controlling idea rather than a design mood. Its subject grounding is the deepest of the three: the noun list is pulled straight from the Facts' own vocabulary, \"operating envelope\" is the correct engineering term for exactly the numbers it puts in the hero, and the weld-heat-tint accent colour is defended with a genuinely business-specific reason (\"this colour exists on this page because Halgarth welds\"). It also shows the most mature editorial judgment in the packet: it explicitly considers and rejects numbering the workshop's steps as a claimed 1-2-3 process, because that would read as a promise the brief's own \"never claim\" list does not license — evidence of reading the constraints, not just the copy. The refusals-and-unknowns panel, placed as the last check immediately before the form, does the job a lesser trade site would spend on testimonials and trust badges, built almost verbatim from the Facts. Its usability spec (16px inputs, 44px targets, native disabled/autofocus named explicitly) hands a builder decisions they would otherwise invent themselves. Candidate 1 is a genuinely close second: the Witness Rule ties self-triage directly to the three numeric fields on the form itself, its hero is the most complete single screen because it fits both modelled refusal cases (mass and ATEX) above the fold, and its colour/type decisions are the most rigorously specified. It loses narrowly because its own honest-risk section admits what I independently flagged: a blueprint-blue, scribed-and-stamped register is a smaller step from generic industrial-B2B cliche than it first appears, and its controlling idea (true versus not true, shown not asserted) answers the brief's tone more than its single named user problem. Candidate 3 is clearly third. Its day-tally is the cleverest, lowest-risk single device in the packet, a static row of tiles embodying the brief's working-day arithmetic without ever computing a live date. But the direction spends the entire first viewport on turnaround timing, the third and least urgent of the brief's three named questions, while the most decision-critical fact — is this rotor even in scope — does not appear until a scroll down, a real mismatch against a brief whose \"problem the page must solve\" is explicitly about refusal, not the return date.",
+  "verbosityExplanation": "Candidate 1 was the longest and most exhaustively documented entry (computed contrast ratios for eight colours, exact clamp() type scales, four separately named risks), and I noticed myself being impressed by that thoroughness partway through, so I deliberately checked whether Candidates 2 and 3 were making equally substantive decisions in fewer words. They were: comparable colour-accessibility reasoning, comparable breakpoint and component specs, just stated more economically. The candidate I marked weakest, Candidate 3, was also the shortest, but the reason I ranked it third is a structural choice (an entire hero spent on turnaround instead of scope) stated with complete clarity regardless of length, not a gap I had to infer from missing detail. The candidate I selected, Candidate 2, is the middle-length entry, and it won over the longest one — evidence against length driving the outcome."
+}

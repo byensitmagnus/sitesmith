@@ -1,0 +1,86 @@
+{
+  "method": "deterministic block parse, one statement per decision, no model",
+  "sections": [
+    "Thesis",
+    "Subject grounding",
+    "First viewport",
+    "Visual and material system",
+    "Typography strategy",
+    "Composition and layout",
+    "Signature element",
+    "Visitor path",
+    "Honest risk"
+  ],
+  "arms": [
+    {
+      "arm": "A",
+      "sha256": "f320d168f58d6233e6e193147a9c9ad0fafc1acbc74fcfdc3b2c0d16e123145a",
+      "words": 2534,
+      "perSection": {
+        "Thesis": 37,
+        "Subject grounding": 194,
+        "First viewport": 230,
+        "Visual and material system": 364,
+        "Typography strategy": 192,
+        "Composition and layout": 625,
+        "Signature element": 271,
+        "Visitor path": 404,
+        "Honest risk": 188
+      },
+      "statementsCut": 1,
+      "blocksIn": {
+        "heading": 9,
+        "paragraph": 20,
+        "list": 4,
+        "sketch": 1
+      }
+    },
+    {
+      "arm": "B",
+      "sha256": "f514f5f5889ad1a7ad1b409ee93ad75ffdb28df5b93961f85b98f3f870423068",
+      "words": 2438,
+      "perSection": {
+        "Thesis": 95,
+        "Subject grounding": 205,
+        "First viewport": 299,
+        "Visual and material system": 348,
+        "Typography strategy": 252,
+        "Composition and layout": 504,
+        "Signature element": 276,
+        "Visitor path": 325,
+        "Honest risk": 105
+      },
+      "statementsCut": 4,
+      "blocksIn": {
+        "heading": 9,
+        "paragraph": 21,
+        "list": 3,
+        "sketch": 1
+      }
+    },
+    {
+      "arm": "C",
+      "sha256": "61ac9b7594c30e64528b3e47d3f689b87d7eb5acd1d1f52c8d0212d56a59b401",
+      "words": 3271,
+      "perSection": {
+        "Thesis": 126,
+        "Subject grounding": 214,
+        "First viewport": 493,
+        "Visual and material system": 590,
+        "Typography strategy": 380,
+        "Composition and layout": 386,
+        "Signature element": 328,
+        "Visitor path": 379,
+        "Honest risk": 346
+      },
+      "statementsCut": 4,
+      "blocksIn": {
+        "heading": 9,
+        "paragraph": 17,
+        "list": 7,
+        "sketch": 3,
+        "table": 1
+      }
+    }
+  ]
+}

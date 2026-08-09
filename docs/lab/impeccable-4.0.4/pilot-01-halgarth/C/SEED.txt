@@ -1,0 +1,112 @@
+DIRECTION CONCEPT SEED (key: 17ccb1bc; mode: persuade; source: api; approved pool: 94ff10ff20de; 281/531 human-approved; rerun with --scope direction --mode persuade --from 17ccb1bc --candidate-count 7 to reproduce this roll against this catalog revision)
+ASSIGNED INDEX: 7
+  After ordering the grounded directions by resonance, build candidate
+  7 of your own grounded list; the assignment never points at a
+  challenger. The assignment is the roll, not a suggestion: your top-ranked
+  direction is what every run would ship, so the script decides which grounded
+  direction gets built. Each direction joins a durable visual system to a
+  concrete expression for the requested first surface, decided as one. It must
+  survive the current task plus navigation, quiet and dense content,
+  interaction and state, and a substantially different future surface. In an
+  attended run, present the assigned direction fully committed and offer
+  re-roll; never present a ranked lineup to choose from. Re-roll yourself only
+  on named factual grounds, when the assignment cannot carry the product's
+  truth or task; taste is never grounds.
+  The assignment exists to refuse the model's ranking rut, never to outrank
+  the user or the brief. Never expose assignment metadata in user-facing labels.
+CHALLENGERS:
+  1. an eBoy pixorama metropolis, where full-saturation RGB isometric blocks build a zoomable city and every object shares one hard pixel grid
+     SOURCE ID: eboy-pixorama-metropolis
+     CREATIVE SPARK: A candy-red crane swings over a cyan office block; three pixel citizens queue for a hotdog cart, and zooming in reveals a robot watering plants on the roof.
+     SYSTEM GRAMMAR:
+       - Palette/material: full-saturation RGB primaries with zero anti-aliasing; the hard pixel is the only unit and dithering is deliberate
+       - Type/composition: blocky pixel type sharing the object grid, isometric density arranged in readable city blocks, jokes hidden at deeper zoom levels
+       - Topology/navigation: Move by block, by zoom level, and by hidden detail.
+       - Controls/state: Zoom, hover, and discover; hover pops a label without breaking the grid.
+       - Responsive/motion: Zoom steps in whole pixel multiples; small screens show fewer blocks at the same crisp scale, never scaled-down mush.
+     WEB LEVERAGE: Integer-scaled pixel rendering with a stepped zoom stage and discoverable hover labels
+     QUALITY BAR: board https://impeccable.style/worlds/cards/eboy-pixorama-metropolis.webp · hero https://impeccable.style/worlds/cards/eboy-pixorama-metropolis-hero.webp
+  2. a backyard loteria night, a deck of numbered icon cards in flat carnival color, each image named and numbered in the same breath, players marking their tablas with dried beans while the caller sings riddles instead of names
+     SOURCE ID: vernacular-ephemera-loteria-tabla-night
+     CREATIVE SPARK: the caller sings the riddle before the name, and half the table laughs and reaches for beans while you scan your tabla for the mermaid, one row short of shouting
+     SYSTEM GRAMMAR:
+       - Palette/material: sun yellow, rose, and turquoise flat fields behind each icon, heavy black contour ink, carnival red card borders, a dried bean's brown as the mark of progress
+       - Type/composition: one icon per card, centered, named beneath in spaced caps with its number, tablas as four-by-four grids of the same icons, no image ever cropped
+       - Topology/navigation: the deck is the sequence and the tabla is the map; the caller's drawn card is always the current item, and your grid fills in whatever order fate deals
+       - Controls/state: a called card flips face-up for everyone, placing a bean commits a match, a completed row shouts itself, and unclaimed matches sit as quiet regret between rounds
+       - Responsive/motion: tablas stay square and shrink whole on phones with the called card pinned above; motion is a card flip and a bean drop
+     WEB LEVERAGE: multiplayer card calls sync over websocket while each tabla remains a keyboard-operable grid with live-region announcements
+     QUALITY BAR: board https://impeccable.style/worlds/cards/vernacular-ephemera-loteria-tabla-night.webp · hero https://impeccable.style/worlds/cards/vernacular-ephemera-loteria-tabla-night-hero.webp
+  3. a sleeping city fold, where streets crease into blankets, towers become bedposts, and neighborhoods dream different weather beneath one night
+     SOURCE ID: dream-surreal-impossible-worlds-sleeping-city-fold
+     CREATIVE SPARK: At midnight an avenue rises like a quilt seam, apartment lights become embroidered stars, and a whole district folds gently over a park dreaming tropical rain.
+     SYSTEM GRAMMAR:
+       - Palette/material: night navy city as ground, window lights as embroidered gold stars, quilt seams in pale thread white, each dreaming district tinted its own weather hue
+       - Type/composition: soft rounded caps for district names stitched along seam lines, the map grid relaxing into blanket folds, morning notes set in a plain waking sans
+       - Topology/navigation: Move through waking streets, folded neighborhoods, shared dream edges, and morning return.
+       - Controls/state: Tuck a district, open its dream, connect two sleeping weather patterns, and unfold at dawn.
+       - Responsive/motion: Use layered city quilts on phones and substitute crossfades with static night and morning plates.
+     WEB LEVERAGE: Deformable map geometry, local time, and collaborative dream fragments create a nightly city that remains spatially recognizable.
+     QUALITY BAR: board https://impeccable.style/worlds/cards/dream-surreal-impossible-worlds-sleeping-city-fold.webp · hero https://impeccable.style/worlds/cards/dream-surreal-impossible-worlds-sleeping-city-fold-hero.webp
+  4. a single square of vermilion washi becoming an orizuru crane through thirty-two deliberate folds, where one uncut sheet passes from flat geometry to beak, wings, hollow body, and a balanced standing silhouette
+     SOURCE ID: paper-folds-pleats-deployable-orizuru-crane-sequence
+     CREATIVE SPARK: The red square closes into a small diamond, opens into a long-necked bird, and with one final pull spreads two crisp wings that still carry every earlier crease.
+     SYSTEM GRAMMAR:
+       - Palette/material: vermilion washi as ground with visible kozo fiber, crease lines in faded fold-white, one gold dot marking the active step, notes in sumi black ink
+       - Type/composition: quiet humanist sans beside kanji step names, folds numbered one to thirty-two in a strict margin column, diagrams square and centered like the uncut sheet
+       - Topology/navigation: Connect face, edge, mountain crease, valley crease, preliminary base, bird base, flap, and finished crane as one continuous sheet.
+       - Controls/state: Fold, unfold, rotate, reverse, and replay with flat, creased, collapsed, based, locked, finished, and recoverable states.
+       - Responsive/motion: Pair the active crease pattern with one authored spatial view and provide discrete fold states under
+     WEB LEVERAGE: Constraint-aware direct manipulation can prevent impossible folds, synchronize the crease pattern with the spatial crane, and deep-link any recoverable step for teaching or return.
+     QUALITY BAR: board https://impeccable.style/worlds/cards/paper-folds-pleats-deployable-orizuru-crane-sequence.webp · hero https://impeccable.style/worlds/cards/paper-folds-pleats-deployable-orizuru-crane-sequence-hero.webp
+  5. a small aircraft's night instrument six-pack, where six luminous gauges hold a pilot's trust through cloud with nothing outside the glass
+     SOURCE ID: signals-instruments-night-flight-six-pack
+     CREATIVE SPARK: Outside is ink; inside, six calm dials agree with each other, and the practiced eye sweeps them in a quiet ritual of cross-checks.
+     SYSTEM GRAMMAR:
+       - Palette/material: matte black panel ground, instrument faces near-black with luminous white markings, radium-green glow for needles; amber and red lamps only for caution
+       - Type/composition: white aviation numerals and tick scales on round dials, terse placard caps beneath each gauge; two ranked rows of three set the fixed composition
+       - Topology/navigation: a fixed constellation of instruments, each owning one truth; the cross-check sweep is the reading order.
+       - Controls/state: deviations tilt needles before alarms; every gauge shows trend as well as value.
+       - Responsive/motion: the six-pack stacks by criticality on phones; needle motion is damped and physical, never snapped.
+     WEB LEVERAGE: Real-time data binds to SVG gauges with damped spring physics and a screen-reader flight summary.
+     QUALITY BAR: board https://impeccable.style/worlds/cards/signals-instruments-night-flight-six-pack.webp · hero https://impeccable.style/worlds/cards/signals-instruments-night-flight-six-pack-hero.webp
+  6. a dial-up bulletin board at 2 a.m., where ANSI title screens in sixteen colors, block-character art, and one phone line make a neighborhood out of text
+     SOURCE ID: medium-native-ansi-bbs-nightboard
+     CREATIVE SPARK: The title screen pours in line by line at modem speed, cyan on black, and being the only caller connected feels like owning the night.
+     SYSTEM GRAMMAR:
+       - Palette/material: sixteen ANSI colors on terminal black, cyan and magenta block art as chrome, blinking white on blue reserved for new mail and live presence
+       - Type/composition: CP437 block glyphs and box-drawing rules composing all chrome on an 80 by 25 cell grid, centered title art over numbered menu lines
+       - Topology/navigation: everything is a text screen with numbered exits; the character grid is the only geometry.
+       - Controls/state: presence is scarce and precious; who is online, new posts, and mail land as textmode events.
+       - Responsive/motion: the grid rescales by character cell; the pour-in reveal respects
+     WEB LEVERAGE: A true character-grid renderer with line-by-line streamed arrival and complete keyboard operation.
+     QUALITY BAR: board https://impeccable.style/worlds/cards/medium-native-ansi-bbs-nightboard.webp · hero https://impeccable.style/worlds/cards/medium-native-ansi-bbs-nightboard-hero.webp
+Fuse each challenger before judging it: the challenger supplies the form
+  and its system grammar, the product supplies every fact, and clarity wins
+  conflicts. Weigh the fused result against the assigned direction on exactly
+  two axes, audience identification and product clarity. Losing to strong
+  grounded material is a valid outcome; beating a thin or tool-monoculture
+  list is the point. A fused challenger that wins both axes becomes the build.
+When you can view images, open the QUALITY BAR board and hero for any
+challenger you weigh seriously and for the world you build. They exist as a
+craft bar, the finish level and commitment the build is expected to reach,
+never as a mockup to copy; your surface serves this product, not that render.
+PRODUCT.md and explicit incumbent brand commitments constrain every direction.
+The seed never chooses exact colors, fonts, tokens, or a user preference, and
+it never permits the world and first surface to be selected independently.
+The CREATIVE SPARK is a complete visual system, not a theme or decorative
+reference. Translate every supplied system rule into the product: palette and
+material, type and composition, topology, controls and states, and adaptation.
+Keep the source's visible character, scale, rhythm, and interaction instead of
+reducing vivid grammar to generic nouns. When the source is already a credible
+interface language, commit to it across navigation, content, controls, and
+states. Otherwise keep a literal carrier only when it becomes functional.
+Ambitious motion, spatial media, or interaction is welcome when it strengthens
+the product without weakening semantics, performance, or fallback behavior.
+TELEMETRY: if the resolved direction uses one of these challengers, rerun
+  this script once with --chosen <challenger-id> --from 17ccb1bc --scope direction --mode persuade
+  after resolution. The ping is anonymous (chosen id only) and is skipped
+  automatically when DO_NOT_TRACK or IMPECCABLE_NO_TELEMETRY is set.
+A user- or brief-pinned decision beats the roll, always.
+ASSIGNED INDEX (restated for truncated readers): 7. Build candidate
+7 of your own grounded list; seed key 17ccb1bc.

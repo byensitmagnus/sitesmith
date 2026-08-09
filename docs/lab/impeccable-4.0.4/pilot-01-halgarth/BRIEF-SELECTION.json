@@ -1,0 +1,25 @@
+{
+  "rule": "sha256(poolSha256).readUInt32BE(0) % 16, over the included slugs sorted alphabetically",
+  "poolSha256": "02aefec56f85077d39727b2f110eb19ea259b44001fd039ea7cb8cf71aaed9cb",
+  "candidates": [
+    "bjerrea-vandlobslaug",
+    "bracken-hill-marks-bench",
+    "bredo-rebslageri",
+    "damgaard-estrik",
+    "halgarth-rotor-balancing",
+    "halloran-machine-spares",
+    "halvard-reedworks",
+    "hesgin-soil-office",
+    "hvalsholm-tagesignalarkiv",
+    "kilnbrook-floor-maltings",
+    "kilvert-lock-room",
+    "marsk-stordyrpraksis",
+    "nettleford-harbour-trust",
+    "ordway-farriery",
+    "stannard-pattern-foundry",
+    "stenrev-lodsservice"
+  ],
+  "index": 4,
+  "brief": "halgarth-rotor-balancing",
+  "decidedBefore": "any generation, any model call"
+}

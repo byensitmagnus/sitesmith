@@ -1,0 +1,23 @@
+{
+  "frozenBefore": "the judge call",
+  "instrument": {
+    "canonical.mjs": "984e2124ed64170d2396b3d86386a45e5c5aa525f6eb792ebb7e4408d714f57d",
+    "leakage.mjs": "1b0bd346372f5cf1d02f173782a35ef5e878b5cf6e41f3e05781a5adda4557b9",
+    "fidelity.mjs": "5509d97d64d36b28459ef3384a93ba8b2b655ad7811d17e1281a60c5deb89339",
+    "VALIDATION.md": "040ef0442ea8e8c7960539b22004f4a5f267932c3580aa8fc29227ea1155a715",
+    "canonical/A.md": "f320d168f58d6233e6e193147a9c9ad0fafc1acbc74fcfdc3b2c0d16e123145a",
+    "canonical/B.md": "f514f5f5889ad1a7ad1b409ee93ad75ffdb28df5b93961f85b98f3f870423068",
+    "canonical/C.md": "61ac9b7594c30e64528b3e47d3f689b87d7eb5acd1d1f52c8d0212d56a59b401"
+  },
+  "worktree": {
+    "branch": "lab/beat-impeccable-4.0.4",
+    "head": "42af8795b14d5652780da3d321f12f9c9d3c7664",
+    "dirty": "?? .kimi-code/",
+    "impeccablePin": "9a949fb543d44cfb406f61bcab99d95d7f12cf1d"
+  },
+  "judgePacket": {
+    "candidate-1.md": "61ac9b7594c30e64528b3e47d3f689b87d7eb5acd1d1f52c8d0212d56a59b401",
+    "candidate-2.md": "f320d168f58d6233e6e193147a9c9ad0fafc1acbc74fcfdc3b2c0d16e123145a",
+    "candidate-3.md": "f514f5f5889ad1a7ad1b409ee93ad75ffdb28df5b93961f85b98f3f870423068"
+  }
+}

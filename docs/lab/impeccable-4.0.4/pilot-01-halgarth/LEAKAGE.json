@@ -1,0 +1,121 @@
+{
+  "verdict": "no tell found",
+  "namedTells": [],
+  "structuralTells": [],
+  "structure": {
+    "markdown table row": {
+      "A": 0,
+      "B": 0,
+      "C": 0
+    },
+    "bold span": {
+      "A": 0,
+      "B": 0,
+      "C": 0
+    },
+    "italic span": {
+      "A": 0,
+      "B": 0,
+      "C": 0
+    },
+    "blockquote": {
+      "A": 0,
+      "B": 0,
+      "C": 0
+    },
+    "bullet item": {
+      "A": 0,
+      "B": 0,
+      "C": 0
+    },
+    "numbered item": {
+      "A": 0,
+      "B": 0,
+      "C": 0
+    },
+    "heading": {
+      "A": 9,
+      "B": 9,
+      "C": 9
+    },
+    "code span": {
+      "A": 0,
+      "B": 0,
+      "C": 0
+    },
+    "em or en dash": {
+      "A": 0,
+      "B": 0,
+      "C": 0
+    }
+  },
+  "words": {
+    "A": 2534,
+    "B": 2438,
+    "C": 3271
+  },
+  "lengthSpread": 0.342,
+  "perSection": {
+    "Thesis": {
+      "A": 39,
+      "B": 97,
+      "C": 128
+    },
+    "Subject grounding": {
+      "A": 197,
+      "B": 208,
+      "C": 217
+    },
+    "First viewport": {
+      "A": 233,
+      "B": 302,
+      "C": 496
+    },
+    "Visual and material system": {
+      "A": 369,
+      "B": 353,
+      "C": 595
+    },
+    "Typography strategy": {
+      "A": 195,
+      "B": 255,
+      "C": 383
+    },
+    "Composition and layout": {
+      "A": 629,
+      "B": 508,
+      "C": 390
+    },
+    "Signature element": {
+      "A": 274,
+      "B": 279,
+      "C": 331
+    },
+    "Visitor path": {
+      "A": 407,
+      "B": 328,
+      "C": 382
+    },
+    "Honest risk": {
+      "A": 191,
+      "B": 108,
+      "C": 349
+    }
+  },
+  "longestPerSection": {
+    "Thesis": "C",
+    "Subject grounding": "C",
+    "First viewport": "C",
+    "Visual and material system": "C",
+    "Typography strategy": "C",
+    "Composition and layout": "A",
+    "Signature element": "C",
+    "Visitor path": "A",
+    "Honest risk": "C"
+  },
+  "sectionsLedBy": {
+    "A": 2,
+    "B": 0,
+    "C": 7
+  }
+}

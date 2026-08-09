@@ -1,0 +1,29 @@
+{
+  "sealed": "before normalisation",
+  "directions": [
+    {
+      "arm": "A",
+      "path": "A/DIRECTION.md",
+      "sha256": "c72d9d5fc3d84555bab833a82a6420cc2b3c9d69e04c3be9466ad7b685540b1f",
+      "lines": 307,
+      "words": 2658,
+      "headings": 9
+    },
+    {
+      "arm": "B",
+      "path": "B/DIRECTION.md",
+      "sha256": "503cd3c1915eca879483c88d3de6c037b8c9ea5e7edc9cf28dc1e6344b32b839",
+      "lines": 262,
+      "words": 2648,
+      "headings": 9
+    },
+    {
+      "arm": "C",
+      "path": "C/DIRECTION.md",
+      "sha256": "156b498027cda0de33293af5ebf7a17191b0c82747b2c580c658a80766027ae6",
+      "lines": 341,
+      "words": 3550,
+      "headings": 9
+    }
+  ]
+}
