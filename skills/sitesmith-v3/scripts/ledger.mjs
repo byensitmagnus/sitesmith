@@ -157,7 +157,19 @@ export function parseDirection(md) {
       argument: runnerUpBody.replace(/^\s*For:\s*\d+.*$/m, '').trim(),
     },
     briefPinned: pinned ? pinned[1].trim() : null,
+    /* The same shape gate.mjs reads, deliberately. Two parsers disagreeing about which
+       element the build was designed around is worse than one being wrong, because the two
+       reports would then contradict each other about the same page. */
+    signatureSelector: selectorIn(body('Signature')),
   }
+}
+
+/* A signature has to name something a query can find; prose alone leaves a measurement
+   guessing, and guessing is deciding. Backticks or a parenthesised selector, matching
+   gate.mjs's `signatureSelector`. */
+export function selectorIn(text) {
+  const m = String(text ?? '').match(/`([^`]+)`|\(([.#[][^)]+)\)/)
+  return m ? (m[1] ?? m[2]).trim() : null
 }
 
 function parseBuiltLine(line) {
@@ -560,16 +572,32 @@ export function judge({ fingerprint, ledger, selfId }) {
 
 /* ── measuring a built page ────────────────────────────────────────────── */
 
-const requireFromCwd = createRequire(join(process.cwd(), 'package.json'))
+/* Playwright lives in the project being measured, not next to this script. Try the plain
+   specifier, then the working directory, then SITESMITH_DEPS_DIR. The third was missing here
+   while the rest of the package honoured it, so measuring a project whose dependencies live
+   elsewhere threw MODULE_NOT_FOUND and the run withheld a verdict it could have produced. */
+const resolvers = [
+  createRequire(join(process.cwd(), 'package.json')),
+  ...(process.env.SITESMITH_DEPS_DIR
+    ? [createRequire(join(resolve(process.env.SITESMITH_DEPS_DIR), '..', 'package.json'))]
+    : []),
+]
 async function loadPlaywright() {
   try {
     return await import('playwright')
-  } catch {
-    return await import(pathToFileURL(requireFromCwd.resolve('playwright')).href)
+  } catch { /* not resolvable from this script; try the project */ }
+  let last = null
+  for (const req of resolvers) {
+    try { return await import(pathToFileURL(req.resolve('playwright')).href) } catch (e) { last = e }
   }
+  throw last ?? new Error('playwright is not resolvable')
 }
 
-export async function measure(target) {
+/* `signature` is the selector from the direction record. Without it the signature colour
+   cannot be measured at all, which is the state this function shipped in: the veto existed,
+   the measurement did not, and every run recorded signatureHue as null while the report
+   listed the check as having run. A caller that has no record still gets everything else. */
+export async function measure(target, { signature = null } = {}) {
   const url = /^[a-z]+:\/\//i.test(target) ? target : pathToFileURL(resolve(target)).href
   const pw = await loadPlaywright()
   const chromium = pw.chromium ?? pw.default?.chromium
@@ -577,7 +605,7 @@ export async function measure(target) {
   const page = await browser.newPage({ viewport: { width: 1440, height: 900 } })
   try {
     await page.goto(url, { waitUntil: 'networkidle' })
-    return await page.evaluate(() => {
+    return await page.evaluate((SIG) => {
       const W = 1440
       const H = 900
       const lum = (s) => {
@@ -628,10 +656,36 @@ export async function measure(target) {
           if (v > 0.35 && v > best) { best = v; accent = c }
         }
       }
+      /* The signature's own colour, taken from the element the record names. Whichever of
+         its matches paints the most of the first screen speaks for it, so a signature built
+         from several parts reports its dominant paint rather than its first node. A
+         transparent element is wearing its text colour, which is what a reader sees. */
+      const signatureColor = (() => {
+        if (!SIG) return null
+        let els
+        try { els = [...document.querySelectorAll(SIG)] } catch { return null }
+        let colour = null, widest = -1
+        for (const el of els) {
+          const a = area(el.getBoundingClientRect())
+          if (a <= widest) continue
+          const s = getComputedStyle(el)
+          const painted = TRANSPARENT.test(s.backgroundColor) ? s.color : s.backgroundColor
+          if (!painted) continue
+          widest = a
+          colour = painted
+        }
+        return colour
+      })()
+
       return {
         luminance: Number(lum(paintedGround).toFixed(3)),
         groundColor: paintedGround,
         accentColor: accent,
+        signatureColor,
+        /* Told apart on purpose. A selector that matched nothing and a record with no
+           selector both produce a null colour, and only one of them is a defect. */
+        signatureSelector: SIG ?? null,
+        signatureMatches: SIG ? (() => { try { return document.querySelectorAll(SIG).length } catch { return 0 } })() : null,
         displayFamily: (h1 ? getComputedStyle(h1).fontFamily : bodyStyle.fontFamily)
           .split(',')[0].replace(/["']/g, '').trim(),
         assetShare: Number((assets.reduce((a, el) => a + area(el.getBoundingClientRect()), 0) / (W * H) * 100).toFixed(2)),
@@ -657,7 +711,7 @@ export async function measure(target) {
             && el.getBoundingClientRect().height > 60
         }).length,
       }
-    })
+    }, signature)
   } finally {
     await browser.close()
   }
@@ -733,7 +787,7 @@ if (!invokedDirectly) { /* imported for its parts; nothing runs */ } else {
     return { path, record: parseDirection(await readFile(path, 'utf8')) }
   }
 
-  const obtainRaw = async (dir) => {
+  const obtainRaw = async (dir, record = null) => {
     const fromFile = flag('--measurement')
     if (fromFile) {
       if (!existsSync(fromFile)) withheld(`the measurement file ${fromFile} does not exist`)
@@ -745,7 +799,10 @@ if (!invokedDirectly) { /* imported for its parts; nothing runs */ } else {
     const page = flag('--page') ?? join(dir, 'index.html')
     if (!/^[a-z]+:\/\//i.test(page) && !existsSync(page)) withheld(`there is no built page at ${page}`)
     try {
-      return { raw: await measure(page), source: `rendered ${page} at 1440x900` }
+      return {
+        raw: await measure(page, { signature: record?.signatureSelector ?? null }),
+        source: `rendered ${page} at 1440x900`,
+      }
     } catch (error) {
       withheld(`the page could not be rendered here: ${error.message.split('\n')[0]}`)
     }
@@ -842,7 +899,7 @@ if (!invokedDirectly) { /* imported for its parts; nothing runs */ } else {
        and the measurement never was. A check wired to nothing is worse than no check: it
        appears in the report as having run. The three hues were computed here, which meant
        only this call site got them; they are computed inside fingerprintOf now. */
-    const { raw, source } = await obtainRaw(dir)
+    const { raw, source } = await obtainRaw(dir, record)
     const fingerprint = fingerprintOf(raw)
 
     let ledger
