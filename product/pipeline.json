@@ -280,6 +280,22 @@
         ".sitesmith/evidence/inspection/"
       ],
       "agentThenDoes": "changes only what redesign.md permits, against the baseline inspect wrote"
+    },
+    {
+      "id": "release",
+      "does": "runs",
+      "command": "sitesmith release [<target>] [--no-commit]",
+      "module": "commands.mjs#release",
+      "runs": [
+        "scripts/verify.mjs",
+        "scripts/journey.mjs",
+        "scripts/contract.mjs check",
+        "scripts/gate.mjs",
+        "scripts/ledger.mjs commit"
+      ],
+      "why": "The release contract below was declared here and evaluated nowhere. It was prose in a JSON file, and the one thing that most needed it was ledger.mjs commit, which records the version every later build is measured against and would append whatever it was pointed at.",
+      "cannotCheck": "a production build where the stack has one, which cannot be determined from outside the stack. It is named in the output rather than dropped.",
+      "stopsWhen": "the first check that is not clean, before the ledger. A withheld verdict stops it exactly as a defect does: a release nobody could check is not a release."
     }
   ],
   "release": {
@@ -336,7 +352,8 @@
     "redesign": "both",
     "contract": "runs",
     "audit": "runs",
-    "verify": "runs"
+    "verify": "runs",
+    "release": "runs"
   },
   "exitContract": {
     "0": "the step completed and the next step may begin",

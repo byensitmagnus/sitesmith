@@ -129,11 +129,78 @@ try {
   check('the guard commit uses to skip a shape it already holds matches on id and fingerprint',
     dupes.length === 2 && key.length > 0, `${dupes.length} matched, key ${key}`);
 
-  /* commit is a claim that a version ships, and it cannot be tested here: nothing in the
-     architecture can say that a version ships, so there is nothing for a test to observe.
-     The guard was written and it works, and it is not in the tree, because it needs every
-     commit test to carry a full release fixture. The reasoning is in
-     docs/lab/impeccable-4.0.4/D2-NO-SHIP-MOMENT.md and the decision is Magnus's. */
+  /* commit is a claim that a version ships, and until `release` existed nothing could make
+     that claim: the contract in product/pipeline.json was prose in a JSON file, so commit
+     would append whatever it was pointed at. These cases drive the real `release` against
+     stubbed engines and watch what it calls. */
+  console.log('\n  and commit happens only through a release that came back clean\n');
+
+  const releaseScenario = async (exits) => {
+    const dir = await mkdtemp(join(tmpdir(), 'sitesmith-release-'));
+    scratch.push(dir);
+    const skill = join(dir, 'skill', 'scripts');
+    const project = join(dir, 'project');
+    const log = join(dir, 'calls.jsonl');
+    await mkdir(skill, { recursive: true });
+    await mkdir(join(project, '.sitesmith'), { recursive: true });
+    await writeFile(log, '', 'utf8');
+    for (const [name, exit] of Object.entries(exits)) {
+      await writeFile(join(skill, name), spy(log, name, exit), 'utf8');
+    }
+    const runner = join(dir, 'run.mjs');
+    await writeFile(runner, `import { release } from ${JSON.stringify(pathToUrl(join(ROOT, 'skills/sitesmith-v3/commands.mjs')))};
+const code = await release(${JSON.stringify(join(dir, 'skill'))}, ${JSON.stringify(project)}, {});
+console.log('RELEASE_EXIT=' + code);
+`, 'utf8');
+    const r = spawnSync(process.execPath, [runner], { encoding: 'utf8' });
+    const calls = (await readFile(log, 'utf8')).trim().split('\n').filter(Boolean).map((l) => JSON.parse(l));
+    return {
+      calls, out: `${r.stdout}${r.stderr}`,
+      exit: Number((`${r.stdout}`.match(/RELEASE_EXIT=(-?\d+)/) ?? [])[1]),
+    };
+  };
+
+  const ALL_CLEAN = { 'verify.mjs': 0, 'journey.mjs': 0, 'contract.mjs': 0, 'gate.mjs': 0, 'ledger.mjs': 0 };
+
+  const shipped = await releaseScenario(ALL_CLEAN);
+  check('a clean release runs verify, journey, contract and gate',
+    ['verify.mjs', 'journey.mjs', 'contract.mjs', 'gate.mjs'].every((s) => called(shipped.calls, s).length === 1),
+    shipped.calls.map((c) => c.script).join(', '));
+  check('and only then commits to the ledger',
+    called(shipped.calls, 'ledger.mjs')[0]?.argv?.[0] === 'commit',
+    JSON.stringify(called(shipped.calls, 'ledger.mjs').map((c) => c.argv)));
+  check('the commit is the last thing it does',
+    shipped.calls.at(-1)?.script === 'ledger.mjs', shipped.calls.map((c) => c.script).join(' then '));
+  check('and a clean release exits 0', shipped.exit === 0, `exit ${shipped.exit}`);
+
+  /* Each check in turn. A failure anywhere must stop the release before the ledger, because
+     the ledger holds what every later build is measured against. */
+  for (const [name, label] of [['verify.mjs', 'verify'], ['journey.mjs', 'a journey'], ['contract.mjs', 'the contract'], ['gate.mjs', 'the gate']]) {
+    const broken = await releaseScenario({ ...ALL_CLEAN, [name]: 1 });
+    check(`a build where ${label} fails is never committed`,
+      called(broken.calls, 'ledger.mjs').length === 0,
+      `${name} exit 1, yet ${called(broken.calls, 'ledger.mjs').length} ledger call(s): ${broken.calls.map((c) => c.script).join(', ')}`);
+    check(`and release carries ${label}'s exit rather than reporting success`,
+      broken.exit === 1, `exit ${broken.exit}`);
+  }
+
+  /* A withheld verdict refuses exactly as a defect does. A release nobody could check is not
+     a release, and exit 3 must not read as "nothing to report". */
+  const withheld = await releaseScenario({ ...ALL_CLEAN, 'verify.mjs': 3 });
+  check('a withheld verdict stops the release too',
+    called(withheld.calls, 'ledger.mjs').length === 0 && withheld.exit === 3,
+    `exit ${withheld.exit}, ${called(withheld.calls, 'ledger.mjs').length} ledger call(s)`);
+
+  /* The ledger's own veto is the last word: the checks can all be clean and the shape can
+     still be one already recorded. */
+  const repeat = await releaseScenario({ ...ALL_CLEAN, 'ledger.mjs': 1 });
+  check('a repeat is refused even when every release check is clean',
+    repeat.exit === 1 && /repeat/i.test(repeat.out), `exit ${repeat.exit}`);
+
+  /* And the requirement that cannot be checked is named rather than dropped. */
+  check('release says which requirement it cannot check',
+    /not checked/i.test(shipped.out) && /production build/i.test(shipped.out),
+    shipped.out.split('\n').slice(-14).join('\n'));
 } finally {
   for (const d of scratch) if (existsSync(d)) await rm(d, { recursive: true, force: true });
 }

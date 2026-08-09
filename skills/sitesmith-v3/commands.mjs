@@ -528,6 +528,76 @@ export async function verify(root, project, { target }) {
   return runScript(root, 'verify.mjs', target ? [target] : [], project);
 }
 
+/* ── release ─────────────────────────────────────────────────────────────── */
+
+/* `product/pipeline.json` has declared a release contract since v3: six requirements a build
+   has to meet before it ships. It was prose in a JSON file. Nothing evaluated it, and the one
+   thing that most needed it was `ledger.mjs commit`, which records the version every later
+   build is measured against and would append whatever it was pointed at.
+
+   So this command is the declared contract, executed. It runs the checks that can be run,
+   says plainly which requirement it cannot check, and commits to the anti-repeat ledger only
+   when every one of them came back clean. A release nobody could check is not a release, so a
+   withheld verdict refuses exactly as a defect does. */
+const RELEASE_STEPS = [
+  { id: 'verify', script: 'verify.mjs', argv: (t) => (t ? [t] : []), requirement: 'verify passes or names every verdict it withheld' },
+  { id: 'journey', script: 'journey.mjs', argv: () => [], requirement: 'a journey for buy, operate and redesign' },
+  { id: 'contract', script: 'contract.mjs', argv: () => ['check'], requirement: 'a design contract that checks clean' },
+  /* The gate is last of the checks because it aggregates: the critique locked to the render
+     is one of its refusals, so requirement two is answered here rather than by a step of its
+     own. */
+  { id: 'gate', script: 'gate.mjs', argv: () => [], requirement: 'gate clean, and a critique locked to the render that ships' },
+];
+
+export async function release(root, project, { target, commit = true } = {}) {
+  say('\n  release runs the contract product/pipeline.json declares, then records the version');
+  say('  that ships. Nothing is recorded unless every check came back clean.\n');
+
+  const results = [];
+  for (const step of RELEASE_STEPS) {
+    say(`\n  ── ${step.id} ──────────────────────────────────────────────\n`);
+    const code = runScript(root, step.script, step.argv(target), project);
+    results.push({ ...step, code });
+    /* Stop at the first one that is not clean. The later checks would report against a build
+       the earlier one already refused, and a reader would have to work out which list to
+       believe. */
+    if (code !== 0) break;
+  }
+
+  const failed = results.filter((r) => r.code !== 0);
+  say('\n  ── release contract ───────────────────────────────────────\n');
+  for (const r of results) say(`  ${r.code === 0 ? 'clean  ' : `exit ${r.code}`}  ${r.requirement}`);
+  for (const s of RELEASE_STEPS.slice(results.length)) say(`  not run  ${s.requirement}`);
+  /* Named rather than quietly dropped. The declaration has six requirements and this command
+     can answer five: whether a production build exists depends on the stack, and a stack with
+     no build step has nothing to point at. */
+  say('  not checked  a production build where the stack has one, which this command cannot');
+  say('               determine from the outside. Say in the run notes whether it was made.');
+
+  if (failed.length) {
+    say(`\n  ${failed[0].id} did not come back clean, so this is not a release.`);
+    say('  Nothing was recorded in the anti-repeat ledger: it holds the versions that shipped,');
+    say('  and every later build is measured against what is in it.\n');
+    await note(project, { at: 'release', shipped: false, failedAt: failed[0].id, code: failed[0].code });
+    return failed[0].code;
+  }
+
+  if (!commit) {
+    say('\n  every check is clean. --no-commit was given, so nothing was recorded.\n');
+    await note(project, { at: 'release', shipped: false, reason: 'no-commit' });
+    return 0;
+  }
+
+  say('\n  ── recording the version that ships ───────────────────────\n');
+  const code = runScript(root, 'ledger.mjs', ['commit', '.'], project);
+  await note(project, { at: 'release', shipped: code === 0, ledger: code });
+  if (code !== 0) {
+    say('\n  the checks passed and the ledger refused. That is a repeat, not a defect: this');
+    say('  shape has been built before. The ledger names what repeats and stops there.\n');
+  }
+  return code;
+}
+
 /* ── the router ──────────────────────────────────────────────────────────── */
 
 /* `does` is the honest half of this table. A command either performs the work itself or it
@@ -544,6 +614,7 @@ export const COMMANDS = {
   contract: { does: 'runs', args: 'new <surface> | check [--write] | compare --url <url>', what: 'the design contract: colour, type and layout as values a build can be checked against' },
   audit: { does: 'runs', args: '[<url-or-dir>] [--out <dir>]', what: 'inspect the result, then run the gate' },
   verify: { does: 'runs', args: '[<target>]', what: 'render matrix, axe in both schemes, floor measures' },
+  release: { does: 'runs', args: '[<target>] [--no-commit]', what: 'the release contract, then record the version that ships' },
 };
 
 export function usage() {
@@ -588,6 +659,7 @@ export async function route(cmd, { root, argv }) {
     case 'contract': return runScript(root, 'contract.mjs', [...argv, '--to', project], project);
     case 'audit': return audit(root, project, { target: first, out: flag('out') });
     case 'verify': return verify(root, project, { target: first });
+    case 'release': return release(root, project, { target: first, commit: !argv.includes('--no-commit') });
     default: return null;
   }
 }

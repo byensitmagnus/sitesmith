@@ -1,4 +1,8 @@
-# D2, the half that has no home: there is no moment where a version ships
+# D2: there was no moment where a version ships, so one was built
+
+> **Resolved 2026-08-09, option 1.** `sitesmith release` now executes the contract
+> `product/pipeline.json` declares, and `ledger.mjs commit` is reachable only through it.
+> Everything below is the state that led to that decision, kept because it is the reasoning.
 
 Stopped and reported rather than invented, under the standing stop condition about
 architecture changes and about tests needing more than a local deterministic fixture.
@@ -77,3 +81,35 @@ Idempotence is already real and is now tested: the guard `commit` uses to skip a
 already holds matches on both the surface id and the fingerprint key, so a rerun on the same
 build appends nothing and prints `skipped_exists`. That was the one part of the commit
 requirement that did not need a ship moment.
+
+---
+
+## Resolved: `sitesmith release`
+
+Option 1, the one that matches what the product already says about itself.
+
+`release` runs verify, journey, `contract check` and gate in that order, stops at the first
+that is not clean, and commits to the anti-repeat ledger only when all four came back clean.
+The gate is last of the checks because it aggregates: the critique locked to the render is one
+of its refusals, so requirement two is answered there rather than by a step of its own.
+
+Three properties, each tested by invocation rather than by reading the output:
+
+- **A failure anywhere stops the release before the ledger.** Four cases, one per check.
+  Nothing is recorded, and release carries the failing check's exit rather than reporting
+  success.
+- **A withheld verdict stops it exactly as a defect does.** Exit 3 must not read as nothing to
+  report: a release nobody could check is not a release.
+- **The ledger's veto is the last word.** Every check can be clean and the shape can still be
+  one already recorded, and then the release refuses as a repeat rather than a defect.
+
+The requirement that cannot be checked is named in the output rather than dropped: whether a
+production build exists depends on the stack, and a stack with no build step has nothing to
+point at. `release` says so and asks for it in the run notes.
+
+`--no-commit` runs the whole contract and records nothing, for a build that is being checked
+rather than shipped.
+
+Twenty-two checks in `tools/test-ledger-invoked.mjs`. `tools/test-pipeline-drift.mjs` caught
+the new command missing from `product/pipeline.json` before the suite went green, which is the
+drift check doing exactly what it exists for.
