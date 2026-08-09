@@ -634,10 +634,12 @@ export async function measure(target, { signature = null } = {}) {
       const paintedGround = TRANSPARENT.test(bodyStyle.backgroundColor)
         ? getComputedStyle(document.documentElement).backgroundColor
         : bodyStyle.backgroundColor
-      /* The emphatic accent is the most saturated colour the page actually paints with,
-         weighted by how much of the first screen it covers. Text colour counts: an accent
-         carrying the one sentence the page wants read is emphatic whether or not it fills
-         anything. */
+      /* The emphatic accent is the most saturated colour the page actually paints on the
+         first screen. Text colour counts: an accent carrying the one sentence the page wants
+         read is emphatic whether or not it fills anything.
+
+         This comment used to say the result was weighted by coverage. Nothing weighted
+         anything, and a one-pixel span below the fold beat a band filling the first screen. */
       const sat = (c) => {
         const m = String(c).match(/(\d+(?:\.\d+)?)/g)
         if (!m || m.length < 3) return 0
@@ -648,8 +650,20 @@ export async function measure(target, { signature = null } = {}) {
         const l = (mx + mn) / 2
         return l > 0.5 ? (mx - mn) / (2 - mx - mn) : (mx - mn) / (mx + mn)
       }
+      /* An element has to be visible on the first screen to speak for the page. `area()`
+         already clips to it, so an element below the fold, off the side, or hidden has zero
+         and is out. The floor above zero is 16 by 16, the smallest square of colour a reader
+         reads as a colour rather than an artefact, and 16 is the number this package already
+         holds for the smallest legible text.
+
+         That floor is the whole of the fix. Ranking stays on saturation, because an accent
+         carrying the one sentence the page wants read is emphatic without filling anything,
+         and multiplying by coverage would hand the title to whatever wash is largest. The
+         saturation floor below it is what keeps the biggest neutral area out. */
+      const MIN_VISIBLE = 16 * 16
       let accent = null, best = 0
       for (const el of all) {
+        if (area(el.getBoundingClientRect()) < MIN_VISIBLE) continue
         const s = getComputedStyle(el)
         for (const c of [s.backgroundColor, s.color, s.borderTopColor]) {
           const v = sat(c)
