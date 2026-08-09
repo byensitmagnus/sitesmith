@@ -30,8 +30,9 @@ import { existsSync } from 'node:fs'
 import { createHash, randomBytes } from 'node:crypto'
 import { homedir } from 'node:os'
 import { join, dirname, resolve, isAbsolute } from 'node:path'
-import { pathToFileURL } from 'node:url'
+import { pathToFileURL, fileURLToPath } from 'node:url'
 import { createRequire } from 'node:module'
+
 
 export const DEFAULT_LEDGER = join(homedir(), '.sitesmith', 'renders.jsonl')
 
@@ -978,6 +979,11 @@ if (!invokedDirectly) { /* imported for its parts; nothing runs */ } else {
       process.exit(0)
     }
 
+    /* commit records the version that ships, and nothing here proves that the release
+       checks passed for it: a build the gate refuses can still append, and every later
+       build is then measured against a page nobody released. Closing that needs a place in
+       the architecture that can say "this version ships", and there is none. See
+       docs/lab/impeccable-4.0.4/D2-NO-SHIP-MOMENT.md. */
     const entry = {
       v: 1,
       when: new Date().toISOString().slice(0, 10),

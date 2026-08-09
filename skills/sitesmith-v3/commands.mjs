@@ -495,13 +495,32 @@ export async function inspect(root, project, { target, out }) {
 }
 
 export async function audit(root, project, { target, out }) {
-  say('\n  audit reads the built result twice: what is on the page, then what the gate refuses.\n');
+  say('\n  audit reads the built result three times: what is on the page, what the gate refuses,\n  and whether this page repeats one already recorded.\n');
   const dest = out ?? join(statePaths(project).evidence, 'audit');
   let worst = 0;
   if (target) worst = Math.max(worst, runScript(root, 'inspect.mjs', [target, '--out', dest], project));
   say('');
-  worst = Math.max(worst, runScript(root, 'gate.mjs', [], project));
-  await note(project, { at: 'audit', target: target ?? project, out: dest });
+  const gate = runScript(root, 'gate.mjs', [], project);
+  worst = Math.max(worst, gate);
+
+  /* The anti-repeat check, which until now ran in no command and no documented step: the
+     capability was described in the README and reachable only by typing the script name.
+     A veto nobody runs is not a veto.
+
+     It runs after the gate and only when the gate is clean. Not to spare the ledger a look
+     at a broken page, but because the two answer different questions and reading them at
+     once teaches the wrong lesson: the gate says this page has a named defect, the ledger
+     says this page has been made before. A run with both gets a list where the second is
+     noise until the first is fixed. */
+  let ledger = null;
+  if (gate === 0) {
+    say('');
+    ledger = runScript(root, 'ledger.mjs', ['check', '.'], project);
+    worst = Math.max(worst, ledger);
+  } else {
+    say('\n  the anti-repeat check did not run: the gate refused, and a repeat is the second question.\n');
+  }
+  await note(project, { at: 'audit', target: target ?? project, out: dest, gate, ledger });
   return worst;
 }
 
