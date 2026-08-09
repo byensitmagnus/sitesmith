@@ -1361,7 +1361,11 @@ for (const file of markupFiles) {
    dark scheme is not the direction anyone was shown. */
 async function loadChromium() {
   try { return (await import('playwright')).chromium; } catch { /* fall through */ }
-  for (const from of [process.cwd(), BUILD, SCRIPT_DIR, SKILL_DIR]) {
+  /* SITESMITH_DEPS_DIR is how the rest of this package is pointed at a browser that lives
+     outside the project, and it was missing from this list. A run with it set got a withheld
+     direction verdict and the report said playwright was not installed, which was not true. */
+  const deps = process.env.SITESMITH_DEPS_DIR ? join(resolve(process.env.SITESMITH_DEPS_DIR), '..') : null;
+  for (const from of [process.cwd(), BUILD, SCRIPT_DIR, SKILL_DIR, ...(deps ? [deps] : [])]) {
     try {
       const req = createRequire(join(from, 'package.json'));
       const pw = await import(pathToFileURL(req.resolve('playwright')).href);

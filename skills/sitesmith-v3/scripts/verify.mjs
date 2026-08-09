@@ -33,13 +33,23 @@ import { pathToFileURL } from 'node:url';
  * Playwright lives in the project being tested, not next to this script. Try the
  * normal specifier first, then resolve from the working directory.
  */
-const requireFromCwd = createRequire(join(process.cwd(), 'package.json'));
+/* Two roots, not one. SITESMITH_DEPS_DIR is how the rest of this package is pointed at a
+   browser installed outside the project, and it was missing here, so a release run from a
+   project whose dependencies live elsewhere failed at the first step with a setup error the
+   caller had already answered. Third place in this package with the same gap. */
+const resolvers = [
+  createRequire(join(process.cwd(), 'package.json')),
+  ...(process.env.SITESMITH_DEPS_DIR
+    ? [createRequire(join(resolve(process.env.SITESMITH_DEPS_DIR), '..', 'package.json'))]
+    : []),
+];
 async function load(name) {
-  try {
-    return await import(name);
-  } catch {
-    return await import(pathToFileURL(requireFromCwd.resolve(name)).href);
+  try { return await import(name); } catch { /* not resolvable from this script */ }
+  let last = null;
+  for (const req of resolvers) {
+    try { return await import(pathToFileURL(req.resolve(name)).href); } catch (e) { last = e; }
   }
+  throw last ?? new Error(`${name} is not resolvable`);
 }
 
 const USAGE =

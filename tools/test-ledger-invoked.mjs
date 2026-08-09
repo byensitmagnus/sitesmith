@@ -149,7 +149,7 @@ try {
     }
     const runner = join(dir, 'run.mjs');
     await writeFile(runner, `import { release } from ${JSON.stringify(pathToUrl(join(ROOT, 'skills/sitesmith-v3/commands.mjs')))};
-const code = await release(${JSON.stringify(join(dir, 'skill'))}, ${JSON.stringify(project)}, {});
+const code = await release(${JSON.stringify(join(dir, 'skill'))}, ${JSON.stringify(project)}, { target: 'http://127.0.0.1:4399/' });
 console.log('RELEASE_EXIT=' + code);
 `, 'utf8');
     const r = spawnSync(process.execPath, [runner], { encoding: 'utf8' });
@@ -163,8 +163,11 @@ console.log('RELEASE_EXIT=' + code);
   const ALL_CLEAN = { 'verify.mjs': 0, 'journey.mjs': 0, 'contract.mjs': 0, 'gate.mjs': 0, 'ledger.mjs': 0 };
 
   const shipped = await releaseScenario(ALL_CLEAN);
-  check('a clean release runs verify, journey, contract and gate',
-    ['verify.mjs', 'journey.mjs', 'contract.mjs', 'gate.mjs'].every((s) => called(shipped.calls, s).length === 1),
+  /* contract.mjs twice: check, then compare against the build. R3 made the compare a step of
+     its own, and the contract asks for both by name. */
+  check('a clean release runs verify, journey, contract check, contract compare and gate',
+    ['verify.mjs', 'journey.mjs', 'gate.mjs'].every((s) => called(shipped.calls, s).length === 1)
+    && called(shipped.calls, 'contract.mjs').length === 2,
     shipped.calls.map((c) => c.script).join(', '));
   check('and only then commits to the ledger',
     called(shipped.calls, 'ledger.mjs')[0]?.argv?.[0] === 'commit',

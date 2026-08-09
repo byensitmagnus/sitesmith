@@ -539,24 +539,69 @@ export async function verify(root, project, { target }) {
    says plainly which requirement it cannot check, and commits to the anti-repeat ledger only
    when every one of them came back clean. A release nobody could check is not a release, so a
    withheld verdict refuses exactly as a defect does. */
-const RELEASE_STEPS = [
-  { id: 'verify', script: 'verify.mjs', argv: (t) => (t ? [t] : []), requirement: 'verify passes or names every verdict it withheld' },
-  { id: 'journey', script: 'journey.mjs', argv: () => [], requirement: 'a journey for buy, operate and redesign' },
-  { id: 'contract', script: 'contract.mjs', argv: () => ['check'], requirement: 'a design contract that checks clean' },
-  /* The gate is last of the checks because it aggregates: the critique locked to the render
-     is one of its refusals, so requirement two is answered here rather than by a step of its
-     own. */
-  { id: 'gate', script: 'gate.mjs', argv: () => [], requirement: 'gate clean, and a critique locked to the render that ships' },
-];
+/* The contract asks for a journey on three surfaces by name, not on every surface. A read or
+   experience surface has no purchase and no console to walk through, and requiring one there
+   is a check nobody can satisfy standing between a finished page and its release.
+
+   A project with no recorded surface still runs it. An absent record is not evidence that no
+   journey is owed, and the failure that matters is releasing without one. */
+const JOURNEY_SURFACES = new Set(['buy', 'operate', 'redesign']);
+
+const releaseSteps = ({ target, surfaces }) => {
+  const owesJourney = !surfaces.length || surfaces.some((s) => JOURNEY_SURFACES.has(s));
+  return [
+    { id: 'verify', script: 'verify.mjs', argv: target ? [target] : [], requirement: 'verify passes or names every verdict it withheld' },
+    ...(owesJourney
+      ? [{
+        id: 'journey',
+        script: 'journey.mjs',
+        /* The same target verify was given. Without it journey falls back to its own default
+           of localhost:5173, and a release then verifies one build and walks another. */
+        argv: target ? ['--base', target] : [],
+        requirement: 'a journey for buy, operate and redesign',
+      }]
+      : []),
+    { id: 'contract check', script: 'contract.mjs', argv: ['check'], requirement: 'a design contract that checks clean' },
+    /* The compare half of the same requirement, and it was missing. `check` reads the contract
+       against itself; only `compare` reads it against the page. A release that ran check alone
+       proved the contract is internally consistent and nothing at all about the build. */
+    ...(target
+      ? [{ id: 'contract compare', script: 'contract.mjs', argv: ['compare', '--url', target], requirement: 'a compare against the build that ships' }]
+      : []),
+    /* The gate is last of the checks because it aggregates: the critique locked to the render
+       is one of its refusals, so that requirement is answered here rather than by a step of its
+       own. */
+    { id: 'gate', script: 'gate.mjs', argv: [], requirement: 'gate clean, and a critique locked to the render that ships' },
+  ];
+};
 
 export async function release(root, project, { target, commit = true } = {}) {
   say('\n  release runs the contract product/pipeline.json declares, then records the version');
   say('  that ships. Nothing is recorded unless every check came back clean.\n');
 
+  /* RUN.json first, because a release measures one build and that file says which surface the
+     build being released is. state.json accumulates every surface a project has ever had, so
+     reading it alone would make a project that once built a buy page owe a journey forever,
+     including when the thing being released is a reading page. It stays as the fallback for a
+     project whose manifest predates this. */
+  const runManifest = join(project, STATE_DIR, 'RUN.json');
+  let surfaces = [];
+  if (existsSync(runManifest)) {
+    try {
+      const m = JSON.parse(readFileSync(runManifest, 'utf8'));
+      if (m.surface) surfaces = [m.surface];
+    } catch { /* unreadable, so fall through to the project's history */ }
+  }
+  if (!surfaces.length) surfaces = (await readState(project))?.surfaces ?? [];
+
+  const steps = releaseSteps({ target, surfaces });
+  say(`  surface: ${surfaces.length ? surfaces.join(', ') : 'none recorded, so nothing is assumed'}`);
+  say(`  target: ${target ?? 'none given'}\n`);
+
   const results = [];
-  for (const step of RELEASE_STEPS) {
+  for (const step of steps) {
     say(`\n  ── ${step.id} ──────────────────────────────────────────────\n`);
-    const code = runScript(root, step.script, step.argv(target), project);
+    const code = runScript(root, step.script, step.argv, project);
     results.push({ ...step, code });
     /* Stop at the first one that is not clean. The later checks would report against a build
        the earlier one already refused, and a reader would have to work out which list to
@@ -567,12 +612,29 @@ export async function release(root, project, { target, commit = true } = {}) {
   const failed = results.filter((r) => r.code !== 0);
   say('\n  ── release contract ───────────────────────────────────────\n');
   for (const r of results) say(`  ${r.code === 0 ? 'clean  ' : `exit ${r.code}`}  ${r.requirement}`);
-  for (const s of RELEASE_STEPS.slice(results.length)) say(`  not run  ${s.requirement}`);
+  for (const s of steps.slice(results.length)) say(`  not run  ${s.requirement}`);
+  if (!steps.some((s) => s.id === 'journey')) {
+    say(`  not owed  a journey: this build is ${surfaces.join(", ") || "an unrecorded surface"}, and the contract asks`);
+    say('            for one on buy, operate and redesign');
+  }
   /* Named rather than quietly dropped. The declaration has six requirements and this command
      can answer five: whether a production build exists depends on the stack, and a stack with
      no build step has nothing to point at. */
   say('  not checked  a production build where the stack has one, which this command cannot');
   say('               determine from the outside. Say in the run notes whether it was made.');
+
+  /* A requirement that could not be measured is not a requirement met. There is nothing to
+     render against, so the compare did not happen, and the contract asks for it by name. 3 is
+     the published code for a verdict withheld. */
+  if (!failed.length && !target) {
+    say('\n  not proved  a compare against the build that ships. No target was given, so there');
+    say('              was nothing to compare the contract against. Run `release <url>` with');
+    say('              the build served, or say in the run notes that this release shipped');
+    say('              without that requirement met.');
+    say('\n  Nothing was recorded in the anti-repeat ledger.\n');
+    await note(project, { at: 'release', shipped: false, withheld: 'contract compare, no target' });
+    return 3;
+  }
 
   if (failed.length) {
     say(`\n  ${failed[0].id} did not come back clean, so this is not a release.`);

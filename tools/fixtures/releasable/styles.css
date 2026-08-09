@@ -1,0 +1,63 @@
+:root {
+  --paper: #e6ecf2;
+  --liquor: #3b2a17;
+  --iron: #7a1f12;
+  --face-drum: "Courier New", monospace;
+  --face-ledger: Georgia, serif;
+  --step-drum: 2.75rem;
+  --step-ledger: 1.0625rem;
+  --curl: 3px;
+}
+
+html { background: var(--paper); }
+
+body {
+  background: var(--paper);
+  color: var(--liquor);
+  font-family: var(--face-ledger);
+  font-size: var(--step-ledger);
+}
+
+h1 {
+  font-family: var(--face-drum);
+  font-size: var(--step-drum);
+  color: var(--liquor);
+  background-image: linear-gradient(var(--liquor), var(--iron));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.wetline {
+  height: 0.5px;
+  border: 0;
+  border-radius: var(--curl);
+  background: var(--iron);
+}
+.ledgerpage { margin-top: 980px; }
+.ledgerpage dl { display: grid; grid-template-columns: auto auto; gap: 0.25rem 1rem; justify-content: start; }
+
+/* The fixture is served and measured, not only parsed. These rules exist so the page clears
+   the floor verify enforces: no horizontal overflow at 375 or 768, a measure inside the band,
+   and tap targets at the 44px minimum. Nothing here is a design decision; it is the floor. */
+* { box-sizing: border-box; }
+img, svg, video { max-width: 100%; height: auto; }
+body { overflow-x: hidden; }
+main, header, nav, footer { max-width: 100%; padding-left: 1rem; padding-right: 1rem; }
+main p { max-width: 62ch; }
+header a, nav a, footer a { display: inline-flex; align-items: center; min-height: 44px; min-width: 44px; padding: 0 0.5rem; }
+nav { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; }
+.ledgerpage dl { grid-template-columns: minmax(0, auto) minmax(0, auto); }
+table, pre { display: block; max-width: 100%; overflow-x: auto; }
+
+@media (max-width: 480px) {
+  /* 34ch was measured here, under the 45ch floor, because the page keeps desktop padding on a
+     375px screen. The text needs the width back before the band can be met. */
+  main, header, nav, footer { padding-left: 0.75rem; padding-right: 0.75rem; }
+  main p { max-width: none; }
+}
+
+/* The brand mark is a link, so it carries the same floor every other target does: 44px,
+   and 24px of clearance from the nav beside it. */
+a.brand { display: inline-flex; align-items: center; justify-content: center;
+  min-height: 44px; min-width: 44px; margin-right: 24px; }

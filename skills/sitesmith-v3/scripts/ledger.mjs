@@ -903,7 +903,13 @@ if (!invokedDirectly) { /* imported for its parts; nothing runs */ } else {
 
   if (verb === 'check' || verb === 'commit') {
     const dir = dirOf(1)
-    const ledgerPath = flag('--ledger') ?? DEFAULT_LEDGER
+    /* SITESMITH_LEDGER was documented and never read. A build's own production report in this
+       repository recorded it as `ledger/env-var-ignored`: the command the brief gave ran
+       against an empty home ledger while the caller believed it was reading theirs. It also
+       makes a run reproducible, because the default is a file that accumulates on one
+       machine and nowhere else, so the same build gets different verdicts on a laptop and on
+       a runner. */
+    const ledgerPath = flag('--ledger') ?? process.env.SITESMITH_LEDGER ?? DEFAULT_LEDGER
     const { path: recordPath, record } = await readDirection(dir)
 
     // A render veto against an unfinished record means nothing, so completeness is settled

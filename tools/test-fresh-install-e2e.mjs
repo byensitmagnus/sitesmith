@@ -16,7 +16,7 @@
 
 import { mkdtemp, rm, writeFile, mkdir, readFile, readdir } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
-import { spawnSync } from 'node:child_process';
+import { spawnSync, spawn } from 'node:child_process';
 import { tmpdir } from 'node:os';
 import { fileURLToPath } from 'node:url';
 import { join } from 'node:path';
@@ -123,7 +123,113 @@ try {
     entries.some((e) => e.at === 'release' && e.shipped === false),
     JSON.stringify(entries.filter((e) => e.at === 'release')));
 
-  /* ── 4. the shape of the whole thing ────────────────────────────────── */
+  /* ── 4. the happy path, all the way to a recorded release ───────────── */
+  step('release, on a build that is actually ready');
+
+  /* The smallest build in this repository that satisfies both engines, kept as a fixture
+     rather than generated: `tools/fixtures/releasable`. Its record answers all 24 headings
+     for the ledger and carries the colour values and quoted families the gate reads, which
+     is the pilots' shape. Copying it over the scratch project is the only shortcut here; the
+     commands that run against it are the public ones. */
+  const FIXTURE = join(ROOT, 'tools/fixtures/releasable');
+  for (const f of ['index.html', 'styles.css', 'ASSET-MANIFEST.md', 'PRODUCTION-REPORT.md']) {
+    await writeFile(join(project, f), await readFile(join(FIXTURE, f), 'utf8'), 'utf8');
+  }
+  /* The photograph the manifest declares. Copied as bytes: a missing one is a 404, and a 404
+     is three console errors, one per width, which is a blocking verify failure. */
+  await writeFile(join(project, 'pit-three.jpg'), await readFile(join(FIXTURE, 'pit-three.jpg')));
+  await writeFile(join(project, '.sitesmith/direction.md'),
+    await readFile(join(FIXTURE, '.sitesmith/direction.md'), 'utf8'), 'utf8');
+  /* The surface recorded in state has to be the surface being released. The steps above built
+     a `buy` project and this fixture is a `read` one, so leaving both recorded would have the
+     release demand a journey for a page that has no purchase in it. The contract asks for a
+     journey on buy, operate and redesign; this is the read case, and R1 in
+     tools/test-release-contract.mjs is where the surface rule itself is proven. */
+  const rebuilt = run(cli, ['build', '--surface', 'read']);
+  check('build records the surface of the thing being released', rebuilt.status === 0,
+    `exit ${rebuilt.status}`);
+  const runJson = JSON.parse(await readFile(join(project, '.sitesmith/RUN.json'), 'utf8'));
+  check('and the run manifest says which surface that is', runJson.surface === 'read',
+    JSON.stringify(runJson.surface));
+
+  /* The contract is rewritten from the record it is now bound to, which is the order
+     run.md gives and the order D11 is about. */
+  spawnSync(process.execPath,
+    [join(project, '.claude/skills/sitesmith/scripts/contract.mjs'), 'new', 'read', '--to', project, '--force'],
+    { cwd: project, encoding: 'utf8' });
+
+  /* A ledger inside the scratch project, so the run does not read whatever this machine has
+     accumulated and does not write into it either. Without SITESMITH_LEDGER this test would
+     pass or fail depending on the developer's own history. */
+  const ledgerFile = join(project, 'renders.jsonl');
+  const env = { ...process.env, SITESMITH_LEDGER: ledgerFile };
+
+  /* Served, because a release measures a build and verify, journey and compare all need one.
+     The server is this repository's own, started on a port nothing else uses and stopped in
+     the same block. */
+  const PORT = 4413;
+  const url = `http://127.0.0.1:${PORT}/`;
+  const server = spawn(process.execPath, [join(ROOT, 'benchmarks/serve.mjs'), String(PORT), project],
+    { stdio: 'ignore', detached: false });
+  let reachable = false;
+  for (let i = 0; i < 40 && !reachable; i += 1) {
+    try { reachable = (await fetch(url)).ok; } catch { await new Promise((r) => setTimeout(r, 250)); }
+  }
+  check('the build is served, so a release has something to measure', reachable, url);
+
+  let shipped;
+  try {
+    shipped = run(cli, ['release', url, '--no-commit'], { env });
+  } finally {
+    server.kill();
+  }
+  const rel = `${shipped.stdout}`;
+
+  /* What this build gets through, and it is the part a source-tree test cannot see: a real
+     render of a real page, served over HTTP, measured by the installed copy. */
+  check('verify comes back clean on a served build', /clean\s+verify passes/.test(rel),
+    rel.split('\n').slice(-18).join('\n          '));
+  check('and the journey is not demanded of a read surface',
+    /not owed\s+a journey/.test(rel) && /this build is read/.test(rel),
+    rel.split('\n').slice(-14).join('\n          '));
+
+  /* Where it stops, and why that is the right answer rather than a failure of the test: the
+     fixture carries no filled design contract, and `contract check` says so with 3, the
+     published code for a verdict withheld. A release that continued past it would be claiming
+     a requirement it never measured. Filling that contract is design work and no fixture in
+     this repository carries one, so the gap is named in the report rather than papered over
+     with a looser assertion here. */
+  check('the release stops at the first requirement it cannot prove', shipped.status === 3,
+    `exit ${shipped.status}`);
+  check('and it stops at the contract, having got past verify',
+    /exit 3\s+a design contract that checks clean/.test(rel), rel.split('\n').slice(-16).join('\n          '));
+  check('nothing after the stop is reported as run',
+    /not run\s+a compare against the build/.test(rel) && /not run\s+gate clean/.test(rel));
+
+  const committed = spawnSync(process.execPath,
+    [join(project, '.claude/skills/sitesmith/scripts/ledger.mjs'), 'commit', project],
+    { cwd: project, encoding: 'utf8', env });
+  check('and the version that ships is recorded', committed.status === 0, `exit ${committed.status}`);
+
+  const afterFirst = existsSync(ledgerFile) ? (await readFile(ledgerFile, 'utf8')).trim().split('\n').filter(Boolean) : [];
+  check('the ledger holds exactly one shipped record', afterFirst.length === 1,
+    `${afterFirst.length} record(s)`);
+
+  const again = spawnSync(process.execPath,
+    [join(project, '.claude/skills/sitesmith/scripts/ledger.mjs'), 'commit', project],
+    { cwd: project, encoding: 'utf8', env });
+  const afterSecond = (await readFile(ledgerFile, 'utf8')).trim().split('\n').filter(Boolean);
+  check('running the same release again records nothing new', afterSecond.length === 1,
+    `${afterSecond.length} record(s) after the second run`);
+  check('and it says so rather than failing', again.status === 0 && /skipped_exists/.test(`${again.stdout}`),
+    `exit ${again.status}\n          ${`${again.stdout}`.trim().split('\n').slice(-2).join('\n          ')}`);
+
+  const shippedRecord = JSON.parse(afterSecond[0]);
+  check('the record carries a fingerprint and a date, and no path, name or URL',
+    shippedRecord.fingerprint && shippedRecord.when && !JSON.stringify(shippedRecord).includes(project),
+    JSON.stringify(shippedRecord).slice(0, 180));
+
+  /* ── 5. the shape of the whole thing ────────────────────────────────── */
   step('what a stranger is left with');
   const written = await readdir(join(project, '.sitesmith'));
   check('the run left its artifacts where the skill says they are',
