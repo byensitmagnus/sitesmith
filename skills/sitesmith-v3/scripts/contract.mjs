@@ -861,12 +861,20 @@ if (CMD === 'new') {
   }
   const c = TEMPLATE(surface);
   const record = join(project, STATE_DIR, 'direction.md');
-  if (existsSync(record)) {
+  const bound = existsSync(record);
+  if (bound) {
     c.writtenAgainst.hash = createHash('sha256').update(await readFile(record)).digest('hex').slice(0, 16);
   }
   await mkdir(dirname(CONTRACT), { recursive: true });
   await writeFile(CONTRACT, `${JSON.stringify(c, null, 2)}\n`, 'utf8');
   say(`\n  wrote ${join(STATE_DIR, 'contract.json')}`);
+  /* Said here, at the moment it happens, because the alternative is a contract that looks
+     bound to a record it was written before and reports nothing about it. */
+  if (!bound) {
+    say(`  There is no ${join(STATE_DIR, 'direction.md')} yet, so this contract is bound to nothing.`);
+    say('  The contract is written FROM the record: write the record first, then run this again');
+    say('  with --force, or `check` will keep telling you the two were never compared.');
+  }
   say('  Every field is empty and every empty field is a question. Fill it from the');
   say('  direction record and the subject, then run `contract.mjs check`.\n');
   process.exit(0);
@@ -881,9 +889,18 @@ if (CMD === 'check' || CMD === 'compare' || CMD === 'stress') {
   }
 
   const record = join(project, STATE_DIR, 'direction.md');
-  if (existsSync(record) && c.writtenAgainst?.hash) {
+  if (existsSync(record)) {
     const now = createHash('sha256').update(await readFile(record)).digest('hex').slice(0, 16);
-    if (now !== c.writtenAgainst.hash) {
+    /* An empty hash used to fall out of this branch and say nothing, so a contract written
+       before its record reported as bound to it. `new` only hashes a record that already
+       exists, which is exactly the order run.md does not enforce, so the silent case was
+       the common one. It is a finding now, not a skip. */
+    if (!c.writtenAgainst?.hash) {
+      note('writtenAgainst', `this contract carries no hash of the direction record, so it was written before `
+        + `${join(STATE_DIR, 'direction.md')} existed and nothing here has ever compared them. `
+        + `The record is at ${now} now. Read the contract against it, then write the hash in, `
+        + 'or rewrite the contract from the record.');
+    } else if (now !== c.writtenAgainst.hash) {
       note('writtenAgainst', `the direction record has changed since this contract was written (${c.writtenAgainst.hash} to ${now}). Read them against each other; this does not rewrite either.`);
     }
   }

@@ -29,7 +29,7 @@ never in a question.
 2. Write the autopilot description section 5 asks for, four or five lines, into
    `.sitesmith/direction.md` before anything else. It is the first field, so the rest of
    the plan is written next to the thing it must not become.
-3. Do sections 2 to 6. Run `node scripts/ledger.mjs new <surface>` and fill every heading
+3. Do sections 2 to 6. Run `node scripts/ledger.mjs new . <surface>` and fill every heading
    it writes to `.sitesmith/direction.md` before any code; a blank heading fails the
    check, and the script owns the heading list so this file does not repeat it. One entry
    per surface, not per project: when a second surface lands in a project that has one,

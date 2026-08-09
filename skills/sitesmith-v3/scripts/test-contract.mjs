@@ -194,5 +194,38 @@ await run((c) => { c.colour.primitives[2].fallback = '#ff0000'; },
 await run((c) => { c.layout.squint = ''; },
   'the squint test unanswered', 3, 'squint');
 
+/* The contract is written FROM the direction record, and `new` hashes the record only if one
+   already exists. Written first, the hash stayed empty, and `check` skipped the comparison on
+   a falsy hash without a word: a contract bound to nothing reported as bound. The order that
+   produced it is the ordinary one, so the silent case was the common case. */
+console.log('\n  and a binding it never actually made\n');
+{
+  const dir = await mkdtemp(join(tmpdir(), 'sitesmith-unbound-'));
+  try {
+    const c = base();
+    c.writtenAgainst = { record: '.sitesmith/direction.md', hash: '' };
+    await mkdir(join(dir, '.sitesmith'), { recursive: true });
+    await writeFile(join(dir, '.sitesmith', 'contract.json'), JSON.stringify(c, null, 2));
+    await writeFile(join(dir, '.sitesmith', 'direction.md'), '## Theses\n\n1. A cutting list.\n');
+    const r = spawnSync(process.execPath, [CLI, 'check', '--to', dir], { encoding: 'utf8' });
+    const out = `${r.stdout}${r.stderr}`;
+    check('a contract with an empty hash beside a real record says so',
+      /never compared|carries no hash/i.test(out), out.split('\n').slice(-12).join('\n'));
+    check('and it names the record\'s hash now, so the two can be bound',
+      /[0-9a-f]{16}/.test(out), out.split('\n').slice(-12).join('\n'));
+
+    /* The same record, hashed in. Nothing to report, and nothing invented to report. */
+    const { createHash } = await import('node:crypto');
+    c.writtenAgainst.hash = createHash('sha256').update(await (await import('node:fs/promises')).readFile(join(dir, '.sitesmith', 'direction.md'))).digest('hex').slice(0, 16);
+    await writeFile(join(dir, '.sitesmith', 'contract.json'), JSON.stringify(c, null, 2));
+    const r2 = spawnSync(process.execPath, [CLI, 'check', '--to', dir], { encoding: 'utf8' });
+    check('a contract hashed against the record it was written from says nothing about binding',
+      !/never compared|carries no hash|has changed since/i.test(`${r2.stdout}${r2.stderr}`),
+      `${r2.stdout}`.split('\n').slice(-12).join('\n'));
+  } finally {
+    await rm(dir, { recursive: true, force: true });
+  }
+}
+
 console.log(`\n  ${failed ? `${failed} failing` : 'the contract accepts what it must and refuses what it must'}\n`);
 process.exit(failed ? 1 : 0);
