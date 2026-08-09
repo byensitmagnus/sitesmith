@@ -159,3 +159,23 @@ across four surfaces returned six different top-3 sets:
 Neither prescriptive record surfaced for any of the six. The mechanism that could cause
 convergence exists; convergence was not observed here. Whether it fires on the briefs the
 A/B actually uses is a question the A/B can answer, and it stays a candidate until it does.
+
+---
+
+## Correction to D11's frequency claim, 2026-08-09
+
+The commit that closed D11 said the order producing the empty hash was "the one run.md
+actually describes", and called the silent case the common case. That is wrong.
+
+`product/pipeline.json` orders the steps `init, recommend, build, direction, contract,
+implement, verify, contract-compare, critique, journey, gate, inspect, redesign`. The
+direction record comes before the contract. `build` enforces the same order after the D1 fix:
+the contract is only asked for once the record exists.
+
+So the empty hash is reached by invoking `contract.mjs new` outside the pipeline, which is
+what the reproduction did. It is an out-of-order invocation, not the documented path.
+
+**The fix stays and the test stays.** The defect is real: an empty hash fell out of a falsy
+check and a contract bound to nothing reported as bound, with no way for a reader to find out.
+Defensive correctness on a path a person can reach by hand is worth the eight lines. What is
+withdrawn is the claim about how often it happens.
