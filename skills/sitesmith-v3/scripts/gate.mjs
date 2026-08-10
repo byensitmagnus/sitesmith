@@ -766,7 +766,16 @@ if (reportRaw === null) {
            file named in any scenario, which let a read-surface run open floor/operate.md,
            and that drift is precisely what the check exists to catch. */
         if (path.startsWith('scripts/')) continue;
+        /* Two scenarios are reachable from every run, and both are reachable because a step
+           every run takes leads there. `inspect` because release is such a step. `contract`
+           because `commands.mjs` refuses to let `build` proceed without a design contract:
+           exit 3, with a blocker naming `contract.mjs new`. A run that meets that blocker and
+           opens the file explaining how to answer it was then refused for reading it, on a
+           build that had done nothing wrong.
+           Nothing wider. The union is these two scenarios by name, not any file named in any
+           scenario, which is the version that let a read-surface run open an operate floor. */
         if ((manifestOfReads.scenarios.inspect ?? []).includes(path)) continue;
+        if ((manifestOfReads.scenarios.contract ?? []).includes(path)) continue;
         /* A manifest entry ending in slash-star means one file out of that directory,
            because a run opens exactly one stack adapter. Matching it literally would
            refuse every build that opened the adapter the router actually named. */

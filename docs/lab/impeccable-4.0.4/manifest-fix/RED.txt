@@ -1,0 +1,15 @@
+
+  the reads manifest against the steps every run takes
+
+  ok    run.md does not itself instruct a read of contract.md, so that is not the reason
+  ok    build refuses to proceed without a design contract, which is what makes it unavoidable
+  ok    SKILL.md declares contract.md under a scenario of its own, not under the surfaces
+  FAIL  a run that opened contract.md is not refused for it
+              reads/outside-manifest             PRODUCTION-REPORT.md:9
+  FAIL  nor for the schema the contract is written against
+              reads/outside-manifest             PRODUCTION-REPORT.md:9
+  ok    a read-surface run that opened an operate floor is still refused
+  ok    and one that opened the motion file it never declared is still refused
+
+  2 failing
+
