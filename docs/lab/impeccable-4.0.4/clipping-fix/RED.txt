@@ -1,0 +1,38 @@
+
+  clipped content, in both axes and inside controls
+
+  FAIL  375px: clipped-h is reported clipped
+          reported: ["clipped-v"]
+  FAIL  375px: clipped-select is reported clipped
+          reported: ["clipped-v"]
+  ok    375px: clipped-v is reported clipped
+  ok    375px: fits is not reported
+  ok    375px: intentional is not reported
+  ok    375px: notes is not reported
+  ok    375px: hidden is not reported
+  ok    375px: offscreen is not reported
+  FAIL  768px: clipped-h is reported clipped
+          reported: ["clipped-v"]
+  FAIL  768px: clipped-select is reported clipped
+          reported: ["clipped-v"]
+  ok    768px: clipped-v is reported clipped
+  ok    768px: fits is not reported
+  ok    768px: intentional is not reported
+  ok    768px: notes is not reported
+  ok    768px: hidden is not reported
+  ok    768px: offscreen is not reported
+  FAIL  1440px: clipped-h is reported clipped
+          reported: ["clipped-v"]
+  FAIL  1440px: clipped-select is reported clipped
+          reported: ["clipped-v"]
+  ok    1440px: clipped-v is reported clipped
+  ok    1440px: fits is not reported
+  ok    1440px: intentional is not reported
+  ok    1440px: notes is not reported
+  ok    1440px: hidden is not reported
+  ok    1440px: offscreen is not reported
+  FAIL  the frozen build that lost the pilot is now reported clipped
+          reported: []
+
+  7 failing
+

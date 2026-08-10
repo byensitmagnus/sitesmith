@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Clipping fixture</title>
+<style>
+  body { font: 16px/1.5 Georgia, serif; margin: 0; padding: 24px; background: #f2eee3; color: #241f18; }
+  h2 { font-size: 18px; margin: 24px 0 8px; }
+  .row { display: flex; gap: 12px; align-items: center; margin-bottom: 4px; }
+  input, select, textarea { font: inherit; padding: 0.6em; border: 1px solid #241f18; box-sizing: border-box; min-height: 44px; }
+
+  /* PASS. A four-digit year with room for four digits, its padding and the browser's own
+     spinner chrome. This is the control the fixture exists to keep passing. */
+  #fits { width: 12ch; }
+
+  /* FAIL. The shape the losing build shipped: a fixed width too small for four digits, its
+     padding and the browser's own spinner. Measured at 5ch in this fixture's face rather than
+     the 7ch that build used, because Georgia is narrower than its data face and 7ch here
+     overflows by one pixel, inside any sane rounding tolerance. The defect is the same defect;
+     the fixture states it at a margin no rounding can explain away. */
+  #clipped-h { width: 5ch; }
+
+  /* NOT DETECTABLE, and kept to say so. A select truncates its own option text internally and
+     reports scrollWidth equal to clientWidth, so the browser offers no signal that the longest
+     option cannot be read. Measured: clientWidth 77, scrollWidth 77, with an option far wider
+     than either. Detecting it would mean measuring the option text against the control in a
+     canvas, which is machinery for a case that has not failed a build here. */
+  #clipped-select { width: 8ch; }
+
+  /* FAIL, and it is the case the old check already caught: text taller than its own box, with
+     overflow hidden. */
+  #clipped-v { height: 2.4em; overflow: hidden; width: 20ch; display: block; }
+
+  /* PASS. A region built to scroll, and saying so. A checker that calls this a defect turns
+     every legitimate scroll container into one. */
+  #intentional { height: 80px; overflow-y: auto; width: 30ch; border: 1px solid #241f18; padding: 8px; }
+
+  /* PASS. A textarea is a scrolling control by definition; more text than fits is not a
+     defect, it is what a textarea is. */
+  #notes { width: 30ch; height: 60px; }
+
+  /* PASS. Hidden and off-screen elements are not visible content, so they cannot be clipped
+     content. */
+  #hidden { display: none; width: 2ch; }
+  #offscreen { position: absolute; left: -9999px; width: 2ch; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Clipping fixture</h1>
+
+  <h2>Must pass: a control with room for its value</h2>
+  <div class="row"><label for="fits">Year, fits</label><input id="fits" type="number" value="1958" min="1958" max="2025"></div>
+
+  <h2>Must fail: a control whose value is cut off horizontally</h2>
+  <div class="row"><label for="clipped-h">Year, clipped</label><input id="clipped-h" type="number" value="1958" min="1958" max="2025"></div>
+
+  <h2>Must fail: a select whose longest option cannot be read</h2>
+  <div class="row"><label for="clipped-select">Notebook</label>
+    <select id="clipped-select">
+      <option>1958 to 1969, before the flood</option>
+      <option>1973 to 2025, after it</option>
+    </select>
+  </div>
+
+  <h2>Must fail: text taller than its own box, which the old check already caught</h2>
+  <p id="clipped-v">Twenty-four plots, sampled twice a year since 1958, and every one of them
+  carries a different story about what the soil did between the two readings.</p>
+
+  <h2>Must pass: a region built to scroll</h2>
+  <div id="intentional" tabindex="0" aria-label="Scrollable notes">
+    <p>Notebooks 24 to 30 were lost in the flood of 24 November 1972.</p>
+    <p>The sampling happened. No record of it survives.</p>
+    <p>The gap must not be filled.</p>
+    <p>Three papers cite the survey. None was written here.</p>
+  </div>
+
+  <h2>Must pass: a textarea, which scrolls by design</h2>
+  <div class="row"><label for="notes">Notes</label>
+    <textarea id="notes">Plot 07 and Plot 17 are the two whose records were typed up. Everything else exists on paper only, in the office, in numbered notebooks.</textarea>
+  </div>
+
+  <input id="hidden" value="1958">
+  <input id="offscreen" value="1958">
+</main>
+</body>
+</html>

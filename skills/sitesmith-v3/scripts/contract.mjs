@@ -34,6 +34,7 @@ import { existsSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { createRequire } from 'node:module';
+import { clippedElements } from './clipping.mjs';
 import { join, dirname, resolve, relative, sep } from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { parse as parseColour, contrast, distance, hex, flatten, AA } from './colour.mjs';
@@ -751,20 +752,24 @@ async function stress(c, url) {
       await page.goto(url, { waitUntil: 'networkidle' });
       if (prepare) await prepare(page);
       await page.waitForTimeout(150);
-      const r = await page.evaluate((sels) => {
+      /* The clipping measurement lives in clipping.mjs and is passed in as source, because
+         page.evaluate cannot close over an import. It was inline here and looked at eight tag
+         names, none of them a control, in one axis. A build shipped its year inputs 9px too
+         narrow and every check in this package passed it. */
+      const r = await page.evaluate(({ sels, clipSrc }) => {
         const doc = document.documentElement;
         const overflow = Math.max(0, doc.scrollWidth - doc.clientWidth);
-        const clipped = [...document.querySelectorAll('h1, h2, h3, p, li, label, button, a')]
-          .filter((el) => el.offsetParent !== null)
-          .filter((el) => el.scrollHeight > el.clientHeight + 2 && getComputedStyle(el).overflow !== 'visible').length;
+        // eslint-disable-next-line no-new-func
+        const clippedDetail = new Function(`return (${clipSrc})()`)();
+        const clipped = clippedDetail.length;
         const boxes = sels.map((s) => {
           const el = document.querySelector(s);
           if (!el) return null;
           const b = el.getBoundingClientRect();
           return [Math.round(b.left), Math.round(b.top + scrollY), Math.round(b.width), Math.round(b.height)];
         });
-        return { overflow, clipped, boxes, height: doc.scrollHeight };
-      }, (c.layout?.leading ?? []).filter(Boolean));
+        return { overflow, clipped, clippedDetail, boxes, height: doc.scrollHeight };
+      }, { sels: (c.layout?.leading ?? []).filter(Boolean), clipSrc: clippedElements.toString() });
       await page.close();
       return { label, ...r };
     };
