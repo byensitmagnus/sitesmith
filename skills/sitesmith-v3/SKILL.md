@@ -184,9 +184,8 @@ the brief.
 
 If it is not in the brief or the evidence it does not go on the page, not as a
 placeholder and not as a plausible example. When you need the sentence and lack the
-fact, ask for it or cut the sentence. The bottom rung is nothing at all: a page with no
-proof section is honest and an invented one is not. Voice is yours to invent. Facts are
-not.
+fact, ask for it or cut the sentence. The bottom rung is nothing at all for proof.
+The shell stays: who, where, one action. Voice is yours to invent. Facts are not.
 
 **The brief's gap and the subject's own unknown are opposites.** A page that writes down
 what the brief did not contain has filed the studio's paperwork on the client's page, and
@@ -208,7 +207,7 @@ Real content, no lorem. Every interactive state exists and is reachable. It work
 to 320px with no horizontal scroll. Keyboard focus is visible and its indicator meets
 contrast on its own. `prefers-reduced-motion` stops the work rather than only the
 visible animation. Semantic elements, real headings, alt text that says what the image
-is doing there.
+is doing there. The shell is Who / Where / Do.
 
 The numbers, so you need not guess: 4.5:1 body text, 3:1 large text and interface
 components, 44px touch targets, 24px between adjacent targets, 16px on inputs, 320px
@@ -216,8 +215,9 @@ minimum width. `verify.md` enumerates the rest of the floor, and every item on i
 the build when it is missing.
 
 **When you cut, never cut these.** Simplicity applies to means, not to obligations:
-input validation at a trust boundary, error handling where data can be lost, anything
-security related, anything the brief asked for by name, and everything in this section.
+the shell, input validation at a trust boundary, error handling where data can be lost,
+anything security related, anything the brief asked for by name, and everything in this
+section.
 A smaller implementation of the chosen direction is always right. A smaller direction,
 or a smaller version of what the client asked for in full, is not.
 

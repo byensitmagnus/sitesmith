@@ -12,7 +12,7 @@
 // Exit codes under test: 0 passed, 1 refused, 2 bad invocation, 3 verdict withheld.
 
 import { spawnSync } from 'node:child_process'
-import { mkdtempSync, copyFileSync, readFileSync, existsSync, readdirSync, mkdirSync } from 'node:fs'
+import { mkdtempSync, copyFileSync, readFileSync, writeFileSync, existsSync, readdirSync, mkdirSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -65,6 +65,43 @@ expect('two Built lines are refused', ['parse', dir('two-built')], 1, (o) => /2 
 expect('theses renumbered out of the order they were written are refused',
   ['parse', dir('shuffled-theses')], 1, (o) => /must run 1 to 3/.test(o))
 expect('a blank heading is refused', ['parse', dir('blank-heading')], 1, (o) => /blank heading/.test(o))
+
+/* The length check let a long excuse pass. The complete fixture already has Who/Where/Do
+   and must keep parsing; a copy with that shape replaced by an explanation must not. */
+{
+  const complete = readFileSync(join(dir('complete'), '.sitesmith', 'direction.md'), 'utf8')
+  const withShell = (name, body) => {
+    const d = join(tmp, name)
+    mkdirSync(join(d, '.sitesmith'), { recursive: true })
+    writeFileSync(join(d, '.sitesmith', 'direction.md'),
+      complete.replace(/## The shell\n[\s\S]*?(?=\n## )/, `## The shell\n${body}\n`))
+    return d
+  }
+
+  expect('a shell that explains the omission instead of answering Who/Where/Do is refused',
+    ['parse', withShell('shell-excuse',
+      'The brief names no address and no contact, so none is shown on the page.')],
+    1, (o) => /must answer Who, Where and Do/.test(o))
+
+  expect('none without a reason is refused',
+    ['parse', withShell('shell-none', 'none')],
+    1, (o) => /answers none without a reason/.test(o))
+
+  expect('Who and Where without Do is refused',
+    ['parse', withShell('shell-no-do',
+      'Who: the loft name in `header .mark`. Where: none, because this is a digital service.')],
+    1, (o) => /must answer Who, Where and Do/.test(o))
+
+  expect('Do without a selector or element is refused',
+    ['parse', withShell('shell-do-bare',
+      'Who: the loft name in `header .mark`. Where: none, because this is a digital service. Do: send an enquiry.')],
+    1, (o) => /Do without a selector or element/.test(o))
+
+  expect('Where: none with a reason, and a Do that names the element, is accepted',
+    ['parse', withShell('shell-digital',
+      'Who: the loft name in `header .mark`. Where: none, because this is a digital service. Do: the enquiry in `footer a`.')],
+    0)
+}
 
 /* the veto */
 
@@ -196,6 +233,10 @@ const noValues = !/#[0-9a-f]{3,6}\b/i.test(template)
   && !/\b(Inter|Georgia|Helvetica|serif|grotesque|cream|terracotta|slate)\b/i.test(template)
 if (!noValues) failed++
 results.push(`${noValues ? '  ok  ' : '  FAIL'} the template proposes no colour, face or adjective`)
+
+const writesShell = /\bWho\s*:/.test(template) && /\bWhere\s*:/.test(template) && /\bDo\s*:/.test(template)
+if (!writesShell) failed++
+results.push(`${writesShell ? '  ok  ' : '  FAIL'} ledger new writes Who / Where / Do`)
 
 const templateParses = run(['parse', newDir]).status === 1
 if (!templateParses) failed++

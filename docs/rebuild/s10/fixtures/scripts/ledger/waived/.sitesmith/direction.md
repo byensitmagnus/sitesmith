@@ -71,7 +71,7 @@ The risk above is answered by `.wetline`, the signature that runs under every he
 `.ledgerpage` renders the pit book itself, below the first screen and from facts the signature does not carry.
 
 ## The shell
-Who: the loft name in the top bar, visible on every screen. Where: no physical visit is offered, so no address is claimed. Do: the enquiry link in the footer, which is the one action this surface carries.
+Who: the loft name in the top bar, visible on every screen. Where: no physical visit is offered, so no address is claimed. Do: the enquiry link in `footer a`, which is the one action this surface carries.
 
 ## Assumptions
 Assumed the loft will let its certificate template be shown publicly. Written down here because nobody has confirmed it.

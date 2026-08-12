@@ -259,11 +259,26 @@ export function directionProblems(record) {
     problems.push(`the "Type" section names ${faces.length} roles and they all carry the same face, "${faces[0]}". Two labels on one face is one face.`)
   }
 
-  /* The shell, answered rather than acknowledged. "none" is a legitimate answer for a
-     surface that genuinely has no way out, and it has to be typed. */
+  /* The shell, answered rather than acknowledged. A 40-character excuse used to pass
+     ("the brief names no address so none is shown"). The template already asks for
+     Who / Where / Do; this is that shape. "none" is still allowed for a surface that
+     genuinely has no way out, and it has to carry a reason. Do has to name a
+     selector or element the same way the risk answer already does. */
+  const DOM_HOOK = /`[^`]+`|\.[a-z][\w-]*|#[a-z][\w-]*|<[a-z]+>/i
   const shell = record.body('The shell').trim()
-  if (shell && shell.length < 40 && !/^none\b/i.test(shell)) {
-    problems.push('the "The shell" section is too short to say who this is, where they are and what the reader can do')
+  if (shell) {
+    if (/^none\b/i.test(shell)) {
+      if (contentWords(shell).size < 6) {
+        problems.push('the "The shell" section answers none without a reason. A surface with no way out has to say why.')
+      }
+    } else if (!/\bwho\s*:/i.test(shell) || !/\bwhere\s*:/i.test(shell) || !/\bdo\s*:/i.test(shell)) {
+      problems.push('the "The shell" section must answer Who, Where and Do. A paragraph that explains the omission is the defect this heading exists to catch.')
+    } else {
+      const doBody = (shell.match(/\bdo\s*:\s*([\s\S]*?)(?=\b(?:who|where)\s*:|$)/i) ?? [])[1] ?? ''
+      if (!DOM_HOOK.test(doBody)) {
+        problems.push('the "The shell" section answers Do without a selector or element, so nothing can check that the action is on the page')
+      }
+    }
   }
 
   /* The answer to the risk has to name something the gate can look for. */
