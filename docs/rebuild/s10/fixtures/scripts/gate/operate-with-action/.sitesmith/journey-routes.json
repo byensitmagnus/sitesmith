@@ -1,0 +1,6 @@
+{
+  "base": "http://127.0.0.1:0",
+  "recorded": true,
+  "specs": ["fixture.spec.mjs"],
+  "routes": ["/"]
+}

@@ -459,6 +459,45 @@ if (BEHAVIOURAL_SURFACES.test(declaredSurface)) {
   }
 }
 
+/* Every page the journey reaches has to be a page verify.mjs has looked at.
+ *
+ * Rendered pilot 02 lost partly on a receipt page carrying six serious accessibility
+ * violations while the build's own verify run reported none. The measurement was right and
+ * the coverage was not: verify.mjs measures the URL it is handed, the builder handed it the
+ * entry, and the entry does not link to the receipt. The journey walked straight through that
+ * page and nothing joined the two facts together.
+ *
+ * The invariant is deliberately not "crawl every href from the entry". A page nobody links to
+ * is exactly the page this is about. It is: whatever the declared journey can actually reach,
+ * the gate has looked at.
+ *
+ * A journey that ran without recording its routes is not evidence of coverage either, so that
+ * refuses too rather than passing quietly. */
+const journeyRoutesPath = join(BUILD, '.sitesmith/journey-routes.json');
+const verifiedRoutesPath = join(BUILD, '.sitesmith/verified-routes.json');
+const journeyRoutes = await readFile(journeyRoutesPath, 'utf8').then(JSON.parse).catch(() => null);
+const verifiedRoutes = await readFile(verifiedRoutesPath, 'utf8').then(JSON.parse).catch(() => null);
+
+if (journeySpecs?.length) {
+  if (journeyRoutes === null) {
+    journeyRefusal('journeys/no-route-record', journeyRoutesPath, 1,
+      'journeys ran but nothing says which pages they reached. Run them through journey.mjs, which records the routes, so the gate can check that every page a user can reach has been verified.');
+  } else if (!journeyRoutes.recorded) {
+    journeyRefusal('journeys/routes-not-recorded', journeyRoutesPath, 1,
+      'the journey ran without its route recorder. Coverage of pages that are only reachable by completing the journey is unknown, and unknown is not verified.');
+  } else if (verifiedRoutes === null) {
+    journeyRefusal('journeys/no-verify-record', verifiedRoutesPath, 1,
+      'the journey reached pages and no verify run has recorded which page it measured. Run verify.mjs against each of them.');
+  } else {
+    const measured = new Set(verifiedRoutes.routes ?? []);
+    const missed = (journeyRoutes.routes ?? []).filter((r) => !measured.has(r));
+    for (const route of missed) {
+      journeyRefusal('journeys/unverified-route', journeyRoutesPath, 1,
+        `the journey reaches ${route} and verify.mjs has never measured it. A page only reachable by completing the journey is still a page the visitor lands on: run verify.mjs against ${route}.`);
+    }
+  }
+}
+
 const manifestRaw = await readFile(MANIFEST_PATH, 'utf8').catch(() => null);
 const manifest = manifestRaw ? parseManifest(manifestRaw) : [];
 const assetRefusal = DRAFT ? warn : refuse;

@@ -28,8 +28,9 @@
  * which is a setup problem, and the gate is what turns it into a refusal at release.
  */
 
-import { readdir } from 'node:fs/promises';
-import { spawnSync } from 'node:child_process';
+import { readdir, mkdir, writeFile } from 'node:fs/promises';
+import { spawn } from 'node:child_process';
+import { createServer, request as httpRequest } from 'node:http';
 import { join, resolve } from 'node:path';
 
 const args = process.argv.slice(2);
@@ -38,6 +39,121 @@ const base = (() => {
   const i = args.indexOf('--base');
   return i >= 0 ? args[i + 1] : 'http://localhost:5173';
 })();
+const routesOut = (() => {
+  const i = args.indexOf('--routes-out');
+  return resolve(i >= 0 ? args[i + 1] : '.sitesmith/journey-routes.json');
+})();
+
+/**
+ * Which pages the journey actually reaches, recorded rather than declared.
+ *
+ * Rendered pilot 02 shipped a receipt page carrying six serious accessibility violations
+ * while the build's own verify run reported none. Nothing was wrong with the measurement:
+ * verify.mjs measures the URL it is handed, the builder handed it the entry, and the entry
+ * does not link to the receipt. The only way to that page is to complete the booking — which
+ * is exactly what a journey does, and the journey knew the page existed while the gate did
+ * not.
+ *
+ * So the journey is asked. The specs are not: they drive the site through `BASE`, and BASE
+ * now points at a forwarding proxy in front of the real server, which writes down every HTML
+ * document that goes past. A spec written before this file changed reports its routes without
+ * knowing it, which is the point — a convention the spec has to opt into would have been
+ * absent on exactly the build that needed it.
+ *
+ * Only documents are recorded. Assets are not pages, and a page a user cannot reach is not
+ * coverage.
+ */
+const BEACON = '/__journey-route';
+
+/* Reported by the page, because the wire is not enough.
+ *
+ * Watching requests catches a server-rendered navigation. It does not catch a client-rendered
+ * one, and that is not an edge case here: in rendered pilot 02 the booking POSTed to `/`, the
+ * framework answered with a component payload, and the receipt was rendered and its URL pushed
+ * without anything ever asking the server for that page. Traffic alone says the journey never
+ * left the entry. The browser knows better, so it is asked. */
+const REPORTER = `<script>(function(){try{
+var seen='';var tell=function(){var p=location.pathname;if(p===seen)return;seen=p;
+try{navigator.sendBeacon(${JSON.stringify(BEACON)},p)}catch(e){}};tell();
+['pushState','replaceState'].forEach(function(m){var o=history[m];history[m]=function(){
+var r=o.apply(this,arguments);tell();return r}});
+addEventListener('popstate',tell);addEventListener('hashchange',tell);
+}catch(e){}})()</script>`;
+
+async function startRecordingProxy(target) {
+  const upstream = new URL(target);
+  const reached = new Set();
+
+  const server = createServer((req, res) => {
+    if (req.url === BEACON) {
+      let body = '';
+      req.on('data', (b) => { body += b; });
+      req.on('end', () => {
+        if (body.startsWith('/')) reached.add(body.split(/[?#]/)[0]);
+        res.writeHead(204); res.end();
+      });
+      return;
+    }
+
+    const headersOut = { ...req.headers };
+    /* Identity encoding, so an HTML body can be read and added to without decompressing it
+       first. The cost is a slower local transfer of a page nobody is timing. */
+    delete headersOut['accept-encoding'];
+
+    const proxied = httpRequest(
+      {
+        hostname: upstream.hostname,
+        port: upstream.port || 80,
+        path: req.url,
+        method: req.method,
+        /* The client's headers go through otherwise untouched, `host` included.
+           Rewriting host to the upstream was the obvious thing and it broke the one case
+           this recorder exists for: a Next.js server action compares Origin against Host and
+           refuses the POST when they disagree, so the booking never submitted. */
+        headers: headersOut,
+      },
+      (up) => {
+        const type = String(up.headers['content-type'] ?? '');
+        if (req.method === 'GET' && up.statusCode < 400 && type.includes('text/html')) {
+          reached.add(new URL(req.url, target).pathname);
+        }
+        const headers = { ...up.headers };
+        /* A redirect that names the real server would walk the browser off the proxy, and the
+           page it lands on is the one worth recording. */
+        if (typeof headers.location === 'string' && headers.location.startsWith(target)) {
+          headers.location = headers.location.slice(target.length) || '/';
+        }
+
+        if (req.method === 'GET' && up.statusCode < 400 && type.includes('text/html')) {
+          const chunks = [];
+          up.on('data', (c) => chunks.push(c));
+          up.on('end', () => {
+            let html = Buffer.concat(chunks).toString('utf8');
+            html = html.includes('</body>')
+              ? html.replace('</body>', `${REPORTER}</body>`)
+              : html + REPORTER;
+            const body = Buffer.from(html, 'utf8');
+            delete headers['content-length'];
+            res.writeHead(up.statusCode, { ...headers, 'content-length': body.length });
+            res.end(body);
+          });
+          return;
+        }
+
+        res.writeHead(up.statusCode, headers);
+        up.pipe(res);
+      },
+    );
+    proxied.on('error', () => { res.writeHead(502); res.end('upstream unreachable'); });
+    req.pipe(proxied);
+  });
+
+  await new Promise((ok, fail) => {
+    server.on('error', fail);
+    server.listen(0, '127.0.0.1', ok);
+  });
+  return { base: `http://127.0.0.1:${server.address().port}`, reached, close: () => server.close() };
+}
 
 const files = (await readdir(dir).catch(() => {
   console.error(`no ${dir}/ directory. A site with no journey has not been tested for behaviour.`);
@@ -52,13 +168,34 @@ if (!files.length) {
 console.log(`\n  journeys, ${files.length} against ${base}\n`);
 let failed = 0;
 
-for (const f of files) {
-  const r = spawnSync(process.execPath, [resolve(join(dir, f))], {
-    encoding: 'utf8',
-    env: { ...process.env, BASE: base },
-    timeout: 120000,
+/* If the proxy cannot start, the specs still run — against the real base, as before — and the
+   route file says so rather than claiming an empty journey reached nothing. A missing
+   recording is a gap in coverage, not a passing run. */
+let recorder = null;
+try {
+  recorder = await startRecordingProxy(base);
+} catch (e) {
+  console.log(`  note  routes were not recorded: ${String(e).slice(0, 80)}\n`);
+}
+const specBase = recorder?.base ?? base;
+
+/* Not spawnSync. The recording proxy lives in this process, and a synchronous child blocks
+   the event loop that would have answered it — the spec then times out on its first
+   navigation against a server that is right here and cannot reply. */
+const runSpec = (file) => new Promise((done) => {
+  const child = spawn(process.execPath, [resolve(join(dir, file))], {
+    env: { ...process.env, BASE: specBase },
   });
-  const out = ((r.stdout ?? '') + (r.stderr ?? '')).trim();
+  let out = '';
+  child.stdout.on('data', (b) => { out += b; });
+  child.stderr.on('data', (b) => { out += b; });
+  const kill = setTimeout(() => child.kill('SIGKILL'), 120000);
+  child.on('close', (status, signal) => { clearTimeout(kill); done({ status, signal, out }); });
+});
+
+for (const f of files) {
+  const r = await runSpec(f);
+  const out = r.out.trim();
   if (r.status === 0) {
     console.log(`  ok    ${f}`);
   } else {
@@ -68,5 +205,17 @@ for (const f of files) {
   }
 }
 
+recorder?.close();
+
+const reached = [...(recorder?.reached ?? [])].sort();
+await mkdir(join(routesOut, '..'), { recursive: true });
+await writeFile(routesOut, JSON.stringify({
+  base,
+  recorded: recorder !== null,
+  specs: files,
+  routes: reached,
+}, null, 2) + '\n');
+
+console.log(`  routes reached: ${reached.length ? reached.join('  ') : 'none recorded'}`);
 console.log(`\n  ${failed ? `${failed} of ${files.length} failed` : `${files.length} passed`}\n`);
 process.exit(failed ? 1 : 0);

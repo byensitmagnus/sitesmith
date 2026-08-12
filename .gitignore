@@ -29,6 +29,12 @@ docs/rebuild/**/fixtures/**/.sitesmith/*
 # is a different fixture on a clean checkout than on the machine that wrote it: locally the
 # gate saw a rendered page and refused, in CI it saw none and passed. Committed on purpose.
 !docs/rebuild/**/fixtures/**/.sitesmith/critique.json
+# Same reason again. A fixture with journeys is now also a fixture about coverage: the gate
+# refuses when a journey reaches a page no verify run has measured, and it reads that from
+# these two files. Ignored, they exist on the machine that wrote them and nowhere else, and
+# three gate cases would pass locally and fail on a clean checkout.
+!docs/rebuild/**/fixtures/**/.sitesmith/journey-routes.json
+!docs/rebuild/**/fixtures/**/.sitesmith/verified-routes.json
 !docs/rebuild/**/fixtures/**/.sitesmith/shots/
 docs/rebuild/**/fixtures/**/.sitesmith/shots/*
 !docs/rebuild/**/fixtures/**/.sitesmith/shots/*.png

@@ -1,10 +1,20 @@
 ---
-name: sitesmith
-description: "Design, build, redesign, audit and polish websites and web apps that do not look AI-generated. Use for landing pages, marketing sites, product and e-commerce pages, SaaS sites, dashboards, web apps, local business sites, portfolios and editorial sites, and for improving existing React, Next.js, Astro, Vue, Tailwind, shadcn or plain HTML/CSS projects. Triggers on: build a website, make a landing page, design a page, redesign this, make it look better, fix the design, improve the UI, this looks generic, choose colours or fonts, pick a style, add animations, make it responsive, add dark mode, accessibility pass, hero section, pricing table, dashboard layout, product page, component styling, design system, design review, UI audit."
+name: sitesmith-legacy-v2
+legacy: true
+description: "History. The superseded v2 pipeline, kept because CI and the benchmarks still run its scripts. It is not the SiteSmith a normal run loads and it defines no current user journey. The live skill is skills/sitesmith-v3, installed by `node bin/sitesmith.mjs install`; this tree is reachable only through `--legacy-v2`."
 license: MIT
 ---
 
-# sitesmith
+> **This is not the live product.** The skill a normal run installs is
+> [`skills/sitesmith-v3`](../sitesmith-v3/SKILL.md), declared as `packageRoot` in
+> [`product/pipeline.json`](../../product/pipeline.json). This tree is the v2 history, reached
+> only through `node bin/sitesmith.mjs install --legacy-v2`, and it is kept because CI and the
+> benchmarks still run `scripts/verify.mjs` and `scripts/token-drift.mjs` from here.
+>
+> A build agent read this file, took it for the current pipeline, and deleted its own finished
+> work on that premise. Everything below describes v2 and should be read as history.
+
+# sitesmith, v2 (history)
 
 A website is not done when the code compiles, and it is not done when the checks pass. The
 checks are a floor. It is done when it has the fourteen things in

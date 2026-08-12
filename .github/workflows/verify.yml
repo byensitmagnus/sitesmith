@@ -177,6 +177,29 @@ jobs:
           SITESMITH_DEPS_DIR: ${{ github.workspace }}/benchmarks/node_modules
         run: node skills/sitesmith-v3/scripts/test-verify.mjs
 
+      # A page reachable only by finishing the journey is still a page. The losing build in
+      # rendered pilot 02 reported 0 accessibility violations while its receipt carried six,
+      # because nothing linked to the receipt and verify measures the URL it is handed.
+      - name: the journey's routes are routes the gate has looked at
+        env:
+          SITESMITH_DEPS_DIR: ${{ github.workspace }}/benchmarks/node_modules
+        run: node skills/sitesmith-v3/scripts/test-journey-routes.mjs
+
+      # Words running into words, and the typesetting that only looks like it.
+      - name: two phrases with nothing between them
+        env:
+          SITESMITH_DEPS_DIR: ${{ github.workspace }}/benchmarks/node_modules
+        run: node skills/sitesmith-v3/scripts/test-collision.mjs
+
+      # One live product surface. Two skill roots both answering to the product's name is
+      # what sent a build agent down the legacy tree and cost it its own finished work.
+      - name: exactly one live SiteSmith surface
+        run: node tools/test-one-live-surface.mjs
+
+      # A benchmark control arm must not be handed a path back into this repository.
+      - name: control-arm isolation
+        run: node tools/test-control-isolation.mjs
+
       - name: every scenario stays inside its context ceiling
         run: |
           node tools/test-context-budget.mjs

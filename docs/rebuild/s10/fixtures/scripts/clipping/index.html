@@ -44,6 +44,10 @@
      content. */
   #hidden { display: none; width: 2ch; }
   #offscreen { position: absolute; left: -9999px; width: 2ch; }
+
+  /* The drawings. An <svg> clips at its viewport by default, which is why none of these needs
+     an overflow declaration to behave the way the comments say. */
+  svg { display: block; border: 1px solid #241f18; margin-bottom: 8px; }
 </style>
 </head>
 <body>
@@ -80,6 +84,63 @@
   <div class="row"><label for="notes">Notes</label>
     <textarea id="notes">Plot 07 and Plot 17 are the two whose records were typed up. Everything else exists on paper only, in the office, in numbered notebooks.</textarea>
   </div>
+
+  <h2>Must fail: a label in a drawing that ends mid-word</h2>
+  <!-- The shape the losing build shipped: same viewBox, same font size, same leader line, a
+       sentence that starts too far right to finish inside the frame. What a reader sees ends
+       mid-word.
+       The annotation starts at x=300 rather than the build's x=244, for the same reason the
+       year input above is 5ch rather than the build's 7ch: this fixture's face is narrower
+       than the one that shipped, and at 244 the same sentence overflows by 1.5px, which is
+       inside any honest rounding tolerance. The defect is the same defect; the fixture states
+       it at a margin no rounding can explain away. -->
+  <svg id="svg-clipped-text" viewBox="0 0 400 260" width="500" height="325">
+    <g stroke="#241f18" stroke-width="1.5" fill="none">
+      <rect x="40" y="20" width="180" height="14" fill="#f7f6f3"></rect>
+      <rect x="40" y="34" width="180" height="34" fill="#e0e2e7"></rect>
+      <rect x="40" y="68" width="180" height="70" stroke-dasharray="3 3"></rect>
+      <rect x="40" y="138" width="180" height="80" fill="#cfd3da"></rect>
+    </g>
+    <line x1="128" y1="20" x2="128" y2="138" stroke="#241f18" stroke-width="6"></line>
+    <line x1="128" y1="86" x2="296" y2="86" stroke="#241f18" stroke-width="1"></line>
+    <text x="300" y="82" font-size="12" fill="#241f18">40 % af</text>
+    <text x="300" y="96" font-size="12" fill="#241f18">dybde: kernemåling tages her</text>
+  </svg>
+
+  <h2>Must pass: a drawing whose labels fit</h2>
+  <!-- The same drawing with the annotation set where it has room. Nothing about it is
+       different in kind, which is the point: the check must separate these two. -->
+  <svg id="svg-fitting-text" viewBox="0 0 400 260" width="500" height="325">
+    <g stroke="#241f18" stroke-width="1.5" fill="none">
+      <rect x="40" y="20" width="180" height="14" fill="#f7f6f3"></rect>
+      <rect x="40" y="138" width="180" height="80" fill="#cfd3da"></rect>
+    </g>
+    <line x1="128" y1="86" x2="240" y2="86" stroke="#241f18" stroke-width="1"></line>
+    <text x="244" y="82" font-size="12" fill="#241f18">40 % af dybden</text>
+    <text x="244" y="96" font-size="12" fill="#241f18">måles her</text>
+  </svg>
+
+  <h2>Must pass: a drawing cropped on purpose</h2>
+  <!-- Shapes running past the frame is ordinary composition: a circle bled off the edge, a
+       rule taken to the boundary. A check that called this a defect would refuse working
+       drawings, so only text is asked about. -->
+  <svg id="svg-cropped-shapes" viewBox="0 0 200 120" width="300" height="180">
+    <circle cx="10" cy="60" r="70" fill="#e0e2e7"></circle>
+    <rect x="-40" y="10" width="120" height="18" fill="#cfd3da"></rect>
+    <line x1="-30" y1="100" x2="260" y2="100" stroke="#241f18" stroke-width="2"></line>
+    <text x="90" y="64" font-size="12" fill="#241f18">Inden for rammen</text>
+  </svg>
+
+  <h2>Must pass: a label the author chose to clip</h2>
+  <!-- An explicit clip-path is the same escape hatch overflow:auto is for a scroll region:
+       written down, therefore meant. -->
+  <svg id="svg-deliberate-clip" viewBox="0 0 200 80" width="300" height="120">
+    <defs>
+      <clipPath id="halfway"><rect x="0" y="0" width="120" height="80"></rect></clipPath>
+      <text id="never-drawn" x="0" y="0">a definition is not a drawing</text>
+    </defs>
+    <text x="150" y="40" font-size="12" fill="#241f18" style="clip-path: url(#halfway)">Bevidst beskåret label</text>
+  </svg>
 
   <input id="hidden" value="1958">
   <input id="offscreen" value="1958">

@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="da">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bestil en gennemgang</title>
+<style>
+  body { font: 16px/1.6 system-ui, sans-serif; margin: 0; padding: 2rem; max-width: 60ch; }
+  label { display: block; margin: 1rem 0 .25rem; }
+  input { font: inherit; padding: .5rem; width: 100%; box-sizing: border-box; }
+  button { font: inherit; margin-top: 1.5rem; padding: .75rem 1.25rem; }
+</style>
+</head>
+<body>
+  <h1>Bestil en gennemgang</h1>
+  <p>Udfyld formularen, så får du et sagsnummer.</p>
+
+  <!-- The entry links nowhere else on purpose. The receipt is reachable only by
+       submitting, which is what makes this fixture the shape pilot 02 shipped. -->
+  <form method="get" action="/kvittering.html">
+    <label for="navn">Navn</label>
+    <input id="navn" name="navn" type="text" required>
+    <label for="telefon">Telefon</label>
+    <input id="telefon" name="telefon" type="tel" required>
+    <button type="submit">Bestil</button>
+  </form>
+</body>
+</html>

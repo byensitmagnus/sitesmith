@@ -24,9 +24,10 @@
  * MIT, part of https://github.com/byensitmagnus/sitesmith
  */
 
-import { mkdir, writeFile } from 'node:fs/promises';
+import { mkdir, writeFile, readFile } from 'node:fs/promises';
 import { resolve, join } from 'node:path';
 import { createRequire } from 'node:module';
+import { collidingText } from './collision.mjs';
 import { pathToFileURL } from 'node:url';
 
 /**
@@ -164,6 +165,8 @@ const report = {
   brokenLinks: [],
   axe: null,
   reducedMotion: null,
+  // Phrases whose ink touches, per width. Reported, not refused: see the note at the call.
+  textCollisions: {},
   // Measurements, not verdicts. run.md step 7 is where a human accepts or justifies each.
   measures: { perWidth: {}, focus: {} },
   // Every check that could not run, with the reason. Empty is the only clean value.
@@ -783,6 +786,19 @@ try {
       () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
     );
 
+    /* Two phrases whose ink touches, so the page reads them as one word.
+     *
+     * Rendered pilot 02's losing build put its wordmark and its tagline in a flex row with no
+     * gap, on every page at every width: "Damgaard EstrikUdtørring og estrik, Lemvig". Six
+     * rounds of the refusal gate did not look for it.
+     *
+     * Reported, not refused. The measurement found the real defect on nine of forty-five real
+     * page renders and nothing else across the winning build and eight benchmark sites — good
+     * enough to put in front of a person, not yet good enough to stop a release over. A gate
+     * that cries wolf gets ignored, and then it protects nothing. */
+    const collisions = await page.evaluate(new Function(`return (${collidingText.toString()})()`));
+    if (collisions.length) report.textCollisions[width] = collisions;
+
     // Document structure. A page can be missing its root element entirely and still
     // render correctly, because the parser invents one, seven pages shipped that
     // way in this repository's own benchmark and every contrast check on them
@@ -935,6 +951,33 @@ try {
 
 await writeFile(`${outDir}/report.json`, JSON.stringify(report, null, 2));
 
+/* Which pages this gate has actually looked at, accumulated across runs.
+ *
+ * This script measures one URL. Nothing wrong with that — but the build in rendered pilot 02
+ * ran it once against the entry and reported PASS with 0 accessibility violations, while the
+ * receipt page a customer lands on after booking carried six serious ones. The receipt is not
+ * linked from the entry, so no amount of care with this script alone would have found it.
+ *
+ * A run of this script is now evidence about one page rather than about a site, and it says
+ * which page. journey.mjs writes down the pages a journey reaches; gate.mjs refuses when the
+ * two lists disagree. Neither file decides anything on its own, which is why the record lives
+ * beside them rather than inside either.
+ */
+const ledgerPath = resolve('.sitesmith/verified-routes.json');
+try {
+  const previous = JSON.parse(await readFile(ledgerPath, 'utf8').catch(() => '{"routes":[]}'));
+  const here = new URL(report.url);
+  const routes = new Set(previous.routes ?? []);
+  routes.add(here.pathname);
+  await mkdir(resolve('.sitesmith'), { recursive: true });
+  await writeFile(ledgerPath, JSON.stringify({
+    origin: here.origin,
+    routes: [...routes].sort(),
+  }, null, 2) + '\n');
+} catch (e) {
+  report.notMeasured.push({ check: 'verified-route record', reason: String(e).split('\n')[0].slice(0, 160) });
+}
+
 const serious = (report.axe?.violations ?? []).filter((v) => v.impact === 'critical' || v.impact === 'serious');
 const overflowing = Object.entries(report.widths).filter(([, w]) => w.horizontalOverflowPx > 1);
 // A 404 that happens to be clean and accessible is still not the page under test.
@@ -998,6 +1041,9 @@ function ranked() {
     for (const ex of v.examples ?? []) say(`         ${ex.target}\n           ${ex.detail}`);
   }
   for (const m of motionFindings) say(`    ${++n}. ${m.kind} : ${m.detail}`);
+  for (const [w, list] of Object.entries(report.textCollisions)) {
+    for (const c of list) say(`    ${++n}. text runs together at ${w}px : ${c.selector} reads "${c.reads}"`);
+  }
   for (const l of report.brokenLinks.slice(0, 10)) say(`    ${++n}. dead link "${l.text}" : ${l.reason}`);
   if (report.brokenLinks.length > 10) say(`       and ${report.brokenLinks.length - 10} more dead links, see report.json`);
   for (const c of report.consoleErrors.slice(0, 10)) say(`    ${++n}. console error at ${c.width}px : ${c.text}`);

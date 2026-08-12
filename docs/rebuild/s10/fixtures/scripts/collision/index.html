@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="da">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Collision fixture</title>
+<style>
+  body { font: 16px/1.6 Georgia, serif; margin: 0; padding: 24px; background: #f2eee3; color: #241f18; }
+  h2 { font-size: 15px; margin: 20px 0 6px; font-weight: normal; color: #6b6154; }
+  section { margin-bottom: 6px; }
+
+  /* FAIL. The shape the losing build shipped, copied exactly: a flex container whose two text
+     children have no gap between them, so the wordmark runs into its own tagline and a reader
+     sees "Damgaard EstrikUdtørring og estrik, Lemvig". Flex removes the whitespace that would
+     have separated them in normal inline flow, which is why this survives a source read. */
+  .wordmark { display: flex; align-items: baseline; font-weight: bold; text-decoration: none; color: inherit; }
+  .wordmark small { font-weight: normal; font-size: 0.8rem; }
+
+  /* PASS. The same two runs with the same markup, separated. Nothing else differs, which is
+     what makes it the control. */
+  .wordmark--ok { gap: 0.5rem; }
+
+  /* PASS. Inline text that abuts on purpose and reads correctly: a numeral and its unit, a
+     superscript, a compound name, a subscripted formula. Each is a token beside a token. */
+  .tokens sup { font-size: 0.7em; }
+  .tokens sub { font-size: 0.7em; }
+
+  /* PASS. An icon beside its label. Zero gap between a drawing and a word is a layout choice,
+     and a drawing is not a word: nothing runs together to read. */
+  .iconed { display: flex; align-items: center; }
+  .iconed svg { width: 20px; height: 20px; }
+
+  /* PASS. Adjacent in the DOM, plainly apart on the page. */
+  .apart { display: flex; gap: 2rem; }
+
+  /* PASS. A decorative shape sitting behind the words, overlapping them completely. It carries
+     no text of its own, so there is nothing for the reader to misread. */
+  .decorated { position: relative; display: inline-block; padding: 4px 10px; }
+  .decorated .swatch { position: absolute; inset: 0; background: #e6dfd0; z-index: 0; }
+  .decorated span { position: relative; z-index: 1; }
+</style>
+</head>
+<body>
+<main>
+  <h2>Must fail: a wordmark running into its own tagline</h2>
+  <section><a id="collide" class="wordmark" href="#top">Damgaard Estrik<small>Udtørring og estrik, Lemvig</small></a></section>
+
+  <h2>Must pass: the same two runs, given a gap</h2>
+  <section><a id="separated" class="wordmark wordmark--ok" href="#top">Damgaard Estrik<small>Udtørring og estrik, Lemvig</small></a></section>
+
+  <h2>Must pass: tokens that abut on purpose</h2>
+  <section id="tokens" class="tokens">
+    <p><strong>2.400</strong><span>&nbsp;kr.</span> ekskl. moms</p>
+    <p>Den 1<sup>ste</sup> måling, og <b>Site</b><i>Smith</i> selv, og H<sub>2</sub>O.</p>
+  </section>
+
+  <h2>Must pass: an icon beside its label</h2>
+  <section><span id="iconed" class="iconed">
+    <svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="8" fill="none" stroke="#241f18" stroke-width="2"></circle></svg><span>Inden for 75 km</span>
+  </span></section>
+
+  <h2>Must pass: adjacent in the DOM, apart on the page</h2>
+  <section><span id="apart" class="apart"><span>Fugtgennemgang</span><span>2.400 kr. ekskl. moms</span></span></section>
+
+  <h2>Must pass: a decorative shape behind the words</h2>
+  <section><span id="decorated" class="decorated"><span class="swatch"></span><span>Kernemåling i borehul</span></span></section>
+</main>
+</body>
+</html>

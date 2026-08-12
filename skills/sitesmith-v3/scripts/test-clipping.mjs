@@ -77,8 +77,14 @@ try {
     const found = await page.evaluate(clippedElements)
     const ids = found.map((f) => f.id).sort()
 
-    const MUST_FAIL = ['clipped-h', 'clipped-v']
-    const MUST_PASS = ['fits', 'intentional', 'notes', 'hidden', 'offscreen']
+    const MUST_FAIL = ['clipped-h', 'clipped-v', 'svg-clipped-text']
+    const MUST_PASS = ['fits', 'intentional', 'notes', 'hidden', 'offscreen',
+      /* The three drawings that must survive the widening. A diagram whose labels fit; a
+         composition cropped on purpose, where shapes run past the frame and only the text
+         stays inside; and a label an author explicitly clip-paths, which is a decision the
+         same way `overflow: auto` is. Rendered pilot 02 was lost partly to a clipped label,
+         and the cheap fix — flag anything crossing an SVG viewport — would refuse all three. */
+      'svg-fitting-text', 'svg-cropped-shapes', 'svg-deliberate-clip']
     /* Not in either list, and the fixture says why: a select reports scrollWidth equal to
        clientWidth however long its options are, so there is nothing to detect without
        measuring option text in a canvas. Recorded rather than quietly dropped. */

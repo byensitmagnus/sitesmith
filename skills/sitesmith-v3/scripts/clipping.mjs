@@ -86,5 +86,86 @@ export function clippedElements() {
     else if (cut(s.overflowY) && tall) push('vertical', el.scrollHeight)
   }
 
+  /* Words drawn inside a drawing.
+   *
+   * The measurement above reads `scrollWidth`, which SVG children do not have, so every label
+   * inside every diagram was invisible to it. In rendered pilot 02 the one illustration of the
+   * client's method ended mid-word — "40 % af konstruktionens dybde: kernemåling tages h" —
+   * because the `<text>` ran 16px past its `<svg>`, and an `<svg>` clips by default. The
+   * package had just shipped a clipping check and still could not see it.
+   *
+   * Only text is asked about. A drawing may overflow its own viewport as much as it likes: a
+   * cropped photograph, a rule bled to the edge and a shape half outside the frame are all
+   * ordinary composition, and refusing them would refuse working drawings. A sentence that
+   * stops mid-word is not composition.
+   *
+   * An explicit `clip-path` is the same escape hatch `overflow: auto` is above: an author who
+   * wrote one meant the cut. */
+  const TEXT_TOL = 1.5
+  for (const svg of document.querySelectorAll('svg')) {
+    const s = getComputedStyle(svg)
+    if (s.display === 'none' || s.visibility === 'hidden' || Number(s.opacity) === 0) continue
+    /* `visible` lets the text spill outside the frame and stay readable, which is not a defect
+       even though it is unusual. Only a frame that takes the words away counts. */
+    if (s.overflow !== 'hidden' && s.overflow !== 'clip' && s.overflow !== 'auto') continue
+
+    const frame = svg.getBoundingClientRect()
+    if (frame.width < 1 || frame.height < 1) continue
+    if (frame.right < 0 || frame.bottom < 0) continue
+
+    for (const t of svg.querySelectorAll('text')) {
+      const words = (t.textContent ?? '').trim()
+      if (!words) continue
+      /* Not rendered: definitions, clip paths and masks describe drawing, they are not on it. */
+      if (t.closest('defs, clipPath, mask, symbol, pattern')) continue
+      const ts = getComputedStyle(t)
+      if (ts.display === 'none' || ts.visibility === 'hidden' || Number(ts.opacity) === 0) continue
+      if (ts.clipPath && ts.clipPath !== 'none') continue
+
+      /* Measured in the drawing's own coordinates, not on screen.
+         `getBoundingClientRect` on an SVG text node returns the box after the viewport has
+         already clipped it, so a sentence running past the frame reports its right edge
+         exactly at the frame and the overflow measures zero. `getBBox` is the unclipped ink
+         extent, and `getCTM` puts it in the viewport's units, where there is something to
+         compare against. */
+      let bbox
+      try { bbox = t.getBBox() } catch { continue }
+      if (bbox.width < 0.5 || bbox.height < 0.5) continue
+      const m = t.getCTM()
+      if (!m) continue
+
+      /* `getCTM` already carries the viewBox scale, so its output is the viewport's own
+         pixels — the box to compare against is the rendered viewport, not the viewBox. Getting
+         that backwards flagged two drawings whose labels sit comfortably inside them. */
+      const view = { w: svg.clientWidth || frame.width, h: svg.clientHeight || frame.height }
+      if (!view.w || !view.h) continue
+
+      const xs = []; const ys = []
+      for (const [px, py] of [[bbox.x, bbox.y], [bbox.x + bbox.width, bbox.y],
+        [bbox.x, bbox.y + bbox.height], [bbox.x + bbox.width, bbox.y + bbox.height]]) {
+        xs.push(m.a * px + m.c * py + m.e)
+        ys.push(m.b * px + m.d * py + m.f)
+      }
+      const box = {
+        left: Math.min(...xs), right: Math.max(...xs),
+        top: Math.min(...ys), bottom: Math.max(...ys),
+      }
+
+      const over = Math.max(-box.left, box.right - view.w, -box.top, box.bottom - view.h)
+      if (over <= TEXT_TOL) continue
+
+      const sideways = box.right - view.w > TEXT_TOL || -box.left > TEXT_TOL
+      out.push({
+        id: svg.id || null,
+        tag: 'svg text',
+        axis: sideways ? 'horizontal' : 'vertical',
+        selector: svg.id ? `#${svg.id} text` : 'svg text',
+        shows: Math.round(sideways ? view.w : view.h),
+        needs: Math.round((sideways ? view.w : view.h) + over),
+        text: words.slice(0, 60),
+      })
+    }
+  }
+
   return out
 }
