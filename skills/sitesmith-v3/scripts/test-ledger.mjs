@@ -12,7 +12,7 @@
 // Exit codes under test: 0 passed, 1 refused, 2 bad invocation, 3 verdict withheld.
 
 import { spawnSync } from 'node:child_process'
-import { mkdtempSync, copyFileSync, readFileSync, existsSync, readdirSync, mkdirSync } from 'node:fs'
+import { mkdtempSync, copyFileSync, readFileSync, writeFileSync, existsSync, readdirSync, mkdirSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -65,6 +65,28 @@ expect('two Built lines are refused', ['parse', dir('two-built')], 1, (o) => /2 
 expect('theses renumbered out of the order they were written are refused',
   ['parse', dir('shuffled-theses')], 1, (o) => /must run 1 to 3/.test(o))
 expect('a blank heading is refused', ['parse', dir('blank-heading')], 1, (o) => /blank heading/.test(o))
+
+/* The length check let a long excuse pass. The complete fixture already has Who/Where/Do
+   and must keep parsing; a copy with that shape replaced by an explanation must not. */
+{
+  const excuseDir = join(tmp, 'shell-excuse')
+  mkdirSync(join(excuseDir, '.sitesmith'), { recursive: true })
+  const complete = readFileSync(join(dir('complete'), '.sitesmith', 'direction.md'), 'utf8')
+  const excused = complete.replace(
+    /## The shell\n[\s\S]*?(?=\n## )/,
+    '## The shell\nThe brief names no address and no contact, so none is shown on the page.\n',
+  )
+  writeFileSync(join(excuseDir, '.sitesmith', 'direction.md'), excused)
+  expect('a shell that explains the omission instead of answering Who/Where/Do is refused',
+    ['parse', excuseDir], 1, (o) => /must answer Who, Where and Do/.test(o))
+
+  const noneDir = join(tmp, 'shell-none')
+  mkdirSync(join(noneDir, '.sitesmith'), { recursive: true })
+  writeFileSync(join(noneDir, '.sitesmith', 'direction.md'),
+    complete.replace(/## The shell\n[\s\S]*?(?=\n## )/, '## The shell\nnone\n'))
+  expect('none without a reason is refused',
+    ['parse', noneDir], 1, (o) => /answers none without a reason/.test(o))
+}
 
 /* the veto */
 
