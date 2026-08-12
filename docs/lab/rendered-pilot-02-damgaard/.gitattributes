@@ -1,0 +1,6 @@
+# Frozen evidence: every file is stored byte for byte.
+#
+# Without this, git normalises line endings on checkout and the sha256 values in
+# ARTIFACT-HASHES.json stop matching the files they describe — on Windows, for most of the
+# text in here. An archive whose own hashes fail is worse than no hashes.
+* -text

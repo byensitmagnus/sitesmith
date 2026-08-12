@@ -1,0 +1,35 @@
+{
+  "writtenBefore": "the sealed mapping was opened",
+  "judge": {
+    "agents": 1,
+    "model": "claude-opus-5",
+    "effort": "max",
+    "tokens": 188856,
+    "toolCalls": 72,
+    "durationMs": 830532,
+    "sawCostInformation": false
+  },
+  "verdict": {
+    "winner": "candidate-2",
+    "confidence": "clear",
+    "why": "Candidate 2 orders the page the way a frightened customer needs it — hero, then \"Hvem vi ikke kan hjælpe\" with the brief's three daily wasted calls as cards and the 75 km radius drawn beneath, then method, then price, then book — and it renders without a single defect at 375, 768 and 1440. Candidate 1 ships two visible text bugs on every page at every width: the masthead reads \"Damgaard EstrikUdtørring og estrik, Lemvig\" with no space, and the hero diagram's key annotation is cut mid-word to \"kernemåling tages h\" while overlapping the \"Isolering\" label. It also leaves the right 60 % of the 1440 canvas empty across five consecutive sections, and carries 6 WCAG 2.1 AA violations against candidate 2's 0.",
+    "perCandidate": {
+      "candidate-1": {
+        "doesTheJob": "yes",
+        "honest": "yes",
+        "design": 5,
+        "strongest": "The price table: six services with the unit folded into each label ('Opbrydning og ny cementestrik, 50-70 mm, pr. m²') so all six figures right-align cleanly on 'kr.', 'Mindste opgave 12 m² / Mindstepris 9.800 kr.' set bolder as a footer row, and the insurance/8-dage-netto terms directly beneath. The radius map is the other real piece of design — it plots 2200 København N outside the 75 km circle on a dashed leader, which candidate 2's plain circles do not. Voice is consistently first person throughout, where candidate 2's slips.",
+        "weakest": "Two text-rendering bugs present on every page at both widths. In candidate-1-v1-landing-1440 and -375 the masthead reads 'Damgaard EstrikUdtørring og estrik, Lemvig' with zero space between wordmark and tagline, and the hero diagram — the only illustration of the firm's method — truncates its key annotation to '40 % af konstruktionens dybde: kernemåling tages h', with that line colliding with the 'Isolering' label below it. Both recur in the refusal and receipt captures. Beyond that, candidate-1-v6-booked-1440 sets the receipt's four facts as labels at the far left and values ~985 px away at the far right, offset half a line downward, so it is ambiguous whether '15.000 kr.' belongs to 'Fratrækkes ved ordre over' or to 'Vi kommer'."
+      },
+      "candidate-2": {
+        "doesTheJob": "yes",
+        "honest": "yes",
+        "design": 8,
+        "strongest": "Section two of the landing page is 'Hvem vi ikke kan hjælpe — Ring endelig og hør, men disse tre siger vi nej til, hver dag', with exactly the brief's three daily wasted calls as three cards (uden for 75 km / kloakvand / \"bare tørret lidt\" uden måling) and the 75 km–40 km radius diagram beneath. The same block is repeated as the left rail of the booking page, ending 'Falder du uden for et af disse, behøver du ikke udfylde formularen — ring 97 00 41 20', placed beside the form before the first input. Mono is reserved for measured things — 2.400 kr., 65 % RF, 2,0 CM%, 18–45 døgn, 06:30–15:00, DE-2026-0318 — so the typography carries the firm's actual claim.",
+        "weakest": "The voice breaks into third person exactly where the firm should be speaking for itself: 'Hvad vi nægter' and 'Hvad vi ikke ved på forhånd' sit above nine bullets reading 'De rører ikke skader med kloakvand…', 'De laver ikke el, VVS…', 'De kan ikke sige om forsikringen dækker. Det afgør taksator, ikke dem' (candidate-2-v3-other-a-1440), with the same slip in 'Regler vi ikke fraviger' and 'kan Damgaard ikke sige på forhånd' on the landing page. In Danish the capital-D 'De' also parses as the formal 'you'. Second: at 375 the booking card's term column is about 55 px wide, so 'Uden for 75 km fra Lemvig.' breaks over four lines beside a second ragged column (candidate-2-v2-booking-empty-375), and the price-table caption 'Priser ekskl. moms' wraps to three lines in candidate-2-v3-other-a-375."
+      }
+    },
+    "whatTheDifferenceCosts": "A homeowner in 2200 København N reading in bed: on candidate 2 the second thing on the page is a card headed \"Uden for 75 km fra Lemvig\", and the coverage circle is directly under it. On candidate 1 the same fact is one sentence inside a price card, and the map that makes it unmistakable is the last section before the footer — roughly 8,300 px down a 9,350 px mobile page, after the entire 12-field form and the price list. Someone who mistypes a postcode gets, on candidate 2, an error summary at the top of the form (\"Der er ét problem med udfyldelsen:\") linking straight to the field; on candidate 1's 7,118 px page there is no summary anywhere, so if focus does not land they must hunt for a red line. Someone who completes a booking gets, on candidate 2, the case number DE-2026-0318 as the largest thing on screen with three labelled facts stacked beneath it; on candidate 1 the value \"15.000 kr.\" sits a thousand pixels right of, and half a line below, the label it belongs to. Anyone on a keyboard or screen reader meets 6 WCAG 2.1 AA violations on candidate 1 and none on candidate 2. And anyone who looks at candidate 1's hero sees the diagram explaining the firm's one differentiator end mid-word: \"kernemåling tages h\".",
+    "wouldShip": "Candidate 2. Before handing it over I would rewrite the third-person bullets under \"Hvad vi nægter\", \"Hvad vi ikke ved på forhånd\" and \"Regler vi ikke fraviger\" into first person — the headings already say \"vi\", the bodies say \"De rører ikke…\" / \"De kan ikke sige…\", and on a page whose whole job is the firm committing to its own limits, that is the passage that must sound like Jens Damgaard talking. Second pass, five minutes: let the refusal term/description pairs on the booking page stack instead of holding a 55 px column at 375."
+  }
+}

@@ -1,0 +1,18 @@
+{
+ "v": 1,
+ "render": "bb9b10c45fa3b32c",
+ "files": [
+  "1440.png",
+  "375.png",
+  "768.png",
+  "reduced-motion-1440.png"
+ ],
+ "answers": "1. The eye lands on the full-width black disclaimer bar first, because it is the highest-contrast band on the screen and sits above everything else; that is the fiction notice, not the price/area/refusal facts the brief says the page must lead with, though the instrument and the price panel are what the eye moves to immediately after.\n2. The booking form's stacked, evenly-spaced labeled fields read as the most generic pattern on the page; nothing about a plain vertical form distinguishes this trade from any other online form.\n3. Yes at 1440, the diagram and its readout sit together, well inside the first screen; at 375 the drawing itself is fully visible in the first 812px, though its accompanying readout list continues just below the fold.\n4. The \"Udstyr og kapacitet\" section is emptiest at 1440: its label/value pairs are capped to a 65-character measure inside a much wider column, leaving a wide grey field to the right that is leftover from the width cap rather than a deliberate composition choice.\n5. The six largest words, the h1, read \"Vi tørrer gulvet ud efter måling\" (we dry the floor by measurement); a generic drying company could claim \"we dry your floor\" but the \"by measurement, not by guessing\" clause is specific to how this business actually works, not a competitor's default line.\n6. Covering the top third, the price table, the numbered process and the price-per-borehul language still say exactly what this is without needing the hero at all.\n\nACCEPT. The single worst thing: the disclaimer bar's own contrast makes it the first thing the eye lands on, ahead of the content the brief says must be readable in the first thirty seconds, even though the facts that matter (price, radius, refusals) are one glance further down and fully in view.",
+ "corrections": [
+  {
+   "note": "softened the top disclaimer bar from solid ink-on-paper to the page's own ground colour with a ruled edge, and split .kapacitet into a two-column flow at 60rem+ so its measure-capped pairs fill the width instead of leaving it empty; re-rendered and re-locked against the new screenshots",
+   "fromRender": "ba832eb19f0a3244",
+   "toRender": "bca959f6bd5eaff8"
+  }
+ ]
+}

@@ -1,0 +1,6 @@
+node_modules
+.next
+out
+data/submissions.log
+*.log
+.env*.local

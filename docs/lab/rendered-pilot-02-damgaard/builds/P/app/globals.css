@@ -1,0 +1,746 @@
+/* ==========================================================================
+   Damgaard Estrik -- design-system contract (see DESIGN-SYSTEM.md)
+   ========================================================================== */
+
+:root {
+  /* spacing -- 8px step, everything derived */
+  --step: 8px;
+  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px;
+  --space-5: 24px; --space-6: 32px; --space-7: 48px; --space-8: 64px; --space-9: 96px;
+
+  /* type -- named roles. base 16px, ratio 1.333 (editorial), rounded */
+  --text-micro: 0.75rem;
+  --text-small: 0.875rem;
+  --text-body: 1rem;
+  --text-lead: 1.125rem;
+  --text-h3: 1.25rem;
+  --text-h2: 1.75rem;
+  --text-h1: clamp(2rem, 1.55rem + 1.9vw, 2.75rem);
+  --text-display: clamp(2.5rem, 1.7rem + 3.3vw, 4rem);
+  --leading-tight: 1.15;
+  --leading-body: 1.6;
+  --measure: 68ch;
+
+  /* shape */
+  --radius-inner: 3px;
+  --radius-outer: 6px;
+  --radius-full: 999px;
+
+  /* elevation -- flat by default; see DESIGN-SYSTEM.md */
+  --elev-0: none;
+  --elev-1: 0 2px 6px rgb(32 28 22 / .12), 0 1px 1px rgb(32 28 22 / .06);
+
+  /* container and grid */
+  --container: 1180px;
+  --gutter: clamp(16px, 4vw, 32px);
+  --grid-columns: 12;
+
+  /* colour -- light (default) */
+  --bg: #F0ECE3;
+  --surface: #FAF7F1;
+  --surface-2: #ECE7DC;
+  --line: #D8D1C2;
+  --ink: #201C16;
+  --ink-2: #5B5245;
+  --accent: #8A4A12;
+  --on-accent: #FCFAF6;
+  --ok: #39653A;
+  --bad: #9C2B1F;
+
+  /* type families -- next/font variables (see app/layout.tsx) plus system fallback */
+  --font-display: var(--font-plex-sans-condensed), ui-sans-serif, system-ui, sans-serif;
+  --font-body: var(--font-plex-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  /* motion budget */
+  --motion-fast: 120ms;
+  --motion-base: 200ms;
+  --motion-slow: 320ms;
+  --ease: cubic-bezier(.2, .6, .2, 1);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #16130F;
+    --surface: #201A13;
+    --surface-2: #2A231A;
+    --line: #3A3226;
+    --ink: #F2EDE3;
+    --ink-2: #C7BEAE;
+    --accent: #E2954A;
+    --on-accent: #16130F;
+    --ok: #8FC793;
+    --bad: #F0917F;
+    --elev-1: 0 2px 8px rgb(0 0 0 / .40), 0 1px 1px rgb(0 0 0 / .30);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ==========================================================================
+   Reset and base
+   ========================================================================== */
+
+*, *::before, *::after { box-sizing: border-box; }
+* { margin: 0; }
+
+html {
+  height: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+html, body { max-width: 100%; overflow-x: hidden; }
+
+body {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  line-height: var(--leading-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+main { flex: 1 1 auto; min-width: 0; }
+
+img, svg { max-width: 100%; display: block; }
+
+a { color: inherit; }
+
+ul, ol { padding-left: 1.1em; }
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  line-height: var(--leading-tight);
+  font-weight: 700;
+  color: var(--ink);
+  text-wrap: balance;
+  /* Danish compounds ("fugtgennemgang") can be a single unbreakable word wider than a
+     narrow container at the largest heading sizes; break it before it overflows. */
+  overflow-wrap: break-word;
+}
+h1 { font-size: var(--text-h1); }
+h2 { font-size: var(--text-h2); }
+h3 { font-size: var(--text-h3); }
+
+p { max-width: var(--measure); }
+p.no-measure { max-width: none; }
+
+/* Any long unbroken token (URLs, emails, refs) wraps instead of forcing scroll. */
+code, .figure, .long-token {
+  overflow-wrap: anywhere;
+}
+
+/* One focus treatment for the whole project. */
+:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: var(--radius-inner);
+}
+
+.skip-link {
+  position: absolute;
+  left: var(--space-3);
+  top: -100px;
+  background: var(--ink);
+  color: var(--bg);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-inner);
+  z-index: 10;
+  transition: top var(--motion-fast) var(--ease);
+}
+.skip-link:focus-visible {
+  top: var(--space-3);
+}
+
+/* ==========================================================================
+   Layout primitives
+   ========================================================================== */
+
+.container {
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+  min-width: 0;
+}
+
+.section {
+  padding-block: var(--space-8);
+}
+.section--tight { padding-block: var(--space-6); }
+.section--bordered { border-top: 1px solid var(--line); }
+
+.stack { display: flex; flex-direction: column; gap: var(--space-5); }
+.stack--tight { gap: var(--space-3); }
+.stack--loose { gap: var(--space-7); }
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-7);
+  align-items: start;
+}
+@media (min-width: 860px) {
+  .grid-2 { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); }
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-5);
+}
+@media (min-width: 640px) {
+  .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+.eyebrow {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: var(--text-small);
+  color: var(--accent);
+}
+
+.lead {
+  font-size: var(--text-lead);
+  color: var(--ink-2);
+}
+
+/* Numbers that are measured, priced, logged or dated: the site's one recurring
+   figure-treatment, per DIRECTION.md. Not applied to a number used inline in prose. */
+.figure {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  letter-spacing: 0.02em;
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  color: var(--ink-2);
+  border-radius: var(--radius-full);
+  padding: var(--space-1) var(--space-3);
+}
+
+/* ==========================================================================
+   Disclosure strip -- required, permanent, on every page, never collapsible.
+   ========================================================================== */
+
+.disclosure-strip {
+  background: var(--surface-2);
+  border-bottom: 1px solid var(--line);
+}
+.disclosure-strip__inner {
+  max-width: var(--container);
+  margin-inline: auto;
+  padding: var(--space-2) var(--gutter);
+  font-size: var(--text-small);
+  color: var(--ink-2);
+  line-height: var(--leading-body);
+}
+.disclosure-strip strong { color: var(--ink); font-weight: 600; }
+
+/* ==========================================================================
+   Header
+   ========================================================================== */
+
+.site-header { border-bottom: 1px solid var(--line); }
+.site-header__bar {
+  max-width: var(--container);
+  margin-inline: auto;
+  padding: var(--space-4) var(--gutter);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  text-decoration: none;
+  min-height: 44px;
+}
+.brand__mark { flex: none; color: var(--accent); }
+.brand__name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--text-h3);
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+
+.site-nav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+  flex-wrap: wrap;
+  row-gap: var(--space-3);
+}
+.site-nav__link {
+  text-decoration: none;
+  font-weight: 600;
+  color: var(--ink-2);
+  min-height: 44px;
+  min-width: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 2px solid transparent;
+}
+.site-nav__link:hover { color: var(--ink); }
+.site-nav__link[aria-current="page"] {
+  color: var(--ink);
+  border-bottom-color: var(--accent);
+}
+.site-nav__phone {
+  font-family: var(--font-mono);
+  font-size: var(--text-small);
+  text-decoration: none;
+  color: var(--ink);
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+.site-nav__phone:hover { color: var(--accent); }
+
+/* ==========================================================================
+   Buttons
+   ========================================================================== */
+
+.btn {
+  appearance: none;
+  border: 1px solid transparent;
+  border-radius: var(--radius-inner);
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: var(--text-body);
+  min-height: 44px;
+  padding: var(--space-3) var(--space-5);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  text-decoration: none;
+  cursor: pointer;
+  transition: filter var(--motion-fast) var(--ease), background-color var(--motion-fast) var(--ease);
+}
+.btn--primary {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+.btn--primary:hover { filter: brightness(1.08); }
+.btn--primary:active { filter: brightness(0.92); }
+
+.btn--secondary {
+  background: transparent;
+  color: var(--ink);
+  border-color: var(--line);
+}
+.btn--secondary:hover { border-color: var(--ink-2); }
+
+/* ==========================================================================
+   Hero (home page only)
+   ========================================================================== */
+
+.hero__kicker {
+  font-size: var(--text-small);
+  color: var(--ink-2);
+  font-weight: 600;
+}
+.hero__title { margin-block: var(--space-4); }
+.hero__lede { margin-bottom: var(--space-6); }
+.hero__actions {
+  display: flex;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+.hero__diagram-wrap {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-outer);
+  padding: var(--space-5);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero__kicker, .hero__title, .hero__lede, .hero__actions {
+    animation: rise var(--motion-slow) var(--ease) both;
+  }
+  .hero__kicker { animation-delay: 0ms; }
+  .hero__title { animation-delay: 60ms; }
+  .hero__lede { animation-delay: 120ms; }
+  .hero__actions { animation-delay: 180ms; }
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+}
+
+/* ==========================================================================
+   Cards -- refusals, rules, unknowns
+   ========================================================================== */
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-outer);
+  padding: var(--space-5);
+}
+.card h3 { font-size: var(--text-h3); margin-bottom: var(--space-2); }
+.card p, .card ul { color: var(--ink-2); font-size: var(--text-small); }
+
+.refusal-list, .rule-list, .unknown-list {
+  list-style: none;
+  padding-left: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+.refusal-list > li, .rule-list > li, .unknown-list > li {
+  display: flex;
+  gap: var(--space-3);
+  align-items: flex-start;
+}
+.refusal-list > li::before,
+.rule-list > li::before,
+.unknown-list > li::before {
+  content: "";
+  flex: none;
+  width: 8px;
+  height: 8px;
+  margin-top: 0.5em;
+  border-radius: var(--radius-full);
+  background: var(--accent);
+}
+
+/* ==========================================================================
+   Price list / threshold table -- the site's rule-table (hairlines live here)
+   ========================================================================== */
+
+.rule-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--text-small);
+}
+.rule-table caption {
+  text-align: left;
+  font-family: var(--font-display);
+  font-size: var(--text-h3);
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: var(--space-4);
+}
+.rule-table th, .rule-table td {
+  text-align: left;
+  padding: var(--space-3) var(--space-3);
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+}
+.rule-table thead th {
+  font-size: var(--text-micro);
+  text-transform: none;
+  color: var(--ink-2);
+  font-weight: 600;
+  border-bottom: 1px solid var(--ink-2);
+}
+.rule-table td.amount, .rule-table th.amount {
+  text-align: right;
+  white-space: nowrap;
+}
+.rule-table-scroll {
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-outer);
+  padding: var(--space-4);
+  background: var(--surface);
+}
+
+/* Below ~600px a 3-column price table doesn't fit even at --text-small, and BRIEF.md is
+   explicit ("Ingen vandret scroll nogen steder i det interval") -- stricter than the
+   usual allowance for a scrollable sub-region. Each row becomes a labelled card instead
+   of a table needing its own horizontal scroll. Column labels come from CSS content, by
+   position (Ydelse is the <th>; the two <td>s are always Pris then Note in that order),
+   so no extra markup is needed. */
+@media (max-width: 599px) {
+  .rule-table-scroll { overflow-x: visible; }
+  .rule-table thead { display: none; }
+  .rule-table, .rule-table tbody, .rule-table tr, .rule-table th, .rule-table td {
+    display: block;
+    width: 100%;
+  }
+  .rule-table tr {
+    border: 1px solid var(--line);
+    border-radius: var(--radius-inner);
+    padding: var(--space-3);
+  }
+  .rule-table tr + tr { margin-top: var(--space-3); }
+  .rule-table th, .rule-table td {
+    border-bottom: none;
+    padding: var(--space-1) 0;
+  }
+  .rule-table td.amount { text-align: left; white-space: normal; }
+  .rule-table td:nth-of-type(1)::before { content: "Pris: "; font-weight: 600; color: var(--ink-2); }
+  .rule-table td:nth-of-type(2)::before { content: "Note: "; font-weight: 600; color: var(--ink-2); }
+}
+
+.vat-note {
+  font-size: var(--text-micro);
+  color: var(--ink-2);
+}
+
+/* ==========================================================================
+   Diagrams -- the site's drawn-asset signature (see ASSET-MANIFEST.md)
+   ========================================================================== */
+
+[data-diagram] {
+  width: 100%;
+  height: auto;
+  color: var(--ink);
+}
+[data-diagram] .diagram-line { stroke: var(--line); }
+[data-diagram] .diagram-ink { stroke: var(--ink); fill: var(--ink); }
+[data-diagram] .diagram-accent { stroke: var(--accent); fill: var(--accent); }
+[data-diagram] text {
+  font-family: var(--font-mono);
+  fill: var(--ink-2);
+  font-size: 11px;
+}
+[data-diagram] text.diagram-label-strong {
+  fill: var(--ink);
+  font-family: var(--font-body);
+  font-weight: 600;
+}
+[data-diagram] text.diagram-figure {
+  fill: var(--accent);
+  font-weight: 600;
+}
+.diagram-caption {
+  font-size: var(--text-small);
+  color: var(--ink-2);
+  margin-top: var(--space-3);
+}
+
+.threshold-legend {
+  list-style: none;
+  padding-left: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  font-size: var(--text-small);
+  color: var(--ink-2);
+  margin-top: var(--space-4);
+  border-top: 1px solid var(--line);
+  padding-top: var(--space-4);
+}
+
+/* ==========================================================================
+   Form
+   ========================================================================== */
+
+.form-intro {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-outer);
+  padding: var(--space-5);
+}
+
+form.booking-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  border: none;
+  padding: 0;
+}
+.field > label, .field > legend {
+  font-weight: 600;
+  font-size: var(--text-small);
+  padding: 0;
+}
+.field__hint {
+  font-size: var(--text-small);
+  color: var(--ink-2);
+}
+.field__error {
+  font-size: var(--text-small);
+  color: var(--bad);
+  display: flex;
+  gap: var(--space-2);
+  align-items: flex-start;
+}
+.field__error::before {
+  content: "!";
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: var(--radius-full);
+  background: var(--bad);
+  color: var(--surface);
+  font-size: 12px;
+  font-weight: 700;
+  margin-top: 1px;
+}
+
+.input, textarea {
+  font: inherit;
+  font-size: var(--text-body);
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-inner);
+  min-height: 44px;
+  padding: var(--space-3) var(--space-4);
+  width: 100%;
+  max-width: 32em;
+}
+.input[aria-invalid="true"] {
+  border-color: var(--bad);
+}
+.input:focus-visible { outline-offset: 1px; }
+
+.radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+.radio-option {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 44px;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-inner);
+  cursor: pointer;
+  background: var(--surface);
+}
+.radio-option:has(input:checked) {
+  border-color: var(--accent);
+  background: var(--surface-2);
+}
+.radio-option input {
+  width: 20px;
+  height: 20px;
+  accent-color: var(--accent);
+  flex: none;
+}
+
+.error-summary {
+  border: 1px solid var(--bad);
+  background: var(--surface);
+  border-radius: var(--radius-outer);
+  padding: var(--space-4) var(--space-5);
+}
+.error-summary p { font-weight: 700; margin-bottom: var(--space-2); }
+.error-summary ul { list-style: none; padding-left: 0; display: flex; flex-direction: column; gap: var(--space-1); }
+.error-summary a { color: var(--bad); text-decoration: underline; }
+
+/* ==========================================================================
+   Receipt panel -- the one surface allowed to lift (see DIRECTION.md "depth")
+   ========================================================================== */
+
+.receipt-panel {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-outer);
+  box-shadow: var(--elev-1);
+  padding: var(--space-6);
+}
+.receipt-panel__case {
+  font-family: var(--font-mono);
+  font-size: var(--text-h2);
+  font-weight: 600;
+  color: var(--accent);
+}
+.receipt-panel dl {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-4);
+  margin-block: var(--space-5);
+}
+@media (min-width: 560px) {
+  .receipt-panel dl { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+.receipt-panel dt { font-size: var(--text-small); color: var(--ink-2); }
+.receipt-panel dd { font-family: var(--font-mono); font-size: var(--text-lead); }
+
+/* The exact required quote is rendered as one contiguous <p> (see app/kvittering/page.tsx
+   and lib/content.js) so no text-extraction method can lose the words between list items.
+   The background/radius here is what carries the "this is a distinct instruction" weight,
+   not markup that would split the text node. */
+.until-arrival {
+  margin-top: var(--space-5);
+  background: var(--surface-2);
+  border-radius: var(--radius-outer);
+  padding: var(--space-5);
+}
+.until-arrival p { font-size: var(--text-lead); }
+
+/* ==========================================================================
+   Footer
+   ========================================================================== */
+
+.site-footer {
+  border-top: 1px solid var(--line);
+  background: var(--surface-2);
+}
+.site-footer .container {
+  padding-block: var(--space-7);
+  display: grid;
+  gap: var(--space-6);
+  grid-template-columns: minmax(0, 1fr);
+}
+@media (min-width: 700px) {
+  .site-footer .container { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+.site-footer h2 { font-size: var(--text-h3); margin-bottom: var(--space-3); }
+.site-footer address { font-style: normal; color: var(--ink-2); font-size: var(--text-small); line-height: var(--leading-body); }
+.site-footer ul { list-style: none; padding-left: 0; display: flex; flex-direction: column; gap: var(--space-1); color: var(--ink-2); font-size: var(--text-small); }
+/* H5: touch targets >= 44x44. A footer list item that IS a link is a standalone nav
+   target (not an inline link inside a sentence, which is exempt), so it gets real tap
+   height; plain-text list items keep their compact spacing. */
+.site-footer li:has(a) { min-height: 44px; display: flex; align-items: center; }
+.site-footer a {
+  text-decoration: underline;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* ==========================================================================
+   Utility
+   ========================================================================== */
+
+.visually-hidden {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

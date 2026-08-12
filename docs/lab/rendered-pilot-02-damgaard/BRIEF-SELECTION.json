@@ -1,0 +1,30 @@
+{
+  "surface": "buy",
+  "rule": "sha256(\"rendered-02:buy:\" + poolSha256).readUInt32BE(0) % eligible.length, over the eligible buy slugs sorted alphabetically",
+  "poolSha256": "02aefec56f85077d39727b2f110eb19ea259b44001fd039ea7cb8cf71aaed9cb",
+  "allBuyBriefs": [
+    "bredo-rebslageri",
+    "damgaard-estrik",
+    "halgarth-rotor-balancing",
+    "halvard-reedworks",
+    "ordway-farriery",
+    "stannard-pattern-foundry"
+  ],
+  "excluded": {
+    "halgarth-rotor-balancing": "the direction pilots ran on it, and it is the source observation for the thesis-order hypothesis",
+    "halvard-reedworks": "audited in the coherence diagnostic, and it is the one additional FAIL that hypothesis rested on",
+    "bredo-rebslageri": "audited in the coherence diagnostic",
+    "stannard-pattern-foundry": "audited in the coherence diagnostic",
+    "hesgin-soil-office": "rendered pilot 01, though it is a read surface and not a buy one"
+  },
+  "candidates": [
+    "damgaard-estrik",
+    "ordway-farriery"
+  ],
+  "index": 0,
+  "brief": "damgaard-estrik",
+  "briefSha256": "bcdcbe8a1f652412d4eb24c6c68b4a38dd10bffafd0a296823877e7d6f9c5c0f",
+  "stack": "Next.js (App Router)",
+  "caveat": "All sixteen briefs had an arm-A direction generated in the voided sixteen-brief run. That run was voided, no result was computed from it, and neither build reads it. It is recorded here rather than left for someone to find.",
+  "decidedBefore": "the selected brief was opened, and before any build workspace existed"
+}

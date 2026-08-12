@@ -1,0 +1,462 @@
+{
+  "frozenFrom": "the pilot 02 scratchpad, unmodified",
+  "briefSha256": "bcdcbe8a1f652412d4eb24c6c68b4a38dd10bffafd0a296823877e7d6f9c5c0f",
+  "files": {
+    ".gitattributes": {
+      "sha256": "9ea6d781ca4ba9bc2e740ab0c80bb4c7b893675b0f973296833be6ca99a40ab9",
+      "bytes": 313
+    },
+    "BRIEF-SELECTION.json": {
+      "sha256": "a8ba3e9acf08574d6640a748efbb2ad215e82e4741641d8291e535f30b53f874",
+      "bytes": 1498
+    },
+    "BUDGET.md": {
+      "sha256": "9ca3ffd4cd8eaeef4c5e64ec94dbab0e34105f5916f9fa17658c227a175f4955",
+      "bytes": 5100
+    },
+    "CONTAMINATION.md": {
+      "sha256": "ab9921f84fa25c73328e0a977996523ab4f3e9c1e5c1c4d89017db289e7dc9ce",
+      "bytes": 4052
+    },
+    "EVENTS.md": {
+      "sha256": "9741c4a5d5ae5ab294063453841c0c5cf2fbae9cf6f431c4022729b561543595",
+      "bytes": 4908
+    },
+    "PACKET-MANIFEST.json": {
+      "sha256": "a6edfb11cceadb8bc4efb979cd93dda8b3fd7c05d2ea266e9d14e409e64c7f3d",
+      "bytes": 8311
+    },
+    "RAW-VERDICT.json": {
+      "sha256": "1ec8d8013bcc0f1d6cf23737b4ddf950b300de65a88e77de5e70b2a22fdc1f2d",
+      "bytes": 6034
+    },
+    "README.md": {
+      "sha256": "455dd4aa4370897330f438bc7d24ac2ee74f38e6dc60432089b5d7dcfc6ebc8d",
+      "bytes": 3300
+    },
+    "REPRODUCE.md": {
+      "sha256": "8c26c59b37da96f9d7b49282a350fb1915561499818773e7401e2484cef60b9e",
+      "bytes": 4058
+    },
+    "RESULT.json": {
+      "sha256": "3c09715809ec12b546f73496789e30b362deb67b86f43a5dcc4399e3ce01296c",
+      "bytes": 2346
+    },
+    "RESULT.md": {
+      "sha256": "5d8340639ea853114484b62c128d4fd7d6298f45530451b4b9a79d4a55e16996",
+      "bytes": 5475
+    },
+    "SEALED-MAPPING.json": {
+      "sha256": "e28c2253efcc80ede2f54c99ad838263333b97d14ebec312b8302a8c10a5809c",
+      "bytes": 331
+    },
+    "USAGE.json": {
+      "sha256": "514cbc04f6fe49fdd79e7130460e6cc495acf610b1d4fe0be0834deb1d31b148",
+      "bytes": 856
+    },
+    "brief/BRIEF.md": {
+      "sha256": "bcdcbe8a1f652412d4eb24c6c68b4a38dd10bffafd0a296823877e7d6f9c5c0f",
+      "bytes": 9615
+    },
+    "brief/BRIEF.sha256": {
+      "sha256": "78ea0dd3d3a01d0e798281f96436fa55185ba3c6d4edc7ff19955b721dc2f1f9",
+      "bytes": 75
+    },
+    "builds/P/.gitignore": {
+      "sha256": "e4fb91c217763e2fceace5e8825b21693278b35b3294116a4b66602b85ef3248",
+      "bytes": 612
+    },
+    "builds/P/ASSET-MANIFEST.md": {
+      "sha256": "dc91a228f647c72fb04865e5c42cae31d4516f4c57ead85c5cdb049d8eb8567f",
+      "bytes": 2120
+    },
+    "builds/P/BRIEF.md": {
+      "sha256": "bcdcbe8a1f652412d4eb24c6c68b4a38dd10bffafd0a296823877e7d6f9c5c0f",
+      "bytes": 9615
+    },
+    "builds/P/DESIGN-SYSTEM.md": {
+      "sha256": "ddb45fda725b05b34fc0b01871a4a006f1a6df9f9fbe128d491b18116b655a15",
+      "bytes": 11064
+    },
+    "builds/P/DIRECTION.md": {
+      "sha256": "ce7b7342602ca888ae504f6619234c76e92d5cf93df48c2d80a6a5c4f361f764",
+      "bytes": 5764
+    },
+    "builds/P/EVIDENCE.md": {
+      "sha256": "c7a2c76944d33e2746556fa5611e0facc65860959266177ea4c04c97e9f2fa13",
+      "bytes": 5614
+    },
+    "builds/P/INTERACTIONS.md": {
+      "sha256": "a0dd66f9a98fa278c9304c4c4051c749413a8541b0e0901e0e180cb85b476c9f",
+      "bytes": 5118
+    },
+    "builds/P/README.md": {
+      "sha256": "0f095db75cfab3cf93153153990a7f42d2c1874d40566a47113434c05230f5e1",
+      "bytes": 2398
+    },
+    "builds/P/app/bestil/BookingForm.tsx": {
+      "sha256": "060b55f60744ee447c57900c8f083aff3a7e96e9f98dd3e12eff912026d0b4f7",
+      "bytes": 6112
+    },
+    "builds/P/app/bestil/actions.ts": {
+      "sha256": "2227eecba55afcdc13d7a35499228127bf2514262c315a19e74216b646771575",
+      "bytes": 931
+    },
+    "builds/P/app/bestil/page.tsx": {
+      "sha256": "7384d41caeb674337cae2cd7ef376cf06d03eb74a23feb07562ea8c2e9b8b0a2",
+      "bytes": 2090
+    },
+    "builds/P/app/globals.css": {
+      "sha256": "0ae47148448abbcd68070966674d3fffe06f1d38e1507ad841cef7ef03f1d238",
+      "bytes": 20642
+    },
+    "builds/P/app/icon.svg": {
+      "sha256": "cf5d56aa953df2bee28c6616c36dfa43cd978ac16d335125d78da2ca91661561",
+      "bytes": 787
+    },
+    "builds/P/app/kvittering/page.tsx": {
+      "sha256": "876d98cf74367db59e3851e86e1b3bfc46d8e9b137174be8db3f0a8315d58c99",
+      "bytes": 2128
+    },
+    "builds/P/app/layout.tsx": {
+      "sha256": "eb161fc258c50b0652f6969ae36d16d6a53848db3e35b88447491eb225b5138e",
+      "bytes": 1855
+    },
+    "builds/P/app/page.tsx": {
+      "sha256": "b098e4f42f5d0b445d6d4df629c7cac58cadf1422ec378fadb77bb5e40b76925",
+      "bytes": 5733
+    },
+    "builds/P/app/priser/page.tsx": {
+      "sha256": "719835823252ebab6e77cbb1784b84a27ce27da5633b30fdb4ed17716a6348b2",
+      "bytes": 6240
+    },
+    "builds/P/components/DisclosureStrip.tsx": {
+      "sha256": "d846e5e9a4a3975f82d363025985918e58c1df04576c617ba0feb793b97629b3",
+      "bytes": 601
+    },
+    "builds/P/components/Mark.tsx": {
+      "sha256": "cea979158cb9b34dc331835694e4963f416f8721af5b98eb9dc2242f384e0b57",
+      "bytes": 1031
+    },
+    "builds/P/components/SiteFooter.tsx": {
+      "sha256": "1ae8e77c37128cb98a3253be9e993c52367dd5fd3963cf23aa414c3d7b9cd900",
+      "bytes": 1732
+    },
+    "builds/P/components/SiteHeader.tsx": {
+      "sha256": "d198bffab2de6a9a6fb3b65ff71399edcd7d6bcfd4d317fdd3eca647c38b7430",
+      "bytes": 1426
+    },
+    "builds/P/components/diagrams/AreaDiagram.tsx": {
+      "sha256": "896180f3d540d143dce95043670e66c8b386ee981eccf360be0b5c6c6cb3dfe1",
+      "bytes": 1964
+    },
+    "builds/P/components/diagrams/DepthDiagram.tsx": {
+      "sha256": "18a98f04fdfa8da78b3565fec131bdab2756dbc09bcd144c17b338ad0be91a80",
+      "bytes": 2808
+    },
+    "builds/P/components/diagrams/TimelineDiagram.tsx": {
+      "sha256": "0707a900ea2e52d353569ce2c4ce17d51c80541b57d4f506fcb37440cbdcd437",
+      "bytes": 3589
+    },
+    "builds/P/eslint.config.mjs": {
+      "sha256": "d6bc6f3c65d69d1e74ea896c593dfef787e5b4d5822cf31db52cf7b38909c73c",
+      "bytes": 1070
+    },
+    "builds/P/journeys/book-a-review.spec.mjs": {
+      "sha256": "5e5d365747bc9c2bdff89a9aa6b2959b949c8dd26164c6d364e682bbacdae01a",
+      "bytes": 11142
+    },
+    "builds/P/lib/content.js": {
+      "sha256": "40287b81a2d5a63d31db2d41bf20b624021be71698641c68edcbf2e0bcb4b8f9",
+      "bytes": 8954
+    },
+    "builds/P/lib/log.ts": {
+      "sha256": "4db2fedfd49c8bfca6c1203351c1a0c2b28699d83c90dc9032380aff30da7f94",
+      "bytes": 635
+    },
+    "builds/P/lib/validation.js": {
+      "sha256": "09a3ec2e49108b4ea88a05032d96626ee0f4b3607b870ac5429e321fcf51ccd0",
+      "bytes": 4881
+    },
+    "builds/P/lib/validation.test.mjs": {
+      "sha256": "272e7b28c517f494336ab7b011ad6a9565da8e1e9cb4ccc684c7c39322df4a0b",
+      "bytes": 4087
+    },
+    "builds/P/next.config.ts": {
+      "sha256": "614bce25b089c3f19b1e17a6346c74b858034040154c6621e7d35303004767cc",
+      "bytes": 133
+    },
+    "builds/P/package-lock.json": {
+      "sha256": "1434fd8620cfc072f0012b3c8471849d8972abe8093a2d08c6fd41ed71f5d291",
+      "bytes": 218051
+    },
+    "builds/P/package.json": {
+      "sha256": "23a54a7ecfe42bfbdd19f6d1eb912dcb1cecab217b87a4d556a0562ceb6898d4",
+      "bytes": 686
+    },
+    "builds/P/scripts/verify.mjs": {
+      "sha256": "3e932a1a9d988cb8278c1f45b65a916dbe0f029d7ecec5a740d827291fc6427c",
+      "bytes": 7505
+    },
+    "builds/P/tsconfig.json": {
+      "sha256": "be18523b23b78b6e1a876ddd107d330f0168bddf09d751b57e0b5edce69c66f3",
+      "bytes": 666
+    },
+    "builds/S/.gitignore": {
+      "sha256": "9925c5f07763fbe83e637f5d7329acbf24c653d295c2ab95b5740ae6d34fd2de",
+      "bytes": 62
+    },
+    "builds/S/.sitesmith/CONTRACT.md": {
+      "sha256": "544fa4cf69b75cdff18efa0b7f1309bb440e06a416e250d4b016abcdb1308158",
+      "bytes": 12230
+    },
+    "builds/S/.sitesmith/DESIGN.md": {
+      "sha256": "cef1833f127f15c7a08942e0669d41eb8b4f7bda96d6117c1d42a0ecfc220b24",
+      "bytes": 393
+    },
+    "builds/S/.sitesmith/PROJECT.md": {
+      "sha256": "5515086ccdb2bb42209169027ec77e5402cd323de0a674e3d931035182ee854b",
+      "bytes": 6615
+    },
+    "builds/S/.sitesmith/RUN.json": {
+      "sha256": "11c345953428038ee12e26a67071535a23cd03687ea47404dcc8fa225e7dd747",
+      "bytes": 6587
+    },
+    "builds/S/.sitesmith/RUN.md": {
+      "sha256": "43e3594b9235b91dba9bfb06f68014dee3957c14b99cca9993d08ba02973f9ac",
+      "bytes": 6027
+    },
+    "builds/S/.sitesmith/contract.json": {
+      "sha256": "ecf95419e4defb4d70fe9f4687b3b40bbb5ae7d845a49de074b3f066be757f3e",
+      "bytes": 18006
+    },
+    "builds/S/.sitesmith/critique-answers.md": {
+      "sha256": "b9afde46c6309f187db46e6f37e2d6b65fb40ef78a5a8deef48dc5617425eb5c",
+      "bytes": 1778
+    },
+    "builds/S/.sitesmith/critique-packet.md": {
+      "sha256": "fe0dad71dce8821b63c8c81a65663622f063426e4ddf458a3ac069b4ede2149b",
+      "bytes": 994
+    },
+    "builds/S/.sitesmith/critique.json": {
+      "sha256": "8eba9a9c1679e54440d41ea78ff4aa8eab6a03aab8a33ec79de09596bb2de2b6",
+      "bytes": 2337
+    },
+    "builds/S/.sitesmith/decisions.jsonl": {
+      "sha256": "2fa07b2bea53710d3bf9f3ecfd2edfa1d0185c42562542470279f166d59648f3",
+      "bytes": 61
+    },
+    "builds/S/.sitesmith/direction.md": {
+      "sha256": "694492b9e1483fa2fe7f42309bec3798ad2156be1da0e3c75188ea0639e4465f",
+      "bytes": 13727
+    },
+    "builds/S/.sitesmith/state.json": {
+      "sha256": "6accc7cef5cbc1a4fbf4d8639fb9a963674c444e1b753980aee4f9515727fce7",
+      "bytes": 106
+    },
+    "builds/S/AGENTS.md": {
+      "sha256": "63f2c50380ed6303237cce215ce27af1d620d094c215e28d1b1538a3c070e3bb",
+      "bytes": 678
+    },
+    "builds/S/ASSET-MANIFEST.md": {
+      "sha256": "cf1025693963f18b965f8ee24f81eb659eca29a984dba1ac88d925a89250d30a",
+      "bytes": 1501
+    },
+    "builds/S/BRIEF.md": {
+      "sha256": "bcdcbe8a1f652412d4eb24c6c68b4a38dd10bffafd0a296823877e7d6f9c5c0f",
+      "bytes": 9615
+    },
+    "builds/S/CLAUDE.md": {
+      "sha256": "336cc4fbf19beaada7ccf9986414fa91851a8d7a07dfb3ccbe800a69eed0ab49",
+      "bytes": 11
+    },
+    "builds/S/INSTALLED-SKILL.json": {
+      "sha256": "bfb3c098d5c2ef37e93b778d9470277c32f1834b512dccdb12113f2ec8f90038",
+      "bytes": 6666
+    },
+    "builds/S/PRODUCTION-REPORT.md": {
+      "sha256": "eedaa57b56ec5c771bb3fcf5d55a1fc6ce93798cc9701f5178ec74ea6b632b57",
+      "bytes": 24826
+    },
+    "builds/S/app/actions.ts": {
+      "sha256": "513196086a4c611d0318bab54e0850b82be7c33d3fafb9d6550e716898186225",
+      "bytes": 5331
+    },
+    "builds/S/app/booking-form.tsx": {
+      "sha256": "24640d23e589af90ec4b722913c7cf7eb7e7014cb6742ad48ea4b59dc98c3b84",
+      "bytes": 7844
+    },
+    "builds/S/app/diagrams.tsx": {
+      "sha256": "6e807862f84a72a9350b96a8f53ffac26341f610af8b4adbd1eacf357704453d",
+      "bytes": 3677
+    },
+    "builds/S/app/globals.css": {
+      "sha256": "7f6b7c0e448eb3359b0af938f8ba0436b16bd7652297890be5a996d12e20011e",
+      "bytes": 16244
+    },
+    "builds/S/app/kvittering/page.tsx": {
+      "sha256": "873a10d43b4b4954757a5a24a5f8ecea48886ffb6539ddaca82a50b5f79d0207",
+      "bytes": 3425
+    },
+    "builds/S/app/layout.tsx": {
+      "sha256": "af145cafd0efd3bd35a05457bb6964fc67ed57d6867e9d57e28bfb084e40b80d",
+      "bytes": 952
+    },
+    "builds/S/app/page.tsx": {
+      "sha256": "9439a055ddd111dc4e7f98dfd330ab30eea8a22a3fbd810f019f6272ab8b0de9",
+      "bytes": 15380
+    },
+    "builds/S/journeys/buy.spec.mjs": {
+      "sha256": "6367ef9c0134f1340843e0594a42a92bd576ab796ad34e3887f3e4f6269f2b56",
+      "bytes": 5859
+    },
+    "builds/S/lib/postnummer.ts": {
+      "sha256": "5376b3ba30763d7f2a55f42d72ef86506abda2a477a106f00f37081b1868a738",
+      "bytes": 5294
+    },
+    "builds/S/lib/submissions.ts": {
+      "sha256": "e9161e0de07d152c8491459824dc856a0994389e6db2e5601a2064a20a198a82",
+      "bytes": 784
+    },
+    "builds/S/next.config.mjs": {
+      "sha256": "1e3206cb200e264fdddb4dbb2e4772daebc839fdbc94b78316d74892a0de6fa2",
+      "bytes": 92
+    },
+    "builds/S/package-lock.json": {
+      "sha256": "6682b96729860731cb150a275d8cbc2eb8b65910370fab37825f819546047001",
+      "bytes": 36547
+    },
+    "builds/S/package.json": {
+      "sha256": "7cbdbe148f4b1bc9a81d17d0ad815bfbd419849b8539827349f1f3f9756983be",
+      "bytes": 530
+    },
+    "builds/S/tsconfig.json": {
+      "sha256": "ef3882ecf07e84f60414032079481f73ff69f9676b6490de90717824e4df2076",
+      "bytes": 700
+    },
+    "checks/P.json": {
+      "sha256": "b1eed73a5e7f82a808353c7c71c36b8a08e853b416801b089d64b78ee93f9984",
+      "bytes": 3472
+    },
+    "checks/S.json": {
+      "sha256": "4607358a226ba4506ff97c41894dd3c47f5e84be59a6b5337ee886785b7c3c0b",
+      "bytes": 4792
+    },
+    "instrument/check.mjs": {
+      "sha256": "ccf88c0ddff229ebb7804afafa26f1e28e550223ad23dc285ef4355bc6c2e999",
+      "bytes": 13591
+    },
+    "instrument/driver.mjs": {
+      "sha256": "80cfdc5654f552bca2337a3919c41685ed5fb20219b291170d6cdee4f8f766ee",
+      "bytes": 6300
+    },
+    "instrument/packet.mjs": {
+      "sha256": "c32115155a49a15106ce2a574b88db847a2117f2672151fb3097bb5cef124399",
+      "bytes": 8465
+    },
+    "judge/CHECKS.md": {
+      "sha256": "6c43962719500e27f4e49193475fe8e2a91e1d089348916b62d12aa4986d93c5",
+      "bytes": 2438
+    },
+    "judge/JUDGE.md": {
+      "sha256": "cd3ee6a95e88fecc6fa3faf4d77f40f731589012a71b5b2a74b94b1dfec6bc48",
+      "bytes": 2476
+    },
+    "judge/packet/candidate-1-v1-landing-1440.png": {
+      "sha256": "eaeecf62ef3d3325720d6a0b8544a11d4bbaee41ff7dffd780e68ecfb40ec138",
+      "bytes": 665464
+    },
+    "judge/packet/candidate-1-v1-landing-375.png": {
+      "sha256": "1b1d492e8bc75ff8f8b51cfd0370dd8b2330c132270a00d52219b83c70ee31ce",
+      "bytes": 564260
+    },
+    "judge/packet/candidate-1-v1-landing-768.png": {
+      "sha256": "f961bf7ebfa784c44f9e146aab8cee4bb6bea0bc5600c07a27d531bc1c1af103",
+      "bytes": 629054
+    },
+    "judge/packet/candidate-1-v2-booking-empty-1440.png": {
+      "sha256": "eaeecf62ef3d3325720d6a0b8544a11d4bbaee41ff7dffd780e68ecfb40ec138",
+      "bytes": 665464
+    },
+    "judge/packet/candidate-1-v2-booking-empty-375.png": {
+      "sha256": "1b1d492e8bc75ff8f8b51cfd0370dd8b2330c132270a00d52219b83c70ee31ce",
+      "bytes": 564260
+    },
+    "judge/packet/candidate-1-v4-refused-postcode-1440.png": {
+      "sha256": "18b6ba04cadfdc04319dac992c31ee60b65a6ddb9e52d969453f8f151e3ecd0b",
+      "bytes": 697566
+    },
+    "judge/packet/candidate-1-v4-refused-postcode-375.png": {
+      "sha256": "11725ba2b0e7c7dbdfce262386b7e2352631ceb1aa3b17388991242bf7feb1e0",
+      "bytes": 597579
+    },
+    "judge/packet/candidate-1-v5-refused-sewage-1440.png": {
+      "sha256": "500f185db88ae71789f251111f183b6a52b3a139b200be9433c088b37361644a",
+      "bytes": 690469
+    },
+    "judge/packet/candidate-1-v5-refused-sewage-375.png": {
+      "sha256": "231582321272a65bbe6538f5744658421e40a420f6e2b80861168d3ea1d432f7",
+      "bytes": 591694
+    },
+    "judge/packet/candidate-1-v6-booked-1440.png": {
+      "sha256": "0b6b5845f2f2b465cb528d8eec7d4eca2de12c9b0ed79bfbdab08a809d1e7101",
+      "bytes": 114735
+    },
+    "judge/packet/candidate-1-v6-booked-375.png": {
+      "sha256": "adcb0e3392b75fb394e38615bb46c511d2f77071e73495ecc5d8d9c8b6181c9b",
+      "bytes": 99883
+    },
+    "judge/packet/candidate-2-v1-landing-1440.png": {
+      "sha256": "bb885cc590976de648f97905710020e0aa3d98e96eb0de267646bd25dfd4351d",
+      "bytes": 363544
+    },
+    "judge/packet/candidate-2-v1-landing-375.png": {
+      "sha256": "596ce123d602ca36c414f2c024f54bbe898ee3fcc326e4833630540e8ab10a3d",
+      "bytes": 330196
+    },
+    "judge/packet/candidate-2-v1-landing-768.png": {
+      "sha256": "babf25d4b3ea08361106bbb61db888a6bf4a224329790369d8084f5aa0f2ecbd",
+      "bytes": 374322
+    },
+    "judge/packet/candidate-2-v2-booking-empty-1440.png": {
+      "sha256": "25ffe8d821c354536482979df89e780be12322315f5ea91214abf5d5becb1005",
+      "bytes": 209651
+    },
+    "judge/packet/candidate-2-v2-booking-empty-375.png": {
+      "sha256": "8b1056c5ab304367ce0c1a2ac010ad2c308fb1345edba9aab23745f9b46fdb86",
+      "bytes": 199895
+    },
+    "judge/packet/candidate-2-v3-other-a-1440.png": {
+      "sha256": "4f98a94f99b10013a12bc6ec6f0a960588f3e98fbd6215fc78262ed2b1d2b6b6",
+      "bytes": 360727
+    },
+    "judge/packet/candidate-2-v3-other-a-375.png": {
+      "sha256": "4ad2493b9e87a7468d611944b4ccf23d3ec3d70cda4e685b5c14ec613391a74f",
+      "bytes": 324536
+    },
+    "judge/packet/candidate-2-v4-refused-postcode-1440.png": {
+      "sha256": "74000cc3770aad91d85ae476bfec526a8a10ade03adc702b29a498354ab0ac04",
+      "bytes": 243295
+    },
+    "judge/packet/candidate-2-v4-refused-postcode-375.png": {
+      "sha256": "333bf0b8b64a23f0eb0967405f25aefe741be910d8276d80bb82b5a63fab1858",
+      "bytes": 230818
+    },
+    "judge/packet/candidate-2-v5-refused-sewage-1440.png": {
+      "sha256": "3abcfae031b2c8bfa1c229d79ed0096921ae0586041d510f861ae644eb38a2e2",
+      "bytes": 239617
+    },
+    "judge/packet/candidate-2-v5-refused-sewage-375.png": {
+      "sha256": "6629f9e5c9873d296ef64a95970ab813aba9b31080b5efe06a0916e19d9db2bb",
+      "bytes": 228404
+    },
+    "judge/packet/candidate-2-v6-booked-1440.png": {
+      "sha256": "e0333674418ff85b4c284321421ed2eb6cdd952cd3e085d08febd6594b790711",
+      "bytes": 136383
+    },
+    "judge/packet/candidate-2-v6-booked-375.png": {
+      "sha256": "7a5c6b3e3d6608f3a109bd98d9432dc4bbac6ec67673608275faf08ad0e1c417",
+      "bytes": 134587
+    }
+  }
+}

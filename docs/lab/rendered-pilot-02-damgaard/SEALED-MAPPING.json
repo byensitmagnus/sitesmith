@@ -1,0 +1,12 @@
+{
+  "sealedBefore": "the judge call",
+  "rule": "sha256 of the two landing screenshots at 1440 joined by a colon, first four bytes, even keeps S first",
+  "candidateToArm": {
+    "candidate-1": "S",
+    "candidate-2": "P"
+  },
+  "armMeaning": {
+    "S": "built with SiteSmith",
+    "P": "built with plain Sonnet, no tooling"
+  }
+}

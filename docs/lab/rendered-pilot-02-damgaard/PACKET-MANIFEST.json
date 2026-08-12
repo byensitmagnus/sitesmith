@@ -1,0 +1,290 @@
+{
+  "widths": {
+    "landing": [
+      375,
+      768,
+      1440
+    ],
+    "rest": [
+      375,
+      1440
+    ]
+  },
+  "shots": {
+    "S": [
+      {
+        "id": "v1-landing",
+        "what": "the page a visitor arrives on",
+        "widths": [
+          375,
+          768,
+          1440
+        ],
+        "path": "/"
+      },
+      {
+        "id": "v2-booking-empty",
+        "what": "the booking form before anything is filled in",
+        "widths": [
+          375,
+          1440
+        ],
+        "path": "/"
+      },
+      {
+        "id": "v4-refused-postcode",
+        "what": "what the site shows when the address is outside the area it serves",
+        "widths": [
+          375,
+          1440
+        ],
+        "path": "/"
+      },
+      {
+        "id": "v5-refused-sewage",
+        "what": "what the site shows when the answer is one the office refuses the job for",
+        "widths": [
+          375,
+          1440
+        ],
+        "path": "/"
+      },
+      {
+        "id": "v6-booked",
+        "what": "what the site shows once a booking goes through",
+        "widths": [
+          375,
+          1440
+        ],
+        "path": "/"
+      }
+    ],
+    "P": [
+      {
+        "id": "v1-landing",
+        "what": "the page a visitor arrives on",
+        "widths": [
+          375,
+          768,
+          1440
+        ],
+        "path": "/"
+      },
+      {
+        "id": "v2-booking-empty",
+        "what": "the booking form before anything is filled in",
+        "widths": [
+          375,
+          1440
+        ],
+        "path": "/bestil"
+      },
+      {
+        "id": "v3-other-a",
+        "what": "another page the site links to",
+        "widths": [
+          375,
+          1440
+        ],
+        "path": "/priser"
+      },
+      {
+        "id": "v4-refused-postcode",
+        "what": "what the site shows when the address is outside the area it serves",
+        "widths": [
+          375,
+          1440
+        ],
+        "path": "/bestil"
+      },
+      {
+        "id": "v5-refused-sewage",
+        "what": "what the site shows when the answer is one the office refuses the job for",
+        "widths": [
+          375,
+          1440
+        ],
+        "path": "/bestil"
+      },
+      {
+        "id": "v6-booked",
+        "what": "what the site shows once a booking goes through",
+        "widths": [
+          375,
+          1440
+        ],
+        "path": "/bestil"
+      }
+    ]
+  },
+  "manifest": [
+    {
+      "label": "candidate-1",
+      "view": "v1-landing",
+      "what": "the page a visitor arrives on",
+      "width": 375,
+      "sha256": "1b1d492e8bc75ff8f8b51cfd0370dd8b2330c132270a00d52219b83c70ee31ce"
+    },
+    {
+      "label": "candidate-1",
+      "view": "v1-landing",
+      "what": "the page a visitor arrives on",
+      "width": 768,
+      "sha256": "f961bf7ebfa784c44f9e146aab8cee4bb6bea0bc5600c07a27d531bc1c1af103"
+    },
+    {
+      "label": "candidate-1",
+      "view": "v1-landing",
+      "what": "the page a visitor arrives on",
+      "width": 1440,
+      "sha256": "eaeecf62ef3d3325720d6a0b8544a11d4bbaee41ff7dffd780e68ecfb40ec138"
+    },
+    {
+      "label": "candidate-1",
+      "view": "v2-booking-empty",
+      "what": "the booking form before anything is filled in",
+      "width": 375,
+      "sha256": "1b1d492e8bc75ff8f8b51cfd0370dd8b2330c132270a00d52219b83c70ee31ce"
+    },
+    {
+      "label": "candidate-1",
+      "view": "v2-booking-empty",
+      "what": "the booking form before anything is filled in",
+      "width": 1440,
+      "sha256": "eaeecf62ef3d3325720d6a0b8544a11d4bbaee41ff7dffd780e68ecfb40ec138"
+    },
+    {
+      "label": "candidate-1",
+      "view": "v4-refused-postcode",
+      "what": "what the site shows when the address is outside the area it serves",
+      "width": 375,
+      "sha256": "11725ba2b0e7c7dbdfce262386b7e2352631ceb1aa3b17388991242bf7feb1e0"
+    },
+    {
+      "label": "candidate-1",
+      "view": "v4-refused-postcode",
+      "what": "what the site shows when the address is outside the area it serves",
+      "width": 1440,
+      "sha256": "18b6ba04cadfdc04319dac992c31ee60b65a6ddb9e52d969453f8f151e3ecd0b"
+    },
+    {
+      "label": "candidate-1",
+      "view": "v5-refused-sewage",
+      "what": "what the site shows when the answer is one the office refuses the job for",
+      "width": 375,
+      "sha256": "231582321272a65bbe6538f5744658421e40a420f6e2b80861168d3ea1d432f7"
+    },
+    {
+      "label": "candidate-1",
+      "view": "v5-refused-sewage",
+      "what": "what the site shows when the answer is one the office refuses the job for",
+      "width": 1440,
+      "sha256": "500f185db88ae71789f251111f183b6a52b3a139b200be9433c088b37361644a"
+    },
+    {
+      "label": "candidate-1",
+      "view": "v6-booked",
+      "what": "what the site shows once a booking goes through",
+      "width": 375,
+      "sha256": "adcb0e3392b75fb394e38615bb46c511d2f77071e73495ecc5d8d9c8b6181c9b"
+    },
+    {
+      "label": "candidate-1",
+      "view": "v6-booked",
+      "what": "what the site shows once a booking goes through",
+      "width": 1440,
+      "sha256": "0b6b5845f2f2b465cb528d8eec7d4eca2de12c9b0ed79bfbdab08a809d1e7101"
+    },
+    {
+      "label": "candidate-2",
+      "view": "v1-landing",
+      "what": "the page a visitor arrives on",
+      "width": 375,
+      "sha256": "596ce123d602ca36c414f2c024f54bbe898ee3fcc326e4833630540e8ab10a3d"
+    },
+    {
+      "label": "candidate-2",
+      "view": "v1-landing",
+      "what": "the page a visitor arrives on",
+      "width": 768,
+      "sha256": "babf25d4b3ea08361106bbb61db888a6bf4a224329790369d8084f5aa0f2ecbd"
+    },
+    {
+      "label": "candidate-2",
+      "view": "v1-landing",
+      "what": "the page a visitor arrives on",
+      "width": 1440,
+      "sha256": "bb885cc590976de648f97905710020e0aa3d98e96eb0de267646bd25dfd4351d"
+    },
+    {
+      "label": "candidate-2",
+      "view": "v2-booking-empty",
+      "what": "the booking form before anything is filled in",
+      "width": 375,
+      "sha256": "8b1056c5ab304367ce0c1a2ac010ad2c308fb1345edba9aab23745f9b46fdb86"
+    },
+    {
+      "label": "candidate-2",
+      "view": "v2-booking-empty",
+      "what": "the booking form before anything is filled in",
+      "width": 1440,
+      "sha256": "25ffe8d821c354536482979df89e780be12322315f5ea91214abf5d5becb1005"
+    },
+    {
+      "label": "candidate-2",
+      "view": "v3-other-a",
+      "what": "another page the site links to",
+      "width": 375,
+      "sha256": "4ad2493b9e87a7468d611944b4ccf23d3ec3d70cda4e685b5c14ec613391a74f"
+    },
+    {
+      "label": "candidate-2",
+      "view": "v3-other-a",
+      "what": "another page the site links to",
+      "width": 1440,
+      "sha256": "4f98a94f99b10013a12bc6ec6f0a960588f3e98fbd6215fc78262ed2b1d2b6b6"
+    },
+    {
+      "label": "candidate-2",
+      "view": "v4-refused-postcode",
+      "what": "what the site shows when the address is outside the area it serves",
+      "width": 375,
+      "sha256": "333bf0b8b64a23f0eb0967405f25aefe741be910d8276d80bb82b5a63fab1858"
+    },
+    {
+      "label": "candidate-2",
+      "view": "v4-refused-postcode",
+      "what": "what the site shows when the address is outside the area it serves",
+      "width": 1440,
+      "sha256": "74000cc3770aad91d85ae476bfec526a8a10ade03adc702b29a498354ab0ac04"
+    },
+    {
+      "label": "candidate-2",
+      "view": "v5-refused-sewage",
+      "what": "what the site shows when the answer is one the office refuses the job for",
+      "width": 375,
+      "sha256": "6629f9e5c9873d296ef64a95970ab813aba9b31080b5efe06a0916e19d9db2bb"
+    },
+    {
+      "label": "candidate-2",
+      "view": "v5-refused-sewage",
+      "what": "what the site shows when the answer is one the office refuses the job for",
+      "width": 1440,
+      "sha256": "3abcfae031b2c8bfa1c229d79ed0096921ae0586041d510f861ae644eb38a2e2"
+    },
+    {
+      "label": "candidate-2",
+      "view": "v6-booked",
+      "what": "what the site shows once a booking goes through",
+      "width": 375,
+      "sha256": "7a5c6b3e3d6608f3a109bd98d9432dc4bbac6ec67673608275faf08ad0e1c417"
+    },
+    {
+      "label": "candidate-2",
+      "view": "v6-booked",
+      "what": "what the site shows once a booking goes through",
+      "width": 1440,
+      "sha256": "e0333674418ff85b4c284321421ed2eb6cdd952cd3e085d08febd6594b790711"
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <style>
+    .frame { stroke: #5B5245; }
+    .shaft { stroke: #201C16; }
+    .tick { stroke: #8A4A12; }
+    rect.bg { fill: #F0ECE3; }
+    @media (prefers-color-scheme: dark) {
+      .frame { stroke: #C7BEAE; }
+      .shaft { stroke: #F2EDE3; }
+      .tick { stroke: #E2954A; }
+      rect.bg { fill: #16130F; }
+    }
+  </style>
+  <rect class="bg" x="0" y="0" width="32" height="32" rx="4" />
+  <path class="frame" d="M4 11 L4 4 L11 4" fill="none" stroke-width="2" />
+  <path class="frame" d="M28 21 L28 28 L21 28" fill="none" stroke-width="2" />
+  <line class="shaft" x1="16" y1="6" x2="16" y2="26" stroke-width="2" />
+  <line class="tick" x1="9" y1="14.6" x2="23" y2="14.6" stroke-width="3" stroke-linecap="round" />
+</svg>

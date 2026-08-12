@@ -1,0 +1,169 @@
+{
+  "label": "S",
+  "base": "http://localhost:3518",
+  "widths": [
+    375,
+    768,
+    1440
+  ],
+  "checks": {
+    "pages": [
+      "/",
+      "/kvittering"
+    ],
+    "httpFailures": {
+      "count": 0,
+      "detail": []
+    },
+    "brokenLinks": {
+      "count": 0,
+      "detail": []
+    },
+    "consoleErrors": {
+      "count": 0,
+      "detail": []
+    },
+    "horizontalOverflow": {
+      "count": 0,
+      "detail": []
+    },
+    "clippedContent": {
+      "count": 0,
+      "detail": []
+    },
+    "axe": {
+      "violations": 6,
+      "byId": {
+        "dlitem": 3,
+        "listitem": 3
+      },
+      "detail": [
+        {
+          "path": "/kvittering",
+          "width": 375,
+          "id": "dlitem",
+          "impact": "serious",
+          "nodes": 8
+        },
+        {
+          "path": "/kvittering",
+          "width": 375,
+          "id": "listitem",
+          "impact": "serious",
+          "nodes": 4
+        },
+        {
+          "path": "/kvittering",
+          "width": 768,
+          "id": "dlitem",
+          "impact": "serious",
+          "nodes": 8
+        },
+        {
+          "path": "/kvittering",
+          "width": 768,
+          "id": "listitem",
+          "impact": "serious",
+          "nodes": 4
+        },
+        {
+          "path": "/kvittering",
+          "width": 1440,
+          "id": "dlitem",
+          "impact": "serious",
+          "nodes": 8
+        },
+        {
+          "path": "/kvittering",
+          "width": 1440,
+          "id": "listitem",
+          "impact": "serious",
+          "nodes": 4
+        }
+      ]
+    },
+    "briefFactsStated": {
+      "of": 9,
+      "present": 9,
+      "missing": []
+    },
+    "forbiddenClaims": {
+      "asserted": 0,
+      "disclaimed": 5,
+      "detail": [
+        {
+          "name": "a duty line, emergency cover or weekend call-out",
+          "asserted": 0,
+          "disclaimed": 2,
+          "examples": []
+        },
+        {
+          "name": "working with or being approved by insurers",
+          "asserted": 0,
+          "disclaimed": 0,
+          "examples": []
+        },
+        {
+          "name": "an authorisation, certification, trade approval or membership",
+          "asserted": 0,
+          "disclaimed": 0,
+          "examples": []
+        },
+        {
+          "name": "competence with mould",
+          "asserted": 0,
+          "disclaimed": 2,
+          "examples": []
+        },
+        {
+          "name": "a guarantee",
+          "asserted": 0,
+          "disclaimed": 1,
+          "examples": []
+        },
+        {
+          "name": "reviews, testimonials or stars",
+          "asserted": 0,
+          "disclaimed": 0,
+          "examples": []
+        }
+      ]
+    },
+    "bookingPath": "/"
+  },
+  "journey": [
+    {
+      "id": "empty-state-readable",
+      "goal": "before filling anything in, a visitor can read the price, the 75 km limit and the refusals",
+      "verdict": "PASS",
+      "why": "price true, 75 km true, refusals true"
+    },
+    {
+      "id": "refusal-postcode",
+      "goal": "a postcode outside the area is refused on the postcode field, in the brief's own words, with the other answers kept",
+      "verdict": "PASS",
+      "why": "the brief's wording appeared; focus landed on postnummer; 12 of 12 answers kept",
+      "evidence": [
+        "5. PostnummerFire cifre, f.eks. 7620Fejl: 2200 København N ligger uden for de 75 km fra Lemvig. Vi kører ikke derover, heller ikke mod ekstra kørsel. Ring 97 00 41 20 mandag til fredag 07:00–14:00, så siger vi hvem der dækker området.",
+        "Fejl: 2200 København N ligger uden for de 75 km fra Lemvig. Vi kører ikke derover, heller ikke mod ekstra kørsel. Ring 97 00 41 20 mandag til fredag 07:00–14:00, så siger vi hvem der dækker området."
+      ]
+    },
+    {
+      "id": "refusal-sewage",
+      "goal": "sewage in the construction is refused on that field, in the brief's own words, with the other answers kept",
+      "verdict": "PASS",
+      "why": "the brief's wording appeared; focus landed on kloakvand; 12 of 12 answers kept",
+      "evidence": [
+        "8. Er der kloakvand eller spildevand involveret?JaNejVed ikkeFejl: Er der kloakvand eller spildevand i konstruktionen, må vi ikke røre den. Det er en skadeservice-opgave, ikke vores. Ring 97 00 41 20, så henviser vi videre samme dag.",
+        "Fejl: Er der kloakvand eller spildevand i konstruktionen, må vi ikke røre den. Det er en skadeservice-opgave, ikke vores. Ring 97 00 41 20, så henviser vi videre samme dag."
+      ]
+    },
+    {
+      "id": "receipt",
+      "goal": "a complete booking produces the case number and the do-and-do-not list",
+      "verdict": "PASS",
+      "why": "case number shown, the do-and-do-not list shown, ended at /kvittering",
+      "evidence": []
+    }
+  ]
+}

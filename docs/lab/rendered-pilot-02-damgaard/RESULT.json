@@ -1,0 +1,116 @@
+{
+  "pilot": "rendered product value 02",
+  "brief": "damgaard-estrik",
+  "surface": "buy",
+  "stack": "nextjs",
+  "productFrozenAt": "3d19e7cb0d7c9e91653abef6bee6c43b2e1bbc28",
+  "verdict": {
+    "winner": "P",
+    "confidence": "clear",
+    "design": {
+      "S": 5,
+      "P": 8
+    }
+  },
+  "siteSmithResult": "LOSS",
+  "checks": {
+    "S": {
+      "pages": 2,
+      "httpFailures": 0,
+      "brokenLinks": 0,
+      "consoleErrors": 0,
+      "horizontalOverflow": 0,
+      "clippedContent": 0,
+      "axeViolations": 6,
+      "axeById": {
+        "dlitem": 3,
+        "listitem": 3
+      },
+      "briefFacts": {
+        "of": 9,
+        "present": 9,
+        "missing": []
+      },
+      "forbiddenAsserted": 0
+    },
+    "P": {
+      "pages": 4,
+      "httpFailures": 0,
+      "brokenLinks": 0,
+      "consoleErrors": 0,
+      "horizontalOverflow": 0,
+      "clippedContent": 0,
+      "axeViolations": 0,
+      "axeById": {},
+      "briefFacts": {
+        "of": 9,
+        "present": 9,
+        "missing": []
+      },
+      "forbiddenAsserted": 0
+    }
+  },
+  "journey": {
+    "S": [
+      {
+        "empty-state-readable": "PASS"
+      },
+      {
+        "refusal-postcode": "PASS"
+      },
+      {
+        "refusal-sewage": "PASS"
+      },
+      {
+        "receipt": "PASS"
+      }
+    ],
+    "P": [
+      {
+        "empty-state-readable": "PASS"
+      },
+      {
+        "refusal-postcode": "PASS"
+      },
+      {
+        "refusal-sewage": "PASS"
+      },
+      {
+        "receipt": "PASS"
+      }
+    ]
+  },
+  "economics": {
+    "S": {
+      "tokens": 1633489,
+      "toolCalls": 828,
+      "wallMs": 13496033,
+      "attempts": 2
+    },
+    "P": {
+      "tokens": 528869,
+      "toolCalls": 272,
+      "wallMs": 5333236,
+      "attempts": 1
+    },
+    "multiples": {
+      "tokens": 3.09,
+      "toolCalls": 3.04,
+      "wall": 2.53
+    }
+  },
+  "judgeCost": {
+    "tokens": 188856,
+    "toolCalls": 72,
+    "model": "claude-opus-5"
+  },
+  "workflowsSpent": 3,
+  "budget": 3,
+  "deterministicDefects": [
+    "D-A clipping.mjs does not see SVG text",
+    "D-B verification never renders pages unreachable from the entry",
+    "D-C two sibling skill trees named for the product caused an unrecoverable delete",
+    "D-D nothing measures adjacent text running together"
+  ],
+  "doesNotClaim": "that plain AI beats SiteSmith generally"
+}

@@ -1,0 +1,8 @@
+1. The eye lands on the full-width black disclaimer bar first, because it is the highest-contrast band on the screen and sits above everything else; that is the fiction notice, not the price/area/refusal facts the brief says the page must lead with, though the instrument and the price panel are what the eye moves to immediately after.
+2. The booking form's stacked, evenly-spaced labeled fields read as the most generic pattern on the page; nothing about a plain vertical form distinguishes this trade from any other online form.
+3. Yes at 1440, the diagram and its readout sit together, well inside the first screen; at 375 the drawing itself is fully visible in the first 812px, though its accompanying readout list continues just below the fold.
+4. The "Udstyr og kapacitet" section is emptiest at 1440: its label/value pairs are capped to a 65-character measure inside a much wider column, leaving a wide grey field to the right that is leftover from the width cap rather than a deliberate composition choice.
+5. The six largest words, the h1, read "Vi tørrer gulvet ud efter måling" (we dry the floor by measurement); a generic drying company could claim "we dry your floor" but the "by measurement, not by guessing" clause is specific to how this business actually works, not a competitor's default line.
+6. Covering the top third, the price table, the numbered process and the price-per-borehul language still say exactly what this is without needing the hero at all.
+
+ACCEPT. The single worst thing: the disclaimer bar's own contrast makes it the first thing the eye lands on, ahead of the content the brief says must be readable in the first thirty seconds, even though the facts that matter (price, radius, refusals) are one glance further down and fully in view.

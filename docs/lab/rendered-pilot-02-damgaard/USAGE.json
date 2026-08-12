@@ -1,0 +1,42 @@
+{
+  "note": "the judge saw none of this",
+  "S": {
+    "arm": "SiteSmith",
+    "tokens": 1633489,
+    "toolCalls": 828,
+    "wallMs": 13496033,
+    "attempts": 2,
+    "stallRetry": "stalled after 8481s, retried 1/5"
+  },
+  "P": {
+    "arm": "plain Sonnet",
+    "tokens": 528869,
+    "toolCalls": 272,
+    "wallMs": 5333236,
+    "attempts": 1
+  },
+  "judge": {
+    "model": "claude-opus-5",
+    "effort": "max",
+    "tokens": 188856,
+    "toolCalls": 72,
+    "wallMs": 830532
+  },
+  "multiples": {
+    "tokens": 3.09,
+    "toolCalls": 3.04,
+    "wall": 2.53
+  },
+  "pilot01ForComparison": {
+    "S": {
+      "tokens": 634905,
+      "wallMinutes": 79
+    },
+    "P": {
+      "tokens": 287592,
+      "wallMinutes": 44
+    }
+  },
+  "buildModel": "sonnet, resolved claude-sonnet-5, effort max",
+  "productFrozenAt": "3d19e7cb0d7c9e91653abef6bee6c43b2e1bbc28"
+}
