@@ -1899,7 +1899,21 @@ if (!direction || !direction.palette || !direction.type) {
          not be is a release. */
       const photoRefusal = DRAFT ? warn : refuse;
       const wantsPhoto = /\b(buy|experience|marketing|campaign|launch|editorial|redesign)\b/i.test(declaredSurface);
-      const hasPhoto = markupFiles.some((f) => /<img\b|<picture\b|background-image\s*:\s*url\(\s*['"]?[^'")]*\.(jpe?g|png|webp|avif)/i.test(textOf(f)));
+      /* A drawing in an <img> used to count. look.md's ladder is client, then licensed,
+         then drawn: only the first two satisfy a page that needs a photograph. */
+      const RASTER_SRC = /src\s*=\s*["'](?:data:image\/(?:jpeg|jpg|png|webp|avif)|[^"']*\.(?:jpe?g|png|webp|avif))/i;
+      const PHOTO_SOURCE = /\b(supplied|client|shot|photograph|licensed|sourced|on[- ]site)\b/i;
+      const hasPhoto = markupFiles.some((f) => {
+        const t = textOf(f);
+        if (/background-image\s*:\s*url\(\s*['"]?[^'")]*\.(jpe?g|png|webp|avif)/i.test(t)) return true;
+        for (const m of t.matchAll(/<img\b[^>]*>/gi)) {
+          if (!RASTER_SRC.test(m[0])) continue;
+          const id = (m[0].match(/data-asset=["']([^"']+)["']/) ?? [])[1];
+          const row = id && manifest.find((r) => r.id === id);
+          if (row && PHOTO_SOURCE.test(row.source)) return true;
+        }
+        return false;
+      });
       if (wantsPhoto && !hasPhoto) {
         photoRefusal('look/no-photograph', MANIFEST_PATH, 1,
           'no photograph anywhere on a page about something that exists. look.md section 3: ask the client for one, source a licensed one, or ship as a draft with the missing asset named. A drawing is the right answer for a section and the wrong one for a thing you could photograph.');

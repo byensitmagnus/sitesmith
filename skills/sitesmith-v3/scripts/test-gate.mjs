@@ -93,6 +93,12 @@ const CASES = [
     why: 'a drawing is the right answer for a section and the wrong one for a thing you could photograph',
   },
   {
+    name: 'a drawing in an img tag is not a photograph',
+    fixture: 'drawn-as-photo', browser: true, expect: 2,
+    must: ['look/no-photograph'],
+    why: 'putting the drawing in an img tag used to satisfy the photograph check, which is how a page drew its way out of the ask',
+  },
+  {
     name: 'a page with nowhere to go and nothing saying who it is',
     fixture: 'no-shell', browser: true, expect: 2,
     must: ['look/no-way-out', 'look/no-shell'],
