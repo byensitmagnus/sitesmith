@@ -430,8 +430,22 @@ const sectionOf = (name) => {
   return directionRaw.slice(m.index + m[0].length).split(/^[ 	]*#{1,6}[ 	]/m)[0].trim();
 };
 const shellSection = sectionOf('The shell');
-const riskAnswerSelector = (sectionOf('Answer to the risk').match(/`([.#][\w-]+)`/) ?? [])[1] ?? null;
-const secondReadingSelector = (sectionOf('Second reading').match(/`([.#][\w-]+)`/) ?? [])[1] ?? null;
+/* ledger.mjs accepts a backtick selector, a bare .class/#id, or a <tag>. This used to
+   read only `(.#name)`, so `a.risk-reply` and `<footer>` were treated as no answer and
+   the page shipped. */
+const namedSelector = (section) => {
+  const tick = section.match(/`([^`]+)`/);
+  if (tick) {
+    const s = tick[1].trim();
+    if (/^[.#\[]/.test(s) || /^[a-z][\w-]*(?:[.#\[:\s]|$)/i.test(s)) return s;
+  }
+  const bare = section.match(/(^|[^`\w-])([.#][\w-]+)/);
+  if (bare) return bare[2];
+  const tag = section.match(/<([a-z][\w-]*)>/i);
+  return tag ? tag[1] : null;
+};
+const riskAnswerSelector = namedSelector(sectionOf('Answer to the risk'));
+const secondReadingSelector = namedSelector(sectionOf('Second reading'));
 
 const journeyDir = join(BUILD, 'journeys');
 const journeySpecs = (await readdir(journeyDir).catch(() => null))?.filter((f) => f.endsWith('.spec.mjs')) ?? null;

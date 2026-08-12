@@ -99,6 +99,12 @@ const CASES = [
     why: 'putting the drawing in an img tag used to satisfy the photograph check, which is how a page drew its way out of the ask',
   },
   {
+    name: 'a risk answered by an element that is not on the page',
+    fixture: 'risk-unanswered', browser: true, expect: 2,
+    must: ['look/risk-unanswered'],
+    why: 'the record named a.risk-reply as the answer and that node is not in the DOM. The gate used to ignore any selector that was not a lone class or id in backticks',
+  },
+  {
     name: 'a page with nowhere to go and nothing saying who it is',
     fixture: 'no-shell', browser: true, expect: 2,
     must: ['look/no-way-out', 'look/no-shell'],
