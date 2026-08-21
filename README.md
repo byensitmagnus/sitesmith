@@ -1,3 +1,7 @@
+---
+source: ai
+---
+
 # SiteSmith
 
 **A browser release loop for coding agents that build websites.**
@@ -23,6 +27,20 @@ ordinary workflow is three commands: `init → build → audit`.
 > **Evidence boundary.** SiteSmith's browser checks catch accessibility, links, console and
 > overflow defects. Round 8's three pages averaged 8.21 in individual review, but the set failed
 > portfolio diversity. SiteSmith does not claim that it measurably improves an arbitrary agent.
+
+## Exactly which AI repository to use
+
+| Repository | Use it when | Do not use it for | Canonical content |
+| --- | --- | --- | --- |
+| **`sitesmith` (this repository)** | You are changing or releasing the SiteSmith website-building product: its skill, pipeline, browser verifier, benchmarks, gallery or provider packs. | General AI memory, private context, Byens IT onboarding or unrelated website projects. | SiteSmith source, tests, evidence and releases. |
+| [`ai-memory`](https://github.com/byensitmagnus/ai-memory) | You are changing generic sync, hooks, installer, doctor, privacy or adapters across AI harnesses. | SiteSmith behavior or design rules. | Portable multi-harness runtime. |
+| `magnusbrain` (private) | The content is Magnus/Byens-specific memory, projects, decisions, context or custom operating rules. | Public SiteSmith development. | Private source of truth and installed skill selections. |
+| `byens-ai-setup` (private) | A Byens IT teammate must receive the approved team bundle of rules, skills, agents, MCP and shared memory. | SiteSmith source development. | Team distribution and onboarding. |
+
+Decision rule: edit SiteSmith only here. Copies under `magnusbrain` or
+`byens-ai-setup` are installed snapshots, never development sources. Release
+from this repository first, then refresh those snapshots. The archived
+`byens-brain` repository is history only and must never receive new work.
 
 ## Showcase reset: 0/8
 
