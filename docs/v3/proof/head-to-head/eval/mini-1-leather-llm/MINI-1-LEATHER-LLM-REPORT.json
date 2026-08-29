@@ -1,0 +1,31 @@
+{
+  "comparison": "mini-1-leather-llm",
+  "briefId": "01-leather-goods",
+  "keyMap": {
+    "P": "sitesmith-host-llm",
+    "Q": "frontend-design-frozen-v2"
+  },
+  "averages": {
+    "sitesmith-host-llm": 57.5,
+    "frontend-design-frozen-v2": 59
+  },
+  "scoresDetail": {
+    "A": {
+      "P": 58,
+      "Q": 59
+    },
+    "B": {
+      "P": 57,
+      "Q": 59
+    }
+  },
+  "trail": {
+    "sitesmithRulesMini1": 40,
+    "sitesmithHostLlmMini1": 57.5,
+    "frontendDesignFrozenV2": 59
+  },
+  "verdict": "MINI FAIL — HOST LLM STILL TRAILS FROZEN FRONTEND-DESIGN (NARROW)",
+  "apiKey": false,
+  "creativePath": "host-llm-same-class + evidence-guard",
+  "createdAt": "2026-07-31T21:30:08.846Z"
+}

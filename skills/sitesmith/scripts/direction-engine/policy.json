@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "policyVersion": "direction-engine-v3-slice-1.0.0",
+  "policyVersion": "direction-engine-v3-orchestrator-1.1.0",
   "worldCount": 5,
   "cardCount": 3,
   "minMacroAxisDiff": 3,
@@ -13,5 +13,8 @@
   "remoteCatalog": false,
   "rejectAllEnabled": true,
   "userChoiceRequired": true,
-  "adjudicatorFallbackOnly": true
+  "adjudicatorFallbackOnly": true,
+  "creativePass": "rules",
+  "creativePassLlmFallbackToRules": true,
+  "architecture": "orchestrator"
 }

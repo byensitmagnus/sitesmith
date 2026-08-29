@@ -1,0 +1,94 @@
+{
+  "evaluator": "B",
+  "briefId": "02-atelier-printworks",
+  "scores": {
+    "P": {
+      "briefFit": 4,
+      "subjectSpecificity": 4,
+      "originality": 3,
+      "composition": 4,
+      "hierarchy": 4,
+      "typography": 3,
+      "materiality": 4,
+      "assetStrategy": 3,
+      "interaction": 3,
+      "signature": 3,
+      "antiCliche": 4,
+      "implementability": 3,
+      "total": 42
+    },
+    "Q": {
+      "briefFit": 2,
+      "subjectSpecificity": 2,
+      "originality": 2,
+      "composition": 2,
+      "hierarchy": 2,
+      "typography": 2,
+      "materiality": 2,
+      "assetStrategy": 2,
+      "interaction": 2,
+      "signature": 1,
+      "antiCliche": 2,
+      "implementability": 2,
+      "total": 23
+    },
+    "R": {
+      "briefFit": 5,
+      "subjectSpecificity": 5,
+      "originality": 5,
+      "composition": 5,
+      "hierarchy": 5,
+      "typography": 5,
+      "materiality": 5,
+      "assetStrategy": 5,
+      "interaction": 5,
+      "signature": 5,
+      "antiCliche": 5,
+      "implementability": 4,
+      "total": 59
+    },
+    "S": {
+      "briefFit": 5,
+      "subjectSpecificity": 5,
+      "originality": 5,
+      "composition": 5,
+      "hierarchy": 5,
+      "typography": 5,
+      "materiality": 5,
+      "assetStrategy": 5,
+      "interaction": 5,
+      "signature": 5,
+      "antiCliche": 5,
+      "implementability": 5,
+      "total": 60
+    },
+    "T": {
+      "briefFit": 5,
+      "subjectSpecificity": 5,
+      "originality": 4,
+      "composition": 4,
+      "hierarchy": 5,
+      "typography": 4,
+      "materiality": 5,
+      "assetStrategy": 5,
+      "interaction": 4,
+      "signature": 4,
+      "antiCliche": 5,
+      "implementability": 5,
+      "total": 55
+    }
+  },
+  "qualitative": {
+    "wouldBuild": "S",
+    "mostGeneric": "Q",
+    "bestGrounded": "S",
+    "strongestDirection": "R"
+  },
+  "comments": {
+    "P": "Correct enquire-first hierarchy and brand chalk/ink/coral, but composition is a thin left-object/right-type axis, signature is only a selector name, plates stay diagram-led, and unknowns are undeclared.",
+    "Q": "Portfolio Grid + Neo Brutalism with Space Grotesk and pink/cyan system accents fights coastal letterpress evidence; editions, Heidelberg facts, and enquire journey are barely bound — generic creative portfolio retrieval.",
+    "R": "Ferry departures board turns Harbour Night / Chalk Path / Ferry Board into instrument rows with coral registration lamp and view→facts→enquire columns — strongest distinctive direction; implementability dips only if board becomes empty transit UI without real edition facts.",
+    "S": "Locked platen chase + job-ticket rail + coral registration cross is print-native end-to-end: hex tokens, three type roles, honest Ferry Board pending, density-4 chalk space, motion-3 settle — best grounded ship package.",
+    "T": "Solid press-room asymmetric portfolio with three edition slots and coral registration motif; fully anti-cliché and honest on needed assets, but less instrument-specific than chase or departures board."
+  }
+}

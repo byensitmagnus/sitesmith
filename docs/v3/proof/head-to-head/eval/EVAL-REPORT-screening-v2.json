@@ -1,0 +1,505 @@
+{
+  "phase": "blind-evaluation",
+  "completedAt": "2026-07-31T20:12:53.812Z",
+  "criteria": [
+    "briefFit",
+    "subjectSpecificity",
+    "originality",
+    "composition",
+    "hierarchy",
+    "typography",
+    "materiality",
+    "assetStrategy",
+    "interaction",
+    "signature",
+    "antiCliche",
+    "implementability"
+  ],
+  "briefs": {
+    "01-leather-goods": {
+      "ranking": [
+        {
+          "arm": "frontend-design",
+          "totalAvg": 59.5,
+          "totalA": 59,
+          "totalB": 60,
+          "label": "T"
+        },
+        {
+          "arm": "impeccable",
+          "totalAvg": 58,
+          "totalA": 58,
+          "totalB": 58,
+          "label": "R"
+        },
+        {
+          "arm": "taste-skill",
+          "totalAvg": 56,
+          "totalA": 54,
+          "totalB": 58,
+          "label": "Q"
+        },
+        {
+          "arm": "sitesmith",
+          "totalAvg": 38.5,
+          "totalA": 34,
+          "totalB": 43,
+          "label": "P"
+        },
+        {
+          "arm": "ui-ux-pro-max",
+          "totalAvg": 23.5,
+          "totalA": 24,
+          "totalB": 23,
+          "label": "S"
+        }
+      ],
+      "sitesmith": {
+        "label": "P",
+        "totalA": 34,
+        "totalB": 43,
+        "totalAvg": 38.5,
+        "criteria": {
+          "briefFit": {
+            "A": 3,
+            "B": 4,
+            "avg": 3.5
+          },
+          "subjectSpecificity": {
+            "A": 3,
+            "B": 4,
+            "avg": 3.5
+          },
+          "originality": {
+            "A": 2,
+            "B": 3,
+            "avg": 2.5
+          },
+          "composition": {
+            "A": 3,
+            "B": 4,
+            "avg": 3.5
+          },
+          "hierarchy": {
+            "A": 4,
+            "B": 4,
+            "avg": 4
+          },
+          "typography": {
+            "A": 2,
+            "B": 3,
+            "avg": 2.5
+          },
+          "materiality": {
+            "A": 3,
+            "B": 4,
+            "avg": 3.5
+          },
+          "assetStrategy": {
+            "A": 4,
+            "B": 4,
+            "avg": 4
+          },
+          "interaction": {
+            "A": 2,
+            "B": 3,
+            "avg": 2.5
+          },
+          "signature": {
+            "A": 2,
+            "B": 3,
+            "avg": 2.5
+          },
+          "antiCliche": {
+            "A": 3,
+            "B": 4,
+            "avg": 3.5
+          },
+          "implementability": {
+            "A": 3,
+            "B": 3,
+            "avg": 3
+          }
+        },
+        "comments": {
+          "A": "Clear proof/action split and product list, but type is only “neutral grotesque”, signature is a vague control name, and sticky desktop column under-serves mobile-first. Reads like a thin template skeleton with correct pack nouns.",
+          "B": "Clear proof-left/action-right spine and brand materials, but type is only “neutral grotesque”, signature is a name without mechanism, mobile-first journey is thin, and unknowns are undeclared despite thin evidence edges."
+        }
+      },
+      "bestUpstream": {
+        "arm": "frontend-design",
+        "totalAvg": 59.5
+      },
+      "outcome": "loss",
+      "qualitativeA": {
+        "wouldBuild": "frontend-design",
+        "mostGeneric": "ui-ux-pro-max",
+        "bestGrounded": "frontend-design",
+        "strongestDirection": "impeccable"
+      },
+      "qualitativeB": {
+        "wouldBuild": "frontend-design",
+        "mostGeneric": "ui-ux-pro-max",
+        "bestGrounded": "taste-skill",
+        "strongestDirection": "impeccable"
+      },
+      "top1Agree": true,
+      "wouldBuildAgree": true,
+      "comments": {
+        "sitesmith": {
+          "A": "Clear proof/action split and product list, but type is only “neutral grotesque”, signature is a vague control name, and sticky desktop column under-serves mobile-first. Reads like a thin template skeleton with correct pack nouns.",
+          "B": "Clear proof-left/action-right spine and brand materials, but type is only “neutral grotesque”, signature is a name without mechanism, mobile-first journey is thin, and unknowns are undeclared despite thin evidence edges."
+        },
+        "taste-skill": {
+          "A": "Strong pack binding: mobile-first spine, hide→make-slot journey, declared have/needed plates, brass-only accent, and honest cream+brass default risk. Signature is solid if less theatrical than R/T. Trade catalog done right.",
+          "B": "Full pick→hide→make-slot lock with mobile stack, price band, 3-week lead, named plates, shape lock, and honest missing stitch-macro — strongest complete build package; signature is solid but less singular than a bench ticket or hide strip."
+        },
+        "impeccable": {
+          "A": "Saddlery bench ticket + gatefold is the most subject-true concept: closed face holds trade facts, open centers Field Tote + hide choice, ticket fills as config. Slight implementability tax for gatefold on mobile; mitigated with sticky CTA.",
+          "B": "Saddlery bench ticket / gatefold is the most subject-true original concept and hierarchy is excellent; gatefold complexity is a real mobile-first risk if the closed face fails to carry trade facts."
+        },
+        "ui-ux-pro-max": {
+          "A": "Newsletter/Content-First + Vibrant & Block-based fights sensory leather trade. Rubik/Nunito and emerald/orange system palette conflict with ink/cream/brass. Animated patterns clash with motion-2. Retrieval-shell, not a product direction.",
+          "B": "Newsletter/Content-First + Vibrant/Block-based with Rubik/Nunito and emerald/orange system palette fights pack brand, motion, and sensory leather ecommerce — template retrieval, not Northline."
+        },
+        "frontend-design": {
+          "A": "Make-slot desk with Hide Grade Strip is the brief’s core care (hide-grade buyers) made visible. Full tokens, mono measurements, plate-first mobile fold, honest missing strap/stitch assets. Highest build confidence without novelty risk.",
+          "B": "Plate-first make-slot desk with Hide Grade Strip matches hide-grade audience exactly; hex tokens, mono measurements, brass-only CTA, and honest missing-asset rules make it the cleanest ship candidate."
+        }
+      }
+    },
+    "02-atelier-printworks": {
+      "ranking": [
+        {
+          "arm": "frontend-design",
+          "totalAvg": 59.5,
+          "totalA": 59,
+          "totalB": 60,
+          "label": "S"
+        },
+        {
+          "arm": "impeccable",
+          "totalAvg": 59,
+          "totalA": 59,
+          "totalB": 59,
+          "label": "R"
+        },
+        {
+          "arm": "taste-skill",
+          "totalAvg": 53,
+          "totalA": 51,
+          "totalB": 55,
+          "label": "T"
+        },
+        {
+          "arm": "sitesmith",
+          "totalAvg": 39,
+          "totalA": 36,
+          "totalB": 42,
+          "label": "P"
+        },
+        {
+          "arm": "ui-ux-pro-max",
+          "totalAvg": 24,
+          "totalA": 25,
+          "totalB": 23,
+          "label": "Q"
+        }
+      ],
+      "sitesmith": {
+        "label": "P",
+        "totalA": 36,
+        "totalB": 42,
+        "totalAvg": 39,
+        "criteria": {
+          "briefFit": {
+            "A": 3,
+            "B": 4,
+            "avg": 3.5
+          },
+          "subjectSpecificity": {
+            "A": 3,
+            "B": 4,
+            "avg": 3.5
+          },
+          "originality": {
+            "A": 2,
+            "B": 3,
+            "avg": 2.5
+          },
+          "composition": {
+            "A": 3,
+            "B": 4,
+            "avg": 3.5
+          },
+          "hierarchy": {
+            "A": 4,
+            "B": 4,
+            "avg": 4
+          },
+          "typography": {
+            "A": 3,
+            "B": 3,
+            "avg": 3
+          },
+          "materiality": {
+            "A": 3,
+            "B": 4,
+            "avg": 3.5
+          },
+          "assetStrategy": {
+            "A": 4,
+            "B": 3,
+            "avg": 3.5
+          },
+          "interaction": {
+            "A": 3,
+            "B": 3,
+            "avg": 3
+          },
+          "signature": {
+            "A": 2,
+            "B": 3,
+            "avg": 2.5
+          },
+          "antiCliche": {
+            "A": 3,
+            "B": 4,
+            "avg": 3.5
+          },
+          "implementability": {
+            "A": 3,
+            "B": 3,
+            "avg": 3
+          }
+        },
+        "comments": {
+          "A": "Object-left/type-right and hover-fact are fine portfolio defaults. Edition-mark signature is name-only; little island/letterpress craft beyond palette nouns. Honest diagram-led assets until plates exist.",
+          "B": "Correct enquire-first hierarchy and brand chalk/ink/coral, but composition is a thin left-object/right-type axis, signature is only a selector name, plates stay diagram-led, and unknowns are undeclared."
+        }
+      },
+      "bestUpstream": {
+        "arm": "frontend-design",
+        "totalAvg": 59.5
+      },
+      "outcome": "loss",
+      "qualitativeA": {
+        "wouldBuild": "frontend-design",
+        "mostGeneric": "ui-ux-pro-max",
+        "bestGrounded": "frontend-design",
+        "strongestDirection": "impeccable"
+      },
+      "qualitativeB": {
+        "wouldBuild": "frontend-design",
+        "mostGeneric": "ui-ux-pro-max",
+        "bestGrounded": "frontend-design",
+        "strongestDirection": "impeccable"
+      },
+      "top1Agree": false,
+      "wouldBuildAgree": true,
+      "comments": {
+        "sitesmith": {
+          "A": "Object-left/type-right and hover-fact are fine portfolio defaults. Edition-mark signature is name-only; little island/letterpress craft beyond palette nouns. Honest diagram-led assets until plates exist.",
+          "B": "Correct enquire-first hierarchy and brand chalk/ink/coral, but composition is a thin left-object/right-type axis, signature is only a selector name, plates stay diagram-led, and unknowns are undeclared."
+        },
+        "ui-ux-pro-max": {
+          "A": "Portfolio Grid + Neo Brutalism + Space Grotesk + system pink/cyan fights chalk/harbour/coral and curator tone. Hard black borders read agency-brutal, not coastal letterpress. Thin pack craft.",
+          "B": "Portfolio Grid + Neo Brutalism with Space Grotesk and pink/cyan system accents fights coastal letterpress evidence; editions, Heidelberg facts, and enquire journey are barely bound — generic creative portfolio retrieval."
+        },
+        "impeccable": {
+          "A": "Ferry departure board is the standout: editions as rows, paper/size/press as columns, coral lamp on active, enquire as destination. Split-flap grammar fits motion-3. Risk of generic transit UI if facts lag is named and mitigated.",
+          "B": "Ferry departures board turns Harbour Night / Chalk Path / Ferry Board into instrument rows with coral registration lamp and view→facts→enquire columns — strongest distinctive direction; implementability dips only if board becomes empty transit UI without real edition facts."
+        },
+        "frontend-design": {
+          "A": "Locked chase + job-ticket rail + coral registration-cross UI is print-native end-to-end. Three type roles, five tokens, honest Ferry Board pending plate. Highest build clarity among the characterful set.",
+          "B": "Locked platen chase + job-ticket rail + coral registration cross is print-native end-to-end: hex tokens, three type roles, honest Ferry Board pending, density-4 chalk space, motion-3 settle — best grounded ship package."
+        },
+        "taste-skill": {
+          "A": "Correct journey and asset honesty with registration-mark motif, but less singular than R/S—reads as a strong variance-locked portfolio plan rather than a memorable studio instrument. Safest generic-good option.",
+          "B": "Solid press-room asymmetric portfolio with three edition slots and coral registration motif; fully anti-cliché and honest on needed assets, but less instrument-specific than chase or departures board."
+        }
+      }
+    },
+    "03-passage-console": {
+      "ranking": [
+        {
+          "arm": "frontend-design",
+          "totalAvg": 59.5,
+          "totalA": 59,
+          "totalB": 60,
+          "label": "P"
+        },
+        {
+          "arm": "impeccable",
+          "totalAvg": 59,
+          "totalA": 59,
+          "totalB": 59,
+          "label": "S"
+        },
+        {
+          "arm": "taste-skill",
+          "totalAvg": 56.5,
+          "totalA": 55,
+          "totalB": 58,
+          "label": "T"
+        },
+        {
+          "arm": "sitesmith",
+          "totalAvg": 41,
+          "totalA": 37,
+          "totalB": 45,
+          "label": "R"
+        },
+        {
+          "arm": "ui-ux-pro-max",
+          "totalAvg": 22.5,
+          "totalA": 20,
+          "totalB": 25,
+          "label": "Q"
+        }
+      ],
+      "sitesmith": {
+        "label": "R",
+        "totalA": 37,
+        "totalB": 45,
+        "totalAvg": 41,
+        "criteria": {
+          "briefFit": {
+            "A": 4,
+            "B": 4,
+            "avg": 4
+          },
+          "subjectSpecificity": {
+            "A": 3,
+            "B": 4,
+            "avg": 3.5
+          },
+          "originality": {
+            "A": 2,
+            "B": 3,
+            "avg": 2.5
+          },
+          "composition": {
+            "A": 3,
+            "B": 4,
+            "avg": 3.5
+          },
+          "hierarchy": {
+            "A": 4,
+            "B": 4,
+            "avg": 4
+          },
+          "typography": {
+            "A": 2,
+            "B": 3,
+            "avg": 2.5
+          },
+          "materiality": {
+            "A": 3,
+            "B": 4,
+            "avg": 3.5
+          },
+          "assetStrategy": {
+            "A": 5,
+            "B": 5,
+            "avg": 5
+          },
+          "interaction": {
+            "A": 3,
+            "B": 4,
+            "avg": 3.5
+          },
+          "signature": {
+            "A": 2,
+            "B": 3,
+            "avg": 2.5
+          },
+          "antiCliche": {
+            "A": 3,
+            "B": 4,
+            "avg": 3.5
+          },
+          "implementability": {
+            "A": 3,
+            "B": 3,
+            "avg": 3
+          }
+        },
+        "comments": {
+          "A": "Correct impulse (full-width real UI, keyboard-first, imageless) but thin: vague work-canvas signature, UI-sans-only type, little state/field specificity. Axis “symbol-led” labels risk chrome noise. Template skeleton with right constraints.",
+          "B": "Correct full-width real-interface mode and keyboard-first intent, but type/signature stay abstract (“UI sans pair”, “work-canvas”), unknowns undeclared, and field/state layout lacks the strip/tape precision of stronger packs."
+        }
+      },
+      "bestUpstream": {
+        "arm": "frontend-design",
+        "totalAvg": 59.5
+      },
+      "outcome": "loss",
+      "qualitativeA": {
+        "wouldBuild": "frontend-design",
+        "mostGeneric": "ui-ux-pro-max",
+        "bestGrounded": "frontend-design",
+        "strongestDirection": "impeccable"
+      },
+      "qualitativeB": {
+        "wouldBuild": "frontend-design",
+        "mostGeneric": "ui-ux-pro-max",
+        "bestGrounded": "frontend-design",
+        "strongestDirection": "impeccable"
+      },
+      "top1Agree": true,
+      "wouldBuildAgree": true,
+      "comments": {
+        "frontend-design": {
+          "A": "Commit strip + mono passage tape + direction two-state lock is a full instrument plan. Density-8 scales, amber fault-only, Ctrl+Enter, all four states, imageless. Dark-shell default risk is owned and constrained. Highest implement precision.",
+          "B": "Commit strip + mono passage tape with inbound/outbound two-state lock is a true harbour desk: density-8, motion-1, imageless, amber fault-only, Ctrl+Enter, all four states, six tokens — would build first."
+        },
+        "ui-ux-pro-max": {
+          "A": "Product Demo + Features / Swiss marketing pattern is wrong mode for a density-8 harbour desk. Rubik/Nunito and blue/orange system palette fight operational brand. Hierarchy starts with “recognition” not work. Only imageless asset rule is right.",
+          "B": "Product Demo + Features / Swiss Minimalism with Rubik/Nunito and blue/orange system accents is marketing-template grammar for a desktop ops console; states, Ctrl+Enter, and density-8 instrument discipline are under-specified."
+        },
+        "sitesmith": {
+          "A": "Correct impulse (full-width real UI, keyboard-first, imageless) but thin: vague work-canvas signature, UI-sans-only type, little state/field specificity. Axis “symbol-led” labels risk chrome noise. Template skeleton with right constraints.",
+          "B": "Correct full-width real-interface mode and keyboard-first intent, but type/signature stay abstract (“UI sans pair”, “work-canvas”), unknowns undeclared, and field/state layout lacks the strip/tape precision of stronger packs."
+        },
+        "impeccable": {
+          "A": "Movements Board metaphor makes harbour work legible without illustration: permanent chalk-entry head + ruled body + Ctrl+Enter stamp. Amber discipline and density-8 held. Strongest character while still operational.",
+          "B": "Movements chalkboard with permanent chalk-entry head strip and Ctrl+Enter stamp is the most memorable harbour metaphor while still locking density-8, amber-only faults, and imageless ops — strongest direction, type slightly less tokenized than P."
+        },
+        "taste-skill": {
+          "A": "Solid two-column desk with status-strip amber channel. Fully state-aware and pack-true; signature is quieter than P/S so it can still slide toward generic dark admin if density slips. Safe strong second build.",
+          "B": "Form-left/log-right cockpit is a clean density-8 desk with mono times and amber-rationed status strip; fully anti-fintech and shippable, signature less singular than direction-lock or chalk-entry strip."
+        }
+      }
+    }
+  },
+  "sitesmithBriefOutcomes": {
+    "01-leather-goods": "loss",
+    "02-atelier-printworks": "loss",
+    "03-passage-console": "loss"
+  },
+  "agreement": {
+    "01-leather-goods": {
+      "top1Agree": true,
+      "wouldBuildAgree": true
+    },
+    "02-atelier-printworks": {
+      "top1Agree": false,
+      "wouldBuildAgree": true
+    },
+    "03-passage-console": {
+      "top1Agree": true,
+      "wouldBuildAgree": true
+    }
+  },
+  "verdict": "PROOF FAILED — DIRECTION QUALITY",
+  "proofStatus": "PROOF FAILED — DIRECTION QUALITY",
+  "summary": {
+    "sitesmithWins": 0,
+    "sitesmithTiesOrMatch": 0,
+    "sitesmithLosses": 3,
+    "matchOrWinCount": 0,
+    "top1Disagreements": 1
+  },
+  "phaseLabel": "screening-v2"
+}

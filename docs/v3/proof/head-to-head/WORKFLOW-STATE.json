@@ -1,0 +1,112 @@
+{
+  "workflowVersion": "1.0.0",
+  "state": "MINI_1_HOST_LLM_COMPLETE",
+  "previousState": "ORCHESTRATOR_ENV_LOADER_LANDED",
+  "allowedNextStates": [
+    "MINI_H2H_WITH_API_KEY",
+    "V23_BUILD_ON_ORCHESTRATOR"
+  ],
+  "repository": "byensitmagnus/sitesmith",
+  "foundationSha": "dc00598cce2af92435a749856393e287506753bc",
+  "proofSha": "b92cdabad98c4d23ff79b74d6881e6b7129325a4",
+  "headToHeadBranch": "codex/v3-direction-head-to-head",
+  "screeningCompleted": 15,
+  "screeningFailed": 0,
+  "paidModelCallsMade": 9,
+  "gates": {
+    "G0_repo_truth": "pass",
+    "G1_corrective_review": "pass",
+    "G2_benchmark_frozen": "pass",
+    "credit_approval": "used-for-screening",
+    "screening": "pass",
+    "evaluators": "complete",
+    "replication": "not-started",
+    "paid_model_calls": 9,
+    "blind_eval": "complete",
+    "screening_v2": "complete",
+    "blind_eval_v2": "complete",
+    "direction_engine_tests": "pass",
+    "mini_1_leather": "complete",
+    "llm_creative_mini": "host-llm-complete-api-key-still-missing",
+    "env_loader": "pass",
+    "mini_1_leather_llm": "complete-narrow-fail"
+  },
+  "blockers": [
+    "True xAI API mini still blocked without XAI_API_KEY/GROK_API_KEY; host-llm mini done (57.5 vs FD 59)"
+  ],
+  "lastVerifiedAt": "2026-07-31T21:30:27.808Z",
+  "lastTransitionReason": "Host-LLM mini-1 leather: 57.5 vs FD 59 (narrow fail); rules trail 40→57.5; API key still absent",
+  "proofStatus": "PROOF FAILED — UPSTREAM SUPERSET",
+  "arms": [
+    "taste-skill",
+    "ui-ux-pro-max",
+    "frontend-design",
+    "impeccable",
+    "sitesmith"
+  ],
+  "briefs": [
+    "01-leather-goods",
+    "02-atelier-printworks",
+    "03-passage-console"
+  ],
+  "screeningRunsDeclared": 15,
+  "replicationRunsDeclared": 15,
+  "evalVerdict": "PROOF FAILED — UPSTREAM SUPERSET",
+  "sitesmithBriefOutcomes": {
+    "01-leather-goods": "loss",
+    "02-atelier-printworks": "loss",
+    "03-passage-console": "loss"
+  },
+  "remediation": "engine-packet-quality-v1",
+  "evalVerdictV2": "PROOF FAILED — DIRECTION QUALITY",
+  "evalVerdictV1": "PROOF FAILED — UPSTREAM SUPERSET",
+  "sitesmithV2Avgs": {
+    "01-leather-goods": 38.5,
+    "02-atelier-printworks": 39,
+    "03-passage-console": 41
+  },
+  "evalVerdictV3": "PROOF FAILED — UPSTREAM SUPERSET",
+  "sitesmithScoreTrail": {
+    "v1": [
+      28.5,
+      29.5,
+      34.5
+    ],
+    "v2": [
+      38.5,
+      39,
+      41
+    ],
+    "v3": [
+      42.5,
+      27.5,
+      28.5
+    ]
+  },
+  "architecture": "docs/v3/ARCH-DIRECTION-ORCHESTRATOR.md",
+  "architectureCanonical": true,
+  "creativePassDefault": "rules",
+  "creativePassLlm": "runDirectionEngineAsync + evidence-guard",
+  "h2hNote": "H2H closed as fail; orchestrator path is product direction going forward",
+  "mini1": {
+    "brief": "01-leather-goods",
+    "sitesmithPacket": "rules (llm blocked)",
+    "baseline": "frontend-design screening-v2 frozen",
+    "sitesmithAvg": 40,
+    "frontendDesignAvg": 59,
+    "verdict": "MINI FAIL — RULES STILL TRAILS FROZEN FRONTEND-DESIGN",
+    "report": "docs/v3/proof/head-to-head/eval/MINI-1-LEATHER-REPORT.md",
+    "llmBlocked": "docs/v3/proof/head-to-head/mini-proof/LLM-BLOCKED.md"
+  },
+  "mini1HostLlm": {
+    "brief": "01-leather-goods",
+    "creativePath": "host-llm-same-class + evidence-guard",
+    "sitesmithAvg": 57.5,
+    "frontendDesignAvg": 59,
+    "rulesMiniAvg": 40,
+    "verdict": "MINI FAIL — HOST LLM STILL TRAILS FROZEN FRONTEND-DESIGN (NARROW)",
+    "report": "docs/v3/proof/head-to-head/eval/MINI-1-LEATHER-LLM-REPORT.md",
+    "packet": "docs/v3/proof/head-to-head/mini-proof/01-leather-goods-host-llm/DIRECTION-PACKET.json",
+    "apiKey": false
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "runId": "screening-v3-03-passage-console-frontend-design",
+  "briefId": "03-passage-console",
+  "arm": "frontend-design",
+  "status": "completed",
+  "startedAt": "2026-07-31T20:45:00.000Z",
+  "finishedAt": "2026-07-31T20:48:00.000Z",
+  "modelCalls": 1,
+  "method": "native-creative-thesis-plan-self-critique",
+  "armCommit": "b29e7cf65e5cb78a5ac33d582270551bc74a14eb",
+  "phase": "screening-v3",
+  "isolation": "fresh-process-no-peer-outputs",
+  "model": "agent-direction",
+  "note": "copied-from-screening-v2-for-sitesmith-creative-layer-delta"
+}

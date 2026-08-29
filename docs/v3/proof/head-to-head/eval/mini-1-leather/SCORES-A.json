@@ -1,0 +1,47 @@
+{
+  "evaluator": "A",
+  "briefId": "01-leather-goods",
+  "comparison": "mini-1-leather",
+  "scores": {
+    "M": {
+      "briefFit": 4,
+      "subjectSpecificity": 4,
+      "originality": 3,
+      "composition": 2,
+      "hierarchy": 3,
+      "typography": 4,
+      "materiality": 3,
+      "assetStrategy": 3,
+      "interaction": 2,
+      "signature": 4,
+      "antiCliche": 4,
+      "implementability": 3,
+      "total": 39
+    },
+    "N": {
+      "briefFit": 5,
+      "subjectSpecificity": 5,
+      "originality": 4,
+      "composition": 5,
+      "hierarchy": 5,
+      "typography": 5,
+      "materiality": 5,
+      "assetStrategy": 5,
+      "interaction": 5,
+      "signature": 5,
+      "antiCliche": 5,
+      "implementability": 5,
+      "total": 59
+    }
+  },
+  "qualitative": {
+    "wouldBuild": "N",
+    "mostGeneric": "M",
+    "bestGrounded": "N",
+    "strongestDirection": "N"
+  },
+  "comments": {
+    "M": "Thesis and Hide Grade Strip signature lock the brief nouns well, but composition is a poster seed (“type alone at scale, artefact below the fold”) that fights mobile-first product commerce, and interaction collapses to “single decisive scroll cue” instead of pick product → choose hide → make-slot. Claims all three SKUs as plate-have and declares no unknowns — weaker honesty than the pack requires.",
+    "N": "Make-slot desk is fully specified: plate-first fold, material stamp, Hide Grade Strip radiogroup, price band + 3-week lead, brass CTA, sticky rail desktop. Hex tokens, named webp assets, honest missing strap/stitch/unknown grade codes. Highest build confidence of the two."
+  }
+}

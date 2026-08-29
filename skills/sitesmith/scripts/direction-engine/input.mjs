@@ -91,16 +91,51 @@ export function validateDirectionInput(raw) {
   };
 }
 
+/**
+ * Strip frontmatter noise and trailing quote artifacts from extracted fields.
+ * H2H failure: subject became `Northline Leather Goods"` from YAML title lines.
+ */
+export function cleanExtractedField(value) {
+  return String(value ?? '')
+    .replace(/^#\s*/, '')
+    .replace(/^subject:\s*/i, '')
+    .replace(/^["'`]+|["'`]+$/g, '')
+    .replace(/\\+"/g, '"')
+    .replace(/["']+$/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+/** Body lines only — skip YAML frontmatter keys that leak into captures. */
+export function contentLines(text) {
+  return String(text ?? '')
+    .split(/\r?\n/)
+    .filter((line) => {
+      if (/^---\s*$/.test(line)) return false;
+      if (/^(title|status|ai_generated|schemaVersion)\s*:/i.test(line)) return false;
+      return true;
+    });
+}
+
 export function extractProjectSignals(input) {
   const text = `${input.brief}\n${input.evidence}\n${input.brand}\n${input.assetPlan}\n${input.assetManifest}\n${input.userConstraints}`;
-  const subject = firstMatch(text, /(?:subject|product|company|client)\s*[:—-]\s*(.+)$/im)
-    ?? firstMatch(text, /^#\s+(.+)$/m)
-    ?? 'unnamed subject';
-  const audience = firstMatch(text, /(?:audience|for)\s*[:—-]\s*(.+)$/im) ?? 'unknown audience';
-  const primaryAction = firstMatch(text, /(?:primary action|cta|job)\s*[:—-]\s*(.+)$/im)
-    ?? firstMatch(text, /\b(buy|book|enquire|sign up|log a passage|configure|request)\b/i)
-    ?? 'unknown action';
-  const antiRefs = [...text.matchAll(/anti[- ]references?\s*[:—-]\s*(.+)$/gim)].map((m) => m[1].trim());
+  const body = contentLines(text).join('\n');
+  const subject = cleanExtractedField(
+    firstMatch(body, /(?:subject|product|company|client)\s*[:—-]\s*(.+)$/im)
+      ?? firstMatch(body, /^#\s+(.+)$/m)
+      ?? 'unnamed subject',
+  );
+  const audience = cleanExtractedField(
+    firstMatch(body, /(?:audience|for)\s*[:—-]\s*(.+)$/im) ?? 'unknown audience',
+  );
+  const primaryAction = cleanExtractedField(
+    firstMatch(body, /(?:primary action|cta|job)\s*[:—-]\s*(.+)$/im)
+      ?? firstMatch(body, /\b(buy|book|enquire|sign up|log a passage|configure|request)\b/i)
+      ?? 'unknown action',
+  );
+  const antiRefs = [...body.matchAll(/anti[- ]references?\s*[:—-]\s*(.+)$/gim)]
+    .map((m) => cleanExtractedField(m[1]))
+    .filter(Boolean);
   const hasBrand = Boolean(input.brand);
   const hasAssetPlan = Boolean(input.assetPlan);
   const hasManifest = Boolean(input.assetManifest);
@@ -111,15 +146,22 @@ export function extractProjectSignals(input) {
   const operational = /console|log form|keyboard|validation|desktop web app|harbour|passage/i.test(text);
   const commerce = /price|sku|cart|slip|make-slot|checkout|product/i.test(text);
   const editorial = /edition|portfolio|letterpress|festival|print/i.test(text);
+  const brandPalette = extractBrandPalette(input.brand);
+  const materials = extractMaterials(body);
+  const products = extractProductList(body);
   const constraints = input.userConstraints
     ? input.userConstraints.split(/\n+/).map((s) => s.trim()).filter(Boolean)
+      .filter((s) => !/^(---|#|title:|status:|ai_generated:)/i.test(s))
     : [];
 
   return {
-    subject: String(subject).trim().slice(0, 120),
-    audience: String(audience).trim().slice(0, 120),
-    primaryAction: String(primaryAction).trim().slice(0, 120),
+    subject: subject.slice(0, 120),
+    audience: audience.slice(0, 120),
+    primaryAction: primaryAction.slice(0, 120),
     antiRefs,
+    brandPalette,
+    materials,
+    products,
     hasBrand,
     hasAssetPlan,
     hasManifest,
@@ -166,4 +208,32 @@ function firstMatch(text, re) {
 
 function uniqueTokens(text) {
   return [...new Set(String(text).toLowerCase().match(/[a-zæøå0-9-]{3,}/g) ?? [])];
+}
+
+function extractBrandPalette(brand) {
+  if (!brand) return [];
+  const body = contentLines(brand).join(' ');
+  const bits = [];
+  // free-text colours: "Ink brown, warm cream, single brass accent"
+  const colourish = body.match(
+    /\b(ink|near-black|chalk|cream|brass|coral|amber|fog|grey|gray|brown|bone|soot|harbour|white|black)[\w\s-]{0,24}/gi,
+  );
+  if (colourish) bits.push(...colourish.map((s) => s.trim().toLowerCase()).slice(0, 6));
+  const hex = body.match(/#[0-9A-Fa-f]{3,8}/g);
+  if (hex) bits.push(...hex.slice(0, 4));
+  return [...new Set(bits)].slice(0, 8);
+}
+
+function extractMaterials(body) {
+  const m = firstMatch(body, /materials?\s*[:—-]\s*(.+)$/im);
+  if (!m) return [];
+  return m.split(/,|\/|;/).map((s) => cleanExtractedField(s)).filter(Boolean).slice(0, 8);
+}
+
+function extractProductList(body) {
+  const m = firstMatch(body, /products?(?:\s*\(truth\))?\s*[:—-]\s*(.+)$/im)
+    ?? firstMatch(body, /work\s*[:—-]\s*(.+)$/im)
+    ?? firstMatch(body, /proof\s*[:—-]\s*(.+)$/im);
+  if (!m) return [];
+  return m.split(/,|;/).map((s) => cleanExtractedField(s)).filter(Boolean).slice(0, 8);
 }

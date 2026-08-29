@@ -1,0 +1,115 @@
+{
+  "briefId": "01-leather-goods",
+  "instructions": {
+    "role": "blind design-direction evaluator",
+    "scoreScale": "1-5 integers only (1=poor, 5=excellent)",
+    "criteria": [
+      "briefFit",
+      "subjectSpecificity",
+      "originality",
+      "composition",
+      "hierarchy",
+      "typography",
+      "materiality",
+      "assetStrategy",
+      "interaction",
+      "signature",
+      "antiCliche",
+      "implementability"
+    ],
+    "qualitative": [
+      "wouldBuild",
+      "mostGeneric",
+      "bestGrounded",
+      "strongestDirection"
+    ],
+    "rules": [
+      "Do not guess system identity",
+      "Score only from the blinded packet + brief pack",
+      "Do not invent facts not in brief/evidence",
+      "unknown fields are a mild implementability risk, not automatic fail"
+    ]
+  },
+  "briefPack": {
+    "brief": "---\ntitle: \"Subject: Northline Leather Goods\"\nstatus: proof-fixture\nai_generated: \"(C)\"\n---\n\n# Subject: Northline Leather Goods\n\nMode intent: sensory ecommerce with real product choices.\n\nAudience: people who buy small-batch bags and straps and care about hide grade.\nPrimary action: configure a bag and request a make-slot.\nPlatform: mobile-first web.\n\nVisual density: 6\nMotion intensity: 2\nAesthetic boldness: 6\n",
+    "evidence": "---\ntitle: \"Evidence — Northline Leather Goods\"\nstatus: proof-fixture\nai_generated: \"(C)\"\n---\n\n# Evidence — Northline Leather Goods\n\nSubject: Northline Leather Goods\nProducts (truth): Field Tote, Belt No. 2, Shoulder Strap\nPrice band (truth): DKK 890–2.400 from supplier sheet 2026-07\nMaterials: bridle leather, solid brass, vegetable tan\nFacts that may appear: hide grade, stitch count, make-slot lead time (3 weeks)\nFacts that must not be invented: reviews, celebrity clients, free worldwide shipping\n\nAnti-references: purple SaaS gradient, stock handshake photos, fake 4.9★ rows\nPrimary journey: pick product → choose hide → request make-slot\n",
+    "constraints": "---\ntitle: Constraints — Northline Leather Goods\nstatus: frozen-benchmark-input\nai_generated: \"(C)\"\n---\n\n# Constraints\n\nSource: existing proof brief evidence/brand/asset plan only. Unknowns stay unknown.\n\n- Do not invent reviews, celebrity clients, or free worldwide shipping.\n- Anti-references: purple SaaS gradient, stock handshake photos, fake 4.9★ rows.\n- No testimonials on file (brand).\n- Deliberately no lifestyle models (asset plan).\n- Load-bearing assets: product plates for Field Tote and Belt No. 2; stitch macro is needed/not declared as have.\n- Platform: mobile-first web (brief).\n- Price band and make-slot lead time only as stated in evidence.\n"
+  },
+  "candidates": [
+    {
+      "id": "P",
+      "designThesis": "Northline sells make-slots on a real bridle-leather bench, not infinite stock: an ink-brown workshop make-slot ledger with a deliberate empty open-slot frame, ringed by product plates and hide-grade choice, ending in Request make-slot — refuse lifestyle luxury heroes and fake social proof.",
+      "subjectGrounding": "Northline Leather Goods; audience people who buy small-batch bags and straps and care about hide grade; products Field Tote, Belt No. 2, Shoulder Strap; materials bridle leather, solid brass, vegetable tan; price band DKK 890–2.400; make-slot lead time 3 weeks; brand ink brown / warm cream / single brass accent; plain trade English; assets product plates Field Tote + Belt No. 2 (have), no lifestyle models; anti purple SaaS gradient, handshake photos, fake 4.9★.",
+      "composition": "First viewport staged as evidenced absence: empty open make-slot frame owns the center; Field Tote product plate, hide-grade chips, materials line, and price band ring the void; primary Request make-slot control sticky on mobile. Wider page is a workshop appointment ledger of open weeks, not a lifestyle lookbook.",
+      "informationHierarchy": "1) Open make-slot (next week + 3-week lead) 2) Selected product plate 3) Hide grade choice 4) Materials and price band 5) Request make-slot action 6) Secondary goods (Belt No. 2, Shoulder Strap as ledger lines).",
+      "typography": "Condensed industrial display for product names (trade catalog, not luxury italic serif); humanist sans with tabular figures for ledger rows, prices, and slot weeks; sentence-case trade English labels; avoid Inter/DM Sans/Playfair/Fraunces/cream-serif-terracotta default cluster.",
+      "colourAndMaterialModel": "Restrained: ink-brown desk ground, warm cream ledger paper panels, single solid-brass accent on active row rule and primary CTA; light surface under cool north workshop light; no purple SaaS gradient, no neon, no black-and-gold boutique foil.",
+      "imageryAndAssetStrategy": "Load-bearing product plates only (field-tote.webp, belt-no-2.webp); deliberately no lifestyle models; stitch-macro needed/not had — omit or mark placeholder, do not invent; Shoulder Strap plate unknown — text/silhouette fallback marked synthetic if required; no stock handshakes.",
+      "interactionConcept": "Hide-grade selection inks the empty open-slot frame with product thumbnail + grade stamp and brightens the brass rule on that ledger row; motion intensity 2 — one short settle ≤200ms, instant under prefers-reduced-motion; request is a real form stating 3-week lead.",
+      "signatureElement": "northline-open-slot — empty make-slot frame [data-signature=\"northline-open-slot\"] that becomes the configured ledger row",
+      "primaryRisk": "Empty-center frame can read as a broken or loading image if unlabeled; must carry persistent 'Open make-slot · week of …' caption and always-visible product plate evidence. Missing stitch-macro and Shoulder Strap plate must not be faked.",
+      "implementationGuidance": "Mobile-first HTML/CSS. Semantic request form. Use only declared have-plates. Hide as radio/segmented control. Prices and lead time only from evidence. AA contrast on ink/cream; brass UI ≥3:1. No parallax multiplane or split-flap cascade unless alternate chosen. Forbidden: purple SaaS gradient, handshake stock, fake stars, testimonials, free worldwide shipping, lifestyle models. Seed key h2h-nlg-01; assigned grounded candidate 7 Make-slot ledger; poolRevision 94ff10ff20de; composition evidenced-absence.",
+      "unknowns": "Exact hide grade nomenclature; exact stitch counts per product; Shoulder Strap plate asset; stitch-macro.webp; live make-slot inventory beyond stated 3-week lead; any reviews/celebrities/shipping claims (must not invent)."
+    },
+    {
+      "id": "Q",
+      "designThesis": "Northline is a make-slot desk, not a boutique shelf: open on the Field Tote product plate with trade facts on the plate edge; primary argument is graded hide + three-week make-slot request — never lifestyle hero, purple SaaS gradient, or star ratings.",
+      "subjectGrounding": "Northline Leather Goods — small-batch bags/straps; bridle leather, solid brass, vegetable tan; products Field Tote, Belt No. 2, Shoulder Strap; price band DKK 890–2.400; 3-week make-slot; audience cares about hide grade; journey pick product → choose hide → request make-slot; mobile-first; brand ink brown + warm cream + single brass accent; plain trade English; no reviews/testimonials/celebrity clients/free worldwide shipping/lifestyle models.",
+      "composition": "Mobile-first bench stack: full-bleed product plate first, material stamp line, Hide Grade Strip, price+lead facts, brass Request make-slot CTA, then secondary Belt No. 2 plate and Shoulder Strap row; desktop widens plate and keeps hide chips + CTA as sticky rail — one bench, not magazine or broadsheet.",
+      "informationHierarchy": "1) Field Tote product plate 2) material stamp facts (bridle / veg tan / solid brass) 3) hide grade choice 4) price band + 3-week lead time 5) primary CTA Request make-slot 6) secondary products + plain specs only — no testimonials, no fake star rows, no decorative 01/02/03 process trophies.",
+      "typography": "Display: Barlow Condensed 600–700 for product names (workshop signage, tight tracking, restrained). Body: IBM Plex Sans 400–500 for plain trade English at 45–75ch. Utility: IBM Plex Mono 400–500 for hide grade codes, stitch count, lead time, prices. No luxury serif display. Fallbacks: Arial Narrow / system-ui / ui-monospace.",
+      "colourAndMaterialModel": "warm-cream #F2EBE0 ground; ink-brown #241912 type/rules; hide-mid #5C4332 secondary; brass #B08A3C single accent on CTA and hardware callouts only; edge-bone #E4D9C8 plate rails and chip wells; soot #120E0B deep borders/focus companion. No purple, no multi-stop SaaS gradients, no acid-neon-on-dark identity.",
+      "imageryAndAssetStrategy": "Load-bearing product plates field-tote.webp and belt-no-2.webp on cream/edge-bone grounds, no model crops. Optional stitch-macro.webp as single proof inset near specs when available. Shoulder Strap as text+price until a plate exists. Deliberately no lifestyle models, stock handshakes, or review avatars.",
+      "interactionConcept": "Hide Grade Strip as accessible radiogroup under the primary plate; selection darkens plate edge rail and updates make-slot summary. Motion intensity 2: only 120–180ms edge response on hide change; prefers-reduced-motion instant swap. CTA: Request make-slot. No scroll-jacking or ambient particle effects.",
+      "signatureElement": "Hide Grade Strip — horizontal hide-grade chips (material swatch wells + ink-brown labels) under the Field Tote plate; the single memorable control that ties plate → grade → make-slot.",
+      "primaryRisk": "Cream + brown leather ecommerce can still read as generic artisan catalog if plates shrink and copy softens into luxury fluff; mitigate with plate-first fold, stamp facts, mono measurements, make-slot language, and brass only on the CTA.",
+      "implementationGuidance": "Tokenize the six colours; brass only on primary CTA and small hardware icons. Load only used weights of Barlow Condensed, IBM Plex Sans, IBM Plex Mono. First paint: Field Tote plate under slim site bar at 375px. Radiogroup for hide grades with visible focus. Fixed CTA copy Request make-slot. Specs limited to hide grade, materials, lead time 3 weeks, price band DKK 890–2.400, stitch count only if known. Absent strap plate → text row. Quality floor: focus visible, reduced-motion, no horizontal overflow, no invented social proof blocks.",
+      "unknowns": "Exact hide grade label set/codes; stitch-macro.webp not yet have; Shoulder Strap plate not declared have; make-slot UI is lead-time fact only — discrete calendar slots not specified in evidence."
+    },
+    {
+      "id": "R",
+      "designThesis": "Mobile-first sensory ecommerce for hide-grade-conscious small-batch buyers: plain-trade product-plate catalog (DESIGN_VARIANCE 6 / MOTION 2 / DENSITY 6) with split proof-vs-configure spine and brass-only accent — no luxury fluff, no social proof.",
+      "subjectGrounding": "Northline Leather Goods; products Field Tote, Belt No. 2, Shoulder Strap; price band DKK 890–2.400; materials bridle leather, solid brass, vegetable tan; facts allowed: hide grade, stitch count, make-slot lead time 3 weeks; primary action configure bag + request make-slot; audience cares about hide grade; voice plain trade English; brand ink brown + warm cream + single brass; no testimonials; no lifestyle models; anti-references purple SaaS gradient / stock handshakes / fake 4.9★.",
+      "composition": "Desktop left product-plate + truth / right configure column (anti-center, variance 6); first fold holds plate, ≤20-word subtext, price band, Request make-slot CTA; mobile <768px single column plate → truth → config; secondary products later strip not three equal hero cards.",
+      "informationHierarchy": "1) Northline identity 2) Field Tote plate 3) truth strip (hide grade, stitch count, materials, DKK 890–2.400, 3-week make-slot) 4) journey pick product → choose hide → request make-slot 5) Belt No. 2 + Shoulder Strap 6) no reviews/testimonials/celebrity/shipping claims.",
+      "typography": "Sans display (Satoshi / Cabinet Grotesk / Geist — not Inter default); body same family or tight pair, max-w-[65ch]; no serif (trade voice, not manuscript luxury); same-family italic/bold emphasis only; sentence-case operational labels; tabular/mono optional for price and counts.",
+      "colourAndMaterialModel": "Warm cream ground, ink brown text/structure, single brass accent on primary CTA and active focus only; brand override of premium-consumer cream+brass ban; tinted shadows if any; all-sharp radius 0 shape lock; dual mode same hue family with brass sole accent.",
+      "imageryAndAssetStrategy": "Load-bearing field-tote.webp and belt-no-2.webp product plates; stitch-macro.webp only if present (needed, not have); no lifestyle models; no stock handshakes; no decorative mesh/gradient hero.",
+      "interactionConcept": "Only journey: pick product → choose hide → request make-slot; one site-wide CTA intent 'Request make-slot'; form labels above, errors below, no placeholder-as-label; skeleton/empty/error/success states without shipping invention; motion intensity 2 = hover border/colour + active press only.",
+      "signatureElement": "Product-plate spine + brass CTA lock: Field Tote plate as permanent proof column, brass only on make-slot control.",
+      "primaryRisk": "Brand cream+ink+brass matches banned warm-craft LLM default; legal only via explicit brand naming — thin plates or missing stitch-macro collapses to generic artisan cream.",
+      "implementationGuidance": "Semantic HTML + Tailwind/native tokens, mobile-first; hero fits viewport; density-6 section gaps; price/lead time/products/materials only as pack; pre-flight: focus rings, 375/768/1440, both schemes, no purple SaaS, no fake stars.",
+      "unknowns": "Exact hide-grade options and per-product stitch counts; make-slot backend/capacity; shipping policy (must not invent free worldwide); stitch-macro not have; Shoulder Strap photography; any review or endorsement content."
+    },
+    {
+      "id": "S",
+      "designThesis": "[redacted] design-system recommendation: Vibrant & Block-based                                                            │ with Feature-Rich Showcase                                                            │ pattern for Subject: Northline Leather Goods",
+      "subjectGrounding": "Query from frozen pack only: sensory e-commerce Subject: Northline Leather Goods ecommerce",
+      "composition": "Feature-Rich Showcase                                                            │",
+      "informationHierarchy": "Sections:                                                                           │\r\n│       1. Hero                                                                           │\r\n│       2. Features                                                                       │\r\n│       3. CTA                                                                            │",
+      "typography": "│  Rubik / Nunito Sans                                                                    │",
+      "colourAndMaterialModel": "primary #059669; secondary #10B981; accent #EA580C",
+      "imageryAndAssetStrategy": "unknown — design-system search path does not emit asset plan; obey pack ASSET-PLAN/CONSTRAINTS",
+      "interactionConcept": "│     Large sections (48px+ gaps), animated patterns, bold hover (color shift),           │",
+      "signatureElement": "Vibrant & Block-based                                                            │",
+      "primaryRisk": "│     Flat design without depth + Text-heavy pages                                        │",
+      "implementationGuidance": "Implement from [redacted]-RETRIEVAL.txt rows and checklist; do not invent beyond retrieval.",
+      "unknowns": "Page-level composition beyond pattern; photography/asset strategy; brand-specific material finishes"
+    },
+    {
+      "id": "T",
+      "designThesis": "Northline Leather Goods\": configure a bag and request a make-slot. via hard vertical rule: proof left, action right — northline, leather, goods, people, who, buy",
+      "subjectGrounding": "Northline Leather Goods\" | --- | title: \"Evidence — Northline Leather Goods\" | status: proof-fixture | ai_generated: \"(C)\" | --- | # Evidence — Northline Leather Goods | domain-knowledge: consulted (5 hits) | people who buy small-batch bags and straps and care about hide grade.",
+      "composition": "hard vertical rule: proof left, action right",
+      "informationHierarchy": "hard vertical rule: proof left, action right",
+      "typography": "neutral grotesque, medium weight only",
+      "colourAndMaterialModel": "stone ground, single brand accent on CTA only",
+      "imageryAndAssetStrategy": "diagram-led evidence stack",
+      "interactionConcept": "sticky action column on desktop",
+      "signatureElement": "northline-sig-1",
+      "primaryRisk": "Signature may overfit if evidence is thin.",
+      "implementationGuidance": "---\ntitle: \"DIRECTION — 01-leather-goods\"\nstatus: direction-engine-slice\nai_generated: \"(C)\"\n---\n\n# DIRECTION — 01-leather-goods\n\nWinner: [redacted] (Northline Leather Goods\": configure a bag and request a make-slot. via hard vertical rule: proof left, action right — northline, leather, goods, people, who, buy)\n\n## Signature\nnorthline-sig-1\n\n## Axis record\n\n- direction-version: 2.3\n- composition: hard vertical rule: proof left, action right\n- type: neutral grotesque, medium weight only\n- colour: stone ground, single brand accent on CTA only\n- imagery: diagram-led evidence stack\n- rhythm: two columns for the whole first fold\n\n- surface: framed — evidence cards in heavy borders\n- labels: sentence case — operational clarity\n- figures: functional tabular — measurements only where compared\n- depth: elevated — evidence cards raise on focus\n\n- visual-density: 6\n- motion-intensity: 2\n- aesthetic-boldness: 6\n\n- signature-selector: [data-signature=\"northline-sig-1\"]\n- signature-min-share: 12\n\n## Rejections\n- [redacted]: recorded alternative; not passed to build context\n- [redacted]: recorded alternative; not passed to build context\n\n## Notes\nSelected by [redacted] v3 slice. Build context must not receive losing cards or generator scores.",
+      "unknowns": "none declared"
+    }
+  ]
+}

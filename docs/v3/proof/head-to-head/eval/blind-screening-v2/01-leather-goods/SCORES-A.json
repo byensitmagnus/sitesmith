@@ -1,0 +1,94 @@
+{
+  "evaluator": "A",
+  "briefId": "01-leather-goods",
+  "scores": {
+    "P": {
+      "briefFit": 3,
+      "subjectSpecificity": 3,
+      "originality": 2,
+      "composition": 3,
+      "hierarchy": 4,
+      "typography": 2,
+      "materiality": 3,
+      "assetStrategy": 4,
+      "interaction": 2,
+      "signature": 2,
+      "antiCliche": 3,
+      "implementability": 3,
+      "total": 34
+    },
+    "Q": {
+      "briefFit": 5,
+      "subjectSpecificity": 5,
+      "originality": 3,
+      "composition": 5,
+      "hierarchy": 5,
+      "typography": 4,
+      "materiality": 4,
+      "assetStrategy": 5,
+      "interaction": 5,
+      "signature": 4,
+      "antiCliche": 4,
+      "implementability": 5,
+      "total": 54
+    },
+    "R": {
+      "briefFit": 5,
+      "subjectSpecificity": 5,
+      "originality": 5,
+      "composition": 4,
+      "hierarchy": 5,
+      "typography": 5,
+      "materiality": 5,
+      "assetStrategy": 5,
+      "interaction": 5,
+      "signature": 5,
+      "antiCliche": 5,
+      "implementability": 4,
+      "total": 58
+    },
+    "S": {
+      "briefFit": 2,
+      "subjectSpecificity": 2,
+      "originality": 1,
+      "composition": 2,
+      "hierarchy": 3,
+      "typography": 2,
+      "materiality": 2,
+      "assetStrategy": 3,
+      "interaction": 2,
+      "signature": 1,
+      "antiCliche": 2,
+      "implementability": 2,
+      "total": 24
+    },
+    "T": {
+      "briefFit": 5,
+      "subjectSpecificity": 5,
+      "originality": 4,
+      "composition": 5,
+      "hierarchy": 5,
+      "typography": 5,
+      "materiality": 5,
+      "assetStrategy": 5,
+      "interaction": 5,
+      "signature": 5,
+      "antiCliche": 5,
+      "implementability": 5,
+      "total": 59
+    }
+  },
+  "qualitative": {
+    "wouldBuild": "T",
+    "mostGeneric": "S",
+    "bestGrounded": "T",
+    "strongestDirection": "R"
+  },
+  "comments": {
+    "P": "Clear proof/action split and product list, but type is only “neutral grotesque”, signature is a vague control name, and sticky desktop column under-serves mobile-first. Reads like a thin template skeleton with correct pack nouns.",
+    "Q": "Strong pack binding: mobile-first spine, hide→make-slot journey, declared have/needed plates, brass-only accent, and honest cream+brass default risk. Signature is solid if less theatrical than R/T. Trade catalog done right.",
+    "R": "Saddlery bench ticket + gatefold is the most subject-true concept: closed face holds trade facts, open centers Field Tote + hide choice, ticket fills as config. Slight implementability tax for gatefold on mobile; mitigated with sticky CTA.",
+    "S": "Newsletter/Content-First + Vibrant & Block-based fights sensory leather trade. Rubik/Nunito and emerald/orange system palette conflict with ink/cream/brass. Animated patterns clash with motion-2. Retrieval-shell, not a product direction.",
+    "T": "Make-slot desk with Hide Grade Strip is the brief’s core care (hide-grade buyers) made visible. Full tokens, mono measurements, plate-first mobile fold, honest missing strap/stitch assets. Highest build confidence without novelty risk."
+  }
+}

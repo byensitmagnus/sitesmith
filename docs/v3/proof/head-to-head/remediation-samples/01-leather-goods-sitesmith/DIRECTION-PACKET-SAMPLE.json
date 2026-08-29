@@ -1,0 +1,39 @@
+{
+  "designThesis": "Northline Leather Goods is not a generic ecommerce template: first fold must make “configure a bag and request a make-slot.” inevitable via hard vertical rule: proof left, action right. Materials: bridle leather, solid brass, vegetable tan. Focus objects: Field Tote, Belt No. 2, Shoulder Strap.",
+  "subjectGrounding": {
+    "subject": "Northline Leather Goods",
+    "primaryAction": "configure a bag and request a make-slot.",
+    "audience": "people who buy small-batch bags and straps and care about hide grade.",
+    "materials": [
+      "bridle leather",
+      "solid brass",
+      "vegetable tan"
+    ],
+    "products": [
+      "Field Tote",
+      "Belt No. 2",
+      "Shoulder Strap"
+    ],
+    "brandPalette": [
+      "ink brown",
+      "cream",
+      "brass accent"
+    ],
+    "antiRefs": [
+      "purple SaaS gradient, stock handshake photos, fake 4.9★ rows",
+      "purple SaaS gradient, stock handshake photos, fake 4.9★ rows."
+    ],
+    "assets": {
+      "imageless": false,
+      "plates": true
+    }
+  },
+  "composition": "hard vertical rule: proof left, action right",
+  "informationHierarchy": "1) Field Tote, Belt No. 2, Shoulder Strap recognition 2) material/truth facts 3) configure a bag and request a make-slot. 4) secondary SKUs — no fake social proof",
+  "typography": "neutral grotesque, medium weight only",
+  "colourAndMaterialModel": "ink brown, cream, brass accent — brand evidence only; single reserved accent",
+  "imageryAndAssetStrategy": "object-led product plates only (Field Tote, Belt No. 2, Shoulder Strap); no lifestyle models or stock people",
+  "signatureElement": "northline-leather-make-control",
+  "primaryRisk": "Must not drift into banned tropes (purple SaaS gradient, stock handshake photos, fake 4.9★ rows; purple SaaS gradie); signature may overfit if evidence is thin.",
+  "note": "Post-fail engine sample only — not part of locked H2H screening"
+}

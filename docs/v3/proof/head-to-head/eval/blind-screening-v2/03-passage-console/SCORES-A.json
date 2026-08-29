@@ -1,0 +1,94 @@
+{
+  "evaluator": "A",
+  "briefId": "03-passage-console",
+  "scores": {
+    "P": {
+      "briefFit": 5,
+      "subjectSpecificity": 5,
+      "originality": 4,
+      "composition": 5,
+      "hierarchy": 5,
+      "typography": 5,
+      "materiality": 5,
+      "assetStrategy": 5,
+      "interaction": 5,
+      "signature": 5,
+      "antiCliche": 5,
+      "implementability": 5,
+      "total": 59
+    },
+    "Q": {
+      "briefFit": 1,
+      "subjectSpecificity": 1,
+      "originality": 1,
+      "composition": 1,
+      "hierarchy": 2,
+      "typography": 1,
+      "materiality": 2,
+      "assetStrategy": 4,
+      "interaction": 2,
+      "signature": 1,
+      "antiCliche": 2,
+      "implementability": 2,
+      "total": 20
+    },
+    "R": {
+      "briefFit": 4,
+      "subjectSpecificity": 3,
+      "originality": 2,
+      "composition": 3,
+      "hierarchy": 4,
+      "typography": 2,
+      "materiality": 3,
+      "assetStrategy": 5,
+      "interaction": 3,
+      "signature": 2,
+      "antiCliche": 3,
+      "implementability": 3,
+      "total": 37
+    },
+    "S": {
+      "briefFit": 5,
+      "subjectSpecificity": 5,
+      "originality": 5,
+      "composition": 5,
+      "hierarchy": 5,
+      "typography": 4,
+      "materiality": 5,
+      "assetStrategy": 5,
+      "interaction": 5,
+      "signature": 5,
+      "antiCliche": 5,
+      "implementability": 5,
+      "total": 59
+    },
+    "T": {
+      "briefFit": 5,
+      "subjectSpecificity": 5,
+      "originality": 3,
+      "composition": 5,
+      "hierarchy": 5,
+      "typography": 4,
+      "materiality": 5,
+      "assetStrategy": 5,
+      "interaction": 5,
+      "signature": 4,
+      "antiCliche": 4,
+      "implementability": 5,
+      "total": 55
+    }
+  },
+  "qualitative": {
+    "wouldBuild": "P",
+    "mostGeneric": "Q",
+    "bestGrounded": "P",
+    "strongestDirection": "S"
+  },
+  "comments": {
+    "P": "Commit strip + mono passage tape + direction two-state lock is a full instrument plan. Density-8 scales, amber fault-only, Ctrl+Enter, all four states, imageless. Dark-shell default risk is owned and constrained. Highest implement precision.",
+    "Q": "Product Demo + Features / Swiss marketing pattern is wrong mode for a density-8 harbour desk. Rubik/Nunito and blue/orange system palette fight operational brand. Hierarchy starts with “recognition” not work. Only imageless asset rule is right.",
+    "R": "Correct impulse (full-width real UI, keyboard-first, imageless) but thin: vague work-canvas signature, UI-sans-only type, little state/field specificity. Axis “symbol-led” labels risk chrome noise. Template skeleton with right constraints.",
+    "S": "Movements Board metaphor makes harbour work legible without illustration: permanent chalk-entry head + ruled body + Ctrl+Enter stamp. Amber discipline and density-8 held. Strongest character while still operational.",
+    "T": "Solid two-column desk with status-strip amber channel. Fully state-aware and pack-true; signature is quieter than P/S so it can still slide toward generic dark admin if density slips. Safe strong second build."
+  }
+}

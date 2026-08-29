@@ -1,0 +1,17 @@
+{
+  "runId": "screening-v3-03-passage-console-ui-ux-pro-max",
+  "briefId": "03-passage-console",
+  "arm": "ui-ux-pro-max",
+  "status": "completed",
+  "startedAt": "2026-07-31T20:02:11.589Z",
+  "finishedAt": "2026-07-31T20:02:11.775Z",
+  "modelCalls": 0,
+  "method": "uupm-search-py-design-system+pack-grounded-synthesis",
+  "armCommit": "4857a2c5ef989794751a0f66b8545a4a49566286",
+  "contextPackHash": "36545bf82b53595f63ed00c9135dd9170e0c320abd742747593db5a19ced1bc7",
+  "packetSha256": "e83cadb8dc8d7b0b95d5e38b57874f855647edced6488e0a5289d0bca5a1d1a6",
+  "phase": "screening-v3",
+  "isolation": "fresh-process-no-peer-outputs",
+  "model": "none-mechanical",
+  "note": "copied-from-screening-v2-for-sitesmith-creative-layer-delta"
+}

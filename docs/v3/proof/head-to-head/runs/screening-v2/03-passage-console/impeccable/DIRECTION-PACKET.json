@@ -1,0 +1,43 @@
+{
+  "designThesis": "Movements Board: harbour tide/movements chalkboard commits passages via permanent chalk-entry head strip + Ctrl+Enter stamp into dense ruled log; refuse KPI dashboard, maps, and fintech gradients.",
+  "subjectGrounding": "Passage Log Console; harbour masters logging vessel passages; desktop web app; vessel, inbound/outbound, timestamp, berth note; form->save->row; empty/validation/success/offline; Ctrl+Enter; near-black shell, fog grey panels, amber warnings only; imageless; density 8, motion 1, boldness 3; no KPIs/logos; anti fintech gradients and playful illustration chrome.",
+  "composition": "Full-width desktop board: thin status rail (title + offline banner); always-on chalk-entry head strip (vessel, IN/OUT, time, berth note, Save + Ctrl+Enter); majority-height dense chronological ruled body. Not hero/KPI dashboard.",
+  "informationHierarchy": "1) Chalk-entry head strip (required fields + Save) 2) Offline/validation amber signal 3) Ruled passage board body. No decorative metrics or logos.",
+  "typography": "Neutral UI workhorse sans for labels; tabular figures for times; short operational labels; compact density-8 scale; no display/poster face.",
+  "colourAndMaterialModel": "Restrained night-watch: near-black shell; fog-grey chalkboard panels; chalk-light ink; signal amber only for offline banner and validation errors. No purple/fintech gradients; no nixie-orange brand glow.",
+  "imageryAndAssetStrategy": "Deliberately imageless — UI chrome and type are the content; asset manifest none.",
+  "interactionConcept": "Land -> focus vessel -> fill required -> Save or Ctrl+Enter -> success row on board -> next entry. Motion intensity 1: state changes only. States: empty, validation, success row, offline banner.",
+  "signatureElement": "Chalk-entry head strip + Ctrl+Enter stamp — permanent rewriteable first line of the movements board; direction as short IN/OUT marks on strip and rows.",
+  "primaryRisk": "Density 8 without imagery collapses into generic dark admin CRUD if chalk-entry strip and amber-only fault discipline are not held; literal nixie orange glow or Ikeda pure-B/W strobe would violate brand and anti-references.",
+  "implementationGuidance": "Build Movements Board only from NATIVE.md: near-black shell, fog-grey board, amber warn-only, imageless; permanent entry strip + dense ruled body; states empty/validation/success/offline; Ctrl+Enter; short operational labels; density 8 / motion 1 / boldness 3. No KPIs, maps, logos, fintech gradients, or illustration chrome. Seed key h2h-passage-2026-07-31; assigned grounded #6 tide/movements chalkboard; poolRevision 94ff10ff20de; alternates A1 barcode-density log (Ikeda fuse), A2 fixed-place time bank without orange glow (Nixie fuse).",
+  "unknowns": "Timestamp defaulting (manual vs system clock); exact requiredness of berth note; validation rule detail beyond requiredness; multi-user concurrency; offline sync behaviour beyond banner; non-desktop breakpoints beyond quality floor.",
+  "sourcePointers": {
+    "arm": "impeccable",
+    "commit": "6b342244e915d64b0d6e84d5eec448fd196ce6bb",
+    "repo": "pbakaus/impeccable",
+    "method": "new-work-concept-seed-challengers-critique",
+    "seedKey": "h2h-passage-2026-07-31",
+    "seedScope": "direction",
+    "seedMode": "operate",
+    "seedSource": "api",
+    "poolRevision": "94ff10ff20de",
+    "assignedIndex": 6,
+    "assignedGroundedCandidate": "tide-movements-chalkboard",
+    "winningChannel": "grounded-assigned",
+    "challengerIds": [
+      "signals-instruments-nixie-laboratory-counter",
+      "ikeda-datamatics",
+      "kinetic-sculpture-automata-tensegrity-breathing-column",
+      "clouds-storms-auroras-iridescent-cloud-edge",
+      "notation-diagram-systems-orienteering-map",
+      "digital-design-canon-cdrom-chrome-navigation"
+    ],
+    "survivingAlternates": [
+      "barcode-density-log-ikeda-fuse",
+      "fixed-place-time-bank-nixie-fuse-no-orange-glow"
+    ],
+    "nativeFile": "NATIVE.md",
+    "contextPackHash": "36545bf82b53595f63ed00c9135dd9170e0c320abd742747593db5a19ced1bc7",
+    "phase": "screening-v2"
+  }
+}

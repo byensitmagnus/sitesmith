@@ -1,0 +1,94 @@
+{
+  "evaluator": "A",
+  "briefId": "02-atelier-printworks",
+  "scores": {
+    "P": {
+      "briefFit": 5,
+      "subjectSpecificity": 5,
+      "originality": 4,
+      "composition": 5,
+      "hierarchy": 5,
+      "typography": 4,
+      "materiality": 5,
+      "assetStrategy": 5,
+      "interaction": 4,
+      "signature": 5,
+      "antiCliche": 5,
+      "implementability": 5,
+      "total": 57
+    },
+    "Q": {
+      "briefFit": 2,
+      "subjectSpecificity": 3,
+      "originality": 2,
+      "composition": 2,
+      "hierarchy": 2,
+      "typography": 2,
+      "materiality": 3,
+      "assetStrategy": 3,
+      "interaction": 2,
+      "signature": 1,
+      "antiCliche": 3,
+      "implementability": 2,
+      "total": 27
+    },
+    "R": {
+      "briefFit": 2,
+      "subjectSpecificity": 2,
+      "originality": 1,
+      "composition": 2,
+      "hierarchy": 2,
+      "typography": 2,
+      "materiality": 2,
+      "assetStrategy": 3,
+      "interaction": 2,
+      "signature": 1,
+      "antiCliche": 2,
+      "implementability": 2,
+      "total": 23
+    },
+    "S": {
+      "briefFit": 5,
+      "subjectSpecificity": 5,
+      "originality": 5,
+      "composition": 5,
+      "hierarchy": 5,
+      "typography": 5,
+      "materiality": 5,
+      "assetStrategy": 5,
+      "interaction": 5,
+      "signature": 5,
+      "antiCliche": 5,
+      "implementability": 4,
+      "total": 59
+    },
+    "T": {
+      "briefFit": 5,
+      "subjectSpecificity": 5,
+      "originality": 5,
+      "composition": 5,
+      "hierarchy": 5,
+      "typography": 5,
+      "materiality": 5,
+      "assetStrategy": 5,
+      "interaction": 4,
+      "signature": 5,
+      "antiCliche": 5,
+      "implementability": 5,
+      "total": 59
+    }
+  },
+  "qualitative": {
+    "wouldBuild": "T",
+    "mostGeneric": "R",
+    "bestGrounded": "T",
+    "strongestDirection": "S"
+  },
+  "comments": {
+    "P": "Press-room marketing with chalk white / harbour ink / coral registration mark and three named edition plate slots; honest Ferry Board needed-state. Asymmetric hero + view→facts→enquire hierarchy fit desktop-tolerant portfolio. Signature is true print-production geometry. Slightly less singular than board/chase metaphors, but fully buildable and pack-clean.",
+    "Q": "Cross-domain contamination: “night-watch instrument”, validation/offline/success hierarchy, and “always-on status strip… amber only for faults” belong to a ops console, not a coastal print portfolio. Type advice fights itself (Fraunces vs condensed grotesque). unknowns none declared. Palette nouns correct; product mode wrong.",
+    "R": "Portfolio Grid + Neo Brutalism retrieval shell. Space Grotesk pair and pink/cyan system palette fight chalk/harbour/coral. No three-edition proof architecture; signature is a slug. Hard offset borders are style-kit chrome, not letterpress evidence. Most generic pack fill.",
+    "S": "Ferry-terminal departure board maps island subject to instrument: three edition rows as departures, columns for paper/size/press, coral registration lamp on active row, enquire as destination. Split-flap cascade fits motion-3; honest photo gaps. Strongest direction; small implementability tax if facts lag (self-named risk).",
+    "T": "Locked chase on the platen: one press sheet in thin ink chase, job-ticket rail for true press facts, grip-edge edition strip, coral registration cross as sole accent/UI grammar. Full hex tokens and type roles. Highest grounded build path without agency portfolio defaults. Would build this first."
+  }
+}

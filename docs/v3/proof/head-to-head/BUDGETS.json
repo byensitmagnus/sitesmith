@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "modelClass": "frontier-class coding agent (host-equivalent; exact vendor may vary by arm host)",
+  "tokenBudgetPerRun": 120000,
+  "wallClockMinutesPerRun": 45,
+  "maxIterationsPerRun": 1,
+  "maxInfrastructureRetries": 1,
+  "note": "Estimates are planning bounds, not measured provider invoices. Grok/OpenAI/Anthropic credit burn is not metered here."
+}

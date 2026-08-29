@@ -1,0 +1,584 @@
+{
+  "schemaVersion": 1,
+  "frozen": true,
+  "frozenAt": "2026-07-31T18:30:00.000Z",
+  "proofSha": "b92cdabad98c4d23ff79b74d6881e6b7129325a4",
+  "phases": {
+    "screening": {
+      "briefs": 3,
+      "arms": 5,
+      "runs": 15,
+      "status": "declared-not-started",
+      "requiresCreditApproval": true
+    },
+    "replication": {
+      "briefs": 3,
+      "arms": 5,
+      "runs": 15,
+      "status": "optional-after-screening-decision",
+      "requiresCreditApproval": true,
+      "note": "Only if screening is mixed/preliminary match per protocol"
+    }
+  },
+  "briefs": {
+    "01-leather-goods": {
+      "contextPackHash": "6099df6a1e57a7bce9d70e72df964cdd05486bb9d636be32964c6df059f48a2f",
+      "inputHashes": {
+        "BRIEF.md": "2ebc1ff864f711aba8f086f9bffc00325bd8d4630ea337737a21f1844d0aa623",
+        "EVIDENCE.md": "b41209b00241554ac4f5c9e3ba1c565eced712b2e2cc4a971cb9067f82fb0fbf",
+        "BRAND.md": "d55356a9eaa31d4f3a4b458a8b6a11eeb3c3830298dfd84890adf4dd9b5e257c",
+        "ASSET-PLAN.md": "b608ffa052e3a4dd4cf6434f2e0bf1cd1f9b4b8612f66e3c3d0c651b5413fedd",
+        "ASSET-MANIFEST.md": "931cf7b4fa31cac139337a1cf40277ca00cd77114e9d8825707983085bcc4dd5",
+        "CONSTRAINTS.md": "e3f680b6ce21477002652aa0d5647213d22e905ad3dec1793dcd4a82d42888b4",
+        "RUN-CONTEXT.json": "1872ed085dc6de3a7c55ca065ef40972758a42aaef1f977584fbdd4851d0a679"
+      },
+      "mode": "ecommerce",
+      "modeLabel": "sensory e-commerce",
+      "path": "docs/v3/proof/head-to-head/briefs/01-leather-goods"
+    },
+    "02-atelier-printworks": {
+      "contextPackHash": "04b3fd24b85d8d459178d11c4eb4c08d9e1339c76326f264a9c8eba8fda1d216",
+      "inputHashes": {
+        "BRIEF.md": "addef356268b10ed1515455dd8de743951b33b92bcf9321839621b132f293053",
+        "EVIDENCE.md": "391438ceaeee63cadb75b8fddd326dd5da2a207a0889535fc40a02f65a047e5e",
+        "BRAND.md": "85bef2c14476d9e0410b90ebdcdc43384586916816bacb5bfbebb6963b985ac9",
+        "ASSET-PLAN.md": "c537084c9ac60f7cce5903c4f3b7eea208a495d30e977a7cb626b1ff274ade5c",
+        "ASSET-MANIFEST.md": "dea7a49874dec35ad2c3a2b1d93faa7dc1965764e8e60ba5326d1a73310fd06d",
+        "CONSTRAINTS.md": "606469dca73f9023a0c5cd7be3aa04f3897450351b3869673edcb51840cc5aa4",
+        "RUN-CONTEXT.json": "e78ada6af7632656659d99acf63e3d5e5fead360f6779689c4de733e56742bf6"
+      },
+      "mode": "marketing",
+      "modeLabel": "characterful marketing/portfolio",
+      "path": "docs/v3/proof/head-to-head/briefs/02-atelier-printworks"
+    },
+    "03-passage-console": {
+      "contextPackHash": "36545bf82b53595f63ed00c9135dd9170e0c320abd742747593db5a19ced1bc7",
+      "inputHashes": {
+        "BRIEF.md": "18a89c445f17b6977b5b9e65cbb38e3f33dbc7304eb35ca1f9a95948f69907ea",
+        "EVIDENCE.md": "b96143921fc32f8897f309f6a4ddec53a0b79952f93639bdc0ecaedd325d40ae",
+        "BRAND.md": "87649bab82ff8702827c80f946c5e83298976fb0bbac7d669104b9f560f8153f",
+        "ASSET-PLAN.md": "885441184c58a44adb15e434beb782f0f04f0ec257edeeaa1fa9087c9c5c576a",
+        "ASSET-MANIFEST.md": "73d048384d7d4976fafaaa2dcdd24b0f623b8b7a2a02fdf27fbd3120f4d92e92",
+        "CONSTRAINTS.md": "43d6c587efc614bccc873d9716620f59be292d5ab8e02979a661050f3c1ff520",
+        "RUN-CONTEXT.json": "f7f841887a3deb27020d2f8a3f5612936504c73dea8607327027ba4e671d3a34"
+      },
+      "mode": "product-ui",
+      "modeLabel": "functional product UI",
+      "path": "docs/v3/proof/head-to-head/briefs/03-passage-console"
+    }
+  },
+  "arms": {
+    "taste-skill": {
+      "armId": "A",
+      "repo": "Leonxlnx/taste-skill",
+      "commit": "e988add20dab0fa97d7a76781c48961c8184288e",
+      "role": "upstream",
+      "workflow": "native Design Read + dials",
+      "readOnly": true
+    },
+    "ui-ux-pro-max": {
+      "armId": "B",
+      "repo": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "commit": "4857a2c5ef989794751a0f66b8545a4a49566286",
+      "role": "upstream",
+      "workflow": "native retrieval + design-system generator",
+      "readOnly": true
+    },
+    "frontend-design": {
+      "armId": "C",
+      "repo": "anthropics/skills",
+      "path": "skills/frontend-design",
+      "commit": "b29e7cf65e5cb78a5ac33d582270551bc74a14eb",
+      "role": "upstream",
+      "workflow": "native creative thesis, plan, self-critique",
+      "readOnly": true
+    },
+    "impeccable": {
+      "armId": "D",
+      "repo": "pbakaus/impeccable",
+      "commit": "6b342244e915d64b0d6e84d5eec448fd196ce6bb",
+      "role": "upstream",
+      "workflow": "native concept seed, challengers, reroll, decision process",
+      "readOnly": true
+    },
+    "sitesmith": {
+      "armId": "E",
+      "repo": "byensitmagnus/sitesmith",
+      "commit": "b92cdabad98c4d23ff79b74d6881e6b7129325a4",
+      "branch": "codex/v3-direction-engine-proof",
+      "role": "candidate",
+      "workflow": "frozen Direction Engine + v2.3 handoff",
+      "readOnlyAfterFreeze": true
+    }
+  },
+  "budgets": {
+    "schemaVersion": 1,
+    "modelClass": "frontier-class coding agent (host-equivalent; exact vendor may vary by arm host)",
+    "tokenBudgetPerRun": 120000,
+    "wallClockMinutesPerRun": 45,
+    "maxIterationsPerRun": 1,
+    "maxInfrastructureRetries": 1,
+    "note": "Estimates are planning bounds, not measured provider invoices. Grok/OpenAI/Anthropic credit burn is not metered here."
+  },
+  "outputSchema": "docs/v3/proof/head-to-head/OUTPUT-SCHEMA.json",
+  "fairnessContract": "docs/v3/proof/head-to-head/FAIRNESS-CONTRACT.md",
+  "screeningRuns": [
+    {
+      "runId": "screen-01-leather-goods-taste-skill",
+      "phase": "screening",
+      "briefId": "01-leather-goods",
+      "arm": "taste-skill",
+      "status": "declared-not-started",
+      "contextPackHash": "6099df6a1e57a7bce9d70e72df964cdd05486bb9d636be32964c6df059f48a2f",
+      "armCommit": "e988add20dab0fa97d7a76781c48961c8184288e",
+      "outputDir": "docs/v3/proof/head-to-head/runs/screening/01-leather-goods/taste-skill",
+      "resultPresent": false,
+      "modelCallsAllowed": false
+    },
+    {
+      "runId": "screen-01-leather-goods-ui-ux-pro-max",
+      "phase": "screening",
+      "briefId": "01-leather-goods",
+      "arm": "ui-ux-pro-max",
+      "status": "declared-not-started",
+      "contextPackHash": "6099df6a1e57a7bce9d70e72df964cdd05486bb9d636be32964c6df059f48a2f",
+      "armCommit": "4857a2c5ef989794751a0f66b8545a4a49566286",
+      "outputDir": "docs/v3/proof/head-to-head/runs/screening/01-leather-goods/ui-ux-pro-max",
+      "resultPresent": false,
+      "modelCallsAllowed": false
+    },
+    {
+      "runId": "screen-01-leather-goods-frontend-design",
+      "phase": "screening",
+      "briefId": "01-leather-goods",
+      "arm": "frontend-design",
+      "status": "declared-not-started",
+      "contextPackHash": "6099df6a1e57a7bce9d70e72df964cdd05486bb9d636be32964c6df059f48a2f",
+      "armCommit": "b29e7cf65e5cb78a5ac33d582270551bc74a14eb",
+      "outputDir": "docs/v3/proof/head-to-head/runs/screening/01-leather-goods/frontend-design",
+      "resultPresent": false,
+      "modelCallsAllowed": false
+    },
+    {
+      "runId": "screen-01-leather-goods-impeccable",
+      "phase": "screening",
+      "briefId": "01-leather-goods",
+      "arm": "impeccable",
+      "status": "declared-not-started",
+      "contextPackHash": "6099df6a1e57a7bce9d70e72df964cdd05486bb9d636be32964c6df059f48a2f",
+      "armCommit": "6b342244e915d64b0d6e84d5eec448fd196ce6bb",
+      "outputDir": "docs/v3/proof/head-to-head/runs/screening/01-leather-goods/impeccable",
+      "resultPresent": false,
+      "modelCallsAllowed": false
+    },
+    {
+      "runId": "screen-01-leather-goods-sitesmith",
+      "phase": "screening",
+      "briefId": "01-leather-goods",
+      "arm": "sitesmith",
+      "status": "declared-not-started",
+      "contextPackHash": "6099df6a1e57a7bce9d70e72df964cdd05486bb9d636be32964c6df059f48a2f",
+      "armCommit": "b92cdabad98c4d23ff79b74d6881e6b7129325a4",
+      "outputDir": "docs/v3/proof/head-to-head/runs/screening/01-leather-goods/sitesmith",
+      "resultPresent": false,
+      "modelCallsAllowed": false
+    },
+    {
+      "runId": "screen-02-atelier-printworks-taste-skill",
+      "phase": "screening",
+      "briefId": "02-atelier-printworks",
+      "arm": "taste-skill",
+      "status": "declared-not-started",
+      "contextPackHash": "04b3fd24b85d8d459178d11c4eb4c08d9e1339c76326f264a9c8eba8fda1d216",
+      "armCommit": "e988add20dab0fa97d7a76781c48961c8184288e",
+      "outputDir": "docs/v3/proof/head-to-head/runs/screening/02-atelier-printworks/taste-skill",
+      "resultPresent": false,
+      "modelCallsAllowed": false
+    },
+    {
+      "runId": "screen-02-atelier-printworks-ui-ux-pro-max",
+      "phase": "screening",
+      "briefId": "02-atelier-printworks",
+      "arm": "ui-ux-pro-max",
+      "status": "declared-not-started",
+      "contextPackHash": "04b3fd24b85d8d459178d11c4eb4c08d9e1339c76326f264a9c8eba8fda1d216",
+      "armCommit": "4857a2c5ef989794751a0f66b8545a4a49566286",
+      "outputDir": "docs/v3/proof/head-to-head/runs/screening/02-atelier-printworks/ui-ux-pro-max",
+      "resultPresent": false,
+      "modelCallsAllowed": false
+    },
+    {
+      "runId": "screen-02-atelier-printworks-frontend-design",
+      "phase": "screening",
+      "briefId": "02-atelier-printworks",
+      "arm": "frontend-design",
+      "status": "declared-not-started",
+      "contextPackHash": "04b3fd24b85d8d459178d11c4eb4c08d9e1339c76326f264a9c8eba8fda1d216",
+      "armCommit": "b29e7cf65e5cb78a5ac33d582270551bc74a14eb",
+      "outputDir": "docs/v3/proof/head-to-head/runs/screening/02-atelier-printworks/frontend-design",
+      "resultPresent": false,
+      "modelCallsAllowed": false
+    },
+    {
+      "runId": "screen-02-atelier-printworks-impeccable",
+      "phase": "screening",
+      "briefId": "02-atelier-printworks",
+      "arm": "impeccable",
+      "status": "declared-not-started",
+      "contextPackHash": "04b3fd24b85d8d459178d11c4eb4c08d9e1339c76326f264a9c8eba8fda1d216",
+      "armCommit": "6b342244e915d64b0d6e84d5eec448fd196ce6bb",
+      "outputDir": "docs/v3/proof/head-to-head/runs/screening/02-atelier-printworks/impeccable",
+      "resultPresent": false,
+      "modelCallsAllowed": false
+    },
+    {
+      "runId": "screen-02-atelier-printworks-sitesmith",
+      "phase": "screening",
+      "briefId": "02-atelier-printworks",
+      "arm": "sitesmith",
+      "status": "declared-not-started",
+      "contextPackHash": "04b3fd24b85d8d459178d11c4eb4c08d9e1339c76326f264a9c8eba8fda1d216",
+      "armCommit": "b92cdabad98c4d23ff79b74d6881e6b7129325a4",
+      "outputDir": "docs/v3/proof/head-to-head/runs/screening/02-atelier-printworks/sitesmith",
+      "resultPresent": false,
+      "modelCallsAllowed": false
+    },
+    {
+      "runId": "screen-03-passage-console-taste-skill",
+      "phase": "screening",
+      "briefId": "03-passage-console",
+      "arm": "taste-skill",
+      "status": "declared-not-started",
+      "contextPackHash": "36545bf82b53595f63ed00c9135dd9170e0c320abd742747593db5a19ced1bc7",
+      "armCommit": "e988add20dab0fa97d7a76781c48961c8184288e",
+      "outputDir": "docs/v3/proof/head-to-head/runs/screening/03-passage-console/taste-skill",
+      "resultPresent": false,
+      "modelCallsAllowed": false
+    },
+    {
+      "runId": "screen-03-passage-console-ui-ux-pro-max",
+      "phase": "screening",
+      "briefId": "03-passage-console",
+      "arm": "ui-ux-pro-max",
+      "status": "declared-not-started",
+      "contextPackHash": "36545bf82b53595f63ed00c9135dd9170e0c320abd742747593db5a19ced1bc7",
+      "armCommit": "4857a2c5ef989794751a0f66b8545a4a49566286",
+      "outputDir": "docs/v3/proof/head-to-head/runs/screening/03-passage-console/ui-ux-pro-max",
+      "resultPresent": false,
+      "modelCallsAllowed": false
+    },
+    {
+      "runId": "screen-03-passage-console-frontend-design",
+      "phase": "screening",
+      "briefId": "03-passage-console",
+      "arm": "frontend-design",
+      "status": "declared-not-started",
+      "contextPackHash": "36545bf82b53595f63ed00c9135dd9170e0c320abd742747593db5a19ced1bc7",
+      "armCommit": "b29e7cf65e5cb78a5ac33d582270551bc74a14eb",
+      "outputDir": "docs/v3/proof/head-to-head/runs/screening/03-passage-console/frontend-design",
+      "resultPresent": false,
+      "modelCallsAllowed": false
+    },
+    {
+      "runId": "screen-03-passage-console-impeccable",
+      "phase": "screening",
+      "briefId": "03-passage-console",
+      "arm": "impeccable",
+      "status": "declared-not-started",
+      "contextPackHash": "36545bf82b53595f63ed00c9135dd9170e0c320abd742747593db5a19ced1bc7",
+      "armCommit": "6b342244e915d64b0d6e84d5eec448fd196ce6bb",
+      "outputDir": "docs/v3/proof/head-to-head/runs/screening/03-passage-console/impeccable",
+      "resultPresent": false,
+      "modelCallsAllowed": false
+    },
+    {
+      "runId": "screen-03-passage-console-sitesmith",
+      "phase": "screening",
+      "briefId": "03-passage-console",
+      "arm": "sitesmith",
+      "status": "declared-not-started",
+      "contextPackHash": "36545bf82b53595f63ed00c9135dd9170e0c320abd742747593db5a19ced1bc7",
+      "armCommit": "b92cdabad98c4d23ff79b74d6881e6b7129325a4",
+      "outputDir": "docs/v3/proof/head-to-head/runs/screening/03-passage-console/sitesmith",
+      "resultPresent": false,
+      "modelCallsAllowed": false
+    }
+  ],
+  "randomizedScreeningOrder": [
+    {
+      "position": 0,
+      "runId": "screen-03-passage-console-frontend-design",
+      "briefId": "03-passage-console",
+      "arm": "frontend-design"
+    },
+    {
+      "position": 1,
+      "runId": "screen-03-passage-console-taste-skill",
+      "briefId": "03-passage-console",
+      "arm": "taste-skill"
+    },
+    {
+      "position": 2,
+      "runId": "screen-02-atelier-printworks-impeccable",
+      "briefId": "02-atelier-printworks",
+      "arm": "impeccable"
+    },
+    {
+      "position": 3,
+      "runId": "screen-02-atelier-printworks-frontend-design",
+      "briefId": "02-atelier-printworks",
+      "arm": "frontend-design"
+    },
+    {
+      "position": 4,
+      "runId": "screen-02-atelier-printworks-ui-ux-pro-max",
+      "briefId": "02-atelier-printworks",
+      "arm": "ui-ux-pro-max"
+    },
+    {
+      "position": 5,
+      "runId": "screen-02-atelier-printworks-sitesmith",
+      "briefId": "02-atelier-printworks",
+      "arm": "sitesmith"
+    },
+    {
+      "position": 6,
+      "runId": "screen-01-leather-goods-frontend-design",
+      "briefId": "01-leather-goods",
+      "arm": "frontend-design"
+    },
+    {
+      "position": 7,
+      "runId": "screen-01-leather-goods-ui-ux-pro-max",
+      "briefId": "01-leather-goods",
+      "arm": "ui-ux-pro-max"
+    },
+    {
+      "position": 8,
+      "runId": "screen-02-atelier-printworks-taste-skill",
+      "briefId": "02-atelier-printworks",
+      "arm": "taste-skill"
+    },
+    {
+      "position": 9,
+      "runId": "screen-03-passage-console-impeccable",
+      "briefId": "03-passage-console",
+      "arm": "impeccable"
+    },
+    {
+      "position": 10,
+      "runId": "screen-03-passage-console-ui-ux-pro-max",
+      "briefId": "03-passage-console",
+      "arm": "ui-ux-pro-max"
+    },
+    {
+      "position": 11,
+      "runId": "screen-01-leather-goods-taste-skill",
+      "briefId": "01-leather-goods",
+      "arm": "taste-skill"
+    },
+    {
+      "position": 12,
+      "runId": "screen-01-leather-goods-sitesmith",
+      "briefId": "01-leather-goods",
+      "arm": "sitesmith"
+    },
+    {
+      "position": 13,
+      "runId": "screen-01-leather-goods-impeccable",
+      "briefId": "01-leather-goods",
+      "arm": "impeccable"
+    },
+    {
+      "position": 14,
+      "runId": "screen-03-passage-console-sitesmith",
+      "briefId": "03-passage-console",
+      "arm": "sitesmith"
+    }
+  ],
+  "randomizationSeed": "0x48324832",
+  "replicationRuns": [
+    {
+      "runId": "replicate-01-leather-goods-taste-skill",
+      "phase": "replication",
+      "briefId": "01-leather-goods",
+      "arm": "taste-skill",
+      "status": "declared-not-started-pending-decision",
+      "contextPackHash": "6099df6a1e57a7bce9d70e72df964cdd05486bb9d636be32964c6df059f48a2f",
+      "armCommit": "e988add20dab0fa97d7a76781c48961c8184288e",
+      "outputDir": "docs/v3/proof/head-to-head/runs/replication/01-leather-goods/taste-skill",
+      "resultPresent": false,
+      "modelCallsAllowed": false
+    },
+    {
+      "runId": "replicate-01-leather-goods-ui-ux-pro-max",
+      "phase": "replication",
+      "briefId": "01-leather-goods",
+      "arm": "ui-ux-pro-max",
+      "status": "declared-not-started-pending-decision",
+      "contextPackHash": "6099df6a1e57a7bce9d70e72df964cdd05486bb9d636be32964c6df059f48a2f",
+      "armCommit": "4857a2c5ef989794751a0f66b8545a4a49566286",
+      "outputDir": "docs/v3/proof/head-to-head/runs/replication/01-leather-goods/ui-ux-pro-max",
+      "resultPresent": false,
+      "modelCallsAllowed": false
+    },
+    {
+      "runId": "replicate-01-leather-goods-frontend-design",
+      "phase": "replication",
+      "briefId": "01-leather-goods",
+      "arm": "frontend-design",
+      "status": "declared-not-started-pending-decision",
+      "contextPackHash": "6099df6a1e57a7bce9d70e72df964cdd05486bb9d636be32964c6df059f48a2f",
+      "armCommit": "b29e7cf65e5cb78a5ac33d582270551bc74a14eb",
+      "outputDir": "docs/v3/proof/head-to-head/runs/replication/01-leather-goods/frontend-design",
+      "resultPresent": false,
+      "modelCallsAllowed": false
+    },
+    {
+      "runId": "replicate-01-leather-goods-impeccable",
+      "phase": "replication",
+      "briefId": "01-leather-goods",
+      "arm": "impeccable",
+      "status": "declared-not-started-pending-decision",
+      "contextPackHash": "6099df6a1e57a7bce9d70e72df964cdd05486bb9d636be32964c6df059f48a2f",
+      "armCommit": "6b342244e915d64b0d6e84d5eec448fd196ce6bb",
+      "outputDir": "docs/v3/proof/head-to-head/runs/replication/01-leather-goods/impeccable",
+      "resultPresent": false,
+      "modelCallsAllowed": false
+    },
+    {
+      "runId": "replicate-01-leather-goods-sitesmith",
+      "phase": "replication",
+      "briefId": "01-leather-goods",
+      "arm": "sitesmith",
+      "status": "declared-not-started-pending-decision",
+      "contextPackHash": "6099df6a1e57a7bce9d70e72df964cdd05486bb9d636be32964c6df059f48a2f",
+      "armCommit": "b92cdabad98c4d23ff79b74d6881e6b7129325a4",
+      "outputDir": "docs/v3/proof/head-to-head/runs/replication/01-leather-goods/sitesmith",
+      "resultPresent": false,
+      "modelCallsAllowed": false
+    },
+    {
+      "runId": "replicate-02-atelier-printworks-taste-skill",
+      "phase": "replication",
+      "briefId": "02-atelier-printworks",
+      "arm": "taste-skill",
+      "status": "declared-not-started-pending-decision",
+      "contextPackHash": "04b3fd24b85d8d459178d11c4eb4c08d9e1339c76326f264a9c8eba8fda1d216",
+      "armCommit": "e988add20dab0fa97d7a76781c48961c8184288e",
+      "outputDir": "docs/v3/proof/head-to-head/runs/replication/02-atelier-printworks/taste-skill",
+      "resultPresent": false,
+      "modelCallsAllowed": false
+    },
+    {
+      "runId": "replicate-02-atelier-printworks-ui-ux-pro-max",
+      "phase": "replication",
+      "briefId": "02-atelier-printworks",
+      "arm": "ui-ux-pro-max",
+      "status": "declared-not-started-pending-decision",
+      "contextPackHash": "04b3fd24b85d8d459178d11c4eb4c08d9e1339c76326f264a9c8eba8fda1d216",
+      "armCommit": "4857a2c5ef989794751a0f66b8545a4a49566286",
+      "outputDir": "docs/v3/proof/head-to-head/runs/replication/02-atelier-printworks/ui-ux-pro-max",
+      "resultPresent": false,
+      "modelCallsAllowed": false
+    },
+    {
+      "runId": "replicate-02-atelier-printworks-frontend-design",
+      "phase": "replication",
+      "briefId": "02-atelier-printworks",
+      "arm": "frontend-design",
+      "status": "declared-not-started-pending-decision",
+      "contextPackHash": "04b3fd24b85d8d459178d11c4eb4c08d9e1339c76326f264a9c8eba8fda1d216",
+      "armCommit": "b29e7cf65e5cb78a5ac33d582270551bc74a14eb",
+      "outputDir": "docs/v3/proof/head-to-head/runs/replication/02-atelier-printworks/frontend-design",
+      "resultPresent": false,
+      "modelCallsAllowed": false
+    },
+    {
+      "runId": "replicate-02-atelier-printworks-impeccable",
+      "phase": "replication",
+      "briefId": "02-atelier-printworks",
+      "arm": "impeccable",
+      "status": "declared-not-started-pending-decision",
+      "contextPackHash": "04b3fd24b85d8d459178d11c4eb4c08d9e1339c76326f264a9c8eba8fda1d216",
+      "armCommit": "6b342244e915d64b0d6e84d5eec448fd196ce6bb",
+      "outputDir": "docs/v3/proof/head-to-head/runs/replication/02-atelier-printworks/impeccable",
+      "resultPresent": false,
+      "modelCallsAllowed": false
+    },
+    {
+      "runId": "replicate-02-atelier-printworks-sitesmith",
+      "phase": "replication",
+      "briefId": "02-atelier-printworks",
+      "arm": "sitesmith",
+      "status": "declared-not-started-pending-decision",
+      "contextPackHash": "04b3fd24b85d8d459178d11c4eb4c08d9e1339c76326f264a9c8eba8fda1d216",
+      "armCommit": "b92cdabad98c4d23ff79b74d6881e6b7129325a4",
+      "outputDir": "docs/v3/proof/head-to-head/runs/replication/02-atelier-printworks/sitesmith",
+      "resultPresent": false,
+      "modelCallsAllowed": false
+    },
+    {
+      "runId": "replicate-03-passage-console-taste-skill",
+      "phase": "replication",
+      "briefId": "03-passage-console",
+      "arm": "taste-skill",
+      "status": "declared-not-started-pending-decision",
+      "contextPackHash": "36545bf82b53595f63ed00c9135dd9170e0c320abd742747593db5a19ced1bc7",
+      "armCommit": "e988add20dab0fa97d7a76781c48961c8184288e",
+      "outputDir": "docs/v3/proof/head-to-head/runs/replication/03-passage-console/taste-skill",
+      "resultPresent": false,
+      "modelCallsAllowed": false
+    },
+    {
+      "runId": "replicate-03-passage-console-ui-ux-pro-max",
+      "phase": "replication",
+      "briefId": "03-passage-console",
+      "arm": "ui-ux-pro-max",
+      "status": "declared-not-started-pending-decision",
+      "contextPackHash": "36545bf82b53595f63ed00c9135dd9170e0c320abd742747593db5a19ced1bc7",
+      "armCommit": "4857a2c5ef989794751a0f66b8545a4a49566286",
+      "outputDir": "docs/v3/proof/head-to-head/runs/replication/03-passage-console/ui-ux-pro-max",
+      "resultPresent": false,
+      "modelCallsAllowed": false
+    },
+    {
+      "runId": "replicate-03-passage-console-frontend-design",
+      "phase": "replication",
+      "briefId": "03-passage-console",
+      "arm": "frontend-design",
+      "status": "declared-not-started-pending-decision",
+      "contextPackHash": "36545bf82b53595f63ed00c9135dd9170e0c320abd742747593db5a19ced1bc7",
+      "armCommit": "b29e7cf65e5cb78a5ac33d582270551bc74a14eb",
+      "outputDir": "docs/v3/proof/head-to-head/runs/replication/03-passage-console/frontend-design",
+      "resultPresent": false,
+      "modelCallsAllowed": false
+    },
+    {
+      "runId": "replicate-03-passage-console-impeccable",
+      "phase": "replication",
+      "briefId": "03-passage-console",
+      "arm": "impeccable",
+      "status": "declared-not-started-pending-decision",
+      "contextPackHash": "36545bf82b53595f63ed00c9135dd9170e0c320abd742747593db5a19ced1bc7",
+      "armCommit": "6b342244e915d64b0d6e84d5eec448fd196ce6bb",
+      "outputDir": "docs/v3/proof/head-to-head/runs/replication/03-passage-console/impeccable",
+      "resultPresent": false,
+      "modelCallsAllowed": false
+    },
+    {
+      "runId": "replicate-03-passage-console-sitesmith",
+      "phase": "replication",
+      "briefId": "03-passage-console",
+      "arm": "sitesmith",
+      "status": "declared-not-started-pending-decision",
+      "contextPackHash": "36545bf82b53595f63ed00c9135dd9170e0c320abd742747593db5a19ced1bc7",
+      "armCommit": "b92cdabad98c4d23ff79b74d6881e6b7129325a4",
+      "outputDir": "docs/v3/proof/head-to-head/runs/replication/03-passage-console/sitesmith",
+      "resultPresent": false,
+      "modelCallsAllowed": false
+    }
+  ],
+  "paidModelCallsMade": 0,
+  "resultsDirectoriesMustBeEmptyBeforeStart": true
+}

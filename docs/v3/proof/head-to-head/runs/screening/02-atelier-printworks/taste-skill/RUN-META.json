@@ -1,0 +1,9 @@
+{
+  "runId": "screen-02-atelier-printworks-taste-skill",
+  "briefId": "02-atelier-printworks",
+  "arm": "taste-skill",
+  "status": "completed",
+  "phase": "screening",
+  "modelCalls": 1,
+  "packetSha256": "d52bc074308bf1919533afa7bf3b19489f3915ec76436a03992c512ad52802b7"
+}

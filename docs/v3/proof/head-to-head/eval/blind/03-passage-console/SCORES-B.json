@@ -1,0 +1,94 @@
+{
+  "evaluator": "B",
+  "briefId": "03-passage-console",
+  "scores": {
+    "P": {
+      "briefFit": 5,
+      "subjectSpecificity": 5,
+      "originality": 4,
+      "composition": 5,
+      "hierarchy": 5,
+      "typography": 5,
+      "materiality": 5,
+      "assetStrategy": 5,
+      "interaction": 5,
+      "signature": 4,
+      "antiCliche": 5,
+      "implementability": 5,
+      "total": 58
+    },
+    "Q": {
+      "briefFit": 1,
+      "subjectSpecificity": 1,
+      "originality": 1,
+      "composition": 1,
+      "hierarchy": 1,
+      "typography": 1,
+      "materiality": 1,
+      "assetStrategy": 1,
+      "interaction": 1,
+      "signature": 1,
+      "antiCliche": 1,
+      "implementability": 2,
+      "total": 13
+    },
+    "R": {
+      "briefFit": 5,
+      "subjectSpecificity": 5,
+      "originality": 4,
+      "composition": 5,
+      "hierarchy": 5,
+      "typography": 5,
+      "materiality": 5,
+      "assetStrategy": 5,
+      "interaction": 5,
+      "signature": 5,
+      "antiCliche": 5,
+      "implementability": 5,
+      "total": 59
+    },
+    "S": {
+      "briefFit": 4,
+      "subjectSpecificity": 3,
+      "originality": 2,
+      "composition": 3,
+      "hierarchy": 2,
+      "typography": 3,
+      "materiality": 3,
+      "assetStrategy": 4,
+      "interaction": 4,
+      "signature": 2,
+      "antiCliche": 4,
+      "implementability": 3,
+      "total": 37
+    },
+    "T": {
+      "briefFit": 5,
+      "subjectSpecificity": 4,
+      "originality": 4,
+      "composition": 4,
+      "hierarchy": 4,
+      "typography": 3,
+      "materiality": 4,
+      "assetStrategy": 5,
+      "interaction": 5,
+      "signature": 4,
+      "antiCliche": 5,
+      "implementability": 4,
+      "total": 51
+    }
+  },
+  "qualitative": {
+    "wouldBuild": "R",
+    "mostGeneric": "Q",
+    "bestGrounded": "R",
+    "strongestDirection": "R"
+  },
+  "comments": {
+    "P": "Dense two-column form/log cockpit with amber-rationed status strip is fully operational and imageless-correct, signature slightly less distinctive than the direction lock.",
+    "Q": "Hero/demo/features marketing shell with blue SaaS palette is the wrong genre for a density-8 harbour log desk.",
+    "R": "Night-watch instrument with Inbound|Outbound lock, hex-locked greyscale, and exact empty/error/success/offline states is the clearest build-ready direction.",
+    "S": "Correct full-width imageless instinct but axis-thin, with garbled grounding and an opaque signature id instead of a named control pattern.",
+    "T": "Watch Ledger entry line is coherent and anti-KPI, yet shorter type/composition detail leaves more room for generic dark CRUD drift."
+  }
+}

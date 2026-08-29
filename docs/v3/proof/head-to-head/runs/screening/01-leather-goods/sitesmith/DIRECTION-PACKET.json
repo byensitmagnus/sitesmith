@@ -1,0 +1,22 @@
+{
+  "designThesis": "Northline Leather Goods\": configure a bag and request a make-slot. via hard vertical rule: proof left, action right — northline, leather, goods, people, who, buy",
+  "subjectGrounding": "Northline Leather Goods\" | --- | title: \"Evidence — Northline Leather Goods\" | status: proof-fixture | ai_generated: \"(C)\" | --- | # Evidence — Northline Leather Goods | domain-knowledge: consulted (5 hits) | people who buy small-batch bags and straps and care about hide grade.",
+  "composition": "hard vertical rule: proof left, action right",
+  "informationHierarchy": "hard vertical rule: proof left, action right",
+  "typography": "neutral grotesque, medium weight only",
+  "colourAndMaterialModel": "stone ground, single brand accent on CTA only",
+  "imageryAndAssetStrategy": "diagram-led evidence stack",
+  "interactionConcept": "sticky action column on desktop",
+  "signatureElement": "northline-sig-1",
+  "primaryRisk": "Signature may overfit if evidence is thin.",
+  "implementationGuidance": "---\ntitle: \"DIRECTION — 01-leather-goods\"\nstatus: direction-engine-slice\nai_generated: \"(C)\"\n---\n\n# DIRECTION — 01-leather-goods\n\nWinner: split-evidence (Northline Leather Goods\": configure a bag and request a make-slot. via hard vertical rule: proof left, action right — northline, leather, goods, people, who, buy)\n\n## Signature\nnorthline-sig-1\n\n## Axis record\n\n- direction-version: 2.3\n- composition: hard vertical rule: proof left, action right\n- type: neutral grotesque, medium weight only\n- colour: stone ground, single brand accent on CTA only\n- imagery: diagram-led evidence stack\n- rhythm: two columns for the whole first fold\n\n- surface: framed — evidence cards in heavy borders\n- labels: sentence case — operational clarity\n- figures: functional tabular — measurements only where compared\n- depth: elevated — evidence cards raise on focus\n\n- visual-density: 6\n- motion-intensity: 2\n- aesthetic-boldness: 6\n\n- signature-selector: [data-signature=\"northline-sig-1\"]\n- signature-min-share: 12\n\n## Rejections\n- statement-object: recorded alternative; not passed to build context\n- material-board: recorded alternative; not passed to build context\n\n## Notes\nSelected by Direction Engine v3 slice. Build context must not receive losing cards or generator scores.",
+  "unknowns": "none declared",
+  "sourcePointers": {
+    "arm": "sitesmith",
+    "commit": "b92cdabad98c4d23ff79b74d6881e6b7129325a4",
+    "enginePolicy": "direction-engine-v3-slice-1.0.0",
+    "inputHash": "f2422508cf74f571b630d8062c37be84263aa1e371653dc7f0a6af9bce5de3dc",
+    "selectedWorldId": "split-evidence",
+    "blindChoice": "L1"
+  }
+}

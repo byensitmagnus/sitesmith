@@ -1,0 +1,94 @@
+{
+  "evaluator": "B",
+  "briefId": "01-leather-goods",
+  "scores": {
+    "P": {
+      "briefFit": 4,
+      "subjectSpecificity": 4,
+      "originality": 3,
+      "composition": 3,
+      "hierarchy": 4,
+      "typography": 4,
+      "materiality": 4,
+      "assetStrategy": 4,
+      "interaction": 3,
+      "signature": 4,
+      "antiCliche": 4,
+      "implementability": 3,
+      "total": 44
+    },
+    "Q": {
+      "briefFit": 5,
+      "subjectSpecificity": 5,
+      "originality": 4,
+      "composition": 5,
+      "hierarchy": 5,
+      "typography": 5,
+      "materiality": 5,
+      "assetStrategy": 5,
+      "interaction": 5,
+      "signature": 5,
+      "antiCliche": 5,
+      "implementability": 5,
+      "total": 59
+    },
+    "R": {
+      "briefFit": 5,
+      "subjectSpecificity": 5,
+      "originality": 5,
+      "composition": 4,
+      "hierarchy": 5,
+      "typography": 4,
+      "materiality": 5,
+      "assetStrategy": 5,
+      "interaction": 4,
+      "signature": 5,
+      "antiCliche": 5,
+      "implementability": 4,
+      "total": 56
+    },
+    "S": {
+      "briefFit": 2,
+      "subjectSpecificity": 2,
+      "originality": 1,
+      "composition": 2,
+      "hierarchy": 2,
+      "typography": 2,
+      "materiality": 2,
+      "assetStrategy": 3,
+      "interaction": 2,
+      "signature": 1,
+      "antiCliche": 2,
+      "implementability": 2,
+      "total": 23
+    },
+    "T": {
+      "briefFit": 5,
+      "subjectSpecificity": 5,
+      "originality": 3,
+      "composition": 4,
+      "hierarchy": 5,
+      "typography": 4,
+      "materiality": 4,
+      "assetStrategy": 5,
+      "interaction": 4,
+      "signature": 3,
+      "antiCliche": 4,
+      "implementability": 5,
+      "total": 51
+    }
+  },
+  "qualitative": {
+    "wouldBuild": "Q",
+    "mostGeneric": "S",
+    "bestGrounded": "Q",
+    "strongestDirection": "R"
+  },
+  "comments": {
+    "P": "Hide Grade Strip + trade plate edge and cream/ink/brass fit the brief, but composition is only a hard vertical rule, interaction is a thin sticky column, grounding is truncated with duplicate anti-refs, and unknowns are wrongly “none declared.”",
+    "Q": "Full mobile-first make-slot desk: Field Tote plate → material stamp → Hide Grade Strip radiogroup → price band + 3-week lead → Request make-slot → secondary goods. Hex tokens, brass-only CTA, honest missing stitch-macro/strap plate, motion-2 edge response — cleanest complete ship package.",
+    "R": "Saddlery bench ticket / gatefold is the most original subject-true concept; closed-face facts + open hide choice map the journey well. Gatefold novelty and thinner type specificity are real mobile-first risks if the closed face fails.",
+    "S": "Newsletter/Content-First + Vibrant/Block-based with Rubik/Nunito and emerald/orange system palette fights pack brand, motion-2, and sensory leather ecommerce — template retrieval, not Northline. Signature is a label, not a mechanism.",
+    "T": "Solid split proof/configure spine, honest assets, and pack-true journey; signature (plate spine + brass CTA) is weaker than a Hide Grade Strip or bench ticket, and cream+ink+brass is correctly flagged as LLM-default risk."
+  }
+}

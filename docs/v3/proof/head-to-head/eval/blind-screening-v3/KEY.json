@@ -1,0 +1,67 @@
+{
+  "createdAt": "2026-07-31T20:18:00.237Z",
+  "briefs": {
+    "01-leather-goods": {
+      "keyMap": {
+        "P": "sitesmith",
+        "Q": "frontend-design",
+        "R": "impeccable",
+        "S": "ui-ux-pro-max",
+        "T": "taste-skill"
+      },
+      "order": [
+        "sitesmith",
+        "frontend-design",
+        "impeccable",
+        "ui-ux-pro-max",
+        "taste-skill"
+      ]
+    },
+    "02-atelier-printworks": {
+      "keyMap": {
+        "P": "taste-skill",
+        "Q": "sitesmith",
+        "R": "ui-ux-pro-max",
+        "S": "impeccable",
+        "T": "frontend-design"
+      },
+      "order": [
+        "taste-skill",
+        "sitesmith",
+        "ui-ux-pro-max",
+        "impeccable",
+        "frontend-design"
+      ]
+    },
+    "03-passage-console": {
+      "keyMap": {
+        "P": "sitesmith",
+        "Q": "frontend-design",
+        "R": "taste-skill",
+        "S": "ui-ux-pro-max",
+        "T": "impeccable"
+      },
+      "order": [
+        "sitesmith",
+        "frontend-design",
+        "taste-skill",
+        "ui-ux-pro-max",
+        "impeccable"
+      ]
+    }
+  },
+  "criteria": [
+    "briefFit",
+    "subjectSpecificity",
+    "originality",
+    "composition",
+    "hierarchy",
+    "typography",
+    "materiality",
+    "assetStrategy",
+    "interaction",
+    "signature",
+    "antiCliche",
+    "implementability"
+  ]
+}

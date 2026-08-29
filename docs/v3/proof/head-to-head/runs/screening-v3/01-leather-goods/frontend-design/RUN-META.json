@@ -1,0 +1,23 @@
+{
+  "runId": "screening-v3-01-leather-goods-frontend-design",
+  "briefId": "01-leather-goods",
+  "arm": "frontend-design",
+  "status": "completed",
+  "startedAt": "2026-07-31T20:15:00.000Z",
+  "finishedAt": "2026-07-31T20:18:00.000Z",
+  "modelCalls": 1,
+  "method": "native-creative-thesis-plan-self-critique",
+  "armCommit": "b29e7cf65e5cb78a5ac33d582270551bc74a14eb",
+  "phase": "screening-v3",
+  "isolation": "fresh-process-no-peer-outputs",
+  "sourcePointers": {
+    "arm": "frontend-design",
+    "commit": "b29e7cf65e5cb78a5ac33d582270551bc74a14eb"
+  },
+  "outputs": [
+    "NATIVE.md",
+    "DIRECTION-PACKET.json",
+    "RUN-META.json"
+  ],
+  "note": "copied-from-screening-v2-for-sitesmith-creative-layer-delta"
+}

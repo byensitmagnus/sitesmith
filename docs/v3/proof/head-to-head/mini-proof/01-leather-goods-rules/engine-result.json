@@ -1,0 +1,1960 @@
+{
+  "ok": true,
+  "stage": "handoff-ready",
+  "policyVersion": "direction-engine-v3-orchestrator-1.1.0",
+  "architecture": "orchestrator",
+  "inputWarnings": [],
+  "proofMeta": {
+    "engineCommit": null,
+    "inputHash": "f330ad427fc1a6f1ec785bf371786317504a87f36d9af10219ac47f09ae46838",
+    "policyVersion": "direction-engine-v3-orchestrator-1.1.0",
+    "randomSeed": "mini-rules-h2h-leather-2026-07-31",
+    "numericSeed": 2334358073,
+    "creativePass": "rules"
+  },
+  "creative": {
+    "mode": "rules",
+    "llmAttempted": false,
+    "llmSucceeded": false
+  },
+  "directionPacket": {
+    "designThesis": "Northline Leather Goods is a make-slot desk, not a boutique shelf: open on Field Tote, Belt No. 2, Shoulder Strap with trade facts on the plate edge; primary argument is material truth + “configure a bag and request a make-slot.” — never lifestyle hero; ban purple SaaS gradient, stock handshake photos, fake 4.9★ rows.",
+    "subjectGrounding": "Subject: Northline Leather Goods · Audience: people who buy small-batch bags and straps and care about hide grade. · Action: configure a bag and request a make-slot. · Products: Field Tote, Belt No. 2, Shoulder Strap · Materials: bridle leather, solid brass, vegetable tan · Palette: ink brown, cream, brass accent · Anti-refs: purple SaaS gradient, stock handshake photos, fake 4.9★ rows; purple SaaS gradient, stock handshake photos, fake 4.9★ rows.",
+    "composition": "type alone at scale, artefact below the fold",
+    "informationHierarchy": "1) Field Tote, Belt No. 2, Shoulder Strap plate recognition 2) bridle leather, solid brass, vegetable tan 3) choice control (grade/size if evidenced) 4) configure a bag and request a make-slot. 5) secondary SKUs — no fake ★/testimonials",
+    "typography": "Display: Barlow Condensed 600–700 (product names / workshop signage). Body: IBM Plex Sans 400–500 (plain trade English, 45–75ch). Utility: IBM Plex Mono 400–500 (grades, lead times, prices). Seed structure: custom-feeling display, extreme scale ratio.",
+    "colourAndMaterialModel": "cream; type/rules in ink brown; accent only on primary CTA/hardware (brass accent). Materials in play: bridle leather, solid brass, vegetable tan. Seed note: ink brown, cream, brass accent — brand evidence only; single reserved accent",
+    "imageryAndAssetStrategy": "Object-led plates only for Field Tote, Belt No. 2, Shoulder Strap (have in manifest/plan). No lifestyle models, no stock handshakes. Needed-only assets stay labelled slots.",
+    "interactionConcept": "single decisive scroll cue",
+    "signatureElement": "Hide Grade Strip under Field Tote plate — chips bind plate → grade → make-slot",
+    "primaryRisk": "Must not drift into banned tropes (purple SaaS gradient, stock handshake photos, fake 4.9★ rows; purple SaaS gradie); signature may overfit if evidence is thin.",
+    "implementationGuidance": "Thesis lock: Northline Leather Goods is a make-slot desk, not a boutique shelf: open on Field Tote, Belt No. 2, Shoulder Strap with trade facts on the plate edge; primary argument is material truth + “configure a bag and request a make-slot.” — never lifestyle hero; ban purple SaaS gradient, stock handshake photos, fake 4.9★ rows. Signature selector: [data-signature] implements “Hide Grade Strip under Field Tote plate — chips bind plate → grade → make-slot”. Hierarchy: 1) Field Tote, Belt No. 2, Shoulder Strap plate recognition 2) bridle leather, solid brass, vegetable tan 3) choice control (grade/size if evidenced) 4) configure a bag and request a make-slot. 5) secondary SKUs — no fake ★/testimonials Type: Display: Barlow Condensed 600–700 (product names / workshop signage). Body: IBM Plex Sans 400–500 (plain trade English, 45–75ch). Utility: IBM Plex Mono 400–500 (grades, lead times, prices). Seed structure: custom-feeling display, extreme scale ratio. Colour/material: cream; type/rules in ink brown; accent only on primary CTA/hardware (brass accent). Materials in play: bridle leather, solid brass, vegetable tan. Seed note: ink brown, cream, brass accent — brand evidence only; single reserved accent Imagery: Object-led plates only for Field Tote, Belt No. 2, Shoulder Strap (have in manifest/plan). No lifestyle models, no stock handshakes. Needed-only assets stay labelled slots. Interaction: single decisive scroll cue; honour dials if explicit on brief. CTA language stays pack-true: “configure a bag and request a make-slot.”. Fail closed: no invented reviews, awards, KPIs, logos, or free shipping. Anti-refs enforced: purple SaaS gradient, stock handshake photos, fake 4.9★ rows; purple SaaS gradient, stock handshake photos, fake 4.9★ rows.",
+    "unknowns": "none declared",
+    "sourcePointers": {
+      "arm": "sitesmith",
+      "creativePass": "rules"
+    }
+  },
+  "route": {
+    "ok": true,
+    "mode": "ecommerce",
+    "ablation": "none",
+    "selectedCount": 18,
+    "totalAvailable": 59,
+    "totalContextCostTokens": 5700,
+    "decisionHash": "e6d09c93d66edef836e404cafc18d95c8531d087f473871ef42883eb1dc9d18a",
+    "selected": [
+      {
+        "capabilityId": "TASTE-CAP-002",
+        "upstreamOrigin": "https://github.com/Leonxlnx/taste-skill.git",
+        "upstreamCommit": "e988add20dab0fa97d7a76781c48961c8184288e",
+        "whyRelevant": "mode ecommerce base required · subject=Northline Leather Goods · action=configure a bag and request a make-slot.",
+        "evidencePointers": [
+          "mode:ecommerce"
+        ],
+        "status": "explicit",
+        "phase": "creative-direction",
+        "contextCostTokens": 300,
+        "providerFallback": "use local deterministic sketch if provider lacks this capability packet"
+      },
+      {
+        "capabilityId": "TASTE-CAP-003",
+        "upstreamOrigin": "https://github.com/Leonxlnx/taste-skill.git",
+        "upstreamCommit": "e988add20dab0fa97d7a76781c48961c8184288e",
+        "whyRelevant": "mode ecommerce base required · subject=Northline Leather Goods · action=configure a bag and request a make-slot.",
+        "evidencePointers": [
+          "mode:ecommerce"
+        ],
+        "status": "explicit",
+        "phase": "creative-direction",
+        "contextCostTokens": 300,
+        "providerFallback": "use local deterministic sketch if provider lacks this capability packet"
+      },
+      {
+        "capabilityId": "TASTE-CAP-004",
+        "upstreamOrigin": "https://github.com/Leonxlnx/taste-skill.git",
+        "upstreamCommit": "e988add20dab0fa97d7a76781c48961c8184288e",
+        "whyRelevant": "mode ecommerce base required · subject=Northline Leather Goods · action=configure a bag and request a make-slot.",
+        "evidencePointers": [
+          "mode:ecommerce"
+        ],
+        "status": "explicit",
+        "phase": "creative-direction",
+        "contextCostTokens": 300,
+        "providerFallback": "use local deterministic sketch if provider lacks this capability packet"
+      },
+      {
+        "capabilityId": "TASTE-CAP-006",
+        "upstreamOrigin": "https://github.com/Leonxlnx/taste-skill.git",
+        "upstreamCommit": "e988add20dab0fa97d7a76781c48961c8184288e",
+        "whyRelevant": "mode ecommerce base required · subject=Northline Leather Goods · action=configure a bag and request a make-slot.",
+        "evidencePointers": [
+          "mode:ecommerce"
+        ],
+        "status": "explicit",
+        "phase": "knowledge",
+        "contextCostTokens": 500,
+        "providerFallback": "use local deterministic sketch if provider lacks this capability packet"
+      },
+      {
+        "capabilityId": "frontend.subject-vernacular",
+        "upstreamOrigin": "https://github.com/anthropics/skills",
+        "upstreamCommit": "b29e7cf65e5cb78a5ac33d582270551bc74a14eb",
+        "whyRelevant": "mode ecommerce base required · subject=Northline Leather Goods · action=configure a bag and request a make-slot.",
+        "evidencePointers": [
+          "mode:ecommerce"
+        ],
+        "status": "explicit",
+        "phase": "creative-direction",
+        "contextCostTokens": 300,
+        "providerFallback": "use local deterministic sketch if provider lacks this capability packet"
+      },
+      {
+        "capabilityId": "frontend.hero-thesis",
+        "upstreamOrigin": "https://github.com/anthropics/skills",
+        "upstreamCommit": "b29e7cf65e5cb78a5ac33d582270551bc74a14eb",
+        "whyRelevant": "mode ecommerce base required · subject=Northline Leather Goods · action=configure a bag and request a make-slot.",
+        "evidencePointers": [
+          "mode:ecommerce"
+        ],
+        "status": "explicit",
+        "phase": "creative-direction",
+        "contextCostTokens": 300,
+        "providerFallback": "use local deterministic sketch if provider lacks this capability packet"
+      },
+      {
+        "capabilityId": "frontend.semantic-structure",
+        "upstreamOrigin": "https://github.com/anthropics/skills",
+        "upstreamCommit": "b29e7cf65e5cb78a5ac33d582270551bc74a14eb",
+        "whyRelevant": "mode ecommerce base required · subject=Northline Leather Goods · action=configure a bag and request a make-slot.",
+        "evidencePointers": [
+          "mode:ecommerce"
+        ],
+        "status": "explicit",
+        "phase": "creative-direction",
+        "contextCostTokens": 300,
+        "providerFallback": "use local deterministic sketch if provider lacks this capability packet"
+      },
+      {
+        "capabilityId": "frontend.interface-writing",
+        "upstreamOrigin": "https://github.com/anthropics/skills",
+        "upstreamCommit": "b29e7cf65e5cb78a5ac33d582270551bc74a14eb",
+        "whyRelevant": "mode ecommerce base required · subject=Northline Leather Goods · action=configure a bag and request a make-slot.",
+        "evidencePointers": [
+          "mode:ecommerce"
+        ],
+        "status": "explicit",
+        "phase": "creative-direction",
+        "contextCostTokens": 300,
+        "providerFallback": "use local deterministic sketch if provider lacks this capability packet"
+      },
+      {
+        "capabilityId": "frontend.anti-default-calibration",
+        "upstreamOrigin": "https://github.com/anthropics/skills",
+        "upstreamCommit": "b29e7cf65e5cb78a5ac33d582270551bc74a14eb",
+        "whyRelevant": "mode ecommerce base required · subject=Northline Leather Goods · action=configure a bag and request a make-slot.",
+        "evidencePointers": [
+          "mode:ecommerce"
+        ],
+        "status": "explicit",
+        "phase": "creative-direction",
+        "contextCostTokens": 300,
+        "providerFallback": "use local deterministic sketch if provider lacks this capability packet"
+      },
+      {
+        "capabilityId": "uupm.classify.product-reasoning",
+        "upstreamOrigin": "nextlevelbuilder/ui-ux-pro-max-skill",
+        "upstreamCommit": "4857a2c5ef989794751a0f66b8545a4a49566286",
+        "whyRelevant": "mode ecommerce base required · subject=Northline Leather Goods · action=configure a bag and request a make-slot.",
+        "evidencePointers": [
+          "mode:ecommerce"
+        ],
+        "status": "explicit",
+        "phase": "knowledge",
+        "contextCostTokens": 500,
+        "providerFallback": "use local deterministic sketch if provider lacks this capability packet"
+      },
+      {
+        "capabilityId": "uupm.tune.design-dials",
+        "upstreamOrigin": "nextlevelbuilder/ui-ux-pro-max-skill",
+        "upstreamCommit": "4857a2c5ef989794751a0f66b8545a4a49566286",
+        "whyRelevant": "mode ecommerce base required · subject=Northline Leather Goods · action=configure a bag and request a make-slot.",
+        "evidencePointers": [
+          "mode:ecommerce"
+        ],
+        "status": "explicit",
+        "phase": "creative-direction",
+        "contextCostTokens": 300,
+        "providerFallback": "use local deterministic sketch if provider lacks this capability packet"
+      },
+      {
+        "capabilityId": "IMP-004",
+        "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
+        "upstreamCommit": "6b342244e915d64b0d6e84d5eec448fd196ce6bb",
+        "whyRelevant": "mode ecommerce base required · subject=Northline Leather Goods · action=configure a bag and request a make-slot.",
+        "evidencePointers": [
+          "mode:ecommerce"
+        ],
+        "status": "explicit",
+        "phase": "seed",
+        "contextCostTokens": 200,
+        "providerFallback": "use local deterministic sketch if provider lacks this capability packet"
+      },
+      {
+        "capabilityId": "IMP-005",
+        "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
+        "upstreamCommit": "6b342244e915d64b0d6e84d5eec448fd196ce6bb",
+        "whyRelevant": "mode ecommerce base required · subject=Northline Leather Goods · action=configure a bag and request a make-slot.",
+        "evidencePointers": [
+          "mode:ecommerce"
+        ],
+        "status": "explicit",
+        "phase": "seed",
+        "contextCostTokens": 200,
+        "providerFallback": "use local deterministic sketch if provider lacks this capability packet"
+      },
+      {
+        "capabilityId": "IMP-008",
+        "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
+        "upstreamCommit": "6b342244e915d64b0d6e84d5eec448fd196ce6bb",
+        "whyRelevant": "mode ecommerce base required · subject=Northline Leather Goods · action=configure a bag and request a make-slot.",
+        "evidencePointers": [
+          "mode:ecommerce"
+        ],
+        "status": "explicit",
+        "phase": "critique",
+        "contextCostTokens": 300,
+        "providerFallback": "use local deterministic sketch if provider lacks this capability packet"
+      },
+      {
+        "capabilityId": "uupm.lookup.stack-guidance",
+        "upstreamOrigin": "nextlevelbuilder/ui-ux-pro-max-skill",
+        "upstreamCommit": "4857a2c5ef989794751a0f66b8545a4a49566286",
+        "whyRelevant": "mode ecommerce base optional · subject=Northline Leather Goods · action=configure a bag and request a make-slot.",
+        "evidencePointers": [
+          "mode:ecommerce"
+        ],
+        "status": "inferred",
+        "phase": "knowledge",
+        "contextCostTokens": 500,
+        "providerFallback": "use local deterministic sketch if provider lacks this capability packet"
+      },
+      {
+        "capabilityId": "frontend.motion-intent",
+        "upstreamOrigin": "https://github.com/anthropics/skills",
+        "upstreamCommit": "b29e7cf65e5cb78a5ac33d582270551bc74a14eb",
+        "whyRelevant": "mode ecommerce base optional · subject=Northline Leather Goods · action=configure a bag and request a make-slot.",
+        "evidencePointers": [
+          "mode:ecommerce"
+        ],
+        "status": "inferred",
+        "phase": "creative-direction",
+        "contextCostTokens": 300,
+        "providerFallback": "use local deterministic sketch if provider lacks this capability packet"
+      },
+      {
+        "capabilityId": "IMP-006",
+        "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
+        "upstreamCommit": "6b342244e915d64b0d6e84d5eec448fd196ce6bb",
+        "whyRelevant": "mode ecommerce base optional · subject=Northline Leather Goods · action=configure a bag and request a make-slot.",
+        "evidencePointers": [
+          "mode:ecommerce"
+        ],
+        "status": "inferred",
+        "phase": "seed",
+        "contextCostTokens": 200,
+        "providerFallback": "use local deterministic sketch if provider lacks this capability packet"
+      },
+      {
+        "capabilityId": "IMP-010",
+        "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
+        "upstreamCommit": "6b342244e915d64b0d6e84d5eec448fd196ce6bb",
+        "whyRelevant": "mode ecommerce base optional · subject=Northline Leather Goods · action=configure a bag and request a make-slot.",
+        "evidencePointers": [
+          "mode:ecommerce"
+        ],
+        "status": "inferred",
+        "phase": "critique",
+        "contextCostTokens": 300,
+        "providerFallback": "use local deterministic sketch if provider lacks this capability packet"
+      }
+    ],
+    "notLoaded": [
+      {
+        "capabilityId": "TASTE-CAP-001",
+        "reason": "not selected by mode+signals/budget"
+      },
+      {
+        "capabilityId": "TASTE-CAP-005",
+        "reason": "not selected by mode+signals/budget"
+      },
+      {
+        "capabilityId": "TASTE-CAP-007",
+        "reason": "not selected by mode+signals/budget"
+      },
+      {
+        "capabilityId": "TASTE-CAP-008",
+        "reason": "not selected by mode+signals/budget"
+      },
+      {
+        "capabilityId": "TASTE-CAP-009",
+        "reason": "not selected by mode+signals/budget"
+      },
+      {
+        "capabilityId": "TASTE-CAP-010",
+        "reason": "not selected by mode+signals/budget"
+      },
+      {
+        "capabilityId": "TASTE-CAP-011",
+        "reason": "not selected by mode+signals/budget"
+      },
+      {
+        "capabilityId": "TASTE-CAP-012",
+        "reason": "not selected by mode+signals/budget"
+      },
+      {
+        "capabilityId": "TASTE-CAP-013",
+        "reason": "deliberate ledger reject / exclusion-only"
+      },
+      {
+        "capabilityId": "TASTE-CAP-014",
+        "reason": "not selected by mode+signals/budget"
+      },
+      {
+        "capabilityId": "TASTE-CAP-015",
+        "reason": "not selected by mode+signals/budget"
+      },
+      {
+        "capabilityId": "TASTE-CAP-016",
+        "reason": "not selected by mode+signals/budget"
+      },
+      {
+        "capabilityId": "TASTE-CAP-017",
+        "reason": "not selected by mode+signals/budget"
+      },
+      {
+        "capabilityId": "TASTE-CAP-018",
+        "reason": "not selected by mode+signals/budget"
+      },
+      {
+        "capabilityId": "TASTE-CAP-019",
+        "reason": "deliberate ledger reject / exclusion-only"
+      },
+      {
+        "capabilityId": "uupm.skill.activation",
+        "reason": "not selected by mode+signals/budget"
+      },
+      {
+        "capabilityId": "uupm.requirements.stack-detect",
+        "reason": "not selected by mode+signals/budget"
+      },
+      {
+        "capabilityId": "uupm.search.bm25",
+        "reason": "not selected by mode+signals/budget"
+      },
+      {
+        "capabilityId": "uupm.generate.design-system",
+        "reason": "not selected by mode+signals/budget"
+      },
+      {
+        "capabilityId": "uupm.lookup.domain-knowledge",
+        "reason": "not selected by mode+signals/budget"
+      },
+      {
+        "capabilityId": "uupm.persist.master-overrides",
+        "reason": "not selected by mode+signals/budget"
+      },
+      {
+        "capabilityId": "uupm.provider.template-build",
+        "reason": "not selected by mode+signals/budget"
+      },
+      {
+        "capabilityId": "uupm.cli.install-uninstall",
+        "reason": "not selected by mode+signals/budget"
+      },
+      {
+        "capabilityId": "uupm.cli.update-versions",
+        "reason": "not selected by mode+signals/budget"
+      },
+      {
+        "capabilityId": "uupm.bundle.sibling-skills",
+        "reason": "deliberate ledger reject / exclusion-only"
+      },
+      {
+        "capabilityId": "uupm.optional.browser-stack",
+        "reason": "not selected by mode+signals/budget"
+      },
+      {
+        "capabilityId": "uupm.quality.tests-release",
+        "reason": "not selected by mode+signals/budget"
+      },
+      {
+        "capabilityId": "frontend.type-as-identity",
+        "reason": "not selected by mode+signals/budget"
+      },
+      {
+        "capabilityId": "frontend.compact-plan-signature",
+        "reason": "not selected by mode+signals/budget"
+      },
+      {
+        "capabilityId": "frontend.plan-critique-build",
+        "reason": "not selected by mode+signals/budget"
+      },
+      {
+        "capabilityId": "frontend.restraint-quality-floor",
+        "reason": "not selected by mode+signals/budget"
+      },
+      {
+        "capabilityId": "IMP-001",
+        "reason": "not selected by mode+signals/budget"
+      },
+      {
+        "capabilityId": "IMP-002",
+        "reason": "not selected by mode+signals/budget"
+      },
+      {
+        "capabilityId": "IMP-003",
+        "reason": "not selected by mode+signals/budget"
+      },
+      {
+        "capabilityId": "IMP-007",
+        "reason": "not selected by mode+signals/budget"
+      },
+      {
+        "capabilityId": "IMP-009",
+        "reason": "not selected by mode+signals/budget"
+      },
+      {
+        "capabilityId": "IMP-011",
+        "reason": "not selected by mode+signals/budget"
+      },
+      {
+        "capabilityId": "IMP-012",
+        "reason": "not selected by mode+signals/budget"
+      },
+      {
+        "capabilityId": "IMP-013",
+        "reason": "not selected by mode+signals/budget"
+      },
+      {
+        "capabilityId": "IMP-014",
+        "reason": "not selected by mode+signals/budget"
+      },
+      {
+        "capabilityId": "IMP-015",
+        "reason": "deliberate ledger reject / exclusion-only"
+      }
+    ],
+    "loadedAll59": false,
+    "domainRetrieval": {
+      "consulted": true,
+      "reason": "BM25-lite keyword scan of \\skills\\sitesmith\\data\\products.csv",
+      "hitCount": 5,
+      "claimAllowed": true
+    }
+  },
+  "direction": {
+    "worlds": [
+      "split-evidence",
+      "index-first",
+      "material-board",
+      "poster-type",
+      "statement-object"
+    ],
+    "cards": [
+      {
+        "internalId": "W1",
+        "worldId": "split-evidence",
+        "seed": {
+          "source": "local-world-library-seed",
+          "version": "1.1.0",
+          "method": "sha256-project-entropy + fisher-yates over eligibility-filtered seeds",
+          "randomSeed": "mini-rules-h2h-leather-2026-07-31",
+          "numericSeed": 2334358073,
+          "licence": "MIT SiteSmith-original world seed templates",
+          "origin": "local",
+          "slot": 0
+        },
+        "thesis": "Northline Leather Goods is a make-slot desk, not a boutique shelf: open on Field Tote, Belt No. 2, Shoulder Strap with trade facts on the plate edge; primary argument is material truth + “configure a bag and request a make-slot.” — never lifestyle hero; ban purple SaaS gradient, stock handshake photos, fake 4.9★ rows.",
+        "evidence": "Subject: Northline Leather Goods · Products (truth): Field Tote, Belt No. 2, Shoulder Strap · Price band (truth): DKK 890–2.400 from supplier sheet 2026-07 · Materials: bridle leather, solid brass, vegetable tan · Facts that may appear: hide grade, stitch count, make-slot lead time (3 weeks) · Facts that must not be invented: reviews, celebrity clients, free worldwide shipping · Anti-references: purple SaaS gradient, stock handshake photos, fake 4.9★ rows · Primary journey: p · domain-knowledge: consulted (5 hits)",
+        "audience": "people who buy small-batch bags and straps and care about hide grade.",
+        "designIntent": "ecommerce: configure a bag and request a make-slot. for Northline Leather Goods",
+        "composition": "hard vertical rule: proof left, action right",
+        "type": "Display: Barlow Condensed 600–700 (product names / workshop signage). Body: IBM Plex Sans 400–500 (plain trade English, 45–75ch). Utility: IBM Plex Mono 400–500 (grades, lead times, prices). Seed structure: neutral grotesque, medium weight only.",
+        "colour": "cream; type/rules in ink brown; accent only on primary CTA/hardware (brass accent). Materials in play: bridle leather, solid brass, vegetable tan. Seed note: ink brown, cream, brass accent — brand evidence only; single reserved accent",
+        "imagery": "Object-led plates only for Field Tote, Belt No. 2, Shoulder Strap (have in manifest/plan). No lifestyle models, no stock handshakes. Needed-only assets stay labelled slots.",
+        "rhythm": "two columns for the whole first fold",
+        "surface": "framed — evidence cards in heavy borders",
+        "labels": "sentence case — operational clarity",
+        "figures": "functional tabular — measurements only where compared",
+        "depth": "elevated — evidence cards raise on focus",
+        "layoutPrinciple": "1) Field Tote, Belt No. 2, Shoulder Strap plate recognition 2) bridle leather, solid brass, vegetable tan 3) choice control (grade/size if evidenced) 4) configure a bag and request a make-slot. 5) secondary SKUs — no fake ★/testimonials",
+        "typographicPrinciple": "Display: Barlow Condensed 600–700 (product names / workshop signage). Body: IBM Plex Sans 400–500 (plain trade English, 45–75ch). Utility: IBM Plex Mono 400–500 (grades, lead times, prices). Seed structure: neutral grotesque, medium weight only.",
+        "assetStrategy": "Object-led plates only for Field Tote, Belt No. 2, Shoulder Strap (have in manifest/plan). No lifestyle models, no stock handshakes. Needed-only assets stay labelled slots.",
+        "motionInteraction": "sticky action column on desktop",
+        "signatureElement": "Hide Grade Strip under Field Tote plate — chips bind plate → grade → make-slot",
+        "primaryRisk": "Must not drift into banned tropes (purple SaaS gradient, stock handshake photos, fake 4.9★ rows; purple SaaS gradie); signature may overfit if evidence is thin.",
+        "differenceNote": "Differs from W3, W4 on composition/type/imagery/grammar after brief-fit filter.",
+        "capabilityProvenance": [
+          "TASTE-CAP-002",
+          "TASTE-CAP-003",
+          "TASTE-CAP-004",
+          "TASTE-CAP-006",
+          "frontend.subject-vernacular",
+          "frontend.hero-thesis",
+          "frontend.semantic-structure",
+          "frontend.interface-writing",
+          "frontend.anti-default-calibration",
+          "uupm.classify.product-reasoning",
+          "uupm.tune.design-dials",
+          "IMP-004",
+          "IMP-005",
+          "IMP-008",
+          "uupm.lookup.stack-guidance",
+          "frontend.motion-intent",
+          "IMP-006",
+          "IMP-010"
+        ],
+        "density": "balanced",
+        "groupsApplied": {
+          "taste": true,
+          "uupm": true,
+          "frontend": true,
+          "impeccable": true
+        },
+        "grounding": {
+          "subject": "Northline Leather Goods",
+          "primaryAction": "configure a bag and request a make-slot.",
+          "audience": "people who buy small-batch bags and straps and care about hide grade.",
+          "materials": [
+            "bridle leather",
+            "solid brass",
+            "vegetable tan"
+          ],
+          "products": [
+            "Field Tote",
+            "Belt No. 2",
+            "Shoulder Strap"
+          ],
+          "brandPalette": [
+            "ink brown",
+            "cream",
+            "brass accent"
+          ],
+          "antiRefs": [
+            "purple SaaS gradient, stock handshake photos, fake 4.9★ rows",
+            "purple SaaS gradient, stock handshake photos, fake 4.9★ rows."
+          ],
+          "assets": {
+            "imageless": false,
+            "plates": true
+          }
+        },
+        "semanticGroupEffects": {
+          "withoutFrontend": false,
+          "withoutTaste": false,
+          "withoutUupm": false,
+          "withoutImpeccable": false
+        },
+        "implementationNotes": "Thesis lock: Northline Leather Goods is a make-slot desk, not a boutique shelf: open on Field Tote, Belt No. 2, Shoulder Strap with trade facts on the plate edge; primary argument is material truth + “configure a bag and request a make-slot.” — never lifestyle hero; ban purple SaaS gradient, stock handshake photos, fake 4.9★ rows. Signature selector: [data-signature] implements “Hide Grade Strip under Field Tote plate — chips bind plate → grade → make-slot”. Hierarchy: 1) Field Tote, Belt No. 2, Shoulder Strap plate recognition 2) bridle leather, solid brass, vegetable tan 3) choice control (grade/size if evidenced) 4) configure a bag and request a make-slot. 5) secondary SKUs — no fake ★/testimonials Type: Display: Barlow Condensed 600–700 (product names / workshop signage). Body: IBM Plex Sans 400–500 (plain trade English, 45–75ch). Utility: IBM Plex Mono 400–500 (grades, lead times, prices). Seed structure: neutral grotesque, medium weight only. Colour/material: cream; type/rules in ink brown; accent only on primary CTA/hardware (brass accent). Materials in play: bridle leather, solid brass, vegetable tan. Seed note: ink brown, cream, brass accent — brand evidence only; single reserved accent Imagery: Object-led plates only for Field Tote, Belt No. 2, Shoulder Strap (have in manifest/plan). No lifestyle models, no stock handshakes. Needed-only assets stay labelled slots. Interaction: sticky action column on desktop; honour dials if explicit on brief. CTA language stays pack-true: “configure a bag and request a make-slot.”. Fail closed: no invented reviews, awards, KPIs, logos, or free shipping. Anti-refs enforced: purple SaaS gradient, stock handshake photos, fake 4.9★ rows; purple SaaS gradient, stock handshake photos, fake 4.9★ rows.",
+        "creativeLayer": {
+          "version": "1.0.0",
+          "boundToEvidence": true,
+          "inventsFacts": false
+        }
+      },
+      {
+        "internalId": "W3",
+        "worldId": "material-board",
+        "seed": {
+          "source": "local-world-library-seed",
+          "version": "1.1.0",
+          "method": "sha256-project-entropy + fisher-yates over eligibility-filtered seeds",
+          "randomSeed": "mini-rules-h2h-leather-2026-07-31",
+          "numericSeed": 2334358073,
+          "licence": "MIT SiteSmith-original world seed templates",
+          "origin": "local",
+          "slot": 2
+        },
+        "thesis": "Northline Leather Goods is a make-slot desk, not a boutique shelf: open on Field Tote, Belt No. 2, Shoulder Strap with trade facts on the plate edge; primary argument is material truth + “configure a bag and request a make-slot.” — never lifestyle hero; ban purple SaaS gradient, stock handshake photos, fake 4.9★ rows.",
+        "evidence": "Subject: Northline Leather Goods · Products (truth): Field Tote, Belt No. 2, Shoulder Strap · Price band (truth): DKK 890–2.400 from supplier sheet 2026-07 · Materials: bridle leather, solid brass, vegetable tan · Facts that may appear: hide grade, stitch count, make-slot lead time (3 weeks) · Facts that must not be invented: reviews, celebrity clients, free worldwide shipping · Anti-references: purple SaaS gradient, stock handshake photos, fake 4.9★ rows · Primary journey: p · domain-knowledge: consulted (5 hits)",
+        "audience": "people who buy small-batch bags and straps and care about hide grade.",
+        "designIntent": "ecommerce: configure a bag and request a make-slot. for Northline Leather Goods",
+        "composition": "grid of many small material samples",
+        "type": "Display: Barlow Condensed 600–700 (product names / workshop signage). Body: IBM Plex Sans 400–500 (plain trade English, 45–75ch). Utility: IBM Plex Mono 400–500 (grades, lead times, prices). Seed structure: small caps labels over soft serif.",
+        "colour": "cream; type/rules in ink brown; accent only on primary CTA/hardware (brass accent). Materials in play: bridle leather, solid brass, vegetable tan. Seed note: ink brown, cream, brass accent — brand evidence only; single reserved accent",
+        "imagery": "Object-led plates only for Field Tote, Belt No. 2, Shoulder Strap (have in manifest/plan). No lifestyle models, no stock handshakes. Needed-only assets stay labelled slots.",
+        "rhythm": "tight mosaic then wide breathing band",
+        "surface": "colour-field — each cell is a material ground",
+        "labels": "sentence case — trade names, not UI chrome",
+        "figures": "proportional — dimensions only when needed",
+        "depth": "overlap — samples slightly shuffle depth",
+        "layoutPrinciple": "1) Field Tote, Belt No. 2, Shoulder Strap plate recognition 2) bridle leather, solid brass, vegetable tan 3) choice control (grade/size if evidenced) 4) configure a bag and request a make-slot. 5) secondary SKUs — no fake ★/testimonials",
+        "typographicPrinciple": "Display: Barlow Condensed 600–700 (product names / workshop signage). Body: IBM Plex Sans 400–500 (plain trade English, 45–75ch). Utility: IBM Plex Mono 400–500 (grades, lead times, prices). Seed structure: small caps labels over soft serif.",
+        "assetStrategy": "Object-led plates only for Field Tote, Belt No. 2, Shoulder Strap (have in manifest/plan). No lifestyle models, no stock handshakes. Needed-only assets stay labelled slots.",
+        "motionInteraction": "sample select builds a slip/cart",
+        "signatureElement": "Hide Grade Strip under Field Tote plate — chips bind plate → grade → make-slot",
+        "primaryRisk": "Must not drift into banned tropes (purple SaaS gradient, stock handshake photos, fake 4.9★ rows; purple SaaS gradie); signature may overfit if evidence is thin.",
+        "differenceNote": "Differs from W1, W4 on composition/type/imagery/grammar after brief-fit filter.",
+        "capabilityProvenance": [
+          "TASTE-CAP-002",
+          "TASTE-CAP-003",
+          "TASTE-CAP-004",
+          "TASTE-CAP-006",
+          "frontend.subject-vernacular",
+          "frontend.hero-thesis",
+          "frontend.semantic-structure",
+          "frontend.interface-writing",
+          "frontend.anti-default-calibration",
+          "uupm.classify.product-reasoning",
+          "uupm.tune.design-dials",
+          "IMP-004",
+          "IMP-005",
+          "IMP-008",
+          "uupm.lookup.stack-guidance",
+          "frontend.motion-intent",
+          "IMP-006",
+          "IMP-010"
+        ],
+        "density": "tactile",
+        "groupsApplied": {
+          "taste": true,
+          "uupm": true,
+          "frontend": true,
+          "impeccable": true
+        },
+        "grounding": {
+          "subject": "Northline Leather Goods",
+          "primaryAction": "configure a bag and request a make-slot.",
+          "audience": "people who buy small-batch bags and straps and care about hide grade.",
+          "materials": [
+            "bridle leather",
+            "solid brass",
+            "vegetable tan"
+          ],
+          "products": [
+            "Field Tote",
+            "Belt No. 2",
+            "Shoulder Strap"
+          ],
+          "brandPalette": [
+            "ink brown",
+            "cream",
+            "brass accent"
+          ],
+          "antiRefs": [
+            "purple SaaS gradient, stock handshake photos, fake 4.9★ rows",
+            "purple SaaS gradient, stock handshake photos, fake 4.9★ rows."
+          ],
+          "assets": {
+            "imageless": false,
+            "plates": true
+          }
+        },
+        "semanticGroupEffects": {
+          "withoutFrontend": false,
+          "withoutTaste": false,
+          "withoutUupm": false,
+          "withoutImpeccable": false
+        },
+        "implementationNotes": "Thesis lock: Northline Leather Goods is a make-slot desk, not a boutique shelf: open on Field Tote, Belt No. 2, Shoulder Strap with trade facts on the plate edge; primary argument is material truth + “configure a bag and request a make-slot.” — never lifestyle hero; ban purple SaaS gradient, stock handshake photos, fake 4.9★ rows. Signature selector: [data-signature] implements “Hide Grade Strip under Field Tote plate — chips bind plate → grade → make-slot”. Hierarchy: 1) Field Tote, Belt No. 2, Shoulder Strap plate recognition 2) bridle leather, solid brass, vegetable tan 3) choice control (grade/size if evidenced) 4) configure a bag and request a make-slot. 5) secondary SKUs — no fake ★/testimonials Type: Display: Barlow Condensed 600–700 (product names / workshop signage). Body: IBM Plex Sans 400–500 (plain trade English, 45–75ch). Utility: IBM Plex Mono 400–500 (grades, lead times, prices). Seed structure: small caps labels over soft serif. Colour/material: cream; type/rules in ink brown; accent only on primary CTA/hardware (brass accent). Materials in play: bridle leather, solid brass, vegetable tan. Seed note: ink brown, cream, brass accent — brand evidence only; single reserved accent Imagery: Object-led plates only for Field Tote, Belt No. 2, Shoulder Strap (have in manifest/plan). No lifestyle models, no stock handshakes. Needed-only assets stay labelled slots. Interaction: sample select builds a slip/cart; honour dials if explicit on brief. CTA language stays pack-true: “configure a bag and request a make-slot.”. Fail closed: no invented reviews, awards, KPIs, logos, or free shipping. Anti-refs enforced: purple SaaS gradient, stock handshake photos, fake 4.9★ rows; purple SaaS gradient, stock handshake photos, fake 4.9★ rows.",
+        "creativeLayer": {
+          "version": "1.0.0",
+          "boundToEvidence": true,
+          "inventsFacts": false
+        }
+      },
+      {
+        "internalId": "W4",
+        "worldId": "poster-type",
+        "seed": {
+          "source": "local-world-library-seed",
+          "version": "1.1.0",
+          "method": "sha256-project-entropy + fisher-yates over eligibility-filtered seeds",
+          "randomSeed": "mini-rules-h2h-leather-2026-07-31",
+          "numericSeed": 2334358073,
+          "licence": "MIT SiteSmith-original world seed templates",
+          "origin": "local",
+          "slot": 3
+        },
+        "thesis": "Northline Leather Goods is a make-slot desk, not a boutique shelf: open on Field Tote, Belt No. 2, Shoulder Strap with trade facts on the plate edge; primary argument is material truth + “configure a bag and request a make-slot.” — never lifestyle hero; ban purple SaaS gradient, stock handshake photos, fake 4.9★ rows.",
+        "evidence": "Subject: Northline Leather Goods · Products (truth): Field Tote, Belt No. 2, Shoulder Strap · Price band (truth): DKK 890–2.400 from supplier sheet 2026-07 · Materials: bridle leather, solid brass, vegetable tan · Facts that may appear: hide grade, stitch count, make-slot lead time (3 weeks) · Facts that must not be invented: reviews, celebrity clients, free worldwide shipping · Anti-references: purple SaaS gradient, stock handshake photos, fake 4.9★ rows · Primary journey: p · domain-knowledge: consulted (5 hits)",
+        "audience": "people who buy small-batch bags and straps and care about hide grade.",
+        "designIntent": "ecommerce: configure a bag and request a make-slot. for Northline Leather Goods",
+        "composition": "type alone at scale, artefact below the fold",
+        "type": "Display: Barlow Condensed 600–700 (product names / workshop signage). Body: IBM Plex Sans 400–500 (plain trade English, 45–75ch). Utility: IBM Plex Mono 400–500 (grades, lead times, prices). Seed structure: custom-feeling display, extreme scale ratio.",
+        "colour": "cream; type/rules in ink brown; accent only on primary CTA/hardware (brass accent). Materials in play: bridle leather, solid brass, vegetable tan. Seed note: ink brown, cream, brass accent — brand evidence only; single reserved accent",
+        "imagery": "Object-led plates only for Field Tote, Belt No. 2, Shoulder Strap (have in manifest/plan). No lifestyle models, no stock handshakes. Needed-only assets stay labelled slots.",
+        "rhythm": "one continuous field then a single break",
+        "surface": "open — type is the material",
+        "labels": "symbol-led — almost no chrome labels",
+        "figures": "absent",
+        "depth": "flat",
+        "layoutPrinciple": "1) Field Tote, Belt No. 2, Shoulder Strap plate recognition 2) bridle leather, solid brass, vegetable tan 3) choice control (grade/size if evidenced) 4) configure a bag and request a make-slot. 5) secondary SKUs — no fake ★/testimonials",
+        "typographicPrinciple": "Display: Barlow Condensed 600–700 (product names / workshop signage). Body: IBM Plex Sans 400–500 (plain trade English, 45–75ch). Utility: IBM Plex Mono 400–500 (grades, lead times, prices). Seed structure: custom-feeling display, extreme scale ratio.",
+        "assetStrategy": "Object-led plates only for Field Tote, Belt No. 2, Shoulder Strap (have in manifest/plan). No lifestyle models, no stock handshakes. Needed-only assets stay labelled slots.",
+        "motionInteraction": "single decisive scroll cue",
+        "signatureElement": "Hide Grade Strip under Field Tote plate — chips bind plate → grade → make-slot",
+        "primaryRisk": "Must not drift into banned tropes (purple SaaS gradient, stock handshake photos, fake 4.9★ rows; purple SaaS gradie); signature may overfit if evidence is thin.",
+        "differenceNote": "Differs from W1, W3 on composition/type/imagery/grammar after brief-fit filter.",
+        "capabilityProvenance": [
+          "TASTE-CAP-002",
+          "TASTE-CAP-003",
+          "TASTE-CAP-004",
+          "TASTE-CAP-006",
+          "frontend.subject-vernacular",
+          "frontend.hero-thesis",
+          "frontend.semantic-structure",
+          "frontend.interface-writing",
+          "frontend.anti-default-calibration",
+          "uupm.classify.product-reasoning",
+          "uupm.tune.design-dials",
+          "IMP-004",
+          "IMP-005",
+          "IMP-008",
+          "uupm.lookup.stack-guidance",
+          "frontend.motion-intent",
+          "IMP-006",
+          "IMP-010"
+        ],
+        "density": "poster",
+        "groupsApplied": {
+          "taste": true,
+          "uupm": true,
+          "frontend": true,
+          "impeccable": true
+        },
+        "grounding": {
+          "subject": "Northline Leather Goods",
+          "primaryAction": "configure a bag and request a make-slot.",
+          "audience": "people who buy small-batch bags and straps and care about hide grade.",
+          "materials": [
+            "bridle leather",
+            "solid brass",
+            "vegetable tan"
+          ],
+          "products": [
+            "Field Tote",
+            "Belt No. 2",
+            "Shoulder Strap"
+          ],
+          "brandPalette": [
+            "ink brown",
+            "cream",
+            "brass accent"
+          ],
+          "antiRefs": [
+            "purple SaaS gradient, stock handshake photos, fake 4.9★ rows",
+            "purple SaaS gradient, stock handshake photos, fake 4.9★ rows."
+          ],
+          "assets": {
+            "imageless": false,
+            "plates": true
+          }
+        },
+        "semanticGroupEffects": {
+          "withoutFrontend": false,
+          "withoutTaste": false,
+          "withoutUupm": false,
+          "withoutImpeccable": false
+        },
+        "implementationNotes": "Thesis lock: Northline Leather Goods is a make-slot desk, not a boutique shelf: open on Field Tote, Belt No. 2, Shoulder Strap with trade facts on the plate edge; primary argument is material truth + “configure a bag and request a make-slot.” — never lifestyle hero; ban purple SaaS gradient, stock handshake photos, fake 4.9★ rows. Signature selector: [data-signature] implements “Hide Grade Strip under Field Tote plate — chips bind plate → grade → make-slot”. Hierarchy: 1) Field Tote, Belt No. 2, Shoulder Strap plate recognition 2) bridle leather, solid brass, vegetable tan 3) choice control (grade/size if evidenced) 4) configure a bag and request a make-slot. 5) secondary SKUs — no fake ★/testimonials Type: Display: Barlow Condensed 600–700 (product names / workshop signage). Body: IBM Plex Sans 400–500 (plain trade English, 45–75ch). Utility: IBM Plex Mono 400–500 (grades, lead times, prices). Seed structure: custom-feeling display, extreme scale ratio. Colour/material: cream; type/rules in ink brown; accent only on primary CTA/hardware (brass accent). Materials in play: bridle leather, solid brass, vegetable tan. Seed note: ink brown, cream, brass accent — brand evidence only; single reserved accent Imagery: Object-led plates only for Field Tote, Belt No. 2, Shoulder Strap (have in manifest/plan). No lifestyle models, no stock handshakes. Needed-only assets stay labelled slots. Interaction: single decisive scroll cue; honour dials if explicit on brief. CTA language stays pack-true: “configure a bag and request a make-slot.”. Fail closed: no invented reviews, awards, KPIs, logos, or free shipping. Anti-refs enforced: purple SaaS gradient, stock handshake photos, fake 4.9★ rows; purple SaaS gradient, stock handshake photos, fake 4.9★ rows.",
+        "creativeLayer": {
+          "version": "1.0.0",
+          "boundToEvidence": true,
+          "inventsFacts": false
+        }
+      }
+    ],
+    "pairwise": [
+      {
+        "a": "W1",
+        "b": "W3",
+        "macroDiff": 3,
+        "grammarDiff": 3,
+        "compositionDiff": true,
+        "pass": true
+      },
+      {
+        "a": "W1",
+        "b": "W4",
+        "macroDiff": 3,
+        "grammarDiff": 4,
+        "compositionDiff": true,
+        "pass": true
+      },
+      {
+        "a": "W3",
+        "b": "W4",
+        "macroDiff": 3,
+        "grammarDiff": 4,
+        "compositionDiff": true,
+        "pass": true
+      }
+    ],
+    "entropy": "mini-rules-h2h-leather-2026-07-31",
+    "numericSeed": 2334358073,
+    "eligibleSeedCount": 5
+  },
+  "blinding": {
+    "independence": "deterministic-preflight",
+    "claim": "local keyword preflight only — not context-isolated external critic",
+    "key": {
+      "L1": "W4",
+      "L2": "W3",
+      "L3": "W1"
+    },
+    "blinded": [
+      {
+        "blindId": "L1",
+        "thesis": "Northline Leather Goods is a make-slot desk, not a boutique shelf: open on Field Tote, Belt No. 2, Shoulder Strap with trade facts on the plate edge; primary argument is material truth + “configure a bag and request a make-slot.” — never lifestyle hero; ban purple SaaS gradient, stock handshake photos, fake 4.9★ rows.",
+        "evidence": "Subject: Northline Leather Goods · Products (truth): Field Tote, Belt No. 2, Shoulder Strap · Price band (truth): DKK 890–2.400 from supplier sheet 2026-07 · Materials: bridle leather, solid brass, vegetable tan · Facts that may appear: hide grade, stitch count, make-slot lead time (3 weeks) · Facts that must not be invented: reviews, celebrity clients, free worldwide shipping · Anti-references: purple SaaS gradient, stock handshake photos, fake 4.9★ rows · Primary journey: p · domain-knowledge: consulted (5 hits)",
+        "audience": "people who buy small-batch bags and straps and care about hide grade.",
+        "designIntent": "ecommerce: configure a bag and request a make-slot. for Northline Leather Goods",
+        "composition": "type alone at scale, artefact below the fold",
+        "type": "Display: Barlow Condensed 600–700 (product names / workshop signage). Body: IBM Plex Sans 400–500 (plain trade English, 45–75ch). Utility: IBM Plex Mono 400–500 (grades, lead times, prices). Seed structure: custom-feeling display, extreme scale ratio.",
+        "colour": "cream; type/rules in ink brown; accent only on primary CTA/hardware (brass accent). Materials in play: bridle leather, solid brass, vegetable tan. Seed note: ink brown, cream, brass accent — brand evidence only; single reserved accent",
+        "imagery": "Object-led plates only for Field Tote, Belt No. 2, Shoulder Strap (have in manifest/plan). No lifestyle models, no stock handshakes. Needed-only assets stay labelled slots.",
+        "rhythm": "one continuous field then a single break",
+        "surface": "open — type is the material",
+        "labels": "symbol-led — almost no chrome labels",
+        "figures": "absent",
+        "depth": "flat",
+        "layoutPrinciple": "1) Field Tote, Belt No. 2, Shoulder Strap plate recognition 2) bridle leather, solid brass, vegetable tan 3) choice control (grade/size if evidenced) 4) configure a bag and request a make-slot. 5) secondary SKUs — no fake ★/testimonials",
+        "typographicPrinciple": "Display: Barlow Condensed 600–700 (product names / workshop signage). Body: IBM Plex Sans 400–500 (plain trade English, 45–75ch). Utility: IBM Plex Mono 400–500 (grades, lead times, prices). Seed structure: custom-feeling display, extreme scale ratio.",
+        "assetStrategy": "Object-led plates only for Field Tote, Belt No. 2, Shoulder Strap (have in manifest/plan). No lifestyle models, no stock handshakes. Needed-only assets stay labelled slots.",
+        "motionInteraction": "single decisive scroll cue",
+        "signatureElement": "northline-sig-L1",
+        "primaryRisk": "Must not drift into banned tropes (purple SaaS gradient, stock handshake photos, fake 4.9★ rows; purple SaaS gradie); signature may overfit if evidence is thin.",
+        "differenceNote": "Differs from L2, L3 on composition/type/imagery/grammar after brief-fit filter.",
+        "density": "poster",
+        "grounding": {
+          "subject": "Northline Leather Goods",
+          "primaryAction": "configure a bag and request a make-slot.",
+          "audience": "people who buy small-batch bags and straps and care about hide grade.",
+          "materials": [
+            "bridle leather",
+            "solid brass",
+            "vegetable tan"
+          ],
+          "products": [
+            "Field Tote",
+            "Belt No. 2",
+            "Shoulder Strap"
+          ],
+          "brandPalette": [
+            "ink brown",
+            "cream",
+            "brass accent"
+          ],
+          "antiRefs": [
+            "purple SaaS gradient, stock handshake photos, fake 4.9★ rows",
+            "purple SaaS gradient, stock handshake photos, fake 4.9★ rows."
+          ],
+          "assets": {
+            "imageless": false,
+            "plates": true
+          }
+        }
+      },
+      {
+        "blindId": "L2",
+        "thesis": "Northline Leather Goods is a make-slot desk, not a boutique shelf: open on Field Tote, Belt No. 2, Shoulder Strap with trade facts on the plate edge; primary argument is material truth + “configure a bag and request a make-slot.” — never lifestyle hero; ban purple SaaS gradient, stock handshake photos, fake 4.9★ rows.",
+        "evidence": "Subject: Northline Leather Goods · Products (truth): Field Tote, Belt No. 2, Shoulder Strap · Price band (truth): DKK 890–2.400 from supplier sheet 2026-07 · Materials: bridle leather, solid brass, vegetable tan · Facts that may appear: hide grade, stitch count, make-slot lead time (3 weeks) · Facts that must not be invented: reviews, celebrity clients, free worldwide shipping · Anti-references: purple SaaS gradient, stock handshake photos, fake 4.9★ rows · Primary journey: p · domain-knowledge: consulted (5 hits)",
+        "audience": "people who buy small-batch bags and straps and care about hide grade.",
+        "designIntent": "ecommerce: configure a bag and request a make-slot. for Northline Leather Goods",
+        "composition": "grid of many small material samples",
+        "type": "Display: Barlow Condensed 600–700 (product names / workshop signage). Body: IBM Plex Sans 400–500 (plain trade English, 45–75ch). Utility: IBM Plex Mono 400–500 (grades, lead times, prices). Seed structure: small caps labels over soft serif.",
+        "colour": "cream; type/rules in ink brown; accent only on primary CTA/hardware (brass accent). Materials in play: bridle leather, solid brass, vegetable tan. Seed note: ink brown, cream, brass accent — brand evidence only; single reserved accent",
+        "imagery": "Object-led plates only for Field Tote, Belt No. 2, Shoulder Strap (have in manifest/plan). No lifestyle models, no stock handshakes. Needed-only assets stay labelled slots.",
+        "rhythm": "tight mosaic then wide breathing band",
+        "surface": "colour-field — each cell is a material ground",
+        "labels": "sentence case — trade names, not UI chrome",
+        "figures": "proportional — dimensions only when needed",
+        "depth": "overlap — samples slightly shuffle depth",
+        "layoutPrinciple": "1) Field Tote, Belt No. 2, Shoulder Strap plate recognition 2) bridle leather, solid brass, vegetable tan 3) choice control (grade/size if evidenced) 4) configure a bag and request a make-slot. 5) secondary SKUs — no fake ★/testimonials",
+        "typographicPrinciple": "Display: Barlow Condensed 600–700 (product names / workshop signage). Body: IBM Plex Sans 400–500 (plain trade English, 45–75ch). Utility: IBM Plex Mono 400–500 (grades, lead times, prices). Seed structure: small caps labels over soft serif.",
+        "assetStrategy": "Object-led plates only for Field Tote, Belt No. 2, Shoulder Strap (have in manifest/plan). No lifestyle models, no stock handshakes. Needed-only assets stay labelled slots.",
+        "motionInteraction": "sample select builds a slip/cart",
+        "signatureElement": "northline-sig-L2",
+        "primaryRisk": "Must not drift into banned tropes (purple SaaS gradient, stock handshake photos, fake 4.9★ rows; purple SaaS gradie); signature may overfit if evidence is thin.",
+        "differenceNote": "Differs from L1, L3 on composition/type/imagery/grammar after brief-fit filter.",
+        "density": "tactile",
+        "grounding": {
+          "subject": "Northline Leather Goods",
+          "primaryAction": "configure a bag and request a make-slot.",
+          "audience": "people who buy small-batch bags and straps and care about hide grade.",
+          "materials": [
+            "bridle leather",
+            "solid brass",
+            "vegetable tan"
+          ],
+          "products": [
+            "Field Tote",
+            "Belt No. 2",
+            "Shoulder Strap"
+          ],
+          "brandPalette": [
+            "ink brown",
+            "cream",
+            "brass accent"
+          ],
+          "antiRefs": [
+            "purple SaaS gradient, stock handshake photos, fake 4.9★ rows",
+            "purple SaaS gradient, stock handshake photos, fake 4.9★ rows."
+          ],
+          "assets": {
+            "imageless": false,
+            "plates": true
+          }
+        }
+      },
+      {
+        "blindId": "L3",
+        "thesis": "Northline Leather Goods is a make-slot desk, not a boutique shelf: open on Field Tote, Belt No. 2, Shoulder Strap with trade facts on the plate edge; primary argument is material truth + “configure a bag and request a make-slot.” — never lifestyle hero; ban purple SaaS gradient, stock handshake photos, fake 4.9★ rows.",
+        "evidence": "Subject: Northline Leather Goods · Products (truth): Field Tote, Belt No. 2, Shoulder Strap · Price band (truth): DKK 890–2.400 from supplier sheet 2026-07 · Materials: bridle leather, solid brass, vegetable tan · Facts that may appear: hide grade, stitch count, make-slot lead time (3 weeks) · Facts that must not be invented: reviews, celebrity clients, free worldwide shipping · Anti-references: purple SaaS gradient, stock handshake photos, fake 4.9★ rows · Primary journey: p · domain-knowledge: consulted (5 hits)",
+        "audience": "people who buy small-batch bags and straps and care about hide grade.",
+        "designIntent": "ecommerce: configure a bag and request a make-slot. for Northline Leather Goods",
+        "composition": "hard vertical rule: proof left, action right",
+        "type": "Display: Barlow Condensed 600–700 (product names / workshop signage). Body: IBM Plex Sans 400–500 (plain trade English, 45–75ch). Utility: IBM Plex Mono 400–500 (grades, lead times, prices). Seed structure: neutral grotesque, medium weight only.",
+        "colour": "cream; type/rules in ink brown; accent only on primary CTA/hardware (brass accent). Materials in play: bridle leather, solid brass, vegetable tan. Seed note: ink brown, cream, brass accent — brand evidence only; single reserved accent",
+        "imagery": "Object-led plates only for Field Tote, Belt No. 2, Shoulder Strap (have in manifest/plan). No lifestyle models, no stock handshakes. Needed-only assets stay labelled slots.",
+        "rhythm": "two columns for the whole first fold",
+        "surface": "framed — evidence cards in heavy borders",
+        "labels": "sentence case — operational clarity",
+        "figures": "functional tabular — measurements only where compared",
+        "depth": "elevated — evidence cards raise on focus",
+        "layoutPrinciple": "1) Field Tote, Belt No. 2, Shoulder Strap plate recognition 2) bridle leather, solid brass, vegetable tan 3) choice control (grade/size if evidenced) 4) configure a bag and request a make-slot. 5) secondary SKUs — no fake ★/testimonials",
+        "typographicPrinciple": "Display: Barlow Condensed 600–700 (product names / workshop signage). Body: IBM Plex Sans 400–500 (plain trade English, 45–75ch). Utility: IBM Plex Mono 400–500 (grades, lead times, prices). Seed structure: neutral grotesque, medium weight only.",
+        "assetStrategy": "Object-led plates only for Field Tote, Belt No. 2, Shoulder Strap (have in manifest/plan). No lifestyle models, no stock handshakes. Needed-only assets stay labelled slots.",
+        "motionInteraction": "sticky action column on desktop",
+        "signatureElement": "northline-sig-L3",
+        "primaryRisk": "Must not drift into banned tropes (purple SaaS gradient, stock handshake photos, fake 4.9★ rows; purple SaaS gradie); signature may overfit if evidence is thin.",
+        "differenceNote": "Differs from L1, L2 on composition/type/imagery/grammar after brief-fit filter.",
+        "density": "balanced",
+        "grounding": {
+          "subject": "Northline Leather Goods",
+          "primaryAction": "configure a bag and request a make-slot.",
+          "audience": "people who buy small-batch bags and straps and care about hide grade.",
+          "materials": [
+            "bridle leather",
+            "solid brass",
+            "vegetable tan"
+          ],
+          "products": [
+            "Field Tote",
+            "Belt No. 2",
+            "Shoulder Strap"
+          ],
+          "brandPalette": [
+            "ink brown",
+            "cream",
+            "brass accent"
+          ],
+          "antiRefs": [
+            "purple SaaS gradient, stock handshake photos, fake 4.9★ rows",
+            "purple SaaS gradient, stock handshake photos, fake 4.9★ rows."
+          ],
+          "assets": {
+            "imageless": false,
+            "plates": true
+          }
+        }
+      }
+    ]
+  },
+  "critic": {
+    "role": "deterministic-preflight",
+    "independence": "deterministic-preflight",
+    "notModelIndependent": true,
+    "externalRunEvidence": false,
+    "scores": [
+      {
+        "blindId": "L1",
+        "briefFit": 6,
+        "originality": 0,
+        "subject": 3,
+        "composition": 3,
+        "implementability": 2,
+        "total": 14,
+        "flags": []
+      },
+      {
+        "blindId": "L2",
+        "briefFit": 6,
+        "originality": 0,
+        "subject": 3,
+        "composition": 3,
+        "implementability": 2,
+        "total": 14,
+        "flags": []
+      },
+      {
+        "blindId": "L3",
+        "briefFit": 6,
+        "originality": 0,
+        "subject": 3,
+        "composition": 3,
+        "implementability": 2,
+        "total": 14,
+        "flags": []
+      }
+    ],
+    "rankedIds": [
+      "L1",
+      "L2",
+      "L3"
+    ],
+    "tie": true,
+    "rejectAll": false,
+    "recommendation": null,
+    "notes": "tie: user or external adjudicator required"
+  },
+  "choice": {
+    "status": "selected",
+    "selectedBlindId": "L1",
+    "selectedInternalId": "W4",
+    "by": "user"
+  },
+  "designSpec": {
+    "schemaVersion": 1,
+    "kind": "sitesmith.designspec.v3-slice",
+    "projectName": "01-leather-goods",
+    "mode": "ecommerce",
+    "stack": "html",
+    "designThesis": "Northline Leather Goods is a make-slot desk, not a boutique shelf: open on Field Tote, Belt No. 2, Shoulder Strap with trade facts on the plate edge; primary argument is material truth + “configure a bag and request a make-slot.” — never lifestyle hero; ban purple SaaS gradient, stock handshake photos, fake 4.9★ rows.",
+    "contentHierarchy": [
+      "Field Tote, Belt No. 2, Shoulder Strap plate recognition",
+      "bridle leather, solid brass, vegetable tan",
+      "choice control (grade/size if evidenced)",
+      "configure a bag and request a make-slot.",
+      "secondary SKUs — no fake ★/testimonials"
+    ],
+    "pageComposition": "type alone at scale, artefact below the fold",
+    "gridAndSpacing": "open 8/16 rhythm, large voids",
+    "typographySystem": {
+      "principle": "Display: Barlow Condensed 600–700 (product names / workshop signage). Body: IBM Plex Sans 400–500 (plain trade English, 45–75ch). Utility: IBM Plex Mono 400–500 (grades, lead times, prices). Seed structure: custom-feeling display, extreme scale ratio.",
+      "roles": [
+        "display",
+        "body",
+        "label",
+        "utility-mono"
+      ]
+    },
+    "colourRoles": {
+      "ground": "cream; type/rules in ink brown; accent only on primary CTA/hardware (brass accent). Materials in play: bridle leather, solid brass, vegetable tan. Seed note: ink brown, cream, brass accent — brand evidence only; single reserved accent",
+      "accent": "brass accent",
+      "text": "primary ink on ground with WCAG AA body contrast",
+      "brandPalette": [
+        "ink brown",
+        "cream",
+        "brass accent"
+      ]
+    },
+    "surfaceMaterialModel": "open — type is the material",
+    "imageryStrategy": "Object-led plates only for Field Tote, Belt No. 2, Shoulder Strap (have in manifest/plan). No lifestyle models, no stock handshakes. Needed-only assets stay labelled slots.",
+    "componentPrinciples": [
+      "states must be visible without colour alone",
+      "primary action uses reserved accent only"
+    ],
+    "interactionStates": [
+      "default",
+      "hover/focus",
+      "active",
+      "disabled",
+      "error"
+    ],
+    "motionRules": {
+      "principle": "single decisive scroll cue",
+      "reducedMotion": "disable non-essential motion"
+    },
+    "responsiveBehavior": {
+      "firstFold": "preserve composition intent; stack only after tablet",
+      "tables": "horizontal scroll must expose affordance if used"
+    },
+    "accessibilityConstraints": [
+      "visible focus",
+      "label every control",
+      "AA contrast for body and UI text"
+    ],
+    "signatureElement": "Hide Grade Strip under Field Tote plate — chips bind plate → grade → make-slot",
+    "forbiddenFallbackDefaults": [
+      "purple SaaS gradient hero",
+      "three equal feature cards as default identity",
+      "round-8 recipe: mono uppercase labels + hairlines + tabular motif + flat depth",
+      "invented testimonials, prices, or certifications"
+    ],
+    "fidelityAssertions": [
+      {
+        "field": "composition",
+        "expected": "type alone at scale, artefact below the fold"
+      },
+      {
+        "field": "type",
+        "expected": "Display: Barlow Condensed 600–700 (product names / workshop signage). Body: IBM Plex Sans 400–500 (plain trade English, 45–75ch). Utility: IBM Plex Mono 400–500 (grades, lead times, prices). Seed structure: custom-feeling display, extreme scale ratio."
+      },
+      {
+        "field": "colour",
+        "expected": "cream; type/rules in ink brown; accent only on primary CTA/hardware (brass accent). Materials in play: bridle leather, solid brass, vegetable tan. Seed note: ink brown, cream, brass accent — brand evidence only; single reserved accent"
+      },
+      {
+        "field": "imagery",
+        "expected": "Object-led plates only for Field Tote, Belt No. 2, Shoulder Strap (have in manifest/plan). No lifestyle models, no stock handshakes. Needed-only assets stay labelled slots."
+      },
+      {
+        "field": "rhythm",
+        "expected": "one continuous field then a single break"
+      },
+      {
+        "field": "surface",
+        "expected": "open — type is the material"
+      },
+      {
+        "field": "labels",
+        "expected": "symbol-led — almost no chrome labels"
+      },
+      {
+        "field": "figures",
+        "expected": "absent"
+      },
+      {
+        "field": "depth",
+        "expected": "flat"
+      },
+      {
+        "field": "signature-selector",
+        "expected": "[data-signature=\"Hide Grade Strip under Field Tote plate — chips bind plate → grade → make-slot\"]"
+      }
+    ],
+    "acceptanceCriteria": [
+      "built page matches axis record treatments",
+      "primary action findable in first fold",
+      "no fabricated brand/product facts",
+      "passes existing v2.3 verify + direction fidelity"
+    ],
+    "capabilityProvenance": [
+      {
+        "capabilityId": "TASTE-CAP-002",
+        "upstreamOrigin": "https://github.com/Leonxlnx/taste-skill.git",
+        "phase": "creative-direction",
+        "whyRelevant": "mode ecommerce base required · subject=Northline Leather Goods · action=configure a bag and request a make-slot.",
+        "evidencePointers": [
+          "mode:ecommerce"
+        ],
+        "status": "explicit"
+      },
+      {
+        "capabilityId": "TASTE-CAP-003",
+        "upstreamOrigin": "https://github.com/Leonxlnx/taste-skill.git",
+        "phase": "creative-direction",
+        "whyRelevant": "mode ecommerce base required · subject=Northline Leather Goods · action=configure a bag and request a make-slot.",
+        "evidencePointers": [
+          "mode:ecommerce"
+        ],
+        "status": "explicit"
+      },
+      {
+        "capabilityId": "TASTE-CAP-004",
+        "upstreamOrigin": "https://github.com/Leonxlnx/taste-skill.git",
+        "phase": "creative-direction",
+        "whyRelevant": "mode ecommerce base required · subject=Northline Leather Goods · action=configure a bag and request a make-slot.",
+        "evidencePointers": [
+          "mode:ecommerce"
+        ],
+        "status": "explicit"
+      },
+      {
+        "capabilityId": "TASTE-CAP-006",
+        "upstreamOrigin": "https://github.com/Leonxlnx/taste-skill.git",
+        "phase": "knowledge",
+        "whyRelevant": "mode ecommerce base required · subject=Northline Leather Goods · action=configure a bag and request a make-slot.",
+        "evidencePointers": [
+          "mode:ecommerce"
+        ],
+        "status": "explicit"
+      },
+      {
+        "capabilityId": "frontend.subject-vernacular",
+        "upstreamOrigin": "https://github.com/anthropics/skills",
+        "phase": "creative-direction",
+        "whyRelevant": "mode ecommerce base required · subject=Northline Leather Goods · action=configure a bag and request a make-slot.",
+        "evidencePointers": [
+          "mode:ecommerce"
+        ],
+        "status": "explicit"
+      },
+      {
+        "capabilityId": "frontend.hero-thesis",
+        "upstreamOrigin": "https://github.com/anthropics/skills",
+        "phase": "creative-direction",
+        "whyRelevant": "mode ecommerce base required · subject=Northline Leather Goods · action=configure a bag and request a make-slot.",
+        "evidencePointers": [
+          "mode:ecommerce"
+        ],
+        "status": "explicit"
+      },
+      {
+        "capabilityId": "frontend.semantic-structure",
+        "upstreamOrigin": "https://github.com/anthropics/skills",
+        "phase": "creative-direction",
+        "whyRelevant": "mode ecommerce base required · subject=Northline Leather Goods · action=configure a bag and request a make-slot.",
+        "evidencePointers": [
+          "mode:ecommerce"
+        ],
+        "status": "explicit"
+      },
+      {
+        "capabilityId": "frontend.interface-writing",
+        "upstreamOrigin": "https://github.com/anthropics/skills",
+        "phase": "creative-direction",
+        "whyRelevant": "mode ecommerce base required · subject=Northline Leather Goods · action=configure a bag and request a make-slot.",
+        "evidencePointers": [
+          "mode:ecommerce"
+        ],
+        "status": "explicit"
+      },
+      {
+        "capabilityId": "frontend.anti-default-calibration",
+        "upstreamOrigin": "https://github.com/anthropics/skills",
+        "phase": "creative-direction",
+        "whyRelevant": "mode ecommerce base required · subject=Northline Leather Goods · action=configure a bag and request a make-slot.",
+        "evidencePointers": [
+          "mode:ecommerce"
+        ],
+        "status": "explicit"
+      },
+      {
+        "capabilityId": "uupm.classify.product-reasoning",
+        "upstreamOrigin": "nextlevelbuilder/ui-ux-pro-max-skill",
+        "phase": "knowledge",
+        "whyRelevant": "mode ecommerce base required · subject=Northline Leather Goods · action=configure a bag and request a make-slot.",
+        "evidencePointers": [
+          "mode:ecommerce"
+        ],
+        "status": "explicit"
+      },
+      {
+        "capabilityId": "uupm.tune.design-dials",
+        "upstreamOrigin": "nextlevelbuilder/ui-ux-pro-max-skill",
+        "phase": "creative-direction",
+        "whyRelevant": "mode ecommerce base required · subject=Northline Leather Goods · action=configure a bag and request a make-slot.",
+        "evidencePointers": [
+          "mode:ecommerce"
+        ],
+        "status": "explicit"
+      },
+      {
+        "capabilityId": "IMP-004",
+        "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
+        "phase": "seed",
+        "whyRelevant": "mode ecommerce base required · subject=Northline Leather Goods · action=configure a bag and request a make-slot.",
+        "evidencePointers": [
+          "mode:ecommerce"
+        ],
+        "status": "explicit"
+      },
+      {
+        "capabilityId": "IMP-005",
+        "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
+        "phase": "seed",
+        "whyRelevant": "mode ecommerce base required · subject=Northline Leather Goods · action=configure a bag and request a make-slot.",
+        "evidencePointers": [
+          "mode:ecommerce"
+        ],
+        "status": "explicit"
+      },
+      {
+        "capabilityId": "IMP-008",
+        "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
+        "phase": "critique",
+        "whyRelevant": "mode ecommerce base required · subject=Northline Leather Goods · action=configure a bag and request a make-slot.",
+        "evidencePointers": [
+          "mode:ecommerce"
+        ],
+        "status": "explicit"
+      },
+      {
+        "capabilityId": "uupm.lookup.stack-guidance",
+        "upstreamOrigin": "nextlevelbuilder/ui-ux-pro-max-skill",
+        "phase": "knowledge",
+        "whyRelevant": "mode ecommerce base optional · subject=Northline Leather Goods · action=configure a bag and request a make-slot.",
+        "evidencePointers": [
+          "mode:ecommerce"
+        ],
+        "status": "inferred"
+      },
+      {
+        "capabilityId": "frontend.motion-intent",
+        "upstreamOrigin": "https://github.com/anthropics/skills",
+        "phase": "creative-direction",
+        "whyRelevant": "mode ecommerce base optional · subject=Northline Leather Goods · action=configure a bag and request a make-slot.",
+        "evidencePointers": [
+          "mode:ecommerce"
+        ],
+        "status": "inferred"
+      },
+      {
+        "capabilityId": "IMP-006",
+        "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
+        "phase": "seed",
+        "whyRelevant": "mode ecommerce base optional · subject=Northline Leather Goods · action=configure a bag and request a make-slot.",
+        "evidencePointers": [
+          "mode:ecommerce"
+        ],
+        "status": "inferred"
+      },
+      {
+        "capabilityId": "IMP-010",
+        "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
+        "phase": "critique",
+        "whyRelevant": "mode ecommerce base optional · subject=Northline Leather Goods · action=configure a bag and request a make-slot.",
+        "evidencePointers": [
+          "mode:ecommerce"
+        ],
+        "status": "inferred"
+      }
+    ],
+    "seedProvenance": {
+      "source": "local-world-library-seed",
+      "version": "1.1.0",
+      "method": "sha256-project-entropy + fisher-yates over eligibility-filtered seeds",
+      "randomSeed": "mini-rules-h2h-leather-2026-07-31",
+      "numericSeed": 2334358073,
+      "licence": "MIT SiteSmith-original world seed templates",
+      "origin": "local",
+      "slot": 3
+    },
+    "policyVersion": "direction-engine-v3-orchestrator-1.1.0",
+    "dials": {
+      "visualDensity": 6,
+      "motionIntensity": 2,
+      "aestheticBoldness": 6,
+      "status": {
+        "visualDensity": "explicit",
+        "motionIntensity": "explicit",
+        "aestheticBoldness": "explicit"
+      }
+    },
+    "choice": {
+      "status": "selected",
+      "selectedBlindId": "L1",
+      "selectedInternalId": "W4",
+      "by": "user"
+    }
+  },
+  "handoff": {
+    "mode": "ecommerce",
+    "stack": "html",
+    "evidenceArtifacts": {
+      "brief": true,
+      "evidence": true,
+      "brand": true,
+      "assetPlan": true,
+      "assetManifest": true
+    },
+    "designSpec": {
+      "schemaVersion": 1,
+      "kind": "sitesmith.designspec.v3-slice",
+      "projectName": "01-leather-goods",
+      "mode": "ecommerce",
+      "stack": "html",
+      "designThesis": "Northline Leather Goods is a make-slot desk, not a boutique shelf: open on Field Tote, Belt No. 2, Shoulder Strap with trade facts on the plate edge; primary argument is material truth + “configure a bag and request a make-slot.” — never lifestyle hero; ban purple SaaS gradient, stock handshake photos, fake 4.9★ rows.",
+      "contentHierarchy": [
+        "Field Tote, Belt No. 2, Shoulder Strap plate recognition",
+        "bridle leather, solid brass, vegetable tan",
+        "choice control (grade/size if evidenced)",
+        "configure a bag and request a make-slot.",
+        "secondary SKUs — no fake ★/testimonials"
+      ],
+      "pageComposition": "type alone at scale, artefact below the fold",
+      "gridAndSpacing": "open 8/16 rhythm, large voids",
+      "typographySystem": {
+        "principle": "Display: Barlow Condensed 600–700 (product names / workshop signage). Body: IBM Plex Sans 400–500 (plain trade English, 45–75ch). Utility: IBM Plex Mono 400–500 (grades, lead times, prices). Seed structure: custom-feeling display, extreme scale ratio.",
+        "roles": [
+          "display",
+          "body",
+          "label",
+          "utility-mono"
+        ]
+      },
+      "colourRoles": {
+        "ground": "cream; type/rules in ink brown; accent only on primary CTA/hardware (brass accent). Materials in play: bridle leather, solid brass, vegetable tan. Seed note: ink brown, cream, brass accent — brand evidence only; single reserved accent",
+        "accent": "brass accent",
+        "text": "primary ink on ground with WCAG AA body contrast",
+        "brandPalette": [
+          "ink brown",
+          "cream",
+          "brass accent"
+        ]
+      },
+      "surfaceMaterialModel": "open — type is the material",
+      "imageryStrategy": "Object-led plates only for Field Tote, Belt No. 2, Shoulder Strap (have in manifest/plan). No lifestyle models, no stock handshakes. Needed-only assets stay labelled slots.",
+      "componentPrinciples": [
+        "states must be visible without colour alone",
+        "primary action uses reserved accent only"
+      ],
+      "interactionStates": [
+        "default",
+        "hover/focus",
+        "active",
+        "disabled",
+        "error"
+      ],
+      "motionRules": {
+        "principle": "single decisive scroll cue",
+        "reducedMotion": "disable non-essential motion"
+      },
+      "responsiveBehavior": {
+        "firstFold": "preserve composition intent; stack only after tablet",
+        "tables": "horizontal scroll must expose affordance if used"
+      },
+      "accessibilityConstraints": [
+        "visible focus",
+        "label every control",
+        "AA contrast for body and UI text"
+      ],
+      "signatureElement": "Hide Grade Strip under Field Tote plate — chips bind plate → grade → make-slot",
+      "forbiddenFallbackDefaults": [
+        "purple SaaS gradient hero",
+        "three equal feature cards as default identity",
+        "round-8 recipe: mono uppercase labels + hairlines + tabular motif + flat depth",
+        "invented testimonials, prices, or certifications"
+      ],
+      "fidelityAssertions": [
+        {
+          "field": "composition",
+          "expected": "type alone at scale, artefact below the fold"
+        },
+        {
+          "field": "type",
+          "expected": "Display: Barlow Condensed 600–700 (product names / workshop signage). Body: IBM Plex Sans 400–500 (plain trade English, 45–75ch). Utility: IBM Plex Mono 400–500 (grades, lead times, prices). Seed structure: custom-feeling display, extreme scale ratio."
+        },
+        {
+          "field": "colour",
+          "expected": "cream; type/rules in ink brown; accent only on primary CTA/hardware (brass accent). Materials in play: bridle leather, solid brass, vegetable tan. Seed note: ink brown, cream, brass accent — brand evidence only; single reserved accent"
+        },
+        {
+          "field": "imagery",
+          "expected": "Object-led plates only for Field Tote, Belt No. 2, Shoulder Strap (have in manifest/plan). No lifestyle models, no stock handshakes. Needed-only assets stay labelled slots."
+        },
+        {
+          "field": "rhythm",
+          "expected": "one continuous field then a single break"
+        },
+        {
+          "field": "surface",
+          "expected": "open — type is the material"
+        },
+        {
+          "field": "labels",
+          "expected": "symbol-led — almost no chrome labels"
+        },
+        {
+          "field": "figures",
+          "expected": "absent"
+        },
+        {
+          "field": "depth",
+          "expected": "flat"
+        },
+        {
+          "field": "signature-selector",
+          "expected": "[data-signature=\"Hide Grade Strip under Field Tote plate — chips bind plate → grade → make-slot\"]"
+        }
+      ],
+      "acceptanceCriteria": [
+        "built page matches axis record treatments",
+        "primary action findable in first fold",
+        "no fabricated brand/product facts",
+        "passes existing v2.3 verify + direction fidelity"
+      ],
+      "capabilityProvenance": [
+        {
+          "capabilityId": "TASTE-CAP-002",
+          "upstreamOrigin": "https://github.com/Leonxlnx/taste-skill.git",
+          "phase": "creative-direction",
+          "whyRelevant": "mode ecommerce base required · subject=Northline Leather Goods · action=configure a bag and request a make-slot.",
+          "evidencePointers": [
+            "mode:ecommerce"
+          ],
+          "status": "explicit"
+        },
+        {
+          "capabilityId": "TASTE-CAP-003",
+          "upstreamOrigin": "https://github.com/Leonxlnx/taste-skill.git",
+          "phase": "creative-direction",
+          "whyRelevant": "mode ecommerce base required · subject=Northline Leather Goods · action=configure a bag and request a make-slot.",
+          "evidencePointers": [
+            "mode:ecommerce"
+          ],
+          "status": "explicit"
+        },
+        {
+          "capabilityId": "TASTE-CAP-004",
+          "upstreamOrigin": "https://github.com/Leonxlnx/taste-skill.git",
+          "phase": "creative-direction",
+          "whyRelevant": "mode ecommerce base required · subject=Northline Leather Goods · action=configure a bag and request a make-slot.",
+          "evidencePointers": [
+            "mode:ecommerce"
+          ],
+          "status": "explicit"
+        },
+        {
+          "capabilityId": "TASTE-CAP-006",
+          "upstreamOrigin": "https://github.com/Leonxlnx/taste-skill.git",
+          "phase": "knowledge",
+          "whyRelevant": "mode ecommerce base required · subject=Northline Leather Goods · action=configure a bag and request a make-slot.",
+          "evidencePointers": [
+            "mode:ecommerce"
+          ],
+          "status": "explicit"
+        },
+        {
+          "capabilityId": "frontend.subject-vernacular",
+          "upstreamOrigin": "https://github.com/anthropics/skills",
+          "phase": "creative-direction",
+          "whyRelevant": "mode ecommerce base required · subject=Northline Leather Goods · action=configure a bag and request a make-slot.",
+          "evidencePointers": [
+            "mode:ecommerce"
+          ],
+          "status": "explicit"
+        },
+        {
+          "capabilityId": "frontend.hero-thesis",
+          "upstreamOrigin": "https://github.com/anthropics/skills",
+          "phase": "creative-direction",
+          "whyRelevant": "mode ecommerce base required · subject=Northline Leather Goods · action=configure a bag and request a make-slot.",
+          "evidencePointers": [
+            "mode:ecommerce"
+          ],
+          "status": "explicit"
+        },
+        {
+          "capabilityId": "frontend.semantic-structure",
+          "upstreamOrigin": "https://github.com/anthropics/skills",
+          "phase": "creative-direction",
+          "whyRelevant": "mode ecommerce base required · subject=Northline Leather Goods · action=configure a bag and request a make-slot.",
+          "evidencePointers": [
+            "mode:ecommerce"
+          ],
+          "status": "explicit"
+        },
+        {
+          "capabilityId": "frontend.interface-writing",
+          "upstreamOrigin": "https://github.com/anthropics/skills",
+          "phase": "creative-direction",
+          "whyRelevant": "mode ecommerce base required · subject=Northline Leather Goods · action=configure a bag and request a make-slot.",
+          "evidencePointers": [
+            "mode:ecommerce"
+          ],
+          "status": "explicit"
+        },
+        {
+          "capabilityId": "frontend.anti-default-calibration",
+          "upstreamOrigin": "https://github.com/anthropics/skills",
+          "phase": "creative-direction",
+          "whyRelevant": "mode ecommerce base required · subject=Northline Leather Goods · action=configure a bag and request a make-slot.",
+          "evidencePointers": [
+            "mode:ecommerce"
+          ],
+          "status": "explicit"
+        },
+        {
+          "capabilityId": "uupm.classify.product-reasoning",
+          "upstreamOrigin": "nextlevelbuilder/ui-ux-pro-max-skill",
+          "phase": "knowledge",
+          "whyRelevant": "mode ecommerce base required · subject=Northline Leather Goods · action=configure a bag and request a make-slot.",
+          "evidencePointers": [
+            "mode:ecommerce"
+          ],
+          "status": "explicit"
+        },
+        {
+          "capabilityId": "uupm.tune.design-dials",
+          "upstreamOrigin": "nextlevelbuilder/ui-ux-pro-max-skill",
+          "phase": "creative-direction",
+          "whyRelevant": "mode ecommerce base required · subject=Northline Leather Goods · action=configure a bag and request a make-slot.",
+          "evidencePointers": [
+            "mode:ecommerce"
+          ],
+          "status": "explicit"
+        },
+        {
+          "capabilityId": "IMP-004",
+          "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
+          "phase": "seed",
+          "whyRelevant": "mode ecommerce base required · subject=Northline Leather Goods · action=configure a bag and request a make-slot.",
+          "evidencePointers": [
+            "mode:ecommerce"
+          ],
+          "status": "explicit"
+        },
+        {
+          "capabilityId": "IMP-005",
+          "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
+          "phase": "seed",
+          "whyRelevant": "mode ecommerce base required · subject=Northline Leather Goods · action=configure a bag and request a make-slot.",
+          "evidencePointers": [
+            "mode:ecommerce"
+          ],
+          "status": "explicit"
+        },
+        {
+          "capabilityId": "IMP-008",
+          "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
+          "phase": "critique",
+          "whyRelevant": "mode ecommerce base required · subject=Northline Leather Goods · action=configure a bag and request a make-slot.",
+          "evidencePointers": [
+            "mode:ecommerce"
+          ],
+          "status": "explicit"
+        },
+        {
+          "capabilityId": "uupm.lookup.stack-guidance",
+          "upstreamOrigin": "nextlevelbuilder/ui-ux-pro-max-skill",
+          "phase": "knowledge",
+          "whyRelevant": "mode ecommerce base optional · subject=Northline Leather Goods · action=configure a bag and request a make-slot.",
+          "evidencePointers": [
+            "mode:ecommerce"
+          ],
+          "status": "inferred"
+        },
+        {
+          "capabilityId": "frontend.motion-intent",
+          "upstreamOrigin": "https://github.com/anthropics/skills",
+          "phase": "creative-direction",
+          "whyRelevant": "mode ecommerce base optional · subject=Northline Leather Goods · action=configure a bag and request a make-slot.",
+          "evidencePointers": [
+            "mode:ecommerce"
+          ],
+          "status": "inferred"
+        },
+        {
+          "capabilityId": "IMP-006",
+          "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
+          "phase": "seed",
+          "whyRelevant": "mode ecommerce base optional · subject=Northline Leather Goods · action=configure a bag and request a make-slot.",
+          "evidencePointers": [
+            "mode:ecommerce"
+          ],
+          "status": "inferred"
+        },
+        {
+          "capabilityId": "IMP-010",
+          "upstreamOrigin": "https://github.com/pbakaus/impeccable.git",
+          "phase": "critique",
+          "whyRelevant": "mode ecommerce base optional · subject=Northline Leather Goods · action=configure a bag and request a make-slot.",
+          "evidencePointers": [
+            "mode:ecommerce"
+          ],
+          "status": "inferred"
+        }
+      ],
+      "seedProvenance": {
+        "source": "local-world-library-seed",
+        "version": "1.1.0",
+        "method": "sha256-project-entropy + fisher-yates over eligibility-filtered seeds",
+        "randomSeed": "mini-rules-h2h-leather-2026-07-31",
+        "numericSeed": 2334358073,
+        "licence": "MIT SiteSmith-original world seed templates",
+        "origin": "local",
+        "slot": 3
+      },
+      "policyVersion": "direction-engine-v3-orchestrator-1.1.0",
+      "dials": {
+        "visualDensity": 6,
+        "motionIntensity": 2,
+        "aestheticBoldness": 6,
+        "status": {
+          "visualDensity": "explicit",
+          "motionIntensity": "explicit",
+          "aestheticBoldness": "explicit"
+        }
+      },
+      "choice": {
+        "status": "selected",
+        "selectedBlindId": "L1",
+        "selectedInternalId": "W4",
+        "by": "user"
+      }
+    },
+    "directionMd": "---\ntitle: \"DIRECTION — 01-leather-goods\"\nstatus: direction-engine-slice\nai_generated: \"(C)\"\n---\n\n# DIRECTION — 01-leather-goods\n\n## Design thesis\nNorthline Leather Goods is a make-slot desk, not a boutique shelf: open on Field Tote, Belt No. 2, Shoulder Strap with trade facts on the plate edge; primary argument is material truth + “configure a bag and request a make-slot.” — never lifestyle hero; ban purple SaaS gradient, stock handshake photos, fake 4.9★ rows.\n\n## Subject grounding\nSubject: Northline Leather Goods\nAudience: people who buy small-batch bags and straps and care about hide grade.\nPrimary action: configure a bag and request a make-slot.\nProducts/work: Field Tote, Belt No. 2, Shoulder Strap\nMaterials: bridle leather, solid brass, vegetable tan\nBrand palette cues: ink brown, cream, brass accent\nAnti-references: purple SaaS gradient, stock handshake photos, fake 4.9★ rows; purple SaaS gradient, stock handshake photos, fake 4.9★ rows.\n\n## Hierarchy\n1) Field Tote, Belt No. 2, Shoulder Strap plate recognition 2) bridle leather, solid brass, vegetable tan 3) choice control (grade/size if evidenced) 4) configure a bag and request a make-slot. 5) secondary SKUs — no fake ★/testimonials\n\n## Signature\nHide Grade Strip under Field Tote plate — chips bind plate → grade → make-slot\n\n## Primary risk\nMust not drift into banned tropes (purple SaaS gradient, stock handshake photos, fake 4.9★ rows; purple SaaS gradie); signature may overfit if evidence is thin.\n\n## Axis record\n\n- direction-version: 2.3\n- composition: type alone at scale, artefact below the fold\n- type: Display: Barlow Condensed 600–700 (product names / workshop signage). Body: IBM Plex Sans 400–500 (plain trade English, 45–75ch). Utility: IBM Plex Mono 400–500 (grades, lead times, prices). Seed structure: custom-feeling display, extreme scale ratio.\n- colour: cream; type/rules in ink brown; accent only on primary CTA/hardware (brass accent). Materials in play: bridle leather, solid brass, vegetable tan. Seed note: ink brown, cream, brass accent — brand evidence only; single reserved accent\n- imagery: Object-led plates only for Field Tote, Belt No. 2, Shoulder Strap (have in manifest/plan). No lifestyle models, no stock handshakes. Needed-only assets stay labelled slots.\n- rhythm: one continuous field then a single break\n\n- surface: open — type is the material\n- labels: symbol-led — almost no chrome labels\n- figures: absent\n- depth: flat\n\n- visual-density: 6\n- motion-intensity: 2\n- aesthetic-boldness: 6\n\n- signature-selector: [data-signature=\"Hide Grade Strip under Field Tote plate — chips bind plate → grade → make-slot\"]\n- signature-min-share: 12\n\n## Implementation notes\nThesis lock: Northline Leather Goods is a make-slot desk, not a boutique shelf: open on Field Tote, Belt No. 2, Shoulder Strap with trade facts on the plate edge; primary argument is material truth + “configure a bag and request a make-slot.” — never lifestyle hero; ban purple SaaS gradient, stock handshake photos, fake 4.9★ rows. Signature selector: [data-signature] implements “Hide Grade Strip under Field Tote plate — chips bind plate → grade → make-slot”. Hierarchy: 1) Field Tote, Belt No. 2, Shoulder Strap plate recognition 2) bridle leather, solid brass, vegetable tan 3) choice control (grade/size if evidenced) 4) configure a bag and request a make-slot. 5) secondary SKUs — no fake ★/testimonials Type: Display: Barlow Condensed 600–700 (product names / workshop signage). Body: IBM Plex Sans 400–500 (plain trade English, 45–75ch). Utility: IBM Plex Mono 400–500 (grades, lead times, prices). Seed structure: custom-feeling display, extreme scale ratio. Colour/material: cream; type/rules in ink brown; accent only on primary CTA/hardware (brass accent). Materials in play: bridle leather, solid brass, vegetable tan. Seed note: ink brown, cream, brass accent — brand evidence only; single reserved accent Imagery: Object-led plates only for Field Tote, Belt No. 2, Shoulder Strap (have in manifest/plan). No lifestyle models, no stock handshakes. Needed-only assets stay labelled slots. Interaction: single decisive scroll cue; honour dials if explicit on brief. CTA language stays pack-true: “configure a bag and request a make-slot.”. Fail closed: no invented reviews, awards, KPIs, logos, or free shipping. Anti-refs enforced: purple SaaS gradient, stock handshake photos, fake 4.9★ rows; purple SaaS gradient, stock handshake photos, fake 4.9★ rows.\n\n## Rejections\n- alternative card (W1): withheld from build\n- alternative card (W3): withheld from build",
+    "axisRecord": "## Axis record\n\n- direction-version: 2.3\n- composition: type alone at scale, artefact below the fold\n- type: Display: Barlow Condensed 600–700 (product names / workshop signage). Body: IBM Plex Sans 400–500 (plain trade English, 45–75ch). Utility: IBM Plex Mono 400–500 (grades, lead times, prices). Seed structure: custom-feeling display, extreme scale ratio.\n- colour: cream; type/rules in ink brown; accent only on primary CTA/hardware (brass accent). Materials in play: bridle leather, solid brass, vegetable tan. Seed note: ink brown, cream, brass accent — brand evidence only; single reserved accent\n- imagery: Object-led plates only for Field Tote, Belt No. 2, Shoulder Strap (have in manifest/plan). No lifestyle models, no stock handshakes. Needed-only assets stay labelled slots.\n- rhythm: one continuous field then a single break\n\n- surface: open — type is the material\n- labels: symbol-led — almost no chrome labels\n- figures: absent\n- depth: flat\n\n- visual-density: 6\n- motion-intensity: 2\n- aesthetic-boldness: 6\n\n- signature-selector: [data-signature=\"Hide Grade Strip under Field Tote plate — chips bind plate → grade → make-slot\"]\n- signature-min-share: 12",
+    "withheldFromBuild": {
+      "rejectedDirectionCards": true,
+      "generatorScores": true,
+      "generatorFavorite": true,
+      "blindKey": true
+    },
+    "next": {
+      "shell": "sitesmith-v2.3",
+      "commands": [
+        "build",
+        "audit"
+      ],
+      "adapters": "html"
+    }
+  },
+  "selectedCard": {
+    "internalId": "W4",
+    "worldId": "poster-type",
+    "seed": {
+      "source": "local-world-library-seed",
+      "version": "1.1.0",
+      "method": "sha256-project-entropy + fisher-yates over eligibility-filtered seeds",
+      "randomSeed": "mini-rules-h2h-leather-2026-07-31",
+      "numericSeed": 2334358073,
+      "licence": "MIT SiteSmith-original world seed templates",
+      "origin": "local",
+      "slot": 3
+    },
+    "thesis": "Northline Leather Goods is a make-slot desk, not a boutique shelf: open on Field Tote, Belt No. 2, Shoulder Strap with trade facts on the plate edge; primary argument is material truth + “configure a bag and request a make-slot.” — never lifestyle hero; ban purple SaaS gradient, stock handshake photos, fake 4.9★ rows.",
+    "evidence": "Subject: Northline Leather Goods · Products (truth): Field Tote, Belt No. 2, Shoulder Strap · Price band (truth): DKK 890–2.400 from supplier sheet 2026-07 · Materials: bridle leather, solid brass, vegetable tan · Facts that may appear: hide grade, stitch count, make-slot lead time (3 weeks) · Facts that must not be invented: reviews, celebrity clients, free worldwide shipping · Anti-references: purple SaaS gradient, stock handshake photos, fake 4.9★ rows · Primary journey: p · domain-knowledge: consulted (5 hits)",
+    "audience": "people who buy small-batch bags and straps and care about hide grade.",
+    "designIntent": "ecommerce: configure a bag and request a make-slot. for Northline Leather Goods",
+    "composition": "type alone at scale, artefact below the fold",
+    "type": "Display: Barlow Condensed 600–700 (product names / workshop signage). Body: IBM Plex Sans 400–500 (plain trade English, 45–75ch). Utility: IBM Plex Mono 400–500 (grades, lead times, prices). Seed structure: custom-feeling display, extreme scale ratio.",
+    "colour": "cream; type/rules in ink brown; accent only on primary CTA/hardware (brass accent). Materials in play: bridle leather, solid brass, vegetable tan. Seed note: ink brown, cream, brass accent — brand evidence only; single reserved accent",
+    "imagery": "Object-led plates only for Field Tote, Belt No. 2, Shoulder Strap (have in manifest/plan). No lifestyle models, no stock handshakes. Needed-only assets stay labelled slots.",
+    "rhythm": "one continuous field then a single break",
+    "surface": "open — type is the material",
+    "labels": "symbol-led — almost no chrome labels",
+    "figures": "absent",
+    "depth": "flat",
+    "layoutPrinciple": "1) Field Tote, Belt No. 2, Shoulder Strap plate recognition 2) bridle leather, solid brass, vegetable tan 3) choice control (grade/size if evidenced) 4) configure a bag and request a make-slot. 5) secondary SKUs — no fake ★/testimonials",
+    "typographicPrinciple": "Display: Barlow Condensed 600–700 (product names / workshop signage). Body: IBM Plex Sans 400–500 (plain trade English, 45–75ch). Utility: IBM Plex Mono 400–500 (grades, lead times, prices). Seed structure: custom-feeling display, extreme scale ratio.",
+    "assetStrategy": "Object-led plates only for Field Tote, Belt No. 2, Shoulder Strap (have in manifest/plan). No lifestyle models, no stock handshakes. Needed-only assets stay labelled slots.",
+    "motionInteraction": "single decisive scroll cue",
+    "signatureElement": "Hide Grade Strip under Field Tote plate — chips bind plate → grade → make-slot",
+    "primaryRisk": "Must not drift into banned tropes (purple SaaS gradient, stock handshake photos, fake 4.9★ rows; purple SaaS gradie); signature may overfit if evidence is thin.",
+    "differenceNote": "Differs from W1, W3 on composition/type/imagery/grammar after brief-fit filter.",
+    "capabilityProvenance": [
+      "TASTE-CAP-002",
+      "TASTE-CAP-003",
+      "TASTE-CAP-004",
+      "TASTE-CAP-006",
+      "frontend.subject-vernacular",
+      "frontend.hero-thesis",
+      "frontend.semantic-structure",
+      "frontend.interface-writing",
+      "frontend.anti-default-calibration",
+      "uupm.classify.product-reasoning",
+      "uupm.tune.design-dials",
+      "IMP-004",
+      "IMP-005",
+      "IMP-008",
+      "uupm.lookup.stack-guidance",
+      "frontend.motion-intent",
+      "IMP-006",
+      "IMP-010"
+    ],
+    "density": "poster",
+    "groupsApplied": {
+      "taste": true,
+      "uupm": true,
+      "frontend": true,
+      "impeccable": true
+    },
+    "grounding": {
+      "subject": "Northline Leather Goods",
+      "primaryAction": "configure a bag and request a make-slot.",
+      "audience": "people who buy small-batch bags and straps and care about hide grade.",
+      "materials": [
+        "bridle leather",
+        "solid brass",
+        "vegetable tan"
+      ],
+      "products": [
+        "Field Tote",
+        "Belt No. 2",
+        "Shoulder Strap"
+      ],
+      "brandPalette": [
+        "ink brown",
+        "cream",
+        "brass accent"
+      ],
+      "antiRefs": [
+        "purple SaaS gradient, stock handshake photos, fake 4.9★ rows",
+        "purple SaaS gradient, stock handshake photos, fake 4.9★ rows."
+      ],
+      "assets": {
+        "imageless": false,
+        "plates": true
+      }
+    },
+    "semanticGroupEffects": {
+      "withoutFrontend": false,
+      "withoutTaste": false,
+      "withoutUupm": false,
+      "withoutImpeccable": false
+    },
+    "implementationNotes": "Thesis lock: Northline Leather Goods is a make-slot desk, not a boutique shelf: open on Field Tote, Belt No. 2, Shoulder Strap with trade facts on the plate edge; primary argument is material truth + “configure a bag and request a make-slot.” — never lifestyle hero; ban purple SaaS gradient, stock handshake photos, fake 4.9★ rows. Signature selector: [data-signature] implements “Hide Grade Strip under Field Tote plate — chips bind plate → grade → make-slot”. Hierarchy: 1) Field Tote, Belt No. 2, Shoulder Strap plate recognition 2) bridle leather, solid brass, vegetable tan 3) choice control (grade/size if evidenced) 4) configure a bag and request a make-slot. 5) secondary SKUs — no fake ★/testimonials Type: Display: Barlow Condensed 600–700 (product names / workshop signage). Body: IBM Plex Sans 400–500 (plain trade English, 45–75ch). Utility: IBM Plex Mono 400–500 (grades, lead times, prices). Seed structure: custom-feeling display, extreme scale ratio. Colour/material: cream; type/rules in ink brown; accent only on primary CTA/hardware (brass accent). Materials in play: bridle leather, solid brass, vegetable tan. Seed note: ink brown, cream, brass accent — brand evidence only; single reserved accent Imagery: Object-led plates only for Field Tote, Belt No. 2, Shoulder Strap (have in manifest/plan). No lifestyle models, no stock handshakes. Needed-only assets stay labelled slots. Interaction: single decisive scroll cue; honour dials if explicit on brief. CTA language stays pack-true: “configure a bag and request a make-slot.”. Fail closed: no invented reviews, awards, KPIs, logos, or free shipping. Anti-refs enforced: purple SaaS gradient, stock handshake photos, fake 4.9★ rows; purple SaaS gradient, stock handshake photos, fake 4.9★ rows.",
+    "creativeLayer": {
+      "version": "1.0.0",
+      "boundToEvidence": true,
+      "inventsFacts": false
+    }
+  },
+  "input": {
+    "brief": "---\ntitle: \"Subject: Northline Leather Goods\"\nstatus: proof-fixture\nai_generated: \"(C)\"\n---\n\n# Subject: Northline Leather Goods\n\nMode intent: sensory ecommerce with real product choices.\n\nAudience: people who buy small-batch bags and straps and care about hide grade.\nPrimary action: configure a bag and request a make-slot.\nPlatform: mobile-first web.\n\nVisual density: 6\nMotion intensity: 2\nAesthetic boldness: 6",
+    "evidence": "---\ntitle: \"Evidence — Northline Leather Goods\"\nstatus: proof-fixture\nai_generated: \"(C)\"\n---\n\n# Evidence — Northline Leather Goods\n\nSubject: Northline Leather Goods\nProducts (truth): Field Tote, Belt No. 2, Shoulder Strap\nPrice band (truth): DKK 890–2.400 from supplier sheet 2026-07\nMaterials: bridle leather, solid brass, vegetable tan\nFacts that may appear: hide grade, stitch count, make-slot lead time (3 weeks)\nFacts that must not be invented: reviews, celebrity clients, free worldwide shipping\n\nAnti-references: purple SaaS gradient, stock handshake photos, fake 4.9★ rows\nPrimary journey: pick product → choose hide → request make-slot",
+    "brand": "---\ntitle: \"Brand\"\nstatus: proof-fixture\nai_generated: \"(C)\"\n---\n\n# Brand\n\nInk brown, warm cream, single brass accent.\nVoice: plain trade English, no luxury fluff.\nNo testimonials on file.",
+    "assetPlan": "---\ntitle: \"Asset plan\"\nstatus: proof-fixture\nai_generated: \"(C)\"\n---\n\n# Asset plan\n\nLoad-bearing: product plates for Field Tote and Belt No. 2.\nOptional: stitch macro.\nDeliberately no lifestyle models.",
+    "assetManifest": "---\ntitle: \"Asset manifest\"\nstatus: proof-fixture\nai_generated: \"(C)\"\n---\n\n# Asset manifest\n\n- field-tote.webp (have)\n- belt-no-2.webp (have)\n- stitch-macro.webp (needed)",
+    "mode": "ecommerce",
+    "stack": "html",
+    "userConstraints": "---\ntitle: Constraints — Northline Leather Goods\nstatus: frozen-benchmark-input\nai_generated: \"(C)\"\n---\n\n# Constraints\n\nSource: existing proof brief evidence/brand/asset plan only. Unknowns stay unknown.\n\n- Do not invent reviews, celebrity clients, or free worldwide shipping.\n- Anti-references: purple SaaS gradient, stock handshake photos, fake 4.9★ rows.\n- No testimonials on file (brand).\n- Deliberately no lifestyle models (asset plan).\n- Load-bearing assets: product plates for Field Tote and Belt No. 2; stitch macro is needed/not declared as have.\n- Platform: mobile-first web (brief).\n- Price band and make-slot lead time only as stated in evidence.",
+    "projectName": "01-leather-goods",
+    "randomSeed": "mini-rules-h2h-leather-2026-07-31",
+    "warnings": [],
+    "subjectHints": {
+      "subject": "Northline Leather Goods",
+      "audience": "people who buy small-batch bags and straps and care about hide grade.",
+      "primaryAction": "configure a bag and request a make-slot.",
+      "antiRefs": [
+        "purple SaaS gradient, stock handshake photos, fake 4.9★ rows",
+        "purple SaaS gradient, stock handshake photos, fake 4.9★ rows."
+      ],
+      "brandPalette": [
+        "ink brown",
+        "cream",
+        "brass accent"
+      ],
+      "materials": [
+        "bridle leather",
+        "solid brass",
+        "vegetable tan"
+      ],
+      "products": [
+        "Field Tote",
+        "Belt No. 2",
+        "Shoulder Strap"
+      ],
+      "hasBrand": true,
+      "hasAssetPlan": true,
+      "hasManifest": true,
+      "imageless": false,
+      "hasProductPlates": true,
+      "hasDiagrams": false,
+      "operational": false,
+      "commerce": true,
+      "editorial": false,
+      "constraints": [
+        "Source: existing proof brief evidence/brand/asset plan only. Unknowns stay unknown.",
+        "- Do not invent reviews, celebrity clients, or free worldwide shipping.",
+        "- Anti-references: purple SaaS gradient, stock handshake photos, fake 4.9★ rows.",
+        "- No testimonials on file (brand).",
+        "- Deliberately no lifestyle models (asset plan).",
+        "- Load-bearing assets: product plates for Field Tote and Belt No. 2; stitch macro is needed/not declared as have.",
+        "- Platform: mobile-first web (brief).",
+        "- Price band and make-slot lead time only as stated in evidence."
+      ],
+      "vocabulary": [
+        "northline",
+        "leather",
+        "goods",
+        "people",
+        "who",
+        "buy",
+        "small-batch",
+        "bags",
+        "and",
+        "straps",
+        "care",
+        "about",
+        "hide",
+        "grade",
+        "configure",
+        "bag",
+        "request",
+        "make-slot",
+        "---",
+        "title",
+        "evidence",
+        "status",
+        "proof-fixture",
+        "generated"
+      ]
+    },
+    "dials": {
+      "visualDensity": 6,
+      "motionIntensity": 2,
+      "aestheticBoldness": 6,
+      "status": {
+        "visualDensity": "explicit",
+        "motionIntensity": "explicit",
+        "aestheticBoldness": "explicit"
+      }
+    },
+    "signals": {
+      "subject": "Northline Leather Goods",
+      "audience": "people who buy small-batch bags and straps and care about hide grade.",
+      "primaryAction": "configure a bag and request a make-slot.",
+      "antiRefs": [
+        "purple SaaS gradient, stock handshake photos, fake 4.9★ rows",
+        "purple SaaS gradient, stock handshake photos, fake 4.9★ rows."
+      ],
+      "brandPalette": [
+        "ink brown",
+        "cream",
+        "brass accent"
+      ],
+      "materials": [
+        "bridle leather",
+        "solid brass",
+        "vegetable tan"
+      ],
+      "products": [
+        "Field Tote",
+        "Belt No. 2",
+        "Shoulder Strap"
+      ],
+      "hasBrand": true,
+      "hasAssetPlan": true,
+      "hasManifest": true,
+      "imageless": false,
+      "hasProductPlates": true,
+      "hasDiagrams": false,
+      "operational": false,
+      "commerce": true,
+      "editorial": false,
+      "constraints": [
+        "Source: existing proof brief evidence/brand/asset plan only. Unknowns stay unknown.",
+        "- Do not invent reviews, celebrity clients, or free worldwide shipping.",
+        "- Anti-references: purple SaaS gradient, stock handshake photos, fake 4.9★ rows.",
+        "- No testimonials on file (brand).",
+        "- Deliberately no lifestyle models (asset plan).",
+        "- Load-bearing assets: product plates for Field Tote and Belt No. 2; stitch macro is needed/not declared as have.",
+        "- Platform: mobile-first web (brief).",
+        "- Price band and make-slot lead time only as stated in evidence."
+      ],
+      "vocabulary": [
+        "northline",
+        "leather",
+        "goods",
+        "people",
+        "who",
+        "buy",
+        "small-batch",
+        "bags",
+        "and",
+        "straps",
+        "care",
+        "about",
+        "hide",
+        "grade",
+        "configure",
+        "bag",
+        "request",
+        "make-slot",
+        "---",
+        "title",
+        "evidence",
+        "status",
+        "proof-fixture",
+        "generated"
+      ]
+    }
+  }
+}

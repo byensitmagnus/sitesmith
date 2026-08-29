@@ -1,0 +1,42 @@
+{
+  "designThesis": "Limited Møn letterpress editions listed as a ferry-terminal departure board — not masonry portfolio, not immersive agency scroll. Harbour-ink board, chalk white page, one coral registration lamp on the active row; split-flap cascade as state language; pointer selects the active departure; enquire is the destination column.",
+  "subjectGrounding": "Atelier Møn Printworks: coastal letterpress (posters, map editions, shop bags for island shops). Audience: curators and small brands commissioning limited runs. Proof: Harbour Night, Chalk Path, Ferry Board; paper stock names, edition sizes, Heidelberg platen only. Brand: chalk white, harbour ink, coral registration mark. Voice: short, concrete, island-local. Forbidden: invented awards, false museum placements. Anti: generic creative-agency blob gradients, stock loft photos.",
+  "composition": "First viewport: thin top rail (name + Editions + Enquire); hero = dark ferry departure board ~70–80% width with three edition rows in fixed columns (name, paper, size, press, enquire); focused row shows coral registration mark; press-sheet evidence plate beside/under board for focused edition; island one-liner under board. Staging: first-viewport-pointer-protagonist (select active row). Desktop-tolerant; board remains instrument on narrow viewports with stacked columns.",
+  "informationHierarchy": "1) Board rows = named editions (view). 2) Columns + expanded caption = paper/edition/press facts (read). 3) Destination column + rail = Enquire (act). No awards, no secondary chrome beyond thin rail. Cognitive cap: ≤4 fact fields + action per row.",
+  "typography": "Board destinations: condensed grotesque caps in fixed cells (instrument language). Island captions/body: quiet humanist or neutral grotesque, sentence case, 45–75ch. Avoid cream+serif display defaults and Inter-as-display. Hierarchy by role (board vs caption), not size alone.",
+  "colourAndMaterialModel": "Restrained with one committed instrument field: chalk white page ground; harbour-ink matte board face and primary type; coral only as registration/active-row lamp (and optional focus hairline). Nordic daylight page scene, not default dark-mode product chrome.",
+  "imageryAndAssetStrategy": "Load-bearing: photographs of three editions on press sheets — harbour-night.webp (have), chalk-path.webp (have), ferry-board.webp (needed; labeled placeholder, not loft stock). Optional registration-mark diagram. No stock loft; no gradients as image substitutes.",
+  "interactionConcept": "Signature: row cascade/flip (split-flap grammar absorbed from challenger) reveals paper/size/press for the focused edition; coral mark seats on active row; pointer/keyboard selects row; Enquire always visible in destination column. Motion intensity 3; prefers-reduced-motion → instant state swap. No scroll-jack, no parallax.",
+  "signatureElement": "Harbour departures board: three limited-edition rows on a harbour-ink flap panel with coral registration lamp on the active row and cell cascade on focus.",
+  "primaryRisk": "If edition facts or press-sheet photos lag, the board reads as generic transit UI and product clarity dies. Mitigation: never ship a row without real edition name + at least one allowed fact; photo gaps labeled, not faked.",
+  "implementationGuidance": "Semantic table/list with column headers; CSS board panel + condensed type + [aria-selected] coral marker; short cascade animation with reduced-motion fallback; wire two have-assets and Ferry Board placeholder; copy short/island-local using only allowed facts; primary Enquire in first viewport and destination column; URL-addressable active row; no blob gradients, loft stock, or award lines; contact channel unknown until provided.",
+  "unknowns": "Exact paper stock names and edition sizes (not invented); contact channel (form/email/phone); pricing, lead times, clients; Ferry Board photograph; specific licensed typeface files beyond roles.",
+  "sourcePointers": {
+    "arm": "impeccable",
+    "commit": "6b342244e915d64b0d6e84d5eec448fd196ce6bb",
+    "repo": "pbakaus/impeccable",
+    "method": "new-work-concept-seed-challengers-critique",
+    "seedKey": "h2h-atelier-2026-07-31",
+    "seedScope": "direction",
+    "seedMode": "persuade",
+    "seedSource": "api",
+    "poolRevision": "94ff10ff20de",
+    "assignedIndex": 6,
+    "assignedGrounded": "ferry-departure-board",
+    "firstSurfaceComposition": "first-viewport-pointer-protagonist",
+    "absorbedChallenger": "signals-instruments-split-flap-concourse",
+    "alternateChallenger": "vernacular-ephemera-socialist-kiosk-print",
+    "challengerIds": [
+      "medium-native-crt-arcade-pixel-glow",
+      "signals-instruments-split-flap-concourse",
+      "pop-culture-shelf-skate-deck-wall",
+      "vernacular-ephemera-socialist-kiosk-print",
+      "games-toys-physics-play-brick-build-instructions",
+      "dream-surreal-impossible-worlds-cloud-quarry"
+    ],
+    "winningChannel": "grounded-assigned",
+    "contextPackHash": "04b3fd24b85d8d459178d11c4eb4c08d9e1339c76326f264a9c8eba8fda1d216",
+    "nativeFile": "NATIVE.md",
+    "phase": "screening-v2"
+  }
+}

@@ -1,0 +1,1 @@
+# Mini-1 LLM/host blind criteria (1–5)\n\n- briefFit\n- subjectSpecificity\n- originality\n- composition\n- hierarchy\n- typography\n- materiality\n- assetStrategy\n- interaction\n- signature\n- antiCliche\n- implementability\n\nQualitative: wouldBuild, mostGeneric, bestGrounded, strongestDirection (candidate id P|Q).\n

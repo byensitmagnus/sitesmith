@@ -1,0 +1,94 @@
+{
+  "evaluator": "A",
+  "briefId": "03-passage-console",
+  "scores": {
+    "P": {
+      "briefFit": 2,
+      "subjectSpecificity": 2,
+      "originality": 1,
+      "composition": 3,
+      "hierarchy": 1,
+      "typography": 3,
+      "materiality": 3,
+      "assetStrategy": 4,
+      "interaction": 3,
+      "signature": 1,
+      "antiCliche": 3,
+      "implementability": 2,
+      "total": 28
+    },
+    "Q": {
+      "briefFit": 5,
+      "subjectSpecificity": 5,
+      "originality": 4,
+      "composition": 5,
+      "hierarchy": 5,
+      "typography": 5,
+      "materiality": 5,
+      "assetStrategy": 5,
+      "interaction": 5,
+      "signature": 5,
+      "antiCliche": 5,
+      "implementability": 5,
+      "total": 59
+    },
+    "R": {
+      "briefFit": 5,
+      "subjectSpecificity": 5,
+      "originality": 3,
+      "composition": 5,
+      "hierarchy": 5,
+      "typography": 4,
+      "materiality": 5,
+      "assetStrategy": 5,
+      "interaction": 5,
+      "signature": 4,
+      "antiCliche": 5,
+      "implementability": 5,
+      "total": 56
+    },
+    "S": {
+      "briefFit": 1,
+      "subjectSpecificity": 2,
+      "originality": 1,
+      "composition": 1,
+      "hierarchy": 2,
+      "typography": 2,
+      "materiality": 2,
+      "assetStrategy": 4,
+      "interaction": 2,
+      "signature": 1,
+      "antiCliche": 2,
+      "implementability": 2,
+      "total": 22
+    },
+    "T": {
+      "briefFit": 5,
+      "subjectSpecificity": 5,
+      "originality": 5,
+      "composition": 5,
+      "hierarchy": 5,
+      "typography": 4,
+      "materiality": 4,
+      "assetStrategy": 5,
+      "interaction": 5,
+      "signature": 5,
+      "antiCliche": 5,
+      "implementability": 4,
+      "total": 57
+    }
+  },
+  "qualitative": {
+    "wouldBuild": "Q",
+    "mostGeneric": "S",
+    "bestGrounded": "Q",
+    "strongestDirection": "T"
+  },
+  "comments": {
+    "P": "Wrong-domain paste: thesis is “make-slot desk / boutique shelf”; hierarchy still talks grade/size and secondary SKUs/testimonials. Signature is “Make-slot control”. Full-width interface + imageless + keyboard-first are the only salvageable bits. Pack nouns bolted onto a leather ecommerce skeleton.",
+    "Q": "Commit desk done right: fixed passage form strip + append-only mono tape; direction as two-state lock is the only structural drama; amber fault-only; Ctrl+Enter; empty/validation/success/offline. Hex tokens, density-8 type scale, honest unknowns. Best grounded and highest would-build for a harbour logging desk.",
+    "R": "Two-column compose/log cockpit with always-on status strip and amber rationed to warnings. Density-8 / motion-1 / imageless all held; form→save→row hierarchy clean. Solid operational UI; originality lower because split form/log is the expected instrument pattern. Signature is system-channel strong, less subject-unique than direction lock or chalk board.",
+    "S": "Product Demo + Features + Swiss Minimalism is marketing chrome for a functional logging job. Rubik/Nunito and blue/orange system palette fight shell/panel/amber. Hierarchy is recognition→facts not open form→save→row. Signature slug. Most generic retrieval shell.",
+    "T": "Movements Board: permanent chalk-entry head strip + dense ruled body + Ctrl+Enter stamp; IN/OUT marks as harbour vernacular. Strongest directional frame without KPI dashboard. Slightly thinner token/type metrics than Q, but signature and composition are more characterful while still density-8 / motion-1 / imageless."
+  }
+}

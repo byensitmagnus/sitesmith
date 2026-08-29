@@ -1,0 +1,36 @@
+{
+  "createdAt": "2026-07-31T21:10:51.498Z",
+  "comparison": "mini-1-leather",
+  "briefId": "01-leather-goods",
+  "keyMap": {
+    "M": "sitesmith-rules",
+    "N": "frontend-design-frozen-v2"
+  },
+  "order": [
+    "sitesmith-rules",
+    "frontend-design-frozen-v2"
+  ],
+  "packetShas": {
+    "M": "6dc820ca02376ba6008f0a9a2bff3659902f1731fb551810f19643c87cf36ba3",
+    "N": "574f84480159178d41f7596223c93adff9917cce63a4c2a7061b9a9c2aa5063e"
+  },
+  "sources": {
+    "M": "mini-proof/01-leather-goods-rules/DIRECTION-PACKET.json",
+    "N": "mini-proof/01-leather-goods-frontend-design-frozen-v2/DIRECTION-PACKET.json"
+  },
+  "criteria": [
+    "briefFit",
+    "subjectSpecificity",
+    "originality",
+    "composition",
+    "hierarchy",
+    "typography",
+    "materiality",
+    "assetStrategy",
+    "interaction",
+    "signature",
+    "antiCliche",
+    "implementability"
+  ],
+  "llmCreative": "blocked — see mini-proof/LLM-BLOCKED.md"
+}

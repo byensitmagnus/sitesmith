@@ -1,0 +1,24 @@
+{
+  "ok": true,
+  "stage": "handoff-ready",
+  "creative": {
+    "mode": "llm",
+    "llmAttempted": true,
+    "llmSucceeded": true,
+    "model": "host-session-llm-inline",
+    "usage": null,
+    "guard": {
+      "ok": true,
+      "problems": []
+    }
+  },
+  "proofMeta": {
+    "engineCommit": null,
+    "inputHash": "7de0df86e91cbf6d572d6e37ba436542468c2bbc006b61b1887906828af65e0b",
+    "policyVersion": "direction-engine-v3-orchestrator-1.1.0",
+    "randomSeed": "host-llm-inline-1785533193671",
+    "numericSeed": 2297068108,
+    "creativePass": "llm",
+    "creativeModel": "host-session-llm-inline"
+  }
+}

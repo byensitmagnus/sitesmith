@@ -1,0 +1,19 @@
+{
+  "designThesis": "Single-screen harbour passage desk: near-black shell, fog-grey work panels, compose-form left and log rows right; density-8 cockpit with motion-1 static interaction; signal amber reserved strictly for warnings (status strip), greyscale for all normal work — operational product UI, not SaaS marketing.",
+  "subjectGrounding": "Audience: harbour masters. Job: log vessel name, inbound/outbound direction, timestamp, berth note. Primary action: save passage (Ctrl+Enter). Platform: desktop web app. Allowed states only: empty log, validation error, success row, offline banner. Forbidden: throughput KPIs, customer logos, consumer fintech gradients, playful illustration. Imagery: deliberately imageless.",
+  "composition": "Desktop app chrome without marketing nav. Two-column work surface (~40–45% form / ~55–60% log) on near-black shell with fog-grey slabs and 1px dividers—no floating card stack. Top status strip always present. Form: vessel*, direction*, time*, optional berth note, Save with Ctrl+Enter secondary label. Log: continuous rows as memory of commits. Cap content width on ultra-wide; densify vertically.",
+  "informationHierarchy": "1) Compose required fields 2) Commit Save/Ctrl+Enter 3) Confirm via new success row in log 4) Correct via inline field errors 5) Degrade via offline banner on status strip. Empty log points operator to form with short operational copy only. No KPI tiles or secondary journeys.",
+  "typography": "Compact UI sans for labels/chrome (Geist or IBM Plex Sans—not Inter-as-identity). font-mono mandatory for timestamps and numeric/code-like data at density 8. Toolbar-scale app title; no display hero type; no serif; short operational labels only.",
+  "colourAndMaterialModel": "Near-black shell + fog grey panels; single cool greyscale lock. Signal amber for warnings only (offline/warn patterns)—never amber primary buttons. Flat industrial material: 1px borders, minimal/no tinted shadows, no glass, no gradients. One small corner-radius scale (0–4px) everywhere.",
+  "imageryAndAssetStrategy": "Deliberately imageless per asset plan/manifest. UI chrome is the content. Empty/error states use type and structure only—no harbour stock, logos, or illustration chrome.",
+  "interactionConcept": "Motion intensity 1: no auto animations or load choreography; hover/focus/active only; optional 1px press feedback. Visible focus rings for keyboard desk work. Label above input, error below, never placeholder-as-label. One-screen journey; success is the static row emphasis (weight/border), not animated toast theatre.",
+  "signatureElement": "Always-on status strip as the sole high-visibility system channel, with amber rationed so colour means pay-attention and greyscale means normal logging work.",
+  "primaryRisk": "Sliding into dark SaaS dashboard clichés (cards, gradients, fake metrics) or burning amber as CTA colour so warnings lose meaning; secondarily, under-density that makes the form feel like a marketing contact form.",
+  "implementationGuidance": "Token shell/panel/ink/muted/line/warn-amber (+ danger only if needed, amber stays warn-only). CSS grid two-col desktop; density-8 tight gaps and row rules; mono times; first-class EmptyLog, FieldError, SuccessRow, OfflineBanner; Save + Ctrl+Enter only shortcut claimed; review-fail on mesh gradients or illustration chrome; content limited to pack field facts.",
+  "unknowns": "Berth taxonomy, vessel registry integration, multi-user/auth, harbour map, analytics, any brand beyond shell/panel/amber, light-mode dual theme, shipping/throughput claims—all stay unknown.",
+  "sourcePointers": {
+    "arm": "taste-skill",
+    "commit": "e988add20dab0fa97d7a76781c48961c8184288e",
+    "method": "taste Design Read + dials"
+  }
+}

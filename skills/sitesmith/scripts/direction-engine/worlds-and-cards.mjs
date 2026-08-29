@@ -2,6 +2,7 @@
 
 import { createHash } from 'node:crypto';
 import { grammarTreatment } from '../direction-record.mjs';
+import { enrichCards } from './creative-layer.mjs';
 
 /** Seed templates only — never final directions without grounding. */
 export const WORLD_LIBRARY = [
@@ -278,13 +279,20 @@ export function applyGroupSemantics(template, groups, input) {
   if (!groups.impeccable) {
     t.depth = 'flat — fewer layered craft decisions without seed/critique loop';
   }
-  // Asset availability reshapes imagery
+  // Asset availability reshapes imagery (must not invent plates)
   if (s.imageless) {
     t.imagery = 'deliberately imageless — chrome and type carry the first screen';
-  } else if (s.hasProductPlates && /object-led|product plate/i.test(t.imagery)) {
-    t.imagery = `${t.imagery} using declared product plates from asset plan`;
-  } else if (!s.hasProductPlates && /object-led|product plate|sample plates/i.test(t.imagery)) {
-    t.imagery = 'diagram-led evidence slots until plates exist';
+  } else if (s.hasProductPlates) {
+    const products = (s.products ?? []).slice(0, 3).join(', ');
+    t.imagery = products
+      ? `object-led product plates only (${products}); no lifestyle models or stock people`
+      : 'object-led product plates from asset plan/manifest (have); no lifestyle models';
+  } else if (!s.hasProductPlates && /object-led|product plate|sample plates|photography-led/i.test(t.imagery)) {
+    t.imagery = 'diagram-led or edition-sheet slots until declared plates exist; no invented photography';
+  }
+  // Brand palette grounds colour when present
+  if ((s.brandPalette ?? []).length) {
+    t.colour = `${s.brandPalette.slice(0, 4).join(', ')} — brand evidence only; single reserved accent`;
   }
   // Constraints
   for (const c of s.constraints ?? []) {
@@ -325,19 +333,22 @@ export function generateDirectionCards(input, route, policy) {
 
   const candidates = worlds.map((world, index) => {
     const t = applyGroupSemantics(world.template, groups, input);
-    const subject = input.signals?.subject ?? input.subjectHints?.subject ?? 'subject';
-    const vocab = (input.signals?.vocabulary ?? []).slice(0, 6).join(', ');
-    const thesis = groups.frontend
-      ? `${subject}: ${input.signals?.primaryAction ?? 'primary action'} via ${t.composition} — ${vocab || 'evidence-grounded'}`
-      : `${subject} layout sketch: ${t.composition}`;
+    const s = input.signals ?? {};
+    const subject = s.subject ?? input.subjectHints?.subject ?? 'subject';
+    const action = s.primaryAction ?? 'primary action';
+    const materials = (s.materials ?? []).slice(0, 3).join(', ');
+    const products = (s.products ?? []).slice(0, 3).join(', ');
+    const anti = (s.antiRefs ?? []).slice(0, 2).join('; ');
+    const thesis = buildThesis({ subject, action, composition: t.composition, materials, products, mode: input.mode, groups });
+    const signatureElement = buildSignature({ subject, composition: t.composition, mode: input.mode, index });
     return {
       internalId: `W${index + 1}`,
       worldId: world.worldId,
       seed: world.seed,
       thesis,
       evidence: summariseEvidence(input.evidence, route),
-      audience: input.signals?.audience ?? 'unknown',
-      designIntent: `${input.mode} · ${input.signals?.primaryAction ?? 'action'} · ${subject}`,
+      audience: s.audience ?? 'unknown',
+      designIntent: `${input.mode}: ${action} for ${subject}`,
       composition: t.composition,
       type: t.type,
       colour: t.colour,
@@ -347,24 +358,28 @@ export function generateDirectionCards(input, route, policy) {
       labels: t.labels,
       figures: t.figures,
       depth: t.depth,
-      layoutPrinciple: t.composition,
+      layoutPrinciple: buildHierarchy({ subject, action, products, mode: input.mode, composition: t.composition }),
       typographicPrinciple: t.type,
       assetStrategy: t.imagery,
       motionInteraction: t.interaction,
-      // Opaque to seed catalog IDs — blind packet must not reintroduce worldId.
-      signatureElement: `${String(subject).split(/\s+/)[0]?.toLowerCase() || 'subject'}-sig-${index + 1}`,
-      primaryRisk: riskFor(t, input.mode, groups),
+      // Opaque to seed catalog IDs — never embed worldId.
+      signatureElement,
+      primaryRisk: riskFor(t, input.mode, groups, anti),
       differenceNote: '',
-      capabilityProvenance: route.selected.map((s) => s.capabilityId),
+      capabilityProvenance: route.selected.map((row) => row.capabilityId),
       density: t.density,
       groupsApplied: groups,
       grounding: {
         subject,
-        primaryAction: input.signals?.primaryAction,
-        antiRefs: input.signals?.antiRefs ?? [],
+        primaryAction: action,
+        audience: s.audience,
+        materials: s.materials ?? [],
+        products: s.products ?? [],
+        brandPalette: s.brandPalette ?? [],
+        antiRefs: s.antiRefs ?? [],
         assets: {
-          imageless: Boolean(input.signals?.imageless),
-          plates: Boolean(input.signals?.hasProductPlates),
+          imageless: Boolean(s.imageless),
+          plates: Boolean(s.hasProductPlates),
         },
       },
       semanticGroupEffects: {
@@ -408,9 +423,13 @@ export function generateDirectionCards(input, route, policy) {
     };
   }
 
-  for (const card of selected) {
+  // Evidence-bound creative layer (rules). Skip when creativePass === 'off'.
+  const passMode = policy.creativePass ?? 'rules';
+  const enriched = passMode === 'off' ? selected : enrichCards(selected, input);
+
+  for (const card of enriched) {
     // Use internal slot ids only — never peer worldIds (would leak in blind packets).
-    const others = selected.filter((c) => c.internalId !== card.internalId).map((c) => c.internalId);
+    const others = enriched.filter((c) => c.internalId !== card.internalId).map((c) => c.internalId);
     card.differenceNote = `Differs from ${others.join(', ')} on composition/type/imagery/grammar after brief-fit filter.`;
   }
 
@@ -419,9 +438,10 @@ export function generateDirectionCards(input, route, policy) {
     entropy,
     numericSeed,
     worlds: worlds.map((w) => w.worldId),
-    cards: selected,
-    pairwise: pairwiseReport(selected, policy),
+    cards: enriched,
+    pairwise: pairwiseReport(enriched, policy),
     eligibleSeedCount: eligible.length,
+    creativeLayer: '1.0.0',
   };
 }
 
@@ -464,17 +484,60 @@ function pairwiseReport(cards, policy) {
 }
 
 function summariseEvidence(evidence, route) {
-  const lines = String(evidence).split(/\r?\n/).map((l) => l.trim()).filter(Boolean);
-  const base = lines.slice(0, 6).join(' | ').slice(0, 400) || 'evidence pack present but empty summary';
+  const lines = String(evidence)
+    .split(/\r?\n/)
+    .map((l) => l.trim())
+    .filter(Boolean)
+    .filter((l) => !/^---$/.test(l))
+    .filter((l) => !/^(title|status|ai_generated)\s*:/i.test(l))
+    .filter((l) => !/^#\s/.test(l));
+  const base = lines.slice(0, 8).join(' · ').slice(0, 480) || 'evidence pack present but empty summary';
   if (route.domainRetrieval?.claimAllowed) {
-    return `${base} | domain-knowledge: consulted (${route.domainRetrieval.hitCount} hits)`;
+    return `${base} · domain-knowledge: consulted (${route.domainRetrieval.hitCount} hits)`;
   }
-  return `${base} | domain-knowledge: not consulted`;
+  return `${base} · domain-knowledge: not consulted`;
 }
 
-function riskFor(template, mode, groups) {
+function buildThesis({ subject, action, composition, materials, products, mode, groups }) {
+  const mat = materials ? ` Materials: ${materials}.` : '';
+  const prod = products ? ` Focus objects: ${products}.` : '';
+  if (groups.frontend) {
+    return `${subject} is not a generic ${mode} template: first fold must make “${action}” inevitable via ${composition}.${mat}${prod}`;
+  }
+  return `${subject}: ${action} — composition ${composition}.${mat}${prod}`;
+}
+
+function buildSignature({ subject, composition, mode, index }) {
+  const token = String(subject).split(/\s+/).filter(Boolean).slice(0, 2).join('-').toLowerCase()
+    .replace(/[^a-zæøå0-9-]/gi, '') || 'subject';
+  // Human-readable signature name from composition, still opaque to world catalog ids
+  const compKey = String(composition).split(/[,:]/)[0].trim().toLowerCase().replace(/[^a-zæøå0-9]+/gi, '-').slice(0, 28);
+  if (mode === 'product-ui') return `${token}-work-canvas`;
+  if (mode === 'ecommerce') return `${token}-make-control`;
+  if (mode === 'marketing' || mode === 'portfolio') return `${token}-edition-mark`;
+  return `${token}-${compKey || 'signature'}-${index + 1}`;
+}
+
+function buildHierarchy({ subject, action, products, mode, composition }) {
+  const prod = products || 'primary subject object';
+  if (mode === 'ecommerce') {
+    return `1) ${prod} recognition 2) material/truth facts 3) ${action} 4) secondary SKUs — no fake social proof`;
+  }
+  if (mode === 'product-ui') {
+    return `1) work object for ${subject} 2) required fields/states 3) ${action} 4) validation/offline — no marketing chrome`;
+  }
+  if (mode === 'marketing' || mode === 'portfolio') {
+    return `1) named work/edition 2) process/material proof 3) ${action} 4) secondary pieces — no award theater`;
+  }
+  return `1) subject 2) ${action} 3) evidence 4) secondary — composition: ${composition}`;
+}
+
+function riskFor(template, mode, groups, anti = '') {
   if (!groups.frontend) return 'Weak subject signature without frontend thesis pressure.';
-  if (mode === 'product-ui' && /bleed|poster/i.test(template.id)) return 'Expressive marketing seeds can bury the work journey.';
+  if (mode === 'product-ui' && /bleed|poster/i.test(template.id)) {
+    return 'Expressive marketing seeds can bury the work journey.';
+  }
+  if (anti) return `Must not drift into banned tropes (${anti.slice(0, 80)}); signature may overfit if evidence is thin.`;
   return 'Signature may overfit if evidence is thin.';
 }
 

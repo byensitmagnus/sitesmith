@@ -1,0 +1,115 @@
+{
+  "briefId": "03-passage-console",
+  "instructions": {
+    "role": "blind design-direction evaluator",
+    "scoreScale": "1-5 integers only (1=poor, 5=excellent)",
+    "criteria": [
+      "briefFit",
+      "subjectSpecificity",
+      "originality",
+      "composition",
+      "hierarchy",
+      "typography",
+      "materiality",
+      "assetStrategy",
+      "interaction",
+      "signature",
+      "antiCliche",
+      "implementability"
+    ],
+    "qualitative": [
+      "wouldBuild",
+      "mostGeneric",
+      "bestGrounded",
+      "strongestDirection"
+    ],
+    "rules": [
+      "Do not guess system identity",
+      "Score only from the blinded packet + brief pack",
+      "Do not invent facts not in brief/evidence",
+      "unknown fields are a mild implementability risk, not automatic fail"
+    ]
+  },
+  "briefPack": {
+    "brief": "---\ntitle: \"Subject: Passage Log Console\"\nstatus: proof-fixture\nai_generated: \"(C)\"\n---\n\n# Subject: Passage Log Console\n\nMode intent: functional product UI with one central work journey.\n\nAudience: harbour masters logging vessel passages.\nPrimary action: log a passage (vessel, direction, time, notes).\nPlatform: desktop web app.\n\nVisual density: 8\nMotion intensity: 1\nAesthetic boldness: 3\n",
+    "evidence": "---\ntitle: \"Evidence — Passage Log Console\"\nstatus: proof-fixture\nai_generated: \"(C)\"\n---\n\n# Evidence — Passage Log Console\n\nSubject: Passage Log Console\nJob: log vessel name, inbound/outbound, timestamp, berth note\nStates: empty log, validation error, success row, offline banner\nFacts allowed: field names, requiredness, keyboard shortcut Ctrl+Enter\nFacts forbidden: fake throughput KPIs, invented customer logos\n\nAnti-references: consumer fintech gradients, playful illustration chrome\nPrimary journey: open log form → fill required fields → save → see row\n",
+    "constraints": "---\ntitle: Constraints — Passage Log Console\nstatus: frozen-benchmark-input\nai_generated: \"(C)\"\n---\n\n# Constraints\n\nSource: existing proof brief evidence/brand/asset plan only. Unknowns stay unknown.\n\n- Do not invent throughput KPIs or customer logos.\n- Anti-references: consumer fintech gradients, playful illustration chrome.\n- Imagery: deliberately imageless (asset plan/manifest).\n- Platform: desktop web app (brief).\n- States that exist: empty log, validation error, success row, offline banner.\n- Keyboard shortcut fact allowed only as stated: Ctrl+Enter.\n"
+  },
+  "candidates": [
+    {
+      "id": "P",
+      "designThesis": "Passage Log Console is a make-slot desk, not a boutique shelf: open on the primary product with trade facts on the plate edge; primary argument is material truth + “log a passage (vessel, direction, time, notes).” — never lifestyle hero; ban consumer fintech gradients, playful illustration chrome.",
+      "subjectGrounding": "Subject: Passage Log Console · Audience: harbour masters logging vessel passages. · Action: log a passage (vessel, direction, time, notes). · Palette: near-black shell, fog grey panels, amber for warnings only · Anti-refs: consumer fintech gradients, playful illustration chrome; consumer fintech gradients, playful illustration chrome. · Evidence: Subject: Passage Log Console · Job: log vessel name, inbound/outbound, timestamp, berth note · States: empty log, validation error, success row, offline banner · Facts allowed: field names, requiredness, keyboard shortcut Ctrl+Enter · Facts forbidden: fake throughput KPIs, invent",
+      "composition": "real interface full width as first screen",
+      "informationHierarchy": "1) primary subject object plate recognition 2) evidence facts 3) choice control (grade/size if evidenced) 4) log a passage (vessel, direction, time, notes). 5) secondary SKUs — no fake ★/testimonials",
+      "typography": "Display: UI sans (Inter / system-ui) medium for section titles. Body: UI sans regular for labels and helper text. Utility: IBM Plex Mono for vessel IDs, timestamps, shortcuts. Seed structure: UI sans pair, tight tracking on tools.",
+      "colourAndMaterialModel": "fog grey panels; type/rules in near-black shell; accent only on primary CTA/hardware (amber for warnings only). Seed note: near-black shell, fog grey panels, amber for warnings only — brand evidence only; single reserved accent",
+      "imageryAndAssetStrategy": "Deliberately imageless — chrome, type, and states carry the first screen; no stock illustration.",
+      "interactionConcept": "keyboard-first primary journey",
+      "signatureElement": "Make-slot control on Passage Log Console — primary CTA is the product, not a hero slogan",
+      "primaryRisk": "Must not drift into banned tropes (consumer fintech gradients, playful illustration chrome; consumer fintech gradie); signature may overfit if evidence is thin.",
+      "implementationGuidance": "---\ntitle: \"DIRECTION — 03-passage-console\"\nstatus: direction-engine-slice\nai_generated: \"(C)\"\n---\n\n# DIRECTION — 03-passage-console\n\n## Design thesis\nPassage Log Console is a make-slot desk, not a boutique shelf: open on the primary product with trade facts on the plate edge; primary argument is material truth + “log a passage (vessel, direction, time, notes).” — never lifestyle hero; ban consumer fintech gradients, playful illustration chrome.\n\n## Subject grounding\nSubject: Passage Log Console\nAudience: harbour masters logging vessel passages.\nPrimary action: log a passage (vessel, direction, time, notes).\nBrand palette cues: near-black shell, fog grey panels, amber for warnings only\nAnti-references: consumer fintech gradients, playful illustration chrome; consumer fintech gradients, playful illustration chrome.\n\n## Hierarchy\n1) primary subject object plate recognition 2) evidence facts 3) choice control (grade/size if evidenced) 4) log a passage (vessel, direction, time, notes). 5) secondary SKUs — no fake ★/testimonials\n\n## Signature\nMake-slot control on Passage Log Console — primary CTA is the product, not a hero slogan\n\n## Primary risk\nMust not drift into banned tropes (consumer fintech gradients, playful illustration chrome; consumer fintech gradie); signature may overfit if evidence is thin.\n\n## Axis record\n\n- direction-version: 2.3\n- composition: real interface full width as first screen\n- type: Display: UI sans (Inter / system-ui) medium for section titles. Body: UI sans regular for labels and helper text. Utility: IBM Plex Mono for vessel IDs, timestamps, shortcuts. Seed structure: UI sans pair, tight tracking on tools.\n- colour: fog grey panels; type/rules in near-black shell; accent only on primary CTA/hardware (amber for warnings only). Seed note: near-black shell, fog grey panels, amber for warnings only — brand evidence only; single reserved accent\n- imagery: Deliberately imageless — chrome, type, and states carry the first screen; no stock illustration.\n- rhythm: asymmetric tool rail + main canvas\n\n- surface: framed — panels bound the work surface\n- labels: symbol-led — tools speak as icons with text fallback\n- figures: absent — no decorative metrics\n- depth: inset — panels recede into the shell\n\n- visual-density: 8\n- motion-intensity: 1\n- aesthetic-boldness: 3\n\n- signature-selector: [data-signature=\"Make-slot control on Passage Log Console — primary CTA is the product, not a hero slogan\"]\n- signature-min-share: 12\n\n## Implementation notes",
+      "unknowns": "none declared"
+    },
+    {
+      "id": "Q",
+      "designThesis": "Commit desk, not product dashboard: first screen is a dense full-width instrument — fixed passage commit strip (form + Log passage / Ctrl+Enter) above an append-only mono passage tape. Direction (inbound|outbound) is the only structural drama as a two-state lock; signal amber is reserved exclusively for offline and validation faults.",
+      "subjectGrounding": "Passage Log Console; harbour masters logging vessel passages; desktop web app; primary action log a passage (vessel name, inbound/outbound, timestamp, berth note); journey open form → fill required fields → save → see row; states empty log, validation error, success row, offline banner; allowed fact Ctrl+Enter; brand near-black shell, fog grey panels, signal amber warnings only, operational short labels; imageless; density 8, motion 1, aesthetic boldness 3; anti-refs consumer fintech gradients, playful illustration chrome; no throughput KPIs or customer logos.",
+      "composition": "Full-width desktop instrument: top status rail (title + offline banner slot); primary commit strip = log form (vessel, direction lock, time, berth note, Log passage + Ctrl+Enter); passage tape below = chronological mono rows. ASCII wireframe in NATIVE.md. Not hero/features/KPI dashboard.",
+      "informationHierarchy": "1) Commit strip (required fields + primary action) 2) Offline/validation signal layer (amber, fault-only) 3) Passage tape (empty invitation → success rows). No decorative metrics or logos.",
+      "typography": "Operate+Read: IBM Plex Sans for UI labels/controls; IBM Plex Mono for vessel names, timestamps, IN/OUT marks with tabular figures. Scale desktop density-8: label 12 / body 14 / row 13 mono / section 16 medium. No display/poster face. Fallbacks system-ui / ui-monospace.",
+      "colourAndMaterialModel": "shell #0B0C0E; panel #1A1D22; panel-edge #2A2F38; ink #E6E8EC; ink-muted #9AA3B2; signal-amber #E5A00D warnings only. Inset fog panels in near-black shell. Six tokens only — no purple/fintech gradients, no acid-green/vermilion decorative accent.",
+      "imageryAndAssetStrategy": "Deliberately imageless — UI chrome and type are the content; asset manifest none. No illustration, stock harbour photos, or logo lockups.",
+      "interactionConcept": "Primary journey open form → fill required fields → save via Log passage or Ctrl+Enter → success row in passage tape. Motion intensity 1: essentially static; focus/error outlines only; prefers-reduced-motion does nothing extra. Empty/validation/offline/success states as specified in pack.",
+      "signatureElement": "Direction as two-state lock (Inbound|Outbound) segmented control — the only bold control; ledger rows echo IN/OUT in mono.",
+      "primaryRisk": "Near-black shell is brand-required and overlaps a common AI default (dark + neon accent); if amber leaks into brand decoration or a third accent is added, the plan collapses into generic dark-tech UI.",
+      "implementationGuidance": "Implement from NATIVE.md compact plan exactly: six colour tokens only; Plex Sans+Mono roles; full-width commit strip + passage tape; direction-lock signature; amber only for offline banner and field errors; no KPIs/logos/illustration; density 8 / motion 1 / boldness 3; visible focus and Ctrl+Enter; quality floor focus/reduced-motion/no horizontal overflow.",
+      "unknowns": "Exact validation rules beyond requiredness; berth-note length limits; timestamp source (manual vs system clock); auth/session model; multi-user concurrency; persistence/sync when returning online; non-desktop breakpoints beyond quality floor; light theme not specified."
+    },
+    {
+      "id": "R",
+      "designThesis": "Single-screen harbour passage desk: near-black shell, fog-grey work panels, compose-form left and log rows right; density-8 cockpit with motion-1 static interaction and low variance (~3); signal amber reserved strictly for warnings on an always-on status strip - operational product UI, not SaaS marketing or fintech gradients.",
+      "subjectGrounding": "Audience: harbour masters. Job: log vessel name, inbound/outbound direction, timestamp, berth note. Primary action: save passage (Ctrl+Enter allowed per pack). Platform: desktop web app. States only: empty log, validation error, success row, offline banner. Forbidden: throughput KPIs, customer logos, consumer fintech gradients, playful illustration. Imagery: deliberately imageless. Brand: near-black shell, fog grey panels, signal amber for warnings only; voice operational short labels.",
+      "composition": "Desktop app chrome without marketing nav. Two-column work surface (~40-45% form / ~55-60% log) on near-black shell with fog-grey slabs and 1px dividers - no floating card stack. Top status strip always present. Form: vessel*, direction* (inbound/outbound), time*, optional berth note, Save with Ctrl+Enter secondary label. Log: continuous rows as commit memory. Cap content width on ultra-wide; densify vertically.",
+      "informationHierarchy": "1) Compose required fields 2) Commit Save/Ctrl+Enter 3) Confirm via new success row in log 4) Correct via inline field errors 5) Degrade via offline banner on status strip. Empty log points operator to form with short operational copy only. No KPI tiles or secondary journeys.",
+      "typography": "Compact UI sans for labels/chrome (Geist or IBM Plex Sans - not Inter-as-identity). font-mono mandatory for timestamps and numeric/code-like data at density 8. Toolbar-scale app title; no display hero type; no serif; short operational labels only.",
+      "colourAndMaterialModel": "Near-black shell + fog grey panels; single cool greyscale lock. Signal amber for warnings only (offline/warn patterns) - never amber primary buttons. Flat industrial material: 1px borders, minimal/no tinted shadows, no glass, no consumer fintech gradients. One small corner-radius scale (0-4px) everywhere.",
+      "imageryAndAssetStrategy": "Deliberately imageless per asset plan/manifest. UI chrome is the content. Empty/error states use type and structure only - no harbour stock, logos, or illustration chrome.",
+      "interactionConcept": "Motion intensity 1: no auto animations or load choreography; hover/focus/active only; optional 1px press feedback. Visible focus rings for keyboard desk work. Label above input, error below, never placeholder-as-label. One-screen journey; success is static row emphasis (weight/border), not animated toast theatre. Ctrl+Enter only as pack-stated save shortcut.",
+      "signatureElement": "Always-on status strip as the sole high-visibility system channel, with amber rationed so colour means pay-attention and greyscale means normal logging work.",
+      "primaryRisk": "Sliding into dark SaaS dashboard cliches (cards, gradients, fake metrics) or burning amber as CTA colour so warnings lose meaning; secondarily, under-density that makes the form feel like a marketing contact form.",
+      "implementationGuidance": "Token shell/panel/ink/muted/line/warn-amber (+ danger only if needed, amber stays warn-only). CSS grid two-col desktop; density-8 tight gaps and row rules; mono times; first-class EmptyLog, FieldError, SuccessRow, OfflineBanner; Save + Ctrl+Enter only shortcut claimed; review-fail on mesh gradients or illustration chrome; content limited to pack field facts (vessel, direction, time, berth note).",
+      "unknowns": "Berth taxonomy, vessel registry integration, multi-user/auth, harbour map, analytics, any brand beyond shell/panel/amber, light-mode dual theme, shipping/throughput claims - all stay unknown."
+    },
+    {
+      "id": "S",
+      "designThesis": "Passage Log Console: deliver “log a passage (vessel, direction, time, notes).” using [redacted] pattern “Product Demo + Features” and style “Minimalism & Swiss Style”, without becoming a generic template. Pack anti-refs: consumer fintech gradients, playful illustration chrome.",
+      "subjectGrounding": "Subject: Passage Log Console · Audience: harbour masters logging vessel passages. · Action: log a passage (vessel, direction, time, notes). · Anti-refs: consumer fintech gradients, playful illustration chrome",
+      "composition": "Product Demo + Features adapted to Passage Log Console first fold",
+      "informationHierarchy": "1) Passage Log Console recognition 2) truth facts (evidence) 3) log a passage (vessel, direction, time, notes). 4) secondary — no fake social proof",
+      "typography": "Rubik / Nunito Sans",
+      "colourAndMaterialModel": "Near-black shell, fog grey panels, signal amber for warnings only. (pack). [redacted] system proposal primary #2563EB / accent #F97316 — prefer pack brand if conflict.",
+      "imageryAndAssetStrategy": "Deliberately imageless per pack — UI chrome/type first; no stock lifestyle.",
+      "interactionConcept": "Subtle hover (200-250ms), smooth transitions, sharp shadows if any, clear type",
+      "signatureElement": "passage-log-minimalism-mark",
+      "primaryRisk": "Excessive decoration + Complex shadows + 3D effects. Also: [redacted] palette may fight pack brand — resolve toward pack brand evidence.",
+      "implementationGuidance": "Query: functional product UI Passage Log Console product-ui Apply [redacted] rows in [redacted]-RETRIEVAL.txt for pattern/type/effects. Bind all copy and assets to pack only: no product list; Deliberately imageless per pack — UI chrome/type first; no stock lifestyle. Do not invent testimonials, awards, or plates marked needed-only.",
+      "unknowns": "Exact type scale metrics beyond [redacted] font pair; motion timing beyond effect keywords."
+    },
+    {
+      "id": "T",
+      "designThesis": "Movements Board: harbour tide/movements chalkboard commits passages via permanent chalk-entry head strip + Ctrl+Enter stamp into dense ruled log; refuse KPI dashboard, maps, and fintech gradients.",
+      "subjectGrounding": "Passage Log Console; harbour masters logging vessel passages; desktop web app; vessel, inbound/outbound, timestamp, berth note; form->save->row; empty/validation/success/offline; Ctrl+Enter; near-black shell, fog grey panels, amber warnings only; imageless; density 8, motion 1, boldness 3; no KPIs/logos; anti fintech gradients and playful illustration chrome.",
+      "composition": "Full-width desktop board: thin status rail (title + offline banner); always-on chalk-entry head strip (vessel, IN/OUT, time, berth note, Save + Ctrl+Enter); majority-height dense chronological ruled body. Not hero/KPI dashboard.",
+      "informationHierarchy": "1) Chalk-entry head strip (required fields + Save) 2) Offline/validation amber signal 3) Ruled passage board body. No decorative metrics or logos.",
+      "typography": "Neutral UI workhorse sans for labels; tabular figures for times; short operational labels; compact density-8 scale; no display/poster face.",
+      "colourAndMaterialModel": "Restrained night-watch: near-black shell; fog-grey chalkboard panels; chalk-light ink; signal amber only for offline banner and validation errors. No purple/fintech gradients; no nixie-orange brand glow.",
+      "imageryAndAssetStrategy": "Deliberately imageless — UI chrome and type are the content; asset manifest none.",
+      "interactionConcept": "Land -> focus vessel -> fill required -> Save or Ctrl+Enter -> success row on board -> next entry. Motion intensity 1: state changes only. States: empty, validation, success row, offline banner.",
+      "signatureElement": "Chalk-entry head strip + Ctrl+Enter stamp — permanent rewriteable first line of the movements board; direction as short IN/OUT marks on strip and rows.",
+      "primaryRisk": "Density 8 without imagery collapses into generic dark admin CRUD if chalk-entry strip and amber-only fault discipline are not held; literal nixie orange glow or Ikeda pure-B/W strobe would violate brand and anti-references.",
+      "implementationGuidance": "Build Movements Board only from NATIVE.md: near-black shell, fog-grey board, amber warn-only, imageless; permanent entry strip + dense ruled body; states empty/validation/success/offline; Ctrl+Enter; short operational labels; density 8 / motion 1 / boldness 3. No KPIs, maps, logos, fintech gradients, or illustration chrome. Seed key h2h-passage-2026-07-31; assigned grounded #6 tide/movements chalkboard; poolRevision 94ff10ff20de; alternates A1 barcode-density log (Ikeda fuse), A2 fixed-place time bank without orange glow (Nixie fuse).",
+      "unknowns": "Timestamp defaulting (manual vs system clock); exact requiredness of berth note; validation rule detail beyond requiredness; multi-user concurrency; offline sync behaviour beyond banner; non-desktop breakpoints beyond quality floor."
+    }
+  ]
+}

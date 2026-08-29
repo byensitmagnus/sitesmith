@@ -1,0 +1,22 @@
+{
+  "runId": "screening-v3-03-passage-console-impeccable",
+  "briefId": "03-passage-console",
+  "arm": "impeccable",
+  "status": "completed",
+  "startedAt": "2026-07-31T20:15:00.000Z",
+  "finishedAt": "2026-07-31T20:22:00.000Z",
+  "modelCalls": 1,
+  "method": "new-work-concept-seed-challengers-critique",
+  "armCommit": "6b342244e915d64b0d6e84d5eec448fd196ce6bb",
+  "contextPackHash": "36545bf82b53595f63ed00c9135dd9170e0c320abd742747593db5a19ced1bc7",
+  "packetSha256": "HOST_RECOMPUTE_sha256_JSON_stringify_packet",
+  "phase": "screening-v3",
+  "isolation": "fresh-process-no-peer-outputs",
+  "model": "host-llm-same-class",
+  "seedKey": "h2h-passage-2026-07-31",
+  "seedSource": "api",
+  "poolRevision": "94ff10ff20de",
+  "assignedIndex": 6,
+  "assignedGroundedCandidate": "tide-movements-chalkboard",
+  "note": "copied-from-screening-v2-for-sitesmith-creative-layer-delta"
+}

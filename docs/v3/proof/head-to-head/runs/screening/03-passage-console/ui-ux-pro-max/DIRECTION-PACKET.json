@@ -1,0 +1,21 @@
+{
+  "designThesis": "UUPM design-system recommendation: Minimalism & Swiss Style                                                         │ with Product Demo + Features                                                          │ pattern for Subject: Passage Log Console",
+  "subjectGrounding": "Query from frozen pack only: functional product UI Subject: Passage Log Console product-ui",
+  "composition": "Product Demo + Features                                                          │",
+  "informationHierarchy": "Sections:                                                                           │\r\n│       1. 1. Hero, 2. Product video/mockup (center), 3. Feature breakdown per section, 4. Comparison (optional), 5. CTA│",
+  "typography": "│  Rubik / Nunito Sans                                                                    │",
+  "colourAndMaterialModel": "primary #2563EB; secondary #3B82F6; accent #F97316",
+  "imageryAndAssetStrategy": "unknown — design-system search path does not emit asset plan; obey pack ASSET-PLAN/CONSTRAINTS",
+  "interactionConcept": "│     Subtle hover (200-250ms), smooth transitions, sharp shadows if any, clear type      │",
+  "signatureElement": "Minimalism & Swiss Style                                                         │",
+  "primaryRisk": "│     Excessive decoration + Complex shadows + 3D effects                                 │",
+  "implementationGuidance": "Implement from UUPM-RETRIEVAL.txt rows and checklist; do not invent beyond retrieval.",
+  "unknowns": "Page-level composition beyond pattern; photography/asset strategy; brand-specific material finishes",
+  "sourcePointers": {
+    "arm": "ui-ux-pro-max",
+    "commit": "4857a2c5ef989794751a0f66b8545a4a49566286",
+    "query": "functional product UI Subject: Passage Log Console product-ui",
+    "retrievalFile": "UUPM-RETRIEVAL.txt",
+    "method": "uupm-search-py-design-system"
+  }
+}

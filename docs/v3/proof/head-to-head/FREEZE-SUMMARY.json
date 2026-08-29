@@ -1,0 +1,63 @@
+{
+  "frozenAt": "2026-07-31T18:30:00.000Z",
+  "proofSha": "b92cdabad98c4d23ff79b74d6881e6b7129325a4",
+  "briefs": {
+    "01-leather-goods": {
+      "contextPackHash": "6099df6a1e57a7bce9d70e72df964cdd05486bb9d636be32964c6df059f48a2f",
+      "inputHashes": {
+        "BRIEF.md": "2ebc1ff864f711aba8f086f9bffc00325bd8d4630ea337737a21f1844d0aa623",
+        "EVIDENCE.md": "b41209b00241554ac4f5c9e3ba1c565eced712b2e2cc4a971cb9067f82fb0fbf",
+        "BRAND.md": "d55356a9eaa31d4f3a4b458a8b6a11eeb3c3830298dfd84890adf4dd9b5e257c",
+        "ASSET-PLAN.md": "b608ffa052e3a4dd4cf6434f2e0bf1cd1f9b4b8612f66e3c3d0c651b5413fedd",
+        "ASSET-MANIFEST.md": "931cf7b4fa31cac139337a1cf40277ca00cd77114e9d8825707983085bcc4dd5",
+        "CONSTRAINTS.md": "e3f680b6ce21477002652aa0d5647213d22e905ad3dec1793dcd4a82d42888b4",
+        "RUN-CONTEXT.json": "1872ed085dc6de3a7c55ca065ef40972758a42aaef1f977584fbdd4851d0a679"
+      },
+      "mode": "ecommerce",
+      "modeLabel": "sensory e-commerce",
+      "path": "docs/v3/proof/head-to-head/briefs/01-leather-goods"
+    },
+    "02-atelier-printworks": {
+      "contextPackHash": "04b3fd24b85d8d459178d11c4eb4c08d9e1339c76326f264a9c8eba8fda1d216",
+      "inputHashes": {
+        "BRIEF.md": "addef356268b10ed1515455dd8de743951b33b92bcf9321839621b132f293053",
+        "EVIDENCE.md": "391438ceaeee63cadb75b8fddd326dd5da2a207a0889535fc40a02f65a047e5e",
+        "BRAND.md": "85bef2c14476d9e0410b90ebdcdc43384586916816bacb5bfbebb6963b985ac9",
+        "ASSET-PLAN.md": "c537084c9ac60f7cce5903c4f3b7eea208a495d30e977a7cb626b1ff274ade5c",
+        "ASSET-MANIFEST.md": "dea7a49874dec35ad2c3a2b1d93faa7dc1965764e8e60ba5326d1a73310fd06d",
+        "CONSTRAINTS.md": "606469dca73f9023a0c5cd7be3aa04f3897450351b3869673edcb51840cc5aa4",
+        "RUN-CONTEXT.json": "e78ada6af7632656659d99acf63e3d5e5fead360f6779689c4de733e56742bf6"
+      },
+      "mode": "marketing",
+      "modeLabel": "characterful marketing/portfolio",
+      "path": "docs/v3/proof/head-to-head/briefs/02-atelier-printworks"
+    },
+    "03-passage-console": {
+      "contextPackHash": "36545bf82b53595f63ed00c9135dd9170e0c320abd742747593db5a19ced1bc7",
+      "inputHashes": {
+        "BRIEF.md": "18a89c445f17b6977b5b9e65cbb38e3f33dbc7304eb35ca1f9a95948f69907ea",
+        "EVIDENCE.md": "b96143921fc32f8897f309f6a4ddec53a0b79952f93639bdc0ecaedd325d40ae",
+        "BRAND.md": "87649bab82ff8702827c80f946c5e83298976fb0bbac7d669104b9f560f8153f",
+        "ASSET-PLAN.md": "885441184c58a44adb15e434beb782f0f04f0ec257edeeaa1fa9087c9c5c576a",
+        "ASSET-MANIFEST.md": "73d048384d7d4976fafaaa2dcdd24b0f623b8b7a2a02fdf27fbd3120f4d92e92",
+        "CONSTRAINTS.md": "43d6c587efc614bccc873d9716620f59be292d5ab8e02979a661050f3c1ff520",
+        "RUN-CONTEXT.json": "f7f841887a3deb27020d2f8a3f5612936504c73dea8607327027ba4e671d3a34"
+      },
+      "mode": "product-ui",
+      "modeLabel": "functional product UI",
+      "path": "docs/v3/proof/head-to-head/briefs/03-passage-console"
+    }
+  },
+  "hashes": {
+    "canonicalSources": "3e45804cd20a6759b5599ff061a5fa7e3fad4537bf96cbefb04d27da556637cf",
+    "fairnessContract": "92c4e88fd4d0bc41d886d213a6a17120976edce8c73cc1d09232ac3d0bc1bcaf",
+    "runManifest": "61d15cbfc9a42f2e62df97eba0d02af0ef819677f81ea10b8ec287ad91a7edc7",
+    "outputSchema": "938246d71e27ff8e3de80d0342217d2ab3f63323e1382e043ca81a8b2486794b",
+    "budgets": "0625554fd0073fbca1d54e8230c316c6fbbb5233f4d587d478df6fa3cee92b27",
+    "riskRegister": "140118789acbbbe3a2856f0bcabbf4c476d0b7c1d39c21511ea69b2da2642508"
+  },
+  "screeningRuns": 15,
+  "replicationRuns": 15,
+  "paidModelCallsMade": 0,
+  "state": "AWAITING_CREDIT_APPROVAL"
+}

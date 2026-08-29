@@ -1,0 +1,47 @@
+{
+  "evaluator": "B",
+  "briefId": "01-leather-goods",
+  "comparison": "mini-1-leather",
+  "scores": {
+    "M": {
+      "briefFit": 4,
+      "subjectSpecificity": 4,
+      "originality": 3,
+      "composition": 2,
+      "hierarchy": 4,
+      "typography": 4,
+      "materiality": 3,
+      "assetStrategy": 3,
+      "interaction": 2,
+      "signature": 5,
+      "antiCliche": 4,
+      "implementability": 3,
+      "total": 41
+    },
+    "N": {
+      "briefFit": 5,
+      "subjectSpecificity": 5,
+      "originality": 4,
+      "composition": 5,
+      "hierarchy": 5,
+      "typography": 5,
+      "materiality": 5,
+      "assetStrategy": 5,
+      "interaction": 5,
+      "signature": 5,
+      "antiCliche": 5,
+      "implementability": 5,
+      "total": 59
+    }
+  },
+  "qualitative": {
+    "wouldBuild": "N",
+    "mostGeneric": "M",
+    "bestGrounded": "N",
+    "strongestDirection": "N"
+  },
+  "comments": {
+    "M": "Signature language is the brief’s care made visible (grade chips under Field Tote). Hierarchy lists materials and CTA correctly. Still reads half-templated: type-poster composition + scroll-cue interaction under-serve density-6 sensory ecommerce, and “unknowns: none declared” is a red flag when strap plate and stitch-macro are pack-unknown.",
+    "N": "Same Hide Grade Strip idea, but every axis is implementable: mobile bench stack, motion-2 edge response, mono measurements, cream/ink/brass hex set, explicit fail-closed on missing assets. No reason to pick M when N is the fuller direction."
+  }
+}

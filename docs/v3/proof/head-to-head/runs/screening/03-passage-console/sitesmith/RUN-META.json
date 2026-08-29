@@ -1,0 +1,9 @@
+{
+  "runId": "screen-03-passage-console-sitesmith",
+  "briefId": "03-passage-console",
+  "arm": "sitesmith",
+  "status": "completed",
+  "phase": "screening",
+  "modelCalls": 0,
+  "packetSha256": "e652ebaa4a1eb1694a148cd7ef4919342be9d0b200fc670d7093d4b5dbbfceb8"
+}

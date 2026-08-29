@@ -1,0 +1,22 @@
+{
+  "designThesis": "Atelier Møn Printworks\": enquire about a print edition. via single object left, large type right — atelier, møn, printworks, curators, and, small",
+  "subjectGrounding": "Atelier Møn Printworks\" | --- | title: \"Evidence — Atelier Møn Printworks\" | status: proof-fixture | ai_generated: \"(C)\" | --- | # Evidence — Atelier Møn Printworks | domain-knowledge: consulted (2 hits) | curators and small brands commissioning limited runs.",
+  "composition": "single object left, large type right",
+  "informationHierarchy": "single object left, large type right",
+  "typography": "condensed display grotesque over quiet sans",
+  "colourAndMaterialModel": "light paper ground with one reserve accent",
+  "imageryAndAssetStrategy": "diagram-led evidence slots until plates exist",
+  "interactionConcept": "hover reveals material fact on the object",
+  "signatureElement": "atelier-sig-3",
+  "primaryRisk": "Signature may overfit if evidence is thin.",
+  "implementationGuidance": "---\ntitle: \"DIRECTION — 02-atelier-printworks\"\nstatus: direction-engine-slice\nai_generated: \"(C)\"\n---\n\n# DIRECTION — 02-atelier-printworks\n\nWinner: statement-object (Atelier Møn Printworks\": enquire about a print edition. via single object left, large type right — atelier, møn, printworks, curators, and, small)\n\n## Signature\natelier-sig-3\n\n## Axis record\n\n- direction-version: 2.3\n- composition: single object left, large type right\n- type: condensed display grotesque over quiet sans\n- colour: light paper ground with one reserve accent\n- imagery: diagram-led evidence slots until plates exist\n- rhythm: hard vertical split then calm bands\n\n- surface: open — subject earns space around the object\n- labels: sentence case captions — retail voice stays human\n- figures: proportional — price is content not motif\n- depth: elevated — object lifts off ground slightly\n\n- visual-density: 4\n- motion-intensity: 3\n- aesthetic-boldness: 7\n\n- signature-selector: [data-signature=\"atelier-sig-3\"]\n- signature-min-share: 12\n\n## Rejections\n- editorial-bleed: recorded alternative; not passed to build context\n- poster-type: recorded alternative; not passed to build context\n\n## Notes\nSelected by Direction Engine v3 slice. Build context must not receive losing cards or generator scores.",
+  "unknowns": "none declared",
+  "sourcePointers": {
+    "arm": "sitesmith",
+    "commit": "b92cdabad98c4d23ff79b74d6881e6b7129325a4",
+    "enginePolicy": "direction-engine-v3-slice-1.0.0",
+    "inputHash": "2d4908174b9cbfe9617811037ed23125a441a81169204460dd7fba6bff045a5f",
+    "selectedWorldId": "statement-object",
+    "blindChoice": "L1"
+  }
+}

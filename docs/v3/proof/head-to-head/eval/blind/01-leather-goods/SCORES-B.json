@@ -1,0 +1,94 @@
+{
+  "evaluator": "B",
+  "briefId": "01-leather-goods",
+  "scores": {
+    "P": {
+      "briefFit": 5,
+      "subjectSpecificity": 5,
+      "originality": 5,
+      "composition": 4,
+      "hierarchy": 5,
+      "typography": 4,
+      "materiality": 5,
+      "assetStrategy": 5,
+      "interaction": 4,
+      "signature": 5,
+      "antiCliche": 5,
+      "implementability": 4,
+      "total": 56
+    },
+    "Q": {
+      "briefFit": 5,
+      "subjectSpecificity": 5,
+      "originality": 4,
+      "composition": 5,
+      "hierarchy": 5,
+      "typography": 5,
+      "materiality": 5,
+      "assetStrategy": 5,
+      "interaction": 5,
+      "signature": 4,
+      "antiCliche": 5,
+      "implementability": 5,
+      "total": 58
+    },
+    "R": {
+      "briefFit": 5,
+      "subjectSpecificity": 5,
+      "originality": 3,
+      "composition": 4,
+      "hierarchy": 5,
+      "typography": 4,
+      "materiality": 4,
+      "assetStrategy": 4,
+      "interaction": 4,
+      "signature": 3,
+      "antiCliche": 4,
+      "implementability": 5,
+      "total": 50
+    },
+    "S": {
+      "briefFit": 1,
+      "subjectSpecificity": 1,
+      "originality": 1,
+      "composition": 1,
+      "hierarchy": 1,
+      "typography": 1,
+      "materiality": 1,
+      "assetStrategy": 1,
+      "interaction": 1,
+      "signature": 1,
+      "antiCliche": 1,
+      "implementability": 2,
+      "total": 13
+    },
+    "T": {
+      "briefFit": 3,
+      "subjectSpecificity": 2,
+      "originality": 2,
+      "composition": 3,
+      "hierarchy": 2,
+      "typography": 2,
+      "materiality": 2,
+      "assetStrategy": 2,
+      "interaction": 3,
+      "signature": 2,
+      "antiCliche": 3,
+      "implementability": 3,
+      "total": 29
+    }
+  },
+  "qualitative": {
+    "wouldBuild": "Q",
+    "mostGeneric": "S",
+    "bestGrounded": "Q",
+    "strongestDirection": "P"
+  },
+  "comments": {
+    "P": "Make-slot ledger with empty open-slot frame is the most subject-true concept, but empty-center risk and thinner type tokens make it slightly harder to ship cleanly.",
+    "Q": "Plate-first bench stack with Hide Grade Strip, exact tokens, and honest missing-asset rules is the strongest real-build package for pick→hide→make-slot.",
+    "R": "Solid split proof/configure spine and full fact lock, but signature and cream+brass craft read closer to a competent default artisan catalog.",
+    "S": "Emerald Feature-Rich Showcase with Hero/Features/CTA and Rubik/Nunito ignores leather, make-slots, and every anti-reference.",
+    "T": "Thin hard-split axis with garbled grounding and diagram-led imagery under-specifies the product-plate ecommerce brief."
+  }
+}

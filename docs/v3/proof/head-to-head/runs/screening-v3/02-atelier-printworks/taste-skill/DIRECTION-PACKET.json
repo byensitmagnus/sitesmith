@@ -1,0 +1,20 @@
+{
+  "designThesis": "Desktop-tolerant press-room marketing/portfolio for Atelier Møn Printworks: three named letterpress editions on press sheets as proof; chalk-white ground, harbour-ink type, one coral registration mark as sole accent; curators and small brands view edition → read paper/edition facts → enquire.",
+  "subjectGrounding": "Atelier Møn Printworks — coastal print studio; letterpress posters, map editions, shop bags for island shops; editions Harbour Night, Chalk Path, Ferry Board; press type Heidelberg platen when stated; audience curators and small brands commissioning limited runs; voice short, concrete, island-local; no invented awards or museum placements.",
+  "composition": "DESIGN_VARIANCE 7: anti-center split or left-aligned type with asymmetric whitespace; hero fits first viewport; calm bands after hero; three edition plate slots; mobile collapses to single column under 768px.",
+  "informationHierarchy": "1) Identity + limited-run what 2) View three named editions 3) Paper/edition/press facts when known 4) Single primary action: enquire about a print edition 5) Short island-local studio note only — no awards block.",
+  "typography": "Sans-first display grotesque (not Inter default; not Fraunces/Instrument_Serif); quiet sans body max-w-[65ch]; mono for edition/press/figure rows; same-family italic/bold emphasis only; descender clearance on italic display.",
+  "colourAndMaterialModel": "Chalk white ground; harbour ink type/structure; one coral registration-mark accent locked page-wide; paper plane + sharp/near-sharp registration geometry; tinted borders over pure-black shadows; light-first.",
+  "imageryAndAssetStrategy": "Load-bearing press-sheet photos: harbour-night.webp (have), chalk-path.webp (have), ferry-board.webp (needed — honest empty/needed slot, no stock loft or blob fills); optional registration-mark diagram.",
+  "interactionConcept": "MOTION_INTENSITY 3: hover/active only; edition hover reveals material fact line; button press feedback; enquire form with labels above, errors below, AA contrast; no scroll choreography or parallax.",
+  "signatureElement": "Coral registration mark as recurring print-production motif (register cross / crop mark) adjacent to plates and primary CTA — geometry not gradient orb.",
+  "primaryRisk": "ferry-board.webp is needed; faking the third edition with stock or silent omission breaks the three-edition proof and the view→facts→enquire journey.",
+  "implementationGuidance": "Lock dials 7/3/4; tokenize chalk white / harbour ink / coral only; asymmetric hero with one plate + enquire CTA; three edition slots with honest Ferry Board needed-state; fact rows only when real paper/edition/Heidelberg copy exists; one enquire intent site-wide; ban blob gradients, loft stock, awards/museums, second accents, Inter+mesh defaults.",
+  "unknowns": "Specific paper stock names; edition sizes; price/terms; studio address/hours/phone; Ferry Board photography until asset exists; any award or institutional placement (forbidden to invent).",
+  "sourcePointers": {
+    "arm": "taste-skill",
+    "commit": "e988add20dab0fa97d7a76781c48961c8184288e",
+    "method": "taste Design Read + dials",
+    "phase": "screening-v2"
+  }
+}

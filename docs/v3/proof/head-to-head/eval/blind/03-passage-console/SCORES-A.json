@@ -1,0 +1,94 @@
+{
+  "evaluator": "A",
+  "briefId": "03-passage-console",
+  "scores": {
+    "P": {
+      "briefFit": 5,
+      "subjectSpecificity": 5,
+      "originality": 4,
+      "composition": 5,
+      "hierarchy": 5,
+      "typography": 4,
+      "materiality": 5,
+      "assetStrategy": 5,
+      "interaction": 5,
+      "signature": 4,
+      "antiCliche": 5,
+      "implementability": 5,
+      "total": 57
+    },
+    "Q": {
+      "briefFit": 1,
+      "subjectSpecificity": 1,
+      "originality": 1,
+      "composition": 1,
+      "hierarchy": 1,
+      "typography": 1,
+      "materiality": 1,
+      "assetStrategy": 1,
+      "interaction": 1,
+      "signature": 1,
+      "antiCliche": 1,
+      "implementability": 2,
+      "total": 13
+    },
+    "R": {
+      "briefFit": 5,
+      "subjectSpecificity": 5,
+      "originality": 5,
+      "composition": 5,
+      "hierarchy": 5,
+      "typography": 5,
+      "materiality": 5,
+      "assetStrategy": 5,
+      "interaction": 5,
+      "signature": 5,
+      "antiCliche": 4,
+      "implementability": 5,
+      "total": 59
+    },
+    "S": {
+      "briefFit": 4,
+      "subjectSpecificity": 2,
+      "originality": 2,
+      "composition": 3,
+      "hierarchy": 2,
+      "typography": 2,
+      "materiality": 3,
+      "assetStrategy": 4,
+      "interaction": 3,
+      "signature": 2,
+      "antiCliche": 3,
+      "implementability": 2,
+      "total": 32
+    },
+    "T": {
+      "briefFit": 5,
+      "subjectSpecificity": 5,
+      "originality": 4,
+      "composition": 4,
+      "hierarchy": 4,
+      "typography": 3,
+      "materiality": 4,
+      "assetStrategy": 5,
+      "interaction": 4,
+      "signature": 4,
+      "antiCliche": 4,
+      "implementability": 4,
+      "total": 50
+    }
+  },
+  "qualitative": {
+    "wouldBuild": "R",
+    "mostGeneric": "Q",
+    "bestGrounded": "R",
+    "strongestDirection": "R"
+  },
+  "comments": {
+    "P": "Two-column density-8 desk with amber-rationed status strip is operationally correct and imageless; signature is slightly less subject-specific than direction-lock.",
+    "Q": "Swiss product-demo marketing pattern (hero/video/features, blue-orange SaaS) is the wrong product mode entirely.",
+    "R": "Night-watch instrument with Inbound|Outbound lock, full hex tokens, mono vessel/time roles — densest subject-true build plan.",
+    "S": "Workspace-canvas sketch stays mode-correct and imageless but too thin to implement without inventing the desk.",
+    "T": "Always-on Watch Ledger entry line fits density 8 and pack states; shorter type/material lock than P/R."
+  }
+}

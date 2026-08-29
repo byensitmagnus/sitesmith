@@ -1,0 +1,47 @@
+{
+  "evaluator": "B",
+  "briefId": "01-leather-goods",
+  "comparison": "mini-1-leather-host-llm",
+  "scores": {
+    "P": {
+      "briefFit": 5,
+      "subjectSpecificity": 5,
+      "originality": 4,
+      "composition": 5,
+      "hierarchy": 5,
+      "typography": 5,
+      "materiality": 5,
+      "assetStrategy": 5,
+      "interaction": 5,
+      "signature": 5,
+      "antiCliche": 5,
+      "implementability": 5,
+      "total": 59
+    },
+    "Q": {
+      "briefFit": 5,
+      "subjectSpecificity": 4,
+      "originality": 4,
+      "composition": 5,
+      "hierarchy": 5,
+      "typography": 4,
+      "materiality": 4,
+      "assetStrategy": 5,
+      "interaction": 5,
+      "signature": 5,
+      "antiCliche": 5,
+      "implementability": 4,
+      "total": 55
+    }
+  },
+  "qualitative": {
+    "wouldBuild": "P",
+    "mostGeneric": "Q",
+    "bestGrounded": "P",
+    "strongestDirection": "P"
+  },
+  "comments": {
+    "P": "Make-slot desk fully locked: plate-first mobile stack, Hide Grade Strip radiogroup, stamp facts, DKK 890–2.400 + 3-week lead, brass-only CTA, sticky rail on desktop. Hex tokens, density/motion/boldness axes, font fallbacks, quality floor, honest missing strap/stitch/grade codes. Same signature idea as Q but every axis is build-ready.",
+    "Q": "Same direction and signature (Hide Grade Strip under Field Tote → make-slot). Journey, products, materials, and anti-cliché stance match the brief. Loses ground where P is concrete: no hex set, no density axes in grounding, thinner type/impl notes — still strong, just the less complete twin."
+  }
+}

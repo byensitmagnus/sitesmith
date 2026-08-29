@@ -1,0 +1,504 @@
+{
+  "phase": "blind-evaluation",
+  "completedAt": "2026-07-31T19:44:30.606Z",
+  "criteria": [
+    "briefFit",
+    "subjectSpecificity",
+    "originality",
+    "composition",
+    "hierarchy",
+    "typography",
+    "materiality",
+    "assetStrategy",
+    "interaction",
+    "signature",
+    "antiCliche",
+    "implementability"
+  ],
+  "briefs": {
+    "01-leather-goods": {
+      "ranking": [
+        {
+          "arm": "frontend-design",
+          "totalAvg": 58.5,
+          "totalA": 59,
+          "totalB": 58,
+          "label": "Q"
+        },
+        {
+          "arm": "impeccable",
+          "totalAvg": 56.5,
+          "totalA": 57,
+          "totalB": 56,
+          "label": "P"
+        },
+        {
+          "arm": "taste-skill",
+          "totalAvg": 48,
+          "totalA": 46,
+          "totalB": 50,
+          "label": "R"
+        },
+        {
+          "arm": "sitesmith",
+          "totalAvg": 28.5,
+          "totalA": 28,
+          "totalB": 29,
+          "label": "T"
+        },
+        {
+          "arm": "ui-ux-pro-max",
+          "totalAvg": 13.5,
+          "totalA": 14,
+          "totalB": 13,
+          "label": "S"
+        }
+      ],
+      "sitesmith": {
+        "label": "T",
+        "totalA": 28,
+        "totalB": 29,
+        "totalAvg": 28.5,
+        "criteria": {
+          "briefFit": {
+            "A": 3,
+            "B": 3,
+            "avg": 3
+          },
+          "subjectSpecificity": {
+            "A": 2,
+            "B": 2,
+            "avg": 2
+          },
+          "originality": {
+            "A": 2,
+            "B": 2,
+            "avg": 2
+          },
+          "composition": {
+            "A": 3,
+            "B": 3,
+            "avg": 3
+          },
+          "hierarchy": {
+            "A": 2,
+            "B": 2,
+            "avg": 2
+          },
+          "typography": {
+            "A": 2,
+            "B": 2,
+            "avg": 2
+          },
+          "materiality": {
+            "A": 2,
+            "B": 2,
+            "avg": 2
+          },
+          "assetStrategy": {
+            "A": 2,
+            "B": 2,
+            "avg": 2
+          },
+          "interaction": {
+            "A": 3,
+            "B": 3,
+            "avg": 3
+          },
+          "signature": {
+            "A": 2,
+            "B": 2,
+            "avg": 2
+          },
+          "antiCliche": {
+            "A": 3,
+            "B": 3,
+            "avg": 3
+          },
+          "implementability": {
+            "A": 2,
+            "B": 3,
+            "avg": 2.5
+          }
+        },
+        "comments": {
+          "A": "Proof-left/action-right sketch is thin; diagram-led imagery fights declared product-plate load-bearing assets.",
+          "B": "Thin hard-split axis with garbled grounding and diagram-led imagery under-specifies the product-plate ecommerce brief."
+        }
+      },
+      "bestUpstream": {
+        "arm": "frontend-design",
+        "totalAvg": 58.5
+      },
+      "outcome": "loss",
+      "qualitativeA": {
+        "wouldBuild": "frontend-design",
+        "mostGeneric": "ui-ux-pro-max",
+        "bestGrounded": "frontend-design",
+        "strongestDirection": "impeccable"
+      },
+      "qualitativeB": {
+        "wouldBuild": "frontend-design",
+        "mostGeneric": "ui-ux-pro-max",
+        "bestGrounded": "frontend-design",
+        "strongestDirection": "impeccable"
+      },
+      "top1Agree": true,
+      "wouldBuildAgree": true,
+      "comments": {
+        "impeccable": {
+          "A": "Make-slot ledger with empty open-slot frame is the most distinctive subject-true composition; empty-center risk needs ruthless labeling.",
+          "B": "Make-slot ledger with empty open-slot frame is the most subject-true concept, but empty-center risk and thinner type tokens make it slightly harder to ship cleanly."
+        },
+        "frontend-design": {
+          "A": "Plate-first hide-grade bench with full tokens, type roles, and honest asset gaps — densest implementable grounded plan.",
+          "B": "Plate-first bench stack with Hide Grade Strip, exact tokens, and honest missing-asset rules is the strongest real-build package for pick→hide→make-slot."
+        },
+        "taste-skill": {
+          "A": "Solid split proof/configure spine and pack-true facts, but cream+brass spine signature reads closer to default artisan ecommerce.",
+          "B": "Solid split proof/configure spine and full fact lock, but signature and cream+brass craft read closer to a competent default artisan catalog."
+        },
+        "ui-ux-pro-max": {
+          "A": "Retrieval template (emerald palette, Hero/Features/CTA, unknown assets) ignores hide, make-slot, and product plates entirely.",
+          "B": "Emerald Feature-Rich Showcase with Hero/Features/CTA and Rubik/Nunito ignores leather, make-slots, and every anti-reference."
+        },
+        "sitesmith": {
+          "A": "Proof-left/action-right sketch is thin; diagram-led imagery fights declared product-plate load-bearing assets.",
+          "B": "Thin hard-split axis with garbled grounding and diagram-led imagery under-specifies the product-plate ecommerce brief."
+        }
+      }
+    },
+    "02-atelier-printworks": {
+      "ranking": [
+        {
+          "arm": "frontend-design",
+          "totalAvg": 59,
+          "totalA": 59,
+          "totalB": 59,
+          "label": "Q"
+        },
+        {
+          "arm": "impeccable",
+          "totalAvg": 56,
+          "totalA": 56,
+          "totalB": 56,
+          "label": "T"
+        },
+        {
+          "arm": "taste-skill",
+          "totalAvg": 51,
+          "totalA": 47,
+          "totalB": 55,
+          "label": "P"
+        },
+        {
+          "arm": "sitesmith",
+          "totalAvg": 29.5,
+          "totalA": 29,
+          "totalB": 30,
+          "label": "R"
+        },
+        {
+          "arm": "ui-ux-pro-max",
+          "totalAvg": 13.5,
+          "totalA": 14,
+          "totalB": 13,
+          "label": "S"
+        }
+      ],
+      "sitesmith": {
+        "label": "R",
+        "totalA": 29,
+        "totalB": 30,
+        "totalAvg": 29.5,
+        "criteria": {
+          "briefFit": {
+            "A": 3,
+            "B": 2,
+            "avg": 2.5
+          },
+          "subjectSpecificity": {
+            "A": 2,
+            "B": 2,
+            "avg": 2
+          },
+          "originality": {
+            "A": 2,
+            "B": 2,
+            "avg": 2
+          },
+          "composition": {
+            "A": 3,
+            "B": 3,
+            "avg": 3
+          },
+          "hierarchy": {
+            "A": 2,
+            "B": 2,
+            "avg": 2
+          },
+          "typography": {
+            "A": 3,
+            "B": 3,
+            "avg": 3
+          },
+          "materiality": {
+            "A": 2,
+            "B": 3,
+            "avg": 2.5
+          },
+          "assetStrategy": {
+            "A": 2,
+            "B": 2,
+            "avg": 2
+          },
+          "interaction": {
+            "A": 3,
+            "B": 3,
+            "avg": 3
+          },
+          "signature": {
+            "A": 2,
+            "B": 2,
+            "avg": 2
+          },
+          "antiCliche": {
+            "A": 3,
+            "B": 3,
+            "avg": 3
+          },
+          "implementability": {
+            "A": 2,
+            "B": 3,
+            "avg": 2.5
+          }
+        },
+        "comments": {
+          "A": "Single-object axis card is under-specified and diagram-led despite two real press-sheet assets already on file.",
+          "B": "Garbled thin slice (single object left / large type right) with metadata-like grounding and opaque signature, too sparse to build without invention."
+        }
+      },
+      "bestUpstream": {
+        "arm": "frontend-design",
+        "totalAvg": 59
+      },
+      "outcome": "loss",
+      "qualitativeA": {
+        "wouldBuild": "frontend-design",
+        "mostGeneric": "ui-ux-pro-max",
+        "bestGrounded": "frontend-design",
+        "strongestDirection": "impeccable"
+      },
+      "qualitativeB": {
+        "wouldBuild": "frontend-design",
+        "mostGeneric": "ui-ux-pro-max",
+        "bestGrounded": "frontend-design",
+        "strongestDirection": "impeccable"
+      },
+      "top1Agree": true,
+      "wouldBuildAgree": true,
+      "comments": {
+        "taste-skill": {
+          "A": "Correct chalk/ink/coral and honest Ferry Board gap, but composition stays generic anti-center portfolio rather than press-room instrument.",
+          "B": "Clear press-room portfolio with coral registration mark and honest Ferry Board needed-state; slightly more standard three-plate layout than the ticket or board concepts."
+        },
+        "frontend-design": {
+          "A": "Make-ready table + job ticket mono + coral registration as UI system is fully subject-native and buildable with declared sheets.",
+          "B": "Make-ready table with job-ticket mono facts and registration-cross chrome is the most buildable, vernacular-specific direction for view→facts→enquire."
+        },
+        "sitesmith": {
+          "A": "Single-object axis card is under-specified and diagram-led despite two real press-sheet assets already on file.",
+          "B": "Garbled thin slice (single object left / large type right) with metadata-like grounding and opaque signature, too sparse to build without invention."
+        },
+        "ui-ux-pro-max": {
+          "A": "Neo-brutal pink/cyan portfolio grid is pure retrieval cliché with zero letterpress or island material.",
+          "B": "Neo Brutalism masonry portfolio in pink/cyan is pure template language and fights the letterpress coastal brief."
+        },
+        "impeccable": {
+          "A": "Ferry departure board for three editions is the boldest island-grounded concept; implementability dips if facts/photos lag.",
+          "B": "Ferry departure board for editions is the boldest island-local signature, but split-flap risk tips toward gimmick if facts/photos lag."
+        }
+      }
+    },
+    "03-passage-console": {
+      "ranking": [
+        {
+          "arm": "frontend-design",
+          "totalAvg": 59,
+          "totalA": 59,
+          "totalB": 59,
+          "label": "R"
+        },
+        {
+          "arm": "taste-skill",
+          "totalAvg": 57.5,
+          "totalA": 57,
+          "totalB": 58,
+          "label": "P"
+        },
+        {
+          "arm": "impeccable",
+          "totalAvg": 50.5,
+          "totalA": 50,
+          "totalB": 51,
+          "label": "T"
+        },
+        {
+          "arm": "sitesmith",
+          "totalAvg": 34.5,
+          "totalA": 32,
+          "totalB": 37,
+          "label": "S"
+        },
+        {
+          "arm": "ui-ux-pro-max",
+          "totalAvg": 13,
+          "totalA": 13,
+          "totalB": 13,
+          "label": "Q"
+        }
+      ],
+      "sitesmith": {
+        "label": "S",
+        "totalA": 32,
+        "totalB": 37,
+        "totalAvg": 34.5,
+        "criteria": {
+          "briefFit": {
+            "A": 4,
+            "B": 4,
+            "avg": 4
+          },
+          "subjectSpecificity": {
+            "A": 2,
+            "B": 3,
+            "avg": 2.5
+          },
+          "originality": {
+            "A": 2,
+            "B": 2,
+            "avg": 2
+          },
+          "composition": {
+            "A": 3,
+            "B": 3,
+            "avg": 3
+          },
+          "hierarchy": {
+            "A": 2,
+            "B": 2,
+            "avg": 2
+          },
+          "typography": {
+            "A": 2,
+            "B": 3,
+            "avg": 2.5
+          },
+          "materiality": {
+            "A": 3,
+            "B": 3,
+            "avg": 3
+          },
+          "assetStrategy": {
+            "A": 4,
+            "B": 4,
+            "avg": 4
+          },
+          "interaction": {
+            "A": 3,
+            "B": 4,
+            "avg": 3.5
+          },
+          "signature": {
+            "A": 2,
+            "B": 2,
+            "avg": 2
+          },
+          "antiCliche": {
+            "A": 3,
+            "B": 4,
+            "avg": 3.5
+          },
+          "implementability": {
+            "A": 2,
+            "B": 3,
+            "avg": 2.5
+          }
+        },
+        "comments": {
+          "A": "Workspace-canvas sketch stays mode-correct and imageless but too thin to implement without inventing the desk.",
+          "B": "Correct full-width imageless instinct but axis-thin, with garbled grounding and an opaque signature id instead of a named control pattern."
+        }
+      },
+      "bestUpstream": {
+        "arm": "frontend-design",
+        "totalAvg": 59
+      },
+      "outcome": "loss",
+      "qualitativeA": {
+        "wouldBuild": "frontend-design",
+        "mostGeneric": "ui-ux-pro-max",
+        "bestGrounded": "frontend-design",
+        "strongestDirection": "frontend-design"
+      },
+      "qualitativeB": {
+        "wouldBuild": "frontend-design",
+        "mostGeneric": "ui-ux-pro-max",
+        "bestGrounded": "frontend-design",
+        "strongestDirection": "frontend-design"
+      },
+      "top1Agree": true,
+      "wouldBuildAgree": true,
+      "comments": {
+        "taste-skill": {
+          "A": "Two-column density-8 desk with amber-rationed status strip is operationally correct and imageless; signature is slightly less subject-specific than direction-lock.",
+          "B": "Dense two-column form/log cockpit with amber-rationed status strip is fully operational and imageless-correct, signature slightly less distinctive than the direction lock."
+        },
+        "ui-ux-pro-max": {
+          "A": "Swiss product-demo marketing pattern (hero/video/features, blue-orange SaaS) is the wrong product mode entirely.",
+          "B": "Hero/demo/features marketing shell with blue SaaS palette is the wrong genre for a density-8 harbour log desk."
+        },
+        "frontend-design": {
+          "A": "Night-watch instrument with Inbound|Outbound lock, full hex tokens, mono vessel/time roles — densest subject-true build plan.",
+          "B": "Night-watch instrument with Inbound|Outbound lock, hex-locked greyscale, and exact empty/error/success/offline states is the clearest build-ready direction."
+        },
+        "sitesmith": {
+          "A": "Workspace-canvas sketch stays mode-correct and imageless but too thin to implement without inventing the desk.",
+          "B": "Correct full-width imageless instinct but axis-thin, with garbled grounding and an opaque signature id instead of a named control pattern."
+        },
+        "impeccable": {
+          "A": "Always-on Watch Ledger entry line fits density 8 and pack states; shorter type/material lock than P/R.",
+          "B": "Watch Ledger entry line is coherent and anti-KPI, yet shorter type/composition detail leaves more room for generic dark CRUD drift."
+        }
+      }
+    }
+  },
+  "sitesmithBriefOutcomes": {
+    "01-leather-goods": "loss",
+    "02-atelier-printworks": "loss",
+    "03-passage-console": "loss"
+  },
+  "agreement": {
+    "01-leather-goods": {
+      "top1Agree": true,
+      "wouldBuildAgree": true
+    },
+    "02-atelier-printworks": {
+      "top1Agree": true,
+      "wouldBuildAgree": true
+    },
+    "03-passage-console": {
+      "top1Agree": true,
+      "wouldBuildAgree": true
+    }
+  },
+  "verdict": "PROOF FAILED — UPSTREAM SUPERSET",
+  "proofStatus": "PROOF FAILED — UPSTREAM SUPERSET",
+  "summary": {
+    "sitesmithWins": 0,
+    "sitesmithTiesOrMatch": 0,
+    "sitesmithLosses": 3,
+    "matchOrWinCount": 0,
+    "top1Disagreements": 0
+  }
+}

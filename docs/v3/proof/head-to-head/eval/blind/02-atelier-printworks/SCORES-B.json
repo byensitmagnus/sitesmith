@@ -1,0 +1,94 @@
+{
+  "evaluator": "B",
+  "briefId": "02-atelier-printworks",
+  "scores": {
+    "P": {
+      "briefFit": 5,
+      "subjectSpecificity": 5,
+      "originality": 4,
+      "composition": 4,
+      "hierarchy": 5,
+      "typography": 4,
+      "materiality": 5,
+      "assetStrategy": 5,
+      "interaction": 4,
+      "signature": 4,
+      "antiCliche": 5,
+      "implementability": 5,
+      "total": 55
+    },
+    "Q": {
+      "briefFit": 5,
+      "subjectSpecificity": 5,
+      "originality": 5,
+      "composition": 5,
+      "hierarchy": 5,
+      "typography": 5,
+      "materiality": 5,
+      "assetStrategy": 5,
+      "interaction": 4,
+      "signature": 5,
+      "antiCliche": 5,
+      "implementability": 5,
+      "total": 59
+    },
+    "R": {
+      "briefFit": 2,
+      "subjectSpecificity": 2,
+      "originality": 2,
+      "composition": 3,
+      "hierarchy": 2,
+      "typography": 3,
+      "materiality": 3,
+      "assetStrategy": 2,
+      "interaction": 3,
+      "signature": 2,
+      "antiCliche": 3,
+      "implementability": 3,
+      "total": 30
+    },
+    "S": {
+      "briefFit": 1,
+      "subjectSpecificity": 1,
+      "originality": 1,
+      "composition": 1,
+      "hierarchy": 1,
+      "typography": 1,
+      "materiality": 1,
+      "assetStrategy": 1,
+      "interaction": 1,
+      "signature": 1,
+      "antiCliche": 1,
+      "implementability": 2,
+      "total": 13
+    },
+    "T": {
+      "briefFit": 5,
+      "subjectSpecificity": 5,
+      "originality": 5,
+      "composition": 5,
+      "hierarchy": 5,
+      "typography": 4,
+      "materiality": 5,
+      "assetStrategy": 5,
+      "interaction": 4,
+      "signature": 5,
+      "antiCliche": 4,
+      "implementability": 4,
+      "total": 56
+    }
+  },
+  "qualitative": {
+    "wouldBuild": "Q",
+    "mostGeneric": "S",
+    "bestGrounded": "Q",
+    "strongestDirection": "T"
+  },
+  "comments": {
+    "P": "Clear press-room portfolio with coral registration mark and honest Ferry Board needed-state; slightly more standard three-plate layout than the ticket or board concepts.",
+    "Q": "Make-ready table with job-ticket mono facts and registration-cross chrome is the most buildable, vernacular-specific direction for view→facts→enquire.",
+    "R": "Garbled thin slice (single object left / large type right) with metadata-like grounding and opaque signature, too sparse to build without invention.",
+    "S": "Neo Brutalism masonry portfolio in pink/cyan is pure template language and fights the letterpress coastal brief.",
+    "T": "Ferry departure board for editions is the boldest island-local signature, but split-flap risk tips toward gimmick if facts/photos lag."
+  }
+}
