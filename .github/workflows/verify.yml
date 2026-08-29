@@ -1,11 +1,7 @@
 name: verify
 
 on:
-  push:
-    branches: [main]
-  pull_request:
   workflow_dispatch:
-
 jobs:
   repo-check:
     name: repo structure, licences and search engine
