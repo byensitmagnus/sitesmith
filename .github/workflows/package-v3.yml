@@ -1,21 +1,7 @@
 name: package v3
 
 on:
-  push:
-    branches:
-      - main
-      - rebuild/sitesmith-unified
-    paths:
-      - 'skills/sitesmith-v3/**'
-      - 'tools/package-sitesmith-v3.mjs'
-      - '.github/workflows/package-v3.yml'
-  pull_request:
-    paths:
-      - 'skills/sitesmith-v3/**'
-      - 'tools/package-sitesmith-v3.mjs'
-      - '.github/workflows/package-v3.yml'
   workflow_dispatch:
-
 jobs:
   package:
     name: build canonical v3 ZIPs
