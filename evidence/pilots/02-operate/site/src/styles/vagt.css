@@ -1,0 +1,732 @@
+/* Bjerregaard Sluse, vagtkonsol.
+   Ét stylesheet, importeret fra siden, som stacks/astro.md beder om.
+   Hver værdi på et kaldested går gennem var(). Literaler bor her og kun her.
+   Værdierne er kontraktens: .sitesmith/contract.json er skrevet før denne fil. */
+
+:root {
+  color-scheme: dark;
+
+  /* Slusehusets materialer klokken to om natten. Ikke roller. */
+  --slusevand: #0f1a1f;
+  --kammer: #16242b;
+  --lygte: #dfeae6;
+  --messing: #c9a227;
+  --tovvaerk: #7f8f7a;
+  --rust: #dd7050;
+
+  /* De samme materialer med luft i. 45 procent til de streger der betyder noget,
+     9 procent til de flader der ikke gør. */
+  --taage-kant: rgba(223, 234, 230, 0.45);
+  --taage-flade: rgba(223, 234, 230, 0.09);
+
+  /* To snit. Mono til alt der er målt, prosa til alt der er skrevet. */
+  --snit-data: "Cascadia Mono", Consolas, "SF Mono", ui-monospace, monospace;
+  --snit-prosa: "Segoe UI Variable Text", "Segoe UI", system-ui, sans-serif;
+
+  /* Skala. 44 findes ét sted. */
+  --s0: 12px;
+  --s1: 14px;
+  --s2: 16px;
+  --s3: 20px;
+  --s4: 28px;
+  --s5: 32px;
+
+  /* Rytme: 4 på ruden, fordi en række aflæsninger er linjeret papir. */
+  --r1: 4px;
+  --r2: 8px;
+  --r3: 12px;
+  --r4: 20px;
+  --r5: 32px;
+  --r6: 56px;
+
+  --bredde: 1100px;
+  --haarstreg: 1px;
+  --baandhoejde: 132px;
+}
+
+@media (min-width: 700px) {
+  :root {
+    /* One-off, erklæret i retningsprotokollen: 44px findes kun på den ene værdi
+       der afgør hastende, og kun når skærmen er bred nok til at bære den. */
+    --s5: 44px;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background-color: var(--slusevand);
+  color: var(--lygte);
+  font-family: var(--snit-prosa);
+  font-size: var(--s2);
+  /* Lys tekst paa moerk bund blomstrer: stregerne loeber sammen ved samme vaegt og
+     samme afstand som paa hvidt papir. Kompensationen er 1,6 i stedet for 1,5, en
+     anelse sporing, og 350 i stedet for 400 hvor snittet kan levere det. Farven er
+     ikke rykket: den staar i kontrakten og er maalt. Vaegten roeres ikke: 350 er en
+     variabel akse Segoe UI Variable Text har og Segoe UI ikke har, saa paa en maskine
+     uden den foerste ville browseren vaelge 300, og lysere er praecis den forkerte vej. */
+  line-height: 1.6;
+  letter-spacing: 0.008em;
+  -webkit-font-smoothing: antialiased;
+}
+
+.ramme {
+  max-width: var(--bredde);
+  margin-inline: auto;
+  padding-inline: var(--r4);
+}
+
+/* ── skallen ─────────────────────────────────────────────────────────── */
+
+.spring {
+  position: absolute;
+  left: -9999px;
+  background-color: var(--messing);
+  color: var(--slusevand);
+  padding: var(--r3) var(--r4);
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  font-weight: 600;
+  z-index: 9;
+}
+
+.spring:focus {
+  left: var(--r4);
+  top: var(--r2);
+}
+
+:focus-visible {
+  outline-style: solid;
+  outline-width: 3px;
+  outline-color: var(--messing);
+  outline-offset: 2px;
+}
+
+.hoved {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--r2) var(--r4);
+  align-items: baseline;
+  padding-block: var(--r4) var(--r3);
+  border-bottom-width: var(--haarstreg);
+  border-bottom-style: solid;
+  border-bottom-color: var(--taage-kant);
+}
+
+.hoved h1 {
+  margin: 0;
+  font-size: var(--s3);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.vagttid {
+  font-family: var(--snit-data);
+  font-size: var(--s1);
+  color: var(--tovvaerk);
+  font-variant-numeric: tabular-nums;
+}
+
+.menu {
+  margin-inline-start: auto;
+  display: flex;
+  flex-wrap: wrap;
+  /* 24px begge veje: en vagt rammer det her med en tommelfinger i regnvejr,
+     og verify maaler baade maalets stoerrelse og afstanden til det naeste. */
+  gap: var(--r6) var(--r6);
+  list-style: none;
+  margin-block: 0;
+  padding-inline-start: 0;
+  font-size: var(--s1);
+}
+
+.menu a {
+  color: var(--lygte);
+  text-decoration-line: underline;
+  text-underline-offset: 4px;
+  text-decoration-color: var(--taage-kant);
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding-inline: var(--r2);
+}
+
+.menu a:hover {
+  text-decoration-color: var(--messing);
+}
+
+/* ── båndet: signaturen ──────────────────────────────────────────────── */
+
+.baand-flade {
+  background-color: var(--kammer);
+  border-block-width: var(--haarstreg);
+  border-block-style: solid;
+  border-block-color: var(--taage-kant);
+  padding-block: var(--r4);
+}
+
+.baand {
+  display: block;
+  width: 100%;
+  height: var(--baandhoejde);
+}
+
+.baand-tekst {
+  font-family: var(--snit-data);
+  font-size: var(--s0);
+  fill: var(--lygte);
+  font-variant-numeric: tabular-nums;
+}
+
+.baand-tekst--svag {
+  fill: var(--tovvaerk);
+}
+
+.baand-tekst--haster {
+  fill: var(--messing);
+  font-weight: 600;
+}
+
+.baand-linje {
+  stroke: var(--taage-kant);
+  stroke-width: 1;
+}
+
+.baand-grund {
+  fill: var(--taage-flade);
+}
+
+.baand-slag {
+  fill: var(--tovvaerk);
+}
+
+.baand-slag--lang {
+  fill: var(--messing);
+}
+
+.baand-haendelse {
+  stroke: var(--messing);
+  stroke-width: 2;
+}
+
+.baand-haendelse--fejl {
+  stroke: var(--rust);
+}
+
+.baand-hul {
+  fill: none;
+  stroke: var(--rust);
+  stroke-width: 1.5;
+  stroke-dasharray: 3 3;
+}
+
+/* De absolut placerede maerker maa ikke skubbe siden bredere: det sidste klokkeslaet
+   staar ved 100 procent og ville laegge sin egen bredde uden for viewporten. */
+.baand-skala,
+.baand-maerker {
+  position: relative;
+  overflow: hidden;
+  height: 20px;
+  font-family: var(--snit-data);
+  font-size: var(--s0);
+  font-variant-numeric: tabular-nums;
+}
+
+.baand-maerker {
+  height: 22px;
+  margin-block-start: var(--r1);
+}
+
+.baand-time,
+.baand-maerke {
+  position: absolute;
+  top: 0;
+  white-space: nowrap;
+  color: var(--tovvaerk);
+  transform: translateX(2px);
+}
+
+/* Det sidste stop staar ved 100 procent, saa det saettes hoejrestillet i stedet. */
+.baand-time:last-of-type {
+  left: auto !important;
+  right: 0;
+  transform: none;
+}
+
+.baand-maerke--haster {
+  color: var(--messing);
+  font-weight: 600;
+}
+
+.baand-maerke--hul {
+  color: var(--rust);
+}
+
+.baand-maerke--nu {
+  color: var(--lygte);
+  transform: translateX(-52px);
+}
+
+@media (max-width: 699px) {
+  /* Hver anden time paa smal skaerm: ni klokkeslaet paa 335px er ni klokkeslaet
+     ingen kan laese, og kontrakten siger det skal vaere hver anden. */
+  .baand-time--ulige {
+    display: none;
+  }
+
+  /* Og kun de to maerker der ikke staar noget andet sted: hullet og nu. De tre
+     haendelsestidspunkter stod oven i hinanden paa 335px, og de staar allerede i
+     listen og i loggen med hele saetningen ved siden af. */
+  .baand-maerke--haster {
+    display: none;
+  }
+
+  .baand-maerke--hul {
+    left: 0 !important;
+    transform: none;
+  }
+
+  .baand-maerke--nu {
+    left: auto !important;
+    right: 0;
+    transform: none;
+  }
+
+  /* To og to, med samme afstand begge veje. Ombrudt tre og en laeser som et
+     menupunkt der mangler. */
+  .menu {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--r3) var(--r4);
+    width: 100%;
+    margin-inline-start: 0;
+  }
+}
+
+.baand-noegle {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--r2) var(--r4);
+  margin-block-start: var(--r3);
+  font-size: var(--s0);
+  color: var(--tovvaerk);
+  font-family: var(--snit-data);
+}
+
+.baand-noegle b {
+  color: var(--lygte);
+  font-weight: 600;
+}
+
+/* ── den sorterede liste ─────────────────────────────────────────────── */
+
+.afsnit {
+  padding-block: var(--r6) var(--r5);
+}
+
+.afsnit h2 {
+  margin-block: 0 var(--r4);
+  font-size: var(--s4);
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.afsnit-note {
+  margin-block: calc(var(--r4) * -1) var(--r4);
+  font-size: var(--s1);
+  color: var(--tovvaerk);
+  max-width: 62ch;
+}
+
+/* Rettelsesrunden: reglen for hele listen stod i samme daempede graa som raekkernes egne
+   metadata og stoedte op til den sidste raekke, saa den laeste som en fodnote om
+   vandtemperaturen. Nu staar den paa sidens bund med luft over sig og i broedtekstens
+   farve, saa den er en regel og ikke en note. */
+.liste-regel {
+  margin-block-start: var(--r6);
+  padding-block-start: var(--r4);
+  border-block-start-width: var(--haarstreg);
+  border-block-start-style: solid;
+  border-block-start-color: var(--taage-kant);
+  color: var(--lygte);
+  font-size: var(--s2);
+  max-width: 62ch;
+}
+
+.post-venstre {
+  display: grid;
+  gap: var(--r3);
+  align-content: start;
+}
+
+.post-tal-blok {
+  display: grid;
+  gap: var(--r1);
+}
+
+/* Fladen gaar 20px ud over tekstspalten i begge sider, saa teksten selv staar paa sidens
+   rygrad. Med polstringen indenfor startede posternes tekst 20px inde og overskrifterne
+   udenfor, og gaten laeste to spalter hvor der kun var én, forskudt. */
+.post {
+  background-color: var(--kammer);
+  border-block-end-width: var(--haarstreg);
+  border-block-end-style: solid;
+  border-block-end-color: var(--taage-kant);
+  padding: var(--r4);
+  margin-inline: calc(var(--r4) * -1);
+  display: grid;
+  gap: var(--r3);
+}
+
+/* Den oeverste post baerer sin egen markering paa indersiden af sin polstring, ikke
+   udenpaa den. Med kanten udenpaa stod posten 23px fra sidens rygrad, hvilket gaten
+   laeste som en spalte der var rykket ved et uheld, og den havde ret. */
+.post-top {
+  padding-block: var(--r5);
+  padding-inline-start: calc(var(--r4) - 3px);
+  border-inline-start-width: 3px;
+  border-inline-start-style: solid;
+  border-inline-start-color: var(--messing);
+}
+
+.post-navn {
+  margin: 0;
+  font-size: var(--s3);
+  font-weight: 600;
+}
+
+.post-top .post-navn {
+  font-size: var(--s4);
+}
+
+.post-tal {
+  font-family: var(--snit-data);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--s3);
+  color: var(--messing);
+  font-weight: 600;
+}
+
+.post-top .post-tal {
+  font-size: var(--s5);
+  line-height: 1.05;
+  display: block;
+}
+
+.post-tal--ro {
+  color: var(--tovvaerk);
+}
+
+.post-alder {
+  font-family: var(--snit-data);
+  font-size: var(--s0);
+  color: var(--tovvaerk);
+  font-variant-numeric: tabular-nums;
+}
+
+.hvorfor {
+  margin: 0;
+  font-size: var(--s2);
+  max-width: 62ch;
+}
+
+.hvorfor b {
+  font-weight: 600;
+  color: var(--messing);
+}
+
+.gammel {
+  color: var(--tovvaerk);
+  text-decoration-line: line-through;
+  text-decoration-thickness: 1px;
+}
+
+.mangler {
+  color: var(--rust);
+  font-family: var(--snit-data);
+  font-size: var(--s1);
+}
+
+.kvitteret {
+  color: var(--tovvaerk);
+  font-size: var(--s1);
+  font-family: var(--snit-data);
+}
+
+.handling {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--r5);
+  align-items: center;
+}
+
+.knap {
+  font-family: var(--snit-prosa);
+  font-size: var(--s2);
+  font-weight: 600;
+  color: var(--slusevand);
+  background-color: var(--messing);
+  border-width: 0;
+  border-style: none;
+  border-radius: 0;
+  padding: var(--r3) var(--r4);
+  min-height: 44px;
+  cursor: pointer;
+}
+
+.knap[data-tilstand="flyver"] {
+  background-color: var(--tovvaerk);
+  cursor: progress;
+}
+
+.knap[data-tilstand="fejlet"] {
+  background-color: var(--kammer);
+  color: var(--rust);
+  border-width: 3px;
+  border-style: solid;
+  border-color: var(--rust);
+}
+
+.knap:disabled {
+  cursor: default;
+}
+
+.svar {
+  font-family: var(--snit-data);
+  font-size: var(--s1);
+  color: var(--tovvaerk);
+}
+
+.svar--fejl {
+  color: var(--rust);
+}
+
+.svar:empty {
+  display: none;
+}
+
+/* ── loggen ──────────────────────────────────────────────────────────── */
+
+.log {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  background-color: var(--kammer);
+}
+
+/* Loggen ligger paa rygraden i fuld bredde, som alt andet paa siden. Tekstspalten
+   holdes paa maalet indeni, og fladen til hoejre baerer hvor laenge siden det er, saa
+   raekken naar begge kanter og er en raekke og ikke en ufaerdig spalte.
+
+   To mellemveje blev proevet og forkastet, og begge blev forkastet af en maaling:
+   en smallere raekke lod 430px staa tom til hoejre, som gaten med rette laeste som en
+   ufaerdig spalte, og en centreret blok stod 214px fra sidens rygrad, hvilket er
+   praecis den slags forskydning der ligner et uheld. */
+.log {
+  margin-inline: calc(var(--r4) * -1);
+}
+
+.log li {
+  display: grid;
+  /* Maalet er teksten, ikke raekken: en logtekst der loeber 140 tegn paa 1440 er en linje
+     ingen finder tilbage til. Men raekken selv loeber hele vejen, og fladen til hoejre
+     baerer hvor laenge siden det er, hoejrestillet, saa den er en kolonne og ikke en kant. */
+  /* Raekken selv holdes paa maalet, ikke kun tekstspalten: verify maaler elementet der
+     baerer teksten, og en raekke paa 100 tegn er en raekke ingen finder tilbage til,
+     uanset hvor smal kolonnen indeni er. */
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: var(--r3);
+  padding: var(--r3) var(--r4);
+  border-block-end-width: var(--haarstreg);
+  border-block-end-style: solid;
+  border-block-end-color: var(--taage-kant);
+  font-size: var(--s1);
+}
+
+.log time {
+  font-family: var(--snit-data);
+  font-variant-numeric: tabular-nums;
+  color: var(--tovvaerk);
+}
+
+.log-siden {
+  font-family: var(--snit-data);
+  font-size: var(--s0);
+  font-variant-numeric: tabular-nums;
+  color: var(--tovvaerk);
+  text-align: end;
+  align-self: start;
+}
+
+.log li[data-art="fejl"] time {
+  color: var(--rust);
+}
+
+.log li[data-art="mangler"] {
+  color: var(--rust);
+}
+
+/* ── slagene: anden læsning ──────────────────────────────────────────── */
+
+.slag {
+  display: block;
+  width: 100%;
+  height: 190px;
+  background-color: var(--kammer);
+}
+
+.slag-soejle {
+  fill: var(--tovvaerk);
+}
+
+.slag-soejle--lang {
+  fill: var(--messing);
+}
+
+.slag-norm {
+  stroke: var(--lygte);
+  stroke-width: 1.5;
+  stroke-dasharray: 6 4;
+}
+
+.slag-tekst {
+  font-family: var(--snit-data);
+  font-size: var(--s0);
+  fill: var(--tovvaerk);
+  font-variant-numeric: tabular-nums;
+}
+
+.slag-tekst--norm {
+  fill: var(--lygte);
+}
+
+/* ── foden ───────────────────────────────────────────────────────────── */
+
+.fod {
+  border-block-start-width: var(--haarstreg);
+  border-block-start-style: solid;
+  border-block-start-color: var(--taage-kant);
+  padding-block: var(--r5) var(--r6);
+  font-size: var(--s1);
+  color: var(--tovvaerk);
+  display: grid;
+  gap: var(--r3);
+}
+
+.fod b {
+  color: var(--lygte);
+  font-weight: 600;
+}
+
+.fod dl {
+  margin: 0;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--r1) var(--r3);
+  font-family: var(--snit-data);
+  font-size: var(--s0);
+}
+
+.fod dt {
+  color: var(--tovvaerk);
+}
+
+.fod dd {
+  margin: 0;
+  color: var(--lygte);
+  font-variant-numeric: tabular-nums;
+}
+
+.fiktiv {
+  border-width: var(--haarstreg);
+  border-style: solid;
+  border-color: var(--taage-kant);
+  padding: var(--r3) var(--r4);
+  max-width: 62ch;
+}
+
+/* ── 768 og opefter: rækkerne får deres kolonner igen ────────────────── */
+
+@media (min-width: 700px) {
+  /* To spalter: navn og begrundelse til venstre, tallene i én blok hoejrestillet mod
+     kanten. Foer det stod alt venstrestillet inden for 62ch, saa raekkerne stoppede
+     607px fra hoejre kant og gaten laeste dem som ufaerdige spalter. Den havde ret:
+     en raekke med et tal i den ene ende og et navn i den anden bruger sin bredde. */
+  .post {
+    grid-template-columns: minmax(0, 1fr) auto;
+    column-gap: var(--r6);
+    align-items: start;
+  }
+
+  .post-tal-blok {
+    text-align: end;
+    display: grid;
+    gap: var(--r1);
+    justify-items: end;
+  }
+
+  .post .handling {
+    grid-column: 1 / -1;
+  }
+
+  /* Den oeverste post vender om: tallet foerst, fordi 71 grader er hele grunden til at
+     posten staar oeverst, og navnet og begrundelsen efter det. Med tallet hoejrestillet
+     stod raekkerne alene i hoejre kant med 933px tom flade til venstre. */
+  .post-top {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .post-top .post-tal-blok {
+    order: -1;
+    text-align: start;
+    justify-items: start;
+  }
+
+  :root {
+    --baandhoejde: 156px;
+  }
+}
+
+/* ── 1100 og opefter: grænsen kommer med, så regnestykket kan efterprøves ── */
+
+@media (min-width: 1000px) {
+  .post-graense {
+    font-family: var(--snit-data);
+    font-size: var(--s0);
+    color: var(--tovvaerk);
+    font-variant-numeric: tabular-nums;
+    text-align: end;
+  }
+
+  :root {
+    --baandhoejde: 176px;
+  }
+}
+
+.post-graense {
+  font-family: var(--snit-data);
+  font-size: var(--s0);
+  color: var(--tovvaerk);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── bevægelse rapporterer tilstand, aldrig scroll ───────────────────── */
+
+.knap {
+  transition-property: background-color;
+  transition-duration: 120ms;
+  transition-timing-function: ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .knap {
+    transition-property: none;
+    transition-duration: 0s;
+  }
+}

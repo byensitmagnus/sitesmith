@@ -1,0 +1,474 @@
+{
+  "$comment": [
+    "Nineteen dimensions, three upstreams, and what SiteSmith already does about each.",
+    "",
+    "This is a decision document, not a delivery. It was written by comparing the pinned",
+    "commits in docs/rebuild/SOURCE-REGISTRY.json against each upstream's current main, and",
+    "by reading docs/rebuild/MECHANISM-LEDGER.json and PLACEMENT.json rather than repeating",
+    "the source research those files already carry.",
+    "",
+    "`sitesmithHas` is one of: yes, partial, no. It is a claim about a file that exists and a",
+    "check that runs, never about an intention. `proof` names the thing that would fail if the",
+    "claim were false."
+  ],
+  "schemaVersion": 1,
+  "writtenAt": "2026-08-03",
+  "aiGenerated": "(C)",
+  "upstreams": {
+    "frontend-design": {
+      "repo": "https://github.com/anthropics/skills",
+      "path": "skills/frontend-design",
+      "pinned": "b29e7cf65e5cb78a5ac33d582270551bc74a14eb",
+      "currentHead": "b29e7cf65e5cb78a5ac33d582270551bc74a14eb",
+      "changedSincePin": false,
+      "lastTouchedThatPath": "2026-06-09, before the pin",
+      "decision": "not reopened. The instruction was to reopen only if it had changed, and it has not.",
+      "licence": "Apache-2.0"
+    },
+    "impeccable": {
+      "repo": "https://github.com/pbakaus/impeccable",
+      "pinned": "6b342244e915d64b0d6e84d5eec448fd196ce6bb",
+      "currentHead": "69b63d36b6321b5a073af320b6365683936f2745",
+      "changedSincePin": true,
+      "aheadBy": 68,
+      "filesChanged": 260,
+      "whatActuallyChanged": [
+        "scripts/lib/staleness-deep.mjs, a second staleness tier that reports drift as a measured proxy and refuses to call a document wrong because a number is large",
+        "scripts/lib/design-parser.mjs, a two-layer DESIGN.md parser: YAML frontmatter for machine-readable tokens plus six canonical prose sections, with a coverage report",
+        "scripts/lib/concept-catalog.mjs, the external concept assignment",
+        "scripts/context.mjs and the hook scripts, mostly provider plumbing",
+        "no new files: the 260 figure is one change replicated across fifteen provider directories"
+      ],
+      "licence": "Apache-2.0"
+    },
+    "ui-ux-pro-max": {
+      "repo": "https://github.com/nextlevelbuilder/ui-ux-pro-max-skill",
+      "pinned": "4857a2c5ef989794751a0f66b8545a4a49566286",
+      "currentHead": "4d140cf8ff6842de13213c7214eff3810371beb2",
+      "changedSincePin": true,
+      "aheadBy": 4,
+      "filesChanged": 51,
+      "whatActuallyChanged": [
+        "scripts/design_system.py, +112 lines: a colour-mode resolver that reads dark intent out of the query and picks a palette for it, plus relative luminance",
+        "scripts/tests/test_design_system_mode.py, new",
+        "a Next.js gallery, which is a website about the skill and not a mechanism in it"
+      ],
+      "licence": "MIT"
+    }
+  },
+  "recommendationVocabulary": {
+    "keep": "SiteSmith's existing answer is at least as good. Nothing to import.",
+    "adapt": "The mechanism is worth having and is rebuilt here against SiteSmith's own contract, not copied.",
+    "test-in-lab": "Plausible and unproven. It goes behind a lab flag and is measured against the production default on the same briefs.",
+    "reject": "Named, with the reason. Not deferred."
+  },
+  "dimensions": [
+    {
+      "n": 1,
+      "id": "product-truth-and-context-lifecycle",
+      "name": "Product truth and context lifecycle",
+      "upstream": {
+        "impeccable": "Three artefacts with separate jobs: a product-level document, a DESIGN.md written after the build by a fresh sub-agent, and a per-route surface brief holding only scope, mode, audience, job and constraints. Plus two tiers of staleness check, the deep one counting commits that touched visual source directories since the design document was last edited.",
+        "ui-ux-pro-max": "MASTER.md plus per-page override files, with a skip-write-unless-force rule and a structured skipped_exists status.",
+        "frontend-design": "Subject-grounding mandate: where the brief is thin the model must invent a concrete subject, audience and page job and state it."
+      },
+      "sitesmithHas": "partial",
+      "path": [
+        ".sitesmith/PROJECT.md",
+        ".sitesmith/DESIGN.md",
+        ".sitesmith/direction.md",
+        ".sitesmith/RUN.json",
+        "skills/sitesmith-v3/commands.mjs#init"
+      ],
+      "proof": "tools/test-commands-exit.mjs writes all four in a temporary project and asserts the manifest's shape; skills/sitesmith-v3/scripts/test-state.mjs covers the state graph.",
+      "gap": "The four files exist and their responsibilities are described in prose, not enforced. None carries a schema version. Nothing measures whether DESIGN.md still describes the code, so a second surface in the same project reads a design record that may be six weeks stale with no signal either way.",
+      "recommendation": "adapt",
+      "adaptation": "Add a schema version to each state file and one cheap staleness check modelled on Impeccable's: count commits touching the visual source directories since the record was last written, report it as a proxy, and never rewrite the user's document.",
+      "contextBloatRisk": "low",
+      "houseStyleConvergenceRisk": "none",
+      "licence": "Apache-2.0, notice required in THIRD-PARTY-NOTICES.md. Mechanism adapted, no text copied."
+    },
+    {
+      "n": 2,
+      "id": "surface-strategy",
+      "name": "Surface strategy",
+      "upstream": {
+        "impeccable": "Four named visitor registers, Persuade, Operate, Read and Experience, chosen from the requested surface rather than from the project type.",
+        "ui-ux-pro-max": "A hand-authored keyword-per-domain dictionary scored by word-boundary match, which routes a query to a category.",
+        "frontend-design": "None. It is one document about one page."
+      },
+      "sitesmithHas": "yes",
+      "path": ["skills/sitesmith-v3/floor/buy.md", "skills/sitesmith-v3/floor/operate.md", "skills/sitesmith-v3/SKILL.md#context.scenarios"],
+      "proof": "SKILL.md's context map loads a different floor per surface, and tools/context-budget.mjs enforces a ceiling per scenario. gate.mjs has surface-specific classes such as operate/nothing-to-do-on-the-first-screen.",
+      "gap": "buy and operate have floors. read and experience are named in the surface list and have no floor file, so two of the four surfaces get the generic floor.",
+      "recommendation": "keep",
+      "adaptation": "The gap is real but it is a content gap in SiteSmith's own floors, not something either upstream would fill. Out of scope for this round.",
+      "contextBloatRisk": "medium, a floor file per surface is loaded on every build of that surface",
+      "houseStyleConvergenceRisk": "medium if a floor starts naming appearances rather than renditions; tools/floor-lint.mjs exists for exactly that.",
+      "licence": "n/a, no import"
+    },
+    {
+      "n": 3,
+      "id": "creative-direction-formation",
+      "name": "Creative direction formation",
+      "upstream": {
+        "impeccable": "A forced index roll: the model derives its own grounded candidate directions, then a SHA-256 of a session key forces one of them, so the model cannot always take its favourite.",
+        "ui-ux-pro-max": "BM25-match a product category and look it up verbatim in a 30-row reasoning table for a pre-written style, colour mood and typography mood.",
+        "frontend-design": "Hero as thesis, signature-element restraint, self-critique against what a similar brief would produce by default."
+      },
+      "sitesmithHas": "yes",
+      "path": ["skills/sitesmith-v3/SKILL.md", "skills/sitesmith-v3/look.md", "skills/sitesmith-v3/scripts/ledger.mjs#REQUIRED"],
+      "proof": "The direction record requires Theses, Case for the runner-up, Built, Signature, Risk, Answer to the risk and Second reading, and gate.mjs refuses when the signature or the second reading does not render. Three of three cold builds were accepted after the second reading was added, against zero of the first nine.",
+      "gap": "None in the production path. The one thing SiteSmith cannot do is assign a direction from outside the model's own preference, which is what the forced roll is for.",
+      "recommendation": "test-in-lab",
+      "adaptation": "Impeccable's external concept assignment goes behind a lab flag only, measured against the three-thesis process on the same briefs with blind review. SiteSmith already lost 40 to 59 to a generator once; it does not come back without new evidence.",
+      "contextBloatRisk": "low in lab",
+      "houseStyleConvergenceRisk": "high. A catalogue of concepts is a house style with extra steps unless the catalogue is derived per subject.",
+      "licence": "Apache-2.0. Lab only, notice required if any text is used."
+    },
+    {
+      "n": 4,
+      "id": "color-discovery",
+      "name": "Colour discovery",
+      "upstream": {
+        "impeccable": "Colours are scraped out of the finished build into DESIGN.md, in hex, OKLCH and rgba, grouped, with named rules. Discovery is the model's; the parser only records it.",
+        "ui-ux-pro-max": "generate_design_system(query) BM25-matches a category, reads a palette off a CSV, and returns it as the project's palette. Since the pin it also reads dark intent out of the query and selects a dark palette by relative luminance.",
+        "frontend-design": "Four to six named hex colours chosen for the brief, before code."
+      },
+      "sitesmithHas": "yes",
+      "path": ["skills/sitesmith-v3/look.md#5", "skills/sitesmith-v3/scripts/ledger.mjs#REQUIRED (Colour)", "skills/sitesmith-v3/scripts/gate.mjs#direction/palette-not-declared"],
+      "proof": "gate.mjs refuses direction/palette-not-declared and direction/ground-outside-declared-band, and tokens/undeclared-literal refuses a colour used that the record never declared.",
+      "gap": "The record names a palette in prose. Nothing states where each colour came from in the subject's own material, so provenance per colour is unrecorded and cannot be checked.",
+      "recommendation": "adapt",
+      "adaptation": "Design Contract v1 carries source colours with the material they came from and a reason, per colour. The upstream contribution is the idea of recording colour in more than one notation, taken from Impeccable's parser. UI/UX Pro Max's category-to-palette lookup is rejected below.",
+      "contextBloatRisk": "low, the contract is written not read on every build",
+      "houseStyleConvergenceRisk": "none if the source is the subject; total if the source is a table.",
+      "licence": "Apache-2.0 for the notation idea. MIT source not used."
+    },
+    {
+      "n": 5,
+      "id": "semantic-color-system",
+      "name": "Semantic colour system",
+      "upstream": {
+        "impeccable": "Colour groups with named rules, parsed into a model the live panel renders. No fixed role vocabulary.",
+        "ui-ux-pro-max": "A ten-role vocabulary: primary, on_primary, secondary, accent, background, foreground, muted, border, destructive, ring, each mapped to a CSS custom property.",
+        "frontend-design": "Roles by intent rather than by name."
+      },
+      "sitesmithHas": "no",
+      "path": [],
+      "proof": "There is nothing to prove. gate.mjs measures declared-versus-used literals; no file states what a colour is for.",
+      "gap": "The largest single gap in this matrix. Nothing in SiteSmith says which colour is the action, which is the focus ring, which is the destructive state, or which foreground goes on which background. Contrast is measured by axe on the rendered page, so a pair that is never rendered in a state the crawler reaches is never measured at all.",
+      "recommendation": "adapt",
+      "adaptation": "Take the role vocabulary as structural inspiration, exactly as permitted: role names and foreground/background pairing. Reject the mapping that fills them from a category table. SiteSmith fills the same roles from the subject's own source colours and validates contrast per pair and per state.",
+      "contextBloatRisk": "low",
+      "houseStyleConvergenceRisk": "low for the vocabulary, high for the table. Ten role names do not make two sites look alike; ten values do.",
+      "licence": "MIT, notice already present. Structure only, no values, no CSV, no code."
+    },
+    {
+      "n": 6,
+      "id": "typography-selection",
+      "name": "Typography selection",
+      "upstream": {
+        "impeccable": "Font roles normalised out of the built page into a hierarchy record.",
+        "ui-ux-pro-max": "A category table returning a heading font, a body font, a mood and a Google Fonts URL.",
+        "frontend-design": "Two or more typefaces by role, deliberately paired for the brief, with an intentional scale."
+      },
+      "sitesmithHas": "partial",
+      "path": ["skills/sitesmith-v3/scripts/ledger.mjs#REQUIRED (Type)", "skills/sitesmith-v3/scripts/gate.mjs#direction/display-face-not-the-declared-one"],
+      "proof": "gate.mjs refuses when the rendered display or body face is not the one the record declared. That is a real check and it runs against the DOM.",
+      "gap": "The record names two faces. It does not name the role beyond display and body, the source, the licence, the weights or the axes, so a variable font shipped at one weight and a licensed font shipped without its licence both pass.",
+      "recommendation": "adapt",
+      "adaptation": "Design Contract v1 carries display, body, utility, data and code roles as needed, each with family, source, licence, weights and axes, and a reason from the subject.",
+      "contextBloatRisk": "low",
+      "houseStyleConvergenceRisk": "none for the schema. The pairings themselves are refused as defaults.",
+      "licence": "MIT pairings may appear as candidates carrying a genericness risk, never as an answer."
+    },
+    {
+      "n": 7,
+      "id": "typography-delivery-and-stress",
+      "name": "Typography delivery and stress",
+      "upstream": {
+        "impeccable": "None beyond recording what was used.",
+        "ui-ux-pro-max": "A CSS import line and a Google Fonts URL.",
+        "frontend-design": "None."
+      },
+      "sitesmithHas": "partial",
+      "path": ["skills/sitesmith-v3/scripts/verify.mjs (type floor, --font-stress)"],
+      "proof": "verify.mjs measures a type floor at three widths and has a font-stress mode that re-measures widths under a wide fallback.",
+      "gap": "No upstream has this and neither, fully, does SiteSmith. Nothing records the loading strategy, the fallback stack, metric compatibility or language coverage, and nothing stresses a long Danish heading or 200 per cent zoom. The pilot is a Danish page and none of that was measured.",
+      "recommendation": "adapt",
+      "adaptation": "The contract carries loading strategy, fallback stack, metric compatibility and language coverage; the validator runs the stress cases and records the results in the contract itself. Nothing imported: this is SiteSmith's own gap and no upstream fills it.",
+      "contextBloatRisk": "low",
+      "houseStyleConvergenceRisk": "none",
+      "licence": "original"
+    },
+    {
+      "n": 8,
+      "id": "layout-formation",
+      "name": "Layout formation",
+      "upstream": {
+        "impeccable": "A craft floor of measurable properties loaded once before UI edits.",
+        "ui-ux-pro-max": "A spacing scale bucketed by a density dial.",
+        "frontend-design": "Structure as information: a structural device should encode something true about the content."
+      },
+      "sitesmithHas": "yes",
+      "path": ["skills/sitesmith-v3/look.md#4", "skills/sitesmith-v3/scripts/gate.mjs (look/lopsided-band, look/one-layout, look/wider-than-its-content, look/ragged-margin, look/dead-field)"],
+      "proof": "78 fixtures in tools/gate-fixtures.mjs, each a page the gate must accept or must refuse. The lopsided-band check was put first by three blind reviewers independently.",
+      "gap": "The measurements are refusals about a finished page. Nothing states the intended reading path, the leading and supporting elements, the grouping or the first viewport object before the page exists, so a layout that fails look/one-layout has no record of what it was trying to be.",
+      "recommendation": "adapt",
+      "adaptation": "The layout half of Design Contract v1 states the path and the structure before implementation. Frontend-design's structure-as-information is already in SKILL.md; this makes it checkable rather than adding it.",
+      "contextBloatRisk": "low",
+      "houseStyleConvergenceRisk": "medium. A contract that names a topology could become a template if the topology vocabulary is short. It is left open rather than enumerated.",
+      "licence": "original"
+    },
+    {
+      "n": 9,
+      "id": "responsive-adaptation",
+      "name": "Responsive adaptation",
+      "upstream": {
+        "impeccable": "Six viewports in a heuristic audit.",
+        "ui-ux-pro-max": "The same six-viewport Playwright script, measuring focus, contrast, overflow and tap targets.",
+        "frontend-design": "Prose instruction only."
+      },
+      "sitesmithHas": "yes",
+      "path": ["skills/sitesmith-v3/scripts/verify.mjs"],
+      "proof": "375, 768 and 1440 rendered on every run, horizontal overflow and tap targets measured at each, and the pilot's CI job asserts all three renders exist.",
+      "gap": "Three widths are measured and no width is planned. Nothing states what the layout is supposed to become at 375, so a stacked column that loses the argument order passes every check.",
+      "recommendation": "adapt",
+      "adaptation": "The contract names the responsive transformation and the departures at each of the three widths; the validator compares them against the rendered DOM.",
+      "contextBloatRisk": "low",
+      "houseStyleConvergenceRisk": "low",
+      "licence": "original"
+    },
+    {
+      "n": 10,
+      "id": "component-and-state-contracts",
+      "name": "Component and state contracts",
+      "upstream": {
+        "impeccable": "Components with variants extracted from the built page into DESIGN.md.",
+        "ui-ux-pro-max": "Static UX knowledge tables, terse rule id plus standard plus rationale, loaded on demand.",
+        "frontend-design": "None."
+      },
+      "sitesmithHas": "yes",
+      "path": ["skills/sitesmith-v3/scripts/inspect.mjs", "skills/sitesmith-v3/floor/buy.md", "skills/sitesmith-v3/floor/operate.md"],
+      "proof": "inspect.mjs records components and six states each with an evidence type, and refuses to record a route it could not read. skills/sitesmith-v3/scripts/test-inspect.mjs covers it.",
+      "gap": "inspect measures an existing site. On a new build nothing states the states before they are built, so empty, loading, partial, error and success are a floor requirement in prose and a hope in practice.",
+      "recommendation": "adapt",
+      "adaptation": "The contract carries the states the surface owes. This is the same mechanism inspect already has, moved to the front of the run.",
+      "contextBloatRisk": "low",
+      "houseStyleConvergenceRisk": "none",
+      "licence": "original"
+    },
+    {
+      "n": 11,
+      "id": "motion",
+      "name": "Motion",
+      "upstream": {
+        "impeccable": "Motion inside the craft floor.",
+        "ui-ux-pro-max": "A motion snippet and a motion dial.",
+        "frontend-design": "Deliberate motion: one orchestrated moment, tied to the subject, with an explicit warning against decorating."
+      },
+      "sitesmithHas": "yes",
+      "path": ["skills/sitesmith-v3/motion.md", "skills/sitesmith-v3/knowledge/motion.jsonl", "skills/sitesmith-v3/scripts/verify.mjs (reduced-motion pass)"],
+      "proof": "verify.mjs renders a reduced-motion pass and the floor requires prefers-reduced-motion to stop the work, not only the animation.",
+      "gap": "None worth closing this round.",
+      "recommendation": "keep",
+      "contextBloatRisk": "low, motion.md loads only on the experience scenario",
+      "houseStyleConvergenceRisk": "low",
+      "licence": "n/a"
+    },
+    {
+      "n": 12,
+      "id": "ux-and-cro-patterns",
+      "name": "UX and CRO patterns",
+      "upstream": {
+        "impeccable": "None as such.",
+        "ui-ux-pro-max": "Two static markdown tables of rule id, standard and rationale, loaded on demand.",
+        "frontend-design": "Copy as design material: user-facing vocabulary, active voice."
+      },
+      "sitesmithHas": "yes",
+      "path": ["skills/sitesmith-v3/knowledge/cro-rules.jsonl", "skills/sitesmith-v3/knowledge/ux-rules.jsonl", "skills/sitesmith-v3/knowledge/evidence.jsonl"],
+      "proof": "30 checks in skills/sitesmith-v3/knowledge/test-retrieve.mjs, and every result prints the hard rule that it is a building block and not a look.",
+      "gap": "None. The load-on-demand shape is already the shape SiteSmith uses.",
+      "recommendation": "keep",
+      "contextBloatRisk": "low, retrieval returns at most three posts",
+      "houseStyleConvergenceRisk": "low",
+      "licence": "MIT, notice present"
+    },
+    {
+      "n": 13,
+      "id": "knowledge-retrieval",
+      "name": "Knowledge retrieval",
+      "upstream": {
+        "impeccable": "None.",
+        "ui-ux-pro-max": "Stdlib-only BM25 over per-domain CSVs with a stopword list and a synonym dictionary, plus an explicit no-match sentence and nearness suggestions.",
+        "frontend-design": "None."
+      },
+      "sitesmithHas": "yes",
+      "path": ["skills/sitesmith-v3/knowledge/retrieve.mjs"],
+      "proof": "129 posts, idf weighting, hard surface and stack filters, a no-match threshold that says so rather than returning the least bad post, at most three results, and the hard rule printed with every result.",
+      "gap": "The corpus has nothing on semantic colour systems, dark and light composition, typography delivery, responsive adaptation, form states, navigation, data visualisation, icon systems or motion systems as systems. Design Contract v1 asks builders questions the index cannot help them answer.",
+      "recommendation": "adapt",
+      "adaptation": "Add only the posts Design Contract v1 needs, each with provenance, confidence, genericness risk, worksWhen, avoidWhen, failure modes, mobile and accessibility. Keep the hard rule.",
+      "contextBloatRisk": "none, the corpus is not loaded; retrieval reads it and returns three posts",
+      "houseStyleConvergenceRisk": "medium, and it is the reason for the genericness-risk field on every post",
+      "licence": "MIT zero-result honesty already adopted; new posts are original."
+    },
+    {
+      "n": 14,
+      "id": "anti-pattern-detection",
+      "name": "Anti-pattern detection",
+      "upstream": {
+        "impeccable": "A 59-rule deterministic registry of named AI tells, each mapped to a static-HTML/CSS or rendered detector.",
+        "ui-ux-pro-max": "Anti-patterns as prose per style, filtered by colour mode since the pin.",
+        "frontend-design": "Three named cliche clusters, calibrated by observation."
+      },
+      "sitesmithHas": "yes",
+      "path": ["skills/sitesmith-v3/scripts/gate.mjs", "skills/sitesmith-v3/knowledge/anti-patterns.jsonl", "docs/GATE-POLICY.md"],
+      "proof": "51 refusal classes, 78 fixtures, and a policy requiring a user-affecting defect, two independent reproductions, a low-false-positive measurement and proof no existing gate covers it before a new hard gate is added.",
+      "gap": "The rules exist as code and as fixtures. There is no registry: no stable id, no severity, no false-positive risk, no override path and no provenance per rule, so the policy is enforced by review rather than by the artefact.",
+      "recommendation": "adapt",
+      "adaptation": "Refactor the existing rules through a canonical registry with no change of semantics and no new hard gates. Impeccable's registry shape is the model; its rules are not imported.",
+      "contextBloatRisk": "none, the registry is read by scripts",
+      "houseStyleConvergenceRisk": "none",
+      "licence": "Apache-2.0 for the shape. No rule text copied."
+    },
+    {
+      "n": 15,
+      "id": "browser-verification",
+      "name": "Browser verification",
+      "upstream": {
+        "impeccable": "A live server, a live browser and dual isolated critique sub-agents, one reading the design and one reading detector and browser evidence, with no shared context.",
+        "ui-ux-pro-max": "A 233-line Playwright heuristic script over six viewports measuring focus, contrast, overflow and tap targets.",
+        "frontend-design": "None."
+      },
+      "sitesmithHas": "yes",
+      "path": ["skills/sitesmith-v3/scripts/verify.mjs", "skills/sitesmith-v3/scripts/journey.mjs"],
+      "proof": "Three widths, axe in both colour schemes, console errors, dead links, horizontal overflow, keyboard focus indicators, type floor, reduced motion, and a withheld verdict rather than a pass when a browser is missing. The pilot's CI job runs all of it against a production build.",
+      "gap": "None in measurement. SiteSmith deliberately does not have Impeccable's live browser iteration, which is stated in the README.",
+      "recommendation": "keep",
+      "contextBloatRisk": "none",
+      "houseStyleConvergenceRisk": "none",
+      "licence": "MIT heuristic audit already credited"
+    },
+    {
+      "n": 16,
+      "id": "critique-and-human-judgement",
+      "name": "Critique and human judgement",
+      "upstream": {
+        "impeccable": "Finish capped at two inspection rounds, reviewed by a fresh non-forked sub-agent against a fixed rubric.",
+        "ui-ux-pro-max": "A design-review sub-agent.",
+        "frontend-design": "A self-critique loop against the brief and against what a similar brief would produce by default."
+      },
+      "sitesmithHas": "yes",
+      "path": ["skills/sitesmith-v3/scripts/critique.mjs", "skills/sitesmith-v3/scripts/gate.mjs#critique/not-taken"],
+      "proof": "Six answers written from the images alone with the record closed, hashed to the render that ships, one correction round and the second refused. gate.mjs refuses critique/stale when the hash does not match the shipped render.",
+      "gap": "None.",
+      "recommendation": "keep",
+      "contextBloatRisk": "none",
+      "houseStyleConvergenceRisk": "none",
+      "licence": "Apache-2.0 bounded-loop idea already credited"
+    },
+    {
+      "n": 17,
+      "id": "provider-packaging",
+      "name": "Provider packaging",
+      "upstream": {
+        "impeccable": "Fifteen provider directories, physically synced, each carrying the whole skill.",
+        "ui-ux-pro-max": "Physically synced copies rather than symlinks, because symlinks break on git for Windows, plus a CI drift check.",
+        "frontend-design": "One directory."
+      },
+      "sitesmithHas": "yes",
+      "path": ["product/pipeline.json", "tools/provider-pack.mjs", "tools/test-pipeline-drift.mjs"],
+      "proof": "Every pack is generated from one pipeline; the drift test unpacks a real install and compares the shipped JOURNEY.md byte for byte against the rendered pipeline. Closed in the alpha-hardening round immediately before this one.",
+      "gap": "Design Contract v1 and its validator have to ship inside the pack and inside the ZIP, or an installed user has a contract they cannot validate.",
+      "recommendation": "adapt",
+      "adaptation": "Add the contract and validator to the package and assert their presence in the drift test and the clean-package job.",
+      "contextBloatRisk": "none",
+      "houseStyleConvergenceRisk": "none",
+      "licence": "MIT sync-not-symlink lesson already adopted"
+    },
+    {
+      "n": 18,
+      "id": "hooks",
+      "name": "Hooks",
+      "upstream": {
+        "impeccable": "Session-boot and before-edit hooks per provider, with an admin script that installs and verifies them, and a staleness check that reports when a hook is registered but its script is missing.",
+        "ui-ux-pro-max": "None.",
+        "frontend-design": "None."
+      },
+      "sitesmithHas": "no",
+      "path": [],
+      "proof": "There is nothing to prove.",
+      "gap": "SiteSmith runs when a person or an agent runs it. It cannot interrupt an edit.",
+      "recommendation": "reject",
+      "adaptation": "Rejected for this round, with the reason. A before-edit hook is a second way for the product to act, in a second place, on every provider, and provider hook formats differ. That is an orchestration surface, and the constraints for this round exclude one. The gap is recorded, not deferred silently.",
+      "contextBloatRisk": "medium",
+      "houseStyleConvergenceRisk": "none",
+      "licence": "n/a, not imported"
+    },
+    {
+      "n": 19,
+      "id": "testing-and-release",
+      "name": "Testing and release",
+      "upstream": {
+        "impeccable": "A CI drift check across the fifteen synced copies.",
+        "ui-ux-pro-max": "A CI drift check across three synced copies, plus python tests for the design-system generator.",
+        "frontend-design": "None."
+      },
+      "sitesmithHas": "yes",
+      "path": [".github/workflows/verify.yml", "tools/test-pipeline-drift.mjs", "tools/test-commands-exit.mjs", "tools/gate-fixtures.mjs"],
+      "proof": "Seven CI jobs, the archive unpacked into an empty directory and driven on node 20, 22 and 24, the pilot rebuilt from its lockfile and passing its own gates, and benchmarks/06-redesign/before/ required to keep failing.",
+      "gap": "The contract needs its own fixtures: a contract that passes, a contract that fails each way it can fail, and a build that contradicts its own contract.",
+      "recommendation": "adapt",
+      "adaptation": "Add contract fixtures in the same shape as the 78 gate fixtures.",
+      "contextBloatRisk": "none",
+      "houseStyleConvergenceRisk": "none",
+      "licence": "original"
+    }
+  ],
+  "rejected": [
+    {
+      "mechanism": "ui-ux-pro-max/design-system-generator",
+      "what": "BM25-match a product category, look it up in ui-reasoning.csv, and return that row's style, colour mood, typography mood and effects as the project's design system.",
+      "why": "It is the exact thing SiteSmith exists to not do. A category table gives every glazier the same palette and every SaaS landing page the same pair of typefaces, which is the failure the whole product is a response to. Already dropped once in docs/rebuild/PLACEMENT.json; recorded again here because the schema around it is being adopted and the generator must not travel with it.",
+      "carriedForward": "the ten-role vocabulary and the foreground/background pairing, as structure only"
+    },
+    {
+      "mechanism": "ui-ux-pro-max/domain-auto-detect",
+      "what": "A keyword-per-domain dictionary that routes a query to a category.",
+      "why": "Same reason. It is the input side of the category table.",
+      "carriedForward": "nothing"
+    },
+    {
+      "mechanism": "ui-ux-pro-max/design-dials",
+      "what": "Three 1 to 10 flags bucketed into tiers that bias the style query.",
+      "why": "Dropped in the rebuild and not revisited. A dial that biases a lookup is only as good as the lookup, and the lookup is rejected.",
+      "carriedForward": "nothing"
+    },
+    {
+      "mechanism": "ui-ux-pro-max font pairings as defaults",
+      "what": "Heading and body font per category with a Google Fonts URL.",
+      "why": "A branch answer produces a branch look. They may appear as candidates carrying an explicit genericness risk and may never be an answer.",
+      "carriedForward": "the candidate shape, with genericness risk attached"
+    },
+    {
+      "mechanism": "impeccable/hooks",
+      "what": "Session-boot and before-edit hooks across fifteen providers.",
+      "why": "A second way for the product to act, in a second place, per provider. That is an orchestration surface and this round is explicitly not building one.",
+      "carriedForward": "nothing"
+    },
+    {
+      "mechanism": "impeccable/live browser editor",
+      "what": "A live server plus a live browser panel for iterating on a running page.",
+      "why": "Already declined in the README and still declined. SiteSmith's loop is render, measure, refuse, and a live editor is a different product.",
+      "carriedForward": "nothing"
+    },
+    {
+      "mechanism": "impeccable/document-after-build-only",
+      "what": "DESIGN.md written only at finish, by a fresh sub-agent reading the shipped code.",
+      "why": "Kept as SiteSmith already has it in verify.md, but not extended to the design contract. The contract's whole purpose is to exist before implementation so the build can be compared against it; writing it afterwards would make it a description rather than a contract.",
+      "carriedForward": "the after-build record stays where it is"
+    }
+  ]
+}

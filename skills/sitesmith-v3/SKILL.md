@@ -14,13 +14,15 @@ context:
     experience: [run.md, look.md, motion.md, stacks/*]
     delegate: [run.md, delegation.md]
     inspect: [verify.md]
+    contract: [contract.md]
   ceilings:
-    always: 3140
+    always: 3160
     routine: 8600
-    experience: 8800
+    experience: 8820
     redesign: 9600
     delegate: 6000
     inspect: 4800
+    contract: 5200
 ---
 
 # sitesmith

@@ -74,6 +74,22 @@ for (const s of p.steps) {
   check(`${s.id}: ${file} exists in the package`, existsSync(join(SKILL, file)));
 }
 
+/* 3b. The design contract has to travel. A contract an installed user can write and cannot
+       validate is a form, and the schema is data the validator reads at runtime rather than
+       code bundled into it, so it is exactly the kind of file an installer forgets. */
+{
+  const dc = p.designContract;
+  check('product/pipeline.json declares the design contract', Boolean(dc));
+  if (dc) {
+    for (const f of [dc.schema, dc.validator]) {
+      check(`${f} exists`, existsSync(join(ROOT, f)));
+      check(`${f} is inside the package`, f.startsWith('skills/sitesmith-v3/'), f);
+    }
+    check('the contract does not claim to be a hard gate', dc.hardGate === false);
+    check('and says why not', typeof dc.whyNotAHardGate === 'string' && dc.whyNotAHardGate.length > 40);
+  }
+}
+
 /* 4. A README quickstart that does not match the pipeline's.
       The README is where a stranger starts. It was the last place still describing a
       journey nothing generated. */
@@ -129,6 +145,10 @@ for (const s of p.steps) {
         existsSync(shipped) && await readFile(shipped, 'utf8') === journey);
       for (const extra of Object.keys(packFiles(name, p))) {
         check(`${name}: ${extra} present`, existsSync(join(dir, PROVIDERS[name].dir, extra)));
+      }
+      /* The contract, its schema and its own step document, in every provider's pack. */
+      for (const f of ['scripts/contract.mjs', 'scripts/colour.mjs', 'contract/schema.json', 'contract.md']) {
+        check(`${name}: ${f} installed`, existsSync(join(dir, PROVIDERS[name].dir, f)));
       }
     }
   } finally {

@@ -41,7 +41,9 @@
       "critique.json": "the six answers, hashed to the render they were written against",
       "decisions.jsonl": "append-only, one line per decision",
       "state.json": "surfaces seen, project name",
-      "evidence/": "inspections, audits, baselines"
+      "evidence/": "inspections, audits, baselines",
+      "contract.json": "the implementable system state: colour, typography and layout as values, with every contrast result measured",
+      "CONTRACT.md": "the same contract, readable"
     }
   },
   "steps": [
@@ -114,6 +116,23 @@
       "stopsWhen": "the render's fingerprint repeats a recent one, or a device appears on every one of the last three records"
     },
     {
+      "id": "contract",
+      "does": "runs, then agent",
+      "command": "node <skill>/scripts/contract.mjs new <surface>   ->   contract.mjs check --write",
+      "module": "scripts/contract.mjs",
+      "reads": [
+        ".sitesmith/direction.md"
+      ],
+      "writes": [
+        ".sitesmith/contract.json",
+        ".sitesmith/CONTRACT.md"
+      ],
+      "agentThenDoes": "fills every field from the direction record and the subject: where each colour was found, which role it fills, which foreground goes on which background and in which state, the type roles with their fallback stacks and language coverage, and what the layout becomes at 375, 768 and 1440",
+      "whyNotTheRecord": "The record explains the decision and is prose. This is the same decision as values, so a build can be compared against it. A record can say 'warm ground, one cold accent' while the page ships body text at 3.9 to 1, and nothing in the record can tell.",
+      "gate": "node <skill>/scripts/contract.mjs check",
+      "stopsWhen": "a required field is unanswered, a role points at no primitive, a pair misses its contrast floor, or a translucent background has no stated backdrop. Exit 3, and the contract says which."
+    },
+    {
       "id": "implement",
       "does": "agent",
       "reads": [
@@ -150,6 +169,24 @@
         ".sitesmith/shots/report.json"
       ],
       "stopsWhen": "a browser is missing; the verdict is withheld and named, never passed"
+    },
+    {
+      "id": "contract-compare",
+      "does": "runs",
+      "command": "node <skill>/scripts/contract.mjs compare --url <url> [--write]   ->   contract.mjs stress --url <url> --write",
+      "module": "scripts/contract.mjs",
+      "reads": [
+        ".sitesmith/contract.json"
+      ],
+      "measures": [
+        "every primitive is declared on the page and renders as the contract's value",
+        "the first viewport object and the signature render, and the first viewport object is in the first screen",
+        "the declared focus order appears in the tab order, in that order",
+        "a coarse geometry adaptation proxy: the leading elements do not sit in the same eight-pixel position at 375 and at 1440. It is not a validation of the transformation the contract declares in prose",
+        "the squint proxy: where the first screen's ink actually is",
+        "the stress cases a browser can decide: a heading at three times its length, the page at 200 per cent zoom, and the page with its own faces blocked. A case a browser cannot decide keeps the words not run."
+      ],
+      "stopsWhen": "the stylesheets did not load, which is withheld rather than judged, or the build differs from the contract that was agreed before it"
     },
     {
       "id": "critique",
@@ -251,7 +288,8 @@
       "a critique locked to the render that ships",
       "a journey for buy, operate and redesign",
       "gate clean, or every refusal claimed in the direction record with a reason",
-      "a production build where the stack has one"
+      "a production build where the stack has one",
+      "a design contract that checks clean, and a compare against the build that ships"
     ],
     "neverClaims": "that the page is good. The gate refuses named defects; the verdict on the design belongs to a person who is shown it."
   },
@@ -296,6 +334,7 @@
     "build": "orchestrates",
     "inspect": "runs",
     "redesign": "both",
+    "contract": "runs",
     "audit": "runs",
     "verify": "runs"
   },
@@ -310,5 +349,22 @@
     "v2Pipeline": "skills/sitesmith/PIPELINE.json",
     "reachableBy": "node bin/sitesmith.mjs install --legacy-v2",
     "note": "History and explicit legacy support. It defines no normal user journey and no normal pack."
+  },
+  "designContract": {
+    "$comment": "Design Contract v1. Written after the direction is chosen and before implementation, provider-neutral, and shipped inside every pack.",
+    "schema": "skills/sitesmith-v3/contract/schema.json",
+    "validator": "skills/sitesmith-v3/scripts/contract.mjs",
+    "state": ".sitesmith/contract.json",
+    "readable": ".sitesmith/CONTRACT.md",
+    "hardGate": false,
+    "whyNotAHardGate": "docs/GATE-POLICY.md asks for a user-affecting defect, two independent reproductions and a low-false-positive measurement before a new hard gate. The contract has one pilot behind it. It refuses on its own command and it does not yet stop the run."
+  },
+  "rules": {
+    "$comment": "Every refusal class the engines emit, with what it is for and how it can be wrong. Generated from the code; the judgement is hand-written in rule-notes.json, and a class with no note cannot ship.",
+    "registry": "product/rules.json",
+    "notes": "product/rule-notes.json",
+    "generator": "tools/build-rule-registry.mjs",
+    "policy": "docs/GATE-POLICY.md",
+    "note": "This changed no rule's semantics. It is a description of what already runs."
   }
 }

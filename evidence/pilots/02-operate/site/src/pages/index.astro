@@ -1,0 +1,414 @@
+---
+import '../styles/vagt.css';
+
+/* Natten den 3. august er faste data, som briefen kræver. Skærmen står klokken 04:10,
+   og hver alder regnes fra det tidspunkt. Det siges på siden. */
+const NU = 4 * 60 + 10;            // 04:10 i minutter efter midnat
+const START = 22 * 60;             // vagten begynder 22:00
+const SLUT = 6 * 60 + 24 * 60;     // 06:00 næste døgn
+const LAENGDE = SLUT - START;      // 480 minutter
+
+const minut = (t) => {
+  const [h, m] = t.split(':').map(Number);
+  return (h < 12 ? h + 24 : h) * 60 + m;
+};
+const x = (t) => ((minut(t) - START) / LAENGDE) * 1000;
+
+const alder = (t, interval) => {
+  const min = (minut(t) - (NU < 12 * 60 ? NU + 24 * 60 : NU)) * -1;
+  return { minutter: min, gammel: min > (interval * 2) / 60 };
+};
+
+const slag = [
+  { start: '22:18', minutter: 11 },
+  { start: '22:47', minutter: 12 },
+  { start: '23:14', minutter: 19 },
+  { start: '23:52', minutter: 10 },
+  { start: '00:31', minutter: 11 },
+  { start: '01:02', minutter: 13 },
+  { start: '01:40', minutter: 11 },
+  { start: '02:15', minutter: 12 },
+  { start: '03:04', minutter: 11 },
+  { start: '03:31', minutter: 10 },
+  { start: '04:02', minutter: 11 },
+];
+
+const haendelser = [
+  { tid: '23:14', art: 'haster', tekst: 'Syd højre portblad standsede på 76 grader. Slaget tog 19 minutter og er logget som langsomt.' },
+  { tid: '01:02', art: 'haster', tekst: 'Hydraulisk tryk faldt til 114 bar i 40 sekunder under slaget og kom igen.' },
+  { tid: '02:40', art: 'fejl', tekst: 'Radiolinket faldt ud i 6 minutter. Fire aflæsninger mangler og er ikke nul.' },
+  { tid: '03:55', art: 'haster', tekst: 'Nord portmotor nåede 71 grader, tre under udkobling, og er ikke kommet ned.' },
+];
+
+/* Hvor længe siden, fra det samme faste referencetidspunkt som alderen på aflæsningerne.
+   Et log-tidsstempel uden afstand til nu er et klokkeslæt, ikke en oplysning. */
+const siden = (t) => {
+  const min = (NU + 24 * 60) - minut(t);
+  const timer = Math.floor(min / 60);
+  return timer ? `${timer} t ${min % 60} min` : `${min} min`;
+};
+
+const timer = ['22:00', '23:00', '00:00', '01:00', '02:00', '03:00', '04:00', '05:00', '06:00'];
+
+const poster = [
+  {
+    id: 'motor',
+    navn: 'Nord portmotor',
+    tal: '71',
+    enhed: '°C',
+    graense: 'udkobler ved 74',
+    maalt: '04:09',
+    interval: 60,
+    tilstand: 'haster',
+    hvorfor: 'Øverst fordi 71 er tre grader under udkoblingen på 74, og fordi den har stået der siden 03:55 uden at komme ned. En motor der kobler ud, bliver ude til den er kølet af.',
+    handling: true,
+  },
+  {
+    id: 'blad',
+    navn: 'Syd højre portblad',
+    tal: '76',
+    enhed: '°',
+    graense: 'åben er 83, i mål er 80',
+    maalt: '04:09',
+    interval: 10,
+    tilstand: 'haster',
+    hvorfor: 'Nummer to fordi 76 er fire grader under de 80 der tæller som i mål, og fordi bladet har stået der siden 23:14. Et blad der ikke er nået i mål, er et blad der ikke er nået i mål.',
+    handling: false,
+  },
+  {
+    id: 'tryk',
+    navn: 'Hydraulisk tryk',
+    tal: '124',
+    enhed: 'bar',
+    graense: 'stalder under 118',
+    maalt: '04:09',
+    interval: 10,
+    tilstand: 'ro',
+    hvorfor: 'Inden for båndet nu. Den faldt til 114 i 40 sekunder klokken 01:02 og kom igen, og det står i loggen fordi det skete, ikke fordi det gør noget nu.',
+    handling: false,
+  },
+  {
+    id: 'vandstand',
+    navn: 'Kammervandstand',
+    tal: '268',
+    enhed: 'cm',
+    graense: 'porte frigiver mellem 210 og 340',
+    maalt: '04:09',
+    interval: 30,
+    tilstand: 'ro',
+    hvorfor: 'Midt i båndet, og den har ligget mellem 244 og 302 hele natten.',
+    handling: false,
+  },
+  {
+    id: 'vandtemp',
+    navn: 'Vandtemperatur',
+    tal: '17,4',
+    enhed: '°C',
+    graense: 'ikke driftsmæssig, føres for biologerne',
+    maalt: '03:38',
+    interval: 900,
+    tilstand: 'gammel',
+    hvorfor: 'Nederst fordi den ikke er driftsmæssig, og markeret som ikke aktuel fordi den er 32 minutter gammel mod et interval på 15 minutter.',
+    handling: false,
+  },
+];
+
+const manglende = ['Kammervandstand', 'Portvinkel, fire blade', 'Hydraulisk tryk', 'Portmotor temperatur'];
+---
+
+<html lang="da">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Bjerregaard Sluse, vagtkonsol 22:00 til 06:00</title>
+    <meta
+      name="description"
+      content="Vagtkonsol for én slusevagt. Natten sorteret efter hvad der er tættest på at gå galt, med alderen på hver aflæsning."
+    />
+  </head>
+  <body>
+    <a class="spring" href="#natten">Spring til nattens øverste post</a>
+
+    <div class="ramme">
+      <header class="hoved">
+        <h1>Bjerregaard Sluse</h1>
+        <p class="vagttid">Vagt 22:00 til 06:00 &middot; skærmen står 04:10</p>
+        <ul class="menu">
+          <li><a href="#natten">Natten</a></li>
+          <li><a href="#loggen">Loggen</a></li>
+          <li><a href="#slagene">Slagene</a></li>
+          <li><a href="#slusen">Slusen</a></li>
+        </ul>
+      </header>
+    </div>
+
+    <div class="baand-flade">
+      <div class="ramme">
+        <svg
+          data-asset="baand-natten"
+          class="baand"
+          viewBox="0 0 1000 176"
+          preserveAspectRatio="none"
+          role="img"
+          aria-labelledby="baand-titel baand-tekst"
+        >
+          <title id="baand-titel">Vagtens otte timer som ét bånd</title>
+          <desc id="baand-tekst">
+            Otte timer fra 22:00 til 06:00 tegnet vandret. Elleve sluseslag er markeret i
+            deres faktiske varighed; slaget klokken 23:14 varede 19 minutter mod en normal
+            cyklus på 11. Fire hændelser sidder på deres klokkeslæt. Radiolinket var nede fra
+            02:40 til 02:46, og det er tegnet som et hul i båndet, fordi fire aflæsninger
+            mangler i det vindue og ikke er nul.
+          </desc>
+
+          <rect class="baand-grund" x="0" y="42" width="1000" height="52" />
+
+          {timer.map((t) => (
+            <line class="baand-linje" x1={x(t)} y1="36" x2={x(t)} y2="100" />
+          ))}
+
+          {slag.map((s) => (
+            <rect
+              class={s.minutter > 16 ? 'baand-slag baand-slag--lang' : 'baand-slag'}
+              x={x(s.start)}
+              y="60"
+              width={(s.minutter / LAENGDE) * 1000}
+              height="16"
+            />
+          ))}
+
+          <rect x={x('02:40')} y="42" width={(6 / LAENGDE) * 1000} height="52" fill="var(--slusevand)" />
+          <rect class="baand-hul" x={x('02:40')} y="42" width={(6 / LAENGDE) * 1000} height="52" />
+
+          {haendelser.map((h) => (
+            <line
+              class={h.art === 'fejl' ? 'baand-haendelse baand-haendelse--fejl' : 'baand-haendelse'}
+              x1={x(h.tid)}
+              y1="42"
+              x2={x(h.tid)}
+              y2="94"
+            />
+          ))}
+
+          <line class="baand-linje" x1={x('04:10')} y1="24" x2={x('04:10')} y2="152" />
+        </svg>
+
+        <!-- Skrift hører ikke hjemme i en SVG der strækkes: med preserveAspectRatio="none"
+             blev hvert klokkeslæt trykket sammen til et smear på 375. Geometrien strækkes,
+             typografien ligger udenpå og bliver aldrig forvrænget. -->
+        <div class="baand-skala" aria-hidden="true">
+          {timer.map((t, i) => (
+            <span class={i % 2 ? 'baand-time baand-time--ulige' : 'baand-time'} style={`left:${(x(t) / 1000) * 100}%`}>{t}</span>
+          ))}
+        </div>
+        <div class="baand-maerker" aria-hidden="true">
+          <span class="baand-maerke baand-maerke--nu" style={`left:${(x('04:10') / 1000) * 100}%`}>nu 04:10</span>
+          <span class="baand-maerke baand-maerke--hul" style={`left:${(x('02:40') / 1000) * 100}%`}>hul 02:40 til 02:46</span>
+          {haendelser.filter((h) => h.art !== 'fejl').map((h) => (
+            <span class="baand-maerke baand-maerke--haster" style={`left:${(x(h.tid) / 1000) * 100}%`}>{h.tid}</span>
+          ))}
+        </div>
+
+        <p class="baand-noegle">
+          <span><b>11</b> slag</span>
+          <span><b>1</b> langsomt, 19 min mod 11</span>
+          <span><b>6</b> minutter uden radio</span>
+          <span><b>4</b> aflæsninger mangler</span>
+        </p>
+      </div>
+    </div>
+
+    <main class="ramme">
+      <section class="afsnit" id="natten">
+        <h2>Natten, sorteret efter hvad der er tættest på at gå galt</h2>
+        <p class="afsnit-note">
+          Hver post bærer den sætning der sorterede den, med tallet og grænsen den blev
+          sorteret på. Skærmen har fem tal og ingen ører, så vær uenig i den når du har
+          grund til det.
+        </p>
+
+        {poster.map((p, i) => {
+          const a = alder(p.maalt, p.interval);
+          return (
+            <article class={i === 0 ? 'post post-top' : 'post'} data-post={p.id}>
+              <div class="post-venstre">
+                <h3 class="post-navn">{p.navn}</h3>
+                <p class="hvorfor">{p.hvorfor}</p>
+              </div>
+              <div class="post-tal-blok">
+                <p class={p.tilstand === 'gammel' ? 'post-tal post-tal--ro gammel' : (p.tilstand === 'ro' ? 'post-tal post-tal--ro' : 'post-tal')}>
+                  {p.tal} <span aria-hidden="true">{p.enhed}</span>
+                  <span class="visuelt-skjult"> {p.enhed}</span>
+                </p>
+                <p class="post-alder">
+                  målt {p.maalt}, {a.minutter} min gammel
+                  {p.tilstand === 'gammel' ? ', ikke aktuel' : ''}
+                </p>
+                <p class="post-graense">{p.graense}</p>
+              </div>
+              {p.handling && (
+                <div class="handling">
+                  <button class="knap" id="kvitter-motor" type="button" data-handling="kvitter" data-post="motor">
+                    Kvittér
+                  </button>
+                  <button class="knap" id="hold-motor" type="button" data-handling="hold" data-post="motor">
+                    Bed om hold på næste slag
+                  </button>
+                  <p class="svar" id="svar-motor" role="status" aria-live="polite"></p>
+                </div>
+              )}
+            </article>
+          );
+        })}
+
+        <p class="liste-regel">
+          Kvittering retter ingenting. Den flytter posten ud af den øverste plads og skriver
+          hvem der kvitterede og hvornår. Hold er en anmodning over det samme radiolink som
+          aflæsningerne kommer ad, så den kan slå fejl, og gør den det, står posten uændret.
+        </p>
+      </section>
+
+      <section class="afsnit" id="loggen">
+        <h2>Hvad der er sket, og hvad der mangler</h2>
+        <ul class="log">
+          {[...haendelser].reverse().map((h) => (
+            <li data-art={h.art}>
+              <time datetime={`2026-08-03T${h.tid}`}>{h.tid}</time>
+              <span>{h.tekst}</span>
+              <span class="log-siden">{siden(h.tid)} siden</span>
+            </li>
+          ))}
+          <li data-art="mangler">
+            <time datetime="2026-08-03T02:40">02:40</time>
+            <span>
+              Mangler i vinduet, ikke nul og ikke skønnet:
+              {' '}{manglende.join(', ')}.
+            </span>
+            <span class="log-siden">{siden('02:40')} siden</span>
+          </li>
+          <li data-art="start">
+            <time datetime="2026-08-03T22:00">22:00</time>
+            <span>Vagten begyndte. Kammervandstand 251 cm, hydraulisk tryk 126 bar.</span>
+            <span class="log-siden">{siden('22:00')} siden</span>
+          </li>
+        </ul>
+      </section>
+
+      <section class="afsnit" id="slagene">
+        <h2>Slagene, mod de elleve minutter</h2>
+        <p class="afsnit-note">
+          Elleve slag, hver med sin varighed. Den stiplede linje er den normale cyklus på 11
+          minutter. Båndet ovenfor læser klokkeslæt og fravær; det her læser varighed.
+        </p>
+        <svg data-asset="slag-varighed" class="slag" viewBox="0 0 1000 190" preserveAspectRatio="none" role="img" aria-labelledby="slag-titel slag-tekst">
+          <title id="slag-titel">Elleve sluseslag mod normen på elleve minutter</title>
+          <desc id="slag-tekst">
+            Hver søjle er ét sluseslag, og højden er slagets varighed. Ti slag ligger mellem
+            10 og 13 minutter. Slaget klokken 23:14 varede 19 minutter og står over den
+            stiplede linje, som er den normale cyklus på 11 minutter.
+          </desc>
+          {slag.map((s, i) => {
+            const b = 1000 / (slag.length * 1.6);
+            const px = i * (1000 / slag.length) + b * 0.3;
+            const h = (s.minutter / 22) * 140;
+            return (
+              <g>
+                <rect
+                  class={s.minutter > 16 ? 'slag-soejle slag-soejle--lang' : 'slag-soejle'}
+                  x={px}
+                  y={150 - h}
+                  width={b}
+                  height={h}
+                />
+                <text class="slag-tekst" x={px} y="168">{s.start}</text>
+                <text class="slag-tekst" x={px} y="182">{s.minutter} min</text>
+              </g>
+            );
+          })}
+          <line class="slag-norm" x1="0" y1={150 - (11 / 22) * 140} x2="1000" y2={150 - (11 / 22) * 140} />
+          <text class="slag-tekst slag-tekst--norm" x="6" y={150 - (11 / 22) * 140 - 6}>normal cyklus, 11 min</text>
+        </svg>
+      </section>
+
+      <section class="afsnit" id="slusen">
+        <h2>Slusen</h2>
+        <div class="fod">
+          <dl>
+            <dt>Kammer</dt><dd>42,0 m lang, 6,4 m bred</dd>
+            <dt>Porte</dt><dd>Nord og Syd, to blade hver</dd>
+            <dt>Normal cyklus</dt><dd>11 minutter; over 16 logges som langsomt</dd>
+            <dt>Vagt</dt><dd>22:00 til 06:00, én vagt, ingen afløser</dd>
+          </dl>
+          <p class="fiktiv">
+            <b>Bjerregaard Sluse findes ikke.</b> Slusen, natten, aflæsningerne og
+            tidspunkterne er opdigtet til at vise SiteSmith frem. Ingenting her er en
+            oplysning om en virkelig sluse, og skærmen betjener ingenting: den kvitterer og
+            beder om hold, og den åbner ikke porte, nulstiller ikke motorer og tavler ikke
+            alarmer.
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <script is:inline>
+      (function () {
+        var svar = document.getElementById('svar-motor');
+        var kvitter = document.getElementById('kvitter-motor');
+        var hold = document.getElementById('hold-motor');
+        if (!svar || !kvitter || !hold) return;
+
+        kvitter.addEventListener('click', function () {
+          var post = document.querySelector('[data-post="motor"].post');
+          kvitter.disabled = true;
+          kvitter.setAttribute('data-tilstand', 'flyver');
+          svar.className = 'svar';
+          svar.textContent = 'sendt';
+          /* Kvittering er lokal: den går ikke over radiolinket, så den lander med det samme
+             og kan ikke slå fejl. Det er hele forskellen på den og hold. */
+          window.setTimeout(function () {
+            kvitter.setAttribute('data-tilstand', 'kvitteret');
+            kvitter.textContent = 'Kvitteret';
+            svar.textContent = 'Kvitteret 04:10 af vagten. Posten er flyttet ned og står uændret.';
+            if (post) {
+              post.classList.remove('post-top');
+              var linje = document.createElement('p');
+              linje.className = 'kvitteret';
+              linje.textContent = 'Kvitteret 04:10 af vagten. Motoren er stadig på 71 grader.';
+              post.appendChild(linje);
+            }
+          }, 90);
+        });
+
+        hold.addEventListener('click', function () {
+          hold.disabled = true;
+          hold.setAttribute('data-tilstand', 'flyver');
+          svar.className = 'svar';
+          svar.textContent = 'sendt, venter på slusehuset';
+          /* Hold går over det samme radiolink som aflæsningerne, og linket har været nede én
+             gang i nat. Det slår fejl her, fordi briefen kræver at fejlvejen kan ses. */
+          window.setTimeout(function () {
+            hold.setAttribute('data-tilstand', 'fejlet');
+            hold.textContent = 'Hold nåede ikke frem';
+            hold.disabled = false;
+            svar.className = 'svar svar--fejl';
+            svar.textContent = 'Anmodningen nåede ikke slusehuset. Radiolinket svarede ikke inden for 20 sekunder. Posten står uændret, og næste slag er ikke holdt.';
+          }, 140);
+        });
+      })();
+    </script>
+
+    <style is:global>
+      .visuelt-skjult {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        margin: -1px;
+        padding: 0;
+        overflow: hidden;
+        clip-path: inset(50%);
+        white-space: nowrap;
+        border-width: 0;
+      }
+    </style>
+  </body>
+</html>

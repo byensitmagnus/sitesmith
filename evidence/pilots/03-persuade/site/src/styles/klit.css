@@ -1,0 +1,610 @@
+/* Vestkystens Frøbank.
+   Ét stylesheet, importeret fra siden, som stacks/astro.md beder om.
+   Hver værdi på et kaldested går gennem var(). Literaler bor her og kun her.
+   Værdierne er kontraktens: .sitesmith/contract.json er skrevet før denne fil. */
+
+:root {
+  color-scheme: light;
+
+  /* Klittens materialer. Ikke roller. */
+  --graaklit: #dfe3d6;
+  --blaek: #23272b;
+  --marehalm: #4a5535;
+  --sand: #d3d2be;
+  --rev: #8f2f20;
+
+  /* De samme materialer med luft i. 55 procent til de streger der skiller
+     sidens afsnit, 12 procent til flader der ikke bærer noget. */
+  --streg: rgba(35, 39, 43, 0.55);
+  --streg-svag: rgba(35, 39, 43, 0.12);
+
+  /* To snit. Bogskrift til det der er optegnet, prosa til henvendelsen. */
+  --snit-bog: "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
+  --snit-prosa: Corbel, Candara, Optima, system-ui, sans-serif;
+
+  /* Skala. 40 findes ét sted. */
+  --t0: 13px;
+  --t1: 15px;
+  --t2: 17px;
+  --t3: 21px;
+  --t4: 27px;
+  --t5: 30px;
+
+  /* Rytme: 8 på ruden, notesbogens egen linjering. */
+  --r1: 8px;
+  --r2: 16px;
+  --r3: 24px;
+  --r4: 40px;
+  --r5: 64px;
+  --r6: 96px;
+
+  --spalte: 720px;
+  --flade: 940px;
+  --haarstreg: 1px;
+}
+
+@media (min-width: 700px) {
+  :root {
+    /* One-off, erklæret i retningsprotokollen: 40px findes kun på de fem uger. */
+    --t5: 40px;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background-color: var(--graaklit);
+  color: var(--blaek);
+  font-family: var(--snit-prosa);
+  font-size: var(--t2);
+  line-height: 1.6;
+}
+
+.spalte {
+  max-width: var(--spalte);
+  margin-inline: auto;
+  padding-inline: var(--r3);
+}
+
+/* Sandfladerne bryder ud forbi tekstspalten, så en tegning har plads til at
+   være en tegning. Ikke ud til kanten: en side der beder om lov, opfører sig
+   ikke som om den ejer skærmen. */
+.flade {
+  max-width: var(--flade);
+  margin-inline: auto;
+  background-color: var(--sand);
+  padding: var(--r4) var(--r3);
+}
+
+/* ── skallen ─────────────────────────────────────────────────────────── */
+
+.spring {
+  position: absolute;
+  left: -9999px;
+  background-color: var(--marehalm);
+  color: var(--graaklit);
+  padding: var(--r1) var(--r2);
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  font-weight: 600;
+  z-index: 9;
+}
+
+.spring:focus {
+  left: var(--r3);
+  top: var(--r1);
+}
+
+:focus-visible {
+  outline-style: solid;
+  outline-width: 3px;
+  outline-color: var(--blaek);
+  outline-offset: 2px;
+}
+
+.hoved {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--r1) var(--r3);
+  align-items: baseline;
+  padding-block: var(--r3) var(--r2);
+}
+
+/* Rubrikken i hovedet er ikke en afsnitsoverskrift og skal ikke vaere samme stoerrelse:
+   27 og 26 er ikke et trin, det er to stoerrelser der ligner hinanden. */
+.hoved h1 {
+  margin: 0;
+  font-family: var(--snit-bog);
+  font-size: var(--t3);
+  font-weight: 400;
+  line-height: 1.25;
+}
+
+.sted {
+  font-size: var(--t1);
+  color: var(--blaek);
+}
+
+.menu {
+  margin-inline-start: auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--r1) var(--r4);
+  list-style: none;
+  margin-block: 0;
+  padding-inline-start: 0;
+  font-size: var(--t1);
+}
+
+.menu a {
+  color: var(--blaek);
+  text-decoration-line: underline;
+  text-underline-offset: 4px;
+  text-decoration-color: var(--streg);
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding-inline: var(--r1);
+}
+
+.menu a:hover {
+  text-decoration-color: var(--marehalm);
+}
+
+/* ── formiddagen: signaturen ─────────────────────────────────────────── */
+
+.formiddag {
+  display: block;
+  width: 100%;
+  height: 200px;
+}
+
+.f-grund {
+  fill: none;
+  stroke: var(--streg);
+  stroke-width: 1;
+}
+
+/* Rettelsesrunden: tegningen var sidens blegeste element og tabte foerstepladsen til de
+   fem uger, som er anden laesning. Feltet er nu marehalm ved 34 procent med en fuld
+   marehalmskant, prikkerne er stoerre, og maalestokken har faaet sit tal med paa selve
+   tegningen i stedet for kun i teksten nedenunder. */
+.f-arbejde {
+  fill: var(--marehalm);
+  fill-opacity: 0.34;
+  stroke: var(--marehalm);
+  stroke-width: 2.5;
+}
+
+.f-prik {
+  fill: var(--marehalm);
+}
+
+.f-maal-tekst {
+  font-family: var(--snit-bog);
+  font-size: var(--t1);
+  font-weight: 700;
+  fill: var(--blaek);
+}
+
+.f-maalestok {
+  stroke: var(--blaek);
+  stroke-width: 2;
+}
+
+.f-akse {
+  stroke: var(--blaek);
+  stroke-width: 1.5;
+}
+
+.f-tik {
+  stroke: var(--streg);
+  stroke-width: 1;
+}
+
+.formiddag-skala {
+  position: relative;
+  overflow: hidden;
+  height: 20px;
+  margin-block-start: var(--r1);
+  font-family: var(--snit-bog);
+  font-size: var(--t0);
+}
+
+.f-time {
+  position: absolute;
+  top: 0;
+  white-space: nowrap;
+  color: var(--blaek);
+}
+
+.f-time:last-of-type {
+  left: auto !important;
+  right: 0;
+}
+
+.f-note {
+  margin-block: var(--r2) 0;
+  font-size: var(--t1);
+  max-width: 62ch;
+}
+
+.f-note b {
+  font-family: var(--snit-bog);
+  font-weight: 700;
+}
+
+/* ── afsnit ──────────────────────────────────────────────────────────── */
+
+.afsnit {
+  padding-block: var(--r5) 0;
+}
+
+.afsnit + .afsnit {
+  border-block-start-width: var(--haarstreg);
+  border-block-start-style: solid;
+  border-block-start-color: var(--streg);
+  margin-block-start: var(--r5);
+}
+
+/* Alle h2, ikke kun dem i .afsnit: reglens overskrift laa paa browserens egen 1.5em,
+   som er 26px, og 26 mod 27 er ikke et trin i skalaen, det er to stoerrelser der ligner
+   hinanden nok til at ligne et uheld. */
+h2 {
+  margin-block: 0 var(--r2);
+  font-family: var(--snit-bog);
+  font-size: var(--t4);
+  font-weight: 400;
+  line-height: 1.25;
+}
+
+h3 {
+  margin-block: 0 var(--r1);
+  font-family: var(--snit-bog);
+  font-size: var(--t3);
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.afsnit p {
+  max-width: 66ch;
+}
+
+.lead {
+  font-size: var(--t3);
+  line-height: 1.4;
+  max-width: 62ch;
+}
+
+.tal {
+  font-family: var(--snit-bog);
+  font-weight: 700;
+}
+
+/* ── reglen ──────────────────────────────────────────────────────────── */
+
+.regel dl {
+  margin: 0;
+  display: grid;
+  gap: var(--r2) var(--r3);
+}
+
+.regel dt {
+  font-family: var(--snit-bog);
+  font-size: var(--t3);
+  font-weight: 700;
+  /* De to foerste termer braekkede over to linjer og den tredje gjorde ikke, hvilket
+     lignede et uheld. Kolonnen er bredere, og termen brydes ikke. */
+  white-space: nowrap;
+}
+
+.regel dd {
+  margin: 0;
+  max-width: 60ch;
+}
+
+@media (min-width: 700px) {
+  .regel dl {
+    grid-template-columns: 13ch minmax(0, 1fr);
+    align-items: baseline;
+  }
+}
+
+/* ── sæsonen: anden læsning ──────────────────────────────────────────── */
+
+.saeson {
+  display: block;
+  width: 100%;
+  height: 150px;
+}
+
+.s-uge {
+  fill: none;
+  stroke: var(--streg);
+  stroke-width: 1;
+}
+
+.s-hul {
+  fill: var(--marehalm);
+}
+
+.s-hul--uspurgt {
+  fill: none;
+  stroke: var(--marehalm);
+  stroke-width: 1.5;
+}
+
+.s-akse {
+  stroke: var(--blaek);
+  stroke-width: 1.5;
+}
+
+.saeson-skala {
+  position: relative;
+  overflow: hidden;
+  height: 20px;
+  margin-block-start: var(--r1);
+  font-family: var(--snit-bog);
+  font-size: var(--t0);
+}
+
+.s-uge-navn {
+  position: absolute;
+  top: 0;
+  white-space: nowrap;
+  color: var(--blaek);
+}
+
+.s-uge-navn:last-of-type {
+  left: auto !important;
+  right: 0;
+}
+
+/* Saesonbaandet er det ene sted paa siden hvor indholdet selv beder om en anden form:
+   tallet og saetningen er en billedtekst, og en billedtekst hoerer ved siden af tegningen
+   og ikke ovenover den. Resten af siden er én spalte, fordi en lodsejer laeser oppefra og
+   ned; det her er den ene undtagelse indholdet betaler for. */
+@media (min-width: 1000px) {
+  .saeson-baand {
+    display: grid;
+    /* 38ch og ikke 22: billedteksten er stadig tekst, og en spalte paa 25 tegn er under
+       maalets nedre graense. Bredere end det, og baandet bliver skaevt: tegningen skal
+       stadig vaere den store halvdel, for det er den der er anden laesning. */
+    grid-template-columns: 38ch minmax(0, 1fr);
+    column-gap: var(--r4);
+    align-items: start;
+  }
+
+  .saeson-baand .saeson,
+  .saeson-baand .saeson-skala {
+    grid-column: 2;
+  }
+
+  .saeson-baand .femuger,
+  .saeson-baand .f-note {
+    grid-column: 1;
+  }
+
+  .saeson-baand .f-note {
+    margin-block-start: var(--r2);
+  }
+
+  /* Den afsluttende saetning ligger i tegningens spalte og ikke paa tvaers: spaendt over
+     hele baandet stoppede raekkerne 568px fra hoejre kant, og et baand hvis raekker alle
+     stopper mod venstre, laeser som en ufaerdig spalte. */
+  .saeson-baand .sidste {
+    grid-column: 2;
+    margin-block-start: var(--r3);
+    max-width: none;
+  }
+}
+
+.femuger {
+  font-family: var(--snit-bog);
+  font-size: var(--t5);
+  font-weight: 700;
+  color: var(--marehalm);
+  line-height: 1.1;
+  margin-block: 0 var(--r1);
+}
+
+.sidste {
+  margin-block-start: var(--r3);
+  max-width: 62ch;
+}
+
+/* ── forespørgslen ───────────────────────────────────────────────────── */
+
+/* display: grid slaar browserens egen [hidden] { display: none }, saa den skjulte
+   formular blev staaende synlig ved siden af kvitteringen. Det samme gaelder .sendt. */
+.forespoergsel[hidden],
+.sendt[hidden] {
+  display: none;
+}
+
+/* Kassen er saa bred som det den indeholder. Med tekstspaltens fulde bredde og felter
+   paa 46 tegn stoppede hver raekke 458px fra hoejre kant, og en kasse hvis indhold alt
+   sammen ligger i venstre side, laeser som en ufaerdig spalte. */
+.forespoergsel {
+  max-width: 52ch;
+  border-width: var(--haarstreg);
+  border-style: solid;
+  border-color: var(--streg);
+  background-color: var(--sand);
+  padding: var(--r4) var(--r3);
+  margin-block-start: var(--r4);
+  display: grid;
+  gap: var(--r3);
+}
+
+.felt {
+  display: grid;
+  gap: var(--r1);
+  max-width: 46ch;
+}
+
+.felt label {
+  font-family: var(--snit-bog);
+  font-size: var(--t2);
+  font-weight: 700;
+}
+
+.felt .hint {
+  font-size: var(--t1);
+}
+
+.felt input,
+.felt select,
+.felt textarea {
+  font-family: var(--snit-prosa);
+  font-size: var(--t2);
+  color: var(--blaek);
+  background-color: transparent;
+  border-width: 0;
+  border-block-end-width: var(--haarstreg);
+  border-block-end-style: solid;
+  border-block-end-color: var(--blaek);
+  border-radius: 0;
+  padding: var(--r1) 0;
+  min-height: 44px;
+  width: 100%;
+}
+
+.felt [aria-invalid="true"] {
+  border-block-end-color: var(--rev);
+  border-block-end-width: 3px;
+}
+
+.fejl {
+  font-size: var(--t1);
+  color: var(--rev);
+  margin: 0;
+}
+
+.fejl:empty {
+  display: none;
+}
+
+.send {
+  font-family: var(--snit-prosa);
+  font-size: var(--t2);
+  font-weight: 600;
+  color: var(--graaklit);
+  background-color: var(--marehalm);
+  border-width: 0;
+  border-style: none;
+  border-radius: 0;
+  padding: var(--r2) var(--r3);
+  min-height: 48px;
+  cursor: pointer;
+  justify-self: start;
+  transition-property: background-color;
+  transition-duration: 120ms;
+  transition-timing-function: ease-out;
+}
+
+.send:hover {
+  background-color: var(--blaek);
+}
+
+.send[data-tilstand="flyver"] {
+  background-color: transparent;
+  color: var(--blaek);
+  border-width: var(--haarstreg);
+  border-style: solid;
+  border-color: var(--blaek);
+  cursor: progress;
+}
+
+.sendt {
+  display: grid;
+  gap: var(--r2);
+  max-width: 62ch;
+}
+
+.sendt dl {
+  margin: 0;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--r1) var(--r2);
+}
+
+.sendt dt {
+  font-family: var(--snit-bog);
+  font-weight: 700;
+}
+
+.sendt dd {
+  margin: 0;
+}
+
+.demonstration {
+  font-size: var(--t1);
+  max-width: 60ch;
+  margin: 0;
+}
+
+/* ── foden ───────────────────────────────────────────────────────────── */
+
+.fod {
+  border-block-start-width: var(--haarstreg);
+  border-block-start-style: solid;
+  border-block-start-color: var(--streg);
+  margin-block-start: var(--r5);
+  padding-block: var(--r3) var(--r6);
+  font-size: var(--t1);
+  display: grid;
+  gap: var(--r2);
+}
+
+.fod p {
+  margin: 0;
+  max-width: 62ch;
+}
+
+.fiktiv {
+  border-width: var(--haarstreg);
+  border-style: solid;
+  border-color: var(--streg);
+  padding: var(--r2);
+  max-width: 62ch;
+}
+
+.fiktiv b {
+  font-family: var(--snit-bog);
+  font-weight: 700;
+}
+
+/* ── smal skærm ──────────────────────────────────────────────────────── */
+
+@media (max-width: 699px) {
+  /* Hver anden time: fem klokkeslæt på 335px er fire for mange. */
+  .f-time--skjul {
+    display: none;
+  }
+
+  .flade {
+    padding-inline: var(--r3);
+  }
+
+  .menu {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--r3) var(--r3);
+    width: 100%;
+    margin-inline-start: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .send {
+    transition-property: none;
+    transition-duration: 0s;
+  }
+}

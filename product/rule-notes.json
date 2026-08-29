@@ -1,0 +1,780 @@
+{
+  "$comment": [
+    "Hand-written judgement for every rule the engines emit. tools/build-rule-registry.mjs",
+    "refuses to build a registry for a class that has no note here, so a new refusal class",
+    "cannot ship without somebody saying what it is for and how it can be wrong.",
+    "",
+    "falsePositiveRisk is a measurement where a pilot exercised the rule, and unassessed",
+    "where none did. Unassessed is not low."
+  ],
+  "schemaVersion": 1,
+  "rules": {
+    "colour/ai-purple": {
+      "kind": "refusal",
+      "severity": "blocking",
+      "appliesWhen": "a stylesheet or inline style declares a colour",
+      "evidence": "No build in this repository has exercised this rule. It is enforced and unmeasured.",
+      "falsePositiveRisk": "unassessed",
+      "override": "None recorded. If this fires and is wrong, that is the evidence the policy asks for; write it down before changing the rule.",
+      "fixtures": {
+        "pass": "tools/gate-fixtures.mjs",
+        "fail": "tools/gate-fixtures.mjs"
+      },
+      "provenance": "taste-skill (MIT) names the tell; the check is original"
+    },
+    "copy/em-dash": {
+      "kind": "refusal",
+      "severity": "blocking",
+      "appliesWhen": "any text the page renders",
+      "evidence": "No build in this repository has exercised this rule. It is enforced and unmeasured.",
+      "falsePositiveRisk": "unassessed",
+      "override": "None recorded. If this fires and is wrong, that is the evidence the policy asks for; write it down before changing the rule.",
+      "fixtures": {
+        "pass": "tools/gate-fixtures.mjs",
+        "fail": "tools/gate-fixtures.mjs"
+      },
+      "provenance": "frontend-design (Apache-2.0) states the rule; the check is original"
+    },
+    "critique/not-taken": {
+      "kind": "refusal",
+      "severity": "blocking",
+      "appliesWhen": "a build that has reached the critique step",
+      "evidence": "Fired on both new pilots before their critiques were locked.",
+      "falsePositiveRisk": "low",
+      "override": "Answer the six questions from the images alone and lock them.",
+      "fixtures": {
+        "pass": "tools/gate-fixtures.mjs",
+        "fail": "tools/gate-fixtures.mjs"
+      },
+      "provenance": "original"
+    },
+    "critique/stale": {
+      "kind": "refusal",
+      "severity": "blocking",
+      "appliesWhen": "a build that has reached the critique step",
+      "evidence": "Fired on both new pilots when the page moved after the critique was locked. Correct both times, and it is the check that enforces looking at what actually ships.",
+      "falsePositiveRisk": "low",
+      "override": "Look at the render that is shipping and re-lock, with a correction if this was the one correction round.",
+      "fixtures": {
+        "pass": "tools/gate-fixtures.mjs",
+        "fail": "tools/gate-fixtures.mjs"
+      },
+      "provenance": "original"
+    },
+    "critique/unreadable": {
+      "kind": "refusal",
+      "severity": "blocking",
+      "appliesWhen": "a build that has reached the critique step",
+      "evidence": "No build in this repository has exercised this rule. It is enforced and unmeasured.",
+      "falsePositiveRisk": "unassessed",
+      "override": "None recorded. If this fires and is wrong, that is the evidence the policy asks for; write it down before changing the rule.",
+      "fixtures": {
+        "pass": "tools/gate-fixtures.mjs",
+        "fail": "tools/gate-fixtures.mjs"
+      },
+      "provenance": "original"
+    },
+    "cta/duplicate-intent": {
+      "kind": "refusal",
+      "severity": "blocking",
+      "appliesWhen": "the page has more than one call to action",
+      "evidence": "No build in this repository has exercised this rule. It is enforced and unmeasured.",
+      "falsePositiveRisk": "unassessed",
+      "override": "None recorded. If this fires and is wrong, that is the evidence the policy asks for; write it down before changing the rule.",
+      "fixtures": {
+        "pass": "tools/gate-fixtures.mjs",
+        "fail": "tools/gate-fixtures.mjs"
+      },
+      "provenance": "original"
+    },
+    "direction/ground-outside-declared-band": {
+      "kind": "refusal",
+      "severity": "blocking",
+      "appliesWhen": "a direction record exists, or should",
+      "evidence": "No build in this repository has exercised this rule. It is enforced and unmeasured.",
+      "falsePositiveRisk": "unassessed",
+      "override": "None recorded. If this fires and is wrong, that is the evidence the policy asks for; write it down before changing the rule.",
+      "fixtures": {
+        "pass": "tools/gate-fixtures.mjs",
+        "fail": "tools/gate-fixtures.mjs"
+      },
+      "provenance": "original"
+    },
+    "direction/one-off-without-a-reason": {
+      "kind": "refusal",
+      "severity": "blocking",
+      "appliesWhen": "a direction record exists, or should",
+      "evidence": "No build in this repository has exercised this rule. It is enforced and unmeasured.",
+      "falsePositiveRisk": "unassessed",
+      "override": "None recorded. If this fires and is wrong, that is the evidence the policy asks for; write it down before changing the rule.",
+      "fixtures": {
+        "pass": "tools/gate-fixtures.mjs",
+        "fail": "tools/gate-fixtures.mjs"
+      },
+      "provenance": "original"
+    },
+    "direction/palette-not-declared": {
+      "kind": "refusal",
+      "severity": "blocking",
+      "appliesWhen": "a direction record exists, or should",
+      "evidence": "No build in this repository has exercised this rule. It is enforced and unmeasured.",
+      "falsePositiveRisk": "unassessed",
+      "override": "None recorded. If this fires and is wrong, that is the evidence the policy asks for; write it down before changing the rule.",
+      "fixtures": {
+        "pass": "tools/gate-fixtures.mjs",
+        "fail": "tools/gate-fixtures.mjs"
+      },
+      "provenance": "original"
+    },
+    "direction/record-missing": {
+      "kind": "refusal",
+      "severity": "blocking",
+      "appliesWhen": "a direction record exists, or should",
+      "evidence": "No build in this repository has exercised this rule. It is enforced and unmeasured.",
+      "falsePositiveRisk": "unassessed",
+      "override": "None recorded. If this fires and is wrong, that is the evidence the policy asks for; write it down before changing the rule.",
+      "fixtures": {
+        "pass": "tools/gate-fixtures.mjs",
+        "fail": "tools/gate-fixtures.mjs"
+      },
+      "provenance": "original"
+    },
+    "direction/signature-does-not-render": {
+      "kind": "refusal",
+      "severity": "blocking",
+      "appliesWhen": "a direction record exists, or should",
+      "evidence": "No build in this repository has exercised this rule. It is enforced and unmeasured.",
+      "falsePositiveRisk": "unassessed",
+      "override": "None recorded. If this fires and is wrong, that is the evidence the policy asks for; write it down before changing the rule.",
+      "fixtures": {
+        "pass": "tools/gate-fixtures.mjs",
+        "fail": "tools/gate-fixtures.mjs"
+      },
+      "provenance": "original"
+    },
+    "direction/signature-names-no-selector": {
+      "kind": "refusal",
+      "severity": "blocking",
+      "appliesWhen": "a direction record exists, or should",
+      "evidence": "Fired on the lock console because the record wrote the selector without backticks. A formatting requirement the template documents.",
+      "falsePositiveRisk": "low",
+      "override": "Put the selector in backticks or parentheses on the Signature line.",
+      "fixtures": {
+        "pass": "tools/gate-fixtures.mjs",
+        "fail": "tools/gate-fixtures.mjs"
+      },
+      "provenance": "original"
+    },
+    "direction/signature-not-declared": {
+      "kind": "refusal",
+      "severity": "blocking",
+      "appliesWhen": "a direction record exists, or should",
+      "evidence": "No build in this repository has exercised this rule. It is enforced and unmeasured.",
+      "falsePositiveRisk": "unassessed",
+      "override": "None recorded. If this fires and is wrong, that is the evidence the policy asks for; write it down before changing the rule.",
+      "fixtures": {
+        "pass": "tools/gate-fixtures.mjs",
+        "fail": "tools/gate-fixtures.mjs"
+      },
+      "provenance": "original"
+    },
+    "direction/type-not-declared": {
+      "kind": "refusal",
+      "severity": "blocking",
+      "appliesWhen": "a direction record exists, or should",
+      "evidence": "Fired on the lock console because the Type line named its families without quotes.",
+      "falsePositiveRisk": "low",
+      "override": "Name the family in quotes on the Type line.",
+      "fixtures": {
+        "pass": "tools/gate-fixtures.mjs",
+        "fail": "tools/gate-fixtures.mjs"
+      },
+      "provenance": "original"
+    },
+    "drawing/untokenised-paint": {
+      "kind": "refusal",
+      "severity": "blocking",
+      "appliesWhen": "the page contains an inline SVG",
+      "evidence": "No build in this repository has exercised this rule. It is enforced and unmeasured.",
+      "falsePositiveRisk": "unassessed",
+      "override": "None recorded. If this fires and is wrong, that is the evidence the policy asks for; write it down before changing the rule.",
+      "fixtures": {
+        "pass": "tools/gate-fixtures.mjs",
+        "fail": "tools/gate-fixtures.mjs"
+      },
+      "provenance": "original"
+    },
+    "drawing/untokenised-stroke-width": {
+      "kind": "refusal",
+      "severity": "blocking",
+      "appliesWhen": "the page contains an inline SVG",
+      "evidence": "No build in this repository has exercised this rule. It is enforced and unmeasured.",
+      "falsePositiveRisk": "unassessed",
+      "override": "None recorded. If this fires and is wrong, that is the evidence the policy asks for; write it down before changing the rule.",
+      "fixtures": {
+        "pass": "tools/gate-fixtures.mjs",
+        "fail": "tools/gate-fixtures.mjs"
+      },
+      "provenance": "original"
+    },
+    "honesty/asset-not-ready": {
+      "kind": "refusal",
+      "severity": "blocking",
+      "appliesWhen": "always: a page that claims something it does not have is the failure this whole category exists for",
+      "evidence": "No build in this repository has exercised this rule. It is enforced and unmeasured.",
+      "falsePositiveRisk": "unassessed",
+      "override": "None recorded. If this fires and is wrong, that is the evidence the policy asks for; write it down before changing the rule.",
+      "fixtures": {
+        "pass": "tools/gate-fixtures.mjs",
+        "fail": "tools/gate-fixtures.mjs"
+      },
+      "provenance": "original"
+    },
+    "honesty/borrowed-mark-without-permission": {
+      "kind": "refusal",
+      "severity": "blocking",
+      "appliesWhen": "always: a page that claims something it does not have is the failure this whole category exists for",
+      "evidence": "No build in this repository has exercised this rule. It is enforced and unmeasured.",
+      "falsePositiveRisk": "unassessed",
+      "override": "None recorded. If this fires and is wrong, that is the evidence the policy asks for; write it down before changing the rule.",
+      "fixtures": {
+        "pass": "tools/gate-fixtures.mjs",
+        "fail": "tools/gate-fixtures.mjs"
+      },
+      "provenance": "original"
+    },
+    "honesty/brand-mark-is-a-filename": {
+      "kind": "refusal",
+      "severity": "blocking",
+      "appliesWhen": "always: a page that claims something it does not have is the failure this whole category exists for",
+      "evidence": "No build in this repository has exercised this rule. It is enforced and unmeasured.",
+      "falsePositiveRisk": "unassessed",
+      "override": "None recorded. If this fires and is wrong, that is the evidence the policy asks for; write it down before changing the rule.",
+      "fixtures": {
+        "pass": "tools/gate-fixtures.mjs",
+        "fail": "tools/gate-fixtures.mjs"
+      },
+      "provenance": "original"
+    },
+    "honesty/design-system-not-installed": {
+      "kind": "refusal",
+      "severity": "blocking",
+      "appliesWhen": "always: a page that claims something it does not have is the failure this whole category exists for",
+      "evidence": "No build in this repository has exercised this rule. It is enforced and unmeasured.",
+      "falsePositiveRisk": "unassessed",
+      "override": "None recorded. If this fires and is wrong, that is the evidence the policy asks for; write it down before changing the rule.",
+      "fixtures": {
+        "pass": "tools/gate-fixtures.mjs",
+        "fail": "tools/gate-fixtures.mjs"
+      },
+      "provenance": "original"
+    },
+    "honesty/draft-flag-unrecorded": {
+      "kind": "refusal",
+      "severity": "blocking",
+      "appliesWhen": "always: a page that claims something it does not have is the failure this whole category exists for",
+      "evidence": "No build in this repository has exercised this rule. It is enforced and unmeasured.",
+      "falsePositiveRisk": "unassessed",
+      "override": "None recorded. If this fires and is wrong, that is the evidence the policy asks for; write it down before changing the rule.",
+      "fixtures": {
+        "pass": "tools/gate-fixtures.mjs",
+        "fail": "tools/gate-fixtures.mjs"
+      },
+      "provenance": "original"
+    },
+    "honesty/dummy-identifier": {
+      "kind": "refusal",
+      "severity": "blocking",
+      "appliesWhen": "always: a page that claims something it does not have is the failure this whole category exists for",
+      "evidence": "No build in this repository has exercised this rule. It is enforced and unmeasured.",
+      "falsePositiveRisk": "unassessed",
+      "override": "None recorded. If this fires and is wrong, that is the evidence the policy asks for; write it down before changing the rule.",
+      "fixtures": {
+        "pass": "tools/gate-fixtures.mjs",
+        "fail": "tools/gate-fixtures.mjs"
+      },
+      "provenance": "original"
+    },
+    "honesty/empty-brand-mark": {
+      "kind": "refusal",
+      "severity": "blocking",
+      "appliesWhen": "always: a page that claims something it does not have is the failure this whole category exists for",
+      "evidence": "No build in this repository has exercised this rule. It is enforced and unmeasured.",
+      "falsePositiveRisk": "unassessed",
+      "override": "None recorded. If this fires and is wrong, that is the evidence the policy asks for; write it down before changing the rule.",
+      "fixtures": {
+        "pass": "tools/gate-fixtures.mjs",
+        "fail": "tools/gate-fixtures.mjs"
+      },
+      "provenance": "original"
+    },
+    "honesty/narrated-absence": {
+      "kind": "refusal",
+      "severity": "blocking",
+      "appliesWhen": "always: a page that claims something it does not have is the failure this whole category exists for",
+      "evidence": "Fired on the seed bank on a sentence that was a substantive promise from the brief rather than a narration of absence. The copy was rewritten positively, which was an improvement, but the rule matched a construction and not a meaning.",
+      "falsePositiveRisk": "high",
+      "override": "Rewrite the sentence to say what is true rather than what is not. A real commitment can usually be said positively.",
+      "fixtures": {
+        "pass": "tools/gate-fixtures.mjs",
+        "fail": "tools/gate-fixtures.mjs"
+      },
+      "provenance": "original"
+    },
+    "honesty/no-asset-manifest": {
+      "kind": "refusal",
+      "severity": "blocking",
+      "appliesWhen": "always: a page that claims something it does not have is the failure this whole category exists for",
+      "evidence": "Fired on the lock console before its manifest existed. No false positive seen.",
+      "falsePositiveRisk": "low",
+      "override": "Write ASSET-MANIFEST.md with the six columns look.md names.",
+      "fixtures": {
+        "pass": "tools/gate-fixtures.mjs",
+        "fail": "tools/gate-fixtures.mjs"
+      },
+      "provenance": "original"
+    },
+    "honesty/placeholder-language": {
+      "kind": "refusal",
+      "severity": "blocking",
+      "appliesWhen": "always: a page that claims something it does not have is the failure this whole category exists for",
+      "evidence": "No build in this repository has exercised this rule. It is enforced and unmeasured.",
+      "falsePositiveRisk": "unassessed",
+      "override": "None recorded. If this fires and is wrong, that is the evidence the policy asks for; write it down before changing the rule.",
+      "fixtures": {
+        "pass": "tools/gate-fixtures.mjs",
+        "fail": "tools/gate-fixtures.mjs"
+      },
+      "provenance": "original"
+    },
+    "honesty/release-claimed-on-a-draft-build": {
+      "kind": "refusal",
+      "severity": "blocking",
+      "appliesWhen": "always: a page that claims something it does not have is the failure this whole category exists for",
+      "evidence": "No build in this repository has exercised this rule. It is enforced and unmeasured.",
+      "falsePositiveRisk": "unassessed",
+      "override": "None recorded. If this fires and is wrong, that is the evidence the policy asks for; write it down before changing the rule.",
+      "fixtures": {
+        "pass": "tools/gate-fixtures.mjs",
+        "fail": "tools/gate-fixtures.mjs"
+      },
+      "provenance": "original"
+    },
+    "honesty/unmanifested-asset": {
+      "kind": "refusal",
+      "severity": "blocking",
+      "appliesWhen": "always: a page that claims something it does not have is the failure this whole category exists for",
+      "evidence": "Fired on both drawings of the lock console, correctly: neither carried data-asset. The requirement was undocumented, and look.md now says it.",
+      "falsePositiveRisk": "low",
+      "override": "Give the drawing a data-asset id and a row in the manifest.",
+      "fixtures": {
+        "pass": "tools/gate-fixtures.mjs",
+        "fail": "tools/gate-fixtures.mjs"
+      },
+      "provenance": "original"
+    },
+    "honesty/unreadable-asset-manifest": {
+      "kind": "refusal",
+      "severity": "blocking",
+      "appliesWhen": "always: a page that claims something it does not have is the failure this whole category exists for",
+      "evidence": "Fired on the lock console, and the cause was a real product defect: look.md documented five columns and the gate reads six. The document was corrected, not the gate.",
+      "falsePositiveRisk": "low",
+      "override": "Use the six columns: id, what, where, source, licence, state.",
+      "fixtures": {
+        "pass": "tools/gate-fixtures.mjs",
+        "fail": "tools/gate-fixtures.mjs"
+      },
+      "provenance": "original"
+    },
+    "look/dead-field": {
+      "kind": "refusal",
+      "severity": "blocking",
+      "appliesWhen": "the page renders and a browser is available",
+      "evidence": "No build in this repository has exercised this rule. It is enforced and unmeasured.",
+      "falsePositiveRisk": "unassessed",
+      "override": "None recorded. If this fires and is wrong, that is the evidence the policy asks for; write it down before changing the rule.",
+      "fixtures": {
+        "pass": "tools/gate-fixtures.mjs",
+        "fail": "tools/gate-fixtures.mjs"
+      },
+      "provenance": "original"
+    },
+    "look/first-viewport-unpainted": {
+      "kind": "refusal",
+      "severity": "blocking",
+      "appliesWhen": "the page renders and a browser is available",
+      "evidence": "No build in this repository has exercised this rule. It is enforced and unmeasured.",
+      "falsePositiveRisk": "unassessed",
+      "override": "None recorded. If this fires and is wrong, that is the evidence the policy asks for; write it down before changing the rule.",
+      "fixtures": {
+        "pass": "tools/gate-fixtures.mjs",
+        "fail": "tools/gate-fixtures.mjs"
+      },
+      "provenance": "original"
+    },
+    "look/lopsided-band": {
+      "kind": "refusal",
+      "severity": "blocking",
+      "appliesWhen": "the page renders and a browser is available",
+      "evidence": "Put first by three blind reviewers independently. Fired on the lock console twice and on the seed bank once; every one was a real flank, and one took two attempts to answer because narrowing the block traded it for ragged-margin.",
+      "falsePositiveRisk": "medium",
+      "override": "Centre it, give the flank something that earns it, or claim lopsided-band under Deliberate with a reason.",
+      "fixtures": {
+        "pass": "tools/gate-fixtures.mjs",
+        "fail": "tools/gate-fixtures.mjs"
+      },
+      "provenance": "original"
+    },
+    "look/no-shell": {
+      "kind": "refusal",
+      "severity": "blocking",
+      "appliesWhen": "the page renders and a browser is available",
+      "evidence": "No build in this repository has exercised this rule. It is enforced and unmeasured.",
+      "falsePositiveRisk": "unassessed",
+      "override": "None recorded. If this fires and is wrong, that is the evidence the policy asks for; write it down before changing the rule.",
+      "fixtures": {
+        "pass": "tools/gate-fixtures.mjs",
+        "fail": "tools/gate-fixtures.mjs"
+      },
+      "provenance": "original"
+    },
+    "look/no-way-out": {
+      "kind": "refusal",
+      "severity": "blocking",
+      "appliesWhen": "the page renders and a browser is available",
+      "evidence": "No build in this repository has exercised this rule. It is enforced and unmeasured.",
+      "falsePositiveRisk": "unassessed",
+      "override": "None recorded. If this fires and is wrong, that is the evidence the policy asks for; write it down before changing the rule.",
+      "fixtures": {
+        "pass": "tools/gate-fixtures.mjs",
+        "fail": "tools/gate-fixtures.mjs"
+      },
+      "provenance": "original"
+    },
+    "look/one-layout": {
+      "kind": "refusal",
+      "severity": "blocking",
+      "appliesWhen": "the page renders and a browser is available",
+      "evidence": "Fired on the seed bank, whose contract deliberately chooses one column. The answer was to give one band the shape its content asked for, which improved the page; a genuinely single-shape page would have to claim it.",
+      "falsePositiveRisk": "medium",
+      "override": "Give one band a shape its own content asks for, or claim one-layout under Deliberate.",
+      "fixtures": {
+        "pass": "tools/gate-fixtures.mjs",
+        "fail": "tools/gate-fixtures.mjs"
+      },
+      "provenance": "original"
+    },
+    "look/one-reading": {
+      "kind": "refusal",
+      "severity": "blocking",
+      "appliesWhen": "the page renders and a browser is available",
+      "evidence": "No build in this repository has exercised this rule. It is enforced and unmeasured.",
+      "falsePositiveRisk": "unassessed",
+      "override": "None recorded. If this fires and is wrong, that is the evidence the policy asks for; write it down before changing the rule.",
+      "fixtures": {
+        "pass": "tools/gate-fixtures.mjs",
+        "fail": "tools/gate-fixtures.mjs"
+      },
+      "provenance": "original"
+    },
+    "look/ragged-margin": {
+      "kind": "refusal",
+      "severity": "blocking",
+      "appliesWhen": "the page renders and a browser is available",
+      "evidence": "Fired on all three pilots. Two were real accidental shifts. The third, the seed bank, was a deliberate break-out argued in the contract and claimed under Deliberate, which is the case that makes the risk medium rather than low.",
+      "falsePositiveRisk": "medium",
+      "override": "Put it on the spine, move it far enough to read as a decision, or claim ragged-margin under Deliberate.",
+      "fixtures": {
+        "pass": "tools/gate-fixtures.mjs",
+        "fail": "tools/gate-fixtures.mjs"
+      },
+      "provenance": "original"
+    },
+    "look/risk-unanswered": {
+      "kind": "refusal",
+      "severity": "blocking",
+      "appliesWhen": "the page renders and a browser is available",
+      "evidence": "No build in this repository has exercised this rule. It is enforced and unmeasured.",
+      "falsePositiveRisk": "unassessed",
+      "override": "None recorded. If this fires and is wrong, that is the evidence the policy asks for; write it down before changing the rule.",
+      "fixtures": {
+        "pass": "tools/gate-fixtures.mjs",
+        "fail": "tools/gate-fixtures.mjs"
+      },
+      "provenance": "original"
+    },
+    "look/second-reading-missing": {
+      "kind": "refusal",
+      "severity": "blocking",
+      "appliesWhen": "the page renders and a browser is available",
+      "evidence": "No build in this repository has exercised this rule. It is enforced and unmeasured.",
+      "falsePositiveRisk": "unassessed",
+      "override": "None recorded. If this fires and is wrong, that is the evidence the policy asks for; write it down before changing the rule.",
+      "fixtures": {
+        "pass": "tools/gate-fixtures.mjs",
+        "fail": "tools/gate-fixtures.mjs"
+      },
+      "provenance": "original"
+    },
+    "look/wider-than-its-content": {
+      "kind": "refusal",
+      "severity": "blocking",
+      "appliesWhen": "the page renders and a browser is available",
+      "evidence": "No build in this repository has exercised this rule. It is enforced and unmeasured.",
+      "falsePositiveRisk": "unassessed",
+      "override": "None recorded. If this fires and is wrong, that is the evidence the policy asks for; write it down before changing the rule.",
+      "fixtures": {
+        "pass": "tools/gate-fixtures.mjs",
+        "fail": "tools/gate-fixtures.mjs"
+      },
+      "provenance": "original"
+    },
+    "operate/nothing-to-do-on-the-first-screen": {
+      "kind": "refusal",
+      "severity": "blocking",
+      "appliesWhen": "the surface is operate",
+      "evidence": "No build in this repository has exercised this rule. It is enforced and unmeasured.",
+      "falsePositiveRisk": "unassessed",
+      "override": "None recorded. If this fires and is wrong, that is the evidence the policy asks for; write it down before changing the rule.",
+      "fixtures": {
+        "pass": "tools/gate-fixtures.mjs",
+        "fail": "tools/gate-fixtures.mjs"
+      },
+      "provenance": "original"
+    },
+    "output/elision-placeholder": {
+      "kind": "refusal",
+      "severity": "blocking",
+      "appliesWhen": "the generated source, at any step",
+      "evidence": "No build in this repository has exercised this rule. It is enforced and unmeasured.",
+      "falsePositiveRisk": "unassessed",
+      "override": "None recorded. If this fires and is wrong, that is the evidence the policy asks for; write it down before changing the rule.",
+      "fixtures": {
+        "pass": "tools/gate-fixtures.mjs",
+        "fail": "tools/gate-fixtures.mjs"
+      },
+      "provenance": "original"
+    },
+    "palette/premium-consumer-default": {
+      "kind": "refusal",
+      "severity": "blocking",
+      "appliesWhen": "a stylesheet or markup declares a hex colour",
+      "evidence": "Fired on two of three pilots. Both were arguably right in effect and wrong in reason: the lock console used the colour as ink on a dark ground rather than as a ground, and the seed bank had a legitimately warm paper. Both changed their material and both pages improved. The rule has no notion of what a colour is used for.",
+      "falsePositiveRisk": "high",
+      "override": "Choose from the subject own materials, or write the banned-palette-pinned-by-brief line in the direction record. That waiver is only honest when the brief really pinned it.",
+      "fixtures": {
+        "pass": "tools/gate-fixtures.mjs",
+        "fail": "tools/gate-fixtures.mjs"
+      },
+      "provenance": "the banned palette is taste-skill (MIT), named there as the second-most-recurring AI tell; the check is original"
+    },
+    "reads/outside-manifest": {
+      "kind": "refusal",
+      "severity": "blocking",
+      "appliesWhen": "a production report declares what it opened",
+      "evidence": "No build in this repository has exercised this rule. It is enforced and unmeasured.",
+      "falsePositiveRisk": "unassessed",
+      "override": "None recorded. If this fires and is wrong, that is the evidence the policy asks for; write it down before changing the rule.",
+      "fixtures": {
+        "pass": "tools/gate-fixtures.mjs",
+        "fail": "tools/gate-fixtures.mjs"
+      },
+      "provenance": "original"
+    },
+    "reconciliation/false-positive-without-reason": {
+      "kind": "refusal",
+      "severity": "blocking",
+      "appliesWhen": "a production report lists mechanical findings",
+      "evidence": "No build in this repository has exercised this rule. It is enforced and unmeasured.",
+      "falsePositiveRisk": "unassessed",
+      "override": "None recorded. If this fires and is wrong, that is the evidence the policy asks for; write it down before changing the rule.",
+      "fixtures": {
+        "pass": "tools/gate-fixtures.mjs",
+        "fail": "tools/gate-fixtures.mjs"
+      },
+      "provenance": "original"
+    },
+    "reconciliation/no-disposition": {
+      "kind": "refusal",
+      "severity": "blocking",
+      "appliesWhen": "a production report lists mechanical findings",
+      "evidence": "No build in this repository has exercised this rule. It is enforced and unmeasured.",
+      "falsePositiveRisk": "unassessed",
+      "override": "None recorded. If this fires and is wrong, that is the evidence the policy asks for; write it down before changing the rule.",
+      "fixtures": {
+        "pass": "tools/gate-fixtures.mjs",
+        "fail": "tools/gate-fixtures.mjs"
+      },
+      "provenance": "original"
+    },
+    "reconciliation/unreconciled-finding": {
+      "kind": "refusal",
+      "severity": "blocking",
+      "appliesWhen": "a production report lists mechanical findings",
+      "evidence": "No build in this repository has exercised this rule. It is enforced and unmeasured.",
+      "falsePositiveRisk": "unassessed",
+      "override": "None recorded. If this fires and is wrong, that is the evidence the policy asks for; write it down before changing the rule.",
+      "fixtures": {
+        "pass": "tools/gate-fixtures.mjs",
+        "fail": "tools/gate-fixtures.mjs"
+      },
+      "provenance": "original"
+    },
+    "report/missing": {
+      "kind": "refusal",
+      "severity": "blocking",
+      "appliesWhen": "a build that claims to be finished",
+      "evidence": "No build in this repository has exercised this rule. It is enforced and unmeasured.",
+      "falsePositiveRisk": "unassessed",
+      "override": "None recorded. If this fires and is wrong, that is the evidence the policy asks for; write it down before changing the rule.",
+      "fixtures": {
+        "pass": "tools/gate-fixtures.mjs",
+        "fail": "tools/gate-fixtures.mjs"
+      },
+      "provenance": "original"
+    },
+    "report/no-files-opened-list": {
+      "kind": "refusal",
+      "severity": "blocking",
+      "appliesWhen": "a build that claims to be finished",
+      "evidence": "Fired on both new pilots when the report used Danish headings. The headings the gate parses are English.",
+      "falsePositiveRisk": "low",
+      "override": "Add a Files opened section.",
+      "fixtures": {
+        "pass": "tools/gate-fixtures.mjs",
+        "fail": "tools/gate-fixtures.mjs"
+      },
+      "provenance": "original"
+    },
+    "report/no-mechanical-findings-list": {
+      "kind": "refusal",
+      "severity": "blocking",
+      "appliesWhen": "a build that claims to be finished",
+      "evidence": "Same run as above.",
+      "falsePositiveRisk": "low",
+      "override": "Add a Mechanical findings section. An empty answer with a reason is allowed.",
+      "fixtures": {
+        "pass": "tools/gate-fixtures.mjs",
+        "fail": "tools/gate-fixtures.mjs"
+      },
+      "provenance": "original"
+    },
+    "report/no-reconciliation": {
+      "kind": "refusal",
+      "severity": "blocking",
+      "appliesWhen": "a build that claims to be finished",
+      "evidence": "No build in this repository has exercised this rule. It is enforced and unmeasured.",
+      "falsePositiveRisk": "unassessed",
+      "override": "None recorded. If this fires and is wrong, that is the evidence the policy asks for; write it down before changing the rule.",
+      "fixtures": {
+        "pass": "tools/gate-fixtures.mjs",
+        "fail": "tools/gate-fixtures.mjs"
+      },
+      "provenance": "original"
+    },
+    "report/no-run-notes": {
+      "kind": "refusal",
+      "severity": "blocking",
+      "appliesWhen": "a build that claims to be finished",
+      "evidence": "Same run as above.",
+      "falsePositiveRisk": "low",
+      "override": "Add a Run notes section with one line per degradable step.",
+      "fixtures": {
+        "pass": "tools/gate-fixtures.mjs",
+        "fail": "tools/gate-fixtures.mjs"
+      },
+      "provenance": "original"
+    },
+    "report/scenario-not-named": {
+      "kind": "refusal",
+      "severity": "blocking",
+      "appliesWhen": "a build that claims to be finished",
+      "evidence": "No build in this repository has exercised this rule. It is enforced and unmeasured.",
+      "falsePositiveRisk": "unassessed",
+      "override": "None recorded. If this fires and is wrong, that is the evidence the policy asks for; write it down before changing the rule.",
+      "fixtures": {
+        "pass": "tools/gate-fixtures.mjs",
+        "fail": "tools/gate-fixtures.mjs"
+      },
+      "provenance": "original"
+    },
+    "report/unknown-scenario": {
+      "kind": "refusal",
+      "severity": "blocking",
+      "appliesWhen": "a build that claims to be finished",
+      "evidence": "No build in this repository has exercised this rule. It is enforced and unmeasured.",
+      "falsePositiveRisk": "unassessed",
+      "override": "None recorded. If this fires and is wrong, that is the evidence the policy asks for; write it down before changing the rule.",
+      "fixtures": {
+        "pass": "tools/gate-fixtures.mjs",
+        "fail": "tools/gate-fixtures.mjs"
+      },
+      "provenance": "original"
+    },
+    "run-notes/empty-field": {
+      "kind": "refusal",
+      "severity": "blocking",
+      "appliesWhen": "a production report has a Run notes block",
+      "evidence": "No build in this repository has exercised this rule. It is enforced and unmeasured.",
+      "falsePositiveRisk": "unassessed",
+      "override": "None recorded. If this fires and is wrong, that is the evidence the policy asks for; write it down before changing the rule.",
+      "fixtures": {
+        "pass": "tools/gate-fixtures.mjs",
+        "fail": "tools/gate-fixtures.mjs"
+      },
+      "provenance": "original"
+    },
+    "run-notes/missing-field": {
+      "kind": "refusal",
+      "severity": "blocking",
+      "appliesWhen": "a production report has a Run notes block",
+      "evidence": "Fired on the lock console, which had a Run notes block with no viewports line.",
+      "falsePositiveRisk": "low",
+      "override": "One line per degradable step: viewports, axe both schemes, live server, anti-slop linter, fallbacks.",
+      "fixtures": {
+        "pass": "tools/gate-fixtures.mjs",
+        "fail": "tools/gate-fixtures.mjs"
+      },
+      "provenance": "original"
+    },
+    "run-notes/no-reason-on-a-step-that-did-not-run": {
+      "kind": "refusal",
+      "severity": "blocking",
+      "appliesWhen": "a production report has a Run notes block",
+      "evidence": "No build in this repository has exercised this rule. It is enforced and unmeasured.",
+      "falsePositiveRisk": "unassessed",
+      "override": "None recorded. If this fires and is wrong, that is the evidence the policy asks for; write it down before changing the rule.",
+      "fixtures": {
+        "pass": "tools/gate-fixtures.mjs",
+        "fail": "tools/gate-fixtures.mjs"
+      },
+      "provenance": "original"
+    },
+    "tokens/undeclared-literal": {
+      "kind": "refusal",
+      "severity": "blocking",
+      "appliesWhen": "a stylesheet declares custom properties",
+      "evidence": "No build in this repository has exercised this rule. It is enforced and unmeasured.",
+      "falsePositiveRisk": "unassessed",
+      "override": "None recorded. If this fires and is wrong, that is the evidence the policy asks for; write it down before changing the rule.",
+      "fixtures": {
+        "pass": "tools/gate-fixtures.mjs",
+        "fail": "tools/gate-fixtures.mjs"
+      },
+      "provenance": "original"
+    },
+    "typeface/named-default": {
+      "kind": "refusal",
+      "severity": "blocking",
+      "appliesWhen": "a stylesheet declares a font family",
+      "evidence": "No build in this repository has exercised this rule. It is enforced and unmeasured.",
+      "falsePositiveRisk": "unassessed",
+      "override": "None recorded. If this fires and is wrong, that is the evidence the policy asks for; write it down before changing the rule.",
+      "fixtures": {
+        "pass": "tools/gate-fixtures.mjs",
+        "fail": "tools/gate-fixtures.mjs"
+      },
+      "provenance": "taste-skill (MIT) names the tell; the check is original"
+    }
+  }
+}

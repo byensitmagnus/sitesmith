@@ -288,10 +288,17 @@ export async function build(root, project, { surface, brief }) {
   const inSkill = (abs) => (skillRoot && abs ? `<skill>/${relative(skillRoot, abs).split(sep).join('/')}` : null);
   const scriptOf = (n) => `node ${inSkill(skillScript(root, n)) ?? `<skill>/scripts/${n}`}`;
 
+  const contractPath = join(p.dir, 'contract.json');
   const blockers = [];
   if (!surface) blockers.push('no surface given: pass --surface buy|operate|read|experience');
   if (!briefPath) blockers.push('no BRIEF.md and no filled PROJECT.md, so nothing states the facts the page may use');
   if (!existsSync(directionPath)) blockers.push(`no direction record: run \`${scriptOf('ledger.mjs')} new . ${surface ?? '<surface>'}\``);
+  /* The contract is a blocker only once the record exists, because it is written from the
+     record. Asking for both at once would hand the agent two unanswerable questions and
+     one order of work that does not say which comes first. */
+  if (existsSync(directionPath) && !existsSync(contractPath)) {
+    blockers.push(`no design contract: run \`${scriptOf('contract.mjs')} new ${surface ?? '<surface>'}\`, fill it from the record, then \`${scriptOf('contract.mjs')} check --write\``);
+  }
 
   const manifest = {
     v: 1,
@@ -309,10 +316,12 @@ export async function build(root, project, { surface, brief }) {
       '<skill>/look.md',
       surface === 'buy' ? '<skill>/floor/buy.md' : surface === 'operate' ? '<skill>/floor/operate.md' : null,
       adapter ? `<skill>/${adapter}` : null,
+      '<skill>/contract.md',
       '<skill>/verify.md',
     ].filter(Boolean),
     write: [
       `${STATE_DIR}/direction.md`,
+      `${STATE_DIR}/contract.json`,
       'the site itself, in the detected stack',
       'ASSET-MANIFEST.md',
       'PRODUCTION-REPORT.md',
@@ -320,6 +329,9 @@ export async function build(root, project, { surface, brief }) {
     ].filter(Boolean),
     commands: {
       direction: `${scriptOf('ledger.mjs')} new . ${surface ?? '<surface>'}`,
+      contract: `${scriptOf('contract.mjs')} new ${surface ?? '<surface>'}`,
+      contractCheck: `${scriptOf('contract.mjs')} check --write`,
+      contractCompare: `${scriptOf('contract.mjs')} compare --url <url> --write`,
       verify: `${scriptOf('verify.mjs')} <url-or-dir>`,
       critiquePacket: `${scriptOf('critique.mjs')} packet`,
       critiqueLock: `${scriptOf('critique.mjs')} lock --file <answers.md>`,
@@ -455,6 +467,7 @@ export const COMMANDS = {
   build: { does: 'orchestrates', args: '[--surface <s>] [--to <dir>]', what: 'prepare state, name the file the agent opens, record the surface' },
   inspect: { does: 'runs', args: '<url-or-dir> [--out <dir>]', what: 'stack, routes, screenshots, components, tokens, assets, audit, baseline' },
   redesign: { does: 'both', args: '<url-or-dir> [--to <dir>]', what: 'runs inspect, then hands the change itself to the agent' },
+  contract: { does: 'runs', args: 'new <surface> | check [--write] | compare --url <url>', what: 'the design contract: colour, type and layout as values a build can be checked against' },
   audit: { does: 'runs', args: '[<url-or-dir>] [--out <dir>]', what: 'inspect the result, then run the gate' },
   verify: { does: 'runs', args: '[<target>]', what: 'render matrix, axe in both schemes, floor measures' },
 };
@@ -495,6 +508,10 @@ export async function route(cmd, { root, argv }) {
     case 'build': return build(root, project, { surface: flag('surface'), brief: flag('brief') });
     case 'inspect': return inspect(root, project, { target: first, out: flag('out') });
     case 'redesign': return redesign(root, project, { target: first });
+    /* Passed through rather than reimplemented: contract.mjs parses its own subcommand and
+       already owns the exit contract. A second argument parser here would be a second place
+       for the two to disagree. */
+    case 'contract': return runScript(root, 'contract.mjs', [...argv, '--to', project], project);
     case 'audit': return audit(root, project, { target: first, out: flag('out') });
     case 'verify': return verify(root, project, { target: first });
     default: return null;
