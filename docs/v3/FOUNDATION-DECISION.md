@@ -1,7 +1,8 @@
 ---
 title: "SiteSmith v3 foundation decision"
-status: ready-for-architecture-approval
+status: not-ready-for-architecture-approval
 date: 2026-07-30
+correctedAt: 2026-07-31
 baseline: 80d4030780a4cab18f3baa16dfd354269f83971c
 ai_generated: "(C)"
 ---
@@ -28,14 +29,25 @@ The original architecture approval is rejected. The slogan-level comparison and 
 
 The reviewed proposal is a SiteSmith v3 **superset architecture** with eleven binding modules,
 `M0` through `M10`. It carries all 59 recorded upstream capabilities through an explicit retain,
-adapt, reimplement, integrate, or reject decision. Both process-isolated reviews now pass the same
-hash-locked revision with zero blockers, so the proposal is ready for an explicit architecture-
-approval decision. Approval would mean only that this system is coherent enough to implement and
-test.
+adapt, reimplement, integrate, or reject decision.
 
-It does **not** mean that v3 exists, works, produces better websites, is production-ready, beats an
-upstream, has passed its benchmark, or merits a release. It authorises no website build, migration,
-merge, push, customer work, showcase, or comparative claim.
+**Current readiness is derived from live review frontmatter, not from this paragraph.** As of the
+2026-07-31 integrity audit on `dc00598`, architecture readiness is
+`not-ready-for-architecture-approval` because no adversarial review file reports `status: pass` with
+`blockerCount: 0`. See [reviews/REVIEW-STATUS.md](./reviews/REVIEW-STATUS.md).
+
+Approval, if later re-earned by real matching PASS reviews on one immutable hash set, would mean
+only that this system is coherent enough to implement and test. It does **not** mean that v3
+exists, works, produces better websites, is production-ready, beats an upstream, has passed its
+benchmark, or merits a release. It authorises no website build, migration, merge, push, customer
+work, showcase, or comparative claim.
+
+### Readiness history (integrity)
+
+| When | Claimed status | Problem |
+| --- | --- | --- |
+| 2026-07-30 (`dc00598` as committed) | `ready-for-architecture-approval` with both reviews PASS | **False.** Cited `ADVERSARIAL-REVIEW-C.md` as PASS/0 while that file is `status: fail` / `blockerCount: 3`. |
+| 2026-07-31 integrity correction | `not-ready-for-architecture-approval` | Status now must match `REVIEW-STATUS.json` derived verdict. Mechanical test fails if this document claims PASS for a non-PASS review. |
 
 ## 2. Evidence boundary
 
@@ -189,21 +201,23 @@ artifact within five minutes are release targets that require measured conforman
 package name or mutable URL is presented as already available. The 100,000-star ambition is only a
 multi-year north star.
 
-Two process-isolated reviews now pass the same final hash revision:
+Live review outcomes on `dc00598` (do not invent PASS from filenames):
 
-- [Traceability review](./reviews/TRACEABILITY-REVIEW-C.md): **PASS, 0 blockers** after auditing all
-  59 chains, their unique child gates, integration categories, module carriage, and source hashes.
-- [Adversarial review](./reviews/ADVERSARIAL-REVIEW-C.md): **PASS, 0 blockers** after attempting to
-  disprove readiness, fairness, licensing closure, creative balance, subgate integrity, and claim
-  discipline.
+| Review | File status | Blockers |
+| --- | --- | --- |
+| [Traceability C](./reviews/TRACEABILITY-REVIEW-C.md) | **pass** | 0 |
+| [Adversarial C](./reviews/ADVERSARIAL-REVIEW-C.md) | **fail** | 3 |
+| [Adversarial D](./reviews/ADVERSARIAL-REVIEW-D.md) | **fail** | 2 |
+| [Adversarial E](./reviews/ADVERSARIAL-REVIEW-E.md) | **fail** | 1 |
+| [Traceability E](./reviews/TRACEABILITY-REVIEW-E.md) | **fail** | 1 |
 
-Both use OpenAI Codex in separate `fork_turns=none` contexts. The deployed model identifier is not
-exposed. They are not model-independent, their candidates are not blinded, and they are not called
-fully independent. Each report records received/withheld artifacts, prompt, provider/model boundary,
-method, exact hashes, remediation history, findings, and verdict. Earlier review revisions found
-real blockers and are retained as superseded history; only the final shared hash revision supports
-this status. Any future blocker or reviewed-artifact hash drift returns this decision to the matching
-NOT READY status.
+Canonical matrix: [REVIEW-STATUS.md](./reviews/REVIEW-STATUS.md) /
+[REVIEW-STATUS.json](./reviews/REVIEW-STATUS.json).
+
+All reviews use OpenAI Codex in separate `fork_turns=none` contexts. That is **context-isolated**,
+not model-independent. Because no adversarial PASS exists, and because C/E hash sets differ, this
+decision is **NOT READY** for architecture approval. Any future readiness claim must be regenerated
+from review frontmatter by the mechanical integrity test; hand-written PASS claims are forbidden.
 
 ## 10. Approval boundary
 
@@ -218,9 +232,10 @@ Architecture readiness requires all of the following at the same revision:
 5. Both process-isolated reviews report zero architecture blockers, and all repository/document
    integrity checks pass after any resulting corrections.
 
-All five conditions hold for the current documentation revision, so it is ready for architecture
-approval. This readiness status is not approval itself: a separate explicit approval is required
-before v3 implementation begins. Website builds, showcases, customer work, migration, benchmark
-execution, merge, push, release, and quality claims remain outside this decision.
+The five conditions do **not** all hold: condition 5 fails because adversarial reviews are not PASS
+with zero blockers on a shared hash revision. Full M0–M10 implementation remains **not approved**.
 
-READY FOR ARCHITECTURE APPROVAL
+The only approved engineering path from this point is the **Direction Engine v3 vertical slice** on
+the existing SiteSmith v2.3 shell (proof branch), which does not claim architecture approval.
+
+NOT READY FOR ARCHITECTURE APPROVAL

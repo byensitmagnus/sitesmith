@@ -2922,12 +2922,36 @@ if (foundation) {
     ['not-ready-derivation-architecture-incomplete', 'NOT READY — DERIVATION ARCHITECTURE INCOMPLETE'],
     ['not-ready-licensing-blocked', 'NOT READY — LICENSING BLOCKED'],
     ['not-ready-quality-contract-incomplete', 'NOT READY — QUALITY CONTRACT INCOMPLETE'],
+    ['not-ready-for-architecture-approval', 'NOT READY FOR ARCHITECTURE APPROVAL'],
+    ['not-ready-review-integrity-failure', 'NOT READY — REVIEW INTEGRITY FAILURE'],
     ['ready-for-architecture-approval', 'READY FOR ARCHITECTURE APPROVAL'],
   ]);
   if (!statusToFinal.has(status)) fail(`FOUNDATION-DECISION.md: invalid decision status ${status}`);
   const expectedFinal = statusToFinal.get(status);
   if (expectedFinal && foundation.trimEnd().split('\n').at(-1) !== expectedFinal) {
     fail(`FOUNDATION-DECISION.md: final status line must be ${expectedFinal}`);
+  }
+  // Ready status may only be claimed when live review frontmatter supports it.
+  // Do not trust prose; require matching PASS files when status is ready.
+  if (status === 'ready-for-architecture-approval') {
+    const reviewDir = path.join(docsDir, 'reviews');
+    let adversarialPass = false;
+    let tracePass = false;
+    if (fs.existsSync(reviewDir)) {
+      for (const name of fs.readdirSync(reviewDir)) {
+        if (!/REVIEW-.*\.md$/i.test(name) || name === 'REVIEW-STATUS.md') continue;
+        const body = fs.readFileSync(path.join(reviewDir, name), 'utf8');
+        const st = frontmatterValue(body, 'status');
+        const blockers = Number(frontmatterValue(body, 'blockerCount'));
+        if (st === 'pass' && blockers === 0) {
+          if (/ADVERSARIAL/i.test(name)) adversarialPass = true;
+          if (/TRACEABILITY/i.test(name)) tracePass = true;
+        }
+      }
+    }
+    if (!adversarialPass || !tracePass) {
+      fail('FOUNDATION-DECISION.md: ready-for-architecture-approval requires live PASS/0 adversarial and traceability reviews');
+    }
   }
   if (!foundation.includes('[26-field JSON ledger]')
       || !foundation.includes('Canonical 26-field records')
