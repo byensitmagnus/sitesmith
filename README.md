@@ -50,8 +50,8 @@ labels, hairline separators, tabular figures and no elevation. Both assignment-b
 independently reached the same portfolio finding.
 
 They remain committed as benchmark evidence, but none is presented as showcase work. The public
-manifest now requires both an individual pass and a rendered portfolio-diversity pass, and CI checks
-that the website tells the same truth. [Raw diversity report](docs/v2/preflight/round-8/diversity/portfolio.json)
+manifest now requires both an individual pass and a rendered portfolio-diversity pass, and the CI workflow
+(started by hand) checks that the website tells the same truth. [Raw diversity report](docs/v2/preflight/round-8/diversity/portfolio.json)
 · [reviews and correction](docs/v2/preflight/round-8/RESULT.md) ·
 [public manifest](gallery/showcase.json)
 
