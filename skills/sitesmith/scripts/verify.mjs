@@ -59,7 +59,13 @@ const argv = process.argv.slice(2);
 const VALUE_FLAGS = new Set(['out', 'widths']);
 const flag = (name, fallback) => {
   const i = argv.indexOf(`--${name}`);
-  return i === -1 ? fallback : argv[i + 1];
+  if (i === -1) return fallback;
+  // A flag with no value is a bad argument (exit 2), not a TypeError that exits 1 as a page defect.
+  if (argv[i + 1] === undefined || argv[i + 1].startsWith('--')) {
+    console.error(`--${name} needs a value\n${USAGE}`);
+    process.exit(2);
+  }
+  return argv[i + 1];
 };
 const has = (name) => argv.includes(`--${name}`);
 

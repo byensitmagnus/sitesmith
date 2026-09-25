@@ -280,6 +280,11 @@ expect('visual', 'text baked into the pixels', rec('fail-baked-text'), 1,
     vr('fail-uncaught-exception/'), 1, /console: .*#cart|console: .*null/);
   expect('verify', 'an unnamed control that only the desktop layout exposes',
     vr('fail-desktop-only-control/'), 1, /critical +label/);
+  for (const bad of ['--out', '--widths']) {
+    const { code } = run(join(S, 'verify.mjs'), ['http://localhost:4713/', bad], FIX);
+    record('verify', `${bad} with no value is a bad argument`, 'exit 2', `exit ${code}`,
+      code === 2, code === 2 ? '' : 'wrong exit code');
+  }
 
   /* A page that never loaded was not measured. Exit 1 means "measured and one site", and the
      showcase gate expects exactly that for round 8, so a crash read as the expected verdict. */
