@@ -214,16 +214,27 @@ if (urls.length < 2) {
   process.exit(2);
 }
 
-const pw = await loadPlaywright();
-const chromium = pw.chromium ?? pw.default?.chromium;
-const browser = await chromium.launch();
+/* Exit 1 means "measured, and they are one site". A crash also exited 1, so a server that was
+   down, or three identical 404 pages, read as the verdict the showcase gate expects for round 8.
+   Anything that stops the measurement is a setup error, exit 2, as in verify.mjs. */
+let browser;
 const sites = [];
-for (const [i, url] of urls.entries()) {
-  /* Default colour scheme, deliberately: this is the portfolio a viewer sees. */
-  const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
-  await page.goto(url, { waitUntil: 'networkidle' });
-  sites.push({ label: labels[i] ?? url, url, m: await measure(page) });
-  await page.close();
+try {
+  const pw = await loadPlaywright();
+  const chromium = pw.chromium ?? pw.default?.chromium;
+  browser = await chromium.launch();
+  for (const [i, url] of urls.entries()) {
+    /* Default colour scheme, deliberately: this is the portfolio a viewer sees. */
+    const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+    const res = await page.goto(url, { waitUntil: 'networkidle' });
+    if (!res || res.status() >= 400) throw new Error(`${url} answered HTTP ${res?.status() ?? 'nothing'}`);
+    sites.push({ label: labels[i] ?? url, url, m: await measure(page) });
+    await page.close();
+  }
+} catch (e) {
+  console.error(`could not measure the portfolio: ${String(e).split('\n')[0]}`);
+  await browser?.close();
+  process.exit(2);
 }
 await browser.close();
 

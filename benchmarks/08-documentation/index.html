@@ -87,9 +87,10 @@ code{font-family:var(--mono);font-size:.88em}
 /* On a phone the full tree is 330px of chrome sitting on top of the heading the
    reader arrived for. Behind a disclosure it is one line; no script needed, and
    the control is a real focusable input rather than a div pretending. */
-.navtog{position:absolute;opacity:0;width:1px;height:1px}
+.navtog{display:none;position:absolute;opacity:0;width:1px;height:1px}
 .navtog-l{display:none}
 @media(max-width:1000px){
+  .navtog{display:block}
   .side{border-right:0;border-bottom:1px solid var(--shell-line);padding-bottom:16px}
   .side nav{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:0 18px}
   .side .sub{margin-left:0}

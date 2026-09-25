@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en-GB"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>Desktop-only defect</title>
+<style>
+/* The checkbox menu the site-bar block shipped: the label is hidden above the breakpoint and
+   the input is not, so a desktop keyboard user tabs onto a control with no name. */
+.toggle{position:absolute;opacity:0;width:1px;height:1px}
+.burger{display:none}
+@media(max-width:760px){.burger{display:inline-flex}}
+</style>
+</head><body>
+<main>
+<input class="toggle" type="checkbox" id="menu">
+<label class="burger" for="menu">Menu</label>
+<h1>Clean on a phone</h1><p>Only the tablet and desktop layouts have the defect.</p>
+</main>
+</body></html>
