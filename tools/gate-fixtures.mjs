@@ -297,6 +297,12 @@ expect('visual', 'text baked into the pixels', rec('fail-baked-text'), 1,
       code === 2, code === 2 ? '' : 'wrong exit code');
   }
 
+  // benchmarks/serve.mjs listens on every interface, so a path out of its root is a file read
+  // for anyone on the network. %2f survives URL parsing and becomes a separator after decoding.
+  const escaped = await fetch('http://localhost:4713/..%2fbuild-fixtures.mjs').then((r) => r.status, () => 0);
+  record('serve', 'the static server refuses a path outside its root', 'status 404', `status ${escaped}`,
+    escaped === 404, escaped === 404 ? '' : 'served a file outside the root');
+
   srv.kill();
 }
 

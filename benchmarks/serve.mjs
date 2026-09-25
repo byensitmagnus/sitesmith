@@ -2,7 +2,7 @@
 /** Minimal static server for the benchmark set. node serve.mjs [port] */
 import { createServer } from 'node:http';
 import { readFile, stat } from 'node:fs/promises';
-import { join, extname, resolve } from 'node:path';
+import { join, extname, resolve, sep } from 'node:path';
 
 const ROOT = resolve(process.argv[3] ?? '.');
 const PORT = Number(process.argv[2] ?? 4321);
@@ -15,6 +15,8 @@ const TYPES = {
 createServer(async (req, res) => {
   try {
     let p = join(ROOT, decodeURIComponent(new URL(req.url, 'http://x').pathname));
+    // %2f survives URL parsing and becomes a separator here, so /..%2f.. escaped the root.
+    if (p !== ROOT && !p.startsWith(ROOT + sep)) throw new Error('outside root');
     const s = await stat(p).catch(() => null);
     if (s?.isDirectory()) p = join(p, 'index.html');
     const body = await readFile(p);
