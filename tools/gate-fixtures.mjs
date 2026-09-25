@@ -26,6 +26,7 @@
 import { spawnSync, spawn } from 'node:child_process';
 import { createServer } from 'node:http';
 import { existsSync } from 'node:fs';
+import { tmpdir } from 'node:os';
 import { fileURLToPath } from 'node:url';
 import { join } from 'node:path';
 
@@ -264,6 +265,34 @@ expect('visual', 'text baked into the pixels', rec('fail-baked-text'), 1,
     run(join(S, 'journey.mjs'), [join(FIX, 'journey/nowhere')]), 1, /no .*directory/);
 
   srvA.kill(); srvB.kill();
+}
+
+/* ══ verify and portfolio-diversity ═════════════════════════════════════ */
+
+{
+  const srv = serve(join(FIX, 'verify'), 4713);
+  if (!(await waitForServer(4713))) record('verify', 'the fixture server came up', 'pass', 'error', false);
+  const vr = (page) => run(join(S, 'verify.mjs'),
+    [`http://localhost:4713/${page}`, '--out', join(tmpdir(), 'sitesmith-verify-fixtures', page || 'root')], FIX);
+
+  expect('verify', 'a client-rendered app whose DOM has its <main> and <h1>', vr(''), 0);
+  expect('verify', 'a script that throws on load and logs nothing',
+    vr('fail-uncaught-exception/'), 1, /console: .*#cart|console: .*null/);
+  expect('verify', 'an unnamed control that only the desktop layout exposes',
+    vr('fail-desktop-only-control/'), 1, /critical +label/);
+
+  /* A page that never loaded was not measured. Exit 1 means "measured and one site", and the
+     showcase gate expects exactly that for round 8, so a crash read as the expected verdict. */
+  for (const [name, urls] of [
+    ['pages that answer 404', ['http://localhost:4713/no-such-a/', 'http://localhost:4713/no-such-b/']],
+    ['a server that is not running', ['http://localhost:4399/a/', 'http://localhost:4399/b/']],
+  ]) {
+    const { code } = run(join(S, 'portfolio-diversity.mjs'), urls, FIX);
+    record('portfolio', `${name} is a setup error, not a measured failure`, 'exit 2', `exit ${code}`,
+      code === 2, code === 2 ? '' : 'wrong exit code');
+  }
+
+  srv.kill();
 }
 
 /* ══ critique ═══════════════════════════════════════════════════════════ */

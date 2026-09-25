@@ -125,6 +125,7 @@ const report = {
   axe: null,
 };
 
+const axeSeen = new Set();
 const browser = await chromium.launch();
 try {
   for (const width of widths) {
@@ -138,6 +139,9 @@ try {
     page.on('console', (m) => {
       if (m.type() === 'error') report.consoleErrors.push({ width, text: m.text().slice(0, 300) });
     });
+    // An uncaught exception or unhandled rejection is not a console message in Playwright, so
+    // a script that dies on load logged nothing here and passed.
+    page.on('pageerror', (e) => report.consoleErrors.push({ width, text: String(e).slice(0, 300) }));
     page.on('requestfailed', (r) => {
       report.failedRequests.push({ width, url: r.url().slice(0, 200), error: r.failure()?.errorText });
     });
@@ -178,10 +182,12 @@ try {
       else if (!/<html[^>]*\slang\s*=/i.test(src)) structure.push('<html> has no lang attribute');
       if (!/<head\b/i.test(src)) structure.push('no <head> element');
       if (!/<body\b/i.test(src)) structure.push('no <body> element');
-      const h1 = (src.match(/<h1[\s>]/gi) ?? []).length;
+      // The parser never invents an <h1> or a <main>, so these are read from the rendered DOM.
+      // In the source, a client-rendered app (an empty #root) has neither and failed here.
+      const h1 = await page.locator('h1').count();
       if (h1 === 0) structure.push('no <h1>');
       else if (h1 > 1) structure.push(`${h1} <h1> elements`);
-      if (!/<main\b/i.test(src)) structure.push('no <main> landmark');
+      if (!(await page.locator('main').count())) structure.push('no <main> landmark');
       if (structure.length) report.structure = structure;
     }
 
@@ -192,7 +198,7 @@ try {
       title: await page.title(),
     };
 
-    // Link and axe checks only need to run once; the narrowest viewport is the strictest.
+    // The link check only needs to run once: every <a href> is in the DOM at every width.
     if (width === Math.min(...widths)) {
       const links = await page.$$eval('a[href]', (as) =>
         as.map((a) => ({ href: a.href, text: (a.textContent || '').trim().slice(0, 60) })),
@@ -214,36 +220,42 @@ try {
           report.brokenLinks.push({ ...link, reason: String(e).slice(0, 120) });
         }
       }
+    }
 
-      if (AxeBuilder) {
-        // Both colour schemes. A palette that passes in light routinely fails in dark,
-        // and testing one and inferring the other is how that ships.
-        const scan = async (scheme) => {
-          await page.emulateMedia({ colorScheme: scheme });
-          await page.waitForTimeout(150);
-          const r = await new AxeBuilder({ page })
-            .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
-            .analyze();
-          return r.violations.map((v) => ({ ...v, scheme }));
-        };
-        const found = [...(await scan('light')), ...(await scan('dark'))];
-        await page.emulateMedia({ colorScheme: null });
-        const results = { violations: found, passes: [] };
-        report.axe = {
-          violations: results.violations.map((v) => ({
-            id: v.id,
-            scheme: v.scheme,
-            impact: v.impact,
-            help: v.help,
-            nodes: v.nodes.length,
-            // Without the offending selectors a violation count is not actionable.
-            examples: v.nodes.slice(0, 4).map((n) => ({
-              target: n.target.join(' '),
-              detail: (n.any?.[0]?.message ?? n.failureSummary ?? '').split('\n')[0].slice(0, 160),
-            })),
+    // axe runs at every width. It skips what is display:none, so a scan at the narrowest width
+    // never saw a desktop-only nav, and an unnamed focusable control shipped in the block library.
+    if (AxeBuilder) {
+      // Both colour schemes. A palette that passes in light routinely fails in dark,
+      // and testing one and inferring the other is how that ships.
+      const scan = async (scheme) => {
+        await page.emulateMedia({ colorScheme: scheme });
+        await page.waitForTimeout(150);
+        const r = await new AxeBuilder({ page })
+          .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
+          .analyze();
+        return r.violations.map((v) => ({ ...v, scheme }));
+      };
+      const found = [...(await scan('light')), ...(await scan('dark'))];
+      await page.emulateMedia({ colorScheme: null });
+      report.axe ??= { violations: [], passes: 0 };
+      for (const v of found) {
+        // The same nodes failing the same rule at three widths is one defect, not three.
+        const key = [v.id, v.scheme, ...v.nodes.map((n) => n.target.join(' '))].join('|');
+        if (axeSeen.has(key)) continue;
+        axeSeen.add(key);
+        report.axe.violations.push({
+          id: v.id,
+          scheme: v.scheme,
+          width,
+          impact: v.impact,
+          help: v.help,
+          nodes: v.nodes.length,
+          // Without the offending selectors a violation count is not actionable.
+          examples: v.nodes.slice(0, 4).map((n) => ({
+            target: n.target.join(' '),
+            detail: (n.any?.[0]?.message ?? n.failureSummary ?? '').split('\n')[0].slice(0, 160),
           })),
-          passes: results.passes.length,
-        };
+        });
       }
     }
 
@@ -302,7 +314,7 @@ if (asJson) {
     console.log('      or `sitesmith doctor` to see what else is absent');
   }
   for (const v of serious) {
-    console.log(`      [${v.scheme ?? '?'}] ${v.impact.padEnd(8)} ${v.id} — ${v.help} (${v.nodes} nodes)`);
+    console.log(`      [${v.scheme ?? '?'} ${v.width}px] ${v.impact.padEnd(8)} ${v.id} — ${v.help} (${v.nodes} nodes)`);
     for (const ex of v.examples ?? []) console.log(`          ${ex.target}\n            ${ex.detail}`);
   }
   for (const l of report.brokenLinks.slice(0, 10)) console.log(`      link "${l.text}" — ${l.reason}`);
