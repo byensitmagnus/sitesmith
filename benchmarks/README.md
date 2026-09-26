@@ -65,12 +65,12 @@ measurement. Its defects, all intentional:
 10. Glassmorphism on the buttons for no functional reason.
 
 `06-redesign/after/` is the same product, same content areas, rebuilt against
-`references/06-redesign-audit.md`. The delta in the table above is what the skill changed.
+`v2/tasks/redesign-audit.md`. The delta in the table above is what the skill changed.
 
 ## Design rubric
 
 Scored 1–5 by inspection of the 1440 screenshots. The rubric is in
-`references/06-redesign-audit.md`; this is the same one the skill applies to its own output.
+`v2/tasks/redesign-audit.md`; this is the same one the skill applies to its own output.
 
 | | 01 | 02 | 03 | 04 | 05 | 06 after | 07 | 08 | 09 | Control |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |

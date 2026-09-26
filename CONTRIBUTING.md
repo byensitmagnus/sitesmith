@@ -55,7 +55,7 @@ What is not acceptable is a file that has been edited and still claims to be ver
 Why the repository stopped vendoring four intact voices, with the measurements: the 2026-07-27
 addendum in [LICENSE-AUDIT.md](LICENSE-AUDIT.md) and [docs/v2/CONFLICTS.md](docs/v2/CONFLICTS.md).
 
-`SKILL.md`, `06-redesign-audit.md`, `10-setup.md`, `12-design-system.md` and `blocks/` are original
+`SKILL.md`, `v2/tasks/redesign-audit.md`, `v2/tasks/setup.md`, `12-design-system.md` and `blocks/` are original
 work. Edit those directly.
 
 ## Running the checks

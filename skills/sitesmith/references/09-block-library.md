@@ -1,7 +1,7 @@
 # Block library
 
-> Part of the **sitesmith** skill. Verbatim from [taste-skill](https://github.com/Leonxlnx/taste-skill) — MIT, © 2026 Leonxlnx.
-> Reproduced without modification; only the heading above and file name are ours.
+> Part of the **sitesmith** skill. Contains a verbatim excerpt from [taste-skill](https://github.com/Leonxlnx/taste-skill) — MIT, © 2026 Leonxlnx.
+> **Modified for sitesmith:** SiteSmith added the title, attribution and local block-library note. Exact ranges and hashes are in `docs/v3/LICENSE-DERIVATION-AUDIT.md`.
 >
 > **Where the blocks are.** Section 12 below defines a schema and says implementations will
 > follow; upstream they never did, and the path it names does not exist here. The working

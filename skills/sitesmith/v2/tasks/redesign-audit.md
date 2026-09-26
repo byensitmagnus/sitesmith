@@ -1,7 +1,7 @@
 # Redesign audit
 
 > Original work, MIT. Written for sitesmith — not derived from any third-party skill.
-> Use when the target already exists. For greenfield work, start at `01-brief-and-dials.md`.
+> Use when the target already exists. For greenfield work, follow the `init` route in `SKILL.md`.
 
 ## Contents
 

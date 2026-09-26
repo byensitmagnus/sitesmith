@@ -21,7 +21,7 @@ needs saying, so the agent guesses and guesses badly. Those matter as much.
 | Side | Source |
 | --- | --- |
 | One scale, everywhere | `03-design-engineering.md:81` — "SHAPE CONSISTENCY LOCK (mandatory): Pick ONE corner-radius scale for the page and stick to it." |
-| One value everywhere is a defect | `06-redesign-audit.md:89` — "Identical border-radius on every element → Tighter inside, softer outside." |
+| One value everywhere is a defect | `v2/tasks/redesign-audit.md:89` — "Identical border-radius on every element → Tighter inside, softer outside." |
 
 **Decision.** One radius *system*, not one radius *value*. The system states an inside/outside
 relationship: a control inside a panel is tighter than the panel. `12-design-system.md`

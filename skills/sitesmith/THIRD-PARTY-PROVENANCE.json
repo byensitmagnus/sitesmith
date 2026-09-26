@@ -1,0 +1,865 @@
+{
+  "schemaVersion": 1,
+  "normalization": "utf8-strip-bom-crlf-to-lf-v1",
+  "spanHashMode": "lines-inclusive-no-synthetic-final-lf-v1",
+  "treeHashMode": "sha256-sorted-relative-path-null-canonical-file-sha-lf-v1",
+  "selfHashMode": "normalized-text-replace-own-sha-with-64-zeroes-v1",
+  "audit": {
+    "path": "docs/v3/LICENSE-DERIVATION-AUDIT.md",
+    "baseline": "80d4030780a4cab18f3baa16dfd354269f83971c",
+    "conclusion": "closed-for-exact-mapped-baseline-only"
+  },
+  "coverage": {
+    "uniqueFileCount": 75,
+    "membershipCount": 76,
+    "treeSha256": "c5aa5336a65499e4903f4871bd89eabd200454b463a3e935691de41c5ad85034",
+    "allowedOverlap": {
+      "path": "references/05-ai-tells.md",
+      "groupIds": [
+        "taste-references",
+        "frontend-design-span"
+      ],
+      "mustUseDisjointSpans": true
+    }
+  },
+  "sources": [
+    {
+      "id": "taste-skill",
+      "repository": "https://github.com/Leonxlnx/taste-skill",
+      "capabilityRevision": "e988add20dab0fa97d7a76781c48961c8184288e",
+      "derivationRevisions": [
+        "e988add20dab0fa97d7a76781c48961c8184288e"
+      ],
+      "licenseSpdx": "MIT",
+      "carriageIds": [
+        "third-party-notices"
+      ]
+    },
+    {
+      "id": "ui-ux-pro-max",
+      "repository": "https://github.com/nextlevelbuilder/ui-ux-pro-max-skill",
+      "capabilityRevision": "4857a2c5ef989794751a0f66b8545a4a49566286",
+      "derivationRevisions": [
+        "65e23199492fa911af32d9078e627ab4de01f4c8",
+        "13789290064c88039ad8fc5376412e8d22e491d7",
+        "07f4ef3ac2568c25a3b0c8ef5165a86abc3e56e4",
+        "6142b073958df645d0fb27e682428e69599386dc"
+      ],
+      "licenseSpdx": "MIT",
+      "carriageIds": [
+        "third-party-notices"
+      ]
+    },
+    {
+      "id": "frontend-design",
+      "repository": "https://github.com/anthropics/skills",
+      "capabilityRevision": "b29e7cf65e5cb78a5ac33d582270551bc74a14eb",
+      "derivationRevisions": [
+        "df5224ba07bcc260c4c6bcd7ce2c5a6cff533c4a"
+      ],
+      "licenseSpdx": "Apache-2.0",
+      "carriageIds": [
+        "apache-2.0-license",
+        "third-party-notices"
+      ],
+      "derivationRepository": "https://github.com/anthropics/claude-plugins-official"
+    },
+    {
+      "id": "impeccable",
+      "repository": "https://github.com/pbakaus/impeccable",
+      "capabilityRevision": "6b342244e915d64b0d6e84d5eec448fd196ce6bb",
+      "derivationRevisions": [
+        "af78b1e512148e2a2f2d2ded6786d265ea420191"
+      ],
+      "licenseSpdx": "Apache-2.0",
+      "carriageIds": [
+        "apache-2.0-license",
+        "third-party-notices"
+      ]
+    }
+  ],
+  "groups": [
+    {
+      "id": "taste-references",
+      "sourceId": "taste-skill",
+      "treeSha256": "7f9a302db90dbf5a603bf4afb383572847a57a234a050828e67870b7dfc73a54",
+      "files": [
+        {
+          "path": "references/01-brief-and-dials.md",
+          "canonicalFileSha256": "0590e18b492788656999e9f5eba1525199257ecafd23eb51bf93797b3e8d48d7",
+          "sourcePath": "skills/taste-skill/SKILL.md",
+          "derivation": "verbatim-spans-in-sitesmith-assembly",
+          "spans": [
+            {
+              "localLines": [
+                34,
+                147
+              ],
+              "sourceLines": [
+                8,
+                121
+              ],
+              "canonicalSpanSha256": "aa6fd0a508cc9c7d253c358bbcca242714b8572211b7c89fe78ad5641d910674"
+            },
+            {
+              "localLines": [
+                148,
+                192
+              ],
+              "sourceLines": [
+                549,
+                593
+              ],
+              "canonicalSpanSha256": "94fd4c1116641996cbeee99aaf95e69a6984b059d9ad16e6a3b8a4b8774762ba"
+            }
+          ]
+        },
+        {
+          "path": "references/02-architecture.md",
+          "canonicalFileSha256": "0a6953571eee0f59ef03c266bdedd85206175e9cfb8a8205bd725bec3680a245",
+          "sourcePath": "skills/taste-skill/SKILL.md",
+          "derivation": "verbatim-spans-in-sitesmith-assembly",
+          "spans": [
+            {
+              "localLines": [
+                8,
+                45
+              ],
+              "sourceLines": [
+                122,
+                159
+              ],
+              "canonicalSpanSha256": "fe9ef4eaef87bbf7426a566d688a7e69956e3b31a034faccfc6259ad82d84b2b"
+            }
+          ]
+        },
+        {
+          "path": "references/03-design-engineering.md",
+          "canonicalFileSha256": "66425bd20daf745d2772235af7f1559404062730200d0efcd5f35a2d545a1238",
+          "sourcePath": "skills/taste-skill/SKILL.md",
+          "derivation": "verbatim-spans-in-sitesmith-assembly",
+          "spans": [
+            {
+              "localLines": [
+                25,
+                214
+              ],
+              "sourceLines": [
+                161,
+                350
+              ],
+              "canonicalSpanSha256": "437ff5db7c5e8a1c93efe8b4ee14ef7fbbd8127691c36c6f92ad47d0c159444c"
+            }
+          ]
+        },
+        {
+          "path": "references/04-motion-and-performance.md",
+          "canonicalFileSha256": "c453700e819e3296b7ea789b2b0a73172f2f0cc249596e501b49b9a9b4f4d600",
+          "sourcePath": "skills/taste-skill/SKILL.md",
+          "derivation": "verbatim-spans-in-sitesmith-assembly",
+          "spans": [
+            {
+              "localLines": [
+                25,
+                223
+              ],
+              "sourceLines": [
+                352,
+                550
+              ],
+              "canonicalSpanSha256": "dc853c458784565d1bccc78d17042a24bffdef8f28ce81e5e261f8b36c5a6daf"
+            }
+          ]
+        },
+        {
+          "path": "references/05-ai-tells.md",
+          "canonicalFileSha256": "849838665ae0e672f6c714f044db4cc53504803773c1fba89268402c96ccd65d",
+          "sourcePath": "skills/taste-skill/SKILL.md",
+          "derivation": "verbatim-spans-in-sitesmith-assembly",
+          "spans": [
+            {
+              "localLines": [
+                24,
+                133
+              ],
+              "sourceLines": [
+                595,
+                704
+              ],
+              "canonicalSpanSha256": "fa9af87fba96031bdb98181a600459c13cd8ed95aa725032b003fe384bfbad05"
+            }
+          ]
+        },
+        {
+          "path": "references/08-pattern-vocabulary.md",
+          "canonicalFileSha256": "5731593e4da753ccfcbeb8b14ad30430d5d18b44b7b9edae2e289d5957d15a4b",
+          "sourcePath": "skills/taste-skill/SKILL.md",
+          "derivation": "verbatim-spans-in-sitesmith-assembly",
+          "spans": [
+            {
+              "localLines": [
+                8,
+                84
+              ],
+              "sourceLines": [
+                705,
+                781
+              ],
+              "canonicalSpanSha256": "f821c81b29245c280d20e8ff18fba2276694d3d5e7d34b0695e156b2c8a7e2e8"
+            }
+          ]
+        },
+        {
+          "path": "references/09-block-library.md",
+          "canonicalFileSha256": "7f89522d4289bde9c2e932c4a1823c69eae2413c362b274d85fabb950b8ade35",
+          "sourcePath": "skills/taste-skill/SKILL.md",
+          "derivation": "verbatim-spans-in-sitesmith-assembly",
+          "spans": [
+            {
+              "localLines": [
+                50,
+                421
+              ],
+              "sourceLines": [
+                835,
+                1206
+              ],
+              "canonicalSpanSha256": "07e614569c674eda75fd79a71ccd0afb5815156f2a4994a479c51480ea6a6374"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "frontend-design-span",
+      "sourceId": "frontend-design",
+      "treeSha256": "7fdae6e791e555c7e891060958c130d76d970df19dfc0e7c088f6012022f85ab",
+      "files": [
+        {
+          "path": "references/05-ai-tells.md",
+          "canonicalFileSha256": "849838665ae0e672f6c714f044db4cc53504803773c1fba89268402c96ccd65d",
+          "sourceRevision": "df5224ba07bcc260c4c6bcd7ce2c5a6cff533c4a",
+          "sourcePath": "plugins/frontend-design/skills/frontend-design/SKILL.md",
+          "sourceGitBlob": "600b6db41fac7e2081c7528ec6982960892c819d",
+          "sourceCanonicalFileSha256": "d39adf3a983de7dafc75991590d54f091755f7e4163d5a5ed085ecd719157184",
+          "derivation": "frontmatter-and-leading-blank-removed-body-in-sitesmith-assembly",
+          "spans": [
+            {
+              "localLines": [
+                139,
+                174
+              ],
+              "sourceSelector": "body-after-yaml-frontmatter-with-leading-blank-removed",
+              "sourceCanonicalSpanSha256": "83f5375c2f158e628421cc578fe9db67bc5031e2e05bbf473ec2d47e56eb4073",
+              "canonicalSpanSha256": "83f5375c2f158e628421cc578fe9db67bc5031e2e05bbf473ec2d47e56eb4073"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "uupm-references",
+      "sourceId": "ui-ux-pro-max",
+      "treeSha256": "596a8f988974b5229a8b4ffcfca87ac54641afb72b704f9c08883259b38a600e",
+      "files": [
+        {
+          "path": "references/07-ux-rules.md",
+          "canonicalFileSha256": "6bc8ac3561606c442f15a33dfe497a120059f103c26ebba12226d8ee41a85a67",
+          "sourceRevision": "65e23199492fa911af32d9078e627ab4de01f4c8",
+          "sourcePath": ".claude/skills/ui-ux-pro-max/SKILL.md",
+          "derivation": "verbatim-spans-in-sitesmith-assembly",
+          "spans": [
+            {
+              "localLines": [
+                35,
+                289
+              ],
+              "sourceLines": [
+                47,
+                301
+              ],
+              "canonicalSpanSha256": "7c5488fbaf6423475774aebdf07b732f0adc1b0405aea2e277739596643fedca"
+            },
+            {
+              "localLines": [
+                290,
+                393
+              ],
+              "sourceLines": [
+                577,
+                680
+              ],
+              "canonicalSpanSha256": "426d181c9650de1c04126214be47d9e6dfc918213dfbefb040e95c2702a87590"
+            }
+          ]
+        },
+        {
+          "path": "references/11-search-engine.md",
+          "canonicalFileSha256": "e64a877de2896dea68dad4b381513e4b096df44072c2a0092517d839fe8627ef",
+          "sourceRevisions": [
+            "13789290064c88039ad8fc5376412e8d22e491d7",
+            "07f4ef3ac2568c25a3b0c8ef5165a86abc3e56e4"
+          ],
+          "sourcePath": "cli/assets/templates/base/skill-content.md",
+          "sourceCanonicalFileSha256": "00df1a36535738b3bb3a07d6c2a537725f817ebf5b218ac91274f2804123388f",
+          "derivation": "modified-derivative"
+        }
+      ]
+    },
+    {
+      "id": "uupm-data",
+      "sourceId": "ui-ux-pro-max",
+      "sourceRevision": "6142b073958df645d0fb27e682428e69599386dc",
+      "treeSha256": "334255fa61bd0cb96ae10872119db0fc34348cf989599f85432a8433226a76b4",
+      "files": [
+        {
+          "path": "data/app-interface.csv",
+          "canonicalFileSha256": "2a17ef810dab715ce1f339861817a8fbe3ccc38142b70517301e874803e838ac",
+          "sourcePath": "src/ui-ux-pro-max/data/app-interface.csv",
+          "sourceGitBlob": "f34c3cd0de0eee83553b996756e1b999749d56a1",
+          "sourceCanonicalFileSha256": "2a17ef810dab715ce1f339861817a8fbe3ccc38142b70517301e874803e838ac",
+          "derivation": "verbatim-canonical-text"
+        },
+        {
+          "path": "data/charts.csv",
+          "canonicalFileSha256": "a70ef7460b0eaaea8614f86a0d09a4bc38b467804179762464b5ca45b491baac",
+          "sourcePath": "src/ui-ux-pro-max/data/charts.csv",
+          "sourceGitBlob": "c27b726c1162aa79d93f46ef039523666be44187",
+          "sourceCanonicalFileSha256": "a70ef7460b0eaaea8614f86a0d09a4bc38b467804179762464b5ca45b491baac",
+          "derivation": "verbatim-canonical-text"
+        },
+        {
+          "path": "data/colors.csv",
+          "canonicalFileSha256": "5a6cb6c5d6f19b5f5e51865ae1e643e4baa05d04304d0bab976f064632149a6a",
+          "sourcePath": ".claude/skills/ui-ux-pro-max/data/colors.csv",
+          "sourceGitBlob": "de74c2ce58060f9fc33e3697d4f7f8876211e0d9",
+          "sourceCanonicalFileSha256": "5a6cb6c5d6f19b5f5e51865ae1e643e4baa05d04304d0bab976f064632149a6a",
+          "derivation": "verbatim-canonical-text"
+        },
+        {
+          "path": "data/google-fonts.csv",
+          "canonicalFileSha256": "3fd2898fb0fdd31ba758bf05cfcd2b58cd0f038a20cf08e417d09e5a8a4a509e",
+          "sourcePath": "src/ui-ux-pro-max/data/google-fonts.csv",
+          "sourceGitBlob": "45ece9ea26e9df5405b987270067cb88dab79f67",
+          "sourceCanonicalFileSha256": "3fd2898fb0fdd31ba758bf05cfcd2b58cd0f038a20cf08e417d09e5a8a4a509e",
+          "derivation": "verbatim-canonical-text"
+        },
+        {
+          "path": "data/icons.csv",
+          "canonicalFileSha256": "f376c29fb4df37b4bdb366a5aa70cb211ba3dd8b435390aaa03152a64b07d2e8",
+          "sourcePath": "src/ui-ux-pro-max/data/icons.csv",
+          "sourceGitBlob": "210a8d0863177abe5e559750d076a27216c87e49",
+          "sourceCanonicalFileSha256": "f376c29fb4df37b4bdb366a5aa70cb211ba3dd8b435390aaa03152a64b07d2e8",
+          "derivation": "verbatim-canonical-text"
+        },
+        {
+          "path": "data/landing.csv",
+          "canonicalFileSha256": "121a2cac7cf21050234b5f80e7b4e182f10123536032e0f9ad862ad3aec9677d",
+          "sourcePath": "src/ui-ux-pro-max/data/landing.csv",
+          "sourceGitBlob": "f64101ec49882e68b0555da56e328187fd2f9a8c",
+          "sourceCanonicalFileSha256": "121a2cac7cf21050234b5f80e7b4e182f10123536032e0f9ad862ad3aec9677d",
+          "derivation": "verbatim-canonical-text"
+        },
+        {
+          "path": "data/products.csv",
+          "canonicalFileSha256": "9fd9e776ba847cf44c1ea78f95fe5e33b2c56bb7e186e3cfff9c49bc7fcb691b",
+          "sourcePath": ".claude/skills/ui-ux-pro-max/data/products.csv",
+          "sourceGitBlob": "0bb9fcb3e03d7f70ca3e53a79de9bea49e585ef0",
+          "sourceCanonicalFileSha256": "9fd9e776ba847cf44c1ea78f95fe5e33b2c56bb7e186e3cfff9c49bc7fcb691b",
+          "derivation": "verbatim-canonical-text"
+        },
+        {
+          "path": "data/react-performance.csv",
+          "canonicalFileSha256": "904c8afcda229629545912dde0e8ac37503757131f0169f80b016f1f58c4fd3f",
+          "sourcePath": "src/ui-ux-pro-max/data/react-performance.csv",
+          "sourceGitBlob": "671465f29ce8d1b12e1576ab81c7b610161f2f6d",
+          "sourceCanonicalFileSha256": "904c8afcda229629545912dde0e8ac37503757131f0169f80b016f1f58c4fd3f",
+          "derivation": "verbatim-canonical-text"
+        },
+        {
+          "path": "data/stacks/angular.csv",
+          "canonicalFileSha256": "dd7cc2a2b34cd8f0508bd05b067545e7a44f7724440c432d491d92a61a8fb6c1",
+          "sourcePath": ".claude/skills/ui-ux-pro-max/data/stacks/angular.csv",
+          "sourceGitBlob": "75cb670f247923ba78946501c004e36dd37d3407",
+          "sourceCanonicalFileSha256": "dd7cc2a2b34cd8f0508bd05b067545e7a44f7724440c432d491d92a61a8fb6c1",
+          "derivation": "verbatim-canonical-text"
+        },
+        {
+          "path": "data/stacks/astro.csv",
+          "canonicalFileSha256": "ad18dae3ab6d148d37d144592df80dc1825b6c9e86d9d2d68fdda77434206a37",
+          "sourcePath": ".claude/skills/ui-ux-pro-max/data/stacks/astro.csv",
+          "sourceGitBlob": "cacba81c96005b527b55bdb56e37d69bd616ca54",
+          "sourceCanonicalFileSha256": "ad18dae3ab6d148d37d144592df80dc1825b6c9e86d9d2d68fdda77434206a37",
+          "derivation": "verbatim-canonical-text"
+        },
+        {
+          "path": "data/stacks/flutter.csv",
+          "canonicalFileSha256": "fe36d404c799781e8ba6e9a8179b45799ed5126a545528550cd2eb0f2346e8c5",
+          "sourcePath": "src/ui-ux-pro-max/data/stacks/flutter.csv",
+          "sourceGitBlob": "b8dfd0d696bdb885184c271feb0d8722f7d7c655",
+          "sourceCanonicalFileSha256": "fe36d404c799781e8ba6e9a8179b45799ed5126a545528550cd2eb0f2346e8c5",
+          "derivation": "verbatim-canonical-text"
+        },
+        {
+          "path": "data/stacks/html-tailwind.csv",
+          "canonicalFileSha256": "7aef38e75c53559470afcfa91580a9917ca8b7dbf8b92110389e23e93703ac52",
+          "sourcePath": "src/ui-ux-pro-max/data/stacks/html-tailwind.csv",
+          "sourceGitBlob": "51ff57a6808b199e664eda22fbd7736d827d9a9a",
+          "sourceCanonicalFileSha256": "7aef38e75c53559470afcfa91580a9917ca8b7dbf8b92110389e23e93703ac52",
+          "derivation": "verbatim-canonical-text"
+        },
+        {
+          "path": "data/stacks/jetpack-compose.csv",
+          "canonicalFileSha256": "6c8fd4b0391c342c12b0af15610cd5becbeccaef0bbe8dcfc01d928c3195d93e",
+          "sourcePath": "src/ui-ux-pro-max/data/stacks/jetpack-compose.csv",
+          "sourceGitBlob": "971ff9e3074c9a1a414b1a7e69745f286291d3f6",
+          "sourceCanonicalFileSha256": "6c8fd4b0391c342c12b0af15610cd5becbeccaef0bbe8dcfc01d928c3195d93e",
+          "derivation": "verbatim-canonical-text"
+        },
+        {
+          "path": "data/stacks/laravel.csv",
+          "canonicalFileSha256": "50e11e60a64b30f329af25ae71f4b8bbdb43bafc1865451b74f9f540a88964d5",
+          "sourcePath": ".claude/skills/ui-ux-pro-max/data/stacks/laravel.csv",
+          "sourceGitBlob": "c32f2084373cc2f917c414949bb8e691825a529e",
+          "sourceCanonicalFileSha256": "50e11e60a64b30f329af25ae71f4b8bbdb43bafc1865451b74f9f540a88964d5",
+          "derivation": "verbatim-canonical-text"
+        },
+        {
+          "path": "data/stacks/nextjs.csv",
+          "canonicalFileSha256": "e828ccc04843742f52f545a068e8a9ab0d2b97c0e771f7e93bf0cef74da05554",
+          "sourcePath": "src/ui-ux-pro-max/data/stacks/nextjs.csv",
+          "sourceGitBlob": "8762161a982279b2bdaad86860d10f0afbfeb13f",
+          "sourceCanonicalFileSha256": "e828ccc04843742f52f545a068e8a9ab0d2b97c0e771f7e93bf0cef74da05554",
+          "derivation": "verbatim-canonical-text"
+        },
+        {
+          "path": "data/stacks/nuxt-ui.csv",
+          "canonicalFileSha256": "05d6e74501b2b6a636faed32450622759f49a5bcafad971f5f4e7eba0eb7be71",
+          "sourcePath": ".claude/skills/ui-ux-pro-max/data/stacks/nuxt-ui.csv",
+          "sourceGitBlob": "7146e84836c504d4374a9b1cace3262b771a2956",
+          "sourceCanonicalFileSha256": "05d6e74501b2b6a636faed32450622759f49a5bcafad971f5f4e7eba0eb7be71",
+          "derivation": "verbatim-canonical-text"
+        },
+        {
+          "path": "data/stacks/nuxtjs.csv",
+          "canonicalFileSha256": "f7a3f2d9542856d00199f85c6c023b7c284cc698e2e6e12d61afce2edacb24d6",
+          "sourcePath": "src/ui-ux-pro-max/data/stacks/nuxtjs.csv",
+          "sourceGitBlob": "c275d0de8c6a06a06f8439be017af660fefe91bb",
+          "sourceCanonicalFileSha256": "f7a3f2d9542856d00199f85c6c023b7c284cc698e2e6e12d61afce2edacb24d6",
+          "derivation": "verbatim-canonical-text"
+        },
+        {
+          "path": "data/stacks/react-native.csv",
+          "canonicalFileSha256": "077aefc81d194895ecf7936b3ed298b978e36961f183e3a275f8acda19b5f621",
+          "sourcePath": "src/ui-ux-pro-max/data/stacks/react-native.csv",
+          "sourceGitBlob": "209e893c3b2441813add061270009d9b6fe3e512",
+          "sourceCanonicalFileSha256": "077aefc81d194895ecf7936b3ed298b978e36961f183e3a275f8acda19b5f621",
+          "derivation": "verbatim-canonical-text"
+        },
+        {
+          "path": "data/stacks/react.csv",
+          "canonicalFileSha256": "e5624ab41d33427d88e41d07581ce4eca59b37b36ab72a6ad43a9c8e2d0a1c72",
+          "sourcePath": "src/ui-ux-pro-max/data/stacks/react.csv",
+          "sourceGitBlob": "9f891f4ab9cc8362b22f919f1dcae5b9853fc9bf",
+          "sourceCanonicalFileSha256": "e5624ab41d33427d88e41d07581ce4eca59b37b36ab72a6ad43a9c8e2d0a1c72",
+          "derivation": "verbatim-canonical-text"
+        },
+        {
+          "path": "data/stacks/shadcn.csv",
+          "canonicalFileSha256": "395c2e415ef6f48a474acccdc8eb2c7258a6ed751a5037ba171a2d8823e02ded",
+          "sourcePath": "src/ui-ux-pro-max/data/stacks/shadcn.csv",
+          "sourceGitBlob": "fb86e8d1c135aa384df284f216c3db9c5187ae57",
+          "sourceCanonicalFileSha256": "395c2e415ef6f48a474acccdc8eb2c7258a6ed751a5037ba171a2d8823e02ded",
+          "derivation": "verbatim-canonical-text"
+        },
+        {
+          "path": "data/stacks/svelte.csv",
+          "canonicalFileSha256": "71af52d64f266c88070b91dbbaa900c2f8074b6baae9f35eaea6ba9cec6fd803",
+          "sourcePath": "src/ui-ux-pro-max/data/stacks/svelte.csv",
+          "sourceGitBlob": "39b6d2e4404cca19d2afe86529597638e6752d2e",
+          "sourceCanonicalFileSha256": "71af52d64f266c88070b91dbbaa900c2f8074b6baae9f35eaea6ba9cec6fd803",
+          "derivation": "verbatim-canonical-text"
+        },
+        {
+          "path": "data/stacks/swiftui.csv",
+          "canonicalFileSha256": "c9c2d2510f8e66281a2514e8dd0125a6b653b9ef53a71281b5e7dfe003d5b569",
+          "sourcePath": "src/ui-ux-pro-max/data/stacks/swiftui.csv",
+          "sourceGitBlob": "1009d75ccdac6eb667ee141285908a249e82fb50",
+          "sourceCanonicalFileSha256": "c9c2d2510f8e66281a2514e8dd0125a6b653b9ef53a71281b5e7dfe003d5b569",
+          "derivation": "verbatim-canonical-text"
+        },
+        {
+          "path": "data/stacks/threejs.csv",
+          "canonicalFileSha256": "f1c05f8f269fc4784170c837f4ff43b50042f00bbd6ba7dbef2896081a052544",
+          "sourcePath": ".claude/skills/ui-ux-pro-max/data/stacks/threejs.csv",
+          "sourceGitBlob": "7035a99742baa094c42e551c03048c02715164a3",
+          "sourceCanonicalFileSha256": "f1c05f8f269fc4784170c837f4ff43b50042f00bbd6ba7dbef2896081a052544",
+          "derivation": "verbatim-canonical-text"
+        },
+        {
+          "path": "data/stacks/vue.csv",
+          "canonicalFileSha256": "c2724915d3c11cd67263f25896cff721f787a0fdd8326002d31e9f5806dfd8f8",
+          "sourcePath": "src/ui-ux-pro-max/data/stacks/vue.csv",
+          "sourceGitBlob": "86b05cffdcd30abedf357e21ddf0fe51baed541f",
+          "sourceCanonicalFileSha256": "c2724915d3c11cd67263f25896cff721f787a0fdd8326002d31e9f5806dfd8f8",
+          "derivation": "verbatim-canonical-text"
+        },
+        {
+          "path": "data/styles.csv",
+          "canonicalFileSha256": "f37eb20e7403a715d440efd45ce6952ea6a445d6143fd130c52e219a4bec9911",
+          "sourcePath": ".claude/skills/ui-ux-pro-max/data/styles.csv",
+          "sourceGitBlob": "9b889db1187bc66b2f69b20627ab1b56165e4668",
+          "sourceCanonicalFileSha256": "f37eb20e7403a715d440efd45ce6952ea6a445d6143fd130c52e219a4bec9911",
+          "derivation": "verbatim-canonical-text"
+        },
+        {
+          "path": "data/typography.csv",
+          "canonicalFileSha256": "dbea262a54e3bfa2e6c3b15989a365d5ef4c43349316aff46635e82ca825adce",
+          "sourcePath": ".claude/skills/ui-ux-pro-max/data/typography.csv",
+          "sourceGitBlob": "51a63f01ac248e51240652131bb342b6606b6856",
+          "sourceCanonicalFileSha256": "dbea262a54e3bfa2e6c3b15989a365d5ef4c43349316aff46635e82ca825adce",
+          "derivation": "verbatim-canonical-text"
+        },
+        {
+          "path": "data/ui-reasoning.csv",
+          "canonicalFileSha256": "06e4369445388ba9b7a57347510b125b7a2145bbf8546a327ba50292503b204a",
+          "sourcePath": "src/ui-ux-pro-max/data/ui-reasoning.csv",
+          "sourceGitBlob": "8b6ca2fb256e13ff2a0a9dd150f34e1bc2ec8e25",
+          "sourceCanonicalFileSha256": "06e4369445388ba9b7a57347510b125b7a2145bbf8546a327ba50292503b204a",
+          "derivation": "verbatim-canonical-text"
+        },
+        {
+          "path": "data/ux-guidelines.csv",
+          "canonicalFileSha256": "e01943c433b2cad3040f19389b3b0455673758a569b7a927b5bedf65c989cb96",
+          "sourcePath": "src/ui-ux-pro-max/data/ux-guidelines.csv",
+          "sourceGitBlob": "e347aeda7401aac08879a7b11c3907782c7bcadb",
+          "sourceCanonicalFileSha256": "e01943c433b2cad3040f19389b3b0455673758a569b7a927b5bedf65c989cb96",
+          "derivation": "verbatim-canonical-text"
+        }
+      ]
+    },
+    {
+      "id": "uupm-python",
+      "sourceId": "ui-ux-pro-max",
+      "sourceRevision": "65e23199492fa911af32d9078e627ab4de01f4c8",
+      "treeSha256": "c39a6a81a513a6b32bd9165d5c8c8f1f38b71f14eab05c878df45a911ead868b",
+      "files": [
+        {
+          "path": "scripts/core.py",
+          "canonicalFileSha256": "93253c8cce815f77e16eddcd66cc4fb3c9f36a027cb22bcbf257c48ab84a66bb",
+          "sourcePath": ".claude/skills/ui-ux-pro-max/scripts/core.py",
+          "sourceGitBlob": "8d02065480ecab6978935133371658789782e093",
+          "sourceCanonicalFileSha256": "772b4d567c7a948c5d4a10343473b4123fec04238d250c9ffce31d0733f752c0",
+          "derivation": "upstream-body-plus-attribution"
+        },
+        {
+          "path": "scripts/design_system.py",
+          "canonicalFileSha256": "5b01b4dc43cbe4249dd13c6076a9cc38c7c325772cada3d08434d7890eddd975",
+          "sourcePath": ".claude/skills/ui-ux-pro-max/scripts/design_system.py",
+          "sourceGitBlob": "d3152e5fb6cd284d03f4169ce63b91f3df40b32d",
+          "sourceCanonicalFileSha256": "f7a21e83739c5ac6ca3738846220f6a9eb7f3c1ae7a44989c5aaa2061ca60310",
+          "derivation": "upstream-body-plus-attribution"
+        },
+        {
+          "path": "scripts/search.py",
+          "canonicalFileSha256": "65147ac6d38e4f90d05935a920318546d6cba321e1e5e578a786244fa684372e",
+          "sourcePath": ".claude/skills/ui-ux-pro-max/scripts/search.py",
+          "sourceGitBlob": "ee1e340eb64c904398d9936ee0ff26fdde4ec3e8",
+          "sourceCanonicalFileSha256": "211546b262fb14d397228dbf982e32254c938d364b6386da69b62e7c3805b319",
+          "derivation": "modified-derivative"
+        }
+      ]
+    },
+    {
+      "id": "impeccable-provider-output",
+      "sourceId": "impeccable",
+      "treeSha256": "9d0aa9c501b29a0d7628c207ad737cfe2f959574658b6d20d5d9d780008e2a6d",
+      "reconstructedSourceTreeSha256": "5d5855a48b6462b42d8ed46447680484a325bf686a1cdb521740dc3e779508aa",
+      "files": [
+        {
+          "path": "references/impeccable/_SKILL-original.md",
+          "canonicalFileSha256": "85913fc22d8e3dd6187bd584d3108f2e551742b8fe4410360b24e28906ca60f0",
+          "sourcePath": ".claude/skills/impeccable/SKILL.md",
+          "reconstructedSourceCanonicalFileSha256": "2ef091bbac46b573bef1c8bca0eed3ba1f5a54b76988e475249194bab16ef20c",
+          "derivation": "remove-attribution-restore-32-reference-prefixes-and-terminal-lf"
+        },
+        {
+          "path": "references/impeccable/adapt.md",
+          "canonicalFileSha256": "5cb9ba2e392b5ae8e0a58cb4f8248cc9417196e89d539cd57812cfeedadb9ca9",
+          "sourcePath": ".claude/skills/impeccable/reference/adapt.md",
+          "reconstructedSourceCanonicalFileSha256": "ec58806f16fc7ba29bccef08f2e158cd00be077ce05d45e943a59bd26dc6dc55",
+          "derivation": "remove-attribution-header"
+        },
+        {
+          "path": "references/impeccable/adapt.native.md",
+          "canonicalFileSha256": "b211340d07aefead961765f1882d11870c646c86fae48b78a645273ac30f441a",
+          "sourcePath": ".claude/skills/impeccable/reference/adapt.native.md",
+          "reconstructedSourceCanonicalFileSha256": "17c583cf8ad41266ea1e787b666b9d91fe13469d3d0f6af57c08e0146f9b17ac",
+          "derivation": "remove-attribution-header"
+        },
+        {
+          "path": "references/impeccable/android.md",
+          "canonicalFileSha256": "277a5d43aae15fb2510ae9d2a1770e8f430d23b018f1663227cf702efdae580f",
+          "sourcePath": ".claude/skills/impeccable/reference/android.md",
+          "reconstructedSourceCanonicalFileSha256": "dacaaf57fe334fb1a02ddb4da5217c78f4e154ac9e6b760d2cc69cceaed0eac4",
+          "derivation": "remove-attribution-header"
+        },
+        {
+          "path": "references/impeccable/animate.md",
+          "canonicalFileSha256": "d834e1105cdafa533f86064a3141620911515b7ffc02d2dd08f8ac3d6ab70724",
+          "sourcePath": ".claude/skills/impeccable/reference/animate.md",
+          "reconstructedSourceCanonicalFileSha256": "e86a01920e31b1f7d3d2d1961c2470bbe8db9f3ebfe5f0985fe004ca64f3a3cc",
+          "derivation": "remove-attribution-header"
+        },
+        {
+          "path": "references/impeccable/audit.md",
+          "canonicalFileSha256": "1b30d972de3ec9db7941d106cca9fc362a769b71c6483e06e58ede11eb902247",
+          "sourcePath": ".claude/skills/impeccable/reference/audit.md",
+          "reconstructedSourceCanonicalFileSha256": "32adc5943c73965dd838685a17e2b6be6828cdf3905fb5b29ab13d3c68e7241f",
+          "derivation": "remove-attribution-header"
+        },
+        {
+          "path": "references/impeccable/audit.native.md",
+          "canonicalFileSha256": "d1588fe4c5b94313c3e2a075c96987c9bba15f22aaf85c1dd08f17a31db077d1",
+          "sourcePath": ".claude/skills/impeccable/reference/audit.native.md",
+          "reconstructedSourceCanonicalFileSha256": "010ecb4ef79d6e063280791cd2d5e6a689f4f7a3d66c60d7d43f04e7b2067966",
+          "derivation": "remove-attribution-header"
+        },
+        {
+          "path": "references/impeccable/bolder.md",
+          "canonicalFileSha256": "6ce5ceb40f15ad3cfee9ce6f3a31847443e47b8eab2a4b7f4836f1f1cb3309b8",
+          "sourcePath": ".claude/skills/impeccable/reference/bolder.md",
+          "reconstructedSourceCanonicalFileSha256": "f2b356a513984559324e5909589cfbe02b5ea6053bd043c0e7354627bc33a113",
+          "derivation": "remove-attribution-header"
+        },
+        {
+          "path": "references/impeccable/clarify.md",
+          "canonicalFileSha256": "e129ada43749a54f9558676e6c75f35c4989f47dcf21fb4c6a4bddfc35690aa2",
+          "sourcePath": ".claude/skills/impeccable/reference/clarify.md",
+          "reconstructedSourceCanonicalFileSha256": "6c382f8283756e8a693d832b750f7e4cbff1ca5bdcc3825b2b4ef4da9f21876a",
+          "derivation": "remove-attribution-header"
+        },
+        {
+          "path": "references/impeccable/colorize.md",
+          "canonicalFileSha256": "6cc0e93231ca2c2b13d0d1eb96cab48ef1dc8613fe93f7e6ad4263bb84eb362e",
+          "sourcePath": ".claude/skills/impeccable/reference/colorize.md",
+          "reconstructedSourceCanonicalFileSha256": "d1fbd55074abb2251bdaa03749d34acc42c38e46e47549f18f5848df57d43c42",
+          "derivation": "remove-attribution-header"
+        },
+        {
+          "path": "references/impeccable/craft-floor.md",
+          "canonicalFileSha256": "c3f6f8ac9f093beadc030d81bfd039d000db60169d81637dc9d6ea736f5de86d",
+          "sourcePath": ".claude/skills/impeccable/reference/craft-floor.md",
+          "reconstructedSourceCanonicalFileSha256": "e419d816711a6e979b38d7f04abe79ca6079d76447eef04428b9fab3a155210f",
+          "derivation": "remove-attribution-header"
+        },
+        {
+          "path": "references/impeccable/craft.md",
+          "canonicalFileSha256": "3a7b77c9eac850cd8587362dd14782064886bf8eb33b036abad569c32811263b",
+          "sourcePath": ".claude/skills/impeccable/reference/craft.md",
+          "reconstructedSourceCanonicalFileSha256": "9205e222bc6565b37fb504ceec93233c2d2a456802b69d16e6b1c44723907c4c",
+          "derivation": "remove-attribution-header"
+        },
+        {
+          "path": "references/impeccable/critique.md",
+          "canonicalFileSha256": "265a110c3e8bdc7501f58209c94eb0c1bd5d6e675ccdcbd60e838b47450a2831",
+          "sourcePath": ".claude/skills/impeccable/reference/critique.md",
+          "reconstructedSourceCanonicalFileSha256": "71934e9c38d85d7d2992d457a12dd870d6ad60de7a5e054c9c479d12e4fc0ee6",
+          "derivation": "remove-attribution-header"
+        },
+        {
+          "path": "references/impeccable/delight.md",
+          "canonicalFileSha256": "5e01ce7ae6439041b665b346072647af7d4509360e543ea742cf24d9f106aa3f",
+          "sourcePath": ".claude/skills/impeccable/reference/delight.md",
+          "reconstructedSourceCanonicalFileSha256": "56500b1f9d2fcec8324d7f448d813048b5831a46d3feeb1055bd3eb17ec3660f",
+          "derivation": "remove-attribution-header"
+        },
+        {
+          "path": "references/impeccable/distill.md",
+          "canonicalFileSha256": "5a8932015e1e6927c3466489855803d87575a4494cb0bccc9a29deaff416e194",
+          "sourcePath": ".claude/skills/impeccable/reference/distill.md",
+          "reconstructedSourceCanonicalFileSha256": "88c4930f49cb41a9fe463bd40989b4ab85694dfda85867d00a94cb7a4c5e7a20",
+          "derivation": "remove-attribution-header"
+        },
+        {
+          "path": "references/impeccable/doctor.md",
+          "canonicalFileSha256": "b886e647b0f0943211594c7bf0296f10dc30b1b64e837362fdc8f84e667f6d7e",
+          "sourcePath": ".claude/skills/impeccable/reference/doctor.md",
+          "reconstructedSourceCanonicalFileSha256": "0b80beb34837ff67312744d007cefda83c2d6ae4c0b6960d226bec12f689c491",
+          "derivation": "remove-attribution-header"
+        },
+        {
+          "path": "references/impeccable/document.md",
+          "canonicalFileSha256": "fac0d435f9342156cec1653237acc17d282f9c93b6af6050a58fa8b9e89ba751",
+          "sourcePath": ".claude/skills/impeccable/reference/document.md",
+          "reconstructedSourceCanonicalFileSha256": "968b492f1879cc5db34f768a90bb5b4eb763261a171dd4fd758b3a4a10c5a8ac",
+          "derivation": "remove-attribution-header"
+        },
+        {
+          "path": "references/impeccable/extract.md",
+          "canonicalFileSha256": "f0eeb98a1b30008257c803d1ff833c8edc17648912528d43811a7757e2f14f74",
+          "sourcePath": ".claude/skills/impeccable/reference/extract.md",
+          "reconstructedSourceCanonicalFileSha256": "32f33c58b7b213ecf88e05b6dcfac6c7f96956b84db5694ddb6e1e0f1b307072",
+          "derivation": "remove-attribution-header"
+        },
+        {
+          "path": "references/impeccable/harden.md",
+          "canonicalFileSha256": "541df805074b16952a94d538dbf22ac4c32be9b24920131755c9cdf019aaf492",
+          "sourcePath": ".claude/skills/impeccable/reference/harden.md",
+          "reconstructedSourceCanonicalFileSha256": "1cb1c5bc7f705250bfbd2a8bbea7a1f0f6e8e579f0a533be4f73067f45848491",
+          "derivation": "remove-attribution-header"
+        },
+        {
+          "path": "references/impeccable/hooks.md",
+          "canonicalFileSha256": "0f43f0b5b321afd975d49c8c04d32e72fc738f902fb1c0156ee325f48c0a58cb",
+          "sourcePath": ".claude/skills/impeccable/reference/hooks.md",
+          "reconstructedSourceCanonicalFileSha256": "d24ff44255fd29738ef05b78afa2e519dbf12cb7bbdaa4c9696b3a656e41d9a7",
+          "derivation": "remove-attribution-header"
+        },
+        {
+          "path": "references/impeccable/init.md",
+          "canonicalFileSha256": "b797f0dab0297b9be125e7b900afc09cd78ada4db2182f9395d7a17b34f61622",
+          "sourcePath": ".claude/skills/impeccable/reference/init.md",
+          "reconstructedSourceCanonicalFileSha256": "f6bba0557444f8d1bfd71ac839014361ab7125fa203a203144df5a50969c011c",
+          "derivation": "remove-attribution-header"
+        },
+        {
+          "path": "references/impeccable/ios.md",
+          "canonicalFileSha256": "36107cf2ed77f287504412d4012e6755621b7934494dcf65f4d923645dd716a9",
+          "sourcePath": ".claude/skills/impeccable/reference/ios.md",
+          "reconstructedSourceCanonicalFileSha256": "07131918b18ce50dbd62fa20bb519d7a0b4a36c798f0e5332522b75cbc7d0574",
+          "derivation": "remove-attribution-header"
+        },
+        {
+          "path": "references/impeccable/layout.md",
+          "canonicalFileSha256": "46f974364ab9ef7b71ce085440d57b9e702cff0989a7dbcc612f98fe470ca0ec",
+          "sourcePath": ".claude/skills/impeccable/reference/layout.md",
+          "reconstructedSourceCanonicalFileSha256": "54e66bfb19d5d7b8d9feb7e05384ae2aa2432b9788355501f288d2575646fe98",
+          "derivation": "remove-attribution-header"
+        },
+        {
+          "path": "references/impeccable/live.md",
+          "canonicalFileSha256": "431591ff879e47176b3dd2c8ad55f194d86fd1d0461874b5f81cf330db226113",
+          "sourcePath": ".claude/skills/impeccable/reference/live.md",
+          "reconstructedSourceCanonicalFileSha256": "ace4771625eca82d34f54cf27124613b7e7c5c35d1799f6661f8ba9380b8c00e",
+          "derivation": "remove-attribution-header"
+        },
+        {
+          "path": "references/impeccable/new-work.md",
+          "canonicalFileSha256": "b531537d9ee4efc23acae36855343b4334779328ecc256c3f93ddc3ac17916a8",
+          "sourcePath": ".claude/skills/impeccable/reference/new-work.md",
+          "reconstructedSourceCanonicalFileSha256": "23ba3c828b16cc3f6655ed36dd54f7ad405a4cf605ff90be7754c5022537ff58",
+          "derivation": "remove-attribution-header"
+        },
+        {
+          "path": "references/impeccable/onboard.md",
+          "canonicalFileSha256": "72063b5417921e690097c2c8bc61e856e4951f73e77ff2fb9f88b8ec43ee2d18",
+          "sourcePath": ".claude/skills/impeccable/reference/onboard.md",
+          "reconstructedSourceCanonicalFileSha256": "9a2c08ee2516d2ee87129e7ebe6a0895f9990c9852d1f6fa7e70be9a6a88a659",
+          "derivation": "remove-attribution-header"
+        },
+        {
+          "path": "references/impeccable/operate.md",
+          "canonicalFileSha256": "f816851344d7ed01434adc81d0fd4fd1fd462ab61324839b610f92984fe48828",
+          "sourcePath": ".claude/skills/impeccable/reference/operate.md",
+          "reconstructedSourceCanonicalFileSha256": "a9d2203acd45ca33a13d5c68b02b23ed512425ac15f0e8438318ed124b43729d",
+          "derivation": "remove-attribution-header"
+        },
+        {
+          "path": "references/impeccable/optimize.md",
+          "canonicalFileSha256": "b6e37b5affe59fd1b0183b6476d008de06842a839b243ab562277a9bf4f79df7",
+          "sourcePath": ".claude/skills/impeccable/reference/optimize.md",
+          "reconstructedSourceCanonicalFileSha256": "73745e94cd4a42653165a89b8c512764a036daae8e5b6da1774b4ddc1659516d",
+          "derivation": "remove-attribution-header"
+        },
+        {
+          "path": "references/impeccable/overdrive.md",
+          "canonicalFileSha256": "5313151e97bd52e033bf98ca8f1fc1cbf2888d743323bf526575e9858e1b7e03",
+          "sourcePath": ".claude/skills/impeccable/reference/overdrive.md",
+          "reconstructedSourceCanonicalFileSha256": "21aae2ede2c5bb886a5f72ab14d1155dce3b99d266cc105b5a8f31ca8b32ac4b",
+          "derivation": "remove-attribution-header"
+        },
+        {
+          "path": "references/impeccable/polish.md",
+          "canonicalFileSha256": "771b85c4cb028629f9579b1edbc39d7947e6f940a77186ff3785139dd73c3a88",
+          "sourcePath": ".claude/skills/impeccable/reference/polish.md",
+          "reconstructedSourceCanonicalFileSha256": "8897a5f97150747bbe0df3cd2bb1c61ab89a3f29c1777a5c506c412c59e1d6b2",
+          "derivation": "remove-attribution-header"
+        },
+        {
+          "path": "references/impeccable/quieter.md",
+          "canonicalFileSha256": "95156ad6ad76c9ff7265395f90234a2db3dbe3b5c69ab385aa49189bc312bed6",
+          "sourcePath": ".claude/skills/impeccable/reference/quieter.md",
+          "reconstructedSourceCanonicalFileSha256": "7d8470f34c6e31e6539b8bde5945d0b6aab0c42b65683689f95fa9a6e0102fd1",
+          "derivation": "remove-attribution-header"
+        },
+        {
+          "path": "references/impeccable/routing.md",
+          "canonicalFileSha256": "51d41033e82826bab7b3041113bf1c0192397d2ef45950f2894592f136e1dbb8",
+          "sourcePath": ".claude/skills/impeccable/reference/routing.md",
+          "reconstructedSourceCanonicalFileSha256": "534a8653a4bd9f0d437eca1b4bf807f9adca1a7d584d38cf8bb161d3ef7fdffc",
+          "derivation": "remove-attribution-header"
+        },
+        {
+          "path": "references/impeccable/shape.md",
+          "canonicalFileSha256": "5c7d8b8e4cbee8b91b3453c2701aa21f55a4bfef36e9a9134940c105e92186aa",
+          "sourcePath": ".claude/skills/impeccable/reference/shape.md",
+          "reconstructedSourceCanonicalFileSha256": "a55f016c046cb6a27c55bd7f346375aeb506a755c4fbca19a5f92dbd42309c23",
+          "derivation": "remove-attribution-header"
+        },
+        {
+          "path": "references/impeccable/typeset.md",
+          "canonicalFileSha256": "7d535a6012c8afcb7de20a0c11066e9bdf568f45f9595cdf778521874df4f549",
+          "sourcePath": ".claude/skills/impeccable/reference/typeset.md",
+          "reconstructedSourceCanonicalFileSha256": "2031c995a3d4b4f1c74535c055ca21ac133034ced477905da543b714802adc10",
+          "derivation": "remove-attribution-header"
+        },
+        {
+          "path": "references/impeccable/visualize.md",
+          "canonicalFileSha256": "726c4ec0a6c38d4cf0a2c517ce2fc8001d16ea06622ee460f8fd27cb5d7eaee4",
+          "sourcePath": ".claude/skills/impeccable/reference/visualize.md",
+          "reconstructedSourceCanonicalFileSha256": "fcdb36b34fb289a218ff342f37ba298e090be67448d3d6de9ed9398b6d6a3f2d",
+          "derivation": "remove-attribution-header"
+        }
+      ]
+    }
+  ],
+  "carriage": [
+    {
+      "id": "root-mit-license",
+      "scope": "repository",
+      "path": "LICENSE",
+      "canonicalFileSha256": "3c917c47afc9bbb061dd0e66077336752156aa9709aab8823682a8ffbd6f1353",
+      "shipsWithInstall": false
+    },
+    {
+      "id": "root-notice",
+      "scope": "repository",
+      "path": "NOTICE.md",
+      "canonicalFileSha256": "efb22a077a65d92e5a3185b9c73202b1ca6feeef4f749ec896b51958680bee02",
+      "shipsWithInstall": false
+    },
+    {
+      "id": "apache-2.0-license",
+      "scope": "skill",
+      "path": "LICENSES/Apache-2.0.txt",
+      "canonicalFileSha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "shipsWithInstall": true
+    },
+    {
+      "id": "third-party-notices",
+      "scope": "skill",
+      "path": "THIRD-PARTY-NOTICES.md",
+      "canonicalFileSha256": "190f1667f52308e8f669697f5e281c95da6659610cb5b871ae55a133902866a0",
+      "shipsWithInstall": true
+    },
+    {
+      "id": "provenance-manifest",
+      "scope": "skill",
+      "path": "THIRD-PARTY-PROVENANCE.json",
+      "canonicalFileSha256": "8cd2d0c387eb72a5a89e40cf8c80986d7e80773efce96f84eb53d02ee575aa35",
+      "shipsWithInstall": true,
+      "hashMode": "normalized-text-replace-own-sha-with-64-zeroes-v1"
+    }
+  ]
+}

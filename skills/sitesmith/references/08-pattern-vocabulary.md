@@ -1,7 +1,7 @@
 # Pattern vocabulary: names for the layouts, hero paradigms and effects that exist
 
-> Part of the **sitesmith** skill. Verbatim from [taste-skill](https://github.com/Leonxlnx/taste-skill) — MIT, © 2026 Leonxlnx.
-> Reproduced without modification; only the heading above and file name are ours.
+> Part of the **sitesmith** skill. Contains a verbatim excerpt from [taste-skill](https://github.com/Leonxlnx/taste-skill) — MIT, © 2026 Leonxlnx.
+> **Modified for sitesmith:** SiteSmith added the title, attribution, contents and local navigation. Exact ranges and hashes are in `docs/v3/LICENSE-DERIVATION-AUDIT.md`.
 
 ---
 

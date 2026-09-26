@@ -15,7 +15,7 @@ It no longer decides output.
 Measured with `tools/extract-rules.py`, this set carries **978 rules across 47 files, 735
 prohibitions against 185 requirements**. Four voices restating each other, occasionally
 contradicting each other — a mandatory one-radius lock in `03-design-engineering.md:81`,
-"identical border-radius on every element" listed as a defect in `06-redesign-audit.md:89` —
+"identical border-radius on every element" listed as a defect in `../v2/tasks/redesign-audit.md:89` —
 and between them no statement anywhere of what a finished website *has*.
 
 An agent reading four bans for every requirement avoids specific failures competently and

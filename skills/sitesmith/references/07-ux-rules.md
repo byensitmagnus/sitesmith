@@ -1,7 +1,7 @@
 # UX rules, accessibility and pre-delivery checklists
 
-> Part of the **sitesmith** skill. Verbatim from [ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) — MIT, © 2024 Next Level Builder.
-> Reproduced without modification; only the heading above and file name are ours.
+> Part of the **sitesmith** skill. Contains two verbatim excerpts from [ui-ux-pro-max-skill v2.9.0](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill/tree/65e23199492fa911af32d9078e627ab4de01f4c8) — MIT, © 2024 Next Level Builder.
+> **Modified for sitesmith:** SiteSmith assembled the non-contiguous excerpts and added the title, attribution, contents and navigation. Exact ranges and hashes are in `docs/v3/LICENSE-DERIVATION-AUDIT.md`.
 
 ---
 

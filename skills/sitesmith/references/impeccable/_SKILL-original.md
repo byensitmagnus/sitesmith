@@ -11,8 +11,8 @@ allowed-tools:
 ---
 
 
-> Part of the **sitesmith** skill. Verbatim from [impeccable](https://github.com/pbakaus/impeccable) — Apache License 2.0, © Paul Bakaus.
-> Reproduced without modification; only this header block and the file name are ours.
+> Part of the **sitesmith** skill. Derived from [impeccable at `af78b1e5`](https://github.com/pbakaus/impeccable/blob/af78b1e512148e2a2f2d2ded6786d265ea420191/.claude/skills/impeccable/SKILL.md) — Apache License 2.0, © Paul Bakaus.
+> **Modified for sitesmith:** this attribution block was added and exactly 32 `reference/<file>.md` link targets were repointed to the same files in this flat directory. All other body text matches that frozen provider output.
 
 ---
 
