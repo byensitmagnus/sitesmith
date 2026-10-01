@@ -1,7 +1,3 @@
----
-source: ai
----
-
 # SiteSmith
 
 **A browser release loop for coding agents that build websites.**
@@ -238,6 +234,11 @@ loop: evidence, visible variation, stack-aware implementation and rendered relea
 
 [CONTRIBUTING.md](CONTRIBUTING.md). The short version: a rule that can't be demonstrated on a
 rendered page doesn't belong in the skill.
+
+## Made by
+
+SiteSmith is made by [Magnus Steinmeier Olsen](https://github.com/byensitmagnus), founder of
+[Byens IT](https://www.byens-it.dk), a Danish gaming-PC and IT company.
 
 ## License
 
